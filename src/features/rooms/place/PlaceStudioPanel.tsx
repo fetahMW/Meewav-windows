@@ -559,8 +559,8 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
         <span className="place-guest-row__compact-shade" />
         {selected || selectionMode ? <span className="place-guest-row__compact-state is-checkbox">{selected ? <SquareCheck aria-hidden="true" /> : <Square aria-hidden="true" />}</span>
           : variant === "backstage" ? <span className="place-guest-row__compact-statuses">
-              {!participant.isCameraEnabled ? <span className="place-guest-row__status-chip is-media-off" title="Caméra coupée">Cam coupée</span> : null}
-              {!participant.isMicrophoneEnabled || hasUnstableConnection ? <span className="place-guest-row__status-icons">
+              {!participant.isCameraEnabled || !participant.isMicrophoneEnabled || hasUnstableConnection ? <span className="place-guest-row__status-icons">
+                {!participant.isCameraEnabled ? <span className="place-guest-row__status-chip is-icon is-media-off" title="Caméra coupée" aria-label="Caméra coupée"><CameraOff aria-hidden="true" /></span> : null}
                 {!participant.isMicrophoneEnabled ? <span className="place-guest-row__status-chip is-icon is-micro-off" title="Micro coupé" aria-label="Micro coupé"><MicOff aria-hidden="true" /></span> : null}
                 {hasUnstableConnection ? <span className="place-guest-row__status-chip is-icon is-unstable" title="Connexion instable" aria-label="Connexion instable"><WifiLow aria-hidden="true" /></span> : null}
               </span> : null}

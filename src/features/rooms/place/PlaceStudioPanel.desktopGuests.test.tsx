@@ -176,14 +176,15 @@ describe("Desktop guest gestures", () => {
     renderDesktopGuests();
     const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
     const louna = within(backstage).getByRole("button", { name: "Sélectionner Louna Saphir" });
-    expect(louna.querySelector(".place-guest-row__compact-statuses")).toHaveTextContent("Cam coupée");
+    expect(louna).not.toHaveTextContent("Cam coupée");
+    expect(louna.querySelector(".place-guest-row__status-chip.is-icon.is-media-off")).toHaveAttribute("aria-label", "Caméra coupée");
     expect(louna.querySelector(".place-guest-row__status-chip.is-unstable .lucide-wifi-low")).not.toBeNull();
     expect(louna).not.toHaveTextContent("Instable");
     expect(louna.querySelector(".place-guest-row__status-chip.is-ready")).toBeNull();
     expect(louna).toHaveAttribute("aria-description", "Caméra coupée, Connexion instable");
     expect(louna).not.toHaveTextContent("112 ms");
     expect(louna.querySelector(".mw-grade-badge")).toHaveClass("mw-grade-badge--md");
-    expect(louna.querySelector(".lucide-camera, .lucide-camera-off")).toBeNull();
+    expect(louna.querySelector(".place-guest-row__status-icons .lucide-camera-off")).not.toBeNull();
     const solis = within(backstage).getByRole("button", { name: "Sélectionner Solis Miro" });
     expect(solis.querySelector(".place-guest-row__status-chip.is-micro-off .lucide-mic-off")).not.toBeNull();
     expect(solis).not.toHaveTextContent("Micro coupé");
