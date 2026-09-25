@@ -7,6 +7,9 @@ import WaveEmptyPanel from "../tools/panels/WaveEmptyPanel";
 import PlaceMixerAudioPlayer, { type PlaceMixerProgramAudioTransport } from "./PlaceMixerAudioPlayer";
 import { placeRoomTime } from "./placeRoomTime";
 
+const runtime = vi.hoisted(() => ({ isDesktop: false }));
+vi.mock("../../../runtime/RuntimeProvider", () => ({ useRuntime: () => runtime }));
+
 vi.mock("../tools/audio/previewWaveform", async (importOriginal) => ({
   ...await importOriginal<typeof import("../tools/audio/previewWaveform")>(),
   decodeAudioWaveform: vi.fn(async () => ({ peaks: Array.from({ length: 120 }, () => ({ min: -.2, max: .2 })) })),
@@ -107,11 +110,14 @@ let context: {
   resume: ReturnType<typeof vi.fn>; close: ReturnType<typeof vi.fn>;
   createGain: () => MockAudioNode; createBufferSource: () => MockAudioNode;
   createMediaStreamDestination: () => MockAudioNode & { stream: { getAudioTracks: () => object[] } };
+  createAnalyser: () => MockAudioNode;
+  createMediaElementSource: () => MockAudioNode;
   createBuffer: (channels: number, length: number, sampleRate: number) => AudioBuffer;
   decodeAudioData: ReturnType<typeof vi.fn>;
 };
 const response = (marker: number) => ({ ok: true, arrayBuffer: async () => new Uint8Array([marker]).buffer }) as Response;
 beforeEach(() => {
+  runtime.isDesktop = false;
   sources = [];
   gains = [];
   oldBuffer = silentBuffer(120);
@@ -123,6 +129,8 @@ beforeEach(() => {
   context = {
     currentTime: 0, state: "running", destination: new MockAudioNode(),
     resume: vi.fn().mockResolvedValue(undefined), close: vi.fn().mockResolvedValue(undefined),
+    createAnalyser: () => Object.assign(new MockAudioNode(), { fftSize: 256, getFloatTimeDomainData: vi.fn() }),
+    createMediaElementSource: () => new MockAudioNode(),
     createGain: () => { const gain = new MockAudioNode(); gains.push(gain); return gain; },
     createBufferSource: () => { const source = new MockAudioNode(); sources.push(source); return source; },
     createMediaStreamDestination: () => (mediaDestination = Object.assign(new MockAudioNode(), { stream: { getAudioTracks: () => [publicTrack] } })),
@@ -164,6 +172,110 @@ function expectBaseAudition(referenceSource: MockAudioNode, candidateSource: Moc
 }
 
 describe("Wave · import et contrôle du Beat dans le lecteur", () => {
+  const chooseDestination = (label: string) => {
+    fireEvent.click(screen.getByRole("button", { name: "Importer un son" }));
+    const modal = screen.getByRole("dialog", { name: "Importer dans la Wave" });
+    expect(screen.queryByRole("menuitem", { name: /Depuis mon appareil/ })).not.toBeInTheDocument();
+    fireEvent.click(within(modal).getByRole("button", { name: new RegExp(label) }));
+    expect(screen.getByRole("menuitem", { name: /Depuis mon appareil/ })).toBeInTheDocument();
+  };
+  const confirmBase = async (name: string) => {
+    chooseDestination("Boucle de base");
+    await importTrack(name);
+    fireEvent.click(screen.getByRole("radio", { name: "DRUMS" }));
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Valider l’import" })); await settle(); });
+  };
+
+  it("propose les trois destinations avant la source et permet d’annuler", () => {
+    const handler = vi.fn();
+    renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
+    fireEvent.click(screen.getByRole("button", { name: "Importer un son" }));
+    const modal = screen.getByRole("dialog", { name: "Importer dans la Wave" });
+    for (const name of [/Boucle de base/, /Boucle de vote/, /Dans le lecteur/]) expect(within(modal).getByRole("button", { name })).toBeVisible();
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(handler).not.toHaveBeenCalled();
+  });
+
+  it("conserve deux bases, isole les prods et réactive une base sans doublon", async () => {
+    const handler = vi.fn().mockResolvedValue(undefined);
+    renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
+    await confirmBase("Old.wav");
+    await confirmBase("Imported.wav");
+    const reference = transport.engine.getSnapshot().referenceId;
+    chooseDestination("Dans le lecteur");
+    await importTrack("Third.wav");
+    expect(handler).toHaveBeenCalledTimes(2);
+    expect(transport.engine.getSnapshot().referenceId).toBe(reference);
+    expect(screen.getByRole("slider", { name: "Progression de Third" })).toBeVisible();
+    expect(screen.queryByRole("radio", { name: "BASE" })).not.toBeInTheDocument();
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" })); await settle(); });
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalled();
+    expect(transport.engine.getSnapshot().playing).toBe(false);
+    act(() => { window.dispatchEvent(new Event("meewav:mixer-playlist-open")); });
+    const bases = screen.getByRole("region", { name: "Boucles de base" });
+    expect(within(bases).getAllByRole("article")).toHaveLength(2);
+    expect(within(bases).getByRole("button", { name: "Supprimer Imported" })).toBeDisabled();
+    expect(screen.getByRole("region", { name: "Dans le lecteur" })).toHaveTextContent("Third");
+    await act(async () => { fireEvent.click(within(bases).getByRole("button", { name: "Lire Old" })); await settle(); });
+    expect(screen.getByRole("radio", { name: "DRUMS" })).toHaveAttribute("aria-checked", "true");
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Valider l’import" })); await settle(); });
+    expect(handler).toHaveBeenCalledTimes(3);
+    expect(handler.mock.calls[2][0].audio.id).toBe(handler.mock.calls[0][0].audio.id);
+    expect(transport.engine.getSnapshot().referenceId).toBe(handler.mock.calls[0][0].audio.id);
+    act(() => { window.dispatchEvent(new Event("meewav:mixer-playlist-open")); });
+    expect(within(screen.getByRole("region", { name: "Boucles de base" })).getAllByRole("article")).toHaveLength(2);
+  });
+
+  it("route le choix Vote effectué avant la sélection du fichier vers le sas", async () => {
+    const handler = vi.fn().mockResolvedValue(undefined);
+    renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
+    chooseDestination("Boucle de vote");
+    await importTrack("Imported.wav");
+    fireEvent.click(screen.getByRole("radio", { name: "DRUMS" }));
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Valider l’import" })); await settle(); });
+    expect(handler).toHaveBeenCalledWith(expect.objectContaining({ destination: "vote", category: "drums" }));
+    expect(screen.getByText("Aucun son chargé")).toBeVisible();
+  });
+
+  it("affiche les groupes dans le rail dépliable Windows et repasse du lecteur au solo du sas", async () => {
+    runtime.isDesktop = true;
+    const handler = vi.fn().mockResolvedValue(undefined);
+    renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
+    await confirmBase("Old.wav");
+    chooseDestination("Dans le lecteur");
+    await importTrack(["Imported.wav", "Third.wav"]);
+    fireEvent.click(screen.getByRole("button", { name: "Afficher les pistes" }));
+    expect(within(screen.getByRole("region", { name: "Dans le lecteur" })).getAllByRole("article")).toHaveLength(2);
+    expect(within(screen.getByRole("region", { name: "Boucles de base" })).getAllByRole("article")).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: /Ajouter des sons/ }));
+    expect(screen.getByRole("dialog", { name: "Importer dans la Wave" })).toBeVisible();
+    fireEvent.keyDown(document, { key: "Escape" });
+    await act(async () => { transport.quickPreview(candidate); await settle(); });
+    await act(async () => { await settle(); });
+    expect(transport.engine.getSnapshot()).toMatchObject({ playing: true, quickPreview: true, candidate: { id: candidate.id } });
+    expect(screen.getByRole("slider", { name: "Progression de Old" })).toBeVisible();
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(["Depuis ma médiathèque", "Depuis mes setlists"])("respecte la destination Vote %s", async (source) => {
+    const handler = vi.fn().mockResolvedValue(undefined);
+    renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
+    chooseDestination("Boucle de vote");
+    fireEvent.click(screen.getByRole("menuitem", { name: source }));
+    if (source === "Depuis mes setlists") {
+      fireEvent.click(document.querySelector<HTMLButtonElement>(".place-mixer-audio-library-modal__choice")!);
+      expect(handler).not.toHaveBeenCalled();
+    }
+    vi.mocked(fetch).mockResolvedValueOnce({ ok: true, blob: async () => new Blob(["audio"], { type: "audio/mpeg" }) } as Response);
+    await act(async () => { fireEvent.click(document.querySelector<HTMLButtonElement>(".place-mixer-audio-library-modal__choice")!); await settle(); });
+    fireEvent.click(screen.getByRole("radio", { name: "DRUMS" }));
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Valider l’import" })); await settle(); });
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledWith(expect.objectContaining({ destination: "vote", audio: expect.objectContaining({ file: expect.any(File) }) }));
+    expect(screen.getByText("Aucun son chargé")).toBeVisible();
+  });
+
   it("masque le sélecteur BASE / BOUCLE / MIX dans le module Beat", () => {
     renderPlayer(1, 1, undefined, <SetWaveToolContext value="wave-orchestra" />);
     expect(screen.queryByRole("radio", { name: "BASE" })).not.toBeInTheDocument();
@@ -180,7 +292,7 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     expect(screen.queryByRole("slider", { name: "Progression de Imported" })).not.toBeInTheDocument();
     const confirm = within(dialog).getByRole("button", { name: "Valider l’import" });
     expect(confirm).toBeDisabled();
-    fireEvent.click(within(dialog).getByRole("button", { name: /Boucle normale/ }));
+    fireEvent.click(within(dialog).getByRole("button", { name: /Boucle de vote/ }));
     expect(dialog).toBeInTheDocument();
     expect(handler).not.toHaveBeenCalled();
     expect(confirm).toBeDisabled();
@@ -203,7 +315,6 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     const handler = vi.fn().mockResolvedValue(undefined);
     renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
     await importTrack("Imported.wav");
-    fireEvent.click(screen.getByRole("button", { name: /Boucle normale/ }));
     fireEvent.click(screen.getByRole("button", { name: /Nouvelle boucle de base/ }));
     fireEvent.click(screen.getByRole("radio", { name: "DRUMS" }));
     expect(handler).not.toHaveBeenCalled();
@@ -221,12 +332,12 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     const handler = vi.fn().mockRejectedValueOnce(new Error("wave_import_duration_off_grid")).mockResolvedValue(undefined);
     renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
     await importTrack("Imported.wav");
-    fireEvent.click(screen.getByRole("button", { name: /Boucle normale/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Boucle de vote/ }));
     fireEvent.click(screen.getByRole("radio", { name: "DRUMS" }));
     await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Valider l’import" })); await settle(); });
     expect(screen.getByRole("alert")).toHaveTextContent("La durée ne tombe pas exactement");
     expect(screen.getByRole("radio", { name: "DRUMS" })).toHaveAttribute("aria-checked", "true");
-    expect(screen.getByRole("button", { name: /Boucle normale/ })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("dialog", { name: "Comment intégrer ce son ?" })).toHaveTextContent("Boucle de vote");
     expect(handler).toHaveBeenCalledTimes(1);
     await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Valider l’import" })); await settle(); });
     expect(handler).toHaveBeenCalledTimes(2);
@@ -237,9 +348,9 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     const handler = vi.fn();
     renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);
     await importTrack("Imported.wav");
-    fireEvent.click(screen.getByRole("button", { name: /Boucle normale/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Boucle de vote/ }));
     fireEvent.click(screen.getByRole("radio", { name: "DRUMS" }));
-    fireEvent.click(screen.getByRole("button", { name: "Annuler", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "Annuler" }));
     expect(handler).not.toHaveBeenCalled();
     expect(screen.queryByRole("dialog", { name: "Comment intégrer ce son ?" })).not.toBeInTheDocument();
   });
@@ -255,7 +366,7 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     await importTrack("Imported.wav");
 
     await act(async () => {
-      const card = screen.getByRole("article", { name: `Sélectionner ${candidate.contributor.name}` });
+      const card = screen.getByRole("article", { name: `Sélectionner ${candidate.title}` });
       expect(within(card).queryByRole("button", { name: `Écouter ${candidate.contributor.name}` })).not.toBeInTheDocument();
       fireEvent.click(card);
       await settle();
@@ -328,7 +439,7 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
       await settle();
     });
 
-    const previewGain = gains.find((gain) => gain.connect.mock.calls.some(([destination]) => destination === context.destination));
+    const previewGain = gains.find((gain) => gain.connect.mock.calls.some(([destination]) => destination.connect.mock.calls.some(([output]: [unknown]) => output === context.destination)));
     const publicGain = gains.find((gain) => gain.connect.mock.calls.some(([destination]) => destination === mediaDestination));
     expect(previewGain?.gain.value).toBeCloseTo(.2);
     expect(publicGain?.gain.linearRampToValueAtTime).toHaveBeenLastCalledWith(1, .018);

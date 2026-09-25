@@ -12,7 +12,8 @@ const MODES = [
   { value: "loop", label: "Lecture en boucle", Icon: Repeat1 },
 ] as const;
 
-export default function PlaceMixerPlaybackMenu({ open, onOpenChange, mode, onModeChange, canLoop, loopActive, onToggleLoop }: {
+export default function PlaceMixerPlaybackMenu({ open, onOpenChange, mode, onModeChange, canLoop, loopActive, onToggleLoop, waveEnabled = true }: {
+  waveEnabled?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mode: PlaybackMode;
@@ -21,8 +22,10 @@ export default function PlaceMixerPlaybackMenu({ open, onOpenChange, mode, onMod
   loopActive: boolean;
   onToggleLoop: () => void;
 }) {
-  const transport = useWaveTransport();
-  const wave = useWaveTransportState();
+  const sharedTransport = useWaveTransport();
+  const sharedWave = useWaveTransportState();
+  const transport = waveEnabled ? sharedTransport : null;
+  const wave = waveEnabled ? sharedWave : null;
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const id = useId();
