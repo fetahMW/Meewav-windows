@@ -382,7 +382,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
   };
 
   if (!hasControl) {
-    return <div className="room-tool-panel is-wave-gate wave-sas wave-sas--premium">
+    return <div className={`room-tool-panel is-wave-gate wave-sas wave-sas--premium${quarantine ? " is-quarantine" : ""}`}>
       <header className="wave-sas__header">
         <span><strong>{quarantine ? "Quarantaine" : "Sas des boucles"}</strong><small>File privée réservée au host</small></span>
         <b>{gateSubmissions.length} boucles</b>
@@ -391,7 +391,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
     </div>;
   }
 
-  return <div className="room-tool-panel is-wave-gate wave-sas wave-sas--premium">
+  return <div className={`room-tool-panel is-wave-gate wave-sas wave-sas--premium${quarantine ? " is-quarantine" : ""}`}>
     <header className="wave-sas__header">
       <span>
         <strong>{quarantine ? "Quarantaine" : "Sas des boucles"}</strong>
@@ -427,6 +427,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
         const canPreview = canPreviewSubmission(submission);
         return <WaveLoopCard
           key={submission.id}
+          stateClassName={quarantine ? "is-quarantine" : "is-gate"}
           accent={category.color}
           avatarUrl={submission.contributor.avatarUrl}
           avatarFallback={submission.contributor.name.charAt(0)}
