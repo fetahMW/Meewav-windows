@@ -3,7 +3,7 @@
  * aluminium edges, brushed fader caps and a spun-aluminium Play ring.
  * Geometry, signal colours and interaction logic stay untouched. */
 
-.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) {
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel {
   /* Satin graphite rim: a soft top catch-light, never a white stroke. */
   --hifi-lacquer-edge:
     linear-gradient(180deg, #4d5056 0%, #2c2e32 14%, #141517 42%, #0b0c0e 62%, #17181b 86%, #303236 100%) border-box;
@@ -31,6 +31,9 @@
     0 2px 0 rgba(214, 226, 246, .035),
     0 5px 8px rgba(0, 0, 0, .8),
     0 16px 28px rgba(0, 0, 0, .6);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) {
   /* Domed lacquer keys: crisp reflected window on the upper half, horizon cut. */
   --hifi-lacquer-key:
     radial-gradient(120% 62% at 50% -4%, rgba(255, 255, 255, .13), rgba(236, 242, 252, .04) 58%, transparent 64%) padding-box,
@@ -349,8 +352,19 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
     0 28px 56px rgba(0, 0, 0, .55),
     inset 0 0 18px rgba(0, 0, 0, .6);
 }
-/* Let the Mixer chassis show through the space around the faders. */
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer > .place-studio-panel__content > .place-studio-panel__surface:not([hidden]) {
+/* The navigation fascia shares the player surface's lacquer and metal edge. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed) > .place-studio-panel__bar {
+  border: 1px solid transparent;
+  background: var(--hifi-lacquer-face);
+  box-shadow: var(--hifi-lacquer-shadow);
+}
+/* Show the chassis finish behind every console view, including the Mixer. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed) > .place-studio-panel__content,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed) > .place-studio-panel__content > .place-studio-panel__surface:not([hidden]) {
+  background: transparent;
+  box-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat :is(.place-chat, .place-chat__messages, .place-chat-workspace, .classe-chat-workspace) {
   background: transparent;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed)::before {
