@@ -158,10 +158,36 @@
 .place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button.is-close,
 .place-mixer-wave-import > section > header > button { grid-template-columns: 1fr; gap: 0; }
 
-.place-mixer-wave-import.is-destination > section { width: min(390px, calc(100vw - 32px)); }
-.place-mixer-wave-import.is-destination .place-mixer-wave-import__choices { grid-template-columns: 1fr; margin-top: 14px; }
-.place-mixer-wave-import.is-destination .place-mixer-wave-import__choices > button { min-height: 64px; grid-template-columns: 24px 1fr; padding: 12px; }
-.place-mixer-wave-import.is-destination .place-mixer-wave-import__choices > button strong { font-size: 13px; }
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu.place-mixer-audio__wave-flow {
+  --wave-import-face: linear-gradient(180deg, #252627, #101112 44%, #050505);
+  --wave-import-depth: inset 0 1px #ffffff20, inset 0 -1px #000, 0 3px 6px #0008;
+  box-sizing: border-box;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  width: min(390px, calc(100% - 16px));
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__wave-flow .place-mixer-audio__source-menu-title { flex: 0 0 auto; }
+.place-room-shell .place-mixer-audio .place-mixer-audio__wave-flow.is-destination .place-mixer-wave-import__choices {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  min-height: 0;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__wave-flow.is-destination .place-mixer-wave-import__choices > button {
+  grid-template-columns: 24px minmax(0, 1fr);
+  min-height: 0;
+  padding: 7px 10px;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__wave-flow.is-destination .place-mixer-wave-import__choices > button strong { font-size: 12px; }
+.place-room-shell .place-mixer-audio .place-mixer-audio__wave-flow.is-sources > button[role="menuitem"] { flex: 1 0 36px; }
 .place-mixer-audio-queue-group { display: grid; gap: 5px; min-width: 0; }
 .place-mixer-audio-queue-group + .place-mixer-audio-queue-group { margin-top: 10px; }
 .place-mixer-audio-queue-group > h3 { display: flex; align-items: center; gap: 7px; margin: 2px 4px 4px; color: #c9b4e7; font-size: 11px; font-weight: 650; }

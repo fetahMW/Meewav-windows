@@ -197,6 +197,21 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     expect(handler).not.toHaveBeenCalled();
   });
 
+  it.each(["Boucle de base", "Boucle de vote", "Dans le lecteur"])("garde le même conteneur dans la console pour %s", (choice) => {
+    renderPlayer();
+    fireEvent.click(screen.getByRole("button", { name: "Importer un son" }));
+    const container = screen.getByRole("dialog", { name: "Importer dans la Wave" });
+    const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
+    expect(player).toContainElement(container);
+    fireEvent.click(within(container).getByRole("button", { name: new RegExp(choice) }));
+    expect(screen.getByRole("menu", { name: "Choisir la source" })).toBe(container);
+    expect(player).toContainElement(container);
+    expect(within(container).getByRole("menuitem", { name: "Depuis mon appareil" })).toBeVisible();
+    fireEvent.click(within(container).getByRole("menuitem", { name: "Changer de destination" }));
+    expect(screen.getByRole("dialog", { name: "Importer dans la Wave" })).toBe(container);
+    expect(player).toContainElement(container);
+  });
+
   it("conserve deux bases, isole les prods et réactive une base sans doublon", async () => {
     const handler = vi.fn().mockResolvedValue(undefined);
     renderPlayer(1, 1, undefined, <RegisterWaveImport handler={handler} />);

@@ -1577,23 +1577,35 @@ export default function PlaceMixerAudioPlayer({
           {desktopDeck ? <div className="place-mixer-deck__bottom">{playbackOptions}</div> : null}
         </div>
       </div>
-      {pickerView === "wave-destination" ? createPortal(
-        <div className="place-mixer-wave-import is-destination" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setPickerView("closed"); }}>
-          <section role="dialog" aria-modal="true" aria-label="Importer dans la Wave" onKeyDown={keepImportFocus}>
-            <header><strong>Importer dans la Wave</strong><button type="button" aria-label="Fermer" onClick={() => setPickerView("closed")}><X /></button></header>
-            <div className="place-mixer-wave-import__choices">
-              {([
-                { id: "base", title: "Boucle de base", detail: "Devient la base active du séquenceur.", Icon: Repeat },
-                { id: "vote", title: "Boucle de vote", detail: "Rejoint le sas de vote.", Icon: ListMusic },
-                { id: "player", title: "Dans le lecteur", detail: "Ajoute une prod à la liste de lecture.", Icon: Music2 },
-              ] as const).map(({ id, title, detail, Icon }, index) => <button key={id} type="button" autoFocus={index === 0} onClick={() => { setWaveImportDestination(id); setPickerView("sources"); }}><Icon aria-hidden="true" /><span><strong>{title}</strong><small>{detail}</small></span></button>)}
-            </div>
-          </section>
-        </div>, document.body,
-      ) : null}
-      {pickerView === "sources" ? (
+      {waveTransport && (pickerView === "wave-destination" || pickerView === "sources") ? (
+        <div className={`place-mixer-audio__source-menu place-mixer-audio__wave-flow${pickerView === "wave-destination" ? " is-destination" : " is-sources"}`}
+          role={pickerView === "wave-destination" ? "dialog" : "menu"}
+          aria-label={pickerView === "wave-destination" ? "Importer dans la Wave" : "Choisir la source"}
+          aria-modal={pickerView === "wave-destination" ? true : undefined}
+          onKeyDown={keepImportFocus}
+        >
+          <strong className="place-mixer-audio__source-menu-title">{pickerView === "wave-destination" ? "Importer dans la Wave" : waveImportDestination === "base" ? "Importer une boucle de base" : waveImportDestination === "vote" ? "Importer une boucle de vote" : "Importer dans le lecteur"}</strong>
+          {pickerView === "wave-destination" ? <div className="place-mixer-wave-import__choices" role="group" aria-label="Destination du son">
+            {([
+              { id: "base", title: "Boucle de base", detail: "Devient la base active du séquenceur.", Icon: Repeat },
+              { id: "vote", title: "Boucle de vote", detail: "Rejoint le sas de vote.", Icon: ListMusic },
+              { id: "player", title: "Dans le lecteur", detail: "Ajoute une prod à la liste de lecture.", Icon: Music2 },
+            ] as const).map(({ id, title, detail, Icon }, index) => <button key={id} type="button" autoFocus={index === 0} onClick={() => { setWaveImportDestination(id); setPickerView("sources"); }}><Icon aria-hidden="true" /><span><strong>{title}</strong><small>{detail}</small></span></button>)}
+          </div> : <>
+            <button type="button" role="menuitem" autoFocus onClick={() => fileInputRef.current?.click()}><Smartphone aria-hidden="true" /><span>Depuis mon appareil</span></button>
+            <button type="button" role="menuitem" onClick={() => setPickerView("library")}><Library aria-hidden="true" /><span>Depuis ma médiathèque</span></button>
+            <button type="button" role="menuitem" onClick={() => { setWaveSetlist(null); setPickerView("setlists"); }}><ListMusic aria-hidden="true" /><span>Depuis mes setlists</span></button>
+            <button type="button" role="menuitem" className="place-mixer-audio__cover-picker" onClick={() => setPickerView("covers")}>
+              {pendingImportCover ? <img src={pendingImportCover} alt="" /> : <Images aria-hidden="true" />}
+              <span>Choisir une cover</span>
+            </button>
+            <button type="button" role="menuitem" onClick={openUpload}><ChevronLeft aria-hidden="true" /><span>Changer de destination</span></button>
+          </>}
+          <button type="button" className="is-close" onClick={() => setPickerView("closed")} aria-label="Fermer"><X aria-hidden="true" /></button>
+        </div>
+      ) : !waveTransport && pickerView === "sources" ? (
         <div className="place-mixer-audio__source-menu" role="menu" aria-label="Choisir la source">
-          <strong className="place-mixer-audio__source-menu-title">{waveImportDestination === "base" ? "Importer une boucle de base" : waveImportDestination === "vote" ? "Importer une boucle de vote" : "Importer un son"}</strong>
+          <strong className="place-mixer-audio__source-menu-title">Importer un son</strong>
           <button type="button" role="menuitem" autoFocus onClick={() => fileInputRef.current?.click()}><Smartphone aria-hidden="true" /><span>Depuis mon appareil</span></button>
           <button type="button" role="menuitem" onClick={() => setPickerView("library")}><Library aria-hidden="true" /><span>Depuis ma médiathèque</span></button>
           <button type="button" role="menuitem" onClick={() => { setWaveSetlist(null); setPickerView("setlists"); }}><ListMusic aria-hidden="true" /><span>Depuis mes setlists</span></button>
@@ -1601,7 +1613,6 @@ export default function PlaceMixerAudioPlayer({
             {pendingImportCover ? <img src={pendingImportCover} alt="" /> : <Images aria-hidden="true" />}
             <span>Choisir une cover</span>
           </button>
-          {waveTransport ? <button type="button" role="menuitem" onClick={openUpload}><ChevronLeft aria-hidden="true" /><span>Changer de destination</span></button> : null}
           <button type="button" className="is-close" onClick={() => setPickerView("closed")} aria-label="Fermer"><X aria-hidden="true" /></button>
         </div>
       ) : null}
