@@ -45,12 +45,17 @@ describe("WaveEmptyPanel · sélection d’écoute du Beat", () => {
     render(<WaveEmptyPanel label="Beat" wave={wave} hostName="Puff" avatarUrl="/assets/orbit/founder-puff.png" />);
     const base = screen.getByRole("article", { name: "Sélectionner Puff" });
     expect(within(base).getByText("Puff")).toBeVisible();
+    expect(within(base).getByText("Beat original")).toBeVisible();
     expect(within(base).getByText("BASE · ARPÈGE")).toBeVisible();
     expect(base.querySelector("img")).toHaveAttribute("src", "/assets/orbit/founder-puff.png");
   });
 
   it("arme une couche acceptée comme candidate du lecteur persistant", () => {
     render(<WaveEmptyPanel label="Beat" wave={wave} avatarUrl="/host.webp" />);
+    const card = screen.getByRole("article", { name: "Sélectionner Luca Maris" });
+    expect(within(card).getByText("Luca Maris")).toBeVisible();
+    expect(within(card).getByText("Night Drive")).toBeVisible();
+    expect(within(card).getByText("8 mesures · 124 BPM")).toBeVisible();
     fireEvent.click(screen.getByRole("article", { name: "Sélectionner Luca Maris" }));
     expect(transportMocks.select).toHaveBeenCalledExactlyOnceWith(accepted);
     expect(screen.getByRole("article", { name: "Sélectionner Luca Maris" })).toHaveAttribute("data-selected", "true");
@@ -105,7 +110,8 @@ describe("WaveEmptyPanel · sélection d’écoute du Beat", () => {
     fireEvent.click(card);
     const navbar = screen.getByRole("complementary", { name: "Actions Beat" });
     expect(within(navbar).getByText("Luca Maris")).toBeVisible();
-    expect(within(navbar).queryByRole("button")).not.toBeInTheDocument();
+    expect(within(navbar).getByRole("button", { name: "Ouvrir le pré-profil de Luca Maris" })).toBeVisible();
+    expect(within(navbar).queryByRole("slider")).not.toBeInTheDocument();
   });
 
   it("affiche un solo strict : la piste solo reste active et la base passe hors écoute", () => {
