@@ -1073,7 +1073,7 @@ export default function PlaceMixerAudioPlayer({
 
   const playlistIndices = queue.flatMap((track, index) =>
     !waveTransport || (currentTrack?.waveDestination !== "base" && track.waveDestination !== "base") ? [index] : []);
-  const canNavigateTracks = waveEngine && waveTransport?.context === "wave-gate"
+  const canNavigateTracks = waveEngine && (waveTransport?.context === "wave-gate" || waveTransport?.context === "wave-quarantine")
     ? waveTransport.queue.length > 1 : playlistIndices.length > 1;
   const selectAdjacent = (direction: -1 | 1) => {
     if (playlistIndices.length < 2) return;
@@ -1082,13 +1082,13 @@ export default function PlaceMixerAudioPlayer({
   };
 
   const handleNextTrack = () => {
-    if (waveEngine && waveTransport?.context === "wave-gate" && waveTransport.queue.length) { waveTransport.adjacent(1); return; }
+    if (waveEngine && (waveTransport?.context === "wave-gate" || waveTransport?.context === "wave-quarantine") && waveTransport.queue.length) { waveTransport.adjacent(1); return; }
     if (!currentTrack || queue.length < 2) return;
     selectAdjacent(1);
   };
 
   const handlePreviousTrack = () => {
-    if (waveEngine && waveTransport?.context === "wave-gate" && waveTransport.queue.length) { waveTransport.adjacent(-1); return; }
+    if (waveEngine && (waveTransport?.context === "wave-gate" || waveTransport?.context === "wave-quarantine") && waveTransport.queue.length) { waveTransport.adjacent(-1); return; }
     if (!currentTrack || queue.length < 2) return;
     selectAdjacent(-1);
   };

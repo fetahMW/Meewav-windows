@@ -212,7 +212,8 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
           setActiveTool("classe-room");
         }}
       /> : null;
-      case "wave-gate": return state.wave ? <WaveGatePanel wave={state.wave} role={role} roomId={room.id} source={room.source} accountId={accountId} disabled={controlDisabled} execute={execute} /> : null;
+      case "wave-gate":
+      case "wave-quarantine": return state.wave ? <WaveGatePanel key={activeTool} quarantine={activeTool === "wave-quarantine"} wave={state.wave} role={role} roomId={room.id} source={room.source} accountId={accountId} disabled={controlDisabled} execute={execute} /> : null;
       // Only the shared dock is present while these panels are rebuilt.
       case "wave-sequencer": return state.wave ? <WaveVoteQueuePanel wave={state.wave} role={role} source={room.source} disabled={controlDisabled} execute={execute} /> : null;
       case "wave-orchestra": return <WaveEmptyPanel label="Beat" wave={state.wave}

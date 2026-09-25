@@ -15,6 +15,7 @@ export const SPECIALIZED_ROOM_TOOL_CONFIGS: Record<SpecializedRoomId, readonly R
   ],
   wave: [
     { id: "wave-gate", label: "Sas des boucles", shortLabel: "Boucle", eyebrow: "CENTRE DE CONTRÔLE", description: "Contrôler et classer les propositions", icon: "audio", controlRoles: CONTROL },
+    { id: "wave-quarantine", label: "Quarantaine", eyebrow: "ATELIER PRIVÉ", description: "Retoucher les boucles avant le vote", icon: "focus", controlRoles: CONTROL },
     { id: "wave-sequencer", label: "Vote du public", shortLabel: "Vote", eyebrow: "VALIDATION COLLECTIVE", description: "Faire valider une boucle à la fois", icon: "vote", controlRoles: CONTROL },
     { id: "wave-orchestra", label: "Beat collectif", shortLabel: "Beat", eyebrow: "CONDUCTEUR OFFICIEL", description: "Piloter les boucles validées", icon: "sequence", controlRoles: CONTROL },
   ],

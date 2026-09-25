@@ -1,0 +1,13 @@
+.room-tools-shell.is-wave .wave-quarantine__toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 8px; }
+.room-tools-shell.is-wave .wave-quarantine__toolbar > button { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; padding: 5px 9px; border: 1px solid #514956; border-radius: 8px; background: linear-gradient(#252328, #0a090c); color: #d8cbe8; font-size: 10px; }
+.room-tools-shell.is-wave .wave-quarantine__toolbar > button svg { width: 14px; height: 14px; }
+.room-tools-shell.is-wave .wave-quarantine__hint { margin: 0 0 9px; color: #a9a0b4; font-size: 11px; line-height: 1.5; }
+.room-tools-shell.is-wave .wave-quarantine__error { color: #ff9eae; font-size: 11px; }
+.room-tools-shell.is-wave .wave-loop-card .wave-loop-card__before-category > button[role="checkbox"] { width: 26px; height: 26px; padding: 3px; border: 0; background: transparent; color: #baa5d4; }
+.room-tools-shell.is-wave .wave-loop-card .wave-loop-card__before-category > button[aria-checked="true"] { color: #dfb4ff; filter: drop-shadow(0 0 4px #b554ff); }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav .place-tools-console__switch { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .wave-tools-nav .place-tools-console__switch > button { min-width: 0; gap: 4px; padding-inline: 3px; font-size: 11px; }
+.room-tools-shell.is-wave .room-tool-panel.is-wave-gate.wave-sas.wave-sas--premium { display: flex; flex-direction: column; }
+.room-tools-shell.is-wave .room-tool-panel.is-wave-gate.wave-sas.wave-sas--premium > .wave-sas__queue { flex: 1 1 auto; min-height: 0; }
+.room-tools-shell.is-wave .room-tool-panel.is-wave-gate.wave-sas.wave-sas--premium > :is(.wave-sas__header, .wave-bottom-bar, .wave-quarantine__toolbar, .wave-quarantine__hint) { flex-shrink: 0; }
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-before-category-action { grid-template-columns: 36px minmax(0, 1fr) 26px 60px 70px 38px; gap: 6px; }

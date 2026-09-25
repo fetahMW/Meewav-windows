@@ -1193,9 +1193,31 @@ export function reduceCommand(state: RoomToolsState, command: RoomToolsCommand, 
         else if (question.status === "displayed") question.status = "pending";
       });
       break;
+    case "wave.submissions.quarantine": {
+      if (!state.wave || !command.submissionIds.length) throw new Error("wave_submission_not_found");
+      const submissions = [...new Set(command.submissionIds)].map(id => {
+        const item = state.wave!.submissions.find(submission => submission.id === id);
+        if (!item) throw new Error("wave_submission_not_found");
+        if (item.vote?.open) throw new Error("wave_vote_open");
+        if (!["RECEIVED", "NEEDS_REVIEW", "NEEDS_CORRECTION", "READY_FOR_VOTE", "NOT_SELECTED"].includes(item.lifecycleStatus ?? "")) throw new Error("wave_submission_not_editable");
+        return item;
+      });
+      for (const submission of submissions) {
+        transitionWaveSubmission(submission, "NEEDS_CORRECTION", { actorId, reason: "host_quarantine" });
+        submission.quarantined = true;
+      }
+      state.wave.history.unshift(`${submissions.length} boucle(s) placée(s) en quarantaine`);
+      break;
+    }
     case "wave.submission.status": {
       const submission = state.wave?.submissions.find((item) => item.id === command.submissionId);
       if (!submission) throw new Error("wave_submission_not_found");
+      if (submission.quarantined && command.status === "analysis") {
+        if (!submission.rightsConfirmed) throw new Error("wave_rights_unconfirmed");
+        if (!state.wave || !waveSubmissionCompatible(state.wave, submission)) throw new Error("wave_file_incompatible");
+        if (!(submission.mediaUrl || submission.mediaPath)) throw new Error("wave_version_media_required");
+        if (submission.lifecycleStatus === "NEEDS_CORRECTION") transitionWaveSubmission(submission, "NEEDS_REVIEW", { actorId, reason: "host_quarantine_reviewed" });
+      }
       if (command.status === "accepted") {
         if (!submission.rightsConfirmed) throw new Error("wave_rights_unconfirmed");
         if (!state.wave) break;
@@ -1233,6 +1255,7 @@ export function reduceCommand(state: RoomToolsState, command: RoomToolsCommand, 
         actorId,
         reason: command.reason ? `host:${command.reason}` : `legacy_command:${command.status}`,
       });
+      if (command.status === "analysis" || command.status === "rejected") submission.quarantined = false;
       break;
     }
     case "wave.rules.update": {
@@ -1334,6 +1357,7 @@ export function reduceCommand(state: RoomToolsState, command: RoomToolsCommand, 
     case "wave.vote.open": {
       const submission = state.wave?.submissions.find((item) => item.id === command.submissionId);
       if (!submission) throw new Error("wave_submission_not_found");
+      if (command.open && submission.quarantined) throw new Error("wave_submission_quarantined");
       if (command.open) {
         if (!state.wave) break;
         if (submission.vote?.open) break;

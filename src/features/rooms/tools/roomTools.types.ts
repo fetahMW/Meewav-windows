@@ -20,7 +20,7 @@ export type RoomActorRole =
 export type RoomToolId =
   | "scene-program" | "scene-prompter" | "scene-evaluation" | "scene-fundraiser"
   | "classe-screen" | "classe-room" | "classe-questions" | "classe-hands" | "classe-seats"
-  | "wave-screen" | "wave-gate" | "wave-sequencer" | "wave-orchestra"
+  | "wave-screen" | "wave-gate" | "wave-quarantine" | "wave-sequencer" | "wave-orchestra"
   | "cage-regie" | "cage-competition" | "cage-battle" | "cage-vote"
   | "loge-preview" | "loge-face-to-face" | "loge-dedication" | "loge-questions" | "loge-audience-choice"
   | "gift";
@@ -248,6 +248,8 @@ export type WaveBaseLoop = {
 };
 export type WaveSubmission = {
   id: string;
+  /** Private host workbench; replacement files stay here until explicitly released. */
+  quarantined?: boolean;
   contributor: RoomPerson;
   title: string;
   instrument: string;
@@ -510,6 +512,7 @@ export type RoomToolsCommand =
   | { type: "wave.base.replace"; baseLoop: WaveBaseLoop }
   | { type: "wave.rules.update"; patch: Pick<WaveBaseLoop, "bpm" | "key" | "bars" | "kind"> }
   | { type: "wave.submissions.setOpen"; open: boolean; acceptedCategories?: WaveLoopCategory[] }
+  | { type: "wave.submissions.quarantine"; submissionIds: string[] }
   | { type: "wave.submission.status"; submissionId: string; status: WaveSubmissionStatus; reason?: WaveReviewReason; feedback?: string }
   | { type: "wave.submission.add"; submission: WaveSubmission }
   | { type: "wave.submission.importToVote"; submission: WaveSubmission }
