@@ -352,10 +352,10 @@
   display: grid; grid-template-columns: 32px; width: 32px;
 }
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine {
-  grid-template-columns: 40px minmax(0, 1fr) 70px 146px 40px !important;
+  grid-template-columns: 34px minmax(0, 1fr) 50px 146px 36px !important;
 }
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine.has-before-category-action {
-  grid-template-columns: 40px minmax(0, 1fr) 26px 70px 146px 40px !important;
+  grid-template-columns: 34px minmax(0, 1fr) 26px 50px 146px 36px !important;
 }
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine .wave-loop-card__quick-actions {
   display: grid; grid-template-columns: 32px 72px 32px; gap: 5px; width: 146px;

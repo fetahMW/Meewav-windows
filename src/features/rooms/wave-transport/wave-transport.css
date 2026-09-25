@@ -516,6 +516,17 @@
 }
 
 /* Same action rail footprint as Boucle: 180px of controls. */
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine .wave-loop-card__name strong {
+  display: block; font-size: 11px; line-height: 1.15;
+  white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine .wave-loop-card__meta { padding-inline: 0; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine .wave-loop-card__meta .wave-category-chip {
+  box-sizing: border-box; width: 46px; min-height: 20px; padding: 0 2px; font-size: 7px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__name strong {
+  font-size: 10px; line-height: 1.1; white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere;
+}
 .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls {
   grid-template-columns: 34px 66px 64px; gap: 8px;
 }
