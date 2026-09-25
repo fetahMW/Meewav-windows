@@ -1,0 +1,79 @@
+/* Native UI typography shared by all six room chats. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-chat,
+.place-chat-message-actions,
+.place-chat-pins {
+  --room-chat-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--room-chat-font);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat :is(.place-chat__message, .place-chat__message p, .place-chat__message time, .place-chat__author, .place-chat__author strong, .place-chat__pinned, .place-chat__pinned strong, .place-chat__pinned small, .place-chat__system, .place-chat__composer.is-liquid-glass, .place-chat__composer.is-liquid-glass .mw-emoticon-composer),
+.place-chat-message-actions :is(button, strong, small, blockquote),
+.place-chat-pins :is(button, strong, blockquote, p) {
+  font-family: var(--room-chat-font);
+  letter-spacing: normal;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat .place-chat__message p {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Restored portrait/name presentation from the validated shared chat. */
+.rooms-page .place-room-shell .place-studio-panel .place-chat .place-chat__message header > span.place-chat__author {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  gap: 8px;
+  min-width: 0;
+  min-height: 24px;
+  width: auto;
+  margin: -2px 0;
+  padding: 2px 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  box-shadow: none;
+  color: #e5e7ee;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+.rooms-page .place-room-shell .place-studio-panel .place-chat .place-chat__message header > span.place-chat__author > strong { display: block; min-width: 0; overflow: hidden; color: inherit; font-size: 11px; font-weight: 500; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.rooms-page .place-room-shell .place-studio-panel .place-chat .place-chat__author > .place-chat__portrait {
+  position: relative;
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #162333;
+  box-shadow: inset 0 0 0 1px #9bc9ff30;
+  color: #b9d9ff;
+  font: 600 12px/1 Inter, sans-serif;
+}
+.rooms-page .place-room-shell .place-studio-panel .place-chat .place-chat__portrait > img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Shared chat author treatment; message typography stays unchanged. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat .place-chat__message .place-chat__author > strong,
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat .wave-chat-replies strong {
+  color: #a6a6ad;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat .wave-chat-message-actions button {
+  font-family: var(--room-chat-font);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}

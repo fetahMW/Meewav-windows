@@ -1,0 +1,1906 @@
+/* La Loge — couche visuelle de référence pour VIP et Questions.
+ * Importée après les feuilles historiques afin de leur substituer une seule DA
+ * cohérente sans toucher au câblage métier des deux outils. */
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin:is(
+  [data-active-tool="loge-dedication"],
+  [data-active-tool="loge-questions"]
+) > .room-tools-shell__panel {
+  container-type: inline-size;
+  background: #000;
+}
+
+/* --------------------------------------------------------------------------
+   Moment VIP — studio privé
+   -------------------------------------------------------------------------- */
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment {
+  --vip-accent: var(--wave-tool-accent);
+  --vip-accent-rgb: var(--wave-tool-accent-rgb);
+  isolation: isolate;
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  background:
+    radial-gradient(74% 42% at 8% -12%, rgba(255, 255, 255, .045), transparent 62%),
+    linear-gradient(180deg, #030304, #000 76%);
+  color: #f4f4f6;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(112deg, rgba(255, 255, 255, .028), transparent 24% 100%);
+  clip-path: polygon(0 0, 28% 0, 15% 100%, 0 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment :is(button, input) {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment :is(button, input):focus-visible {
+  outline: 2px solid rgba(var(--vip-accent-rgb), .68);
+  outline-offset: 2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero {
+  display: grid;
+  min-height: 62px;
+  flex-shrink: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 9px;
+  padding: 8px 11px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background:
+    linear-gradient(108deg, rgba(255, 255, 255, .045), transparent 38%) padding-box,
+    linear-gradient(145deg, #090a0b, #020203 68%, #000) padding-box,
+    linear-gradient(112deg, rgba(235, 239, 245, .31), rgba(var(--vip-accent-rgb), .2) 48%, rgba(68, 71, 77, .045)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .11), inset 0 -1px #000, 0 5px 12px rgba(0, 0, 0, .42);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero > span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: color-mix(in srgb, var(--vip-accent) 72%, #c9cbd0);
+  font-size: 7px;
+  font-weight: 780;
+  letter-spacing: .13em;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__eyebrow svg {
+  width: 9px;
+  height: 9px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero > span > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero strong {
+  color: #fafafa;
+  font-size: 18px;
+  font-weight: 790;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+  text-shadow: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero > span > span svg {
+  width: 14px;
+  height: 14px;
+  color: var(--vip-accent);
+  filter: drop-shadow(0 0 5px rgba(var(--vip-accent-rgb), .24));
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero > span > small:last-child {
+  overflow: hidden;
+  color: rgba(207, 208, 214, .58);
+  font-size: 8.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero :is(b, em) {
+  display: inline-flex;
+  min-height: 29px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(218, 219, 224, .7);
+  box-shadow: var(--wave-tool-control-shadow);
+  font-size: 7px;
+  font-style: normal;
+  font-weight: 730;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero b {
+  color: color-mix(in srgb, var(--vip-accent) 68%, #e4e5e8);
+  letter-spacing: .06em;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero b i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--vip-accent);
+  box-shadow: 0 0 7px rgba(var(--vip-accent-rgb), .55);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero em svg {
+  width: 11px;
+  height: 11px;
+  color: currentColor;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__layout {
+  display: grid;
+  min-height: min-content;
+  flex: 0 0 auto;
+  grid-template-columns: minmax(210px, .82fr) minmax(0, 1.18fr);
+  grid-template-rows: auto;
+  align-items: start;
+  gap: 14px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__layout.has-action {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__step {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .018), transparent 22%) padding-box,
+    linear-gradient(145deg, #08090a, #020203 69%, #000) padding-box,
+    linear-gradient(112deg, rgba(229, 234, 240, .27), rgba(133, 137, 144, .075) 54%, rgba(55, 58, 64, .025)) border-box;
+  box-shadow: inset 0 1px rgba(230, 234, 240, .1), inset 0 -1px #000, 0 5px 12px rgba(0, 0, 0, .42);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__step > header {
+  display: flex;
+  min-height: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__step > header > b {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(var(--vip-accent-rgb), .32);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #17181a, #050506);
+  color: var(--vip-accent);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 9px rgba(var(--vip-accent-rgb), .07);
+  font-size: 9px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__step > header strong {
+  color: #f1f1f3;
+  font-size: 11px;
+  font-weight: 730;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__step > header small {
+  color: rgba(196, 198, 204, .51);
+  font-size: 7.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fans {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__search {
+  display: grid;
+  min-height: 35px;
+  flex-shrink: 0;
+  grid-template-columns: minmax(0, 1fr) 17px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid rgba(219, 224, 232, .15);
+  border-radius: 9px;
+  background: linear-gradient(180deg, #08090a, #020203);
+  color: rgba(195, 198, 205, .55);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__search:focus-within {
+  border-color: rgba(var(--vip-accent-rgb), .42);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .04), 0 0 0 2px rgba(var(--vip-accent-rgb), .06);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__search input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #f0f1f3;
+  font-size: 9px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__search input::placeholder {
+  color: rgba(188, 190, 197, .4);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__search svg {
+  width: 13px;
+  height: 13px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan-summary {
+  display: flex;
+  min-height: 23px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  color: rgba(191, 193, 200, .48);
+  font-size: 7.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan-summary :is(span, b) {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan-summary b {
+  overflow: hidden;
+  color: color-mix(in srgb, var(--vip-accent) 62%, #dedfe3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan-summary svg {
+  width: 10px;
+  height: 10px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan-list {
+  display: flex;
+  min-height: 50px;
+  max-height: 160px;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #37383c transparent;
+  scrollbar-width: thin;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan {
+  position: relative;
+  display: grid;
+  min-height: 50px;
+  flex-shrink: 0;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, #08090a, #020203 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(226, 231, 238, .22), rgba(109, 113, 120, .055)) border-box;
+  color: inherit;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .055), inset 0 -1px #000;
+  text-align: left;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan:is(:hover, :focus-visible) {
+  background:
+    linear-gradient(145deg, #0c0d0f, #030304 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(238, 241, 246, .39), rgba(var(--vip-accent-rgb), .2) 52%, rgba(88, 91, 97, .06)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .11), 0 4px 9px rgba(0, 0, 0, .35);
+  transform: translateY(-1px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan.is-selected {
+  background:
+    radial-gradient(ellipse at 0 50%, rgba(var(--vip-accent-rgb), .07), transparent 54%) padding-box,
+    linear-gradient(145deg, #0a0b0c, #020203 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(241, 243, 247, .44), rgba(var(--vip-accent-rgb), .58) 48%, rgba(90, 92, 97, .07)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 0 12px rgba(var(--vip-accent-rgb), .075), 0 4px 9px rgba(0, 0, 0, .38);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan.is-selected::before {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 0;
+  width: 2px;
+  border-radius: 99px;
+  background: var(--vip-accent);
+  box-shadow: 0 0 7px rgba(var(--vip-accent-rgb), .42);
+  content: "";
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan img {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(230, 234, 240, .24);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px #030304;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan > span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan strong {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  color: #f2f2f4;
+  font-size: 9.5px;
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan strong svg {
+  width: 9px;
+  height: 9px;
+  color: var(--vip-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan small {
+  overflow: hidden;
+  color: rgba(190, 192, 199, .46);
+  font-size: 7.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan em {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(183, 185, 192, .5);
+  font-size: 6.6px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan em i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #68d8a8;
+  box-shadow: 0 0 5px rgba(104, 216, 168, .42);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan em.is-selected {
+  color: var(--vip-accent);
+  font-weight: 720;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__fan em.is-queued {
+  color: rgba(154, 190, 238, .72);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__actions {
+  display: flex;
+  min-height: 0;
+  align-self: stretch;
+  flex-direction: column;
+  gap: 9px;
+  padding: 10px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__actions > header > span {
+  display: grid;
+  gap: 2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action-grid {
+  display: grid;
+  min-height: min-content;
+  flex: 0 0 auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, minmax(66px, auto));
+  gap: 7px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action.is-live {
+  --action-tone: var(--vip-accent-rgb);
+  display: grid;
+  min-height: 0;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  gap: 3px 9px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 0 50%, rgba(var(--action-tone), .045), transparent 48%) padding-box,
+    linear-gradient(145deg, #08090a, #020203 70%, #000) padding-box,
+    linear-gradient(112deg, rgba(229, 233, 239, .27), rgba(var(--action-tone), .13) 51%, rgba(67, 70, 76, .03)) border-box;
+  color: inherit;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .075), inset 0 -1px #000, 0 3px 8px rgba(0, 0, 0, .32);
+  text-align: left;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action.is-video { --action-tone: 91, 205, 167; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action.is-live { --action-tone: 99, 155, 229; grid-column: auto; }
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action:is(:hover, :focus-visible):not(:disabled) {
+  background:
+    radial-gradient(ellipse at 0 50%, rgba(var(--action-tone), .08), transparent 52%) padding-box,
+    linear-gradient(145deg, #0d0e0f, #030304 70%, #000) padding-box,
+    linear-gradient(112deg, rgba(240, 242, 246, .46), rgba(var(--action-tone), .35) 51%, rgba(78, 81, 87, .05)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .13), 0 0 11px rgba(var(--action-tone), .065), 0 4px 9px rgba(0, 0, 0, .38);
+  transform: translateY(-1px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action:disabled {
+  opacity: .34;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action-icon,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action.is-live .vip-moment__action-icon {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  grid-row: 1 / 3;
+  place-items: center;
+  border: 1px solid rgba(var(--action-tone), .34);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #17181a, #050506);
+  color: rgb(var(--action-tone));
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 9px rgba(var(--action-tone), .07);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action > strong {
+  align-self: end;
+  color: #f2f2f4;
+  font-size: 10px;
+  font-weight: 730;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action > p {
+  display: block;
+  align-self: start;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: rgba(193, 195, 202, .51);
+  font-size: 7.2px;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__action > small {
+  display: inline-flex;
+  min-height: 24px;
+  grid-column: 3;
+  grid-row: 1 / 3;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid rgba(var(--action-tone), .24);
+  border-radius: 7px;
+  background: rgba(var(--action-tone), .045);
+  color: color-mix(in srgb, rgb(var(--action-tone)) 68%, #e2e3e6);
+  font-size: 6.8px;
+  font-weight: 740;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__choose-hint {
+  margin: 0;
+  color: rgba(188, 190, 197, .45);
+  font-size: 7px;
+  text-align: center;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__success {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 11px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header {
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr) auto;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header > span {
+  display: grid;
+  gap: 1px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header > span small {
+  color: var(--vip-accent);
+  font-size: 6.5px;
+  font-weight: 770;
+  letter-spacing: .08em;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header > span strong {
+  font-size: 12px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__back {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(219, 220, 225, .7);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__back svg {
+  width: 12px;
+  height: 12px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header em {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(188, 190, 197, .54);
+  font-size: 7px;
+  font-style: normal;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header em i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__execution > header em.is-recording {
+  color: #ff738c;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(226, 231, 238, .14);
+  border-radius: 11px;
+  background: radial-gradient(circle at 50% 46%, rgba(var(--vip-accent-rgb), .055), transparent 44%), #010102;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture.is-video video {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+  background: #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture > time {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 4px 7px;
+  border: 1px solid rgba(229, 234, 240, .12);
+  border-radius: 7px;
+  background: rgba(2, 2, 3, .84);
+  color: #f3f3f5;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture > time small {
+  color: rgba(190, 192, 198, .45);
+  font-size: 6.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__audio-visual {
+  display: flex;
+  height: 90px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--vip-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__audio-visual > span {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  margin-right: 10px;
+  place-items: center;
+  border: 1px solid rgba(var(--vip-accent-rgb), .3);
+  border-radius: 13px;
+  background: linear-gradient(180deg, #17181a, #050506);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 13px rgba(var(--vip-accent-rgb), .08);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__audio-visual > span svg {
+  width: 22px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__audio-visual > i {
+  width: 2px;
+  border-radius: 3px;
+  background: linear-gradient(var(--vip-accent), color-mix(in srgb, var(--vip-accent) 42%, #555861));
+  opacity: .58;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] :is(
+  .vip-moment__capture-actions button,
+  .vip-moment__invitation-status button,
+  .vip-moment__live fieldset button,
+  .vip-moment__invite,
+  .vip-moment__success > button,
+  .vip-moment__footer button
+) {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(222, 221, 228, .76);
+  box-shadow: var(--wave-tool-control-shadow);
+  font-size: 7.5px;
+  font-weight: 720;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] :is(
+  .vip-moment__capture-actions button,
+  .vip-moment__invitation-status button,
+  .vip-moment__live fieldset button,
+  .vip-moment__invite,
+  .vip-moment__success > button,
+  .vip-moment__footer button
+):is(:hover, :focus-visible):not(:disabled) {
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .018) 38%, transparent 52%) padding-box,
+    linear-gradient(180deg, #232529, #0e0f11 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .54), rgba(var(--vip-accent-rgb), .28) 48%, rgba(82, 78, 88, .1)) border-box;
+  color: #f5f5f6;
+  transform: translateY(-1px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] :is(
+  .vip-moment__capture-actions button.is-primary,
+  .vip-moment__invitation-status button.is-primary,
+  .vip-moment__invite
+) {
+  min-width: 126px;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--vip-accent-rgb), .12), transparent 62%) padding-box,
+    linear-gradient(180deg, #202125, #0b0c0e 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(247, 248, 250, .5), rgba(var(--vip-accent-rgb), .58) 49%, rgba(76, 70, 84, .15)) border-box;
+  color: #faf8f4;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 11px rgba(var(--vip-accent-rgb), .08);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture-actions button svg,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__capture-actions button.is-stop,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status button.is-end {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 25%) padding-box,
+    linear-gradient(180deg, #171315, #070405 62%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .25), rgba(255, 103, 126, .3) 52%, rgba(70, 59, 63, .1)) border-box;
+  color: #ff8da0;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment button:disabled {
+  opacity: .36;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__private {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  color: rgba(188, 190, 197, .46);
+  font-size: 6.8px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__private svg {
+  width: 10px;
+  color: var(--vip-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__error {
+  margin: 0;
+  color: #ff8da0;
+  font-size: 7.5px;
+  text-align: center;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live-hero {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px;
+  text-align: center;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live-hero > span,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status > span,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__success > span {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(var(--vip-accent-rgb), .32);
+  border-radius: 13px;
+  background: linear-gradient(180deg, #17181a, #050506);
+  color: var(--vip-accent);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 13px rgba(var(--vip-accent-rgb), .08);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] :is(
+  .vip-moment__live-hero > span,
+  .vip-moment__invitation-status > span,
+  .vip-moment__success > span
+) svg {
+  width: 23px;
+  height: 23px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live-hero strong,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status strong,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__success > strong {
+  color: #f2f2f4;
+  font-size: 13px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live-hero p,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status small,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__success > small {
+  max-width: 320px;
+  margin: 0;
+  color: rgba(190, 192, 199, .5);
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live fieldset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 0;
+  padding: 26px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(226, 231, 238, .1);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live legend {
+  width: 100%;
+  color: rgba(205, 207, 213, .62);
+  font-size: 7.5px;
+  text-align: center;
+  transform: translateY(18px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live fieldset button {
+  min-width: 68px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__live fieldset button.is-selected {
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--vip-accent-rgb), .1), transparent 62%) padding-box,
+    linear-gradient(180deg, #1d1f22, #08090a 58%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .47), rgba(var(--vip-accent-rgb), .5) 49%, rgba(76, 70, 84, .13)) border-box;
+  color: #faf9f6;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invite {
+  margin: 4px auto 0;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__success {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__invitation-status > span.is-live,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__success > span {
+  border-color: rgba(80, 218, 165, .36);
+  color: #5ee0ad;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 13px rgba(80, 218, 165, .08);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__footer {
+  display: grid;
+  min-height: 46px;
+  flex-shrink: 0;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+  padding: 8px 10px;
+  border: 1px solid rgba(226, 231, 238, .12);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #070809, #010102 72%);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__footer > svg {
+  width: 16px;
+  color: var(--vip-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__footer > span {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__footer strong {
+  color: rgba(231, 232, 235, .8);
+  font-size: 7.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__footer small {
+  overflow: hidden;
+  color: rgba(188, 190, 197, .45);
+  font-size: 6.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__footer button {
+  min-height: 29px;
+}
+
+/* --------------------------------------------------------------------------
+   Questions — console éditoriale du live
+   -------------------------------------------------------------------------- */
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: 58px 36px minmax(0, 1fr);
+  gap: 8px;
+  padding: 9px;
+  overflow: hidden;
+  background:
+    radial-gradient(72% 38% at 8% -14%, rgba(255, 255, 255, .04), transparent 62%),
+    linear-gradient(180deg, #030304, #000 76%);
+  color: #f4f4f6;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions.has-composer {
+  grid-template-rows: 58px 36px minmax(0, 1fr) auto;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions:has(> .room-tool-notice) {
+  grid-template-rows: 58px 36px minmax(0, 1fr) auto;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions > .room-tool-notice {
+  min-height: 42px;
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .18);
+  border-radius: 9px;
+  background: linear-gradient(145deg, #08090a, #020203 72%);
+  color: rgba(213, 214, 219, .67);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .045), inset 0 -1px #000;
+  font-size: 7.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 34px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background:
+    linear-gradient(108deg, rgba(255, 255, 255, .045), transparent 38%) padding-box,
+    linear-gradient(145deg, #090a0b, #020203 68%, #000) padding-box,
+    linear-gradient(112deg, rgba(235, 239, 245, .31), rgba(var(--wave-tool-accent-rgb), .18) 48%, rgba(68, 71, 77, .045)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .11), inset 0 -1px #000, 0 5px 12px rgba(0, 0, 0, .42);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .3);
+  border-radius: 9px;
+  background: linear-gradient(180deg, #17181a, #050506);
+  color: var(--wave-tool-accent);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 9px rgba(var(--wave-tool-accent-rgb), .07);
+  filter: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-copy strong {
+  overflow: hidden;
+  color: #f6f6f7;
+  font-size: 14px;
+  font-weight: 780;
+  letter-spacing: -.025em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-copy small {
+  overflow: hidden;
+  color: rgba(198, 200, 206, .54);
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-count {
+  display: grid;
+  min-width: 42px;
+  min-height: 34px;
+  place-content: center;
+  justify-items: center;
+  gap: 1px;
+  padding: 3px 8px;
+  border: 0;
+  border-left: 1px solid rgba(226, 231, 238, .12);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-count b {
+  color: var(--wave-tool-accent);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(var(--wave-tool-accent-rgb), .16);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-count small {
+  color: rgba(190, 192, 198, .46);
+  font-size: 6.2px;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle {
+  display: flex;
+  min-width: 91px;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(220, 221, 225, .73);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > span > i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--wave-tool-accent);
+  box-shadow: 0 0 6px rgba(var(--wave-tool-accent-rgb), .55);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > b {
+  position: relative;
+  width: 27px;
+  height: 14px;
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .42);
+  border-radius: 999px;
+  background: rgba(var(--wave-tool-accent-rgb), .12);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > b > i {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ededee;
+  box-shadow: 0 0 6px rgba(255, 255, 255, .18);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle[aria-checked="false"] > span > i {
+  background: #65666b;
+  box-shadow: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle[aria-checked="false"] > b {
+  border-color: rgba(218, 223, 230, .15);
+  background: #08090a;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle[aria-checked="false"] > b > i {
+  right: 15px;
+  background: #9b9ca1;
+  box-shadow: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 3px;
+  border: 1px solid rgba(226, 231, 238, .13);
+  border-radius: 9px;
+  background: linear-gradient(180deg, #08090a, #020203);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(196, 198, 204, .52);
+  box-shadow: none;
+  font-size: 8px;
+  font-weight: 680;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button + button::before {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  width: 1px;
+  background: rgba(226, 231, 238, .1);
+  content: "";
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button::after {
+  position: absolute;
+  right: 14px;
+  bottom: 0;
+  left: 14px;
+  height: 2px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, transparent, var(--wave-tool-accent), transparent);
+  box-shadow: 0 -2px 7px rgba(var(--wave-tool-accent-rgb), .28);
+  content: "";
+  opacity: 0;
+  transform: scaleX(.5);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button:is(:hover, :focus-visible) {
+  background: rgba(255, 255, 255, .02);
+  color: #f2f3f5;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button.is-active {
+  border: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .035), transparent);
+  color: #f6f6f7;
+  box-shadow: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button span {
+  display: grid;
+  min-width: 16px;
+  height: 16px;
+  place-items: center;
+  border: 1px solid rgba(226, 231, 238, .1);
+  border-radius: 999px;
+  background: #08090a;
+  color: rgba(216, 218, 223, .64);
+  font-size: 6.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__board {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(226, 231, 238, .13);
+  border-radius: 11px;
+  background: linear-gradient(145deg, #050607, #010102 70%, #000);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__board.has-pinned {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__stage,
+  .room-loge-questions__queue
+) {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: 27px minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__stage {
+  grid-template-rows: 27px auto;
+  border-bottom: 1px solid rgba(var(--wave-tool-accent-rgb), .14);
+  background: linear-gradient(180deg, rgba(var(--wave-tool-accent-rgb), .025), transparent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__stage,
+  .room-loge-questions__queue
+) > header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 9px;
+  border-bottom: 1px solid rgba(226, 231, 238, .075);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__stage,
+  .room-loge-questions__queue
+) > header > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__stage,
+  .room-loge-questions__queue
+) > header svg {
+  width: 10px;
+  height: 10px;
+  color: var(--wave-tool-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__stage,
+  .room-loge-questions__queue
+) > header strong {
+  color: rgba(232, 233, 236, .82);
+  font-size: 7.2px;
+  font-weight: 760;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__stage,
+  .room-loge-questions__queue
+) > header small {
+  color: rgba(184, 186, 193, .4);
+  font-size: 6.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list {
+  display: grid;
+  min-height: 0;
+  align-content: start;
+  gap: 6px;
+  padding: 7px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #37383c transparent;
+  scrollbar-width: thin;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list.is-pinned {
+  padding: 7px 8px 8px;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list::-webkit-scrollbar {
+  width: 3px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  background: #37383c;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--wave-tool-accent) 42%, #555861);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article {
+  position: relative;
+  display: grid;
+  min-height: 78px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 6px;
+  padding: 8px 9px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, #08090a, #020203 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(226, 231, 238, .23), rgba(109, 113, 120, .055)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .06), inset 0 -1px #000, 0 3px 8px rgba(0, 0, 0, .33);
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article:is(:hover, :focus-within) {
+  background:
+    linear-gradient(145deg, #0c0d0f, #030304 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(238, 241, 246, .4), rgba(var(--wave-tool-accent-rgb), .2) 52%, rgba(88, 91, 97, .06)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .11), 0 4px 9px rgba(0, 0, 0, .38);
+  transform: translateY(-1px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-selected {
+  min-height: 108px;
+  padding: 9px 10px 9px 13px;
+  background:
+    radial-gradient(ellipse at 0 50%, rgba(var(--wave-tool-accent-rgb), .065), transparent 52%) padding-box,
+    linear-gradient(145deg, #0a0b0c, #020203 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(241, 243, 247, .44), rgba(var(--wave-tool-accent-rgb), .57) 48%, rgba(90, 92, 97, .07)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 0 12px rgba(var(--wave-tool-accent-rgb), .075), 0 4px 9px rgba(0, 0, 0, .38);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-selected::before {
+  position: absolute;
+  top: 11px;
+  bottom: 11px;
+  left: 0;
+  width: 2px;
+  border-radius: 99px;
+  background: var(--wave-tool-accent);
+  box-shadow: 0 0 7px rgba(var(--wave-tool-accent-rgb), .42);
+  content: "";
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-answered {
+  min-height: 76px;
+  background:
+    linear-gradient(145deg, #070908, #020303 72%, #000) padding-box,
+    linear-gradient(112deg, rgba(226, 231, 238, .2), rgba(83, 202, 157, .12)) border-box;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__avatar,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-selected .room-loge-questions__avatar {
+  box-sizing: border-box;
+  display: grid;
+  width: 31px;
+  min-width: 31px;
+  max-width: 31px;
+  height: 31px;
+  min-height: 31px;
+  max-height: 31px;
+  place-items: center;
+  padding: 1px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 231, 238, .24);
+  border-radius: 50%;
+  background: #070809;
+  box-shadow: 0 0 0 2px #030304;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__identity-copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__identity strong {
+  overflow: hidden;
+  color: #f0f1f3;
+  font-size: 10px;
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__identity small {
+  color: rgba(190, 192, 198, .48);
+  font-size: 7.2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(185, 187, 194, .42);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__meta :is(time, b) {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7px;
+  font-weight: 560;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__meta svg {
+  width: 9px;
+  height: 9px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__meta b {
+  color: color-mix(in srgb, var(--wave-tool-accent) 68%, #d8d9dd);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__on-air {
+  display: inline-flex;
+  width: max-content;
+  min-height: 14px;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  padding: 0 6px;
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .28);
+  border-radius: 999px;
+  background: rgba(var(--wave-tool-accent-rgb), .055);
+  color: var(--wave-tool-accent);
+  font-size: 5.8px;
+  font-weight: 740;
+  letter-spacing: .05em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__on-air i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--wave-tool-accent);
+  box-shadow: 0 0 6px rgba(var(--wave-tool-accent-rgb), .55);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list blockquote {
+  display: -webkit-box;
+  width: 100%;
+  min-height: 0;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  color: rgba(241, 242, 245, .88);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 520;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-selected blockquote {
+  color: #f6f6f7;
+  font-size: 11px;
+  font-weight: 620;
+  -webkit-line-clamp: 3;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 29px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(220, 221, 225, .72);
+  box-shadow: var(--wave-tool-control-shadow);
+  font-size: 7.2px;
+  font-weight: 690;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button svg {
+  width: 10px;
+  height: 10px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button:is(:hover, :focus-visible):not(:disabled) {
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .018) 38%, transparent 52%) padding-box,
+    linear-gradient(180deg, #232529, #0e0f11 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .54), rgba(var(--wave-tool-accent-rgb), .28) 48%, rgba(82, 78, 88, .1)) border-box;
+  color: #f5f5f6;
+  transform: translateY(-1px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button.is-primary {
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .12), transparent 62%) padding-box,
+    linear-gradient(180deg, #202125, #0b0c0e 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(247, 248, 250, .5), rgba(var(--wave-tool-accent-rgb), .58) 49%, rgba(76, 70, 84, .15)) border-box;
+  color: #faf8f4;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 11px rgba(var(--wave-tool-accent-rgb), .08);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button.is-ignore {
+  color: rgba(190, 192, 198, .56);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button:disabled {
+  opacity: .36;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer {
+  display: grid;
+  min-height: 62px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 4px 8px;
+  margin: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(226, 231, 238, .13);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #070809, #010102 72%);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer > header {
+  grid-column: 1 / -1;
+  min-height: 0;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer > header strong {
+  color: rgba(229, 230, 233, .78);
+  font-size: 7.5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer .room-tool-field {
+  min-width: 0;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer textarea {
+  width: 100%;
+  min-height: 34px;
+  max-height: 48px;
+  padding: 8px 9px;
+  resize: none;
+  border: 1px solid rgba(219, 224, 232, .15);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #08090a, #020203);
+  color: #f0f1f3;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+  font-size: 8px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer textarea:focus {
+  border-color: rgba(var(--wave-tool-accent-rgb), .46);
+  outline: 0;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .04), 0 0 0 2px rgba(var(--wave-tool-accent-rgb), .07);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer > button {
+  min-width: 112px;
+  min-height: 34px;
+  align-self: stretch;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .12), transparent 62%) padding-box,
+    linear-gradient(180deg, #202125, #0b0c0e 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(247, 248, 250, .5), rgba(var(--wave-tool-accent-rgb), .58) 49%, rgba(76, 70, 84, .15)) border-box;
+  color: #faf8f4;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 11px rgba(var(--wave-tool-accent-rgb), .08);
+  font-size: 7.5px;
+  font-weight: 720;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer > button:disabled {
+  opacity: .36;
+  cursor: not-allowed;
+}
+
+@container (max-width: 620px) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment {
+    overflow-y: auto;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero {
+    min-height: 58px;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__actions {
+    min-height: min-content;
+  }
+}
+
+@container (max-width: 520px) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-count {
+    display: none;
+  }
+}
+
+@container (max-width: 430px) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero > span > small:last-child,
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment__hero em {
+    display: none;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-copy small {
+    display: none;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle {
+    min-width: 72px;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > span {
+    font-size: 0;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > span > i {
+    display: block;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer {
+    flex-wrap: wrap;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer {
+    grid-template-columns: 1fr;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__composer > button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin:is(
+    [data-active-tool="loge-dedication"],
+    [data-active-tool="loge-questions"]
+  ) :is(button, article) {
+    transition: none;
+  }
+}
+
+/* Member console: only the cards scroll; search and actions stay in place. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment.is-member-console {
+  overflow: hidden;
+  scrollbar-gutter: auto;
+  padding: 10px;
+  background: #000;
+
+  & > .vip-moment__layout {
+    flex: 1 1 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  & > .vip-moment__layout.has-action {
+    display: block;
+    overflow-y: auto;
+  }
+
+  & .vip-moment__fans {
+    display: grid;
+    min-height: 0;
+    min-width: 0;
+    grid-template-rows: 42px minmax(0, 1fr);
+    gap: 12px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  & .vip-moment__search {
+    min-height: 42px;
+    border-radius: 11px;
+    padding-inline: 13px;
+    background: linear-gradient(#0d0e10, #030304);
+    box-shadow: inset 0 2px 5px #000, 0 1px rgba(255,255,255,.07);
+  }
+
+  & .vip-moment__search input { font-size: 11px; }
+
+  & .vip-moment__fan-list {
+    min-height: 0;
+    max-height: none;
+    gap: 8px;
+    padding: 2px 4px 6px 1px;
+    overscroll-behavior-y: contain;
+    scroll-padding-block: 6px;
+    scrollbar-width: none;
+  }
+  & .vip-moment__fan-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+  & .vip-moment__fan {
+    min-height: 66px;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: transparent;
+    /* Exact Sas loop-card material from wave-transport.css. */
+    background:
+      radial-gradient(ellipse at 68% 130%, rgba(var(--vip-accent-rgb), .08), transparent 65%) padding-box,
+      linear-gradient(115deg, #ffffff08, #ffffff01 46%, transparent) padding-box,
+      linear-gradient(145deg, #111217db, #050609ed 76%) padding-box,
+      linear-gradient(110deg, #e5eaf02d, #9ca4b412 32%, #0000 64%, #a4a9b012) border-box;
+    backdrop-filter: blur(10px) saturate(110%);
+    -webkit-backdrop-filter: blur(10px) saturate(110%);
+    box-shadow: inset 0 1px #e6eaf01a, inset 0 -1px #000a, 0 3px 9px #0004;
+  }
+
+  & .vip-moment__fan.is-selected {
+    border-color: rgba(var(--vip-accent-rgb), .25);
+    box-shadow: inset 0 1px #ffffff24, inset 0 -9px 18px -15px rgba(var(--vip-accent-rgb), .65), 0 3px 9px #0006;
+  }
+
+  & .vip-moment__fan.is-selected::before { content: none; }
+  & .vip-moment__fan:hover { border-color: #e5eaf03d; }
+  & .vip-moment__portrait { display: block; width: 42px; height: 42px; overflow: hidden; border-radius: 50%; }
+  & .vip-moment__fan img { width: 42px; height: 42px; border: 0; border-radius: 0; box-shadow: none; }
+  & .vip-moment__fan img[src^="/images/tremplin/artists/generated/"] { transform: scale(1.7); transform-origin: 50% 28%; }
+  & .vip-moment__fan em.is-selected { color: #d8e1ee; }
+  & .vip-moment__fan strong { font-size: 12px; }
+  & .vip-moment__fan small { font-size: 9px; }
+  & .vip-moment__fan em { font-size: 8px; }
+
+  & .vip-member-actions {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 5px 12px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    /* Same floating action bar as the Wave Sas. */
+    background:
+      linear-gradient(115deg, #ffffff07, transparent 46%) padding-box,
+      linear-gradient(180deg, #1c1d246e, #090a106b) padding-box,
+      linear-gradient(110deg, #dce2ee26, #818a9e0b 50%, #c0c6d118) border-box;
+    backdrop-filter: blur(20px) saturate(110%);
+    -webkit-backdrop-filter: blur(20px) saturate(110%);
+    box-shadow: inset 0 1px #ffffff0e, inset 0 -1px #0006, 0 5px 16px #0006;
+  }
+
+  & .vip-member-actions__recipient {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    margin: 0;
+    padding-right: 8px;
+    border-right: 1px solid #ffffff12;
+    color: #92908a;
+    font-size: 10px;
+  }
+  & .vip-member-actions__recipient > svg { width: 12px; height: 12px; color: #bd9a58; }
+  & .vip-member-actions__recipient > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  & .vip-member-actions__recipient strong { display: block; overflow: hidden; text-overflow: ellipsis; color: #e4e2e8; font-weight: 650; }
+  & .vip-member-actions__recipient small { display: block; overflow: hidden; text-overflow: ellipsis; color: #a69b83; font-size: 8px; }
+  & .vip-member-actions__avatar { width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%; }
+  & .vip-member-actions__avatar img { width: 28px; height: 28px; object-fit: cover; }
+  & .vip-member-actions__avatar img[src^="/images/tremplin/artists/generated/"] { transform: scale(1.7); transform-origin: 50% 28%; }
+
+  & .vip-member-actions__buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 34px);
+    gap: 8px;
+  }
+
+  & .vip-member-actions__button {
+    --moment-tone: 233, 189, 104;
+    display: flex;
+    min-width: 0;
+    min-height: 34px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 2px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #e4e2de;
+    box-shadow: none;
+    font-size: 9px;
+    line-height: 1.3;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+  }
+  & .vip-member-actions__button.is-video { --moment-tone: 91,205,167; }
+  & .vip-member-actions__button.is-live { --moment-tone: 145,177,230; }
+  & .vip-member-actions__button > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  & .vip-member-actions__button > svg { box-sizing: content-box; width: 16px; height: 16px; flex: 0 0 16px; padding: 6px; border: 1px solid transparent; border-radius: 8px; background: var(--wave-tool-control-surface); box-shadow: var(--wave-tool-control-shadow); color: #b7b8c2; }
+  & .vip-member-actions__button:hover:not(:disabled) { background: rgba(230,239,255,.065); color: #fff; }
+  & .vip-member-actions__button:disabled { opacity: .4; cursor: not-allowed; }
+}
+
+/* Keep the recovered member console on the current white host controls. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment {
+  --vip-gold: #f2f3f6;
+  --vip-gold-rgb: 242, 243, 246;
+  --vip-accent-rgb: 232, 235, 241;
+}
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__button { --moment-tone:232,235,241; color:#f2f3f6; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__button > svg { color:#f2f3f6; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console :is(.vip-moment__invite, .vip-moment__capture-actions button, .vip-moment__invitation-status button.is-primary) { border-color:#ffffff38; background:linear-gradient(#25262b,#08090c); color:#f5f5f7; }
+/* Cards sit on an opaque surface: nested backdrop filters only add GPU work. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console :is(.vip-moment__fan,.vip-member-actions) { backdrop-filter:none; -webkit-backdrop-filter:none; }
+.place-room-shell .room-tools-shell.is-loge[data-active-tool="gift"] > .room-tools-shell__panel { height:100%; overflow-y:auto; }
+.place-room-shell .room-tools-shell.is-loge[data-active-tool="gift"] .place-chat-workspace { display:block; height:100%; }

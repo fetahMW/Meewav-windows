@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "assetVersion": "0.0.11",
+  "generatedBy": "scripts/sync-opendaw-wasm.mjs",
+  "sourcePackage": {
+    "name": "@opendaw/studio-core-wasm",
+    "version": "0.0.11"
+  },
+  "packages": {
+    "@opendaw/studio-sdk": "0.0.166",
+    "@opendaw/studio-core-wasm": "0.0.11",
+    "@opendaw/studio-boxes": "0.0.104",
+    "@opendaw/studio-core": "0.2.0"
+  },
+  "licensing": {
+    "usage": "internal-prototype-only",
+    "productionApproved": false,
+    "bundledButExcludedFromCommercialUse": [
+      "wasm/plugins/device_compressor.wasm",
+      "wasm/plugins/device_neural_amp.wasm"
+    ],
+    "reason": "WasmEngine.ensureReady in 0.0.11 loads the complete hard-coded device module table. These modules are present only so the internal prototype can boot and are not approved for commercial use."
+  },
+  "files": [
+    {
+      "path": "wasm-processor.js",
+      "source": "@opendaw/studio-core-wasm/dist/wasm-processor.js",
+      "mediaType": "text/javascript",
+      "bytes": 1002847,
+      "sha256": "764735c77a92c524e999746fa761df7244bb91f35d8ec527b00b103958c11eba"
+    },
+    {
+      "path": "wasm-offline-worker.js",
+      "source": "@opendaw/studio-core-wasm/dist/wasm-offline-worker.js",
+      "mediaType": "text/javascript",
+      "bytes": 992609,
+      "sha256": "79ec44589123816f5f8ebb4d607024bb676440207775de29c99c2fbbc0fc9f25"
+    },
+    {
+      "path": "processors.js",
+      "source": "@opendaw/studio-core/dist/processors.js",
+      "mediaType": "text/javascript",
+      "bytes": 906450,
+      "sha256": "575aab5c54fa67f850ab55cfd869fe4a390d7ccf226657411742f3d983ce1439"
+    },
+    {
+      "path": "wasm/engine.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/engine.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 1012200,
+      "sha256": "810e767b75457f2bdc105ce11ce55f639737db4760cf391ed056e240b17ea9e2"
+    },
+    {
+      "path": "wasm/plugins/device_apparat.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_apparat.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 4858,
+      "sha256": "7df0b1ec433e76fa90277af59256edbff5b0d05640453f01c29a735237099a47"
+    },
+    {
+      "path": "wasm/plugins/device_arpeggio.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_arpeggio.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 7158,
+      "sha256": "c51744f2bf20223312e6e54a3623d4b3e8c1f1f49d3a0cbc84abeb09a5294f55"
+    },
+    {
+      "path": "wasm/plugins/device_autotune.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_autotune.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 21421,
+      "sha256": "74e9d9757a3f9b0c9f24e734a0a05e1d6c6fe5fce63f201871c553ecd6c7ad18"
+    },
+    {
+      "path": "wasm/plugins/device_compressor.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_compressor.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 11765,
+      "sha256": "3e4464c9bc6727d71887b71648ff1b83aa861f5d2d76cd204ad3519def776db6"
+    },
+    {
+      "path": "wasm/plugins/device_crusher.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_crusher.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 13001,
+      "sha256": "4766d9b23c95320ae8c0f1e38796f42bc11e99fbca3ebb70ed8e99c38fee00b4"
+    },
+    {
+      "path": "wasm/plugins/device_dattorro_reverb.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_dattorro_reverb.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 11985,
+      "sha256": "ca182d3eb77a9e54561b2d80d55386962bb5e77b2e3c1d3ddc929f8070b53a4b"
+    },
+    {
+      "path": "wasm/plugins/device_delay.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_delay.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 18538,
+      "sha256": "3f32d8ebc91602c5e4a96cab437a7d49b27abc3dd70c82c65915f6db53abbd84"
+    },
+    {
+      "path": "wasm/plugins/device_fold.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_fold.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 7790,
+      "sha256": "62f351250a25614538481e9a5301c2d8f9e94d378bce3df2c6a4b50a370f996a"
+    },
+    {
+      "path": "wasm/plugins/device_gate.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_gate.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 6211,
+      "sha256": "9d92645ce494f7809383f254f2b4bc5404b5e9e395291cf81a6b7e0483668d0c"
+    },
+    {
+      "path": "wasm/plugins/device_maximizer.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_maximizer.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 10699,
+      "sha256": "1759e9c9295727be56a02474207106341cf9c297c9d26abfec4b867aed83082d"
+    },
+    {
+      "path": "wasm/plugins/device_nano.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_nano.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 9022,
+      "sha256": "b8035899f147fbcb799b71fefbe52d50305e99f2807df1de4ffe2d9d54b0559d"
+    },
+    {
+      "path": "wasm/plugins/device_neon.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_neon.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 28504,
+      "sha256": "442a1883b011e0fde7549fdd82cf28081650a20cff5c06f744d0137ea84050dc"
+    },
+    {
+      "path": "wasm/plugins/device_neural_amp.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_neural_amp.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 12784,
+      "sha256": "e8fad752c4feccbe28ae020bd68303f958db4dc08110e46f03d4c6ba01c8fdf5"
+    },
+    {
+      "path": "wasm/plugins/device_pitch.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_pitch.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 1965,
+      "sha256": "963f2daa4cdb9a4d35ecbd2df2d1cfd918603f9dcfcb28456d9144a0394686f2"
+    },
+    {
+      "path": "wasm/plugins/device_playfield_sample.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_playfield_sample.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 16727,
+      "sha256": "b9f03ee94c58975f914986e2655b792814f401c4031a7088decbe0c45120767a"
+    },
+    {
+      "path": "wasm/plugins/device_revamp.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_revamp.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 19339,
+      "sha256": "c33226dba984d248147bf02b28a57799b613707b74d7608f72253939f5d5f7bb"
+    },
+    {
+      "path": "wasm/plugins/device_reverb.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_reverb.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 7874,
+      "sha256": "12bd280b266b9d10c0486ea2fe1caa1f1466576e44ae78b4b4fccfafa6c10af4"
+    },
+    {
+      "path": "wasm/plugins/device_soundfont.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_soundfont.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 13462,
+      "sha256": "45886df7936c172bf1be5884abd6e237cc5a6ecdb7d4600081876f2166603070"
+    },
+    {
+      "path": "wasm/plugins/device_spielwerk.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_spielwerk.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 1069,
+      "sha256": "84c969c5801a1b20ba9693e14c2be5b560323d97d7d7527ed2cbfc8d8c05cd0c"
+    },
+    {
+      "path": "wasm/plugins/device_stereo_tool.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_stereo_tool.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 9616,
+      "sha256": "76e1ce62a6e1e99e7341c1a40ba7788aa7e4cd2ebf8c66c97089307eb3584222"
+    },
+    {
+      "path": "wasm/plugins/device_tidal.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_tidal.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 11533,
+      "sha256": "b454de49a6c3dde0ab2ed776f3e7eb830f3a8b83978baee60721facaeb88ec25"
+    },
+    {
+      "path": "wasm/plugins/device_vaporisateur.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_vaporisateur.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 30935,
+      "sha256": "5f0d75acae81440841935d7a46f83760f4f687138a9e0cc3b47e0b8b579bcce1"
+    },
+    {
+      "path": "wasm/plugins/device_velocity.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_velocity.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 2123,
+      "sha256": "5d2acc265352a510723b83f23343d8a1a0e157815e9e123bab39095dc32c4d0f"
+    },
+    {
+      "path": "wasm/plugins/device_vocoder.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_vocoder.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 34962,
+      "sha256": "0b824ffb1c7f9eb2e05d3d4b0f87d14219537e61f9dd0ef1f053be036ab9a115"
+    },
+    {
+      "path": "wasm/plugins/device_waveshaper.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_waveshaper.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 6387,
+      "sha256": "a3e815c00460163ec21010d8e0ee67f63666d19d9bd020a249f3c55ad1e0c078"
+    },
+    {
+      "path": "wasm/plugins/device_werkstatt.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_werkstatt.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 1655,
+      "sha256": "7e446c0838d54ede60a6511bd2f0da5e5accfb76f7ebfb8214f7493389a2892b"
+    },
+    {
+      "path": "wasm/plugins/device_zeitgeist.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/plugins/device_zeitgeist.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 2283,
+      "sha256": "1276549a93c359d4c426ee2ba13757f70e77b1d7f7cd05a8a433b10c4517bc72"
+    },
+    {
+      "path": "wasm/stretch_wasm.wasm",
+      "source": "@opendaw/studio-core-wasm/dist/wasm/stretch_wasm.wasm",
+      "mediaType": "application/wasm",
+      "bytes": 70865,
+      "sha256": "fbb3f74f3655608cbbb0d06a29d581ca506d63c7ee395452226c80a40651d138"
+    }
+  ]
+}

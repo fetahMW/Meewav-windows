@@ -1,0 +1,1116 @@
+{
+  "name": "MeeWav — Pack 2 de 50 émoticônes musique et communauté 3D",
+  "packId": "meewav-emojis-v2",
+  "version": "2.0.0",
+  "count": 50,
+  "layout": {
+    "columns": 10,
+    "rows": 5
+  },
+  "background": "transparent",
+  "visualDirection": "3D cosy, glossy, néon, musique et usages MeeWav",
+  "recommendedUsage": "React + Vite, web et mobile",
+  "publicBasePath": "/meewav-emojis-v2",
+  "items": [
+    {
+      "id": 1,
+      "name": "micro-flamme-live",
+      "label": "Micro en flamme — Live",
+      "category": "live",
+      "keywords": [
+        "live",
+        "rap",
+        "performance"
+      ],
+      "sourceIndex": 1,
+      "sprite": {
+        "row": 0,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/micro-flamme-live.png",
+        "png256": "png/256/micro-flamme-live.png",
+        "png512": "png/512/micro-flamme-live.png",
+        "webp256": "webp/256/micro-flamme-live.webp"
+      }
+    },
+    {
+      "id": 2,
+      "name": "micro-studio-or",
+      "label": "Micro studio doré",
+      "category": "studio",
+      "keywords": [
+        "studio",
+        "voix",
+        "enregistrement"
+      ],
+      "sourceIndex": 2,
+      "sprite": {
+        "row": 0,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/micro-studio-or.png",
+        "png256": "png/256/micro-studio-or.png",
+        "png512": "png/512/micro-studio-or.png",
+        "webp256": "webp/256/micro-studio-or.webp"
+      }
+    },
+    {
+      "id": 3,
+      "name": "casque-mw-bleu",
+      "label": "Casque MW bleu",
+      "category": "audio",
+      "keywords": [
+        "écoute",
+        "profil",
+        "studio"
+      ],
+      "sourceIndex": 3,
+      "sprite": {
+        "row": 0,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/casque-mw-bleu.png",
+        "png256": "png/256/casque-mw-bleu.png",
+        "png512": "png/512/casque-mw-bleu.png",
+        "webp256": "webp/256/casque-mw-bleu.webp"
+      }
+    },
+    {
+      "id": 4,
+      "name": "casque-mw-rouge",
+      "label": "Casque MW rouge",
+      "category": "audio",
+      "keywords": [
+        "écoute",
+        "réaction",
+        "studio"
+      ],
+      "sourceIndex": 4,
+      "sprite": {
+        "row": 0,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/casque-mw-rouge.png",
+        "png256": "png/256/casque-mw-rouge.png",
+        "png512": "png/512/casque-mw-rouge.png",
+        "webp256": "webp/256/casque-mw-rouge.webp"
+      }
+    },
+    {
+      "id": 5,
+      "name": "guitare-electrique-feu",
+      "label": "Guitare électrique en feu",
+      "category": "instrument",
+      "keywords": [
+        "guitare",
+        "rock",
+        "concert"
+      ],
+      "sourceIndex": 5,
+      "sprite": {
+        "row": 0,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/guitare-electrique-feu.png",
+        "png256": "png/256/guitare-electrique-feu.png",
+        "png512": "png/512/guitare-electrique-feu.png",
+        "webp256": "webp/256/guitare-electrique-feu.webp"
+      }
+    },
+    {
+      "id": 6,
+      "name": "guitare-acoustique",
+      "label": "Guitare acoustique",
+      "category": "instrument",
+      "keywords": [
+        "guitare",
+        "acoustique",
+        "composition"
+      ],
+      "sourceIndex": 6,
+      "sprite": {
+        "row": 0,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/guitare-acoustique.png",
+        "png256": "png/256/guitare-acoustique.png",
+        "png512": "png/512/guitare-acoustique.png",
+        "webp256": "webp/256/guitare-acoustique.webp"
+      }
+    },
+    {
+      "id": 7,
+      "name": "basse-electrique-neon",
+      "label": "Basse électrique néon",
+      "category": "instrument",
+      "keywords": [
+        "basse",
+        "groove",
+        "instrumentiste"
+      ],
+      "sourceIndex": 7,
+      "sprite": {
+        "row": 0,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/basse-electrique-neon.png",
+        "png256": "png/256/basse-electrique-neon.png",
+        "png512": "png/512/basse-electrique-neon.png",
+        "webp256": "webp/256/basse-electrique-neon.webp"
+      }
+    },
+    {
+      "id": 8,
+      "name": "saxophone-en-flamme",
+      "label": "Saxophone en flamme",
+      "category": "instrument",
+      "keywords": [
+        "saxophone",
+        "jazz",
+        "instrumentiste"
+      ],
+      "sourceIndex": 8,
+      "sprite": {
+        "row": 0,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/saxophone-en-flamme.png",
+        "png256": "png/256/saxophone-en-flamme.png",
+        "png512": "png/512/saxophone-en-flamme.png",
+        "webp256": "webp/256/saxophone-en-flamme.webp"
+      }
+    },
+    {
+      "id": 9,
+      "name": "trompette-en-flamme",
+      "label": "Trompette en flamme",
+      "category": "instrument",
+      "keywords": [
+        "trompette",
+        "cuivres",
+        "instrumentiste"
+      ],
+      "sourceIndex": 9,
+      "sprite": {
+        "row": 0,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/trompette-en-flamme.png",
+        "png256": "png/256/trompette-en-flamme.png",
+        "png512": "png/512/trompette-en-flamme.png",
+        "webp256": "webp/256/trompette-en-flamme.webp"
+      }
+    },
+    {
+      "id": 10,
+      "name": "batterie-mw",
+      "label": "Batterie MW",
+      "category": "instrument",
+      "keywords": [
+        "batterie",
+        "rythme",
+        "concert"
+      ],
+      "sourceIndex": 10,
+      "sprite": {
+        "row": 0,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/batterie-mw.png",
+        "png256": "png/256/batterie-mw.png",
+        "png512": "png/512/batterie-mw.png",
+        "webp256": "webp/256/batterie-mw.webp"
+      }
+    },
+    {
+      "id": 11,
+      "name": "synthetiseur-compact",
+      "label": "Synthétiseur compact",
+      "category": "production",
+      "keywords": [
+        "clavier",
+        "synthé",
+        "composition"
+      ],
+      "sourceIndex": 11,
+      "sprite": {
+        "row": 1,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/synthetiseur-compact.png",
+        "png256": "png/256/synthetiseur-compact.png",
+        "png512": "png/512/synthetiseur-compact.png",
+        "webp256": "webp/256/synthetiseur-compact.webp"
+      }
+    },
+    {
+      "id": 12,
+      "name": "boite-a-rythmes-808",
+      "label": "Boîte à rythmes 808",
+      "category": "production",
+      "keywords": [
+        "808",
+        "beatmaking",
+        "production"
+      ],
+      "sourceIndex": 12,
+      "sprite": {
+        "row": 1,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/boite-a-rythmes-808.png",
+        "png256": "png/256/boite-a-rythmes-808.png",
+        "png512": "png/512/boite-a-rythmes-808.png",
+        "webp256": "webp/256/boite-a-rythmes-808.webp"
+      }
+    },
+    {
+      "id": 13,
+      "name": "platine-dj-neon",
+      "label": "Platine DJ néon",
+      "category": "dj",
+      "keywords": [
+        "dj",
+        "vinyle",
+        "mix"
+      ],
+      "sourceIndex": 13,
+      "sprite": {
+        "row": 1,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/platine-dj-neon.png",
+        "png256": "png/256/platine-dj-neon.png",
+        "png512": "png/512/platine-dj-neon.png",
+        "webp256": "webp/256/platine-dj-neon.webp"
+      }
+    },
+    {
+      "id": 14,
+      "name": "table-de-mixage",
+      "label": "Table de mixage",
+      "category": "production",
+      "keywords": [
+        "mixage",
+        "studio",
+        "production"
+      ],
+      "sourceIndex": 14,
+      "sprite": {
+        "row": 1,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/table-de-mixage.png",
+        "png256": "png/256/table-de-mixage.png",
+        "png512": "png/512/table-de-mixage.png",
+        "webp256": "webp/256/table-de-mixage.webp"
+      }
+    },
+    {
+      "id": 15,
+      "name": "enceinte-studio-neon",
+      "label": "Enceinte studio néon",
+      "category": "studio",
+      "keywords": [
+        "enceinte",
+        "monitoring",
+        "audio"
+      ],
+      "sourceIndex": 15,
+      "sprite": {
+        "row": 1,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/enceinte-studio-neon.png",
+        "png256": "png/256/enceinte-studio-neon.png",
+        "png512": "png/512/enceinte-studio-neon.png",
+        "webp256": "webp/256/enceinte-studio-neon.webp"
+      }
+    },
+    {
+      "id": 16,
+      "name": "boombox-live",
+      "label": "Boombox Live",
+      "category": "live",
+      "keywords": [
+        "boombox",
+        "écoute",
+        "street"
+      ],
+      "sourceIndex": 16,
+      "sprite": {
+        "row": 1,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/boombox-live.png",
+        "png256": "png/256/boombox-live.png",
+        "png512": "png/512/boombox-live.png",
+        "webp256": "webp/256/boombox-live.webp"
+      }
+    },
+    {
+      "id": 17,
+      "name": "onde-audio-neon",
+      "label": "Onde audio néon",
+      "category": "digital",
+      "keywords": [
+        "audio",
+        "waveform",
+        "message vocal"
+      ],
+      "sourceIndex": 17,
+      "sprite": {
+        "row": 1,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/onde-audio-neon.png",
+        "png256": "png/256/onde-audio-neon.png",
+        "png512": "png/512/onde-audio-neon.png",
+        "webp256": "webp/256/onde-audio-neon.webp"
+      }
+    },
+    {
+      "id": 18,
+      "name": "notes-musicales-pop",
+      "label": "Notes musicales pop",
+      "category": "reaction",
+      "keywords": [
+        "musique",
+        "réaction",
+        "joie"
+      ],
+      "sourceIndex": 18,
+      "sprite": {
+        "row": 1,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/notes-musicales-pop.png",
+        "png256": "png/256/notes-musicales-pop.png",
+        "png512": "png/512/notes-musicales-pop.png",
+        "webp256": "webp/256/notes-musicales-pop.webp"
+      }
+    },
+    {
+      "id": 19,
+      "name": "vinyle-en-flamme",
+      "label": "Vinyle en flamme",
+      "category": "dj",
+      "keywords": [
+        "vinyle",
+        "hit",
+        "dj"
+      ],
+      "sourceIndex": 19,
+      "sprite": {
+        "row": 1,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/vinyle-en-flamme.png",
+        "png256": "png/256/vinyle-en-flamme.png",
+        "png512": "png/512/vinyle-en-flamme.png",
+        "webp256": "webp/256/vinyle-en-flamme.webp"
+      }
+    },
+    {
+      "id": 20,
+      "name": "cassette-neon",
+      "label": "Cassette néon",
+      "category": "audio",
+      "keywords": [
+        "cassette",
+        "playlist",
+        "nostalgie"
+      ],
+      "sourceIndex": 20,
+      "sprite": {
+        "row": 1,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/cassette-neon.png",
+        "png256": "png/256/cassette-neon.png",
+        "png512": "png/512/cassette-neon.png",
+        "webp256": "webp/256/cassette-neon.webp"
+      }
+    },
+    {
+      "id": 21,
+      "name": "couronne-mw",
+      "label": "Couronne MW",
+      "category": "badge",
+      "keywords": [
+        "premium",
+        "talent",
+        "classement"
+      ],
+      "sourceIndex": 21,
+      "sprite": {
+        "row": 2,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/couronne-mw.png",
+        "png256": "png/256/couronne-mw.png",
+        "png512": "png/512/couronne-mw.png",
+        "webp256": "webp/256/couronne-mw.webp"
+      }
+    },
+    {
+      "id": 22,
+      "name": "note-en-flamme",
+      "label": "Note en flamme",
+      "category": "reaction",
+      "keywords": [
+        "musique",
+        "buzz",
+        "réaction"
+      ],
+      "sourceIndex": 22,
+      "sprite": {
+        "row": 2,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/note-en-flamme.png",
+        "png256": "png/256/note-en-flamme.png",
+        "png512": "png/512/note-en-flamme.png",
+        "webp256": "webp/256/note-en-flamme.webp"
+      }
+    },
+    {
+      "id": 23,
+      "name": "coeur-casque",
+      "label": "Cœur avec casque",
+      "category": "reaction",
+      "keywords": [
+        "j’aime",
+        "écoute",
+        "soutien"
+      ],
+      "sourceIndex": 23,
+      "sprite": {
+        "row": 2,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/coeur-casque.png",
+        "png256": "png/256/coeur-casque.png",
+        "png512": "png/512/coeur-casque.png",
+        "webp256": "webp/256/coeur-casque.webp"
+      }
+    },
+    {
+      "id": 24,
+      "name": "etoile-talent",
+      "label": "Étoile du talent",
+      "category": "badge",
+      "keywords": [
+        "talent",
+        "favori",
+        "grade"
+      ],
+      "sourceIndex": 24,
+      "sprite": {
+        "row": 2,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/etoile-talent.png",
+        "png256": "png/256/etoile-talent.png",
+        "png512": "png/512/etoile-talent.png",
+        "webp256": "webp/256/etoile-talent.webp"
+      }
+    },
+    {
+      "id": 25,
+      "name": "trophee-musical",
+      "label": "Trophée musical",
+      "category": "badge",
+      "keywords": [
+        "victoire",
+        "récompense",
+        "classement"
+      ],
+      "sourceIndex": 25,
+      "sprite": {
+        "row": 2,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/trophee-musical.png",
+        "png256": "png/256/trophee-musical.png",
+        "png512": "png/512/trophee-musical.png",
+        "webp256": "webp/256/trophee-musical.webp"
+      }
+    },
+    {
+      "id": 26,
+      "name": "globe-casque",
+      "label": "Globe avec casque",
+      "category": "discovery",
+      "keywords": [
+        "globe",
+        "découverte",
+        "international"
+      ],
+      "sourceIndex": 26,
+      "sprite": {
+        "row": 2,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/globe-casque.png",
+        "png256": "png/256/globe-casque.png",
+        "png512": "png/512/globe-casque.png",
+        "webp256": "webp/256/globe-casque.webp"
+      }
+    },
+    {
+      "id": 27,
+      "name": "fusee-musicale",
+      "label": "Fusée musicale",
+      "category": "promotion",
+      "keywords": [
+        "décollage",
+        "buzz",
+        "progression"
+      ],
+      "sourceIndex": 27,
+      "sprite": {
+        "row": 2,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/fusee-musicale.png",
+        "png256": "png/256/fusee-musicale.png",
+        "png512": "png/512/fusee-musicale.png",
+        "webp256": "webp/256/fusee-musicale.webp"
+      }
+    },
+    {
+      "id": 28,
+      "name": "clap-video",
+      "label": "Clap vidéo",
+      "category": "video",
+      "keywords": [
+        "vidéo",
+        "clip",
+        "tournage"
+      ],
+      "sourceIndex": 28,
+      "sprite": {
+        "row": 2,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/clap-video.png",
+        "png256": "png/256/clap-video.png",
+        "png512": "png/512/clap-video.png",
+        "webp256": "webp/256/clap-video.webp"
+      }
+    },
+    {
+      "id": 29,
+      "name": "camera-videoclip",
+      "label": "Caméra de vidéoclip",
+      "category": "video",
+      "keywords": [
+        "caméra",
+        "clip",
+        "réalisation"
+      ],
+      "sourceIndex": 29,
+      "sprite": {
+        "row": 2,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/camera-videoclip.png",
+        "png256": "png/256/camera-videoclip.png",
+        "png512": "png/512/camera-videoclip.png",
+        "webp256": "webp/256/camera-videoclip.webp"
+      }
+    },
+    {
+      "id": 30,
+      "name": "badge-live",
+      "label": "Badge Live",
+      "category": "live",
+      "keywords": [
+        "direct",
+        "streaming",
+        "live"
+      ],
+      "sourceIndex": 30,
+      "sprite": {
+        "row": 2,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/badge-live.png",
+        "png256": "png/256/badge-live.png",
+        "png512": "png/512/badge-live.png",
+        "webp256": "webp/256/badge-live.webp"
+      }
+    },
+    {
+      "id": 31,
+      "name": "panneau-on-air",
+      "label": "Panneau On Air",
+      "category": "live",
+      "keywords": [
+        "antenne",
+        "direct",
+        "room"
+      ],
+      "sourceIndex": 31,
+      "sprite": {
+        "row": 3,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/panneau-on-air.png",
+        "png256": "png/256/panneau-on-air.png",
+        "png512": "png/512/panneau-on-air.png",
+        "webp256": "webp/256/panneau-on-air.webp"
+      }
+    },
+    {
+      "id": 32,
+      "name": "short-musical",
+      "label": "Short musical",
+      "category": "shorts",
+      "keywords": [
+        "short",
+        "vidéo",
+        "mobile"
+      ],
+      "sourceIndex": 32,
+      "sprite": {
+        "row": 3,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/short-musical.png",
+        "png256": "png/256/short-musical.png",
+        "png512": "png/512/short-musical.png",
+        "webp256": "webp/256/short-musical.webp"
+      }
+    },
+    {
+      "id": 33,
+      "name": "messagerie",
+      "label": "Messagerie",
+      "category": "messaging",
+      "keywords": [
+        "chat",
+        "message",
+        "discussion"
+      ],
+      "sourceIndex": 33,
+      "sprite": {
+        "row": 3,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/messagerie.png",
+        "png256": "png/256/messagerie.png",
+        "png512": "png/512/messagerie.png",
+        "webp256": "webp/256/messagerie.webp"
+      }
+    },
+    {
+      "id": 34,
+      "name": "discussion-groupe",
+      "label": "Discussion de groupe",
+      "category": "community",
+      "keywords": [
+        "groupe",
+        "communauté",
+        "messagerie"
+      ],
+      "sourceIndex": 34,
+      "sprite": {
+        "row": 3,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/discussion-groupe.png",
+        "png256": "png/256/discussion-groupe.png",
+        "png512": "png/512/discussion-groupe.png",
+        "webp256": "webp/256/discussion-groupe.webp"
+      }
+    },
+    {
+      "id": 35,
+      "name": "collaboration",
+      "label": "Collaboration",
+      "category": "collaboration",
+      "keywords": [
+        "collab",
+        "accord",
+        "projet"
+      ],
+      "sourceIndex": 35,
+      "sprite": {
+        "row": 3,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/collaboration.png",
+        "png256": "png/256/collaboration.png",
+        "png512": "png/512/collaboration.png",
+        "webp256": "webp/256/collaboration.webp"
+      }
+    },
+    {
+      "id": 36,
+      "name": "applaudissements",
+      "label": "Applaudissements",
+      "category": "reaction",
+      "keywords": [
+        "bravo",
+        "félicitations",
+        "réaction"
+      ],
+      "sourceIndex": 36,
+      "sprite": {
+        "row": 3,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/applaudissements.png",
+        "png256": "png/256/applaudissements.png",
+        "png512": "png/512/applaudissements.png",
+        "webp256": "webp/256/applaudissements.webp"
+      }
+    },
+    {
+      "id": 37,
+      "name": "signe-victoire",
+      "label": "Signe de victoire",
+      "category": "reaction",
+      "keywords": [
+        "victoire",
+        "peace",
+        "réaction"
+      ],
+      "sourceIndex": 37,
+      "sprite": {
+        "row": 3,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/signe-victoire.png",
+        "png256": "png/256/signe-victoire.png",
+        "png512": "png/512/signe-victoire.png",
+        "webp256": "webp/256/signe-victoire.webp"
+      }
+    },
+    {
+      "id": 38,
+      "name": "signe-rock",
+      "label": "Signe rock",
+      "category": "reaction",
+      "keywords": [
+        "rock",
+        "force",
+        "réaction"
+      ],
+      "sourceIndex": 38,
+      "sprite": {
+        "row": 3,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/signe-rock.png",
+        "png256": "png/256/signe-rock.png",
+        "png512": "png/512/signe-rock.png",
+        "webp256": "webp/256/signe-rock.webp"
+      }
+    },
+    {
+      "id": 39,
+      "name": "megaphone",
+      "label": "Mégaphone",
+      "category": "announcement",
+      "keywords": [
+        "annonce",
+        "promotion",
+        "actualité"
+      ],
+      "sourceIndex": 39,
+      "sprite": {
+        "row": 3,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/megaphone.png",
+        "png256": "png/256/megaphone.png",
+        "png512": "png/512/megaphone.png",
+        "webp256": "webp/256/megaphone.webp"
+      }
+    },
+    {
+      "id": 40,
+      "name": "nuage-musical",
+      "label": "Nuage musical",
+      "category": "digital",
+      "keywords": [
+        "cloud",
+        "audio",
+        "partage"
+      ],
+      "sourceIndex": 40,
+      "sprite": {
+        "row": 3,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/nuage-musical.png",
+        "png256": "png/256/nuage-musical.png",
+        "png512": "png/512/nuage-musical.png",
+        "webp256": "webp/256/nuage-musical.webp"
+      }
+    },
+    {
+      "id": 41,
+      "name": "danseur-hip-hop",
+      "label": "Danseur hip-hop",
+      "category": "dance",
+      "keywords": [
+        "danse",
+        "hip-hop",
+        "performance"
+      ],
+      "sourceIndex": 41,
+      "sprite": {
+        "row": 4,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/danseur-hip-hop.png",
+        "png256": "png/256/danseur-hip-hop.png",
+        "png512": "png/512/danseur-hip-hop.png",
+        "webp256": "webp/256/danseur-hip-hop.webp"
+      }
+    },
+    {
+      "id": 42,
+      "name": "breakdancer",
+      "label": "Breakdancer",
+      "category": "dance",
+      "keywords": [
+        "breakdance",
+        "danse",
+        "battle"
+      ],
+      "sourceIndex": 42,
+      "sprite": {
+        "row": 4,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/breakdancer.png",
+        "png256": "png/256/breakdancer.png",
+        "png512": "png/512/breakdancer.png",
+        "webp256": "webp/256/breakdancer.webp"
+      }
+    },
+    {
+      "id": 43,
+      "name": "beatboxer",
+      "label": "Beatboxer",
+      "category": "performance",
+      "keywords": [
+        "beatbox",
+        "micro",
+        "live"
+      ],
+      "sourceIndex": 43,
+      "sprite": {
+        "row": 4,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/beatboxer.png",
+        "png256": "png/256/beatboxer.png",
+        "png512": "png/512/beatboxer.png",
+        "webp256": "webp/256/beatboxer.webp"
+      }
+    },
+    {
+      "id": 44,
+      "name": "chanteuse-live",
+      "label": "Chanteuse Live",
+      "category": "performance",
+      "keywords": [
+        "chant",
+        "voix",
+        "live"
+      ],
+      "sourceIndex": 44,
+      "sprite": {
+        "row": 4,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/chanteuse-live.png",
+        "png256": "png/256/chanteuse-live.png",
+        "png512": "png/512/chanteuse-live.png",
+        "webp256": "webp/256/chanteuse-live.webp"
+      }
+    },
+    {
+      "id": 45,
+      "name": "rappeur-live",
+      "label": "Rappeur Live",
+      "category": "performance",
+      "keywords": [
+        "rap",
+        "micro",
+        "live"
+      ],
+      "sourceIndex": 45,
+      "sprite": {
+        "row": 4,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/rappeur-live.png",
+        "png256": "png/256/rappeur-live.png",
+        "png512": "png/512/rappeur-live.png",
+        "webp256": "webp/256/rappeur-live.webp"
+      }
+    },
+    {
+      "id": 46,
+      "name": "videoclippeur",
+      "label": "Vidéoclippeur",
+      "category": "video",
+      "keywords": [
+        "montage",
+        "clip",
+        "ordinateur"
+      ],
+      "sourceIndex": 46,
+      "sprite": {
+        "row": 4,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/videoclippeur.png",
+        "png256": "png/256/videoclippeur.png",
+        "png512": "png/512/videoclippeur.png",
+        "webp256": "webp/256/videoclippeur.webp"
+      }
+    },
+    {
+      "id": 47,
+      "name": "concert-live",
+      "label": "Concert Live",
+      "category": "live",
+      "keywords": [
+        "concert",
+        "public",
+        "scène"
+      ],
+      "sourceIndex": 47,
+      "sprite": {
+        "row": 4,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/concert-live.png",
+        "png256": "png/256/concert-live.png",
+        "png512": "png/512/concert-live.png",
+        "webp256": "webp/256/concert-live.webp"
+      }
+    },
+    {
+      "id": 48,
+      "name": "dj-performance",
+      "label": "DJ en performance",
+      "category": "dj",
+      "keywords": [
+        "dj",
+        "mix",
+        "live"
+      ],
+      "sourceIndex": 48,
+      "sprite": {
+        "row": 4,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/dj-performance.png",
+        "png256": "png/256/dj-performance.png",
+        "png512": "png/512/dj-performance.png",
+        "webp256": "webp/256/dj-performance.webp"
+      }
+    },
+    {
+      "id": 49,
+      "name": "baguette-creative",
+      "label": "Baguette créative",
+      "category": "creation",
+      "keywords": [
+        "créativité",
+        "effet",
+        "magie"
+      ],
+      "sourceIndex": 49,
+      "sprite": {
+        "row": 4,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/baguette-creative.png",
+        "png256": "png/256/baguette-creative.png",
+        "png512": "png/512/baguette-creative.png",
+        "webp256": "webp/256/baguette-creative.webp"
+      }
+    },
+    {
+      "id": 50,
+      "name": "enceinte-portable-mw",
+      "label": "Enceinte portable MW",
+      "category": "audio",
+      "keywords": [
+        "enceinte",
+        "mobile",
+        "écoute"
+      ],
+      "sourceIndex": 50,
+      "sprite": {
+        "row": 4,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/enceinte-portable-mw.png",
+        "png256": "png/256/enceinte-portable-mw.png",
+        "png512": "png/512/enceinte-portable-mw.png",
+        "webp256": "webp/256/enceinte-portable-mw.webp"
+      }
+    }
+  ]
+}

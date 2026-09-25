@@ -1,0 +1,37 @@
+/* The Desktop launch sequence is a page below the window controls. */
+body:has(.meewav-desktop-titlebar) { --desktop-sequence-top:40px; }
+body .rooms-home-launch-dialog:not(.cage-prepared-overlay):has(.is-desktop-sequence) {
+  inset:var(--desktop-sequence-top,0px) 0 0;
+  padding:0; display:flex; align-items:stretch; justify-content:stretch;
+  background:#090b0f; backdrop-filter:none;
+}
+body .rooms-home-launch-dialog .room-launch.is-desktop-sequence,
+body .rooms-home-launch-dialog .cage-launch.is-desktop-sequence {
+  width:100%; max-width:none; height:100%; max-height:none; min-height:0;
+  flex:1 1 auto; border:0; border-radius:0; box-shadow:none;
+}
+body .rooms-home-launch-dialog .room-launch-cage.is-desktop-sequence {
+  width:100%; height:100%; max-height:none; min-height:0; gap:0;
+}
+.room-launch-cage.is-desktop-sequence>.room-launch-back { margin:8px 24px 0; flex-shrink:0; }
+.is-desktop-sequence>.cage-launch__header,
+.is-desktop-sequence>.cage-launch__steps,
+.is-desktop-sequence>.cage-launch__footer { flex-shrink:0; }
+.is-desktop-sequence>.cage-launch__body,
+.is-desktop-sequence>.room-launch__body,
+.is-desktop-sequence>.room-launch__studio {
+  flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain;
+  scrollbar-width:thin; scrollbar-color:#666d7d #0b0d12;
+}
+.cage-launch__body>.room-production { flex-shrink:0; }
+.is-desktop-sequence .room-production { flex-shrink:0; width:100%; margin:0; border:0; border-radius:0; box-shadow:none; }
+.is-desktop-sequence.is-studio-step>.cage-launch__body,
+.is-desktop-sequence>.room-launch__studio { padding:0; }
+.is-desktop-sequence:not(.is-studio-step)>.room-launch__body,
+.is-desktop-sequence:not(.is-studio-step)>.cage-launch__body { padding-inline:max(24px,calc((100% - 900px)/2)); }
+.is-desktop-sequence:not(.is-studio-step)>.room-launch__body { align-content:start; }
+.is-desktop-sequence>.room-launch__types { flex:1; align-content:start; padding:32px max(24px,calc((100% - 1100px)/2)); }
+.is-desktop-sequence .room-production__workspace { grid-template-columns:minmax(280px,340px) minmax(0,1fr); }
+@media(max-width:900px) { .is-desktop-sequence .room-production__workspace { grid-template-columns:minmax(0,1fr); } }
+
+.cage-launch__back { display:grid; place-items:center; flex:0 0 36px; height:36px; padding:0; border:1px solid #515662; border-radius:9px; background:#252931; color:#dce1ed; cursor:pointer; }

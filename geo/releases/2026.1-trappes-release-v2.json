@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "releaseStatus": "candidate",
+  "version": "2026.1-trappes-release-v2",
+  "scope": "trappes",
+  "datasetId": "a867f82b-41f1-50b5-a809-b6ff186e2b17",
+  "datasetStatus": "validated",
+  "qualityGates": {
+    "canonicalValidation": "passed",
+    "draftZoneCount": 0,
+    "maximumAllowedTileBytes": 500000,
+    "maximumTileBytes": 3135,
+    "legacyRollbackAvailable": true
+  },
+  "counts": {
+    "administrativeZones": 12,
+    "musicZones": 12,
+    "vectorTiles": 97,
+    "searchRecords": 12
+  },
+  "artifacts": {
+    "canonicalDatasetSha256": "dd22f2e7babdaa81905fca0f4d4fe13ccee706c4ad6345c6e3557e19877d251a",
+    "zonesPmtilesSha256": "b2d19ffbf68224f47a8c362a144f31de67c307f31a4466cd9de17f6783698019",
+    "searchIndexSha256": "da44a95febaa94d4664f9e655fa8c6bc38722d56a864ce36bda18dc09256b621",
+    "postgisValidationSha256": "b5901a1b2166d0d2f6db5637009d78ff4b9ae01dcb9a4daa6ab8bcfffe512630"
+  },
+  "activation": {
+    "automatic": false,
+    "runtimeModeRemains": "legacy"
+  }
+}

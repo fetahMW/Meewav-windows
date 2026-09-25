@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "kind": "france_wave_9_semantic_independent_audit",
+  "generatedAt": "2026-07-14T19:16:13.585Z",
+  "status": "PASS",
+  "auditMode": {
+    "readOnlyInputs": true,
+    "browserUsed": false,
+    "networkUsed": false,
+    "concurrency": 1,
+    "wfsCache": ".tmp/france-wave-9-semantic-wfs-cache",
+    "method": [
+      "Exact plan and curation identities were checked independently against the national inventory and cached IGN/INSEE Contours IRIS WFS features.",
+      "Every rename evidence identifier and official label was checked against the cached IGN BD TOPO feature; every evidence coordinate was tested with a strict boundary-excluding point-in-polygon predicate against its exact source IRIS.",
+      "Every numbered merge was independently checked for a single normalized base, exhaustive contiguous 1..N membership, exact expected-label alignment, connected pairwise adjacency graph and one-component Turf union.",
+      "Final visible labels were reconstructed from the operations and checked for French-folded uniqueness and technical, numbered, directional, generic, operational, placeholder and commune-only risks.",
+      "The repository's official Guide Alpha validator was invoked separately for both plan/curation pairs."
+    ]
+  },
+  "files": {
+    "geo/work/france-wave-9-risk-semantic-resolved-plan.json": {
+      "bytes": 867294,
+      "sha256": "6aedb1abd00ab56c9fc4943890c8f6a72f2d257de2df6d1f448d5cfcdfb325b2"
+    },
+    "geo/work/france-wave-9-risk-semantic-curation.json": {
+      "bytes": 4088571,
+      "sha256": "9d5544bb7a7500ec07c1ad159816ae82bdedf72e8b1ca9168bdf431e29b035ce"
+    },
+    "geo/work/france-wave-9-risk-semantic-unresolved.json": {
+      "bytes": 7650,
+      "sha256": "bbd35bfc186dd4e98e15be375fa4776044de6d3bf9fd8d6a5b788d3162b4f169"
+    },
+    "geo/work/france-wave-9-risk-plan.json": {
+      "bytes": 881385,
+      "sha256": "d2ef4df6cf0f20c2adb0803743ce31c7d47c95bb5fd0289bd84f751ffeb7fbc4"
+    },
+    "geo/work/france-wave-9-national-clean-semantic-resolved-plan.json": {
+      "bytes": 158198,
+      "sha256": "8cdd2b09980918ff60a6f3860c78142448b1e0d99c4baf18db449a06262de518"
+    },
+    "geo/work/france-wave-9-national-clean-semantic-curation.json": {
+      "bytes": 527142,
+      "sha256": "dbe62b28530958dfb9e8ebe6c74128b4ec2f80c22d5928862a72c3e3050b69e4"
+    },
+    "geo/work/france-wave-9-national-clean-semantic-unresolved.json": {
+      "bytes": 3368,
+      "sha256": "2345870e6fe2b7250f3045f306c0920ed7f31c3815fd7cfa9a29df593e6d4ead"
+    },
+    "geo/work/france-wave-9-national-clean-exceptions.json": {
+      "bytes": 177379,
+      "sha256": "29ae2c44b8219a55636275157ca46961c381981b2e6142ce17b92e73f581277c"
+    },
+    "geo/work/france-iris-national-inventory.json": {
+      "bytes": 30515336,
+      "sha256": "3769d2fdbc155f43b10303eee1121947bffbe5379f84d53b340b94a5acbe85a1"
+    }
+  },
+  "combinedInputsSha256": "07e504293f7ef37645c08ddee5e6fbeeecbac4a3061e62ba01fae9919f275033",
+  "wfsCache": {
+    "files": 437,
+    "bytes": 309903982,
+    "features": 218372,
+    "sha256Manifest": "d6097eb23c38107e475f0222644a42c12065000272e6cc17c6780f0cd9178b59",
+    "neededExactIris": 3053,
+    "foundExactIris": 3053,
+    "neededEvidenceFeatures": 1840,
+    "foundEvidenceFeatures": 1840,
+    "redundantExactIrisEntries": 6,
+    "redundantEvidenceEntries": 1,
+    "redundantEntriesByteIdentical": true,
+    "conflictingDuplicateEntries": 0
+  },
+  "checks": {
+    "officialIdsLabelsAndTypes": {
+      "status": "PASS",
+      "verifiedExactIris": 3053,
+      "drift": 0
+    },
+    "identityAndUniqueness": {
+      "status": "PASS",
+      "uniqueResolvedCities": 855,
+      "uniqueCommuneCodes": 855,
+      "uniqueOperationIds": 1848,
+      "uniqueMergeOutputIds": 8,
+      "uniqueEvidenceFeatureIds": 1840,
+      "duplicates": 0
+    },
+    "coverage": {
+      "status": "PASS",
+      "originCities": 860,
+      "resolvedCities": 855,
+      "quarantinedUnresolvedCities": 5,
+      "resolvedUnresolvedOverlap": 0,
+      "missingOriginCities": 0,
+      "unexpectedCities": 0
+    },
+    "operations": {
+      "status": "PASS",
+      "operations": 1848,
+      "rename": 1840,
+      "merge": 8,
+      "accept": 0,
+      "exactSourceTargets": 1857,
+      "riskySourceIris": 1857,
+      "doubleTargets": 0,
+      "unknownTargets": 0,
+      "expectedLabelDrift": 0
+    },
+    "merges": {
+      "status": "PASS",
+      "verified": 8,
+      "nonExhaustive": 0,
+      "nonContiguous": 0,
+      "mixedBase": 0,
+      "disconnected": 0,
+      "topologyClaimDrift": 0
+    },
+    "containedEvidence": {
+      "status": "PASS",
+      "verified": 1840,
+      "namedRoad": 1242,
+      "habitationToponym": 598,
+      "strictlyInteriorToExactSourceIris": 1840,
+      "boundaryOrOutside": 0,
+      "officialFeatureOrLabelDrift": 0,
+      "wrongCommune": 0,
+      "roadPointOffOfficialGeometry": 0,
+      "ineligibleHabitationToponym": 0
+    },
+    "finalLabels": {
+      "status": "PASS",
+      "visiblePlates": 3044,
+      "technicalOrUnsafe": 0,
+      "foldedCollisions": 0
+    }
+  },
+  "pairs": {
+    "risk": {
+      "status": "PASS",
+      "cities": 724,
+      "originCities": 728,
+      "quarantinedUnresolvedCities": 4,
+      "officialIris": 2546,
+      "visiblePlates": 2537,
+      "operations": {
+        "rename": 1655,
+        "merge": 8,
+        "accept": 0,
+        "exactSourceTargets": 1672
+      },
+      "strictContainedEvidence": 1655,
+      "connectedExhaustiveMerges": 8,
+      "errors": 0
+    },
+    "nationalClean": {
+      "status": "PASS",
+      "cities": 131,
+      "originCities": 132,
+      "quarantinedUnresolvedCities": 1,
+      "officialIris": 507,
+      "visiblePlates": 507,
+      "operations": {
+        "rename": 185,
+        "merge": 0,
+        "accept": 0,
+        "exactSourceTargets": 185
+      },
+      "strictContainedEvidence": 185,
+      "connectedExhaustiveMerges": 0,
+      "errors": 0
+    }
+  },
+  "officialValidator": {
+    "risk": {
+      "status": "PASS",
+      "exitCode": 0,
+      "stdout": [
+        "Wave 9 Guide Alpha audit artifacts: PASS",
+        "724 cities, 2546 official IRIS, 2537 visible plates",
+        "0 accept, 1655 rename, 8 merge operations"
+      ]
+    },
+    "nationalClean": {
+      "status": "PASS",
+      "exitCode": 0,
+      "stdout": [
+        "Wave 9 Guide Alpha audit artifacts: PASS",
+        "131 cities, 507 official IRIS, 507 visible plates",
+        "0 accept, 185 rename, 0 merge operations"
+      ]
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

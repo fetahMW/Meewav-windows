@@ -1,0 +1,161 @@
+/* One shared Play finish for the Mixer and Gate: black lacquer, a single
+   fine pearl/chrome edge and a white triangle. No category-coloured ring.
+   Important declarations supersede the historical Mixer transport layers. */
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play,
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play {
+  border: 1px solid transparent !important;
+  border-radius: 50% !important;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, .12) 0%, rgba(255, 255, 255, .025) 27%, transparent 40%) padding-box,
+    radial-gradient(circle at 50% 54%, #1b1d20 0%, #090a0b 61%, #020203 100%) padding-box,
+    conic-gradient(from 220deg, #303338, rgba(239, 243, 248, .28), #45494f, #1b1e22, #303338) border-box !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .12),
+    inset 0 -2px 5px rgba(0, 0, 0, .86),
+    inset 0 0 0 2px rgba(0, 0, 0, .45),
+    0 0 0 1px #000,
+    0 5px 12px rgba(0, 0, 0, .52) !important;
+  color: #afb2b8 !important;
+  filter: none;
+  transition: color 150ms ease, box-shadow 150ms ease;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:is(:hover, :focus-visible):not(:disabled),
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play:is(:hover, :focus-visible):not(:disabled) {
+  border-color: transparent !important;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, .24) 0%, rgba(255, 255, 255, .045) 27%, transparent 40%) padding-box,
+    radial-gradient(circle at 50% 54%, #1b1d20 0%, #090a0b 61%, #020203 100%) padding-box,
+    conic-gradient(from 220deg, #464a50, rgba(239, 243, 248, .7), #717780, #24272c, #464a50) border-box !important;
+  color: #fff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .34),
+    inset 0 -2px 5px rgba(0, 0, 0, .86),
+    inset 0 0 0 2px rgba(0, 0, 0, .4),
+    0 0 0 1px #000,
+    0 5px 12px rgba(0, 0, 0, .54),
+    0 0 10px rgba(228, 233, 240, .08) !important;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:focus-visible,
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play:focus-visible {
+  outline: 1px solid rgba(231, 237, 246, .75) !important;
+  outline-offset: 3px;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:active:not(:disabled),
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 3px 7px rgba(0, 0, 0, .82),
+    inset 0 0 0 2px rgba(0, 0, 0, .5),
+    0 2px 5px rgba(0, 0, 0, .46) !important;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:disabled,
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play:disabled {
+  box-shadow: inset 0 1px rgba(255, 255, 255, .1), inset 0 -2px 5px rgba(0, 0, 0, .86) !important;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play > svg,
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play > svg {
+  width: 17px !important;
+  height: 17px !important;
+  fill: currentColor;
+  stroke-width: 1.8;
+  color: inherit;
+  filter: none;
+  transform: none;
+}
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play > svg.lucide-play,
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play > svg.lucide-play {
+  transform: translateX(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play,
+  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions > .wave-loop-card__play {
+    transition: none;
+  }
+}
+
+.place-mixer-wave-import {
+  position: fixed; z-index: 10030; inset: 0; display: grid; place-items: center; padding: 20px;
+  background: rgba(0, 0, 4, .72); backdrop-filter: blur(18px) saturate(115%);
+}
+.place-mixer-wave-import > section {
+  --wave-import-face: linear-gradient(180deg, #252627, #101112 44%, #050505);
+  --wave-import-depth: inset 0 1px #ffffff20, inset 0 -1px #000, 0 3px 6px #0008;
+  box-sizing: border-box; width: min(520px, 100%); max-height: calc(100dvh - 40px); overflow-y: auto; padding: 18px;
+  border: 1px solid #64666d; border-radius: 18px;
+  background: linear-gradient(115deg, #ffffff06, transparent 36%), linear-gradient(180deg, #1b1d1f, #080909 60px, #020202);
+  box-shadow: inset 0 1px #ffffff40, inset 0 0 0 3px #ffffff05, 0 24px 70px #000c;
+  color: #efeff2; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color-scheme: dark;
+}
+.place-mixer-wave-import header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 2px 2px 12px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.place-mixer-wave-import header > span { display: flex; align-items: center; gap: 10px; }
+.place-mixer-wave-import header > span > svg { box-sizing: content-box; width: 18px; padding: 10px; flex-shrink: 0; border: 1px solid #5c5e65; border-radius: 10px; background: var(--wave-import-face); box-shadow: var(--wave-import-depth); color: #d4d6dc; }
+.place-mixer-wave-import header > span > span { display: grid; gap: 2px; }
+.place-mixer-wave-import header small { color: #a6a8b1; font-size: 8px; font-weight: 700; letter-spacing: .14em; }
+.place-mixer-wave-import header strong { font-size: 15px; }
+.place-mixer-wave-import header > button { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border: 1px solid #46484e; border-radius: 9px; background: var(--wave-import-face); box-shadow: var(--wave-import-depth); color: #c5c7cf; }
+.place-mixer-wave-import header > button svg { width: 14px; }
+.place-mixer-wave-import > section > p { display: grid; gap: 3px; margin: 12px 3px; }
+.place-mixer-wave-import > section > p > strong { font-size: 13px; overflow-wrap: anywhere; }
+.place-mixer-wave-import > section > p > small { color: #a2a4ae; font-size: 11px; line-height: 1.5; }
+.place-mixer-wave-import__choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.place-mixer-wave-import__choices > button {
+  display: grid; grid-template-columns: 34px minmax(0,1fr); align-items: center; gap: 9px; min-height: 76px; padding: 10px;
+  border: 1px solid #42444b; border-radius: 10px; background: var(--wave-import-face); box-shadow: var(--wave-import-depth); color: #dcdde3; text-align: left;
+}
+.place-mixer-wave-import__choices > button[aria-pressed="true"] { border-color: #b8bbc4; background: linear-gradient(180deg, #2b2d30, #090909); box-shadow: inset 0 1px #ffffff35, inset 3px 0 #bfc3cc, 0 3px 6px #0008; color: #f6f6f8; }
+.place-mixer-wave-import__choices > button > svg { width: 18px; justify-self: center; color: #bfc3cc; }
+.place-mixer-wave-import__choices > button > span { display: grid; gap: 4px; }
+.place-mixer-wave-import__choices > button strong { font-size: 11px; }
+.place-mixer-wave-import__choices > button small { color: #a2a4ae; font-size: 10px; line-height: 1.45; }
+.place-mixer-wave-import fieldset { display: flex; flex-wrap: wrap; gap: 5px; margin: 11px 0 0; padding: 9px; border: 1px solid rgba(255,255,255,.08); border-radius: 13px; }
+.place-mixer-wave-import legend { padding: 0 5px; color: #a6a8b1; font-size: 10px; }
+.place-mixer-wave-import fieldset > button { min-height: 34px; padding: 0 10px; border: 1px solid #41434a; border-radius: 7px; background: var(--wave-import-face); box-shadow: var(--wave-import-depth); color: #b5b7c0; font-size: 9px; font-weight: 650; }
+.place-mixer-wave-import fieldset > button.is-active { border-color: #b8bbc4; color: #f4f4f6; background: linear-gradient(180deg, #303236, #0a0a0b); box-shadow: inset 0 -2px var(--wave-import-accent), inset 0 1px #ffffff30; }
+.place-mixer-wave-import .place-mixer-wave-import__analysis { margin: 8px 0 0; color: #bfc1cb; font-size: 10px; letter-spacing: .04em; text-align: center; }
+.place-mixer-wave-import .place-mixer-wave-import__error { color: #ff8fa0; font-size: 9px; }
+.place-mixer-wave-import__actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #ffffff12; }
+.place-mixer-wave-import__actions > button { min-height: 40px; border: 1px solid #46484e; border-radius: 9px; background: var(--wave-import-face); box-shadow: var(--wave-import-depth); color: #d7d9e0; font: inherit; font-size: 11px; font-weight: 650; }
+.place-mixer-wave-import__actions > .is-primary { border-color: #b5b8c1; box-shadow: inset 0 1px #ffffff40, inset 0 -2px #ffffff20, 0 3px 6px #000; color: #f4f4f6; }
+.place-mixer-wave-import button { cursor: pointer; }
+.place-mixer-wave-import button:hover:not(:disabled) { border-color: #b8bbc4; filter: brightness(1.12); }
+.place-mixer-wave-import button:focus-visible { outline: 2px solid #c6c9d3; outline-offset: 3px; }
+.place-mixer-wave-import button:disabled { opacity: .4; cursor: not-allowed; }
+@media (max-width: 520px) { .place-mixer-wave-import__choices { grid-template-columns: 1fr; } }
+
+/* Import panels share the equipment finish, without obscuring live video. */
+.place-mixer-wave-import { background: transparent; backdrop-filter: none; animation: none; transition: none; }
+.place-mixer-wave-import > section { animation: none; transition: none; transform: none; background: linear-gradient(180deg, #191a1b 0, #080808 48px, #020202 100%); }
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu {
+  width: min(310px, calc(100% - 18px));
+  padding: 10px;
+  gap: 6px;
+  background: linear-gradient(180deg, #191a1b 0, #080808 48px, #020202 100%);
+  border: 1px solid #57595e; border-radius: 12px;
+  box-shadow: inset 0 1px #ffffff24, inset 0 -1px #000, 0 12px 28px #0009;
+  animation: none; transition: none; transform: none; backdrop-filter: none;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button svg { color: #c6c8ce; }
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button:hover,
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button:focus-visible {
+  border-color: #92959d !important; background: linear-gradient(#292a2c, #080808) !important; color: #fff !important;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button.is-close,
+.place-mixer-wave-import > section > header > button {
+  display: grid; place-items: center; width: 26px; height: 26px; min-width: 26px; min-height: 26px;
+  padding: 0; border: 1px solid #57595e !important; border-radius: 6px;
+  background: linear-gradient(#262729, #080808) !important; color: #d8dae0 !important;
+  box-shadow: inset 0 1px #ffffff24, 0 2px 4px #0008; transform: none;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button.is-close svg,
+.place-mixer-wave-import > section > header > button > svg { width: 16px; height: 16px; margin: 0; position: static; transform: none; }
+
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu button.is-close,
+.place-mixer-wave-import > section > header > button { grid-template-columns: 1fr; gap: 0; }
+
+.place-room-shell .place-mixer-audio .place-mixer-audio__source-menu-title { min-height: 30px; padding-right: 32px; }

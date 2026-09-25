@@ -1,0 +1,62 @@
+.rooms-home-launch-dialog .cage-launch {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif; color-scheme: dark;
+  width: min(660px, calc(100vw - 32px)); max-height: min(850px, calc(100dvh - 40px));
+  padding: 0; display: flex; flex-direction: column; text-align: left; overflow: hidden;
+  color: #efedf5; border: 1px solid #777983; border-radius: 27px;
+  background: radial-gradient(ellipse at 16% 0, #ffffff0d, transparent 45%), linear-gradient(165deg, #14151a 0, #07080a 30%, #030405 80%, #101115 100%);
+  box-shadow: inset 0 1px 1px #ffffff45, inset 0 -1px 2px #ffffff15, 0 24px 85px #000b;
+}
+.rooms-home-launch-dialog .cage-launch.is-studio-step { width: min(1180px, calc(100vw - 32px)); }
+.cage-launch__header { display: flex; align-items: center; gap: 15px; padding: 25px 25px 20px; }
+.cage-launch__mark { display: grid; place-items: center; width: 45px; height: 45px; flex: 0 0 auto; border: 1px solid #a09daa55; border-radius: 14px; color: #c8b5f6; background: linear-gradient(#292730, #0b0b0e); box-shadow: inset 0 1px #ffffff24; }
+.cage-launch__eyebrow { color: #aaa4bc; font-size: 10px; letter-spacing: .11em; font-weight: 650; }
+.cage-launch__header h2 { margin: 4px 0; font-size: 23px; letter-spacing: -.025em; }
+.cage-launch__header p { margin: 0; color: #9f9da9; font-size: 12px; line-height: 1.5; }
+.cage-launch__close { width: 33px; height: 33px; margin-left: auto; flex: 0 0 auto; display: grid; place-items: center; color: #cbc8d2; border: 1px solid #6b6c754d; border-radius: 10px; background: linear-gradient(#25262b, #090a0c); box-shadow: inset 0 1px #ffffff2b; }
+.cage-launch__close svg { width: 16px; }
+.cage-launch__steps { display: flex; justify-content: space-between; margin: 0 25px; padding: 16px 0; border-top: 1px solid #ffffff0c; border-bottom: 1px solid #ffffff0c; }
+.cage-launch__steps span { display: flex; align-items: center; gap: 7px; color: #7e7c88; font-size: 12px; }
+.cage-launch__steps i { display: grid; place-items: center; width: 21px; height: 21px; border: 1px solid #ffffff15; border-radius: 50%; font-size: 10px; font-style: normal; }
+.cage-launch__steps .is-active { color: #d7c9f7; }
+.cage-launch__steps .is-active i { background: #9460ea25; border-color: #be95ff64; }
+.cage-launch__body { overflow-y: auto; overscroll-behavior: contain; padding: 22px 25px; display: flex; flex-direction: column; gap: 17px; scrollbar-width: thin; scrollbar-color: #737b89 #080a0c; }
+.cage-launch__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 15px; }
+.cage-launch__field { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: #bab7c4; font-size: 12px; }
+.cage-launch__field :is(input, select) { width: 100%; min-width: 0; box-sizing: border-box; height: 43px; padding: 0 12px; border: 1px solid #ffffff20; border-radius: 11px; outline: none; color: #e4e1ed; background: #ffffff04; font: inherit; font-size: 13px; color-scheme: dark; box-shadow: inset 0 1px 3px #0008; }
+.cage-launch__field :is(input, select):focus-visible { border-color: #b28ae5; box-shadow: 0 0 0 2px #ad7cee1c; }
+.cage-launch__note { margin: 0; color: #92909d; font-size: 12px; line-height: 1.7; }
+.cage-launch__permissions { display: flex; flex-direction: column; gap: 14px; margin-top: 1px; }
+.cage-launch__permissions label { display: flex; align-items: flex-start; gap: 11px; cursor: pointer; }
+.cage-launch__permissions input { accent-color: #a682d5; margin-top: 3px; }
+.cage-launch__permissions span { display: flex; flex-direction: column; gap: 4px; }
+.cage-launch__permissions strong { font-size: 12px; font-weight: 550; color: #d0ccd9; }
+.cage-launch__permissions small { color: #85818e; font-size: 11px; line-height: 1.5; }
+.cage-launch__footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 25px; border-top: 1px solid #ffffff0b; background: #0004; }
+.cage-launch__footer button, .cage-launch__save { min-height: 42px; padding: 0 16px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; font-size: 12px; font-weight: 550; }
+.cage-launch__footer button svg, .cage-launch__save svg { width: 16px; height: 16px; }
+.cage-launch__primary { background: linear-gradient(#514363, #292032); color: #f1e9ff; border: 1px solid #ac8ccc88; box-shadow: inset 0 1px #f1dcff33, 0 3px 9px #0008; }
+.cage-launch__secondary, .cage-launch__save { color: #b6b2c0; background: linear-gradient(#1a1b20, #08090b); border: 1px solid #ffffff1c; box-shadow: inset 0 1px #ffffff14; }
+.cage-launch button:disabled { opacity: .5; cursor: default; }
+.cage-launch button:focus-visible { outline: 2px solid #bc9af4; outline-offset: 3px; }
+.cage-launch__summary { text-align: center; padding: 7px 0 12px; }
+.cage-launch__summary > svg { display: block; margin: 0 auto 12px; color: #c5b1e2; width: 33px; height: 33px; }
+.cage-launch__summary > span { font-size: 9px; letter-spacing: .12em; color: #a49dac; }
+.cage-launch__summary h3 { margin: 8px 0; font-size: 24px; font-weight: 650; letter-spacing: -.025em; }
+.cage-launch__summary p { margin: 0; color: #a19bab; font-size: 13px; }
+.cage-launch__recap { margin: 0; padding: 0 16px; border: 1px solid #ffffff12; border-radius: 14px; background: #0004; }
+.cage-launch__recap div { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; font-size: 12px; }
+.cage-launch__recap div + div { border-top: 1px solid #ffffff0a; }
+.cage-launch__recap dt { color: #908c99; }
+.cage-launch__recap dd { margin: 0; color: #d3cddc; text-align: right; }
+.cage-launch__save { align-self: flex-start; }
+.cage-launch__error { margin: 0; color: #e7a1a8; font-size: 12px; line-height: 1.6; }
+@media (max-width: 520px) {
+  .cage-launch__header { padding: 20px 17px 15px; gap: 10px; }
+  .cage-launch__mark { display: none; }
+  .cage-launch__header h2 { font-size: 20px; }
+  .cage-launch__steps { margin: 0 17px; }
+  .cage-launch__steps span { font-size: 10px; gap: 5px; }
+  .cage-launch__body { padding: 20px 17px; }
+  .cage-launch__grid { grid-template-columns: 1fr; gap: 15px; }
+  .cage-launch__footer { padding: 15px 17px; }
+}

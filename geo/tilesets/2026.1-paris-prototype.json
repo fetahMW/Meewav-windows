@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.1-paris-prototype",
+  "scope": "paris",
+  "archive": "france-zones-paris.pmtiles",
+  "sha256": "5734a8cfefb8d5007f8e88f7bae031dbc2c3fb684023fb009caf5d76c6aae7b2",
+  "bytes": 4273655,
+  "tileCount": 631,
+  "tilesByZoom": {
+    "4": 2,
+    "5": 4,
+    "6": 9,
+    "7": 24,
+    "8": 72,
+    "9": 2,
+    "10": 5,
+    "11": 10,
+    "12": 32,
+    "13": 104,
+    "14": 367
+  },
+  "maximumTileBytes": 245939,
+  "minZoom": 4,
+  "maxZoom": 14,
+  "bounds": [
+    -5.1036,
+    41.36823,
+    9.55972,
+    51.0884
+  ],
+  "center": [
+    2.3807005,
+    48.84998152586082,
+    11
+  ],
+  "sourceLayers": [
+    "regions",
+    "departments",
+    "communes",
+    "music_zones"
+  ],
+  "physicalSourceLayers": {
+    "regions": {
+      "present": true,
+      "sampleZoneId": "aeffeb92-188f-59ec-a561-8257a043e9df",
+      "sampleLegacyZoneId": null
+    },
+    "departments": {
+      "present": false,
+      "sampleZoneId": null,
+      "sampleLegacyZoneId": null
+    },
+    "communes": {
+      "present": true,
+      "sampleZoneId": "32facdd6-d9f5-576d-80fb-112652c0db7f",
+      "sampleLegacyZoneId": "grand_paris_commune_92004"
+    },
+    "music_zones": {
+      "present": true,
+      "sampleZoneId": "32facdd6-d9f5-576d-80fb-112652c0db7f",
+      "sampleLegacyZoneId": "grand_paris_commune_92004"
+    }
+  },
+  "featureCounts": {
+    "regions": 13,
+    "departments": 0,
+    "communes": 123,
+    "music_zones": 1115
+  },
+  "canonicalZoneCount": 1115,
+  "representativeTile": {
+    "z": 14,
+    "x": 8304,
+    "y": 5639
+  },
+  "representativeLayerFeatureCounts": {
+    "communes": 6,
+    "music_zones": 25
+  }
+}

@@ -1,0 +1,36 @@
+.ring-artist-preprofile {
+  --mw-bubble-w:413px; --mw-bubble-h:588px;
+  position:fixed; z-index:15940; width:413px; height:588px;
+  transform-origin:top left; pointer-events:auto;
+  color:#eee; -webkit-user-select:none; user-select:none;
+  animation:ring-preprofile-enter 160ms ease-out;
+}
+.ring-artist-preprofile *, .ring-artist-preprofile *::before, .ring-artist-preprofile *::after { box-sizing:border-box; }
+.ring-artist-preprofile * { -webkit-user-select:none; user-select:none; }
+.ring-artist-preprofile__close {
+  position:absolute; z-index:21; top:10px; right:12px;
+  display:grid; place-items:center; width:30px; height:30px;
+  padding:0; border:1px solid #bfc0c15c; border-radius:8px;
+  background:radial-gradient(ellipse at 23% -8%, #ffffff26, transparent 65%), linear-gradient(160deg, #303132, #101112 34%, #030303 72%, #111213);
+  box-shadow:inset 0 1px 1px #ffffff38, inset 0 -1px 3px #000, 0 2px 0 #010101, 0 4px 6px #0009;
+  color:#d0d2d5; cursor:pointer;
+}
+.ring-artist-preprofile__close svg { width:15px; height:15px; stroke-width:1.65; }
+.ring-artist-preprofile__close:hover { border-color:#d4dae5a3; color:#fff; }
+.ring-artist-preprofile__close:active { transform:translateY(1px); }
+.ring-artist-preprofile__close:focus-visible { outline:2px solid #c0ccdf; outline-offset:3px; }
+.ring-artist-preprofile[data-placement="right"] .mw-hover-preprofile-bubble__arrow {
+  left:-7px; border-left:1px solid #b4c0d25c; border-bottom:1px solid #404853; transform:translateY(-50%) rotate(45deg);
+}
+.ring-artist-preprofile[data-placement="left"] .mw-hover-preprofile-bubble__arrow {
+  right:-7px; border-top:1px solid #b4c0d25c; border-right:1px solid #404853; transform:translateY(-50%) rotate(45deg);
+}
+.ring-artist-preprofile__demo { position:absolute; bottom:13px; left:24px; font-size:9px; color:#858b98; pointer-events:none; }
+.ring-artist-preprofile__notice {
+  position:absolute; z-index:22; bottom:32px; left:20px; right:20px;
+  padding:14px; border:1px solid #b5a0e85e; border-radius:12px;
+  background:#171020f5; color:#eee5ff; font-size:13px; line-height:1.5; text-align:center;
+  box-shadow:0 6px 20px #0007;
+}
+@keyframes ring-preprofile-enter { from { opacity:0; } to { opacity:1; } }
+@media (prefers-reduced-motion:reduce) { .ring-artist-preprofile { animation:none; } }

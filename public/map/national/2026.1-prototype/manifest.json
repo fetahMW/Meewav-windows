@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.2-montpellier-test",
+  "scope": "all",
+  "archive": "france-zones.pmtiles",
+  "sha256": "4664594b36412e0658a926061abf41385ecef5bb6c64779067cd70ae05b59a93",
+  "bytes": 27440413,
+  "tileCount": 4493,
+  "tilesByZoom": {
+    "4": 2,
+    "5": 4,
+    "6": 9,
+    "7": 24,
+    "8": 72,
+    "9": 23,
+    "10": 47,
+    "11": 104,
+    "12": 284,
+    "13": 882,
+    "14": 3042
+  },
+  "maximumTileBytes": 390227,
+  "minZoom": 4,
+  "maxZoom": 14,
+  "bounds": [
+    -5.1036,
+    41.36823,
+    9.55972,
+    51.0884
+  ],
+  "center": [
+    2.7558410667399302,
+    46.97599240788497,
+    11
+  ],
+  "sourceLayers": [
+    "regions",
+    "departments",
+    "communes",
+    "music_zones"
+  ],
+  "physicalSourceLayers": {
+    "regions": {
+      "present": true,
+      "sampleZoneId": "04d28f30-ebcb-54b9-af51-90b7dd6d42b3",
+      "sampleLegacyZoneId": null
+    },
+    "departments": {
+      "present": false,
+      "sampleZoneId": null,
+      "sampleLegacyZoneId": null
+    },
+    "communes": {
+      "present": true,
+      "sampleZoneId": "c0af0932-443b-564b-a2ec-6afacc5ff3bb",
+      "sampleLegacyZoneId": "nantes_metropole_commune_44009"
+    },
+    "music_zones": {
+      "present": true,
+      "sampleZoneId": "8f242dbe-5503-51b1-bdb1-172dc5c05a95",
+      "sampleLegacyZoneId": "nantes_0101_dobree_bon_port"
+    }
+  },
+  "featureCounts": {
+    "regions": 13,
+    "departments": 0,
+    "communes": 440,
+    "music_zones": 6942
+  },
+  "canonicalZoneCount": 3471,
+  "representativeTile": {
+    "z": 14,
+    "x": 8412,
+    "y": 5844
+  },
+  "representativeLayerFeatureCounts": {
+    "music_zones": 64
+  }
+}

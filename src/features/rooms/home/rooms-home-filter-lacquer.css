@@ -1,0 +1,231 @@
+/* Rooms' filter lives in a portal. Scope the equipment finish to its ID so
+   the Globe and the other shared filter panels keep their own presentation. */
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) {
+  --rooms-filter-face: linear-gradient(180deg, #252627, #101112 44%, #050505);
+  --rooms-filter-rim: #ffffff24;
+  --rooms-filter-key-shadow: inset 0 1px #ffffff18, inset 0 -1px #000, 0 2px 4px #0008;
+  border: 1px solid #55565c;
+  border-radius: 18px;
+  background: linear-gradient(115deg, #ffffff04, transparent 30%), linear-gradient(180deg, #191b1d, #080909 65px, #030303);
+  box-shadow: inset 0 1px #ffffff35, inset 1px 0 #ffffff0a, inset 0 -1px #000, 0 18px 60px #000b;
+  color: #ececee;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header {
+  flex: 0 0 auto;
+  border-color: #ffffff12;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header::before {
+  background: linear-gradient(90deg, #c4c6cb38, #c4c6cb0c 65%, transparent);
+  box-shadow: none;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__headingIcon {
+  border-color: #707075;
+  border-radius: 11px;
+  background: var(--rooms-filter-face);
+  box-shadow: inset 0 1px #ffffff25, 0 3px 6px #000c;
+  color: #e3e4e7;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__headingIcon::after { display: none; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__eyebrow { color: #a9abb2; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header strong { color: #f0f0f2; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header p { color: #a4a4ac; }
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__close {
+  border-color: #46464b;
+  border-radius: 10px;
+  background: var(--rooms-filter-face);
+  box-shadow: var(--rooms-filter-key-shadow);
+  color: #c4c6cb;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__body {
+  align-content: start;
+  gap: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: #454549 #080808;
+  cursor: auto;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__body::-webkit-scrollbar { display: block; width: 4px; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__body::-webkit-scrollbar-thumb { background: #454549; border-radius: 4px; }
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__group { border-color: #ffffff12; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__groupHeader { color: #e4e4e7; font-weight: 650; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__groupHeader small {
+  border-color: #ffffff12;
+  border-radius: 6px;
+  background: #050505;
+  color: #9c9fa8;
+  font-weight: 600;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) :is(.meewav-filter-choice, .rooms-home-filter__grades > button) {
+  min-width: 0;
+  min-height: 44px;
+  border-color: #3b3c41;
+  border-radius: 8px;
+  background: var(--rooms-filter-face);
+  box-shadow: var(--rooms-filter-key-shadow);
+  color: #c5c6ce;
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.4;
+  transform: none;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-choice::after {
+  width: 7px;
+  height: 7px;
+  border-color: #6b6d75;
+  border-radius: 2px;
+  background: #020202;
+  box-shadow: inset 0 1px 2px #000;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) :is(.meewav-filter-choice, .rooms-home-filter__grades > button).is-active {
+  border-color: #94969f;
+  background: linear-gradient(180deg, #202123, #080808 60%);
+  box-shadow: inset 0 1px #ffffff25, inset 0 -1px #000, 0 2px 4px #0008;
+  color: #f1f1f3;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-choice.is-active::after {
+  border-color: #d0c4ef;
+  background: #b39aef;
+  box-shadow: 0 0 4px #b39aef24;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .rooms-home-filter__artist {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  min-height: 58px;
+  padding: 8px 30px 8px 8px;
+  align-items: center;
+  gap: 8px;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .rooms-home-filter__avatar {
+  display: block;
+  width: 36px;
+  height: 40px;
+  object-fit: contain;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .rooms-home-filter__artist > span { min-width: 0; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .rooms-home-filter__artist > small {
+  flex: 0 0 auto;
+  color: #999ca7;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .rooms-home-filter__grades { gap: 9px; }
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-field > span { color: #999ca6; font-weight: 550; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-field::after { border-color: #aeb0b8; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-field select {
+  border-color: #3b3c41;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #020202, #090909);
+  box-shadow: inset 0 2px 5px #000;
+  color: #e4e4e7;
+  font-size: 12px;
+  font-weight: 550;
+  transform: none;
+}
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-field :is(option, optgroup) { color: #e4e4e7; background: #090909; }
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__selectionHint {
+  flex: 0 0 auto;
+  padding-top: 12px;
+  border-top: 1px solid #ffffff12;
+  color: #979aa5;
+  font-size: 10px;
+  font-weight: 550;
+}
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__actions { margin-top: 12px; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) :is(.artist-filter-panel__reset, .artist-filter-panel__apply) {
+  min-height: 40px;
+  border-color: #46464b;
+  border-radius: 8px;
+  background: var(--rooms-filter-face);
+  box-shadow: var(--rooms-filter-key-shadow);
+  color: #d8d8df;
+  font-size: 11px;
+  font-weight: 650;
+}
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__apply {
+  border-color: #a0a2ac;
+  background: linear-gradient(180deg, #2b2c2e, #111112 50%, #050505);
+  box-shadow: inset 0 1px #ffffff40, inset 0 -2px #ffffff20, 0 2px 6px #000;
+  color: #f4f4f6;
+}
+
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) :is(button, select):hover:not(:disabled) {
+  border-color: #929099;
+  background: linear-gradient(180deg, #303033, #0a0a0b);
+  box-shadow: var(--rooms-filter-key-shadow);
+  color: #f0f0f2;
+  transform: none;
+}
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) button.is-active:hover { border-color: #c0c1c9; }
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) :is(button, select):focus-visible {
+  outline: 2px solid #c4c6cf;
+  outline-offset: 2px;
+}
+:is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) button:active:not(:disabled) { box-shadow: inset 0 2px 5px #000, inset 0 -1px #ffffff14; }
+
+/* The trigger and applied filters use the same black control face. */
+.rooms-home__search .search-filter-button {
+  border-color: #4a4b52;
+  background: linear-gradient(180deg, #252627, #101112 44%, #050505);
+  box-shadow: inset 0 1px #ffffff18, inset 0 -1px #000, 0 2px 4px #0008;
+  color: #bfc1cb;
+}
+.rooms-home__search .search-filter-button:is(:hover, .is-active) {
+  border-color: #929099;
+  background: linear-gradient(180deg, #303033, #0a0a0b);
+  box-shadow: inset 0 1px #ffffff25, inset 0 -1px #000, 0 2px 4px #0008;
+  color: #f0f0f2;
+}
+.rooms-home__search .search-filter-button:focus-visible { outline: 2px solid #c4c6cf; outline-offset: 2px; }
+.rooms-home__search .search-filter-button__count { background: #5137a1; color: #f4f0ff; box-shadow: none; }
+.rooms-home__active-filters :is(.artist-filter-active-chip, .artist-filter-active-chips__reset) {
+  border-color: #46464b;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #202123, #080808);
+  box-shadow: inset 0 1px #ffffff14;
+  color: #c4c6cf;
+}
+.rooms-home__active-filters :is(.artist-filter-active-chip, .artist-filter-active-chips__reset):hover {
+  border-color: #929099;
+  background: linear-gradient(180deg, #303033, #0a0a0b);
+  color: #f0f0f2;
+}
+.rooms-home__active-filters button:focus-visible { outline: 2px solid #c4c6cf; outline-offset: -2px; }
+
+@media (max-width: 580px) {
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) { padding: 18px; }
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__heading { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; }
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .artist-filter-panel__headingIcon { width: 36px; height: 40px; }
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header { gap: 10px; }
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header strong { font-size: 19px; }
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__header p { font-size: 11px; }
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .side-panel__close { width: 36px; height: 36px; }
+}
+
+@media (max-width: 360px) {
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) .meewav-filter-choice-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel),
+  :is(#rooms-home-filter-panel, #studio-guests-filter-panel, #scene-filter-panel) :is(button, select),
+  .rooms-home__search .search-filter-button { transition: none; }
+}

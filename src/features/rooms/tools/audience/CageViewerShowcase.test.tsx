@@ -1,0 +1,22 @@
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, expect, it, vi } from "vitest";
+import CageViewerShowcase from "./CageViewerShowcase";
+afterEach(()=>vi.useRealTimers());
+it("starts only on request and leaves exactly two seconds between resolved matches",()=>{
+ vi.useFakeTimers();
+ render(<CageViewerShowcase enabled><p>Programme réel</p></CageViewerShowcase>);
+ expect(screen.queryByText(/PARIS VS MARSEILLE/)).toBeNull();
+ act(()=>window.dispatchEvent(new Event("cage-viewer-simulation-ready")));
+ expect(screen.getByText(/PARIS VS MARSEILLE/)).toBeInTheDocument();
+ act(()=>vi.advanceTimersByTime(4000));
+ fireEvent.click(screen.getAllByRole("button",{name:"Je valide"})[0]);
+ expect(screen.getByText("Votre choix")).toBeInTheDocument();
+ act(()=>vi.advanceTimersByTime(6000));
+ expect(screen.getByText(/RÉSULTAT DU BATTLE/)).toBeInTheDocument();
+ act(()=>vi.advanceTimersByTime(1999));
+ expect(screen.getByText(/RÉSULTAT DU BATTLE/)).toBeInTheDocument();
+ act(()=>vi.advanceTimersByTime(1));
+ expect(screen.getByText(/BATTLE EN COURS/)).toBeInTheDocument();
+ fireEvent.click(screen.getByRole("button",{name:"Quitter la simulation"}));
+ expect(screen.getByText("Programme réel")).toBeInTheDocument();
+});

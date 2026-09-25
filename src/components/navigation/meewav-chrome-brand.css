@@ -1,0 +1,45 @@
+/* The desktop glass chassis carries MEEWAV above the globe. Keep its header
+   identity compact and consistent while preserving mobile and overlay brands. */
+@media (min-width: 761px) {
+  :is(.rooms-page, .messaging-page, .market-page, .tremplin-page, .shorts-page, .profile-page, .profile-viewer-page:not(.is-overlay))
+  :is(.rooms-topbar, .place-room-shellbar, .mw-chat-header, .market-topbar, .tremplin-topbar, .shorts-topbar, .profile-command-bar, .profile-viewer-command-bar) {
+    padding-inline-start: clamp(12px, 1vw, 20px);
+  }
+
+  :is(.rooms-page, .messaging-page, .market-page, .tremplin-page, .shorts-page, .profile-page, .profile-viewer-page:not(.is-overlay))
+  :is(.rooms-topbar, .place-room-shellbar, .mw-chat-header, .market-topbar, .tremplin-topbar, .shorts-topbar, .profile-command-bar, .profile-viewer-command-bar)
+  .meewav-pillar-brand {
+    gap: 0;
+  }
+
+  :is(.rooms-page, .messaging-page, .market-page, .tremplin-page, .shorts-page, .profile-page, .profile-viewer-page:not(.is-overlay))
+  :is(.rooms-topbar, .place-room-shellbar, .mw-chat-header, .market-topbar, .tremplin-topbar, .shorts-topbar, .profile-command-bar, .profile-viewer-command-bar)
+  .meewav-pillar-brand > :is(.meewav-pillar-brand__app, .meewav-pillar-brand__separator) {
+    display: none;
+  }
+
+  :is(.rooms-page, .messaging-page, .market-page, .tremplin-page, .shorts-page, .profile-page, .profile-viewer-page:not(.is-overlay))
+  :is(.rooms-topbar, .place-room-shellbar, .mw-chat-header, .market-topbar, .tremplin-topbar, .shorts-topbar, .profile-command-bar, .profile-viewer-command-bar):not([data-room-presentation])
+  .meewav-pillar-brand .meewav-pillar-brand__pillar {
+    color: #b39aef;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /* Live room titles keep their own identity, including La Loge's gold lettering. */
+
+  .profile-viewer-page:not(.is-overlay) .profile-viewer-command-bar {
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--mw-glass-topbar-height, clamp(62px, 6.2vh, 68px));
+    padding-block: 8px;
+    padding-inline-end: clamp(12px, 1vw, 20px);
+  }
+
+  .profile-viewer-page:not(.is-overlay) .profile-viewer-command-bar .meewav-pillar-brand__pillar {
+    font-size: 22px;
+    font-weight: 780;
+    letter-spacing: -0.04em;
+  }
+}

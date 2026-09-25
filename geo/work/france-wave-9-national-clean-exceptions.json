@@ -1,0 +1,6946 @@
+{
+  "schemaVersion": 1,
+  "kind": "guide_alpha_auto_curation_exceptions",
+  "wave": 9,
+  "generatedAt": "2026-07-14T18:46:35.233Z",
+  "provenance": {
+    "inputPath": "geo/work/france-wave-9-clean-plan.json",
+    "inputSha256": "2d96736f1a1e770ecf427b1993f2c9989948e8fada3e4b5bd335e81488525179",
+    "inputSchemaVersion": 1,
+    "inputWave": 9,
+    "inputGeneratedAt": "2026-06-14T09:12:07.922Z",
+    "inputCollectionKey": "cities",
+    "inputCityCount": 412
+  },
+  "auditPolicy": {
+    "version": 1,
+    "decision": "accept-only; never rename, merge, group, drop or invent",
+    "exactInventory": "Every ready city keeps every exact source IRIS ID, official label and type unchanged.",
+    "labels": "Ready labels must be non-empty, human, unique after French normalization, unnumbered, non-technical, non-direction-only, non-operational and non-generic.",
+    "exceptions": "Every ambiguity is quarantined for manual exact-ID Guide Alpha curation."
+  },
+  "summary": {
+    "inputCities": 412,
+    "inspectedCities": 412,
+    "readyCities": 280,
+    "manualCurationRequired": 132,
+    "deferredByLimit": 0
+  },
+  "cities": [
+    {
+      "id": "vaureal",
+      "name": "Vauréal",
+      "communeCode": "95637",
+      "rank": 5,
+      "population": 16079,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "956370101",
+          "label": "Sablons-Ombrages-Moissons",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "956370102",
+          "label": "Le Boulingrin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "956370103",
+          "label": "Siaule-Le Boulingrin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "956370104",
+          "label": "Marnière-Les Groues-Allée Couverte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "956370105",
+          "label": "Hauts Toupets-Bocquet-Longues Terres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "956370106",
+          "label": "Le Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "956370106"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sin_le_noble",
+      "name": "Sin-le-Noble",
+      "communeCode": "59569",
+      "rank": 6,
+      "population": 16076,
+      "departmentCode": "59",
+      "departmentName": "Nord",
+      "regionName": "Hauts-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "595690101",
+          "label": "Le Marais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595690102",
+          "label": "Le Bivouac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595690103",
+          "label": "Le Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595690104",
+          "label": "La Brasserie et Le Faubourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595690105",
+          "label": "Le Puits du Midi et Paul Foucaut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595690106",
+          "label": "Quartier Les Épis",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre Ville” is a generic territorial description.",
+          "sourceIds": [
+            "595690103"
+          ],
+          "labels": [
+            "Le Centre Ville"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amberieu_en_bugey",
+      "name": "Ambérieu-en-Bugey",
+      "communeCode": "01004",
+      "rank": 9,
+      "population": 15934,
+      "departmentCode": "01",
+      "departmentName": "Ain",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "010040101",
+          "label": "Les Pérouses-Triangle d'Activités",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010040102",
+          "label": "Longeray-Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010040201",
+          "label": "Centre-Saint-Germain-Vareilles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010040202",
+          "label": "Tiret-Les Allymes",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Les Pérouses-Triangle d'Activités” contains operational or land-use wording.",
+          "sourceIds": [
+            "010040101"
+          ],
+          "labels": [
+            "Les Pérouses-Triangle d'Activités"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hennebont",
+      "name": "Hennebont",
+      "communeCode": "56083",
+      "rank": 10,
+      "population": 15910,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "560830101",
+          "label": "Centre Ville Kerlano",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "560830102",
+          "label": "Langroix Talhouet Saint-Gilles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "560830103",
+          "label": "Kerihouais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "560830104",
+          "label": "Zones Industrielles",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "560830105",
+          "label": "Rive Droite",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zones Industrielles” contains operational or land-use wording.",
+          "sourceIds": [
+            "560830104"
+          ],
+          "labels": [
+            "Zones Industrielles"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hayange",
+      "name": "Hayange",
+      "communeCode": "57306",
+      "rank": 11,
+      "population": 15806,
+      "departmentCode": "57",
+      "departmentName": "Moselle",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "573060101",
+          "label": "Le Konacker",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "573060102",
+          "label": "1re Zone Forêts et Champs",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "573060103",
+          "label": "Marspich La Vierge",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "573060104",
+          "label": "Cité du Bruhl",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "573060105",
+          "label": "Faubourg Sainte-Catherine Pâtural",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "573060106",
+          "label": "Cités du Gargan Bellevue La Cerisaie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "573060108",
+          "label": "Saint-Nicolas en Forêt",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "573060110",
+          "label": "2e Zone Forêts et Champs",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "numbered_label",
+          "detail": "The label “1re Zone Forêts et Champs” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "573060102"
+          ],
+          "labels": [
+            "1re Zone Forêts et Champs"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “1re Zone Forêts et Champs” contains operational or land-use wording.",
+          "sourceIds": [
+            "573060102"
+          ],
+          "labels": [
+            "1re Zone Forêts et Champs"
+          ]
+        },
+        {
+          "code": "numbered_label",
+          "detail": "The label “2e Zone Forêts et Champs” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "573060110"
+          ],
+          "labels": [
+            "2e Zone Forêts et Champs"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “2e Zone Forêts et Champs” contains operational or land-use wording.",
+          "sourceIds": [
+            "573060110"
+          ],
+          "labels": [
+            "2e Zone Forêts et Champs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "longwy",
+      "name": "Longwy",
+      "communeCode": "54323",
+      "rank": 16,
+      "population": 15679,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "543230101",
+          "label": "Saint-Louis-Les Recollets-Longwy Bas",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543230102",
+          "label": "Gouraincourt",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543230103",
+          "label": "Le Vieux Château Pulventeux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543230104",
+          "label": "Longwy Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543230105",
+          "label": "Longwy Ouest-Longwy Haut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543230106",
+          "label": "Le Tivoli-Longwy Haut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543230107",
+          "label": "Longwy Nord-Ouest",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Longwy Ouest” is only the commune name plus a direction.",
+          "sourceIds": [
+            "543230104"
+          ],
+          "labels": [
+            "Longwy Ouest"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Longwy Nord-Ouest” is only the commune name plus a direction.",
+          "sourceIds": [
+            "543230107"
+          ],
+          "labels": [
+            "Longwy Nord-Ouest"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guipavas",
+      "name": "Guipavas",
+      "communeCode": "29075",
+      "rank": 18,
+      "population": 15538,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "290750101",
+          "label": "Habitat Épars",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290750102",
+          "label": "Aéroport",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "290750103",
+          "label": "Coataudon-Moulin Blanc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290750104",
+          "label": "Bourg Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290750105",
+          "label": "Bourg Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Aéroport” is only a generic facility name.",
+          "sourceIds": [
+            "290750102"
+          ],
+          "labels": [
+            "Aéroport"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roquebrune_sur_argens",
+      "name": "Roquebrune-sur-Argens",
+      "communeCode": "83107",
+      "rank": 20,
+      "population": 15442,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "831070101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831070102",
+          "label": "La Bouverie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831070103",
+          "label": "Les Issambres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831070104",
+          "label": "Écarts",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "831070101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tarascon",
+      "name": "Tarascon",
+      "communeCode": "13108",
+      "rank": 21,
+      "population": 15396,
+      "departmentCode": "13",
+      "departmentName": "Bouches-du-Rhône",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "131080101",
+          "label": "Extention Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "131080102",
+          "label": "Campagne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "131080103",
+          "label": "Zone Nord-Est Urbaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "131080104",
+          "label": "Centre Ville Sud et Quartier Marly",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "131080105",
+          "label": "Centre Ville Nord",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Nord-Est Urbaine” contains operational or land-use wording.",
+          "sourceIds": [
+            "131080103"
+          ],
+          "labels": [
+            "Zone Nord-Est Urbaine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vesoul",
+      "name": "Vesoul",
+      "communeCode": "70550",
+      "rank": 24,
+      "population": 15078,
+      "departmentCode": "70",
+      "departmentName": "Haute-Saône",
+      "regionName": "Bourgogne-Franche-Comté",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "705500101",
+          "label": "Rèpes-Pontarcher",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "705500102",
+          "label": "Grand Montmarin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "705500103",
+          "label": "Vesoul Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "705500104",
+          "label": "Grand Grésil-Stade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "705500105",
+          "label": "Centre Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "705500106",
+          "label": "Centre Nord-Saint-Ferjeux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "705500107",
+          "label": "Jean-Jaurès-Petit-Banque",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Vesoul Ouest” is only the commune name plus a direction.",
+          "sourceIds": [
+            "705500103"
+          ],
+          "labels": [
+            "Vesoul Ouest"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arnouville",
+      "name": "Arnouville",
+      "communeCode": "95019",
+      "rank": 25,
+      "population": 15023,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "950190101",
+          "label": "Cottage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950190102",
+          "label": "Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950190103",
+          "label": "Stade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950190104",
+          "label": "Vieux Pays",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950190105",
+          "label": "Condos",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950190106",
+          "label": "Beauséjour",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Gare” is only a generic facility name.",
+          "sourceIds": [
+            "950190102"
+          ],
+          "labels": [
+            "Gare"
+          ]
+        },
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Stade” is only a generic facility name.",
+          "sourceIds": [
+            "950190103"
+          ],
+          "labels": [
+            "Stade"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fameck",
+      "name": "Fameck",
+      "communeCode": "57206",
+      "rank": 29,
+      "population": 14788,
+      "departmentCode": "57",
+      "departmentName": "Moselle",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "572060101",
+          "label": "Bouvreuils Cerisaie Hêtres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "572060102",
+          "label": "Cités Bosment Oury Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "572060103",
+          "label": "Rémelange Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "572060104",
+          "label": "Zone de Forêts",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "572060105",
+          "label": "Rémelange Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "572060106",
+          "label": "Le Haut Chemin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "572060107",
+          "label": "Budange Édange Les Chênes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "572060108",
+          "label": "Morlange Bel-Air Bertrand Nord",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone de Forêts” contains operational or land-use wording.",
+          "sourceIds": [
+            "572060104"
+          ],
+          "labels": [
+            "Zone de Forêts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_gilles",
+      "name": "Saint-Gilles",
+      "communeCode": "30258",
+      "rank": 30,
+      "population": 14734,
+      "departmentCode": "30",
+      "departmentName": "Gard",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "302580101",
+          "label": "Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "302580102",
+          "label": "Sabatot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "302580103",
+          "label": "Zone Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "302580104",
+          "label": "Zone Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "302580105",
+          "label": "Centre Périphérique",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Nord” contains operational or land-use wording.",
+          "sourceIds": [
+            "302580103"
+          ],
+          "labels": [
+            "Zone Nord"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Sud” contains operational or land-use wording.",
+          "sourceIds": [
+            "302580104"
+          ],
+          "labels": [
+            "Zone Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "montesson",
+      "name": "Montesson",
+      "communeCode": "78418",
+      "rank": 32,
+      "population": 14549,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "784180101",
+          "label": "Les Rabaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784180102",
+          "label": "La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784180103",
+          "label": "La Borde",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784180104",
+          "label": "Centre Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784180105",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784180106",
+          "label": "Centre Ouest",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "784180105"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "montataire",
+      "name": "Montataire",
+      "communeCode": "60414",
+      "rank": 38,
+      "population": 14257,
+      "departmentCode": "60",
+      "departmentName": "Oise",
+      "regionName": "Hauts-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "604140101",
+          "label": "Martinets I",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "604140102",
+          "label": "Martinets II",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "604140201",
+          "label": "Bas de la Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "604140301",
+          "label": "Gournay-Fonds de Montataire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "604140401",
+          "label": "Quartier Industriel",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "604140501",
+          "label": "Secteur Agricole",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Quartier Industriel” contains operational or land-use wording.",
+          "sourceIds": [
+            "604140401"
+          ],
+          "labels": [
+            "Quartier Industriel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hautmont",
+      "name": "Hautmont",
+      "communeCode": "59291",
+      "rank": 39,
+      "population": 14152,
+      "departmentCode": "59",
+      "departmentName": "Nord",
+      "regionName": "Hauts-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "592910101",
+          "label": "Saint-Marcel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "592910102",
+          "label": "Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "592910103",
+          "label": "Cimetière-Église",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "592910104",
+          "label": "Les Tulipes-Cité de Forest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "592910105",
+          "label": "Entre Deux Bois-La Chesnaie-Les Bateliers",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Gare” is only a generic facility name.",
+          "sourceIds": [
+            "592910102"
+          ],
+          "labels": [
+            "Gare"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_martin_de_crau",
+      "name": "Saint-Martin-de-Crau",
+      "communeCode": "13097",
+      "rank": 40,
+      "population": 14145,
+      "departmentCode": "13",
+      "departmentName": "Bouches-du-Rhône",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "130970101",
+          "label": "Les Bois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130970102",
+          "label": "La Crau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130970103",
+          "label": "Caphan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130970104",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130970105",
+          "label": "Le Lac",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "130970104"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bollene",
+      "name": "Bollène",
+      "communeCode": "84019",
+      "rank": 44,
+      "population": 14024,
+      "departmentCode": "84",
+      "departmentName": "Vaucluse",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "840190101",
+          "label": "La Planchette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840190102",
+          "label": "Gres de Tousilles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840190103",
+          "label": "La Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840190201",
+          "label": "Bollène Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840190202",
+          "label": "Bollène Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840190203",
+          "label": "Bollène Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “La Ville” is a generic territorial description.",
+          "sourceIds": [
+            "840190103"
+          ],
+          "labels": [
+            "La Ville"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bollène Est” is only the commune name plus a direction.",
+          "sourceIds": [
+            "840190201"
+          ],
+          "labels": [
+            "Bollène Est"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bollène Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "840190202"
+          ],
+          "labels": [
+            "Bollène Nord"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bollène Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "840190203"
+          ],
+          "labels": [
+            "Bollène Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "andresy",
+      "name": "Andrésy",
+      "communeCode": "78015",
+      "rank": 45,
+      "population": 13834,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "780150101",
+          "label": "L'Hautil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780150102",
+          "label": "Les Coteaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780150103",
+          "label": "Les Charvaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780150104",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780150105",
+          "label": "Les Îles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780150106",
+          "label": "Denouval",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "780150104"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "avon",
+      "name": "Avon",
+      "communeCode": "77014",
+      "rank": 48,
+      "population": 13651,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "770140101",
+          "label": "Avon Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "770140102",
+          "label": "Avon Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "770140103",
+          "label": "Avon Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "770140104",
+          "label": "Avon Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "770140105",
+          "label": "Avon Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Avon Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "770140101"
+          ],
+          "labels": [
+            "Avon Nord"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Avon Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "770140102"
+          ],
+          "labels": [
+            "Avon Centre"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Avon Ouest” is only the commune name plus a direction.",
+          "sourceIds": [
+            "770140103"
+          ],
+          "labels": [
+            "Avon Ouest"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Avon Est” is only the commune name plus a direction.",
+          "sourceIds": [
+            "770140104"
+          ],
+          "labels": [
+            "Avon Est"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Avon Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "770140105"
+          ],
+          "labels": [
+            "Avon Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amilly",
+      "name": "Amilly",
+      "communeCode": "45004",
+      "rank": 49,
+      "population": 13582,
+      "departmentCode": "45",
+      "departmentName": "Loiret",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "450040101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450040102",
+          "label": "Saint-Firmin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450040103",
+          "label": "Les Goths",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450040201",
+          "label": "Viroy A",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450040202",
+          "label": "Viroy B",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "450040101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plouzane",
+      "name": "Plouzané",
+      "communeCode": "29212",
+      "rank": 50,
+      "population": 13567,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "292120101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292120102",
+          "label": "Castel Nevez",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292120103",
+          "label": "Kerallan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292120104",
+          "label": "La Trinité",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292120105",
+          "label": "Habitat Épars",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "292120106",
+          "label": "Technopole",
+          "irisType": "A"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "292120101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        },
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Technopole” is only a generic facility name.",
+          "sourceIds": [
+            "292120106"
+          ],
+          "labels": [
+            "Technopole"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "genas",
+      "name": "Genas",
+      "communeCode": "69277",
+      "rank": 53,
+      "population": 13421,
+      "departmentCode": "69",
+      "departmentName": "Rhône",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "692770101",
+          "label": "Grandes Terres Revoisson",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "692770102",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "692770103",
+          "label": "Azieu",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "692770104",
+          "label": "Vurey",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "692770102"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tulle",
+      "name": "Tulle",
+      "communeCode": "19272",
+      "rank": 54,
+      "population": 13401,
+      "departmentCode": "19",
+      "departmentName": "Corrèze",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "192720101",
+          "label": "Souilhac Cité Cazeaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192720102",
+          "label": "Rural Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192720201",
+          "label": "Urbain Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192720202",
+          "label": "Urbain Centre Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192720301",
+          "label": "Urbain Rive Gauche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192720302",
+          "label": "Urbain Gare-Condamines-Marquisat",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192720303",
+          "label": "Rural Est",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural Ouest” contains generic territorial wording.",
+          "sourceIds": [
+            "192720102"
+          ],
+          "labels": [
+            "Rural Ouest"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural Est” contains generic territorial wording.",
+          "sourceIds": [
+            "192720303"
+          ],
+          "labels": [
+            "Rural Est"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cuers",
+      "name": "Cuers",
+      "communeCode": "83049",
+      "rank": 55,
+      "population": 13271,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "830490101",
+          "label": "Les Rayols-Saint-Lazare-Les Bousquets",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830490102",
+          "label": "Les Cahides-L'Hubac-L'Hubac de Capus",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830490103",
+          "label": "Le Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "830490103"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "berck",
+      "name": "Berck",
+      "communeCode": "62108",
+      "rank": 60,
+      "population": 12951,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "621080101",
+          "label": "Mairie-La Vigogne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621080102",
+          "label": "Quartier Chinois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621080103",
+          "label": "Hôpital",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621080104",
+          "label": "Gare-Agora",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621080105",
+          "label": "Quartier Gentry-Institut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621080106",
+          "label": "Randon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621080107",
+          "label": "Plaine de l'église-Plaine Magnier",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Hôpital” is only a generic facility name.",
+          "sourceIds": [
+            "621080103"
+          ],
+          "labels": [
+            "Hôpital"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aubergenville",
+      "name": "Aubergenville",
+      "communeCode": "78029",
+      "rank": 65,
+      "population": 12723,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "780290101",
+          "label": "Élisa",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780290102",
+          "label": "Trait d'Union",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780290103",
+          "label": "Montgardé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780290104",
+          "label": "Bois Bodin Haut du Parc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780290105",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780290106",
+          "label": "Acosta",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "780290105"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chalette_sur_loing",
+      "name": "Châlette-sur-Loing",
+      "communeCode": "45068",
+      "rank": 67,
+      "population": 12677,
+      "departmentCode": "45",
+      "departmentName": "Loiret",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "450680101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450680102",
+          "label": "Lancy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450680103",
+          "label": "Vesines",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450680104",
+          "label": "Pontonnerie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "450680105",
+          "label": "Kennedy-Château Blanc",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "450680101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "louvres",
+      "name": "Louvres",
+      "communeCode": "95351",
+      "rank": 70,
+      "population": 12560,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "953510101",
+          "label": "Louvres Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953510102",
+          "label": "Louvres Centre Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953510103",
+          "label": "Louvres Sud et Est",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Louvres Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "953510101"
+          ],
+          "labels": [
+            "Louvres Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "creutzwald",
+      "name": "Creutzwald",
+      "communeCode": "57160",
+      "rank": 78,
+      "population": 12254,
+      "departmentCode": "57",
+      "departmentName": "Moselle",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "571600101",
+          "label": "Parcs d'Activités Est et Sud",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "571600102",
+          "label": "Cité Maroc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "571600103",
+          "label": "Neuland Sud Breckelberg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "571600104",
+          "label": "Parc d'Activités Nord",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "571600105",
+          "label": "Breckelberg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "571600106",
+          "label": "Houvergarten Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "571600107",
+          "label": "Bellevue-Garang",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "571600108",
+          "label": "Beau-Site Fatima",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Parcs d'Activités Est et Sud” contains operational or land-use wording.",
+          "sourceIds": [
+            "571600101"
+          ],
+          "labels": [
+            "Parcs d'Activités Est et Sud"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Parc d'Activités Nord” contains operational or land-use wording.",
+          "sourceIds": [
+            "571600104"
+          ],
+          "labels": [
+            "Parc d'Activités Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "castelnaudary",
+      "name": "Castelnaudary",
+      "communeCode": "11076",
+      "rank": 79,
+      "population": 12151,
+      "departmentCode": "11",
+      "departmentName": "Aude",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "110760102",
+          "label": "L'Estangbigou",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "110760104",
+          "label": "Verdun",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "110760105",
+          "label": "Lapasset",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "110760106",
+          "label": "Les Fontanilles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "110760107",
+          "label": "La Gare",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “La Gare” is only a generic facility name.",
+          "sourceIds": [
+            "110760107"
+          ],
+          "labels": [
+            "La Gare"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_cyprien",
+      "name": "Saint-Cyprien",
+      "communeCode": "66171",
+      "rank": 81,
+      "population": 12068,
+      "departmentCode": "66",
+      "departmentName": "Pyrénées-Orientales",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "661710101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "661710102",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "661710103",
+          "label": "Zone Plage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "661710104",
+          "label": "Zone Port",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "661710101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        },
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "661710102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "661710102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "661710102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Plage” contains operational or land-use wording.",
+          "sourceIds": [
+            "661710103"
+          ],
+          "labels": [
+            "Zone Plage"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Port” contains operational or land-use wording.",
+          "sourceIds": [
+            "661710104"
+          ],
+          "labels": [
+            "Zone Port"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "valbonne",
+      "name": "Valbonne",
+      "communeCode": "06152",
+      "rank": 84,
+      "population": 11939,
+      "departmentCode": "06",
+      "departmentName": "Alpes-Maritimes",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "061520101",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061520102",
+          "label": "Écarts Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061520103",
+          "label": "Garbejaire-Haut Sartoux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061520104",
+          "label": "Île Verte-Nord-Est",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "061520101"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ifs",
+      "name": "Ifs",
+      "communeCode": "14341",
+      "rank": 85,
+      "population": 11937,
+      "departmentCode": "14",
+      "departmentName": "Calvados",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "143410103",
+          "label": "Ifs Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "143410104",
+          "label": "Ifs Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "143410105",
+          "label": "Parcs d'Activités",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "143410106",
+          "label": "Ifs Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "143410107",
+          "label": "Le Hoguet",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Ifs Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "143410103"
+          ],
+          "labels": [
+            "Ifs Centre"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Ifs Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "143410104"
+          ],
+          "labels": [
+            "Ifs Sud"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Parcs d'Activités” contains operational or land-use wording.",
+          "sourceIds": [
+            "143410105"
+          ],
+          "labels": [
+            "Parcs d'Activités"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Ifs Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "143410106"
+          ],
+          "labels": [
+            "Ifs Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "le_relecq_kerhuon",
+      "name": "Le Relecq-Kerhuon",
+      "communeCode": "29235",
+      "rank": 86,
+      "population": 11897,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "292350101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292350102",
+          "label": "La Corniche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292350103",
+          "label": "Pont de l'Iroise-Rocade Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292350104",
+          "label": "Kermadec",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292350105",
+          "label": "Anse de Kerhuon",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "292350101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seyssinet_pariset",
+      "name": "Seyssinet-Pariset",
+      "communeCode": "38485",
+      "rank": 88,
+      "population": 11739,
+      "departmentCode": "38",
+      "departmentName": "Isère",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "384850101",
+          "label": "Les Îles Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384850102",
+          "label": "Les Îles Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384850103",
+          "label": "La Fauconnière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384850104",
+          "label": "Pacalaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384850105",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384850106",
+          "label": "Haut de la Commune",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "384850105"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "provins",
+      "name": "Provins",
+      "communeCode": "77379",
+      "rank": 92,
+      "population": 11632,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "773790101",
+          "label": "Centre-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773790102",
+          "label": "Centre-Nord-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773790103",
+          "label": "Centre-Sud Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773790201",
+          "label": "ZUP Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773790202",
+          "label": "ZUP Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “ZUP Nord” contains operational or land-use wording.",
+          "sourceIds": [
+            "773790201"
+          ],
+          "labels": [
+            "ZUP Nord"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “ZUP Sud” contains operational or land-use wording.",
+          "sourceIds": [
+            "773790202"
+          ],
+          "labels": [
+            "ZUP Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "epinay_sous_senart",
+      "name": "Épinay-sous-Sénart",
+      "communeCode": "91215",
+      "rank": 93,
+      "population": 11611,
+      "departmentCode": "91",
+      "departmentName": "Essonne",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "912150101",
+          "label": "Plaine 1 Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912150102",
+          "label": "Plaine 1 Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912150103",
+          "label": "Les Cinéastes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912150104",
+          "label": "Forêt",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "numbered_label",
+          "detail": "The label “Plaine 1 Sud” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "912150101"
+          ],
+          "labels": [
+            "Plaine 1 Sud"
+          ]
+        },
+        {
+          "code": "numbered_label",
+          "detail": "The label “Plaine 1 Nord” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "912150102"
+          ],
+          "labels": [
+            "Plaine 1 Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ancenis_saint_gereon",
+      "name": "Ancenis-Saint-Géréon",
+      "communeCode": "44003",
+      "rank": 94,
+      "population": 11600,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "440030101",
+          "label": "Zones d'Activités-Campagne",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "440030102",
+          "label": "Loire-Voie Ferrée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440030103",
+          "label": "Voie Ferrée-Lotissements",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440030201",
+          "label": "Saint-Géréon",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zones d'Activités-Campagne” contains operational or land-use wording.",
+          "sourceIds": [
+            "440030101"
+          ],
+          "labels": [
+            "Zones d'Activités-Campagne"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bolbec",
+      "name": "Bolbec",
+      "communeCode": "76114",
+      "rank": 95,
+      "population": 11590,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "761140101",
+          "label": "Bolbec Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761140102",
+          "label": "Bolbec Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761140103",
+          "label": "Bolbec Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761140104",
+          "label": "Bolbec Centre",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bolbec Ouest” is only the commune name plus a direction.",
+          "sourceIds": [
+            "761140101"
+          ],
+          "labels": [
+            "Bolbec Ouest"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bolbec Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "761140102"
+          ],
+          "labels": [
+            "Bolbec Nord"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bolbec Est” is only the commune name plus a direction.",
+          "sourceIds": [
+            "761140103"
+          ],
+          "labels": [
+            "Bolbec Est"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Bolbec Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "761140104"
+          ],
+          "labels": [
+            "Bolbec Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pontchateau",
+      "name": "Pontchâteau",
+      "communeCode": "44129",
+      "rank": 97,
+      "population": 11474,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "441290101",
+          "label": "Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441290102",
+          "label": "Campagne",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Agglomération” is a generic territorial description.",
+          "sourceIds": [
+            "441290101"
+          ],
+          "labels": [
+            "Agglomération"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dourdan",
+      "name": "Dourdan",
+      "communeCode": "91200",
+      "rank": 99,
+      "population": 11415,
+      "departmentCode": "91",
+      "departmentName": "Essonne",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "912000101",
+          "label": "Le Parterre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912000102",
+          "label": "La Croix Saint-Jacques",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912000103",
+          "label": "Le Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912000104",
+          "label": "Le Potelet",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre Ville” is a generic territorial description.",
+          "sourceIds": [
+            "912000103"
+          ],
+          "labels": [
+            "Le Centre Ville"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "briancon",
+      "name": "Briançon",
+      "communeCode": "05023",
+      "rank": 100,
+      "population": 11411,
+      "departmentCode": "05",
+      "departmentName": "Hautes-Alpes",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "050230101",
+          "label": "Briançon Vauban",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "050230102",
+          "label": "Grande Boucle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "050230103",
+          "label": "République-Sainte Catherine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "050230104",
+          "label": "Briançon Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "050230105",
+          "label": "Briançon Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "050230106",
+          "label": "La Croix de Toulouse-Serre des Aigles",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "050230107",
+          "label": "L'Infernet",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "050230108",
+          "label": "Fort des Têtes-Fort de Rambouillet",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "050230109",
+          "label": "Fort de la Croix de Bretagne",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Briançon Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "050230104"
+          ],
+          "labels": [
+            "Briançon Nord"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Briançon Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "050230105"
+          ],
+          "labels": [
+            "Briançon Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "panazol",
+      "name": "Panazol",
+      "communeCode": "87114",
+      "rank": 102,
+      "population": 11342,
+      "departmentCode": "87",
+      "departmentName": "Haute-Vienne",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "871140101",
+          "label": "Le Chalet-La Bausserie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "871140102",
+          "label": "Fargeas-Morpiènas",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "871140103",
+          "label": "Les Vignes-Soudanas",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "871140104",
+          "label": "Panazol Est",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Panazol Est” is only the commune name plus a direction.",
+          "sourceIds": [
+            "871140104"
+          ],
+          "labels": [
+            "Panazol Est"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tournon_sur_rhone",
+      "name": "Tournon-sur-Rhône",
+      "communeCode": "07324",
+      "rank": 104,
+      "population": 11279,
+      "departmentCode": "07",
+      "departmentName": "Ardèche",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "073240101",
+          "label": "La Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "073240102",
+          "label": "Quartiers Est-Rhône",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "073240103",
+          "label": "Quartiers Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "073240104",
+          "label": "Doux-Plateau",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “La Ville” is a generic territorial description.",
+          "sourceIds": [
+            "073240101"
+          ],
+          "labels": [
+            "La Ville"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "riorges",
+      "name": "Riorges",
+      "communeCode": "42184",
+      "rank": 106,
+      "population": 11139,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "421840101",
+          "label": "Le Pontet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421840102",
+          "label": "La Villette",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "421840103",
+          "label": "Le Marais-les Canaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421840104",
+          "label": "Les Sables-Les Poupées-Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421840105",
+          "label": "Riorges Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421840106",
+          "label": "Combray-Neubourg-Le Marclet",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Riorges Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "421840105"
+          ],
+          "labels": [
+            "Riorges Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chanteloup_les_vignes",
+      "name": "Chanteloup-les-Vignes",
+      "communeCode": "78138",
+      "rank": 113,
+      "population": 10861,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "781380101",
+          "label": "Le Bois Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781380102",
+          "label": "L'Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781380103",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781380104",
+          "label": "L'Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781380105",
+          "label": "La Plaine",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "781380103"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deville_les_rouen",
+      "name": "Déville-lès-Rouen",
+      "communeCode": "76216",
+      "rank": 115,
+      "population": 10802,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "762160101",
+          "label": "Quartier Fontenelle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762160102",
+          "label": "Quartier Georges Hebert",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762160103",
+          "label": "Les Hauts de Déville-lès-Rouen",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762160104",
+          "label": "Le Centre",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "762160104"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "argeles_sur_mer",
+      "name": "Argelès-sur-Mer",
+      "communeCode": "66008",
+      "rank": 124,
+      "population": 10616,
+      "departmentCode": "66",
+      "departmentName": "Pyrénées-Orientales",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "660080101",
+          "label": "Plage et Écarts",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "660080102",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "660080103",
+          "label": "Massane Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "660080104",
+          "label": "Périphérie Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "660080102"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie Sud” contains generic territorial wording.",
+          "sourceIds": [
+            "660080104"
+          ],
+          "labels": [
+            "Périphérie Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "la_londe_les_maures",
+      "name": "La Londe-les-Maures",
+      "communeCode": "83071",
+      "rank": 126,
+      "population": 10584,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "830710103",
+          "label": "Bord de Mer",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830710104",
+          "label": "Zone Agricole et Boisée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830710105",
+          "label": "Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Agricole et Boisée” contains operational or land-use wording.",
+          "sourceIds": [
+            "830710104"
+          ],
+          "labels": [
+            "Zone Agricole et Boisée"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "830710105"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seysses",
+      "name": "Seysses",
+      "communeCode": "31547",
+      "rank": 128,
+      "population": 10539,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "315470101",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "315470102",
+          "label": "Terrasse de la Saudrune",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "315470103",
+          "label": "Vallée du Fossat",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "315470101"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aubiere",
+      "name": "Aubière",
+      "communeCode": "63014",
+      "rank": 135,
+      "population": 10459,
+      "departmentCode": "63",
+      "departmentName": "Puy-de-Dôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "630140101",
+          "label": "Ville Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630140102",
+          "label": "Les Hauts d'Aubière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630140103",
+          "label": "Secteur d'Activités Économiques",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "630140104",
+          "label": "Campus Universitaire les Cézeaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630140105",
+          "label": "Val d'Artière-Puy d'Aubière",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Secteur d'Activités Économiques” contains operational or land-use wording.",
+          "sourceIds": [
+            "630140103"
+          ],
+          "labels": [
+            "Secteur d'Activités Économiques"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gerzat",
+      "name": "Gerzat",
+      "communeCode": "63164",
+      "rank": 139,
+      "population": 10335,
+      "departmentCode": "63",
+      "departmentName": "Puy-de-Dôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "631640101",
+          "label": "Rochefort",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "631640102",
+          "label": "Les Chabesses",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "631640103",
+          "label": "Zone Spécifique",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "631640104",
+          "label": "Centre Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "631640105",
+          "label": "Zone Verte",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "631640106",
+          "label": "Les Pègues",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Spécifique” contains operational or land-use wording.",
+          "sourceIds": [
+            "631640103"
+          ],
+          "labels": [
+            "Zone Spécifique"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Verte” contains operational or land-use wording.",
+          "sourceIds": [
+            "631640105"
+          ],
+          "labels": [
+            "Zone Verte"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sainte_savine",
+      "name": "Sainte-Savine",
+      "communeCode": "10362",
+      "rank": 141,
+      "population": 10289,
+      "departmentCode": "10",
+      "departmentName": "Aube",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "103620101",
+          "label": "Sainte-Savine Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103620102",
+          "label": "Sainte-Savine Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103620103",
+          "label": "Sainte-Savine Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103620104",
+          "label": "Sainte-Savine Sud-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103620105",
+          "label": "Sainte-Savine Centre-Ouest",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Sainte-Savine Est” is only the commune name plus a direction.",
+          "sourceIds": [
+            "103620101"
+          ],
+          "labels": [
+            "Sainte-Savine Est"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Sainte-Savine Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "103620102"
+          ],
+          "labels": [
+            "Sainte-Savine Centre"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Sainte-Savine Ouest” is only the commune name plus a direction.",
+          "sourceIds": [
+            "103620103"
+          ],
+          "labels": [
+            "Sainte-Savine Ouest"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Sainte-Savine Sud-Est” is only the commune name plus a direction.",
+          "sourceIds": [
+            "103620104"
+          ],
+          "labels": [
+            "Sainte-Savine Sud-Est"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "soyaux",
+      "name": "Soyaux",
+      "communeCode": "16374",
+      "rank": 148,
+      "population": 10087,
+      "departmentCode": "16",
+      "departmentName": "Charente",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "163740101",
+          "label": "Zones d'Activités",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "163740102",
+          "label": "Soyaux Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "163740103",
+          "label": "Champ de Manœuvres Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "163740104",
+          "label": "Champ de Manœuvres Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "163740105",
+          "label": "Soyaux Nord",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zones d'Activités” contains operational or land-use wording.",
+          "sourceIds": [
+            "163740101"
+          ],
+          "labels": [
+            "Zones d'Activités"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Soyaux Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "163740102"
+          ],
+          "labels": [
+            "Soyaux Sud"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Soyaux Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "163740105"
+          ],
+          "labels": [
+            "Soyaux Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "la_farlede",
+      "name": "La Farlède",
+      "communeCode": "83054",
+      "rank": 150,
+      "population": 10014,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "830540101",
+          "label": "Les Nartières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830540102",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830540103",
+          "label": "Les Mauniers",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "830540102"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bourg_de_peage",
+      "name": "Bourg-de-Péage",
+      "communeCode": "26057",
+      "rank": 154,
+      "population": 9921,
+      "departmentCode": "26",
+      "departmentName": "Drôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "260570101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "260570102",
+          "label": "La Parisière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "260570103",
+          "label": "Goubetière Bayannins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "260570104",
+          "label": "Maladière Petite Ardoise",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "260570101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_max",
+      "name": "Saint-Max",
+      "communeCode": "54482",
+      "rank": 155,
+      "population": 9913,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "544820101",
+          "label": "Trinité-Jolimont Vieux Saint-Max",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "544820102",
+          "label": "Saint-Michel Mainvaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "544820103",
+          "label": "Quartier Jean XXIII",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "544820104",
+          "label": "Saint-Max Centre",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Saint-Max Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "544820104"
+          ],
+          "labels": [
+            "Saint-Max Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_barthelemy_d_anjou",
+      "name": "Saint-Barthélemy-d'Anjou",
+      "communeCode": "49267",
+      "rank": 159,
+      "population": 9720,
+      "departmentCode": "49",
+      "departmentName": "Maine-et-Loire",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "492670101",
+          "label": "Parc d'Activités",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "492670102",
+          "label": "Chêne Vert-Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492670103",
+          "label": "Villechien-Chambrée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492670104",
+          "label": "Gemmetrie-Morlière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492670105",
+          "label": "Marmitière-Venaiserie",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Parc d'Activités” contains operational or land-use wording.",
+          "sourceIds": [
+            "492670101"
+          ],
+          "labels": [
+            "Parc d'Activités"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_doulchard",
+      "name": "Saint-Doulchard",
+      "communeCode": "18205",
+      "rank": 161,
+      "population": 9647,
+      "departmentCode": "18",
+      "departmentName": "Cher",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "182050101",
+          "label": "Rural",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182050102",
+          "label": "Malitorne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182050103",
+          "label": "Maxime Lebrun",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182050104",
+          "label": "Bourg",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "182050101"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "182050104"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nort_sur_erdre",
+      "name": "Nort-sur-Erdre",
+      "communeCode": "44110",
+      "rank": 164,
+      "population": 9570,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "441100101",
+          "label": "Hors Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441100102",
+          "label": "Agglomération",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Agglomération” is a generic territorial description.",
+          "sourceIds": [
+            "441100102"
+          ],
+          "labels": [
+            "Agglomération"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_jean_le_blanc",
+      "name": "Saint-Jean-le-Blanc",
+      "communeCode": "45286",
+      "rank": 166,
+      "population": 9562,
+      "departmentCode": "45",
+      "departmentName": "Loiret",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "452860101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452860102",
+          "label": "Les Varennes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452860103",
+          "label": "Route de Sandillon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452860104",
+          "label": "Montission",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "452860101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chaponost",
+      "name": "Chaponost",
+      "communeCode": "69043",
+      "rank": 178,
+      "population": 9382,
+      "departmentCode": "69",
+      "departmentName": "Rhône",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "690430101",
+          "label": "Zone Centrale",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "690430102",
+          "label": "Zone Pavillonnaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "690430103",
+          "label": "Zone Habitat Diffus",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Centrale” contains operational or land-use wording.",
+          "sourceIds": [
+            "690430101"
+          ],
+          "labels": [
+            "Zone Centrale"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Pavillonnaire” contains operational or land-use wording.",
+          "sourceIds": [
+            "690430102"
+          ],
+          "labels": [
+            "Zone Pavillonnaire"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Habitat Diffus” contains operational or land-use wording.",
+          "sourceIds": [
+            "690430103"
+          ],
+          "labels": [
+            "Zone Habitat Diffus"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fontaine_les_dijon",
+      "name": "Fontaine-lès-Dijon",
+      "communeCode": "21278",
+      "rank": 187,
+      "population": 9252,
+      "departmentCode": "21",
+      "departmentName": "Côte-d'Or",
+      "regionName": "Bourgogne-Franche-Comté",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "212780101",
+          "label": "Vieux Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "212780102",
+          "label": "Saverney",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "212780103",
+          "label": "Saint-Martin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "212780104",
+          "label": "Majnoni",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "212780199",
+          "label": "Activités Économiques",
+          "irisType": "A"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Activités Économiques” contains operational or land-use wording.",
+          "sourceIds": [
+            "212780199"
+          ],
+          "labels": [
+            "Activités Économiques"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ouistreham",
+      "name": "Ouistreham",
+      "communeCode": "14488",
+      "rank": 188,
+      "population": 9212,
+      "departmentCode": "14",
+      "departmentName": "Calvados",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "144880101",
+          "label": "Riva Bella",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "144880102",
+          "label": "Bourg Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "144880103",
+          "label": "Reine Mathilde-Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "144880104",
+          "label": "Port",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Port” is only a generic facility name.",
+          "sourceIds": [
+            "144880104"
+          ],
+          "labels": [
+            "Port"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ussel",
+      "name": "Ussel",
+      "communeCode": "19275",
+      "rank": 190,
+      "population": 9187,
+      "departmentCode": "19",
+      "departmentName": "Corrèze",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "192750101",
+          "label": "Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192750102",
+          "label": "Couzergues",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192750201",
+          "label": "Diège",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192750202",
+          "label": "Sarsonne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "192750203",
+          "label": "Gane",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Gare” is only a generic facility name.",
+          "sourceIds": [
+            "192750101"
+          ],
+          "labels": [
+            "Gare"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "launaguet",
+      "name": "Launaguet",
+      "communeCode": "31282",
+      "rank": 192,
+      "population": 9173,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "312820101",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "312820102",
+          "label": "Les Sables",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "312820101"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "varennes_vauzelles",
+      "name": "Varennes-Vauzelles",
+      "communeCode": "58303",
+      "rank": 193,
+      "population": 9146,
+      "departmentCode": "58",
+      "departmentName": "Nièvre",
+      "regionName": "Bourgogne-Franche-Comté",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "583030101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "583030102",
+          "label": "Veninges",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "583030103",
+          "label": "Henri Choquet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "583030104",
+          "label": "Crot Cizeau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "583030105",
+          "label": "La Cité",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "583030101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quetigny",
+      "name": "Quetigny",
+      "communeCode": "21515",
+      "rank": 201,
+      "population": 8971,
+      "departmentCode": "21",
+      "departmentName": "Côte-d'Or",
+      "regionName": "Bourgogne-Franche-Comté",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "215150101",
+          "label": "Atrias-Vieux Village-Grand Chaignet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "215150102",
+          "label": "La Fontaine aux Jardins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "215150103",
+          "label": "Les Huches",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "215150104",
+          "label": "Place Centrale-Quetignerots-Pré Bourgeot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "215150199",
+          "label": "Zone Activités Europe-Cap Vert-Grand Marché",
+          "irisType": "A"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Activités Europe-Cap Vert-Grand Marché” contains operational or land-use wording.",
+          "sourceIds": [
+            "215150199"
+          ],
+          "labels": [
+            "Zone Activités Europe-Cap Vert-Grand Marché"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chartres_de_bretagne",
+      "name": "Chartres-de-Bretagne",
+      "communeCode": "35066",
+      "rank": 205,
+      "population": 8880,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "350660101",
+          "label": "Centre Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "350660102",
+          "label": "Centre Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "350660103",
+          "label": "Rural Ouest-La Janais",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "350660104",
+          "label": "Rural Est",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural Ouest-La Janais” contains generic territorial wording.",
+          "sourceIds": [
+            "350660103"
+          ],
+          "labels": [
+            "Rural Ouest-La Janais"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural Est” contains generic territorial wording.",
+          "sourceIds": [
+            "350660104"
+          ],
+          "labels": [
+            "Rural Est"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_jean_de_monts",
+      "name": "Saint-Jean-de-Monts",
+      "communeCode": "85234",
+      "rank": 208,
+      "population": 8868,
+      "departmentCode": "85",
+      "departmentName": "Vendée",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "852340101",
+          "label": "Centre Ville-Plage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "852340102",
+          "label": "Périphérie",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "852340102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "852340102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "852340102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nangis",
+      "name": "Nangis",
+      "communeCode": "77327",
+      "rank": 209,
+      "population": 8867,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "773270101",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773270102",
+          "label": "Centre-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773270103",
+          "label": "Centre-Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "773270101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "773270101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "773270101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "petit_couronne",
+      "name": "Petit-Couronne",
+      "communeCode": "76497",
+      "rank": 213,
+      "population": 8683,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "764970101",
+          "label": "Le Pommeret-Mairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "764970102",
+          "label": "La Croix Mendès France",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "764970103",
+          "label": "Zone Portuaire",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "764970104",
+          "label": "Centre Ville-Archipel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "764970105",
+          "label": "Forêt Rouvray",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Portuaire” contains operational or land-use wording.",
+          "sourceIds": [
+            "764970103"
+          ],
+          "labels": [
+            "Zone Portuaire"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mauleon",
+      "name": "Mauléon",
+      "communeCode": "79079",
+      "rank": 215,
+      "population": 8573,
+      "departmentCode": "79",
+      "departmentName": "Deux-Sèvres",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "790790101",
+          "label": "Mauléon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "790790102",
+          "label": "Saint-Aubin-de-Baubigné",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "790790103",
+          "label": "Rorthais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "790790104",
+          "label": "Le Temple",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "790790105",
+          "label": "La Chapelle Largeau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "790790106",
+          "label": "Loublande",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "790790107",
+          "label": "Moulins",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "commune_name_only_label",
+          "detail": "The label “Mauléon” only repeats the commune name.",
+          "sourceIds": [
+            "790790101"
+          ],
+          "labels": [
+            "Mauléon"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trignac",
+      "name": "Trignac",
+      "communeCode": "44210",
+      "rank": 220,
+      "population": 8397,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "442100101",
+          "label": "Trignac Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "442100102",
+          "label": "Certé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "442100103",
+          "label": "Bert-les Écarts",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "442100104",
+          "label": "Zone Commerciale",
+          "irisType": "A"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Trignac Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "442100101"
+          ],
+          "labels": [
+            "Trignac Centre"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Commerciale” contains operational or land-use wording.",
+          "sourceIds": [
+            "442100104"
+          ],
+          "labels": [
+            "Zone Commerciale"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bihorel",
+      "name": "Bihorel",
+      "communeCode": "76095",
+      "rank": 223,
+      "population": 8316,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "760950101",
+          "label": "Le Chapitre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "760950102",
+          "label": "Le Plateau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "760950103",
+          "label": "Le Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "760950103"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guilers",
+      "name": "Guilers",
+      "communeCode": "29069",
+      "rank": 225,
+      "population": 8268,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "290690101",
+          "label": "Bourg Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290690102",
+          "label": "Bourg Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290690103",
+          "label": "Rural",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "290690103"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seyssins",
+      "name": "Seyssins",
+      "communeCode": "38486",
+      "rank": 232,
+      "population": 8092,
+      "departmentCode": "38",
+      "departmentName": "Isère",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "384860101",
+          "label": "La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384860102",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384860103",
+          "label": "Le Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "384860102"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "384860103"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "louveciennes",
+      "name": "Louveciennes",
+      "communeCode": "78350",
+      "rank": 234,
+      "population": 7990,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "783500101",
+          "label": "Les Coteaux de Seine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783500102",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783500103",
+          "label": "Le Plateau",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "783500102"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "romagnat",
+      "name": "Romagnat",
+      "communeCode": "63307",
+      "rank": 238,
+      "population": 7894,
+      "departmentCode": "63",
+      "departmentName": "Puy-de-Dôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "633070101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "633070102",
+          "label": "Chomontel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "633070103",
+          "label": "Bezance",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "633070101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_julien_de_concelles",
+      "name": "Saint-Julien-de-Concelles",
+      "communeCode": "44169",
+      "rank": 239,
+      "population": 7883,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "441690101",
+          "label": "Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441690102",
+          "label": "La Vallée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441690103",
+          "label": "Les Champs",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Agglomération” is a generic territorial description.",
+          "sourceIds": [
+            "441690101"
+          ],
+          "labels": [
+            "Agglomération"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coulounieix_chamiers",
+      "name": "Coulounieix-Chamiers",
+      "communeCode": "24138",
+      "rank": 242,
+      "population": 7832,
+      "departmentCode": "24",
+      "departmentName": "Dordogne",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "241380101",
+          "label": "Bas Chamiers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "241380102",
+          "label": "Chamiers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "241380103",
+          "label": "Pareau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "241380104",
+          "label": "Le Bourg",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "241380104"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_denis_en_val",
+      "name": "Saint-Denis-en-Val",
+      "communeCode": "45274",
+      "rank": 247,
+      "population": 7766,
+      "departmentCode": "45",
+      "departmentName": "Loiret",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "452740101",
+          "label": "Rue de Saint-Denis",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452740102",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452740103",
+          "label": "Zone Éparse",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "452740102"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Éparse” contains operational or land-use wording.",
+          "sourceIds": [
+            "452740103"
+          ],
+          "labels": [
+            "Zone Éparse"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "noisy_le_roi",
+      "name": "Noisy-le-Roi",
+      "communeCode": "78455",
+      "rank": 250,
+      "population": 7713,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "784550101",
+          "label": "Le Parc et La Tuilerie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784550102",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784550103",
+          "label": "Les Résidences",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "784550102"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bain_de_bretagne",
+      "name": "Bain-de-Bretagne",
+      "communeCode": "35012",
+      "rank": 253,
+      "population": 7674,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "350120101",
+          "label": "Urbain",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "350120102",
+          "label": "Rural",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "350120102"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mimizan",
+      "name": "Mimizan",
+      "communeCode": "40184",
+      "rank": 254,
+      "population": 7673,
+      "departmentCode": "40",
+      "departmentName": "Landes",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "401840101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "401840102",
+          "label": "Plage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "401840103",
+          "label": "Bel-Air",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "401840101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tullins",
+      "name": "Tullins",
+      "communeCode": "38517",
+      "rank": 255,
+      "population": 7624,
+      "departmentCode": "38",
+      "departmentName": "Isère",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "385170101",
+          "label": "Fures",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "385170102",
+          "label": "Tullins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "385170103",
+          "label": "Plaine et Coteaux",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "commune_name_only_label",
+          "detail": "The label “Tullins” only repeats the commune name.",
+          "sourceIds": [
+            "385170102"
+          ],
+          "labels": [
+            "Tullins"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_prix",
+      "name": "Saint-Prix",
+      "communeCode": "95574",
+      "rank": 256,
+      "population": 7612,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "955740101",
+          "label": "Saint-Prix Forêt",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "955740102",
+          "label": "Saint-Prix Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955740103",
+          "label": "Saint-Prix Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955740104",
+          "label": "Saint-Prix Ville",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Saint-Prix Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "955740103"
+          ],
+          "labels": [
+            "Saint-Prix Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "melesse",
+      "name": "Melesse",
+      "communeCode": "35173",
+      "rank": 259,
+      "population": 7541,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "351730101",
+          "label": "Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "351730102",
+          "label": "Hors Agglomération",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Agglomération” is a generic territorial description.",
+          "sourceIds": [
+            "351730101"
+          ],
+          "labels": [
+            "Agglomération"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "colombelles",
+      "name": "Colombelles",
+      "communeCode": "14167",
+      "rank": 274,
+      "population": 7243,
+      "departmentCode": "14",
+      "departmentName": "Calvados",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "141670101",
+          "label": "Lazzaro",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "141670102",
+          "label": "Le Bois Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "141670103",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "141670104",
+          "label": "Le Plateau et l'Orne",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "141670103"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "la_talaudiere",
+      "name": "La Talaudière",
+      "communeCode": "42305",
+      "rank": 279,
+      "population": 7133,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "423050101",
+          "label": "Le Roule-La Grande Vaure",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "423050102",
+          "label": "La Talaudière Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "423050103",
+          "label": "La Talaudière Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “La Talaudière Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "423050102"
+          ],
+          "labels": [
+            "La Talaudière Nord"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “La Talaudière Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "423050103"
+          ],
+          "labels": [
+            "La Talaudière Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bagneres_de_bigorre",
+      "name": "Bagnères-de-Bigorre",
+      "communeCode": "65059",
+      "rank": 280,
+      "population": 7114,
+      "departmentCode": "65",
+      "departmentName": "Hautes-Pyrénées",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "650590101",
+          "label": "Secteur Thermal",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "650590102",
+          "label": "Secteur Industriel de l'Adour",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "650590103",
+          "label": "Secteur Pavillonnaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "650590104",
+          "label": "Secteur Montagne",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "650590105",
+          "label": "Secteur Hameaux",
+          "irisType": "D"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Secteur Industriel de l'Adour” contains operational or land-use wording.",
+          "sourceIds": [
+            "650590102"
+          ],
+          "labels": [
+            "Secteur Industriel de l'Adour"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nerac",
+      "name": "Nérac",
+      "communeCode": "47195",
+      "rank": 285,
+      "population": 6992,
+      "departmentCode": "47",
+      "departmentName": "Lot-et-Garonne",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "471950101",
+          "label": "Grand Nérac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "471950102",
+          "label": "Petit Nérac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "471950103",
+          "label": "Nérac Rural",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Nérac Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "471950103"
+          ],
+          "labels": [
+            "Nérac Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pledran",
+      "name": "Plédran",
+      "communeCode": "22176",
+      "rank": 286,
+      "population": 6933,
+      "departmentCode": "22",
+      "departmentName": "Côtes-d'Armor",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "221760101",
+          "label": "Secteur Urbain",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "221760102",
+          "label": "Secteur Rural",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Secteur Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "221760102"
+          ],
+          "labels": [
+            "Secteur Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "change_72058",
+      "name": "Changé",
+      "communeCode": "72058",
+      "rank": 288,
+      "population": 6911,
+      "departmentCode": "72",
+      "departmentName": "Sarthe",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "720580101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "720580102",
+          "label": "Campagne",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "720580101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "veigne",
+      "name": "Veigné",
+      "communeCode": "37266",
+      "rank": 290,
+      "population": 6865,
+      "departmentCode": "37",
+      "departmentName": "Indre-et-Loire",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "372660101",
+          "label": "Veigne Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372660102",
+          "label": "Veigne Nord",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Veigne Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "372660101"
+          ],
+          "labels": [
+            "Veigne Sud"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Veigne Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "372660102"
+          ],
+          "labels": [
+            "Veigne Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loudun",
+      "name": "Loudun",
+      "communeCode": "86137",
+      "rank": 292,
+      "population": 6839,
+      "departmentCode": "86",
+      "departmentName": "Vienne",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "861370101",
+          "label": "Loudun Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "861370102",
+          "label": "Entre Route de Thouars et Route de Poitiers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "861370103",
+          "label": "Entre Route de Poitiers et Route de Chinon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "861370104",
+          "label": "Entre Route de Chinon et Route de Thouars",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Loudun Centre” is only the commune name plus a direction.",
+          "sourceIds": [
+            "861370101"
+          ],
+          "labels": [
+            "Loudun Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "montfort_sur_meu",
+      "name": "Montfort-sur-Meu",
+      "communeCode": "35188",
+      "rank": 294,
+      "population": 6810,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "351880101",
+          "label": "Rural",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "351880102",
+          "label": "Urbain Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "351880103",
+          "label": "Urbain Est",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "351880101"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vigneux_de_bretagne",
+      "name": "Vigneux-de-Bretagne",
+      "communeCode": "44217",
+      "rank": 299,
+      "population": 6692,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "442170101",
+          "label": "Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "442170102",
+          "label": "Hors Agglomération",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Agglomération” is a generic territorial description.",
+          "sourceIds": [
+            "442170101"
+          ],
+          "labels": [
+            "Agglomération"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "luxeuil_les_bains",
+      "name": "Luxeuil-les-Bains",
+      "communeCode": "70311",
+      "rank": 301,
+      "population": 6663,
+      "departmentCode": "70",
+      "departmentName": "Haute-Saône",
+      "regionName": "Bourgogne-Franche-Comté",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "703110101",
+          "label": "Centre Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "703110102",
+          "label": "Centre Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "703110103",
+          "label": "Messier",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "703110104",
+          "label": "Stade",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_facility_label",
+          "detail": "The label “Stade” is only a generic facility name.",
+          "sourceIds": [
+            "703110104"
+          ],
+          "labels": [
+            "Stade"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bouffemont",
+      "name": "Bouffémont",
+      "communeCode": "95091",
+      "rank": 305,
+      "population": 6593,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "950910101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950910102",
+          "label": "Trait d'Union",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950910103",
+          "label": "Hauts Champs",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "950910101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ceyrat",
+      "name": "Ceyrat",
+      "communeCode": "63070",
+      "rank": 306,
+      "population": 6592,
+      "departmentCode": "63",
+      "departmentName": "Puy-de-Dôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "630700101",
+          "label": "Ceyrat",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630700102",
+          "label": "Boisséjour",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "commune_name_only_label",
+          "detail": "The label “Ceyrat” only repeats the commune name.",
+          "sourceIds": [
+            "630700101"
+          ],
+          "labels": [
+            "Ceyrat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "la_chevroliere",
+      "name": "La Chevrolière",
+      "communeCode": "44041",
+      "rank": 311,
+      "population": 6539,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "440410101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440410102",
+          "label": "Campagne",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "440410101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "courthezon",
+      "name": "Courthézon",
+      "communeCode": "84039",
+      "rank": 316,
+      "population": 6426,
+      "departmentCode": "84",
+      "departmentName": "Vaucluse",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "840390101",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840390102",
+          "label": "La Plaine",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "840390101"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "murs_erigne",
+      "name": "Mûrs-Erigné",
+      "communeCode": "49223",
+      "rank": 318,
+      "population": 6408,
+      "departmentCode": "49",
+      "departmentName": "Maine-et-Loire",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "492230101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492230102",
+          "label": "Le Grand Clos",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "492230101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mer",
+      "name": "Mer",
+      "communeCode": "41136",
+      "rank": 323,
+      "population": 6250,
+      "departmentCode": "41",
+      "departmentName": "Loir-et-Cher",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "411360101",
+          "label": "Collectifs-Coteaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "411360102",
+          "label": "Aulnay-Extérieurs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "411360103",
+          "label": "Centre Ville-Tronne",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Collectifs-Coteaux” contains generic territorial wording.",
+          "sourceIds": [
+            "411360101"
+          ],
+          "labels": [
+            "Collectifs-Coteaux"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terrasson_lavilledieu",
+      "name": "Terrasson-Lavilledieu",
+      "communeCode": "24547",
+      "rank": 325,
+      "population": 6218,
+      "departmentCode": "24",
+      "departmentName": "Dordogne",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "245470101",
+          "label": "Urbain",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "245470102",
+          "label": "Rural",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "245470102"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "horbourg_wihr",
+      "name": "Horbourg-Wihr",
+      "communeCode": "68145",
+      "rank": 329,
+      "population": 6199,
+      "departmentCode": "68",
+      "departmentName": "Haut-Rhin",
+      "regionName": "Grand Est",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "681450101",
+          "label": "Horbourg-Wihr Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "681450102",
+          "label": "Horbourg-Wihr Nord",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Horbourg-Wihr Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "681450101"
+          ],
+          "labels": [
+            "Horbourg-Wihr Sud"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Horbourg-Wihr Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "681450102"
+          ],
+          "labels": [
+            "Horbourg-Wihr Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menucourt",
+      "name": "Menucourt",
+      "communeCode": "95388",
+      "rank": 332,
+      "population": 6184,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "953880101",
+          "label": "Menucourt Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953880102",
+          "label": "Menucourt Nord",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Menucourt Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "953880101"
+          ],
+          "labels": [
+            "Menucourt Sud"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “Menucourt Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "953880102"
+          ],
+          "labels": [
+            "Menucourt Nord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "commentry",
+      "name": "Commentry",
+      "communeCode": "03082",
+      "rank": 340,
+      "population": 6017,
+      "departmentCode": "03",
+      "departmentName": "Allier",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "030820101",
+          "label": "1re Zone",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "030820102",
+          "label": "2e Zone",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "030820103",
+          "label": "3e Zone",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "numbered_label",
+          "detail": "The label “1re Zone” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "030820101"
+          ],
+          "labels": [
+            "1re Zone"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “1re Zone” contains operational or land-use wording.",
+          "sourceIds": [
+            "030820101"
+          ],
+          "labels": [
+            "1re Zone"
+          ]
+        },
+        {
+          "code": "numbered_label",
+          "detail": "The label “2e Zone” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "030820102"
+          ],
+          "labels": [
+            "2e Zone"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “2e Zone” contains operational or land-use wording.",
+          "sourceIds": [
+            "030820102"
+          ],
+          "labels": [
+            "2e Zone"
+          ]
+        },
+        {
+          "code": "numbered_label",
+          "detail": "The label “3e Zone” contains a number and requires explicit semantic review.",
+          "sourceIds": [
+            "030820103"
+          ],
+          "labels": [
+            "3e Zone"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “3e Zone” contains operational or land-use wording.",
+          "sourceIds": [
+            "030820103"
+          ],
+          "labels": [
+            "3e Zone"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clapiers",
+      "name": "Clapiers",
+      "communeCode": "34077",
+      "rank": 342,
+      "population": 6006,
+      "departmentCode": "34",
+      "departmentName": "Hérault",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "340770101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "340770102",
+          "label": "Périphérie",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "340770101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        },
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "340770102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "340770102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "340770102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_mandrier_sur_mer",
+      "name": "Saint-Mandrier-sur-Mer",
+      "communeCode": "83153",
+      "rank": 343,
+      "population": 6000,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "831530101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831530102",
+          "label": "Pin Rolland-Marégau",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "831530101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "la_verriere",
+      "name": "La Verrière",
+      "communeCode": "78644",
+      "rank": 344,
+      "population": 5994,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "786440101",
+          "label": "Bois de l'Étang",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786440102",
+          "label": "La Verrière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786440103",
+          "label": "Orly Parc",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "commune_name_only_label",
+          "detail": "The label “La Verrière” only repeats the commune name.",
+          "sourceIds": [
+            "786440102"
+          ],
+          "labels": [
+            "La Verrière"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vias",
+      "name": "Vias",
+      "communeCode": "34332",
+      "rank": 348,
+      "population": 5952,
+      "departmentCode": "34",
+      "departmentName": "Hérault",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "343320101",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "343320102",
+          "label": "Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "343320101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "343320101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "343320101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "343320102"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grand_charmont",
+      "name": "Grand-Charmont",
+      "communeCode": "25284",
+      "rank": 350,
+      "population": 5873,
+      "departmentCode": "25",
+      "departmentName": "Doubs",
+      "regionName": "Bourgogne-Franche-Comté",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "252840101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "252840102",
+          "label": "Les Fougères",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "252840101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "le_poinconnet",
+      "name": "Le Poinçonnet",
+      "communeCode": "36159",
+      "rank": 351,
+      "population": 5855,
+      "departmentCode": "36",
+      "departmentName": "Indre",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "361590101",
+          "label": "Le Bourg et Zone Agglomérée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "361590102",
+          "label": "Les Écarts",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Le Bourg et Zone Agglomérée” contains operational or land-use wording.",
+          "sourceIds": [
+            "361590101"
+          ],
+          "labels": [
+            "Le Bourg et Zone Agglomérée"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sarrians",
+      "name": "Sarrians",
+      "communeCode": "84122",
+      "rank": 353,
+      "population": 5792,
+      "departmentCode": "84",
+      "departmentName": "Vaucluse",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "841220101",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "841220102",
+          "label": "Extérieur",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Village” is a generic territorial description.",
+          "sourceIds": [
+            "841220101"
+          ],
+          "labels": [
+            "Le Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "canejan",
+      "name": "Canéjan",
+      "communeCode": "33090",
+      "rank": 355,
+      "population": 5756,
+      "departmentCode": "33",
+      "departmentName": "Gironde",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "330900101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330900102",
+          "label": "La House",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "330900101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mourenx",
+      "name": "Mourenx",
+      "communeCode": "64410",
+      "rank": 359,
+      "population": 5695,
+      "departmentCode": "64",
+      "departmentName": "Pyrénées-Atlantiques",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "644100101",
+          "label": "Coueyto",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644100102",
+          "label": "Périphérie",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "644100102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "644100102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "644100102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_georges_d_orques",
+      "name": "Saint-Georges-d'Orques",
+      "communeCode": "34259",
+      "rank": 360,
+      "population": 5676,
+      "departmentCode": "34",
+      "departmentName": "Hérault",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "342590101",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "342590102",
+          "label": "Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "342590101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "342590101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "342590101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "342590102"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cancale",
+      "name": "Cancale",
+      "communeCode": "35049",
+      "rank": 361,
+      "population": 5672,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "350490101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "350490102",
+          "label": "Rural",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "350490101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "350490102"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bedarrides",
+      "name": "Bédarrides",
+      "communeCode": "84016",
+      "rank": 362,
+      "population": 5671,
+      "departmentCode": "84",
+      "departmentName": "Vaucluse",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "840160101",
+          "label": "Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840160102",
+          "label": "Extérieur",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "840160101"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guines",
+      "name": "Guînes",
+      "communeCode": "62397",
+      "rank": 369,
+      "population": 5479,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "623970101",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "623970102",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "623970103",
+          "label": "Le Marais (Hameau)",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Centre” is a generic territorial description.",
+          "sourceIds": [
+            "623970101"
+          ],
+          "labels": [
+            "Le Centre"
+          ]
+        },
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "623970102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "623970102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "623970102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guemene_penfao",
+      "name": "Guémené-Penfao",
+      "communeCode": "44067",
+      "rank": 379,
+      "population": 5243,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "440670101",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440670102",
+          "label": "Guenouvry-Besle-Les Écarts",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "440670101"
+          ],
+          "labels": [
+            "Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "la_mure",
+      "name": "La Mure",
+      "communeCode": "38269",
+      "rank": 387,
+      "population": 4963,
+      "departmentCode": "38",
+      "departmentName": "Isère",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "382690101",
+          "label": "La Mure Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "382690102",
+          "label": "La Mure Sud",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “La Mure Nord” is only the commune name plus a direction.",
+          "sourceIds": [
+            "382690101"
+          ],
+          "labels": [
+            "La Mure Nord"
+          ]
+        },
+        {
+          "code": "technical_directional_label",
+          "detail": "The label “La Mure Sud” is only the commune name plus a direction.",
+          "sourceIds": [
+            "382690102"
+          ],
+          "labels": [
+            "La Mure Sud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "teyran",
+      "name": "Teyran",
+      "communeCode": "34309",
+      "rank": 394,
+      "population": 4787,
+      "departmentCode": "34",
+      "departmentName": "Hérault",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "343090101",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "343090102",
+          "label": "Village",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "343090101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "343090101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "343090101"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Village” is a generic territorial description.",
+          "sourceIds": [
+            "343090102"
+          ],
+          "labels": [
+            "Village"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_germain_du_puy",
+      "name": "Saint-Germain-du-Puy",
+      "communeCode": "18213",
+      "rank": 395,
+      "population": 4779,
+      "departmentCode": "18",
+      "departmentName": "Cher",
+      "regionName": "Centre-Val de Loire",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "182130101",
+          "label": "Le Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182130102",
+          "label": "Le Val d'Yevre",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Le Bourg” is a generic territorial description.",
+          "sourceIds": [
+            "182130101"
+          ],
+          "labels": [
+            "Le Bourg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fumel",
+      "name": "Fumel",
+      "communeCode": "47106",
+      "rank": 398,
+      "population": 4690,
+      "departmentCode": "47",
+      "departmentName": "Lot-et-Garonne",
+      "regionName": "Nouvelle-Aquitaine",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "471060101",
+          "label": "Rural",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "471060102",
+          "label": "Urbain",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Rural” contains generic territorial wording.",
+          "sourceIds": [
+            "471060101"
+          ],
+          "labels": [
+            "Rural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trouville_sur_mer",
+      "name": "Trouville-sur-Mer",
+      "communeCode": "14715",
+      "rank": 401,
+      "population": 4619,
+      "departmentCode": "14",
+      "departmentName": "Calvados",
+      "regionName": "Normandie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "147150101",
+          "label": "Aguesseau-Ville Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "147150102",
+          "label": "Port Littoral-Ville Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "147150103",
+          "label": "Hennequeville-Zone Callenville",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Hennequeville-Zone Callenville” contains operational or land-use wording.",
+          "sourceIds": [
+            "147150103"
+          ],
+          "labels": [
+            "Hennequeville-Zone Callenville"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "carnac",
+      "name": "Carnac",
+      "communeCode": "56034",
+      "rank": 405,
+      "population": 4194,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "560340101",
+          "label": "Hors Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "560340102",
+          "label": "Agglomération",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Agglomération” is a generic territorial description.",
+          "sourceIds": [
+            "560340102"
+          ],
+          "labels": [
+            "Agglomération"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "port_vendres",
+      "name": "Port-Vendres",
+      "communeCode": "66148",
+      "rank": 407,
+      "population": 4018,
+      "departmentCode": "66",
+      "departmentName": "Pyrénées-Orientales",
+      "regionName": "Occitanie",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "661480101",
+          "label": "Centre Ville Port",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "661480102",
+          "label": "Périphérie",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "direction_only_label",
+          "detail": "The label “Périphérie” is a bare direction or centre/periphery label.",
+          "sourceIds": [
+            "661480102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” is a generic territorial description.",
+          "sourceIds": [
+            "661480102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        },
+        {
+          "code": "generic_territorial_label",
+          "detail": "The label “Périphérie” contains generic territorial wording.",
+          "sourceIds": [
+            "661480102"
+          ],
+          "labels": [
+            "Périphérie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saint_tropez",
+      "name": "Saint-Tropez",
+      "communeCode": "83119",
+      "rank": 411,
+      "population": 3582,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "mode": "standalone_split",
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "831190101",
+          "label": "Zone Ouest Urbaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831190102",
+          "label": "Zone Est Diffuse",
+          "irisType": "H"
+        }
+      ],
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Ouest Urbaine” contains operational or land-use wording.",
+          "sourceIds": [
+            "831190101"
+          ],
+          "labels": [
+            "Zone Ouest Urbaine"
+          ]
+        },
+        {
+          "code": "operational_label",
+          "detail": "The label “Zone Est Diffuse” contains operational or land-use wording.",
+          "sourceIds": [
+            "831190102"
+          ],
+          "labels": [
+            "Zone Est Diffuse"
+          ]
+        }
+      ]
+    }
+  ],
+  "deferredCities": []
+}

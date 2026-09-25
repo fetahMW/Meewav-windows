@@ -1,0 +1,196 @@
+/* Live viewer controls. The three materials are intentionally distinct:
+   satin chassis, recessed smoked glass buttons and a fine reflective rim. */
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar {
+  --control-size: 54px;
+  --metric-width: calc(var(--control-size) * 1.62);
+  --control-gap: calc(var(--control-size) * .163);
+  --shell-padding-x: calc(var(--control-size) * .272);
+  --shell-padding-y: calc(var(--control-size) * .185);
+  --rim-purple: #a58adc;
+  --surface-top: #191b20;
+  --surface-mid: #0b0d11;
+  --surface-bottom: #030406;
+  --gold: #ffe38c;
+  position: absolute;
+  isolation: isolate;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  right: auto;
+  left: 50%;
+  bottom: 8px;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  min-height: 0;
+  gap: var(--control-gap);
+  padding: var(--shell-padding-y) var(--shell-padding-x);
+  border: 1px solid transparent;
+  border-radius: calc(var(--control-size) * .64);
+  background:
+    radial-gradient(ellipse 18% 35% at 2% 94%, #9680d620, transparent 75%) padding-box,
+    radial-gradient(ellipse 16% 30% at 98% 94%, #9680d620, transparent 75%) padding-box,
+    radial-gradient(ellipse at 50% 0%, #f1edff0b, transparent 48%) padding-box,
+    radial-gradient(ellipse at 15% 115%, #7963c516, transparent 35%) padding-box,
+    linear-gradient(180deg, #0a0b0e 0%, #050608 24%, #020304 63%, #07080c 100%) padding-box,
+    var(--live-glass-rim) border-box;
+  box-shadow: 0 24px 48px #0009, 0 7px 18px #000a, inset 0 1px 1px #ffffff0d, inset 0 -1px 1px #aba0db20;
+  backdrop-filter: none;
+  overflow: visible;
+  scrollbar-width: thin;
+  scrollbar-color: #5b536e #08090c;
+  transform: translateX(-50%);
+  opacity: 1;
+  pointer-events: auto;
+}
+.live-action-bar, .live-action-bar *, .live-action-bar::before, .live-action-bar::after, .live-action-bar *::before, .live-action-bar *::after { box-sizing: border-box; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar[data-size="reference"] { --control-size: 92px; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar::before,
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar::before {
+  inset: 2px;
+  border: 0;
+  box-shadow: inset 0 1px 2px #ffffff06, inset 0 -1px 1px #9984c31c;
+  background: radial-gradient(ellipse 26% 5% at 31% 0%, #f6f0ff42, transparent), radial-gradient(ellipse 27% 4% at 90% 100%, #baa1f74d, transparent);
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar::after {
+  inset: 0;
+  background: radial-gradient(ellipse 16% 2% at 25% 0%, #fcfaff6b, transparent), radial-gradient(ellipse 10% 2% at 80% 100%, #fff1b345, transparent);
+}
+.rooms-page .place-room-shell .place-stage:not(.is-controls-visible) > .place-stage__controls.live-action-bar { opacity: 0; pointer-events: none; transform: translate(-50%, 8px); }
+@media (hover: hover) {
+  .rooms-page .place-room-shell .place-stage:not(.is-controls-visible) > .place-stage__controls.live-action-bar:hover { opacity: 1; pointer-events: auto; transform: translateX(-50%); }
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .place-stage__controls-spacer { display: none; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reactions { display: contents; }
+
+/* Shared button construction: socket, body, rim, bevel and optical coating. */
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar :where(button, .shorts-reaction.is-readonly) {
+  --button-width: var(--control-size);
+  --button-radius: 999px;
+  --edge-light: #f5f7ffff;
+  --edge-tint: #9b83dfc2;
+  --button-halo: #8260df42;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 0 0 var(--button-width);
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--control-size) * .17);
+  width: var(--button-width);
+  min-width: var(--button-width);
+  height: var(--control-size);
+  min-height: var(--control-size);
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--button-radius);
+  color: #e4e7ed;
+  background:
+    radial-gradient(ellipse 48% 52% at 25% 0%, #f4f5ff40, transparent 77%) padding-box,
+    radial-gradient(ellipse 100% 30% at 50% 104%, #b29cff17, transparent 80%) padding-box,
+    linear-gradient(160deg, #232529 0%, #0c0e12 35%, #040609 72%, #111219 100%) padding-box,
+    conic-gradient(from 30deg, #171c23 0deg, #66707bba 42deg, #161921 106deg, var(--edge-tint) 176deg, #32333f 218deg, var(--edge-light) 290deg, #272c34 333deg, #171c23 360deg) border-box;
+  box-shadow: 0 8px 10px #000b, 0 2px 4px #000e, 0 0 0 2px #010203, 0 0 0 3px #69667721, 0 7px 12px var(--button-halo), inset 0 2px 2px #ffffff0d, inset 0 -3px 5px #000c;
+  cursor: pointer;
+  overflow: visible;
+  transform: none;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), opacity .18s ease;
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar :where(button, .shorts-reaction.is-readonly)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.4px;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 24% 12% at 29% 6%, #fff, transparent 85%), conic-gradient(from 15deg, #ffffff0d, #cad2e363 55deg, #0506070d 115deg, #11121a00 155deg, #bcb0fdd0 202deg, #26272c22 237deg, #f4f8ffff 305deg, #34384666 344deg, #ffffff0d);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar :where(button, .shorts-reaction.is-readonly)::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--control-size) * .057);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 38% 67% at 28% -6%, #ffffff3a, transparent 77%), radial-gradient(ellipse 68% 15% at 58% 100%, #b5a4fa22, transparent 80%), linear-gradient(155deg, #202227, #080a0e 44%, #050609 72%, #12141b);
+  box-shadow: 0 0 0 1.5px #010204, 0 1px 2px 2px #0009, inset 0 1px 1px #edf2ff70, inset 0 -1px 1px #000d;
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar :where(button, .shorts-reaction.is-readonly) > :is(svg, span) { position: relative; z-index: 1; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar :where(button, .shorts-reaction.is-readonly) svg {
+  width: calc(var(--control-size) * .40);
+  height: calc(var(--control-size) * .40);
+  flex-shrink: 0;
+  stroke-width: 2;
+  filter: drop-shadow(0 2px 1px #000b) drop-shadow(0 0 3px #d2d7ff1a);
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction {
+  --button-width: var(--metric-width);
+  --button-radius: calc(var(--control-size) * .46);
+  --button-halo: #9b70db2e;
+  --edge-tint: #b498e8aa;
+  --specular-x: 18%;
+  height: calc(var(--control-size) * .88);
+  min-height: calc(var(--control-size) * .88);
+  background: radial-gradient(ellipse 40% 28% at var(--specular-x) -5%, #d8bfff3b, transparent 78%) padding-box, radial-gradient(ellipse 60% 20% at 65% 105%, #ad84ef25, transparent 80%) padding-box, linear-gradient(#101016 0%, #07080b 30%, #030407 72%, #0a080e) padding-box, linear-gradient(135deg, #ddc8ffc4, #8882916b 25%, #9990a44d 58%, #d8b9ffba 83%, #a9a1b17d) border-box;
+  box-shadow: 0 10px 14px #000b, 0 4px 9px var(--button-halo), inset 0 1px 2px #ffffff20, inset 0 -2px 3px #d2b8ff0f;
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction::before { inset: 0; background: radial-gradient(ellipse 22% 9% at 21% 3%, #fff4ffef, transparent 80%), linear-gradient(140deg, #efddffd9, #a69eb72b 25%, #9f91bc16 49%, #d8b9ffb0 81%, #b8aec251); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction::after { inset: 2px; background: radial-gradient(ellipse 28% 12% at var(--specular-x) -1%, #e1c6ff28, transparent 78%); box-shadow: inset 0 1px 1px #ffffff0c, inset 0 -1px 2px #d4b3ff18; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden { --specular-x: 82%; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden::before { background: radial-gradient(ellipse 22% 9% at 79% 3%, #f5ddffef, transparent 80%), linear-gradient(220deg, #ecd9ffdf, #a69eb733 26%, #9f91bc16 49%, #d8b9ffb0 81%, #b8aec251); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction__icon { display: grid; place-items: center; width: calc(var(--control-size) * .43); height: calc(var(--control-size) * .43); flex: 0 0 auto; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction__icon svg { width: 100%; height: 100%; fill: none; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction__count { display: block; flex: 0 0 auto; margin: 0; padding: 0; color: #e5e5ee; font: 500 calc(var(--control-size) * .26)/1 -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -.035em; white-space: nowrap; text-shadow: 0 1px 2px #000b; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--like .shorts-reaction__icon { color: #d6c7ff; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden .shorts-reaction__icon { color: var(--gold); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden .shorts-reaction__icon svg { filter: drop-shadow(0 2px 1px #000b) drop-shadow(0 0 4px #ffd35a30); }
+
+/* Monetization keeps the same black body; only the optical rim is gold. */
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .place-stage__hat-action {
+  --edge-light: #fffce5;
+  --edge-tint: #dba533d9;
+  --button-halo: #cb8f284a;
+  background: radial-gradient(ellipse 72% 67% at 29% 0%, #fff8c343, transparent 78%) padding-box, linear-gradient(160deg, #29271c, #0b0d09 49%, #19170d 90%) padding-box, conic-gradient(from 15deg, #493d21, #ebd590e0 65deg, #715c23 118deg, #e0ab41e0 195deg, #292719 241deg, #fff9c3ff 304deg, #493d21) border-box;
+}
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .place-stage__hat-action::before { background: radial-gradient(ellipse 24% 12% at 20% 13%, #fffbdc, transparent 85%), conic-gradient(from 15deg, #75633029, #f1ca6a95 52deg, #14110c 145deg, #fbc74abc 195deg, #64522838 238deg, #fff6cdff 302deg, #75633029); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .place-stage__hat-action::after { background: radial-gradient(ellipse 55% 57% at 29% 0%, #fff4bd45, transparent 76%), linear-gradient(155deg, #27251b, #0d0c08 44%, #090804 72%, #211b0b); box-shadow: 0 0 0 1.5px #080904, 0 1px 2px 2px #0008, inset 0 -2px 4px #e8b94755, inset 0 1px 1px #fff7bb80; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .live-action-bar__money { width: calc(var(--control-size) * .51); height: calc(var(--control-size) * .51); filter: drop-shadow(0 2px 2px #000a) drop-shadow(0 0 6px #ffd35a38); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.14); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar button:active:not(:disabled) { transform: translateY(1px) scale(.985); box-shadow: 0 2px 5px #000d, inset 0 3px 6px #000b, inset 0 -1px 1px #e6daff26; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar button:focus-visible { outline: 2px solid #c6b5f1; outline-offset: 6px; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar button.is-active { --button-halo: #9471e95c; --edge-light: #eedcffe6; --edge-tint: #bea1fbdd; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction.is-active .shorts-reaction__icon { color: #c2a6ff; filter: drop-shadow(0 0 5px #a280ff60); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden.is-active { --button-halo: #d9ab394a; --edge-light: #fff3c5; --edge-tint: #e0b94edd; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden.is-active .shorts-reaction__icon { color: #ffeaa3; filter: drop-shadow(0 0 5px #ffd35a45); }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden.is-given:disabled { opacity: 1; cursor: default; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--golden.is-given .shorts-reaction__icon svg { fill: currentColor; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar button:disabled { opacity: .55; cursor: not-allowed; }
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .is-readonly { cursor: default; }
+@media (max-width: 600px) {
+  .rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar { --control-size: 44px; --metric-width: 69px; --control-gap: 4px; --shell-padding-x: 7px; --shell-padding-y: 8px; bottom: var(--live-controls-bottom, 12px); max-width: calc(100% - 10px); }
+  .rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction { height: 44px; min-height: 44px; }
+  .rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar :where(button, .shorts-reaction.is-readonly)::before { padding: 1px; }
+}
+@media (max-width: 360px) {
+  .rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar { --control-size: 36px; --metric-width: 56px; --control-gap: 2px; --shell-padding-x: 5px; }
+  .rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction { height: 36px; min-height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar button { transition: none; }
+}
+/* A pointer click must not pin viewer controls; keyboard focus stays discoverable. */
+.rooms-page .place-room-shell .place-room-experience[data-room-presentation="cage"] .place-stage.is-viewer-stage:not(.is-controls-visible) > .place-stage__controls.live-action-bar { opacity:0; pointer-events:none; transform:translate(-50%,8px); }
+.rooms-page .place-room-shell .place-stage.is-viewer-stage > .place-stage__controls.live-action-bar { transition:opacity .22s ease,transform .22s ease; }
+
+.rooms-page .place-room-shell .place-stage > .place-stage__controls.live-action-bar .shorts-reaction--like.is-active .shorts-reaction__icon svg { fill: currentColor; }

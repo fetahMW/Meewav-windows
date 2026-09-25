@@ -1,0 +1,96 @@
+/* Body portal: unaffected by the player's overflow or generic deck buttons. */
+.place-mixer-playback-popover {
+  position: fixed;
+  z-index: 10000;
+  display: grid;
+  box-sizing: border-box;
+  width: 264px;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+  gap: 4px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid #b9bec12e;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #191a1ded, #08090bf5 70%);
+  backdrop-filter: blur(18px);
+  box-shadow: inset 0 1px #ffffff14, inset 0 -1px #000a, 0 12px 30px #000b;
+  color: #eeeaf4;
+  font: 500 12px/1.35 Inter, system-ui, sans-serif;
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: #50515a transparent;
+}
+.place-mixer-playback-popover > button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 8px;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 38px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #25272b, #101113 44%, #060708) padding-box,
+    linear-gradient(130deg, #d6dce440, #747b8215 45%, #ffffff0b) border-box;
+  box-shadow: inset 0 1px #ffffff0c, inset 0 -1px #0009, 0 2px 4px #0005;
+  color: #c6c1cd;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  transition: color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+.place-mixer-playback-popover > button > svg { width: 17px; height: 17px; color: #a79bb7; stroke-width: 1.8; }
+.place-mixer-playback-popover > button > span { min-width: 0; white-space: normal; }
+.place-mixer-playback-popover > button > i { box-sizing: border-box; width: 7px; height: 7px; border: 1px solid #6f647e; border-radius: 50%; }
+.place-mixer-playback-popover > button:is(:hover, :focus-visible):not(:disabled) { border-color: #63497d; background: #a169d514; color: #faf5ff; }
+.place-mixer-playback-popover > button:focus-visible { outline: 1px solid #ba8ce6; outline-offset: -2px; }
+.place-mixer-playback-popover > button[aria-checked="true"] { border-color: #745296; background: linear-gradient(100deg, #8d4bc52b, #6a3d9412); color: #f4eaff; }
+.place-mixer-playback-popover > button[aria-checked="true"] > svg { color: #c791fb; }
+.place-mixer-playback-popover > button[aria-checked="true"] > i { border-color: #d7b8fa; background: #a56ae6; box-shadow: 0 0 5px #a56ae650; }
+.place-mixer-playback-popover > button:disabled { opacity: .42; cursor: not-allowed; }
+.place-mixer-playback-popover__separator { height: 1px; margin: 4px 8px; background: #ffffff12; }
+.place-mixer-playback-popover__hint { margin: 2px 10px 4px; color: #a7a0b1; font-size: 11px; line-height: 1.45; }
+.place-mixer-playback-popover__caption,
+.place-mixer-playback-popover__length-heading {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin: 2px 9px 3px; color: #a3a4ad; font-size: 10px; font-weight: 600;
+}
+.place-mixer-playback-popover__length-heading { margin-top: 5px; }
+.place-mixer-playback-popover__length-heading small { color: #777a85; font-size: 9px; font-weight: 500; }
+.place-mixer-playback-popover .wave-musical-length {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px;
+  margin: 0 3px 3px; padding: 4px; border: 1px solid #ffffff0c; border-radius: 11px;
+  background: #030406a6; box-shadow: inset 0 1px 4px #0008;
+}
+.place-mixer-playback-popover .wave-musical-length > button {
+  appearance: none; display: flex; align-items: center; justify-content: center; gap: 4px;
+  box-sizing: border-box; min-width: 0; height: 32px; margin: 0; padding: 0 5px;
+  border: 1px solid transparent; border-radius: 7px;
+  background: linear-gradient(160deg, #23252a, #0d0e11 65%) padding-box,
+    linear-gradient(140deg, #b8c0ce33, #ffffff07 65%) border-box;
+  box-shadow: inset 0 1px #ffffff0a, 0 2px 4px #0005;
+  color: #92949e; font: inherit; cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+.place-mixer-playback-popover .wave-musical-length > button strong { color: inherit; font-size: 12px; font-weight: 650; }
+.place-mixer-playback-popover .wave-musical-length > button span { font-size: 9px; opacity: .65; }
+.place-mixer-playback-popover .wave-musical-length > button:is(:hover, :focus-visible):not(:disabled) {
+  border-color: #c7b2df59; color: #f1ebf7; box-shadow: inset 0 1px #ffffff16, 0 2px 4px #0005;
+}
+.place-mixer-playback-popover .wave-musical-length > button[aria-checked="true"] {
+  border-color: #bb98e266; color: #ece2f7;
+  background: linear-gradient(155deg, #3a3048, #18131f 65%) padding-box;
+  box-shadow: inset 0 1px #ece2ff14, inset 0 -1px #bd8ce455, 0 0 8px #9566c00d;
+}
+.place-mixer-playback-popover .wave-musical-length > button:disabled { opacity: .32; cursor: not-allowed; }
+.place-mixer-playback-popover .wave-musical-length > button:focus-visible { outline: 1px solid #c7b2df; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .place-mixer-playback-popover > button,
+  .place-mixer-playback-popover .wave-musical-length > button { transition: none; }
+}

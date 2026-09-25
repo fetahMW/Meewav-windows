@@ -1,0 +1,37 @@
+/* Fits the existing track header; no player/body/waveform dimensions change. */
+.place-room-shell .place-mixer-audio.has-wave-listening .place-mixer-audio__track {
+  grid-template-columns: minmax(69px, 1fr) auto minmax(69px, 1fr); gap: 10px;
+}
+.place-room-shell .place-mixer-audio .wave-listening-selector {
+  display: inline-grid; grid-template-columns: repeat(3, auto); align-items: center;
+  align-self: center; justify-self: center; gap: 2px; padding: 3px; min-width: 0; margin: 0;
+  transform: none;
+  border: 1px solid #ffffff15; border-radius: 8px;
+  background: linear-gradient(180deg, #101014, #030405); box-shadow: inset 0 1px #ffffff06;
+}
+.place-room-shell .place-mixer-audio .wave-listening-selector > button {
+  display: grid; place-items: center; width: auto !important; min-width: 0 !important;
+  height: 24px !important; min-height: 24px !important; margin: 0; padding: 0 7px !important;
+  border: 1px solid #ffffff09 !important; border-radius: 5px !important;
+  background: #050608 !important; box-shadow: none !important;
+  color: #757480; font: inherit; font-size: 8px !important; font-weight: 650; line-height: 1;
+  letter-spacing: .02em; cursor: pointer;
+  transition: color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+.place-room-shell .place-mixer-audio .wave-listening-selector > button[aria-checked="true"] {
+  color: #f5edff; border-color: #b883f096 !important;
+  background: linear-gradient(155deg, #382347, #18101f) !important;
+  box-shadow: inset 0 1px #e4cdff24, inset 0 -1px #b877f340, 0 0 9px #ac6fec26 !important;
+}
+.place-room-shell .place-mixer-audio .wave-listening-selector > button:hover:not(:disabled) { color: #f1f1f5; }
+.place-room-shell .place-mixer-audio .wave-listening-selector > button:focus-visible { outline: 2px solid #c0b8d3; outline-offset: 2px; }
+.place-room-shell .place-mixer-audio .wave-listening-selector > button:disabled { opacity: .35; cursor: not-allowed; }
+.place-room-shell .place-mixer-audio.has-wave-listening .place-mixer-audio__track-hint.is-quick-preview { color: #bba6d2; }
+@container wave-tools (max-width: 340px) {
+  .place-room-shell .place-mixer-audio.has-wave-listening .place-mixer-audio__track { gap: 4px; }
+  .place-room-shell .place-mixer-audio .wave-listening-selector { margin: 0; }
+  .place-room-shell .place-mixer-audio .wave-listening-selector > button { padding-inline: 4px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-mixer-audio .wave-listening-selector > button { transition: none; }
+}

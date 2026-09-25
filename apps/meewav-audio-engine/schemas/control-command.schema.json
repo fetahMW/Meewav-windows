@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://meewav.com/schemas/audio-engine/control-command.v1.json",
+  "title": "MeeWav Audio Engine control command",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "requestId", "sessionId", "command", "payload", "signature"],
+  "properties": {
+    "version": { "const": 1 },
+    "requestId": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "sessionId": { "type": "string", "minLength": 8, "maxLength": 256 },
+    "command": {
+      "enum": [
+        "devices.list",
+        "devices.select",
+        "plugins.list",
+        "plugins.rescan",
+        "chain.get",
+        "chain.update",
+        "preset.apply",
+        "monitor.start",
+        "monitor.stop",
+        "diagnostics.get"
+      ]
+    },
+    "payload": { "type": "object" },
+    "signature": { "type": "string", "minLength": 32, "maxLength": 512 }
+  }
+}

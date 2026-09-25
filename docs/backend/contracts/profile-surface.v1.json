@@ -1,0 +1,106 @@
+{
+  "contract": "meewav-profile-surface",
+  "schemaVersion": 1,
+  "authority": "web-platform-v1",
+  "profileMode": "host",
+  "viewerFullProfile": {
+    "status": "deferred",
+    "publicPopupProjectionOnly": true,
+    "mustNotReuseLegacyIosViewerAsAuthority": true
+  },
+  "topLevelTabs": [
+    {
+      "id": "home",
+      "label": "Accueil",
+      "eyebrow": "Vue d’ensemble"
+    },
+    {
+      "id": "stats",
+      "label": "Statistiques",
+      "eyebrow": "Performance"
+    },
+    {
+      "id": "media",
+      "label": "Créations",
+      "eyebrow": "Média"
+    },
+    {
+      "id": "space",
+      "label": "Espace privé",
+      "eyebrow": "Gestion"
+    }
+  ],
+  "mediaModules": [
+    {
+      "id": "library",
+      "label": "Médiathèque",
+      "filters": [
+        "all",
+        "audio",
+        "video",
+        "images",
+        "documents",
+        "produced-on-meewav"
+      ]
+    },
+    {
+      "id": "cage",
+      "label": "La Cage"
+    },
+    {
+      "id": "setlist",
+      "label": "Setlist"
+    },
+    {
+      "id": "gifts",
+      "label": "Cadeaux"
+    },
+    {
+      "id": "badges",
+      "label": "Badges",
+      "meaning": "grade-and-server-recognitions"
+    }
+  ],
+  "privateModules": [
+    {
+      "id": "wallet",
+      "label": "Portefeuille"
+    },
+    {
+      "id": "transactions",
+      "label": "Transactions"
+    },
+    {
+      "id": "contracts",
+      "label": "Contrats"
+    },
+    {
+      "id": "hardware",
+      "label": "Matériel"
+    },
+    {
+      "id": "security",
+      "label": "Sécurité"
+    },
+    {
+      "id": "organization",
+      "label": "Organisation"
+    }
+  ],
+  "removedModules": [
+    {
+      "id": "universe",
+      "label": "Mon univers",
+      "replacement": "library.filter.produced-on-meewav",
+      "removeRoutesAndState": true,
+      "preserveUnderlyingMedia": true
+    }
+  ],
+  "gradeContract": "grade-levels.v1.json",
+  "rules": {
+    "gradeIsServerAuthoritative": true,
+    "recognitionsAreServerAuthoritative": true,
+    "technicalChipsAreNotRecognitions": true,
+    "productionMocksAllowed": false
+  }
+}

@@ -1,0 +1,350 @@
+/* Shared violet glass chassis. The Globe keeps its existing navigation material. */
+@media (min-width: 761px) {
+  .meewav-primary-nav.is-glass-chassis {
+    --mw-glass-pole-width: calc(var(--mw-l-chassis-rail-width) + min(8px, var(--mw-l-chassis-rail-width) * 0.095));
+    /* A gently projected rounded rectangle, with continuous tangents at every corner. */
+    --mw-glass-pole-button-frame: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60' preserveAspectRatio='none'%3E%3Cpath d='M13 5.030 Q30 6.570 47 5.030 C51.971 4.580 56 8.029 56 13 V45 C56 49.971 51.971 54.580 47 55.030 Q30 56.570 13 55.030 C8.029 54.580 4 49.971 4 45 V13 C4 8.029 8.029 4.580 13 5.030Z' fill='none' stroke='white' stroke-width='0.9'/%3E%3C/svg%3E");
+    /* The same glass surface catches a little more light during interaction. */
+    --mw-glass-pole-button-surface: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60' preserveAspectRatio='none'%3E%3Cpath d='M13 5.030 Q30 6.570 47 5.030 C51.971 4.580 56 8.029 56 13 V45 C56 49.971 51.971 54.580 47 55.030 Q30 56.570 13 55.030 C8.029 54.580 4 49.971 4 45 V13 C4 8.029 8.029 4.580 13 5.030Z' fill='white'/%3E%3C/svg%3E");
+  }
+
+  .meewav-primary-nav.is-glass-chassis::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0 auto 0 0;
+    /* Match the SVG's painted width, including the existing outer edge. */
+    width: var(--mw-glass-pole-width);
+    /* A broad convex shoulder shapes the violet; fine glints live between icons. */
+    background: linear-gradient(90deg,
+      #08021e9e 0%,
+      #13073252 9%,
+      #20104417 20%,
+      #cbb0ff17 32%,
+      #dcc6ff30 46%,
+      #c5a1ff21 57%,
+      #3013570a 68%,
+      #14062e47 81%,
+      #09021fa3 95%,
+      #050015c7 100%);
+    mask-image: linear-gradient(180deg, transparent, #000 150px);
+    pointer-events: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis.is-rooms-landing-chassis .meewav-primary-nav__l-chassis-edge-main {
+    /* Full-length paths let the highlight taper away without a bright endpoint. */
+    stroke-width: 2;
+    opacity: 0.35;
+    transform: translate(-3.5px, -3.5px);
+    filter: blur(0.35px);
+  }
+  .meewav-primary-nav.is-glass-chassis.is-rooms-landing-chassis .meewav-primary-nav__l-chassis-edge-tail {
+    stroke: url("#meewav-l-chassis-edge-gradient");
+    stroke-width: 20;
+    opacity: 0.18;
+    transform: translate(-8px, -8px);
+    filter: blur(4px);
+  }
+  .meewav-primary-nav.is-glass-chassis.is-rooms-landing-chassis .meewav-primary-nav__l-chassis-hotspot {
+    display: none;
+  }
+
+  /* The scrollable wrapper spans the material; the buttons keep their size. */
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__pillars {
+    width: var(--mw-glass-pole-width);
+    justify-content: safe center;
+  }
+
+  .meewav-primary-nav.is-glass-chassis > :is(.meewav-primary-nav__pillars, .meewav-primary-nav__account) {
+    left: clamp(3.23px, 0.24vw, 3.8px);
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__account::before {
+    /* Follow the cylinder's curve, keeping the original separator's center. */
+    height: 4px;
+    transform: translateY(-1.5px);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 4' preserveAspectRatio='none'%3E%3Cpath d='M0 .75 Q30 3.25 60 .75' fill='none' stroke='white' stroke-width='.8'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    box-shadow: none;
+    filter: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item,
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:is(.is-active, :hover, :focus-visible, :active) {
+    isolation: isolate;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    /* Keep the inherited color violet while hover/focus transitions unwind. */
+    color: rgba(234, 228, 255, 0.72);
+    transform: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item > :is(svg, .meewav-primary-nav__globe) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map) > svg {
+    color: inherit;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):not(.is-profile) > .meewav-primary-nav__material-glint {
+    position: absolute;
+    z-index: -1;
+    display: block;
+    top: -25px;
+    left: 50%;
+    width: 25px;
+    height: 36px;
+    background: linear-gradient(90deg, transparent 12%, #d5b8ff0e 32%, #f1ddff2b 45%, #d2aaff14 56%, transparent 79%);
+    mask-image: radial-gradient(ellipse, #000 0%, #0008 35%, transparent 70%);
+    filter: blur(0.5px);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-messages > .meewav-primary-nav__material-glint {
+    top: -20px;
+    height: 30px;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-market > .meewav-primary-nav__material-glint { opacity: 0.65; }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-tremplin > .meewav-primary-nav__material-glint { opacity: 0.45; }
+
+  /* Preserve the resting glass contour in every state, with no luminous halo. */
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map)::before,
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map)::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border: 0;
+    border-radius: 0;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-composite: intersect;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map)::before {
+    background: linear-gradient(115deg, #ede3ff0d, transparent 42%), linear-gradient(180deg, #e4d5ff08, #d9c7ff03 55%, #f1e6ff06);
+    mask-image: var(--mw-glass-pole-button-surface);
+    box-shadow: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map)::after {
+    background: linear-gradient(120deg, #1a0a3e88, #d9c2ff70 32%, #d0b7f747 60%, #1a0a3e9e);
+    mask-image: var(--mw-glass-pole-button-frame);
+    opacity: 0.8;
+    box-shadow: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map).is-active::before {
+    /* A small inset mark belongs to the current page, never to a hover. */
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M8 24V36' fill='none' stroke='%23eadfff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat,
+      linear-gradient(115deg, #f0e5ff12, transparent 52%),
+      linear-gradient(180deg, #dfccff1a, #cbb0ff17 65%, #9e7ad617);
+    opacity: 1;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):not(.is-active):is(:hover, :focus-visible)::before {
+    opacity: 0.85;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):not(.is-active):active::before {
+    opacity: 1;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):is(.is-active, :hover, :focus-visible)::after {
+    opacity: 1;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map).is-active::after {
+    background: linear-gradient(120deg, #c8afe473, #edddffb0 32%, #ddc7ff80 68%, #5d3b9759);
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):focus-visible {
+    outline: none;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):focus-visible::after {
+    background: linear-gradient(120deg, #ffffff55, #fff 32%, #ffffffbb 72%, #ffffff55);
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):is(.is-active, :hover, :focus-visible) > svg {
+    color: #ece4ff;
+    filter: none;
+    transform: none;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map).is-active > svg {
+    color: #f6f1ff;
+    stroke-width: 2.1;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):focus-visible > svg {
+    color: #fff;
+    stroke-width: 2.2;
+    filter: none;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):active > svg { transform: scale(0.94); }
+
+  /* A feathered depression cups the globe, without a hard bezel. */
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-map { border-radius: 50%; }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-map::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: -8px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 48% 40%, #09021aab 20%, #19083988 47%, #30136326 65%, transparent 74%);
+    box-shadow: inset 2px 6px 10px #09021dcc, inset -1px -5px 9px #d9b9ff70;
+    filter: blur(1.6px);
+    mask-image: radial-gradient(ellipse, #000 48%, #000b 62%, transparent 74%);
+    pointer-events: none;
+    transition: filter 180ms ease, opacity 180ms ease;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__globe {
+    box-shadow: 0 4px 6px #08021b80, inset -10px -8px 15px #01000ac7, inset 5px 4px 10px #ffffff33;
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-map:is(:hover, :focus-visible) .meewav-primary-nav__globe {
+    transform: translateY(1px) scale(0.96);
+    box-shadow: 0 2px 4px #08021ba6, inset -10px -8px 15px #01000ad9, inset 5px 4px 9px #ffffff33;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-map:active .meewav-primary-nav__globe {
+    transform: translateY(3px) scale(0.88);
+    filter: brightness(0.9);
+    box-shadow: 0 1px 2px #08021bb3, inset -10px -8px 15px #01000ae6, inset 4px 3px 8px #ffffff26;
+  }
+}
+
+/* The standalone visitor profile previously used a floating navigation. Give
+   it the same viewport-anchored host as the other full-page destinations. */
+@media (min-width: 761px) {
+  .profile-viewer-page.is-page {
+    --mw-glass-topbar-height: clamp(62px, 6.2vh, 68px);
+    --mw-glass-viewer-rail-width: clamp(68px, 4vw, 80px);
+  }
+  .profile-viewer-page.is-page .profile-viewer-primary-rail {
+    position: fixed;
+    z-index: 120;
+    top: var(--mw-glass-topbar-height);
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: var(--mw-glass-viewer-rail-width);
+    min-height: 0;
+    flex-direction: column;
+  }
+  .profile-viewer-primary-rail > .meewav-primary-nav.is-glass-chassis {
+    --mw-l-chassis-display: block;
+    --mw-l-chassis-rail-width: var(--mw-glass-viewer-rail-width);
+    --mw-l-chassis-topbar-height: var(--mw-glass-topbar-height);
+    position: static;
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
+    padding: 18px max(8px, calc((var(--mw-glass-viewer-rail-width) - 52px) / 2));
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    transform: none;
+  }
+}
+
+@media (min-width: 761px) and (max-height: 680px) {
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map):not(.is-profile) > .meewav-primary-nav__material-glint {
+    top: -19px;
+    height: 28px;
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item.is-messages > .meewav-primary-nav__material-glint {
+    top: -12px;
+    height: 22px;
+  }
+}
+
+@media (min-width: 761px) and (prefers-reduced-motion: reduce) {
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map)::before,
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map)::after,
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__item:not(.is-map) > svg,
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__globe {
+    transition: none;
+  }
+}
+
+
+.meewav-primary-nav__pole-wordmark { display: none; }
+
+@media (min-width: 761px) {
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__pillars {
+    /* Preserve the icon positions while giving the wordmark room above the
+       globe when the stack scrolls in a short window. */
+    margin-top: -56px;
+    padding-top: 56px;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__pole-wordmark {
+    position: absolute;
+    z-index: 2;
+    /* Lift the inscription, easing the offset in short windows so it always
+       stays below the header instead of jumping at a height breakpoint. */
+    top: clamp(-57px, calc(229px - 50vh), -32px);
+    left: 50%;
+    display: block;
+    width: 66px;
+    height: 22px;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__pole-wordmark > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    stroke: none;
+    filter: none;
+    transform: none;
+  }
+
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__pole-wordmark text {
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 1.35px;
+  }
+}
+
+.meewav-primary-nav__glass-lintel { display: none; }
+
+@media (min-width: 761px) {
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__glass-lintel {
+    display: inline;
+    fill: none;
+    pointer-events: none;
+  }
+
+  /* All three reflections follow the existing, unbroken chassis path. Their
+     soft volume dies away before the fine edge merges into the black beam. */
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__glass-lintel-body {
+    stroke-width: 18px;
+    transform: translate(-3.5px, -3.5px);
+    filter: blur(2px);
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__glass-lintel-glaze {
+    stroke-width: 6px;
+    transform: translate(-3.5px, -3.5px);
+    opacity: 0.35;
+    filter: blur(1px);
+  }
+  .meewav-primary-nav.is-glass-chassis .meewav-primary-nav__glass-lintel-reflection {
+    stroke-width: 0.8px;
+    transform: translate(-3.5px, -3.5px);
+  }
+}

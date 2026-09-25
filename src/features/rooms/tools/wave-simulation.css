@@ -1,0 +1,9 @@
+.wave-simulation { position: relative; pointer-events: auto; }
+.wave-simulation__trigger { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid #74694e; border-radius: 10px; background: #29251e; color: #f5dfaa; cursor: pointer; font: inherit; font-size: 12px; }
+.wave-simulation__panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); z-index: 100; display: grid; gap: 8px; width: 260px; padding: 16px; border: 1px solid #575044; border-radius: 14px; background: #201f23; color: #f6f1e7; box-shadow: 0 12px 36px #0008; }
+.wave-simulation__panel > small { color: #bdb5a9; line-height: 1.5; }
+.wave-simulation__panel > button { display: flex; justify-content: space-between; gap: 12px; padding: 11px; border: 1px solid #454047; border-radius: 8px; background: #2a282e; color: inherit; cursor: pointer; }
+.wave-simulation__panel > button[aria-pressed="true"] { border-color: #d1ad61; background: #3a3223; }
+.wave-simulation__panel > button:disabled { opacity: .5; cursor: wait; }
+.place-room-shellbar[data-room-presentation="wave"]:has(.wave-simulation) { overflow: visible; }
+.place-room-shellbar[data-room-presentation="wave"] > .place-room-shellbar__broadcast-cluster:has(.wave-simulation) { display: flex; overflow: visible; }

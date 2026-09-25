@@ -1,0 +1,21 @@
+/* One poll surface for every room, host results and viewer chat. */
+.rooms-page .place-room-shell .rooms-chat-poll-slot { flex-shrink:0; margin:10px; max-height:60vh; overflow-y:auto; scrollbar-width:thin; }
+.rooms-page .place-room-shell .rooms-shared-poll { --poll-purple:#8b5cff; --poll-blue:#8fc8ff; padding:16px; border:1px solid #8b5cff70; border-radius:16px; background:radial-gradient(ellipse at top left,#8b5cff12,transparent 65%),linear-gradient(150deg,#16131d,#030405 65%); box-shadow:inset 0 1px #ffffff25,0 8px 24px #0005; color:#f0eef5; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__header { display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__glyph { display:grid; place-items:center; flex-shrink:0; width:36px; height:36px; border:1px solid #8b5cff90; border-radius:10px; background:linear-gradient(#35234f,#100b1a); color:#c8acff; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__glyph svg { color:#c8acff; width:21px; height:21px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__header > span:last-child { display:grid; gap:6px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__header small { color:#c8acff; font-size:10px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__header strong { font-size:15px; color:#f3f0f8; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-tool-card__header em { font-style:normal; color:#a8a1b5; font-size:11px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options { display:grid; gap:8px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options button { position:relative; isolation:isolate; overflow:hidden; display:flex; justify-content:space-between; align-items:center; gap:12px; width:100%; min-height:58px; padding:12px; border:1px solid #8b5cff50; border-radius:10px; background:linear-gradient(#19141f,#060507); color:#f0eef5; text-align:left; cursor:pointer; }
+.rooms-page .place-room-shell .rooms-shared-poll .chat-poll-result-fill { position:absolute; inset:0 auto 0 0; z-index:-1; background:linear-gradient(90deg,#8b5cff55,#8b5cff22); pointer-events:none; transition:width .25s ease; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options button.is-active { border-color:var(--poll-blue); }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options button:enabled:hover { border-color:#c3a4ff; background:#221630; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options button:focus-visible { outline:2px solid var(--poll-blue); outline-offset:2px; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options strong { color:var(--poll-blue); font-size:16px; text-align:right; }
+.rooms-page .place-room-shell .rooms-shared-poll .place-chat-poll__options small { display:block; margin-top:4px; color:#b9accb; font-size:10px; }
+.rooms-page .place-room-shell .rooms-shared-poll .chat-poll-total { margin:12px 0 0; font-size:11px; color:#b4a9c3; }
+.rooms-page .place-room-shell .wave-chat-poll-preview { border-color:#8b5cff60; background:linear-gradient(150deg,#17121e,#030405 65%); }
+.rooms-page .place-room-shell .wave-chat-poll-preview > header { color:#c8acff; }

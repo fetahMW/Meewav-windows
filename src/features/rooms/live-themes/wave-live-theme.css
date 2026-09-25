@@ -1,0 +1,5 @@
+/* La Wave owns only its identity accent. Shared Room UI stays untouched. */
+.place-room-shellbar[data-room-presentation="wave"] .meewav-pillar-brand__pillar {
+  color: #5b8dff;
+  text-shadow: none;
+}

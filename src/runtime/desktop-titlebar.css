@@ -1,0 +1,224 @@
+body:has(.meewav-desktop-titlebar) {
+  padding-top: 40px;
+  box-sizing: border-box;
+}
+
+/* The product keeps its own artwork and navigation below the window strip. */
+body:has(.meewav-desktop-titlebar):has(:is(.rooms-page, .tremplin-page, .market-page, .shorts-page, .messaging-page, .profile-page)) {
+  padding-top: 0;
+}
+
+body:has(.meewav-desktop-titlebar) :is(.globe-v2-page, .vinyl-globe-page) {
+  top: 40px;
+  height: calc(100dvh - 40px);
+}
+
+body:has(.meewav-desktop-titlebar) :is(.rooms-page, .tremplin-page, .market-page, .shorts-page:not(.is-document), .messaging-page) {
+  top: 0;
+  height: 100dvh;
+}
+
+body:has(.meewav-desktop-titlebar) :is(.tremplin-shell, .market-shell, .messaging-stage),
+body:has(.meewav-desktop-titlebar) .shorts-page:not(.is-document) .shorts-shell {
+  top: 40px;
+}
+
+/* La Scène's document routes remain in normal flow. */
+body:has(.meewav-desktop-titlebar) .scene-page.is-document {
+  top: auto;
+  height: auto;
+  min-height: 100dvh;
+  padding-top: 40px;
+}
+
+body:has(.meewav-desktop-titlebar) .rooms-topbar,
+body:has(.meewav-desktop-titlebar) .scene-page.is-document .shorts-topbar {
+  top: 40px;
+}
+
+/* Meewav's header keeps its own surface below the window strip. */
+body:has(.meewav-desktop-titlebar) :is(.rooms-topbar, .tremplin-topbar, .market-topbar, .shorts-topbar, .messaging-page .mw-chat-header) {
+  border-bottom: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body:has(.meewav-desktop-titlebar) .rooms-page__future-surface {
+  top: calc(40px + var(--rooms-topbar-height));
+}
+
+body:has(.meewav-desktop-titlebar) .rooms-tremplin-return {
+  top: calc(40px + var(--rooms-topbar-height) + 18px);
+}
+
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-experience.place-room-shell {
+  inset-block-start: 40px;
+}
+
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-experience.place-room-shell.has-shellbar {
+  inset-block-start: calc(40px + var(--rooms-topbar-height));
+}
+
+@media (min-width: 761px) {
+  body:has(.meewav-desktop-titlebar) .rooms-primary-rail { top: calc(40px + var(--rooms-topbar-height)); }
+  body:has(.meewav-desktop-titlebar) .tremplin-primary-rail { top: calc(40px + var(--tremplin-primary-band-height)); }
+  body:has(.meewav-desktop-titlebar) .market-primary-rail { top: calc(40px + var(--market-primary-band-height)); }
+  body:has(.meewav-desktop-titlebar) .shorts-primary-rail { top: calc(40px + var(--shorts-topbar-height)); }
+  body:has(.meewav-desktop-titlebar) .messaging-rail { top: calc(40px + var(--messaging-topbar-height)); }
+}
+
+/* La Scène's document navigation uses fixed positioning outside its header. */
+body:has(.meewav-desktop-titlebar) .scene-page :is(.scene-context-bar, .scene-browse-nav, .scene-browse-chips-shell, .scene-watch-menu, .scene-watch-menu-space) {
+  top: calc(40px + var(--shorts-topbar-height));
+}
+
+body:has(.meewav-desktop-titlebar) .scene-page .scene-watch-menu .scene-browse-nav {
+  top: 0;
+}
+
+body:has(.meewav-desktop-titlebar) .scene-page .scene-navigation-progress {
+  top: calc(40px + var(--shorts-topbar-height) - 4px);
+}
+
+body:has(.meewav-desktop-titlebar) .profile-page {
+  min-height: 100svh;
+  padding-top: 40px;
+}
+
+body:has(.meewav-desktop-titlebar) .profile-page .profile-command-bar {
+  top: 40px;
+  border-bottom: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body:has(.meewav-desktop-titlebar) .profile-page .profile-command-bar .profile-top-tabs .profile-tabs__indicator {
+  bottom: 3px;
+}
+
+@media (min-width: 761px) {
+  body:has(.meewav-desktop-titlebar) .profile-page .profile-primary-rail {
+    top: calc(40px + var(--profile-chrome-height));
+  }
+}
+
+body:has(.meewav-desktop-titlebar) .profile-page .profile-data-announcer {
+  top: calc(40px + var(--profile-chrome-height) + 8px);
+}
+
+body:has(.meewav-desktop-titlebar) .profile-page .profile-artist-filter {
+  top: 40px;
+  max-height: calc(100dvh - 40px);
+}
+
+/* Auth centers a full-viewport root with !important rules. Reserve the native
+   shell's space there too, otherwise its header slides under the title bar. */
+body:has(.meewav-desktop-titlebar) #root:has(.auth-page),
+body:has(.meewav-desktop-titlebar) .auth-page {
+  min-height: calc(100dvh - 40px) !important;
+}
+
+@media (min-width: 992px) {
+  body:has(.meewav-desktop-titlebar) .auth-page {
+    height: calc(100dvh - 40px) !important;
+    max-height: calc(100dvh - 40px) !important;
+  }
+}
+
+.meewav-desktop-titlebar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50000;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 0 0 15px;
+  border-bottom: 0;
+  background: linear-gradient(105deg, #2c2a34 0%, #332e3b 52%, #292832 100%);
+  box-shadow: 0 2px 14px rgba(5, 3, 12, 0.24);
+  color: #e5deec;
+  font: 500 12px Inter, system-ui, sans-serif;
+  user-select: none;
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+
+.meewav-desktop-titlebar__menu {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  gap: 2px;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.meewav-desktop-titlebar__menu-group { position: relative; }
+.meewav-desktop-titlebar__menu-group > button {
+  min-height: 29px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #ddd6e7;
+  font: 500 12px Inter, system-ui, sans-serif;
+  cursor: pointer;
+}
+.meewav-desktop-titlebar__menu-group > button:hover,
+.meewav-desktop-titlebar__menu-group > button[aria-expanded="true"] { background: #ffffff16; color: #f4eaff; }
+.meewav-desktop-titlebar__menu-group > button:focus-visible,
+.meewav-desktop-titlebar__dropdown button:focus-visible { outline: 2px solid #ad83ed; outline-offset: -2px; }
+.meewav-desktop-titlebar__dropdown {
+  position: absolute;
+  top: 37px;
+  left: 0;
+  z-index: 1;
+  min-width: 214px;
+  padding: 6px;
+  border: 1px solid #ad89d556;
+  border-radius: 11px;
+  background: #181022;
+  box-shadow: 0 18px 40px #000b, inset 0 1px #ffffff17;
+}
+.meewav-desktop-titlebar__dropdown button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #e8def1;
+  font: 500 11px Inter, system-ui, sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+.meewav-desktop-titlebar__dropdown button:hover { background: #aa73e232; }
+.meewav-desktop-titlebar__dropdown kbd { color: #ae9ebe; font: 10px Inter, system-ui, sans-serif; white-space: nowrap; }
+.meewav-desktop-titlebar__controls {
+  display: flex;
+  align-self: stretch;
+  margin-left: auto;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.meewav-desktop-titlebar__controls button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #d8d0e5;
+  cursor: pointer;
+}
+.meewav-desktop-titlebar__controls button:hover { background: #ffffff19; color: #fff; }
+.meewav-desktop-titlebar__controls .meewav-desktop-titlebar__close:hover { background: #bd3344; }
+.meewav-desktop-titlebar__controls button:focus-visible { outline: 2px solid #ad83ed; outline-offset: -3px; }

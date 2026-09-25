@@ -1,0 +1,6 @@
+.viewer-green-house-audio { display:grid; gap:9px; padding:13px; border:1px solid #ffffff23; border-radius:14px; background:linear-gradient(145deg,#202125,#090a0d); color:#eeeeF3; font:12px/1.45 Inter,system-ui,sans-serif; }
+.viewer-green-house-audio p { margin:0; color:#a9acb6; }
+.viewer-green-house-audio label { display:flex; align-items:center; gap:9px; }
+.viewer-green-house-audio meter { flex:1; min-width:0; height:13px; }
+.viewer-green-house-audio small { color:#b9b5aa; }
+.viewer-green-house-audio input { flex-shrink:0; accent-color:#b898ee; }

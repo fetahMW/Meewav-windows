@@ -1,0 +1,133 @@
+.meewav-tooltip {
+  position: fixed;
+  z-index: 12050;
+  display: grid;
+  width: max-content;
+  max-width: min(330px, calc(100vw - 24px));
+  min-height: 48px;
+  grid-template-columns: 29px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 10px 14px 11px 11px;
+  border: 1px solid rgba(195, 155, 255, 0.72);
+  border-radius: 17px 17px 17px 6px;
+  color: #faf7ff;
+  background:
+    radial-gradient(circle at 12% 2%, rgba(194, 143, 255, 0.2), transparent 36%),
+    linear-gradient(145deg, rgba(32, 18, 60, 0.99), rgba(13, 8, 27, 0.995) 72%);
+  box-shadow:
+    0 18px 46px rgba(3, 1, 10, 0.48),
+    0 0 0 1px rgba(116, 76, 190, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  isolation: isolate;
+  pointer-events: none;
+  animation: meewav-tooltip-arrive-top 150ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: var(--meewav-tooltip-arrow-left) calc(100% + 7px);
+}
+
+.meewav-tooltip[data-placement="bottom"] {
+  border-radius: 6px 17px 17px 17px;
+  animation-name: meewav-tooltip-arrive-bottom;
+  transform-origin: var(--meewav-tooltip-arrow-left) -7px;
+}
+
+.meewav-tooltip::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: -7px;
+  left: calc(var(--meewav-tooltip-arrow-left) - 7px);
+  width: 13px;
+  height: 13px;
+  border-right: 1px solid rgba(195, 155, 255, 0.72);
+  border-bottom: 1px solid rgba(195, 155, 255, 0.72);
+  background: #120a25;
+  box-shadow: 5px 5px 12px rgba(3, 1, 10, 0.2);
+  transform: rotate(45deg);
+}
+
+.meewav-tooltip[data-placement="bottom"]::before {
+  top: -7px;
+  bottom: auto;
+  border: 0;
+  border-top: 1px solid rgba(195, 155, 255, 0.72);
+  border-left: 1px solid rgba(195, 155, 255, 0.72);
+  background: #21123d;
+  box-shadow: -4px -4px 10px rgba(3, 1, 10, 0.14);
+}
+
+.meewav-tooltip::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 7px;
+  right: 9px;
+  width: 35px;
+  height: 22px;
+  opacity: 0.24;
+  background-image: radial-gradient(circle, #d9b7ff 0 1px, transparent 1.2px);
+  background-size: 6px 6px;
+  mask-image: linear-gradient(120deg, transparent, #000);
+}
+
+.meewav-tooltip__icon {
+  position: relative;
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border: 1px solid rgba(208, 178, 255, 0.35);
+  border-radius: 10px;
+  color: #eadbff;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.24), transparent 31%),
+    linear-gradient(145deg, rgba(160, 96, 255, 0.46), rgba(91, 79, 220, 0.22));
+  box-shadow:
+    0 7px 18px rgba(75, 36, 145, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.meewav-tooltip__icon svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+}
+
+.meewav-tooltip__copy {
+  position: relative;
+  z-index: 1;
+  display: block;
+  max-width: 260px;
+  font: 650 12px/1.45 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+
+@keyframes meewav-tooltip-arrive-top {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes meewav-tooltip-arrive-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meewav-tooltip {
+    animation-duration: 1ms;
+  }
+}

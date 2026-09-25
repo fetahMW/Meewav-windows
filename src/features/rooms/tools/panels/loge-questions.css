@@ -1,0 +1,419 @@
+/* The current feed has a command bar and one scroll area. Its explicit
+ * layout class keeps the archived three-row question board from sizing it. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] > .room-tools-shell__panel:has(> .is-feed-layout) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions.is-feed-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+  min-width: 0;
+  gap: 10px;
+  padding: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #030304, #000 76%);
+}
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions.is-feed-layout > :not(.room-loge-questions__feed) {
+  flex: 0 0 auto;
+}
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions.is-feed-layout > .room-loge-questions__feed {
+  flex: 1 1 0;
+  min-height: 0;
+  overscroll-behavior-y: contain;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__commandbar {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 32px;
+  flex-wrap: wrap;
+  padding: 0 1px 6px;
+  border-bottom: 1px solid rgba(226, 231, 238, .09);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__summary {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  color: rgba(235, 236, 239, .82);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__summary > i {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: var(--wave-tool-accent);
+  box-shadow: 0 0 7px rgba(var(--wave-tool-accent-rgb), .5);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__summary strong {
+  font-size: 8.5px;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__summary small {
+  overflow: hidden;
+  color: rgba(197, 199, 205, .45);
+  font-size: 6.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 27px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(237, 238, 241, .78);
+  box-shadow: var(--wave-tool-control-shadow);
+  font-size: 7.2px;
+  font-weight: 710;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake svg {
+  width: 10px;
+  height: 10px;
+  color: var(--wave-tool-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake[aria-checked="false"] {
+  color: rgba(207, 208, 213, .5);
+  filter: saturate(.4);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed {
+  display: grid;
+  min-height: 0;
+  align-content: start;
+  grid-auto-rows: max-content;
+  gap: 6px;
+  padding: 1px 4px 10px 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed::-webkit-scrollbar {
+  width: 4px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  background: rgba(190, 193, 200, .27);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed:hover::-webkit-scrollbar-thumb {
+  background: rgba(221, 223, 228, .42);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  gap: 5px;
+  padding: 8px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 86% 120%, rgba(var(--wave-tool-accent-rgb), .035), transparent 60%) padding-box,
+    linear-gradient(116deg, rgba(255, 255, 255, .032), transparent 38%) padding-box,
+    linear-gradient(145deg, #101114, #040405 72%) padding-box,
+    linear-gradient(112deg, rgba(231, 235, 241, .19), rgba(115, 120, 130, .08) 44%, rgba(59, 61, 67, .05)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .075), inset 0 -1px #000, 0 3px 9px rgba(0, 0, 0, .3);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article:is(:hover, :focus-within) {
+  background:
+    radial-gradient(ellipse at 86% 120%, rgba(var(--wave-tool-accent-rgb), .065), transparent 62%) padding-box,
+    linear-gradient(116deg, rgba(255, 255, 255, .045), transparent 40%) padding-box,
+    linear-gradient(145deg, #131418, #050506 72%) padding-box,
+    linear-gradient(112deg, rgba(235, 238, 243, .27), rgba(var(--wave-tool-accent-rgb), .13) 55%, rgba(75, 77, 83, .07)) border-box;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-selected {
+  background:
+    radial-gradient(ellipse at 8% 110%, rgba(var(--wave-tool-accent-rgb), .09), transparent 54%) padding-box,
+    linear-gradient(116deg, rgba(255, 255, 255, .04), transparent 40%) padding-box,
+    linear-gradient(145deg, #121210, #050504 74%) padding-box,
+    linear-gradient(112deg, rgba(var(--wave-tool-accent-rgb), .62), rgba(var(--wave-tool-accent-rgb), .18) 52%, rgba(83, 78, 63, .11)) border-box;
+  box-shadow: inset 2px 0 0 var(--wave-tool-accent), inset 0 1px rgba(255, 255, 255, .09), 0 4px 12px rgba(0, 0, 0, .35);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-answered {
+  opacity: .66;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed .room-loge-questions__avatar,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-selected .room-loge-questions__avatar {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  border-color: rgba(var(--wave-tool-accent-rgb), .34);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed .room-loge-questions__identity strong {
+  font-size: 8.7px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed .room-loge-questions__identity small {
+  font-size: 6.2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed .room-loge-questions__on-air {
+  min-height: 12px;
+  margin-top: 1px;
+  padding-inline: 5px;
+  border-color: rgba(var(--wave-tool-accent-rgb), .38);
+  background: rgba(var(--wave-tool-accent-rgb), .09);
+  color: color-mix(in srgb, var(--wave-tool-accent) 78%, #f1f1f2);
+  font-size: 5.4px;
+}
+
+/* Portraits Questions : géométrie strictement circulaire, sans bague décorative. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed .room-loge-questions__avatar,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-selected .room-loge-questions__avatar {
+  box-sizing: border-box;
+  display: block;
+  width: 28px;
+  min-width: 28px;
+  max-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  flex: 0 0 28px;
+  align-self: center;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 50%;
+  outline: 0;
+  background: #070707;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, .46);
+  aspect-ratio: 1 / 1;
+  clip-path: circle(50%);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed .room-loge-questions__avatar img,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-selected .room-loge-questions__avatar img {
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  clip-path: circle(50%);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed blockquote {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: rgba(244, 245, 247, .88);
+  font-size: 9px;
+  font-weight: 590;
+  line-height: 1.32;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-selected blockquote {
+  font-size: 9.4px;
+  -webkit-line-clamp: 3;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 26px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: var(--wave-tool-control-surface);
+  color: rgba(228, 229, 233, .68);
+  box-shadow: var(--wave-tool-control-shadow);
+  font-size: 6.8px;
+  font-weight: 690;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 90ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button svg {
+  width: 9px;
+  height: 9px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-primary {
+  border-color: rgba(var(--wave-tool-accent-rgb), .36);
+  color: #f4f4f5;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-ignore {
+  color: rgba(202, 204, 210, .48);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer:has(> button:nth-child(3)) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer:has(> button:nth-child(3)) > button {
+  width: 100%;
+  padding-inline: 6px;
+  white-space: nowrap;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(232, 234, 239, .3);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .105), rgba(255, 255, 255, .025)),
+    #09090b;
+  color: #fff;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .14),
+    0 5px 13px rgba(0, 0, 0, .36),
+    0 0 0 1px rgba(var(--wave-tool-accent-rgb), .06);
+  transform: translateY(-1px);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:focus-visible {
+  outline: 2px solid rgba(var(--wave-tool-accent-rgb), .68);
+  outline-offset: 2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:active:not(:disabled) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(0, 0, 0, .18)), #070708;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .65);
+  transform: translateY(0) scale(.985);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:disabled {
+  opacity: .34;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-private svg {
+  color: rgba(var(--wave-tool-accent-rgb), .72);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-display:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(var(--wave-tool-accent-rgb), .62);
+  background:
+    linear-gradient(180deg, rgba(var(--wave-tool-accent-rgb), .2), rgba(var(--wave-tool-accent-rgb), .055)),
+    #090907;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .14),
+    0 5px 14px rgba(0, 0, 0, .38),
+    0 0 12px rgba(var(--wave-tool-accent-rgb), .1);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-ignore:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(var(--wave-tool-accent-rgb), .3);
+  color: rgba(244, 242, 235, .92);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-ignore:is(:hover, :focus-visible):not(:disabled) svg {
+  color: rgba(var(--wave-tool-accent-rgb), .8);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake {
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(var(--wave-tool-accent-rgb), .38);
+  background: linear-gradient(180deg, rgba(var(--wave-tool-accent-rgb), .12), rgba(255, 255, 255, .025)), #09090b;
+  color: #fff;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake:focus-visible {
+  outline: 2px solid rgba(var(--wave-tool-accent-rgb), .68);
+  outline-offset: 2px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__action-error {
+  margin: 0 9px;
+  padding: 7px 9px;
+  border: 1px solid rgba(229, 190, 75, .28);
+  border-radius: 9px;
+  background: rgba(229, 190, 75, .055);
+  color: rgba(248, 234, 193, .86);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+@container (max-width: 410px) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__summary small {
+    display: none;
+  }
+
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake {
+    padding-inline: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+    .room-loge-questions__feed article,
+    .room-loge-questions__feed article > footer button,
+    .room-loge-questions__intake
+  ) {
+    transition: none;
+  }
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions { font-family:Inter,ui-sans-serif,system-ui,sans-serif; }

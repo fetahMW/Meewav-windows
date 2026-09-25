@@ -1,0 +1,6 @@
+@import "./classe-hifi.css";
+
+/* La Classe owns its identity and scoped hi-fi finish; other Rooms stay intact. */
+.place-room-shellbar[data-room-presentation="classe"] .meewav-pillar-brand__pillar {
+  color: #5f86ff;
+}

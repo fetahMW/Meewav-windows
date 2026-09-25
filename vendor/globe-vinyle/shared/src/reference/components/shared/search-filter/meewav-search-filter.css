@@ -1,0 +1,524 @@
+.meewav-filter-below-header {
+  position: fixed; z-index: 10021; inset: var(--meewav-filter-panel-top) 0 0;
+  overflow: clip; pointer-events: none;
+}
+.meewav-filter-below-header .meewav-filter-panel__backdrop.is-bounded { position: absolute; inset: 0; }
+.meewav-filter-below-header .meewav-filter-panel.side-panel.is-bounded {
+  position: absolute; top: 0; left: var(--meewav-filter-panel-left); right: auto;
+  bottom: var(--meewav-filter-panel-bottom); width: calc(100% - var(--meewav-filter-panel-left) - var(--meewav-filter-panel-right));
+  max-height: calc(100% - var(--meewav-filter-panel-bottom)); margin: 0; padding: 20px;
+  transform: translateX(calc(-100% - var(--meewav-filter-panel-left))); opacity: 0;
+  transition: transform 380ms cubic-bezier(.22,.65,.25,1), opacity 220ms ease, visibility 0s linear 380ms;
+}
+.meewav-filter-below-header .meewav-filter-panel.side-panel.is-bounded.is-open {
+  transform: translateX(0); opacity: 1; visibility: visible; pointer-events: auto;
+  transition: transform 380ms cubic-bezier(.22,.65,.25,1), opacity 220ms ease, visibility 0s;
+}
+.meewav-filter-below-header .artist-filter-panel__body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+@media (prefers-reduced-motion: reduce) { .meewav-filter-below-header .meewav-filter-panel.side-panel { transition: none; } }
+
+.meewav-search-filter-bar.is-flow {
+  position: relative;
+  inset: auto;
+  width: min(100%, 390px);
+  max-width: none;
+  margin: 0;
+}
+
+.meewav-search-filter-bar__shortcut {
+  display: inline-flex;
+  min-width: max-content;
+  min-height: 25px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 7px;
+  border: 1px solid rgba(218, 204, 244, 0.13);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(224, 216, 239, 0.58);
+  font: 700 9px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .meewav-search-filter-bar__shortcut {
+    display: none;
+  }
+}
+
+.meewav-filter-panel__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms cubic-bezier(.2, .8, .2, 1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.meewav-filter-panel__backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.meewav-filter-panel.side-panel {
+  z-index: 10021;
+  color-scheme: dark;
+  background-color: #0d081d;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(139, 92, 246, 0.17), transparent 28%),
+    radial-gradient(circle at 100% 38%, rgba(72, 86, 220, 0.08), transparent 34%),
+    linear-gradient(168deg, #160d30 0%, #0d081d 42%, #080612 100%);
+  isolation: isolate;
+  transition:
+    transform 260ms cubic-bezier(.4, 0, .6, 1),
+    opacity 220ms cubic-bezier(.4, 0, 1, 1),
+    visibility 0s linear 260ms;
+}
+
+.meewav-filter-panel__backdrop.is-bounded {
+  top: var(--meewav-filter-panel-top);
+  right: var(--meewav-filter-panel-right);
+  bottom: var(--meewav-filter-panel-bottom);
+  left: var(--meewav-filter-panel-left);
+}
+
+.meewav-filter-panel.side-panel.is-bounded {
+  top: var(--meewav-filter-panel-top);
+  right: auto;
+  bottom: var(--meewav-filter-panel-bottom);
+  left: var(--meewav-filter-panel-left);
+  width: min(
+    520px,
+    calc(
+      100vw - var(--meewav-filter-panel-left) -
+      var(--meewav-filter-panel-right) - 18px
+    )
+  );
+  max-height: calc(
+    100dvh - var(--meewav-filter-panel-top) -
+    var(--meewav-filter-panel-bottom)
+  );
+  padding: 22px;
+}
+
+.meewav-filter-panel .side-panel__header {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  gap: 18px;
+  min-height: 92px;
+  padding: 2px 0 20px;
+  border-bottom: 1px solid rgba(203, 181, 255, 0.14);
+}
+
+.meewav-filter-panel .side-panel__header::before {
+  content: "";
+  position: absolute;
+  right: 48px;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #a777ff 0%, #6d70ff 48%, transparent 100%);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.42);
+  pointer-events: none;
+}
+
+.meewav-filter-panel .side-panel__header::after {
+  display: none;
+}
+
+.artist-filter-panel__heading {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+.artist-filter-panel__headingIcon {
+  position: relative;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(196, 165, 255, 0.28);
+  border-radius: 15px;
+  color: #d8c5ff;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.2), transparent 30%),
+    linear-gradient(145deg, rgba(151, 95, 255, 0.34), rgba(82, 93, 231, 0.16)),
+    rgba(20, 12, 43, 0.94);
+  box-shadow:
+    0 12px 28px rgba(47, 23, 111, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.artist-filter-panel__headingIcon::after {
+  content: "";
+  position: absolute;
+  inset: auto -8px -12px auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(119, 108, 255, 0.26);
+  filter: blur(8px);
+}
+
+.artist-filter-panel__headingIcon svg {
+  position: relative;
+  z-index: 1;
+}
+
+.artist-filter-panel__headingCopy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.meewav-filter-panel .artist-filter-panel__eyebrow {
+  margin: 0;
+  color: rgba(194, 171, 255, 0.82);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  line-height: 1.2;
+}
+
+.meewav-filter-panel .side-panel__header strong {
+  color: #fbf9ff;
+  font-size: 21px;
+  font-weight: 780;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+}
+
+.meewav-filter-panel .side-panel__header p {
+  margin: 3px 0 0;
+  max-width: 340px;
+  color: rgba(224, 215, 242, 0.66);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.meewav-filter-panel .side-panel__close {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid rgba(200, 179, 245, 0.16);
+  border-radius: 14px;
+  color: rgba(236, 229, 250, 0.72);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.meewav-filter-panel .side-panel__close:hover,
+.meewav-filter-panel .side-panel__close:focus-visible {
+  border-color: rgba(181, 137, 255, 0.52);
+  outline: none;
+  color: #fff;
+  background: rgba(139, 92, 246, 0.18);
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  transform: translateY(-1px);
+}
+
+.meewav-filter-panel .artist-filter-panel__body {
+  gap: 18px;
+  margin-top: 18px;
+  padding-right: 5px;
+}
+
+.meewav-filter-panel .artist-filter-panel__group {
+  padding: 1px 0 18px;
+  border-bottom: 1px solid rgba(205, 185, 246, 0.09);
+}
+
+.meewav-filter-panel .artist-filter-panel__group:last-child {
+  padding-bottom: 2px;
+  border-bottom: 0;
+}
+
+.meewav-filter-panel .artist-filter-panel__groupHeader {
+  margin: 0 2px 11px;
+  color: rgba(250, 247, 255, 0.92);
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: .01em;
+}
+
+.meewav-filter-panel .artist-filter-panel__groupHeader small {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 9px;
+  border: 1px solid rgba(182, 148, 255, 0.16);
+  border-radius: 999px;
+  color: rgba(217, 200, 255, 0.74);
+  background: rgba(137, 91, 246, 0.08);
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.meewav-filter-field {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.meewav-filter-field::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 21px;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid rgba(225, 211, 255, 0.76);
+  border-bottom: 1.5px solid rgba(225, 211, 255, 0.76);
+  pointer-events: none;
+  transform: rotate(45deg) translateY(-2px);
+  transform-origin: center;
+  transition: border-color 160ms ease;
+}
+
+.meewav-filter-field > span {
+  padding-left: 2px;
+  color: rgba(211, 199, 235, 0.64);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.meewav-filter-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 48px 0 15px;
+  border: 1px solid rgba(196, 166, 255, 0.18);
+  border-radius: 15px;
+  outline: none;
+  color: rgba(252, 249, 255, 0.94);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.11), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    rgba(10, 7, 22, 0.88);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 10px 24px rgba(3, 1, 12, 0.18);
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    border-color 170ms ease,
+    background 170ms ease,
+    box-shadow 170ms ease,
+    transform 170ms ease;
+}
+
+.meewav-filter-field select:hover {
+  border-color: rgba(188, 148, 255, 0.46);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.2), transparent 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(13, 8, 28, 0.94);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 14px 30px rgba(3, 1, 12, 0.24);
+  transform: translateY(-1px);
+}
+
+.meewav-filter-field select:focus-visible {
+  border-color: rgba(174, 125, 255, 0.8);
+  outline: none;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.24), transparent 48%),
+    rgba(15, 9, 34, 0.96);
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.13),
+    0 16px 34px rgba(3, 1, 12, 0.27),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.meewav-filter-field:has(select:hover)::after,
+.meewav-filter-field:has(select:focus-visible)::after {
+  border-color: #fff;
+}
+
+.meewav-filter-field select option,
+.meewav-filter-field select optgroup {
+  color: #f8f4ff;
+  background: #130c29;
+  font-weight: 650;
+}
+
+.meewav-filter-field select option {
+  padding: 12px;
+}
+
+.meewav-filter-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.meewav-filter-choice {
+  position: relative;
+  min-height: 44px;
+  padding: 10px 34px 10px 12px;
+  border: 1px solid rgba(190, 160, 250, 0.14);
+  border-radius: 14px;
+  color: rgba(235, 229, 247, 0.72);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+    rgba(12, 8, 26, 0.76);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 760;
+  text-align: left;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.meewav-filter-choice::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(214, 196, 252, 0.28);
+  border-radius: 50%;
+  background: rgba(10, 6, 25, 0.72);
+  transform: translateY(-50%);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.meewav-filter-choice:hover,
+.meewav-filter-choice:focus-visible {
+  border-color: rgba(181, 137, 255, 0.44);
+  outline: none;
+  color: #fff;
+  background: rgba(139, 92, 246, 0.12);
+  transform: translateY(-1px);
+}
+
+.meewav-filter-choice.is-active {
+  border-color: rgba(181, 114, 255, 0.62);
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(141, 91, 246, 0.27), rgba(82, 96, 255, 0.13)),
+    rgba(16, 10, 37, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(181, 114, 255, 0.1),
+    0 10px 24px rgba(46, 20, 111, 0.18);
+}
+
+.meewav-filter-choice.is-active::after {
+  border-color: rgba(255, 255, 255, 0.88);
+  background: #a777ff;
+  box-shadow: 0 0 0 3px rgba(167, 119, 255, 0.13), 0 0 12px rgba(167, 119, 255, 0.42);
+}
+
+.artist-filter-active-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.artist-filter-active-chips::-webkit-scrollbar { display: none; }
+
+.artist-filter-active-chip,
+.artist-filter-active-chips__reset {
+  min-height: 36px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.artist-filter-active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 11px;
+  border: 1px solid rgba(181, 114, 255, 0.28);
+  color: rgba(248, 245, 255, 0.88);
+  background: rgba(141, 91, 246, 0.12);
+}
+
+.artist-filter-active-chips__reset {
+  border: 0;
+  padding-inline: 8px;
+  color: #c6a9ff;
+  background: transparent;
+  font-weight: 800;
+}
+
+.meewav-illustrated-filter-grid .artist-filter-option:focus-visible {
+  border-color: rgba(181, 137, 255, 0.72);
+  outline: none;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(141, 91, 246, 0.24), rgba(82, 96, 255, 0.14)),
+    rgba(16, 10, 37, 0.94);
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.14),
+    0 12px 28px rgba(28, 12, 72, 0.24);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 680px) {
+  .meewav-search-filter-bar.is-flow { width: 100%; }
+  .meewav-filter-choice-grid { grid-template-columns: 1fr; }
+
+  .meewav-filter-panel.side-panel.is-bounded {
+    width: min(
+      460px,
+      calc(
+        100vw - var(--meewav-filter-panel-left) -
+        var(--meewav-filter-panel-right) - 8px
+      )
+    );
+    padding: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .meewav-illustrated-filter-grid.artist-filter-panel__options--roles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meewav-filter-panel__backdrop { transition: none; }
+}
+
+/* Restoring focus after a pointer dismissal must not paint a keyboard ring. */
+.meewav-search-filter-bar .search-filter-button[data-pointer-focus-restored]:focus-visible { outline: none; }

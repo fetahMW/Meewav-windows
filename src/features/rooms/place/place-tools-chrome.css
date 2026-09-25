@@ -1,0 +1,208 @@
+/* Invités reprend le relief de l'onglet Mixeur avec l'ancien accent chaud du Chat.
+ * Le cadre PVC et les états Outils / Mixeur restent inchangés. */
+.place-room-shell .place-studio-panel.is-host-panel.is-guests:not(.is-collapsed) .place-studio-panel__tabs > button.is-active {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, .028) 28%, transparent 43%) padding-box,
+    radial-gradient(ellipse at 50% 112%, rgba(236, 183, 66, .22), rgba(154, 104, 31, .052) 49%, transparent 72%) padding-box,
+    linear-gradient(180deg, #15120c 0%, #090806 55%, #020201 100%) padding-box,
+    linear-gradient(100deg, rgba(205, 160, 73, .92), rgba(255, 224, 153, .98) 49%, rgba(157, 110, 43, .82)) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .24),
+    inset 0 -11px 21px rgba(171, 118, 34, .16),
+    inset 0 0 16px rgba(0, 0, 0, .22),
+    0 1px 0 rgba(0, 0, 0, .9),
+    0 6px 15px rgba(0, 0, 0, .48),
+    0 8px 22px rgba(199, 146, 46, .24);
+  color: #fffdf6;
+  text-shadow: 0 0 8px rgba(255, 221, 151, .25);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-guests:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::before {
+  background: linear-gradient(112deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, .05) 31%, rgba(255, 255, 255, .008) 43%, transparent 55%);
+  opacity: .54;
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-guests:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::after {
+  position: absolute;
+  right: 8%;
+  bottom: -1px;
+  left: 8%;
+  display: block !important;
+  height: 2px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #c3913f 14%, #ffe1a0 50%, #c3913f 86%, transparent);
+  box-shadow: 0 -3px 10px rgba(224, 169, 64, .52);
+  content: "";
+  opacity: 1;
+  transform: none;
+  pointer-events: none;
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-guests:not(.is-collapsed) .place-studio-panel__tabs > button.is-active > svg {
+  color: #edc875;
+  filter: drop-shadow(0 0 4px rgba(229, 175, 64, .32));
+}
+
+/* Toutes les Rooms partagent la barre compacte de la Wave, aux mêmes
+ * dimensions que Volumes / FX voix / Pads / Time. */
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console).place-tools-console {
+  --tools-subnav-height: 34px;
+  --tools-subnav-row: 29px;
+  grid-template-rows: max-content minmax(0, 1fr);
+  gap: 0;
+  min-height: 0;
+  padding: 0 0 7px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch {
+  position: relative;
+  z-index: 5;
+  box-sizing: border-box;
+  display: grid;
+  width: auto;
+  min-width: 0;
+  height: var(--tools-subnav-height);
+  min-height: var(--tools-subnav-height);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: var(--tools-subnav-row);
+  gap: 0;
+  margin: 3px 6px 4px;
+  padding: 4px 7px 0;
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 10px;
+  background:
+    linear-gradient(108deg, rgba(255, 255, 255, .035), transparent 31%),
+    linear-gradient(180deg, #070708 0%, #020203 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 236, 242, .165),
+    inset 0 -1px 0 rgba(0, 0, 0, .98),
+    0 3px 8px rgba(0, 0, 0, .34);
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch::before {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(112deg, rgba(232, 236, 242, .33), rgba(160, 166, 175, .105) 29%, rgba(58, 61, 67, .035) 66%, rgba(176, 181, 188, .105));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  content: "";
+  pointer-events: none;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  width: auto;
+  min-width: 0;
+  height: var(--tools-subnav-row);
+  min-height: var(--tools-subnav-row);
+  grid-row: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 7px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: rgba(194, 192, 201, .62);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 10.5px;
+  font-weight: 730;
+  line-height: 1.12;
+  text-shadow: none;
+  transform: none;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button + button::before {
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 0;
+  display: block;
+  width: 1px;
+  background: rgba(210, 198, 227, .12);
+  content: "";
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button > span {
+  width: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button > svg {
+  flex: 0 0 18px;
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .025), transparent);
+  color: #f4f5f7;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button.is-active {
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(218, 227, 242, .095), transparent 57%),
+    linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 50%);
+  color: #fafbfc;
+  box-shadow: none;
+  text-shadow: 0 0 7px rgba(218, 227, 242, .2);
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button::after {
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  left: 8px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, #aeb7c6 12%, #eef1f7 50%, #aeb7c6 88%, transparent 100%);
+  box-shadow: 0 -2px 7px rgba(218, 227, 242, .28), 0 0 2px rgba(240, 242, 247, .35);
+  content: "";
+  opacity: 0;
+  transform: scaleX(.45);
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button:not(:disabled):is(.is-active, :hover, :focus-visible) > svg {
+  color: #e9edf4;
+  filter: drop-shadow(0 0 4px rgba(218, 227, 242, .20));
+}
+
+.place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button:focus-visible {
+  outline: 1px solid rgba(218, 227, 242, .72);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+@media (min-width: 900px) and (min-height: 900px) {
+  .place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console).place-tools-console {
+    --tools-subnav-height: 37px;
+    --tools-subnav-row: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-studio-panel.is-tools :is(.room-tools-shell, .place-tools-console) .place-tools-console__switch > button::after { transition: none; }
+}

@@ -1,0 +1,36 @@
+<!doctype html><html lang="fr"><meta charset="utf-8"><title>Vérification du Master viewer</title>
+<style>body{background:#08090b;color:#e6e1ef;font:16px system-ui;padding:32px}button{padding:14px;background:#252229;color:inherit;border:1px solid #777;border-radius:12px}pre{white-space:pre-wrap}</style>
+<h1>Graphe Web Audio réel — Master viewer</h1><p>Signaux synthétiques locaux, sans micro, sans connexion aux haut-parleurs et sans publication.</p>
+<button id="run">Vérifier le routage</button><pre id="result">Prêt</pre>
+<script type="module">
+import { ViewerSendAudio, normalizeViewerLevels } from '/src/features/rooms/place/viewerSendAudio.ts';
+document.querySelector('#run').onclick = async () => {
+ const output = document.querySelector('#result'); output.textContent = 'Mesure…';
+ const sourceContext = new AudioContext(), mix = new ViewerSendAudio(), sources = [], lines = [];
+ const sleep = () => new Promise(resolve => setTimeout(resolve, 220));
+ const near = (label, value, expected) => { if (Math.abs(value - expected) > .025) throw new Error(`${label}: ${value.toFixed(3)} au lieu de ${expected}`); lines.push(`OK · ${label} : ${value.toFixed(3)}`); };
+ try {
+  await sourceContext.resume(); await mix.prepare();
+  for (const [id, value] of [['voice', .2], ['music', .3], ['system', .1]]) {
+   const source = sourceContext.createConstantSource(), destination = sourceContext.createMediaStreamDestination(); source.offset.value = value;
+   source.connect(destination); source.start(); sources.push({ source, destination }); mix.setInput(id, destination.stream.getAudioTracks()[0]);
+  }
+  mix.enableMusic(true);
+  let levels = normalizeViewerLevels({ voice:{gain:1}, music:{gain:1}, system:{gain:1}, master:{gain:1} }); mix.update(levels); await sleep();
+  near('Somme des trois sources', mix.sample().master, .6);
+  levels = {...levels, voice:{gain:.5,muted:false}}; mix.update(levels); await sleep(); near('Ma voix seule diminue', mix.sample().master, .5);
+  levels = {...levels, music:{gain:.5,muted:false}}; mix.update(levels); await sleep(); near('Musique seule diminue', mix.sample().master, .35);
+  levels = {...levels, system:{gain:0,muted:true}}; mix.update(levels); await sleep(); near('Capture système coupée', mix.sample().master, .25);
+  levels = {...levels, master:{gain:.4,muted:false}}; mix.update(levels); await sleep(); near('Master agit sur la somme', mix.sample().master, .1);
+  levels = {...levels, master:{gain:1,muted:true}}; mix.update(levels); await sleep(); near('Master mute', mix.sample().master, 0);
+  levels = {...levels, master:{gain:1,muted:false}}; mix.update(levels); sources[0].destination.stream.getAudioTracks()[0].stop(); mix.setInput('voice',null); await sleep(); near('Micro déconnecté, musique conservée', mix.sample().master, .15);
+  mix.enableMusic(false); await sleep(); near('Sources silencieuses : vumètre immobile',mix.sample().master,0);
+  mix.enableMusic(true); sources[1].source.offset.value=1.4; levels={...levels,music:{gain:1,muted:false}};mix.update(levels);await sleep();
+  // A MediaStream source may clamp above full scale; add a second real source to test the sum.
+  sources[2].source.offset.value=.8; levels={...levels,system:{gain:1,muted:false}};mix.update(levels);await sleep();
+  if(mix.sample().master < 1) throw new Error('Saturation non détectée'); lines.push('OK · Saturation détectée avant le limiteur');
+  output.textContent = lines.join('\n')+'\n9 vérifications audio réussies.';
+ } catch(error) { output.textContent=lines.join('\n')+'\nÉCHEC · '+error.message; }
+ finally { sources.forEach(({source,destination})=>{source.stop();destination.stream.getTracks().forEach(track=>track.stop());});mix.dispose();await sourceContext.close(); }
+};
+</script></html>

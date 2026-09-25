@@ -1,0 +1,1056 @@
+{
+  "schemaVersion": 1,
+  "resolvedAt": "2026-08-11",
+  "scope": {
+    "purpose": "Versioned registry for the sixteen mandatory MeeWav voice-correction candidates",
+    "evidenceBoundary": "A resolved release, source audit, installed file or successful instantiation is not an audible validation. Numeric latency remains null unless a reproducible measurement exists.",
+    "productionApproved": false
+  },
+  "statusVocabulary": [
+    "TESTÉ",
+    "TESTÉ_PARTIELLEMENT",
+    "BLOQUÉ_PAR_ENVIRONNEMENT",
+    "BLOQUÉ_PAR_LICENCE_OU_ACTIVATION",
+    "NON_TEMPS_RÉEL_CONFIRMÉ",
+    "NON_REPRODUCTIBLE"
+  ],
+  "environment": {
+    "os": "Microsoft Windows 11 Famille",
+    "osVersion": "10.0.26200",
+    "architecture": "x86_64",
+    "node": "24.12.0",
+    "npm": "11.6.2",
+    "rust": "1.93.1",
+    "cmakeOnPath": false,
+    "pluginRootsScanned": [
+      "C:\\Program Files\\Common Files\\VST3",
+      "C:\\Program Files\\Common Files\\CLAP",
+      "C:\\Program Files\\Common Files\\Avid\\Audio\\Plug-Ins",
+      "C:\\Program Files\\VstPlugins",
+      "C:\\Program Files\\Steinberg\\VstPlugins",
+      "%APPDATA%\\VST3"
+    ],
+    "detectedCandidateArtifacts": [
+      {
+        "candidateId": "autotune-2026",
+        "relationship": "related older product, not the requested AutoTune 2026 candidate",
+        "name": "Auto-Tune Pro 11.0.0",
+        "format": "VST3",
+        "path": "C:\\Program Files\\Common Files\\VST3\\Antares\\Auto-Tune Pro.vst3",
+        "bytes": 44975616,
+        "sha256": "38c42d0b4b260fa72e7ed4af58cb9e271cc48c9fc72372463254f040bbbf76f3",
+        "signatureStatus": "NotSigned",
+        "audioEvidence": "An existing isolated MeeWav probe instantiated the VST3 and processed one synthetic block. No microphone, headset, activation state, licence validity, audible correction or stability was verified."
+      },
+      {
+        "candidateId": "spoton",
+        "relationship": "exact installed candidate",
+        "name": "Spoton 1.1.2",
+        "format": "VST3",
+        "path": "C:\\Program Files\\Common Files\\VST3\\Spoton.vst3\\Contents\\x86_64-win\\Spoton.vst3",
+        "bytes": 7150672,
+        "sha256": "aa3d5c381fc77e1388f9f224512f4b5ea65a5f2bc62775fb039e13eae2ff349c",
+        "signatureStatus": "Valid - Sixth Sample Ky",
+        "audioEvidence": "The installed VST3 was instantiated four times by the isolated MeeWav host and processed the deterministic-vocal-like-v1 signal with a stable output hash. No microphone, headphones or human listening occurred."
+      },
+      {
+        "candidateId": "graillon-3-free",
+        "relationship": "exact installed candidate",
+        "name": "Graillon 3 Free 3.2.0",
+        "format": "VST3",
+        "path": "C:\\Program Files\\Common Files\\VST3\\Auburn Sounds Graillon 3.vst3\\Contents\\x86_64-win\\Auburn Sounds Graillon 3.vst3",
+        "bytes": 4203600,
+        "sha256": "867103fec0ec6b785e0d92a0eb5fb7c13961e740e469ba037da7e936b1b99509",
+        "signatureStatus": "Valid - Guillaume Piolat",
+        "audioEvidence": "The installed VST3 was instantiated four times by the isolated MeeWav host and processed the deterministic-vocal-like-v1 signal with a stable output hash. No microphone, headphones or human listening occurred."
+      },
+      {
+        "candidateId": "opendaw-autotune",
+        "relationship": "exact candidate runtime assets",
+        "name": "openDAW device_autotune.wasm",
+        "format": "WebAssembly/AudioWorklet",
+        "path": "audio-lab-public/opendaw-wasm/0.0.11/wasm/plugins/device_autotune.wasm",
+        "bytes": 21421,
+        "sha256": "74e9d9757a3f9b0c9f24e734a0a05e1d6c6fe5fce63f201871c553ecd6c7ad18",
+        "signatureStatus": "not-applicable",
+        "audioEvidence": "The existing MeeWav lab loaded the worklet/WASM and processed synthetic audio through a local WebRTC loopback. No real microphone/headset or human listening occurred."
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "ordinal": 1,
+      "id": "spoton",
+      "group": "native-modern",
+      "name": "Spoton",
+      "vendor": "Sixth Sample",
+      "officialUrl": "https://sixthsample.com/spoton/",
+      "repositoryUrl": null,
+      "resolution": {
+        "version": "1.1.2",
+        "tag": null,
+        "commitSha": null,
+        "testedRevision": "installed VST3 1.1.2 / ABCDEF019182FAEB536978744C737733",
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "proprietary",
+        "binaryOrModel": "free proprietary binary using Moonbase activation/licensing",
+        "redistribution": "not authorised by the public product page",
+        "commercialIntegration": "load only a copy legitimately installed by the user; written vendor confirmation required before bundling"
+      },
+      "availability": {
+        "formats": ["VST3", "AU", "AAX"],
+        "os": ["Windows 10+", "macOS 10.13+"],
+        "architectures": ["64-bit host; exact per-OS CPU list not stated on the product page"]
+      },
+      "installation": {
+        "method": "Official signed Windows installer supplied by the user; MeeWav loads only the local VST3 and does not redistribute it.",
+        "localState": "official signed VST3 installed locally for the internal Windows laboratory",
+        "paths": ["C:\\Program Files\\Common Files\\VST3\\Spoton.vst3\\Contents\\x86_64-win\\Spoton.vst3"],
+        "artifactSha256": "aa3d5c381fc77e1388f9f224512f4b5ea65a5f2bc62775fb039e13eae2ff349c",
+        "artifacts": [
+          {"type": "VST3", "path": "C:\\Program Files\\Common Files\\VST3\\Spoton.vst3\\Contents\\x86_64-win\\Spoton.vst3", "bytes": 7150672, "sha256": "aa3d5c381fc77e1388f9f224512f4b5ea65a5f2bc62775fb039e13eae2ff349c", "signatureStatus": "Valid - Sixth Sample Ky"}
+        ]
+      },
+      "meewavLoading": {
+        "method": "Isolated laboratory VST3 probe by canonical plugin ID; production Bridge scanner and Room audio plane remain unavailable",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["key", "target notes", "amount", "speed"],
+      "audioContract": {
+        "sampleRatesHz": [48000],
+        "bufferSizesSamples": [128],
+        "declaredLatency": "The installed VST3 reported 0 samples to the MeeWav host at 48 kHz; this is a plugin declaration, not an acoustic measurement.",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {"type": "signed-local-install", "candidateMatched": true, "details": "The user-supplied installer and installed VST3 both have a valid Authenticode signature from Sixth Sample Ky. The installed artifact hash is aa3d5c381fc77e1388f9f224512f4b5ea65a5f2bc62775fb039e13eae2ff349c."},
+        {"type": "vst3-synthetic-signal", "candidateMatched": true, "details": "MeeWav matched vendor Sixth Sample, name Spoton and class ID ABCDEF019182FAEB536978744C737733, then processed deterministic-vocal-like-v1 four times at 48 kHz / 128 samples. Every run was finite, non-silent and bounded with output hash d8e05a3bb47db633. The VST3 exposed 16 parameters and reported zero samples of latency."}
+      ],
+      "status": "TESTÉ_PARTIELLEMENT",
+      "realtimeClassification": "vendor-claimed-real-time",
+      "blockingReason": "Synthetic VST3 processing is proven, but Moonbase/activation behaviour, a wired-headphone microphone session, acoustic latency, stability and Room publication remain untested.",
+      "sources": [
+        {"url": "https://sixthsample.com/spoton/", "checkedAt": "2026-08-11", "supports": "version 1.1.2, features, formats and OS requirements"},
+        {"url": "https://sixthsample.com/support/", "checkedAt": "2026-08-11", "supports": "official installer and activation flow"}
+      ]
+    },
+    {
+      "ordinal": 2,
+      "id": "openvoxtuner",
+      "group": "native-modern",
+      "name": "OpenVoxTuner",
+      "vendor": "EiffelBS",
+      "officialUrl": "https://openvoxtuner.eiffelbs.ovh/",
+      "repositoryUrl": "https://github.com/EiffelBS/OpenVoxTuner",
+      "resolution": {
+        "version": "0.1.67",
+        "tag": "v0.1.67",
+        "commitSha": "5570e8a6bf8e686c33c7971563c3d757f9c394d6",
+        "testedRevision": "v0.1.67 / 5570e8a6bf8e686c33c7971563c3d757f9c394d6",
+        "releaseDate": "2026-08-03",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "AGPL-3.0",
+        "binaryOrModel": "release binaries are distributed from the same AGPL repository; no separate binary licence was located",
+        "redistribution": "AGPL obligations apply",
+        "commercialIntegration": "commercial developer licence is advertised for closed-source integration; legal review required"
+      },
+      "availability": {
+        "formats": ["VST3", "AU", "Standalone"],
+        "os": ["Windows", "macOS"],
+        "architectures": ["Windows architecture not explicitly stated", "macOS universal arm64/x86_64"]
+      },
+      "installation": {
+        "method": "Official Windows installer or macOS signed/notarized package; source build uses CMake and JUCE 8.",
+        "localState": "exact tagged source built outside the repository for the internal Windows laboratory",
+        "paths": ["C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTuner_artefacts\\Release\\VST3\\OpenVoxTuner.vst3\\Contents\\x86_64-win\\OpenVoxTuner.vst3"],
+        "artifactSha256": "83011d254570d05b49958035e25736b1f2ab2e865cf4a6db351ff51f06b18122",
+        "artifacts": [
+          {"type": "VST3", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTuner_artefacts\\Release\\VST3\\OpenVoxTuner.vst3\\Contents\\x86_64-win\\OpenVoxTuner.vst3", "sha256": "83011d254570d05b49958035e25736b1f2ab2e865cf4a6db351ff51f06b18122"},
+          {"type": "Standalone executable (not launched)", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTuner_artefacts\\Release\\Standalone\\OpenVoxTuner.exe", "sha256": "9882d875ee7e6f156ce30f2647a765749c5c59a3ef68bade6abbd3d31ce3427a"},
+          {"type": "Unit-test executable", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTunerTests_artefacts\\Release\\OpenVoxTunerTests.exe", "sha256": "8d15fd21b840ba033d09611f7d8748b20b17016428deb2da1fa38966c7a85e07"}
+        ]
+      },
+      "meewavLoading": {
+        "method": "VST3 by canonical plugin ID after isolated scan",
+        "currentlyImplemented": true
+      },
+      "exposedParameters": ["key", "14 scale types", "correction mode", "correction amount", "vibrato preserve", "latency mode", "formant mode", "harmonies", "MIDI target"],
+      "audioContract": {
+        "sampleRatesHz": [48000],
+        "bufferSizesSamples": [128],
+        "declaredLatency": "The exact-tag VST3 reported 576 samples (12 ms at 48 kHz) to the MeeWav laboratory probe; this is plugin-reported, not an acoustic measurement.",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {"type": "source-build", "candidateMatched": true, "details": "Exact tag v0.1.67 built twice as VST3, Standalone and OpenVoxKey on Windows x64; upstream test executable reported 102 OK and 0 KO. The VST3 hashes differed between the two builds, so bit-for-bit binary reproducibility is not claimed."},
+        {"type": "vst3-synthetic-signal", "candidateMatched": true, "details": "MeeWav loaded the reproducible exact-tag bundle and processed deterministic-vocal-like-v1 at 48 kHz / 128 samples. Four runs were finite, non-silent and bounded but produced different FNV-1a64 values (afa5e9c73d4a1633, 8f21f9524919bb9f, 7d244617640acdc3, 7ecec86a112a0033). The pinned build embeds plugin version 0.1.67."}
+      ],
+      "status": "TESTÉ_PARTIELLEMENT",
+      "realtimeClassification": "source-claims-real-time",
+      "blockingReason": "The exact tagged VST3 processed a synthetic signal, but no recorded voice, headphones, acoustic latency, long session, WebRTC Room or human listening test was available.",
+      "sources": [
+        {"url": "https://github.com/EiffelBS/OpenVoxTuner/releases/tag/v0.1.67", "checkedAt": "2026-08-11", "supports": "resolved release"},
+        {"url": "https://github.com/EiffelBS/OpenVoxTuner/tree/5570e8a6bf8e686c33c7971563c3d757f9c394d6", "checkedAt": "2026-08-11", "supports": "pinned source, formats, parameters, build and licensing"}
+      ]
+    },
+    {
+      "ordinal": 3,
+      "id": "graillon-3-free",
+      "group": "native-modern",
+      "name": "Graillon 3 Free",
+      "vendor": "Auburn Sounds",
+      "officialUrl": "https://www.auburnsounds.com/products/Graillon.html",
+      "repositoryUrl": null,
+      "resolution": {
+        "version": "3.2.0",
+        "tag": null,
+        "commitSha": null,
+        "testedRevision": "installed VST3 3.2.0 / 0B20BA920CE0B1456E62754133317340",
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "proprietary",
+        "binaryOrModel": "proprietary Free Edition/full-edition distribution",
+        "redistribution": "not authorised by the public product page",
+        "commercialIntegration": "load a legitimately installed user copy only; confirm host/redistribution rights before bundling"
+      },
+      "availability": {
+        "formats": ["CLAP", "VST3", "VST2", "AUv2", "AAX", "LV2", "FL Studio plugin"],
+        "os": ["Windows 7+", "macOS 10.15+", "Ubuntu 22.04+"],
+        "architectures": ["VST3 x86_64/arm64", "AU x86_64/arm64", "AAX x86_64/arm64", "LV2 Linux x86_64"]
+      },
+      "installation": {
+        "method": "Official signed Auburn Sounds Free Edition installer supplied by the user; MeeWav loads only the local VST3 and does not redistribute it.",
+        "localState": "official signed VST3 installed locally for the internal Windows laboratory",
+        "paths": ["C:\\Program Files\\Common Files\\VST3\\Auburn Sounds Graillon 3.vst3\\Contents\\x86_64-win\\Auburn Sounds Graillon 3.vst3"],
+        "artifactSha256": "867103fec0ec6b785e0d92a0eb5fb7c13961e740e469ba037da7e936b1b99509",
+        "artifacts": [
+          {"type": "VST3", "path": "C:\\Program Files\\Common Files\\VST3\\Auburn Sounds Graillon 3.vst3\\Contents\\x86_64-win\\Auburn Sounds Graillon 3.vst3", "bytes": 4203600, "sha256": "867103fec0ec6b785e0d92a0eb5fb7c13961e740e469ba037da7e936b1b99509", "signatureStatus": "Valid - Guillaume Piolat"}
+        ]
+      },
+      "meewavLoading": {
+        "method": "Isolated laboratory VST3 probe by canonical plugin ID; production Bridge scanner and Room audio plane remain unavailable. CLAP requires a future host.",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["pitch correction amount", "snap minimum/maximum", "pitch engine G2/G3/I1", "pitch shift", "formant shift", "compressor", "gate", "chorus", "preamp", "bitcrusher"],
+      "audioContract": {
+        "sampleRatesHz": [22050, 44100, 48000, 88200, 96000, 176400, 192000],
+        "bufferSizesSamples": [128],
+        "declaredLatency": "The data sheet lists 24.4 ms at 44.1 kHz and 22.4 ms at 96/192 kHz. The installed VST3 reported 1,074 samples (22.375 ms) to MeeWav at 48 kHz; this is not an acoustic measurement.",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {"type": "signed-local-install", "candidateMatched": true, "details": "The user-supplied installer and installed VST3 both have a valid Authenticode signature from Guillaume Piolat. The installed artifact hash is 867103fec0ec6b785e0d92a0eb5fb7c13961e740e469ba037da7e936b1b99509."},
+        {"type": "vst3-synthetic-signal", "candidateMatched": true, "details": "MeeWav matched vendor Auburn Sounds, name Graillon 3 and class ID 0B20BA920CE0B1456E62754133317340, then processed deterministic-vocal-like-v1 four times at 48 kHz / 128 samples. Every run was finite, non-silent and bounded with output hash 9bc560090eec634f. The VST3 exposed 2,147 parameters (67 useful parameters reported) and declared 1,074 samples of latency."}
+      ],
+      "status": "TESTÉ_PARTIELLEMENT",
+      "realtimeClassification": "vendor-claimed-real-time",
+      "blockingReason": "Synthetic VST3 processing is proven, but a wired-headphone microphone session, acoustic latency, stability, audible correction quality and Room publication remain untested.",
+      "sources": [
+        {"url": "https://www.auburnsounds.com/products/Graillon.html", "checkedAt": "2026-08-11", "supports": "version, free/full feature boundary and formats"},
+        {"url": "https://www.auburnsounds.com/downloads/Graillon%203%20User%27s%20Guide.pdf", "checkedAt": "2026-08-11", "supports": "formats, OS and 22.05–192 kHz range"},
+        {"url": "https://www.auburnsounds.com/faq/What-are-the-System-Requirements-for-Auburn-Sounds-plug-ins.html", "checkedAt": "2026-08-11", "supports": "architectures and minimum OS"}
+      ]
+    },
+    {
+      "ordinal": 4,
+      "id": "qpitch",
+      "group": "native-modern",
+      "name": "QPitch",
+      "vendor": "Skynse",
+      "officialUrl": "https://github.com/Skynse/qpitch",
+      "repositoryUrl": "https://github.com/Skynse/qpitch",
+      "resolution": {
+        "version": "1.3.1",
+        "tag": "v1.3.1",
+        "commitSha": "a0a95f103d2715650462344c1be3dfad4e2e9290",
+        "testedRevision": "v1.3.1 / a0a95f103d2715650462344c1be3dfad4e2e9290",
+        "releaseDate": "2026-06-09",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "GPL-3.0",
+        "binaryOrModel": "GPL-3.0 project; Rubber Band is dynamically loaded on Linux/macOS and has separate licensing",
+        "redistribution": "GPL and third-party obligations apply",
+        "commercialIntegration": "GO_JURIDIQUE_REQUIS for closed-source MeeWav"
+      },
+      "availability": {
+        "formats": ["VST3", "CLAP"],
+        "os": ["Windows", "macOS", "Linux"],
+        "architectures": ["Windows build architecture not stated", "macOS universal", "Linux distro-dependent"]
+      },
+      "installation": {
+        "method": "Build pinned source recursively with JUCE submodule and CMake, or use official release archives; Rubber Band runtime is expected for best quality on Linux/macOS.",
+        "localState": "exact tagged source built outside the repository for the internal Windows laboratory",
+        "paths": [
+          "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-qpitch-v1.3.1\\QPitch_artefacts\\Release\\VST3\\QPitch.vst3\\Contents\\x86_64-win\\QPitch.vst3",
+          "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-qpitch-v1.3.1\\QPitch_artefacts\\Release\\CLAP\\QPitch.clap"
+        ],
+        "artifactSha256": "abe772cc1d521fdf69be311dc831fba42afa80e18715fc64e2835eda00ebd8ba",
+        "artifacts": [
+          {"type": "VST3", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-qpitch-v1.3.1\\QPitch_artefacts\\Release\\VST3\\QPitch.vst3\\Contents\\x86_64-win\\QPitch.vst3", "sha256": "abe772cc1d521fdf69be311dc831fba42afa80e18715fc64e2835eda00ebd8ba"},
+          {"type": "CLAP", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-qpitch-v1.3.1\\QPitch_artefacts\\Release\\CLAP\\QPitch.clap", "sha256": "a3a0d59a5d44053751f1e103d9a2abc4f70b92798123feb0352375901d1024ff"}
+        ]
+      },
+      "meewavLoading": {
+        "method": "VST3 by canonical plugin ID; CLAP path not yet implemented",
+        "currentlyImplemented": true
+      },
+      "exposedParameters": ["retune speed", "note transition", "correction amount", "key", "scale", "range", "formant", "humanize", "target-note mask", "bypass"],
+      "audioContract": {
+        "sampleRatesHz": [48000],
+        "bufferSizesSamples": [128],
+        "declaredLatency": "The exact-tag VST3 reported 0 samples to the MeeWav laboratory probe; this is plugin-reported, not an acoustic measurement.",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {"type": "source-build", "candidateMatched": true, "details": "Exact tag v1.3.1 built as VST3 and CLAP on Windows x64; five upstream DSP diagnostic executables completed with exit code 0."},
+        {"type": "vst3-synthetic-signal", "candidateMatched": true, "details": "MeeWav loaded the reproducible exact-tag VST3 and processed deterministic-vocal-like-v1 at 48 kHz / 128 samples. Three consecutive runs were finite, non-silent and bounded and all produced FNV-1a64 300c1e46d9472fe7. Embedded plugin metadata still reports 1.1.0."}
+      ],
+      "status": "TESTÉ_PARTIELLEMENT",
+      "realtimeClassification": "source-claims-real-time-plugin",
+      "blockingReason": "The exact tagged VST3 processed a synthetic signal, but no recorded voice, headphones, acoustic latency, long session, WebRTC Room or human listening test was available. The CLAP artifact was built but the MeeWav Bridge has no CLAP host yet.",
+      "sources": [
+        {"url": "https://github.com/Skynse/qpitch/releases/tag/v1.3.1", "checkedAt": "2026-08-11", "supports": "resolved release"},
+        {"url": "https://github.com/Skynse/qpitch/tree/a0a95f103d2715650462344c1be3dfad4e2e9290", "checkedAt": "2026-08-11", "supports": "pinned code, build matrix, formats and dependencies"},
+        {"url": "https://github.com/Skynse/qpitch/blob/a0a95f103d2715650462344c1be3dfad4e2e9290/LICENSE", "checkedAt": "2026-08-11", "supports": "GPL-3.0 licence"}
+      ]
+    },
+    {
+      "ordinal": 5,
+      "id": "silvertune",
+      "group": "native-modern",
+      "name": "Silvertune native + Web + companion",
+      "vendor": "verticalrectangle",
+      "officialUrl": "https://silvertune.live/",
+      "repositoryUrl": "https://github.com/verticalrectangle/silvertune-web",
+      "resolution": {
+        "version": "companion 0.4.0 / web at 67778f4095117962860c00d68cd95a3ec849f361",
+        "tag": "companion-v0.4.0",
+        "commitSha": "7b9be1fb65e71eff2f274ddafbd12868c27bc171",
+        "testedRevision": "companion-v0.4.0 / 7b9be1fb65e71eff2f274ddafbd12868c27bc171",
+        "companion": {
+          "version": "0.4.0",
+          "tag": "companion-v0.4.0",
+          "commitSha": "7b9be1fb65e71eff2f274ddafbd12868c27bc171",
+          "buildTested": true,
+          "launched": false
+        },
+        "web": {
+          "sourceAuditSha": "67778f4095117962860c00d68cd95a3ec849f361",
+          "runtimeTested": false
+        },
+        "releaseDate": "2026-05-02",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "NOASSERTION: no LICENSE file and no SPDX licence were present at the checked revisions",
+        "binaryOrModel": "NOASSERTION",
+        "redistribution": "not permitted without an explicit licence",
+        "commercialIntegration": "blocked pending written licensing clarification"
+      },
+      "availability": {
+        "formats": ["Web AudioWorklet", "native companion", "CLAP artifact referenced by project instructions"],
+        "os": ["modern secure-context browsers", "Windows companion", "macOS companion", "Linux companion"],
+        "architectures": ["not stated in a machine-verifiable licence/release manifest"]
+      },
+      "installation": {
+        "method": "Serve the web page in HTTPS/localhost; run the official companion binary or build companion source. Do not redistribute before licence clarification.",
+        "localState": "exact tagged companion built twice outside the repository; builds succeeded but were not bit-for-bit identical",
+        "paths": ["C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\silvertune-companion-v0.4.0\\Release\\silvertune-companion.exe"],
+        "artifactSha256": "17604c5237262b70f8fdd16f510263861940df1da285aeb04b3ad8a40e9a6a78",
+        "artifacts": [
+          {"type": "Companion executable (primary build, not launched)", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\silvertune-companion-v0.4.0\\Release\\silvertune-companion.exe", "sha256": "17604c5237262b70f8fdd16f510263861940df1da285aeb04b3ad8a40e9a6a78"},
+          {"type": "Companion executable (script replay, not launched)", "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-silvertune-companion-v0.4.0\\Release\\silvertune-companion.exe", "sha256": "ef5aec8d475c883663cb43049f3f80d0c5dc56945dea3c9f407e2125b43c75ca"}
+        ],
+        "webRuntimeArtifact": null
+      },
+      "meewavLoading": {
+        "method": "AudioWorklet adapter for web; companion over loopback WebSocket; native plugin only after supported-host validation",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["key C–B", "scale Chromatic/Major/Minor", "speed 0–100 ms", "hold 0–200 ms", "wide 0–100%"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": [256, 1024, 4096],
+        "declaredLatency": "No end-to-end value. Web YIN uses BUF=1024/HOP=32 and grainSize=256; companion YIN HOP=128 and shifter BUF=4096.",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {"type": "source-build", "candidateMatched": true, "details": "Exact tag companion-v0.4.0 built on Windows x64 after supplying the required COMPANION_VERSION CMake value; source was not patched. A second successful build produced a different binary SHA-256, so bit-for-bit reproducibility is not claimed."},
+        {"type": "worklet-static-check", "candidateMatched": true, "details": "The exact-tag web AudioWorklet passed JavaScript syntax validation and all inspected local static references resolved. No microphone, audio device or companion process was started."}
+      ],
+      "status": "BLOQUÉ_PAR_ENVIRONNEMENT",
+      "realtimeClassification": "source-implements-streaming-paths",
+      "blockingReason": "The companion builds, but no common corpus, microphone, headphones, MeeWav audio path or listening test traversed it. The absence of an explicit repository licence independently blocks redistribution/integration.",
+      "sources": [
+        {"url": "https://silvertune.live/", "checkedAt": "2026-08-11", "supports": "official product/demo surface"},
+        {"url": "https://github.com/verticalrectangle/silvertune-web/tree/67778f4095117962860c00d68cd95a3ec849f361", "checkedAt": "2026-08-11", "supports": "current web/companion implementation and DSP constants"},
+        {"url": "https://github.com/verticalrectangle/silvertune-web/tree/companion-v0.4.0", "checkedAt": "2026-08-11", "supports": "resolved companion release and absence of a repository licence file"}
+      ]
+    },
+    {
+      "ordinal": 6,
+      "id": "autotune-2026",
+      "group": "native-modern",
+      "name": "AutoTune 2026",
+      "vendor": "Antares",
+      "officialUrl": "https://antarestech.com/products/pitch-correction/at2026",
+      "repositoryUrl": null,
+      "resolution": {
+        "version": "1.2",
+        "tag": null,
+        "commitSha": null,
+        "testedRevision": null,
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "proprietary",
+        "binaryOrModel": "commercial proprietary plugin; vendor activation required",
+        "redistribution": "not authorised by a normal end-user licence",
+        "commercialIntegration": "load only a legitimately installed/activated user copy; OEM/SaaS rights require a vendor agreement"
+      },
+      "availability": {
+        "formats": ["VST3", "AUv2", "AAX"],
+        "os": ["Windows 10/11", "macOS 14+"],
+        "architectures": ["Windows 64-bit", "Apple Silicon native; exact Intel support for 1.2 not asserted here"]
+      },
+      "installation": {
+        "method": "Install and activate legitimately through Auto-Tune Central; MeeWav must never handle user credentials or bypass activation.",
+        "localState": "exact candidate absent; related Auto-Tune Pro 11.0.0 VST3 present",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "VST3 by verified class ID after isolated scan; never AAX",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["key", "scale", "target notes", "retune speed", "humanize", "Flex Tune", "vocal range", "Classic/Modern", "Low Latency/HQ", "tracking"],
+      "audioContract": {
+        "sampleRatesHz": [44100, 48000, 88200, 96000, 176400, 192000],
+        "bufferSizesSamples": null,
+        "declaredLatency": "2.5 ms core processing at 44.1 kHz in Low Latency mode (vendor claim; not total monitoring latency)",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "related-product-only",
+          "candidateMatched": false,
+          "details": "Auto-Tune Pro 11.0.0 processed one synthetic block in the existing isolated VST3 probe and reported 2670 samples at 48 kHz. This is not AutoTune 2026 and is not carried over as a candidate measurement."
+        }
+      ],
+      "status": "BLOQUÉ_PAR_LICENCE_OU_ACTIVATION",
+      "realtimeClassification": "vendor-claimed-real-time",
+      "blockingReason": "AutoTune 2026 itself is not installed or activated. The related Auto-Tune Pro 11 installation cannot be relabelled as the 2026 product.",
+      "sources": [
+        {"url": "https://antarestech.com/products/pitch-correction/at2026", "checkedAt": "2026-08-11", "supports": "version 1.2, features, formats and minimum OS"},
+        {"url": "https://help.antarestech.com/hc/en-us/articles/42855736822932-AutoTune-2026-FAQ", "checkedAt": "2026-08-11", "supports": "sample rates, formats, monophonic input and activation flow"},
+        {"url": "https://www.antarestech.com/fr/blog/real-time-pitch-correction-for-live-performance-with-autotune-2026", "checkedAt": "2026-08-11", "supports": "vendor 2.5 ms core-latency claim and its limited scope"}
+      ]
+    },
+    {
+      "ordinal": 7,
+      "id": "opendaw-autotune",
+      "group": "web-wasm",
+      "name": "openDAW Autotune",
+      "vendor": "André Michelle / openDAW",
+      "officialUrl": "https://github.com/andremichelle/openDAW",
+      "repositoryUrl": "https://github.com/andremichelle/openDAW",
+      "resolution": {
+        "version": "studio-sdk 0.0.166; studio-core-wasm 0.0.11; studio-boxes 0.0.104; studio-core 0.2.0",
+        "tag": null,
+        "commitSha": null,
+        "sourceAuditSha": "2f9e60fec44903f51e84a4d1ce60d9e4a8b5e113",
+        "packageGitHeads": {
+          "@opendaw/studio-sdk@0.0.166": "e4f70170c5947610932306da94e7f0bb817e43b3",
+          "@opendaw/studio-core-wasm@0.0.11": null,
+          "@opendaw/studio-boxes@0.0.104": "c1a5287078f6fdc5e3574cbb53da0544474ea0cd",
+          "@opendaw/studio-core@0.2.0": "e4f70170c5947610932306da94e7f0bb817e43b3"
+        },
+        "testedRevision": "@opendaw/studio-core-wasm@0.0.11 and companion exact package versions",
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "Repository README: AGPL-3.0-or-later or commercial; installed npm manifests: LGPL-3.0-or-later",
+        "binaryOrModel": "WASM package manifests report LGPL-3.0-or-later; the bundle also loads modules excluded from the advertised commercial licence",
+        "redistribution": "not approved because repository/package terms conflict and the full hard-coded module table is bundled",
+        "commercialIntegration": "GO_JURIDIQUE_REQUIS; obtain written scope confirmation and a clean commercial WASM bundle"
+      },
+      "availability": {
+        "formats": ["WebAssembly", "AudioWorklet", "TypeScript SDK"],
+        "os": ["browsers supporting AudioWorklet, WebAssembly and cross-origin isolation"],
+        "architectures": ["browser/WASM"]
+      },
+      "installation": {
+        "method": "Exact npm packages are locked; versioned WASM/Worklet assets are copied by the repository sync script.",
+        "localState": "present",
+        "paths": ["node_modules/@opendaw", "audio-lab-public/opendaw-wasm/0.0.11"],
+        "artifactSha256": "device_autotune.wasm: 74e9d9757a3f9b0c9f24e734a0a05e1d6c6fe5fce63f201871c553ecd6c7ad18",
+        "artifacts": [
+          {"type": "WebAssembly plugin", "path": "audio-lab-public/opendaw-wasm/0.0.11/wasm/plugins/device_autotune.wasm", "sha256": "74e9d9757a3f9b0c9f24e734a0a05e1d6c6fe5fce63f201871c553ecd6c7ad18"}
+        ]
+      },
+      "meewavLoading": {
+        "method": "Existing VoiceCorrectionEngine and versioned AudioWorklet/WASM lab path behind the disabled-by-default audio-lab mode",
+        "currentlyImplemented": true
+      },
+      "exposedParameters": ["key 0–11", "scale 0–7", "amount 0–1", "retune 0–1", "shift -12…+12 semitones", "smooth 0–1", "enabled"],
+      "audioContract": {
+        "sampleRatesHz": [48000],
+        "bufferSizesSamples": [128],
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "synthetic-audio",
+          "candidateMatched": true,
+          "details": "Existing automated Chromium proof loaded AudioWorklet/WASM, passed a synthetic source through dry/wet paths and observed local WebRTC packet/byte deltas."
+        },
+        {
+          "type": "limitations",
+          "candidateMatched": true,
+          "details": "No real microphone/headset, no human listening, no remote Room participant and no end-to-end latency measurement."
+        }
+      ],
+      "status": "TESTÉ_PARTIELLEMENT",
+      "realtimeClassification": "streaming-path-proved-with-synthetic-audio-only",
+      "blockingReason": "Partial only: real vocal quality, monitoring latency, remote Room delivery and commercial licensing remain unverified.",
+      "sources": [
+        {"url": "https://github.com/andremichelle/openDAW/tree/2f9e60fec44903f51e84a4d1ce60d9e4a8b5e113", "checkedAt": "2026-08-11", "supports": "current source and repository dual-licence statement"},
+        {"url": "https://www.npmjs.com/package/@opendaw/studio-core-wasm/v/0.0.11", "checkedAt": "2026-08-11", "supports": "resolved package version and npm manifest licence"},
+        {"url": "https://www.npmjs.com/package/@opendaw/studio-sdk/v/0.0.166", "checkedAt": "2026-08-11", "supports": "resolved SDK version and npm manifest licence"},
+        {"url": "docs/opendaw-voice-correction-poc.md", "checkedAt": "2026-08-11", "supports": "MeeWav test boundary and local asset evidence"}
+      ]
+    },
+    {
+      "ordinal": 8,
+      "id": "libsonare",
+      "group": "web-wasm",
+      "name": "libsonare",
+      "vendor": "libraz",
+      "officialUrl": "https://libsonare.libraz.net/",
+      "repositoryUrl": "https://github.com/libraz/libsonare",
+      "resolution": {
+        "version": "1.6.0",
+        "tag": "v1.6.0",
+        "commitSha": "9e23b374299107bfcc04d1716d4ece5de2aaab19",
+        "testedRevision": null,
+        "releaseDate": "2026-08-02",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "Apache-2.0",
+        "binaryOrModel": "Apache-2.0 project; no model weights are required according to the repository",
+        "redistribution": "permissive subject to Apache notices and dependency review",
+        "commercialIntegration": "possible in principle; dependency and patent review still required"
+      },
+      "availability": {
+        "formats": ["C++ library", "WASM", "AudioWorklet", "Node native binding", "Python package"],
+        "os": ["Linux", "macOS", "WebAssembly", "WSL2; native Windows explicitly unsupported"],
+        "architectures": ["source-dependent native architectures", "browser/WASM"]
+      },
+      "installation": {
+        "method": "npm @libraz/libsonare, pip libsonare, or pinned C++/WASM source build.",
+        "localState": "absent",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "Dedicated WASM/AudioWorklet adapter after API and causal-stream validation",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["pitch correction and note editing are advertised; exact causal live-correction parameter mapping not yet verified"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": null,
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [],
+      "status": "BLOQUÉ_PAR_ENVIRONNEMENT",
+      "realtimeClassification": "streaming-engine-exists; live-autotune-causality-not-yet-proved",
+      "blockingReason": "The candidate is not installed. Native Windows is unsupported and the WASM correction API has not processed an audio signal in MeeWav.",
+      "sources": [
+        {"url": "https://github.com/libraz/libsonare/releases/tag/v1.6.0", "checkedAt": "2026-08-11", "supports": "resolved release"},
+        {"url": "https://github.com/libraz/libsonare/tree/9e23b374299107bfcc04d1716d4ece5de2aaab19", "checkedAt": "2026-08-11", "supports": "pinned code, platforms, WASM/AudioWorklet capabilities and licence"},
+        {"url": "https://libsonare.libraz.net/docs/realtime-streaming", "checkedAt": "2026-08-11", "supports": "official real-time API documentation"}
+      ]
+    },
+    {
+      "ordinal": 9,
+      "id": "autotone-alex-crist",
+      "group": "web-wasm",
+      "name": "Autotone",
+      "vendor": "Alex Crist",
+      "officialUrl": "https://alexcrist.github.io/autotone/",
+      "repositoryUrl": "https://github.com/alexcrist/autotone",
+      "resolution": {
+        "version": "unreleased",
+        "tag": null,
+        "commitSha": "fd4005adb659aa687cb2bb95c9663252098591f9",
+        "testedRevision": null,
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "MIT",
+        "binaryOrModel": "CREPE submodule/model and TensorFlow.js dependencies require separate inventory",
+        "redistribution": "MIT project code, subject to model/dependency terms",
+        "commercialIntegration": "dependency/model legal review required"
+      },
+      "availability": {
+        "formats": ["Web application", "WebAssembly pitch shifter", "Web Workers", "TensorFlow.js CREPE"],
+        "os": ["historical desktop browsers compatible with its Node 14/Webpack stack"],
+        "architectures": ["browser/WASM"]
+      },
+      "installation": {
+        "method": "Pinned source, CREPE submodule, Emscripten 3.1.29, Node 14.18.2 and npm 6.14.15.",
+        "localState": "absent",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "Not suitable for the live adapter without re-architecting its stop-then-process pipeline",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["base note", "scale", "CREPE oversampling constants", "FFT pitch-shifter window/oversampling constants"],
+      "audioContract": {
+        "sampleRatesHz": [48000],
+        "bufferSizesSamples": null,
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "source-audit",
+          "candidateMatched": true,
+          "details": "Autotoner.stopRecording() suspends capture, retrieves the accumulated recording, then awaits full pitch detection and pitch shifting."
+        }
+      ],
+      "status": "NON_TEMPS_RÉEL_CONFIRMÉ",
+      "realtimeClassification": "record-then-process",
+      "blockingReason": "The checked implementation only corrects after recording stops; it does not expose a continuous corrected MediaStream for live monitoring or WebRTC.",
+      "sources": [
+        {"url": "https://github.com/alexcrist/autotone/tree/fd4005adb659aa687cb2bb95c9663252098591f9", "checkedAt": "2026-08-11", "supports": "pinned source, build versions, MIT licence and processing architecture"},
+        {"url": "https://github.com/alexcrist/autotone/blob/fd4005adb659aa687cb2bb95c9663252098591f9/react/src/audio/autotone/Autotoner.js", "checkedAt": "2026-08-11", "supports": "record-then-process control flow"}
+      ]
+    },
+    {
+      "ordinal": 10,
+      "id": "autotalent",
+      "group": "native-legacy",
+      "name": "Autotalent",
+      "vendor": "Tom Baran",
+      "officialUrl": "http://tombaran.info/autotalent.html",
+      "repositoryUrl": "https://github.com/Stazed/autotalent",
+      "resolution": {
+        "version": "0.2 (Debian source revision 0.2-6)",
+        "tag": null,
+        "commitSha": null,
+        "testedRevision": null,
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "GPL-2.0-or-later according to current Debian/Guix packaging",
+        "binaryOrModel": "no model; distro binary follows source-package terms",
+        "redistribution": "GPL obligations apply",
+        "commercialIntegration": "do not copy code into closed MeeWav; dynamic-host legal review required"
+      },
+      "availability": {
+        "formats": ["LADSPA"],
+        "os": ["Linux and other LADSPA-capable Unix-like systems"],
+        "architectures": ["distro/source-build dependent"]
+      },
+      "installation": {
+        "method": "Use a verified distro source package such as Debian autotalent 0.2-6 or build the original 0.2 source against LADSPA.",
+        "localState": "absent; requested GitHub repository returns 404",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "No LADSPA host exists in the Windows Bridge; Linux laboratory host required",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["concert A", "fixed pitch", "pull to fixed pitch", "allowed-note mask", "correction strength", "smoothness", "LFO/vibrato", "formant warp"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": null,
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {"type": "source-resolution", "candidateMatched": true, "details": "The prompt repository URL returned 404; Debian still publishes source package 0.2-6 and upstream 0.2 tarball checksums."}
+      ],
+      "status": "BLOQUÉ_PAR_ENVIRONNEMENT",
+      "realtimeClassification": "legacy-real-time-plugin",
+      "blockingReason": "Current machine is Windows with no LADSPA host. The prompt's GitHub mirror is gone; a Linux environment and verified distro source are needed.",
+      "sources": [
+        {"url": "https://packages.debian.org/stable/source/sound/autotalent", "checkedAt": "2026-08-11", "supports": "current reproducible source package 0.2-6 and source checksums"},
+        {"url": "https://salsa.debian.org/multimedia-team/autotalent", "checkedAt": "2026-08-11", "supports": "current distro-maintained source repository"},
+        {"url": "https://github.com/Stazed/autotalent", "checkedAt": "2026-08-11", "supports": "negative evidence: repository not found"}
+      ]
+    },
+    {
+      "ordinal": 11,
+      "id": "talentedhack",
+      "group": "native-legacy",
+      "name": "TalentedHack",
+      "vendor": "Jeremy Salwen",
+      "officialUrl": "https://github.com/jeremysalwen/TalentedHack",
+      "repositoryUrl": "https://github.com/jeremysalwen/TalentedHack",
+      "resolution": {
+        "version": "1.92",
+        "tag": "v1.92",
+        "commitSha": "1b4c2e9dbd83948ab0273efa64b348a72697b8e3",
+        "testedRevision": null,
+        "releaseDate": "2022-01-15",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "GPL-3.0",
+        "binaryOrModel": "source/plugin under repository licence; no model",
+        "redistribution": "GPL obligations apply",
+        "commercialIntegration": "Linux reference only pending legal review"
+      },
+      "availability": {
+        "formats": ["LV2"],
+        "os": ["Linux (the README only claims historical 32-bit Linux portability)"],
+        "architectures": ["source-build dependent"]
+      },
+      "installation": {
+        "method": "Build pinned source with LV2 and FFTW3 development files, then install the .lv2 directory.",
+        "localState": "absent",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "No LV2 host exists in the current Windows Bridge; Linux laboratory host required",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["Autotalent controls", "MIDI pitch output", "MIDI correction control"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": null,
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [],
+      "status": "BLOQUÉ_PAR_ENVIRONNEMENT",
+      "realtimeClassification": "legacy-real-time-plugin",
+      "blockingReason": "Windows environment has neither LV2 host nor Linux audio stack; no plugin was built or loaded.",
+      "sources": [
+        {"url": "https://github.com/jeremysalwen/TalentedHack/tree/v1.92", "checkedAt": "2026-08-11", "supports": "pinned release, LV2 build instructions and parameters"},
+        {"url": "https://github.com/jeremysalwen/TalentedHack/blob/v1.92/COPYING", "checkedAt": "2026-08-11", "supports": "GPL licence"}
+      ]
+    },
+    {
+      "ordinal": 12,
+      "id": "x42-fat1",
+      "group": "native-legacy",
+      "name": "x42/fat1 — AutoTune-1",
+      "vendor": "x42 / Fons Adriaensen",
+      "officialUrl": "https://github.com/x42/fat1.lv2",
+      "repositoryUrl": "https://github.com/x42/fat1.lv2",
+      "resolution": {
+        "version": "0.8.9",
+        "tag": "v0.8.9",
+        "commitSha": "a9802042df8c8c157a0f26bc1903c282f09350f5",
+        "testedRevision": null,
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "GPL-2.0",
+        "binaryOrModel": "GPL-2.0 LV2 plugin; no model",
+        "redistribution": "GPL obligations apply",
+        "commercialIntegration": "Linux reference/dynamic loading requires legal review"
+      },
+      "availability": {
+        "formats": ["LV2"],
+        "os": ["Linux/Unix-like LV2 environments"],
+        "architectures": ["source-build dependent"]
+      },
+      "installation": {
+        "method": "Build pinned source with LV2 SDK, FFTW, GNU make and a C compiler.",
+        "localState": "absent",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "No LV2 host exists in the Windows Bridge; Linux laboratory host required",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["tuning reference", "bias", "filter", "correction", "target-note mask"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": null,
+        "declaredLatency": "plugin exposes an LV2 latency-reporting port; numeric value requires instantiation",
+        "measuredLatency": null
+      },
+      "testEvidence": [],
+      "status": "BLOQUÉ_PAR_ENVIRONNEMENT",
+      "realtimeClassification": "legacy-real-time-plugin",
+      "blockingReason": "Windows environment has neither LV2 host nor Linux audio stack; no numeric latency or audio pass was obtained.",
+      "sources": [
+        {"url": "https://github.com/x42/fat1.lv2/tree/v0.8.9", "checkedAt": "2026-08-11", "supports": "pinned release, build requirements and latency-port claim"},
+        {"url": "https://github.com/x42/fat1.lv2/blob/v0.8.9/COPYING", "checkedAt": "2026-08-11", "supports": "GPL-2.0 licence"}
+      ]
+    },
+    {
+      "ordinal": 13,
+      "id": "mxtune",
+      "group": "native-legacy",
+      "name": "MXTune",
+      "vendor": "liuanlin-mx",
+      "officialUrl": "https://github.com/liuanlin-mx/MXTune",
+      "repositoryUrl": "https://github.com/liuanlin-mx/MXTune",
+      "resolution": {
+        "version": "1.2.0",
+        "tag": "v1.2.0",
+        "commitSha": "b7f77b78208297ba0a5a4c25ac1759a44e87fb00",
+        "testedRevision": "v1.2.0 / b7f77b78208297ba0a5a4c25ac1759a44e87fb00",
+        "releaseDate": "2023-02-18",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "GPL-3.0",
+        "binaryOrModel": "GPL project; historical JUCE and Steinberg SDK pieces have separate terms",
+        "redistribution": "GPL and SDK obligations apply",
+        "commercialIntegration": "not suitable for closed MeeWav without legal/build modernisation review"
+      },
+      "availability": {
+        "formats": ["VST2 documented", "VST3 scaffolding referenced but not verified as a current supported artifact"],
+        "os": ["Windows", "macOS", "Linux"],
+        "architectures": ["historical source-build dependent"]
+      },
+      "installation": {
+        "method": "Historical build requires manually supplied JUCE and VST SDK versions plus platform-specific source edits.",
+        "localState": "exact-tag detached source was configured and a Release build was attempted outside the repository; generation failed before compilation and nothing was installed",
+        "paths": [],
+        "artifactSha256": null,
+        "artifacts": []
+      },
+      "meewavLoading": {
+        "method": "Current Bridge is VST3-only and cannot load the documented VST2 artifact",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["Autotalent-derived key/note mask", "correction strength", "smoothness", "pitch shift", "formant controls"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": null,
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "exact-tag-configure-build",
+          "candidateMatched": true,
+          "details": "v1.2.0 at b7f77b78208297ba0a5a4c25ac1759a44e87fb00 was checked out in a detached worktree. Default CMake 4.1 configuration failed on the obsolete 3.0 policy floor; retrying with CMAKE_POLICY_VERSION_MINIMUM=3.5 reached generation but failed because JUCE/JuceLibraryCode/include_juce_audio_plugin_client_Unity.cpp is absent. cmake --build re-ran generation and failed identically. No source patch or install was performed."
+        }
+      ],
+      "status": "NON_REPRODUCTIBLE",
+      "realtimeClassification": "legacy-plugin",
+      "blockingReason": "The exact v1.2.0 source cannot generate a build with the recorded Windows toolchain because required generated JUCE source is absent; its documented build also depends on historical/manual JUCE and VST SDK setup.",
+      "sources": [
+        {"url": "https://github.com/liuanlin-mx/MXTune/tree/v1.2.0", "checkedAt": "2026-08-11", "supports": "pinned release, platform build instructions and algorithm lineage"},
+        {"url": "https://github.com/liuanlin-mx/MXTune/blob/v1.2.0/LICENSE", "checkedAt": "2026-08-11", "supports": "GPL-3.0 licence"}
+      ]
+    },
+    {
+      "ordinal": 14,
+      "id": "musicai-ruvnet",
+      "group": "ai-experimental",
+      "name": "MusicAI",
+      "vendor": "ruvnet",
+      "officialUrl": "https://github.com/ruvnet/musicai",
+      "repositoryUrl": "https://github.com/ruvnet/musicai",
+      "resolution": {
+        "version": "package manifest 1.0.0; no release/tag",
+        "tag": null,
+        "commitSha": "92c0c53f2ca81d82a3e392f8781cc521f25b2c21",
+        "testedRevision": null,
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "MIT (LICENSE and package manifest); README badge also mentions Apache-2.0 without a matching dual-licence text",
+        "binaryOrModel": "repository includes a Linux x64 .node binary; no separately licensed trained correction weights were found",
+        "redistribution": "blocked until binary provenance/dependency licences and README inconsistency are reviewed",
+        "commercialIntegration": "not recommended because the advertised DSP is not implemented as claimed"
+      },
+      "availability": {
+        "formats": ["Rust N-API module", "Node/TypeScript API"],
+        "os": ["Raspberry Pi/Linux target", "repository also contains linux-x64 native binary"],
+        "architectures": ["aarch64 Linux", "armv7 Linux", "x86_64 Linux artifact"]
+      },
+      "installation": {
+        "method": "Pinned source would require npm, Rust/N-API toolchain and dependency audit.",
+        "localState": "not installed in MeeWav; source inspected in a disposable audit checkout",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "No adapter; not eligible until real continuous DSP exists",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["targetPitch", "strength", "sample rate/block-size configuration"],
+      "audioContract": {
+        "sampleRatesHz": [44100, 48000],
+        "bufferSizesSamples": [128, 256],
+        "declaredLatency": "README claims <10 ms; not accepted as measured evidence",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "source-audit",
+          "candidateMatched": false,
+          "details": "src/autotune.rs explicitly labels the pitch shifting as simplified and placeholder; it performs buffer resampling, while formant preservation is a pass-through placeholder."
+        }
+      ],
+      "status": "NON_REPRODUCTIBLE",
+      "realtimeClassification": "advertised-real-time-behaviour-not-implemented",
+      "blockingReason": "The pinned source contradicts its own YIN/PSOLA/formant claims and does not provide the advertised continuous real-time correction engine.",
+      "sources": [
+        {"url": "https://github.com/ruvnet/musicai/tree/92c0c53f2ca81d82a3e392f8781cc521f25b2c21", "checkedAt": "2026-08-11", "supports": "pinned source, package targets and licence"},
+        {"url": "https://github.com/ruvnet/musicai/blob/92c0c53f2ca81d82a3e392f8781cc521f25b2c21/src/autotune.rs", "checkedAt": "2026-08-11", "supports": "placeholder/simple-resampling implementation evidence"}
+      ]
+    },
+    {
+      "ordinal": 15,
+      "id": "loukai",
+      "group": "ai-experimental",
+      "name": "Loukai",
+      "vendor": "Luis Montes",
+      "officialUrl": "https://loukai.com/",
+      "repositoryUrl": "https://github.com/monteslu/loukai",
+      "resolution": {
+        "version": "0.12.0",
+        "tag": "v0.12.0",
+        "commitSha": "34c0a4b500225453e31cf128cd129a8cc74c3cfe",
+        "testedRevision": null,
+        "releaseDate": "2026-08-08",
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "AGPL-3.0",
+        "binaryOrModel": "AGPL application with separately listed third-party dependencies/assets",
+        "redistribution": "AGPL obligations and third-party notices apply",
+        "commercialIntegration": "isolate/evaluate DSP only; closed-source integration requires legal review"
+      },
+      "availability": {
+        "formats": ["Electron application", "Web AudioWorklet modules"],
+        "os": ["Windows", "macOS", "Linux"],
+        "architectures": ["Windows x64", "macOS x64/arm64", "Linux x64/arm64"]
+      },
+      "installation": {
+        "method": "Run/build the pinned Electron application; do not install the whole app inside MeeWav.",
+        "localState": "not installed in MeeWav; source modules inspected without building the app",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "Potentially isolate micPitchDetectorWorklet + phaseVocoderWorklet after independent tests and AGPL review",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": ["enabled", "strength 0–100", "speed 1–100", "prefer vocals", "key/scale reference tracking", "pitch semitones -24…+24"],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": [128, 512, 2048],
+        "declaredLatency": "README claims AudioWorklet <5 ms, but the connected phase vocoder uses FFT 2048/hop 512; no total measurement is supplied",
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "source-audit",
+          "candidateMatched": true,
+          "details": "v0.12.0 microphoneEngine connects mic detector → phase-vocoder AudioWorklet → gain → compressor and updates pitchSemitones from detected/target pitch. No audio was run."
+        }
+      ],
+      "status": "BLOQUÉ_PAR_ENVIRONNEMENT",
+      "realtimeClassification": "continuous-source-path-present-but-untested",
+      "blockingReason": "The DSP path exists in source, but the full Electron app was not installed/built and the modules have not processed audio independently or in MeeWav.",
+      "sources": [
+        {"url": "https://github.com/monteslu/loukai/tree/v0.12.0", "checkedAt": "2026-08-11", "supports": "resolved release, platforms, dependencies and AGPL licence"},
+        {"url": "https://github.com/monteslu/loukai/blob/v0.12.0/src/renderer/js/microphoneEngine.js", "checkedAt": "2026-08-11", "supports": "connected correction route and controls"},
+        {"url": "https://github.com/monteslu/loukai/blob/v0.12.0/src/renderer/js/phaseVocoderWorklet.js", "checkedAt": "2026-08-11", "supports": "FFT/hop DSP implementation"}
+      ]
+    },
+    {
+      "ordinal": 16,
+      "id": "bert-apc",
+      "group": "ai-experimental",
+      "name": "BERT-APC",
+      "vendor": "Sungjae Kim, Kihyun Na, Jinyoung Choi, Injung Kim",
+      "officialUrl": "https://arxiv.org/abs/2511.20006",
+      "repositoryUrl": "https://github.com/Joshua-1995/BERT-APC-Demo",
+      "resolution": {
+        "version": "demo repository; no release/tag",
+        "tag": null,
+        "commitSha": "0b5a5d3f813c92eea08aad930c63403540bd074f",
+        "testedRevision": null,
+        "releaseDate": null,
+        "resolvedAt": "2026-08-11"
+      },
+      "licensing": {
+        "code": "MIT for the static demo repository",
+        "binaryOrModel": "no model code, weights or executable correction pipeline is published in the checked demo repository",
+        "redistribution": "demo assets follow repository MIT text; audio ownership/dataset/model rights require separate confirmation",
+        "commercialIntegration": "blocked because the actual model/pipeline and its licence are unavailable"
+      },
+      "availability": {
+        "formats": ["static HTML demo", "pre-rendered WAV/PNG result assets"],
+        "os": ["any static-site browser for demo playback"],
+        "architectures": ["not applicable"]
+      },
+      "installation": {
+        "method": "Static demo only; there is no engine to install.",
+        "localState": "absent; repository tree inspected remotely/disposably",
+        "paths": [],
+        "artifactSha256": null
+      },
+      "meewavLoading": {
+        "method": "none; offline research reference only if full code/weights become available",
+        "currentlyImplemented": false
+      },
+      "exposedParameters": [],
+      "audioContract": {
+        "sampleRatesHz": null,
+        "bufferSizesSamples": null,
+        "declaredLatency": null,
+        "measuredLatency": null
+      },
+      "testEvidence": [
+        {
+          "type": "repository-tree-audit",
+          "candidateMatched": false,
+          "details": "The pinned repository contains index.html, figures and pre-rendered comparison audio/images only; no training/inference code, dependency manifest or weights are present."
+        }
+      ],
+      "status": "NON_REPRODUCTIBLE",
+      "realtimeClassification": "offline-contextual-method; no runnable engine published",
+      "blockingReason": "The demonstrator is not the BERT-APC engine. Without model code and weights, neither offline reproduction nor real-time evaluation is possible.",
+      "sources": [
+        {"url": "https://arxiv.org/abs/2511.20006", "checkedAt": "2026-08-11", "supports": "paper architecture and note-level/contextual offline method"},
+        {"url": "https://github.com/Joshua-1995/BERT-APC-Demo/tree/0b5a5d3f813c92eea08aad930c63403540bd074f", "checkedAt": "2026-08-11", "supports": "pinned static demo tree and MIT demo licence"}
+      ]
+    }
+  ],
+  "extensionSearch": {
+    "performedAt": "2026-08-11",
+    "queries": [
+      "current GitHub pitch-correction/autotune VST3/CLAP projects",
+      "current GitHub AudioWorklet automatic pitch-correction projects"
+    ],
+    "result": "No additional candidate was added. The only current relevant discovery was EasyEffects 8.2.x adding x42 AutoTune, which wraps the already registered x42/fat1 LV2 candidate rather than introducing a new engine."
+  }
+}

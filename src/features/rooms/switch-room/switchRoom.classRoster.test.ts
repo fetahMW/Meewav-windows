@@ -1,0 +1,20 @@
+import {afterEach,expect,it,vi} from "vitest";
+import {createPlaceDemoState} from "../place/place.fixtures";
+import {defaultRoomLaunch} from "../launch/roomLaunch";
+import {switchRoomService} from "./switchRoom.service";
+import {switchToolsKey} from "./switchRoom.preparation";
+vi.mock("../tools/roomTools.service",()=>({roomToolsRepository:{load:vi.fn()}}));
+afterEach(()=>{localStorage.clear();sessionStorage.clear();});
+it("moves the exact selected queue identities into 8 occupied and 16 free seats, without enabling microphones",async()=>{
+ Object.defineProperty(navigator,"locks",{configurable:true,value:{request:async(_key:string,run:()=>unknown)=>run()}});
+ const room=createPlaceDemoState();const template=room.queue[0];
+ room.queue=Array.from({length:24},(_,i)=>({...template,id:`q-${i}`,profile:{...template.profile,id:`student-${i}`,displayName:`Élève ${i}`}}));
+ const state=await switchRoomService.get(room,"place",room.host.id);
+ const config={launch:{...defaultRoomLaunch("classe"),title:"Cours"},studentIds:room.queue.slice(0,8).map(p=>p.profile.id)};
+ await switchRoomService.commit(room,room.host.id,state,"classe","request",config);
+ const saved=JSON.parse(localStorage.getItem(switchToolsKey(room.id,"classe"))!);
+ expect(saved.classe.seats.filter((s:any)=>s.person).map((s:any)=>s.person.id)).toEqual(config.studentIds);
+ expect(saved.classe.seats.every((s:any)=>s.canSpeak===false&&(!s.person||s.person.microphone==="off"))).toBe(true);
+ expect(saved.classe.seats).toHaveLength(24);expect(saved.classe.seats.filter((s:any)=>s.status==="free")).toHaveLength(16);
+ const next=await switchRoomService.get(room,"place",room.host.id);expect(next.current).toBe("classe");
+});

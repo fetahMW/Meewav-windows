@@ -1,0 +1,468 @@
+/* Shared room Chat finish, validated in Classe. Keep it scoped away from messaging. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis.is-chat .place-chat .place-chat__composer {
+  box-sizing: border-box;
+  grid-template-columns: minmax(0, 1fr) 44px 44px;
+  align-items: center;
+  gap: 6px;
+  min-height: 60px;
+  margin: 4px 4px 2px;
+  padding: 7px;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background:
+    radial-gradient(ellipse 75% 25px at 38% -12px, #d8e4f21c, transparent 80%) padding-box,
+    linear-gradient(180deg, #171a1f, #080a0d 18px, #020304 72%, #07090c) padding-box,
+    linear-gradient(135deg, #545b66, #1e232c 26%, #11141a 70%, #363e4c) border-box;
+  box-shadow:
+    inset 0 1px #e8f1ff12,
+    inset 0 -1px #000,
+    0 -1px 0 #000,
+    0 -6px 16px #000a,
+    0 2px 3px #000c;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Recessed glass: text and inline MeeWav images keep their natural flow. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .mw-emoticon-composer {
+  box-sizing: border-box;
+  display: block;
+  height: 44px;
+  min-height: 44px;
+  padding: 11px 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #252b35;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #020304, #090c11);
+  box-shadow: inset 0 2px 5px #000, 0 1px #dbe9ff0b;
+  color: #f1f4f9;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 450;
+  line-height: 20px;
+  letter-spacing: .01em;
+  caret-color: #85bcff;
+  scrollbar-width: thin;
+  scrollbar-color: #444d61 transparent;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .mw-emoticon-composer[data-empty="true"]::before {
+  color: #929aa9;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .mw-emoticon-composer:focus {
+  outline: none;
+  border-color: #6085b3;
+  box-shadow: inset 0 2px 5px #000, 0 0 0 1px #81baff24, 0 0 12px #6aadff0c;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .mw-emoticon-composer__image {
+  width: 24px;
+  height: 24px;
+}
+
+/* Matched physical keys. The disabled send key stays black, not a purple slab. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(.place-chat__emoji > button, button[type="submit"]) {
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background:
+    radial-gradient(ellipse 110% 80% at 40% -30%, #d8e4f236, transparent 80%) padding-box,
+    linear-gradient(180deg, #20252d, #0e1117 42%, #030406 85%, #090c10) padding-box,
+    linear-gradient(145deg, #6f798a, #353d4a 26%, #1a202a 64%, #424a59) border-box;
+  box-shadow: inset 0 1px #f0f5ff26, inset 0 -1px #000, 0 2px 3px #000d;
+  color: #b9c3d5;
+  opacity: 1;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(.place-chat__emoji > button, button[type="submit"]) svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.65;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(.place-chat__emoji > button, button[type="submit"]):not(:disabled):hover {
+  color: #fff;
+  border-color: #8197b570;
+  box-shadow: inset 0 1px #f0f5ff40, inset 0 -1px #000, 0 0 12px #91b7ff12, 0 2px 3px #000d;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer button[type="submit"]:not(:disabled) {
+  border-color: #71acf570;
+  color: #c4dfff;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% -40%, #9ac7ff3d, transparent 85%) padding-box,
+    linear-gradient(180deg, #212c3a, #0f1721 44%, #080c10 82%, #121b25) padding-box,
+    linear-gradient(145deg, #789bc6, #2a4361 40%, #486991) border-box;
+  box-shadow: inset 0 1px #d6e8ff35, inset 0 -1px #7db8ff3b, 0 0 12px #55a2ff18, 0 2px 3px #000d;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(.place-chat__emoji > button, button[type="submit"]):not(:disabled):active {
+  box-shadow: inset 0 2px 5px #000b, inset 0 -1px #d5e2ff1f;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(.place-chat__emoji > button, button[type="submit"]):focus-visible {
+  outline: 2px solid #85bcff;
+  outline-offset: 2px;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(.place-chat__emoji > button, button[type="submit"]):disabled {
+  background: var(--studio-black-key);
+  box-shadow: inset 0 1px #d7e5ff12, inset 0 -1px #000, 0 1px 2px #000a;
+  color: #697283;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* The emoticon library owns its violet signal, independently of the Chat. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .place-chat__emoji > button:not(:disabled) {
+  color: #c9a7ff;
+  border-color: #aa79ed66;
+  background:
+    radial-gradient(ellipse 110% 80% at 40% -30%, #d4b7ff24, transparent 80%) padding-box,
+    linear-gradient(180deg, #231b2e, #100b17 44%, #050407 85%, #100b17) padding-box,
+    linear-gradient(145deg, #9977c6, #443151 40%, #694786) border-box;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .place-chat__emoji > button:not(:disabled):is(:hover, [aria-expanded="true"], :focus-visible) {
+  color: #e4d1ff;
+  border-color: #bd91ff99;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% -40%, #c49aff3d, transparent 85%) padding-box,
+    linear-gradient(180deg, #30213f, #180f23 44%, #0b0710 82%, #1a1025) padding-box,
+    linear-gradient(145deg, #b38bd9, #503364 40%, #8055a4) border-box;
+  box-shadow: inset 0 1px #e7d6ff35, inset 0 -1px #bd8aff3b, 0 0 12px #a56aff24, 0 2px 3px #000d;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer .place-chat__emoji > button:focus-visible { outline-color: #c49aff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__composer :is(button, .mw-emoticon-composer) {
+    transition: none;
+  }
+}
+
+/* Chat is blue; Invités is orange; Mixeur remains violet and Classe remains white. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-studio-panel__tabs > button[data-surface="guests"] {
+  --studio-tab-color: #ffb36e;
+  --studio-tab-face: linear-gradient(150deg, #ffbf8a12, transparent 50%) padding-box, linear-gradient(#2c211a, #100b08) padding-box, linear-gradient(140deg, #ba8c65, #59402b 65%, #906541) border-box;
+  --studio-tab-light: linear-gradient(90deg, transparent, #ef9344 30%, #ffd2a1 50%, #ef9344 70%, transparent);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-studio-panel__tabs > button[data-surface="guests"].is-active::after {
+  box-shadow: 0 -2px 7px #fda45a38;
+}
+
+/* One compact four-command Chat rail, shared by the six room presentations. */
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-columns: auto;
+  grid-auto-flow: row;
+  grid-template-rows: 32px;
+  height: 38px;
+  min-height: 38px;
+  gap: 0;
+  margin: 1px 4px 4px;
+  padding: 2px 3px;
+  border: 1px solid #363b43;
+  border-radius: 10px;
+  background: linear-gradient(#121519, #030405);
+  box-shadow: inset 0 1px #e1e9f214, inset 0 -1px #000, 0 2px 4px #000a;
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  min-width: 0;
+  height: 32px;
+  min-height: 32px;
+  gap: 5px;
+  padding: 0 3px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  color: #a4a9b3;
+  font: 600 10px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button svg {
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+  color: inherit;
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button span {
+  width: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button + button::before {
+  position: absolute;
+  inset: 8px auto 8px -1px;
+  width: 1px;
+  background: #e1e7f018;
+  content: "";
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button::after {
+  position: absolute;
+  inset: auto 14% 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #7db8ff, transparent);
+  box-shadow: 0 -2px 6px #4398ff38;
+  content: "";
+  opacity: 0;
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button.is-active {
+  color: #acd1ff;
+  background: radial-gradient(ellipse at 50% 110%, #5298ed21, transparent 80%);
+}
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button.is-active::after { opacity: 1; }
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button:hover { color: #e4f0ff; }
+.rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button:focus-visible { outline: 1px solid #85bcff; outline-offset: -2px; }
+
+.classe-chat-workspace__messages,
+.classe-chat-workspace__tool,
+.place-chat-workspace__body,
+.place-chat-workspace__messages,
+.place-chat-workspace__panel { min-height: 0; min-width: 0; overflow: hidden; }
+.classe-chat-workspace__messages[hidden],
+.place-chat-workspace__messages[hidden],
+.place-chat-workspace__panel[hidden] { display: none !important; }
+.classe-chat-workspace__tool { display: grid; grid-template-rows: auto minmax(0, 1fr); }
+.classe-chat-workspace__back {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+  gap: 4px;
+  min-height: 32px;
+  margin: 0 7px 3px;
+  padding: 0 5px;
+  border: 0;
+  background: transparent;
+  color: #c7cbd3;
+  font: 500 11px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+}
+.classe-chat-workspace__back svg { width: 14px; height: 14px; }
+.classe-chat-workspace__back:hover { color: #acd1ff; }
+.classe-chat-workspace__back:focus-visible { outline: 1px solid #85bcff; outline-offset: -1px; border-radius: 6px; }
+.classe-chat-workspace__tool-body { min-height: 0; overflow: auto; padding: 0 3px 8px; scrollbar-width: thin; scrollbar-color: #415165 transparent; }
+/* Chat blue is scoped to the Chat surface; reused gift tools keep their violet accent. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat :is(.classe-chat-workspace__tool-body, .place-chat-workspace).is-wave-tool-skin {
+  --wave-tool-accent: #86bdff;
+  --wave-tool-accent-rgb: 134, 189, 255;
+  --place-tool-accent: #86bdff;
+  --place-tool-accent-rgb: 134, 189, 255;
+}
+
+/* A softly crowned pinned plate, with a small blue pin. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis.is-chat .place-chat .place-chat__pinned {
+  position: relative;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin: 4px 4px 10px;
+  padding: 11px 12px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: var(--studio-convex-face);
+  box-shadow: var(--studio-convex-shadow);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__pinned > svg {
+  box-sizing: border-box;
+  width: 30px;
+  height: 34px;
+  padding: 7px;
+  border: 1px solid #6d9ed938;
+  border-radius: 8px;
+  background: linear-gradient(#17202a, #06080a);
+  box-shadow: inset 0 1px #b7d6fb1c, 0 2px 3px #000;
+  color: #7db8ff;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__pinned small { color: #82a7d4; font-size: 9px; font-weight: 550; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__pinned strong { font-size: 12px; font-weight: 550; line-height: 1.45; color: #edf0f5; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__messages { scrollbar-color: #365c8b66 transparent; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat:not(:has(> .place-chat__pinned)) { grid-template-rows: minmax(0, 1fr) auto; }
+
+/* Portalled picker: room-only opt-in leaves the standalone messaging wall unchanged. */
+.mw-emoticon-wall:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) {
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #59616d;
+  border-radius: 17px;
+  color: #f2f4f8;
+  background: radial-gradient(ellipse 110% 70px at 32% -28px, #b8c6d523, transparent 75%), linear-gradient(165deg, #14171c, #06080b 40%, #030405);
+  box-shadow: inset 0 1px #d9e3f02e, inset 0 -1px #000, 0 0 0 3px #020304c9, 0 18px 60px #000d;
+  backdrop-filter: blur(24px);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__header { grid-template-columns: 42px minmax(0, 1fr) 32px; gap: 10px; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__mark {
+  width: 40px;
+  height: 40px;
+  border-color: #747e8d42;
+  border-radius: 11px;
+  background: linear-gradient(#20242c, #06080c);
+  box-shadow: inset 0 1px #f4f8ff15, 0 3px 6px #000a;
+}
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__mark img { width: 34px; height: 34px; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__header small { display: none; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__header strong { font-size: 14px; line-height: 1.5; font-weight: 650; letter-spacing: -.02em; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__header em { color: #959da9; font-size: 10px; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__header > button { width: 32px; height: 32px; color: #b4bdcb; border: 1px solid #ffffff16; background: linear-gradient(#181b21, #05070a); }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__search { min-height: 38px; border-color: #444c5866; border-radius: 9px; background: #030508; box-shadow: inset 0 2px 5px #000; color: #a1a9b6; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__search input { font-size: 12px; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__search input::placeholder { color: #929ba9; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__search:focus-within { border-color: #b18ada; box-shadow: inset 0 2px 5px #000, 0 0 0 1px #bd8aff26; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__categories { gap: 6px; padding-bottom: 3px; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__categories button { min-height: 28px; padding: 5px 10px; border-radius: 7px; border-color: #7e879726; background: linear-gradient(#15191f, #090b0e); color: #abb2be; font-size: 10px; font-weight: 550; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__categories button.is-active { border-color: #ba8bea70; background: linear-gradient(#2a1e39, #120c1a); color: #dbc1ff; box-shadow: inset 0 1px #e1caff24; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) :is(.mw-emoticon-wall__categories button, .mw-emoticon-wall__header > button):is(:hover, :focus-visible) { border-color: #c093f299; background: linear-gradient(#30213f, #110b19); color: #e4d1ff; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; scrollbar-color: #6f798a #090b10; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__grid > button { min-height: 76px; padding: 6px 3px; border: 1px solid #b0bfda1a; border-radius: 10px; background: linear-gradient(160deg, #1a1f26, #0d1015 44%, #06080b); box-shadow: inset 0 1px #ecf2ff0c, 0 2px 3px #0007; color: #b5bdca; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__grid > button span { font-size: 9px; font-weight: 500; line-height: 1.3; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__grid > button:is(:hover, :focus-visible) { border-color: #bb8eed99; background: linear-gradient(160deg, #291d39, #100b17 75%); box-shadow: inset 0 1px #dfc5ff26, 0 0 12px #a366ec14, 0 3px 8px #0008; color: #e4ceff; transform: none; }
+:is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) button:focus-visible { outline: 1px solid #c49aff; outline-offset: -2px; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat),
+  :is(.mw-emoticon-wall--room-chat, .mw-emoticon-wall--classe-chat) .mw-emoticon-wall__grid > button { animation: none; transition: none; }
+}
+
+/* Reconciled Chat workspace: shared blue accent for editorial controls. */
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-tool-poll__duration-summary svg {
+  color: #86bdff;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace:has(> .place-chat-workspace__error) {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button.is-active > svg {
+  color: inherit;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace :is(.place-tool-card, .place-gift-tool__body):hover {
+  scrollbar-color: #365c8b transparent;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-chat-message-picker label:hover {
+  border-color: #73a0d788;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-chat-message-picker label.is-selected {
+  border-color: #73a0d7;
+  box-shadow: inset 0 0 16px #86bdff0c;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-chat-message-picker input {
+  accent-color: #86bdff;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-chat-poll__options > button:is(:hover, .is-active) {
+  border-color: #73a0d7;
+  background: #101821;
+}
+
+/* Narrow side panels keep full labels, including on a wide desktop viewport. */
+@container (max-width: 360px) {
+  .rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) {
+    grid-template-rows: 44px;
+    height: 48px;
+    min-height: 48px;
+    padding: 1px 3px;
+  }
+  .rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button {
+    height: 44px;
+    min-height: 44px;
+    flex-direction: column;
+    gap: 3px;
+    padding: 3px;
+    font: 600 10px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+  .rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button svg {
+    flex-basis: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Also supports older room layouts that do not establish a query container. */
+@media (max-width: 600px) {
+  .rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) {
+    grid-template-rows: 44px;
+    height: 48px;
+    min-height: 48px;
+    padding: 1px 3px;
+  }
+  .rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button {
+    height: 44px;
+    min-height: 44px;
+    flex-direction: column;
+    gap: 3px;
+    padding: 3px;
+    font: 600 9px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+  .rooms-page .place-room-shell[data-room-presentation] :is(.classe-chat-workspace, .place-chat-workspace) > :is(.place-tools-console__switch, .place-chat-workspace__nav) > button svg {
+    flex-basis: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+
+/* Chat accents also cover older message rows and gift controls. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__message.is-host {
+  border-color: #86bdff2e;
+  box-shadow: inset 2px 0 #86bdffd1, 0 8px 24px #081a221f;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__message.is-host header > strong {
+  color: #dceaff;
+  text-shadow: 0 0 13px #86bdff24;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__host-badge {
+  border-color: #86bdff57;
+  background: #4279bc33;
+  color: #bedaff;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__return-live {
+  border-color: #b57afa70;
+  background: #241337f0;
+  box-shadow: 0 10px 28px #0005, 0 0 18px #a35ee02e;
+  color: #efddff;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__return-live:hover {
+  border-color: #c99affaa;
+  background: #382052f5;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat__return-live:focus-visible {
+  outline: 2px solid #bf8dff;
+  outline-offset: 2px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-gift-tool__recipient-group button > i {
+  color: var(--wave-tool-accent);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-gift-tool__footer-selection:focus-visible {
+  outline-color: var(--wave-tool-accent);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-chat-workspace .place-gift-tool__steps li.is-current {
+  color: #d6e7ff;
+}

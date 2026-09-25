@@ -1,0 +1,58 @@
+.place-guest-quick-message {
+  width: min(360px, calc(100vw - 40px));
+  max-height: calc(100dvh - 40px);
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #6d5543;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #202026, #0a0a0e 65%);
+  color: #f3f2f8;
+  box-shadow: inset 0 1px #ffffff20, 0 18px 70px #000b;
+  font: 14px Inter, sans-serif;
+}
+.place-guest-quick-message::backdrop { background: #0008; }
+.place-guest-quick-message form { display: grid; gap: 16px; }
+.place-guest-quick-message header, .place-guest-quick-message footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.place-guest-quick-message header div, .place-guest-quick-message label { display: grid; gap: 8px; }
+.place-guest-quick-message small { font-size: 10px; letter-spacing: .12em; color: #ffb36e; }
+.place-guest-quick-message strong { font-size: 18px; }
+.place-guest-quick-message textarea { box-sizing: border-box; width: 100%; min-height: 110px; resize: vertical; padding: 12px; border: 1px solid #594331; border-radius: 10px; background: #08080c; color: inherit; font: inherit; }
+.place-guest-quick-message button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 12px; border: 1px solid #9b6741; border-radius: 9px; background: linear-gradient(#3b281b, #1b110a); color: inherit; cursor: pointer; }
+.place-guest-quick-message button svg { width: 16px; height: 16px; color: #ffb36e; }
+.place-guest-quick-message button:disabled { opacity: .45; cursor: default; }
+.place-guest-quick-message :is(button, textarea):focus-visible { outline: 2px solid #ffb36e; outline-offset: 3px; }
+.place-guest-quick-message p, .place-guest-quick-message footer span { margin: 0; font-size: 12px; line-height: 1.5; color: #bdb8cb; }
+.place-guest-quick-message [role=alert] { color: #f5a5b8; }
+.place-backstage-camera { width: min(480px, calc(100vw - 40px)); }
+.place-backstage-camera video { width: 100%; max-height: 50dvh; object-fit: contain; background: #000; border-radius: 10px; margin: 16px 0; }
+.place-backstage-camera > p { margin-top: 16px; }
+
+.room-quick-private-message__identity { display: flex; min-width: 0; align-items: center; gap: 10px; }
+.room-quick-private-message__identity > img { width: 40px; height: 40px; flex: 0 0 40px; border: 1px solid #55506d; border-radius: 50%; object-fit: cover; }
+.room-quick-private-message__identity > span { display: grid; min-width: 0; gap: 2px; }
+.room-quick-private-message__identity em { overflow: hidden; color: #aaa6b5; font-size: 11px; font-style: normal; text-overflow: ellipsis; white-space: nowrap; }
+.room-quick-private-message button:not(:disabled) { transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease, transform 90ms ease; }
+.room-quick-private-message button:is(:hover, :focus-visible):not(:disabled) { border-color: #9677b8; background: linear-gradient(#3b2b4e, #191220); box-shadow: inset 0 1px #ffffff24, 0 5px 16px #0007; transform: translateY(-1px); }
+.room-quick-private-message button:active:not(:disabled) { transform: translateY(0) scale(.985); }
+
+.room-quick-private-message.is-loge {
+  width: min(380px, calc(100vw - 32px));
+  padding: 17px;
+  border-color: rgba(232, 197, 100, .32);
+  border-radius: 15px;
+  background:
+    radial-gradient(80% 65% at 4% 0%, rgba(232, 197, 100, .075), transparent 58%),
+    linear-gradient(145deg, #151514, #050505 68%);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .11), 0 24px 80px #000d;
+}
+.room-quick-private-message.is-loge::backdrop { background: rgba(0, 0, 0, .76); backdrop-filter: blur(3px); }
+.room-quick-private-message.is-loge form { gap: 13px; }
+.room-quick-private-message.is-loge .room-quick-private-message__identity > img { border-color: rgba(232, 197, 100, .46); box-shadow: 0 0 0 3px rgba(232, 197, 100, .06); }
+.room-quick-private-message.is-loge small { color: rgba(232, 197, 100, .82); }
+.room-quick-private-message.is-loge strong { color: #f5f3ed; font-size: 16px; }
+.room-quick-private-message.is-loge textarea { min-height: 92px; border-color: rgba(218, 220, 225, .18); background: #030304; box-shadow: inset 0 1px 6px #000; }
+.room-quick-private-message.is-loge textarea:hover { border-color: rgba(232, 197, 100, .3); }
+.room-quick-private-message.is-loge button { border-color: rgba(218, 220, 225, .18); background: linear-gradient(180deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .015)), #090909; }
+.room-quick-private-message.is-loge button:is(:hover, :focus-visible):not(:disabled) { border-color: rgba(232, 197, 100, .48); background: linear-gradient(180deg, rgba(232, 197, 100, .15), rgba(232, 197, 100, .035)), #090908; box-shadow: inset 0 1px rgba(255, 255, 255, .13), 0 7px 18px #0009; }
+.room-quick-private-message.is-loge :is(button, textarea):focus-visible { outline-color: rgba(232, 197, 100, .82); }
+.room-quick-private-message.is-loge footer > button { color: #f6f2e7; }

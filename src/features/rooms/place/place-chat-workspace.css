@@ -1,0 +1,291 @@
+/* Shared chat actions: the Wave's black surfaces, one rail, one scroll owner. */
+.place-room-shell .place-chat-workspace.is-viewer-chat {
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+}
+.place-room-shell .place-chat-workspace.is-viewer-chat:has(> :is(.rooms-chat-poll-slot, .wave-chat-poll-preview)) {
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 6px;
+}
+.place-room-shell .place-chat-workspace {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  gap: 8px;
+  padding: 3px 6px 6px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-template-columns: none;
+  grid-template-rows: 38px;
+  gap: 0;
+  height: 42px;
+  min-height: 42px;
+  margin: 0;
+  padding: 2px 4px;
+  border: 1px solid rgba(221, 225, 232, .16);
+  border-radius: 12px;
+  background: linear-gradient(112deg, rgba(255, 255, 255, .035), transparent 40%), linear-gradient(#090a0b, #020203);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .1), 0 3px 8px #0006;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+  height: 38px;
+  padding: 0 5px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  color: #93929d;
+  font: 700 11px/1.15 Inter, sans-serif;
+  transition: color 140ms, background 140ms;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button > span {
+  display: block;
+  width: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button > svg {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button + button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  bottom: 11px;
+  width: 1px;
+  display: block;
+  background: #ffffff14;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #a3ccff, transparent);
+  box-shadow: 0 -2px 9px #70b0ff66;
+  opacity: 0;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button.is-active {
+  background: radial-gradient(ellipse at 50% 110%, #70b0ff14, transparent 70%);
+  color: #f8fbff;
+}
+
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button.is-active::after { opacity: 1; }
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button.is-active > svg { color: #a6ceff; }
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button:hover { color: #fff; background: #ffffff08; }
+.place-room-shell .place-chat-workspace > .place-tools-console__switch > button:focus-visible { outline: 1px solid #a6ceff; outline-offset: -2px; }
+
+.place-chat-workspace__body,
+.place-chat-workspace__panel {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.place-chat-workspace__panel[hidden] { display: none !important; }
+.place-chat-workspace .place-chat:not(:has(> .place-chat__pinned)) { grid-template-rows: minmax(0, 1fr) auto; }
+
+.place-room-shell .place-chat-workspace .place-tool-card {
+  position: relative;
+  box-sizing: border-box;
+  max-height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 14px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: var(--wave-tool-black-surface);
+  box-shadow: inset 0 1px #ffffff16, 0 4px 14px #0006;
+  scrollbar-width: thin;
+  scrollbar-color: #393a40 transparent;
+}
+
+.place-room-shell .place-chat-workspace .place-tool-card:hover { scrollbar-color: #70b0ff transparent; }
+.place-room-shell .place-chat-workspace .place-tool-card__header { grid-template-columns: 34px minmax(0, 1fr) auto; }
+.place-room-shell .place-chat-workspace .place-tool-card__glyph { width: 34px; height: 34px; }
+.place-room-shell .place-chat-workspace .place-tool-card__header strong { font-size: 16px; }
+.place-room-shell .place-chat-workspace .place-tool-card__header em { font-size: 11px; }
+.place-room-shell .place-chat-workspace .place-tool-card__footer { position: static; }
+
+.place-chat-message-picker { min-width: 0; margin: 0; padding: 0; border: 0; }
+.place-chat-message-picker legend { margin-bottom: 10px; color: #a5aab1; font-size: 11px; }
+.place-chat-message-picker > div { display: grid; gap: 7px; }
+.place-chat-message-picker label {
+  display: grid;
+  grid-template-columns: 14px 30px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ffffff16;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #17181a, #050506 62%);
+  cursor: pointer;
+  transition: border-color 150ms, background 150ms;
+}
+.place-chat-message-picker label:hover { border-color: #70b0ff88; }
+.place-chat-message-picker label.is-selected { border-color: #70b0ff; box-shadow: inset 0 0 16px #70b0ff0c; }
+.place-chat-message-picker input { width: 14px; height: 14px; margin: 0; accent-color: #89bcfa; }
+.place-chat-message-picker img { width: 30px; height: 30px; min-width: 30px; object-fit: cover; border-radius: 50%; }
+.place-chat-message-picker label > span { display: grid; min-width: 0; gap: 3px; }
+.place-chat-message-picker strong { color: #eff2f5; font-size: 12px; }
+.place-chat-message-picker label > span > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: #a4a9af; font-size: 12px; line-height: 1.4; }
+.place-chat-poll__options { display: grid; gap: 8px; }
+.place-chat-poll__options > button { display: flex; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid #ffffff26; border-radius: 10px; background: #0d0d10; color: #eaeef2; }
+.place-chat-poll__options > button:is(:hover, .is-active) { border-color: #89bcfa; background: #12171e; }
+.place-chat-poll__options > button:disabled { cursor: default; }
+
+/* The catalogue owns its scroll area; the action footer never covers a card. */
+.place-room-shell .place-chat-workspace .place-gift-tool__form[data-step="0"] .place-gift-tool__body {
+  align-content: start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #393a40 transparent;
+}
+.place-room-shell .place-chat-workspace .place-gift-tool__body:hover { scrollbar-color: #70b0ff transparent; }
+
+@container (max-width: 360px) {
+  .place-room-shell .place-chat-workspace > .place-tools-console__switch { grid-template-rows: 44px; height: 48px; min-height: 48px; }
+  .place-room-shell .place-chat-workspace > .place-tools-console__switch > button { height: 44px; flex-direction: column; gap: 3px; font-size: 10px; padding: 3px; }
+  .place-room-shell .place-chat-workspace > .place-tools-console__switch > button > svg { flex-basis: 15px; width: 15px; height: 15px; }
+}
+
+.place-chat-workspace:has(> .place-chat-workspace__error) { grid-template-rows: auto auto minmax(0, 1fr); }
+.place-chat-workspace__error { margin: 0; padding: 8px 12px; color: #f6b5b9; font-size: 12px; }
+.place-room-shell .place-chat-workspace .place-chat-editorial-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.place-room-shell .place-chat-workspace .place-chat-editorial-actions button { min-width: 0; padding: 10px 8px; font-size: 11px; }
+
+.place-room-shell .place-chat-workspace.is-gift-only { grid-template-rows: minmax(0, 1fr); }
+.place-room-shell .place-chat-workspace.is-gift-only:has(> .place-chat-workspace__error) { grid-template-rows: auto minmax(0, 1fr); }
+.place-room-shell .place-chat-workspace.is-gift-only .place-chat-workspace__panel { overflow-y: auto; }
+.place-room-shell .place-chat-workspace.is-viewer-chat .place-chat-workspace__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 58px;
+  gap: 6px;
+}
+.place-room-shell .place-chat-social-actions {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  padding: 6px 3px;
+  border: 1px solid #ffffff1c;
+  border-radius: 12px;
+  background: linear-gradient(165deg, #24252a, #101114 48%, #08090b);
+  box-shadow: inset 0 1px #ffffff18;
+}
+.place-room-shell .place-chat-social-actions .shorts-reactions {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 6px;
+}
+.place-room-shell .place-chat-social-actions .shorts-reaction,
+.place-room-shell .place-chat-social-actions__support {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 5px 2px;
+  border: 1px solid #ffffff20;
+  border-radius: 9px;
+  background: linear-gradient(#28292e, #131417);
+  color: #e2dce8;
+  box-shadow: inset 0 1px #ffffff14;
+  cursor: pointer;
+}
+.place-room-shell .place-chat-social-actions .shorts-reaction:hover,
+.place-room-shell .place-chat-social-actions__support:hover {
+  border-color: #b186d988;
+  background: linear-gradient(#33293c, #1b1522);
+}
+.place-room-shell .place-chat-social-actions .shorts-reaction--like.is-active { color: #ff92b5; }
+.place-room-shell .place-chat-social-actions .shorts-reaction--golden { color: #f2ca67; }
+.place-room-shell .place-chat-social-actions .shorts-reaction:disabled,
+.place-room-shell .place-chat-social-actions__support:disabled { cursor: default; opacity: .55; }
+.place-room-shell .place-chat-social-actions :is(.shorts-reaction, .place-chat-social-actions__support):focus-visible {
+  outline: 2px solid #b886f0;
+  outline-offset: 2px;
+}
+.place-room-shell .place-chat-social-actions .shorts-reaction__icon,
+.place-room-shell .place-chat-social-actions .shorts-reaction__icon svg,
+.place-room-shell .place-chat-social-actions__support > svg { width: 19px; height: 19px; }
+.place-room-shell .place-chat-social-actions .shorts-reaction__count { font-size: 10px; }
+.place-room-shell .place-chat-social-actions__support {
+  position: relative;
+  margin-top: auto;
+  color: #e9cf93;
+}
+.place-room-shell .place-chat-social-actions__support small {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  display: grid;
+  min-width: 16px;
+  height: 16px;
+  place-items: center;
+  border-radius: 99px;
+  background: #e1bb70;
+  color: #15120c;
+  font: 700 10px/1 Inter, sans-serif;
+}
+.place-feature-overview { margin: 8px; padding: 14px; border: 1px solid transparent; border-radius: 14px; background: var(--wave-tool-black-surface); }
+.place-feature-overview header > span { display: grid; gap: 5px; }
+.place-feature-overview header small { font-size: 10px; color: #a3a1ab; letter-spacing: .08em; }
+.place-feature-overview header strong { font-size: 17px; color: #f5f3f8; }
+.place-feature-overview header em { font-size: 12px; font-style: normal; color: #98969f; }
+.place-feature-overview > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+.place-feature-overview article { display: flex; align-items: center; gap: 10px; padding: 12px 8px; border: 1px solid #ffffff15; border-radius: 10px; background: #070708; }
+.place-feature-overview article svg { width: 18px; height: 18px; color: #aba9b4; }
+.place-feature-overview article span { display: grid; gap: 3px; }
+.place-feature-overview article strong { font-size: 20px; color: #f5f3f8; }
+.place-feature-overview article small { color: #929098; font-size: 10px; }
+
+/* The number of room-specific tabs varies after moving shared actions to Chat. */
+.place-room-shell .place-studio-panel.is-tools .room-tools-shell .place-tools-console__switch {
+  grid-template-columns: none;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+}
+
+@media (max-width: 600px) {
+  .place-room-shell .place-chat-workspace > .place-tools-console__switch > button { flex-direction: column; gap: 3px; font-size: 9px; }
+  .place-room-shell .place-chat-workspace > .place-tools-console__switch > button > svg { width: 14px; height: 14px; flex-basis: 14px; }
+}

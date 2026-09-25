@@ -1,0 +1,508 @@
+/*
+ * Cage portrait duel
+ * ------------------
+ * This composition is selected only when the two current competitors expose
+ * 9:16 sources. Every decorative layer is CSS/SVG; the camera streams remain
+ * uncropped and are never used as decorative textures.
+ */
+
+.cage-stage-feed__portrait-identity,
+.cage-stage-feed__portrait-live,
+.cage-stage-feed__portrait-metrics {
+  display: none;
+}
+
+@media (min-width: 761px) {
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel {
+    --portrait-left-rgb: 66, 132, 255;
+    --portrait-right-rgb: 151, 87, 255;
+    background:
+      radial-gradient(ellipse at 28% 48%, rgba(var(--portrait-left-rgb), 0.035), transparent 30%),
+      radial-gradient(ellipse at 72% 48%, rgba(var(--portrait-right-rgb), 0.03), transparent 30%),
+      linear-gradient(180deg, #06070c, #030408);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel::before {
+    display: none;
+    content: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel::after {
+    z-index: 8;
+    background:
+      linear-gradient(180deg, rgba(2, 3, 8, 0.12), transparent 16%, transparent 70%, rgba(2, 3, 8, 0.56)),
+      radial-gradient(ellipse at center, transparent 60%, rgba(1, 2, 6, 0.34) 100%);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-grid {
+    z-index: 3;
+    inset: clamp(6px, 0.55cqw, 8px) clamp(24px, 5.2cqw, 76px);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(70px, 10cqw, 142px);
+    overflow: visible;
+    background: transparent;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-grid::after {
+    display: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed {
+    --portrait-feed-rgb: var(--portrait-left-rgb);
+    --portrait-feed-radius: clamp(16px, 1.65cqw, 22px);
+    position: relative;
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    aspect-ratio: 9 / 16;
+    align-self: center;
+    justify-self: start;
+    overflow: visible;
+    border: 1px solid rgba(var(--portrait-feed-rgb), 0.55);
+    border-radius: var(--portrait-feed-radius);
+    background: #03040a;
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 0 18px rgba(var(--portrait-feed-rgb), 0.08);
+    transition: border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-b {
+    --portrait-feed-rgb: var(--portrait-right-rgb);
+    justify-self: end;
+  }
+
+  /* The feed owns the only stroke; its media clips independently so the
+     external identity callouts remain visible. */
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed::before,
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed::after {
+    display: none;
+    content: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-live {
+    border-color: rgba(var(--portrait-feed-rgb), 0.72);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(var(--portrait-feed-rgb), 0.12);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-winner {
+    border-color: rgba(245, 207, 120, 0.78);
+    box-shadow:
+      0 24px 62px rgba(0, 0, 0, 0.52),
+      0 0 34px rgba(245, 207, 120, 0.17);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__media {
+    inset: 0;
+    width: auto !important;
+    height: auto !important;
+    overflow: hidden;
+    border-radius: calc(var(--portrait-feed-radius) - 1px);
+    background: #03040a !important;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__media > .place-stage-layout__tile,
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed .place-camera__media-frame {
+    overflow: hidden;
+    border-radius: inherit !important;
+    background: #03040a !important;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed .place-camera__media {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    background: #03040a !important;
+    filter: saturate(0.98) contrast(1.02) brightness(0.94);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-live .place-camera__media {
+    filter: saturate(1.035) contrast(1.03) brightness(0.99);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__shade {
+    z-index: 10;
+    inset: 0;
+    border-radius: calc(var(--portrait-feed-radius) - 1px);
+    background:
+      linear-gradient(180deg, rgba(2, 3, 8, 0.4), transparent 17%, transparent 70%, rgba(2, 3, 8, 0.62)),
+      linear-gradient(90deg, rgba(2, 3, 8, 0.08), transparent 22% 78%, rgba(2, 3, 8, 0.12));
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity {
+    position: absolute;
+    z-index: 20;
+    top: clamp(28px, 3.2cqw, 44px);
+    left: calc(100% + clamp(10px, 1.2cqw, 18px));
+    display: grid;
+    width: clamp(142px, 12cqw, 180px);
+    min-width: 0;
+    max-width: none;
+    min-height: clamp(45px, 4.7cqw, 62px);
+    align-content: center;
+    justify-items: start;
+    gap: 6px;
+    padding: 10px 12px 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #e8eaf1;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    text-align: left;
+    box-shadow: none;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity::before {
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    width: 16px;
+    height: 1px;
+    background: rgba(var(--portrait-feed-rgb), 0.7);
+    content: "";
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity:hover {
+    border-color: rgba(var(--portrait-feed-rgb), 0.2);
+    background: rgba(var(--portrait-feed-rgb), 0.055);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-b .cage-stage-feed__portrait-identity {
+    right: calc(100% + clamp(10px, 1.2cqw, 18px));
+    left: auto;
+    justify-items: end;
+    padding-right: 20px;
+    padding-left: 12px;
+    text-align: right;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-b .cage-stage-feed__portrait-identity::before {
+    right: -8px;
+    left: auto;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity:focus-visible {
+    outline: 2px solid rgba(var(--portrait-feed-rgb), 0.95);
+    outline-offset: 3px;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity strong {
+    overflow: hidden;
+    width: 100%;
+    color: #e8eaf1;
+    font-size: clamp(13px, 1.35cqw, 19px);
+    font-weight: 650;
+    letter-spacing: 0.025em;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity small {
+    overflow: hidden;
+    width: 100%;
+    color: rgba(var(--portrait-feed-rgb), 0.9);
+    font-size: clamp(7px, 0.67cqw, 9px);
+    font-weight: 550;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-live {
+    position: absolute;
+    z-index: 21;
+    top: clamp(18px, 1.8cqw, 25px);
+    right: clamp(16px, 1.65cqw, 23px);
+    display: inline-flex;
+    min-height: clamp(22px, 2.15cqw, 29px);
+    align-items: center;
+    gap: 5px;
+    padding: 0 clamp(7px, 0.75cqw, 10px);
+    border: 1px solid rgba(255, 119, 145, 0.25);
+    border-radius: 6px;
+    background: rgba(8, 7, 13, 0.78);
+    color: rgba(255, 236, 241, 0.9);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+    font-size: clamp(6px, 0.61cqw, 8px);
+    font-weight: 880;
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(12px);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-live > i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ff637f;
+    box-shadow: 0 0 9px rgba(255, 99, 127, 0.88);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-metrics {
+    position: absolute;
+    z-index: 20;
+    bottom: clamp(17px, 1.8cqw, 25px);
+    left: clamp(17px, 1.8cqw, 25px);
+    display: flex;
+    align-items: center;
+    gap: clamp(13px, 1.45cqw, 20px);
+    color: rgba(255, 255, 255, 0.92);
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8));
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-metrics > span {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 2px 5px;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-metrics svg {
+    width: clamp(15px, 1.5cqw, 20px);
+    height: clamp(15px, 1.5cqw, 20px);
+    grid-row: 1 / span 2;
+    stroke-width: 1.8;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-a .cage-stage-feed__portrait-metrics > span:last-child svg {
+    color: rgb(var(--portrait-left-rgb));
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-b .cage-stage-feed__portrait-metrics > span:last-child svg {
+    color: rgb(var(--portrait-right-rgb));
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-metrics b {
+    font-size: clamp(8px, 0.82cqw, 11px);
+    font-weight: 850;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-metrics small {
+    grid-column: 2;
+    color: rgba(238, 230, 248, 0.58);
+    font-size: clamp(5px, 0.5cqw, 7px);
+    font-weight: 720;
+    line-height: 1;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis {
+    position: absolute;
+    z-index: 18;
+    top: clamp(6px, 0.55cqw, 8px);
+    bottom: clamp(6px, 0.55cqw, 8px);
+    left: 50%;
+    display: grid;
+    width: clamp(96px, 20cqw, 320px);
+    place-items: center;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis::before {
+    display: none;
+    content: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis::after {
+    position: absolute;
+    top: 22%;
+    bottom: 22%;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(148, 163, 190, 0.14) 28%, rgba(148, 163, 190, 0.14) 72%, transparent);
+    content: "";
+    transform: translateX(-50%);
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis > i {
+    display: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis > b {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    width: clamp(38px, 3.8cqw, 50px);
+    height: clamp(38px, 3.8cqw, 50px);
+    place-items: center;
+    border: 1px solid rgba(167, 181, 207, 0.18);
+    border-radius: 12px;
+    background: linear-gradient(145deg, #12151d, #090b11);
+    color: #dce1eb;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(13px, 1.3cqw, 17px);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    text-shadow: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis > b::before,
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis > b::after {
+    display: none;
+    content: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__footer {
+    display: none;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .place-stage.is-cage-stage:not(.is-viewer-stage):has(.cage-stage-program.is-portrait-duel) > .place-stage__controls,
+  .place-room-experience[data-room-presentation="cage"] .place-stage.is-cage-stage:not(.is-viewer-stage):has(.cage-stage-program.is-portrait-duel):not(.is-controls-visible):not(:focus-within) > .place-stage__controls {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%);
+  }
+
+  @container (max-width: 1450px) {
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity {
+      top: 16%;
+      left: calc(100% + 8px);
+      width: 120px;
+      min-height: 46px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-b .cage-stage-feed__portrait-identity {
+      top: 28%;
+      right: calc(100% + 8px);
+      left: auto;
+    }
+  }
+
+  @container (max-width: 820px) {
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-grid {
+      inset: 8px 12px;
+      gap: clamp(44px, 8cqw, 62px);
+      padding-inline: 0;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed {
+      height: 100%;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis {
+      top: 8px;
+      bottom: 8px;
+      width: clamp(64px, 16cqw, 116px);
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity {
+      left: calc(100% + 5px);
+      width: 92px;
+      min-width: 0;
+      max-width: none;
+      min-height: 42px;
+      padding-right: 11px;
+      padding-left: 20px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-b .cage-stage-feed__portrait-identity {
+      right: calc(100% + 5px);
+      left: auto;
+      padding-right: 20px;
+      padding-left: 11px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity strong {
+      font-size: 12px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-live {
+      min-height: 21px;
+      padding-inline: 6px;
+      font-size: 5.5px;
+    }
+  }
+
+  @container (max-width: 620px) {
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-grid {
+      inset: 26px 12px 65px;
+      gap: 38px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed {
+      --portrait-feed-radius: 14px;
+      height: 74%;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-identity {
+      top: 12px;
+      left: 11px;
+      min-width: 92px;
+      max-width: calc(100% - 50px);
+      min-height: 36px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-live {
+      top: 13px;
+      right: 11px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-metrics {
+      bottom: 13px;
+      left: 13px;
+      gap: 9px;
+    }
+
+    .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-program__duel-axis {
+      width: 46px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 761px) {
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed.is-live {
+    animation: cage-portrait-feed-live 2.8s ease-in-out infinite;
+  }
+
+  .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-portrait-duel .cage-stage-feed__portrait-live > i {
+    animation: cage-portrait-live-dot 1.7s ease-in-out infinite;
+  }
+}
+
+@keyframes cage-portrait-feed-live {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.025); }
+}
+
+@keyframes cage-portrait-live-dot {
+  0%, 100% { opacity: 0.62; transform: scale(0.86); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* A compact persistent victory count stays on the artist's video between duels. */
+.cage-stage-program .cage-stage-feed > .cage-stage-feed__battle-wins {
+  position: absolute;
+  z-index: 22;
+  right: 14px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 25px;
+  padding: 3px 8px;
+  border: 1px solid #ffffff40;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #292c32e8, #08090cf0 65%);
+  color: #f5f6fa;
+  box-shadow: inset 0 1px #ffffff24, 0 2px 7px #0008;
+  font: 650 12px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.cage-stage-program .cage-stage-feed > .cage-stage-feed__battle-wins > svg { width: 14px; height: 14px; }

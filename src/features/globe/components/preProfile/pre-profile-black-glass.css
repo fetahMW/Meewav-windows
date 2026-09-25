@@ -1,0 +1,110 @@
+/* Material only: original content styles own dimensions, spacing and type sizes. */
+.mw-hover-preprofile-bubble__shell.is-black-glass .mw-preprofile {
+  --mw-visitor-line: #aab6ca20;
+  --mw-visitor-line-strong: #aab6ca40;
+  --mw-visitor-muted: #969eac;
+  --pp-key:
+    linear-gradient(180deg, #ffffff0e, transparent 3px) padding-box,
+    linear-gradient(165deg, #191c22, #08090c 42%, #020304) padding-box,
+    linear-gradient(125deg, #626a77, #282d37 24%, #171b23 68%, #3b424e) border-box;
+  --pp-key-shadow: inset 0 1px #e8efff14, inset 0 -1px #000, 0 2px 4px #0006;
+  color: #e8ebf2;
+
+  & .mw-preprofile__portrait-shell {
+    border-color: transparent;
+    background: linear-gradient(#080a0e, #080a0e) padding-box, linear-gradient(145deg, #bac6d8, #303847 45%, #65738a) border-box;
+    box-shadow: 0 0 0 3px #080a0e, 0 0 0 4px #a2b4cc16, 0 6px 15px #0007;
+  }
+  & .mw-preprofile__name { text-shadow: none; color: #f0f2f7; }
+  & .mw-preprofile__role { color: #abb2c0; }
+  & .mw-preprofile__meta { color: #858e9d; }
+  & .mw-preprofile__location-inline svg, & .mw-preprofile__followers-inline svg { color: #a5b1c7; }
+  & .mw-preprofile__button,
+  & .mw-preprofile__contact-button,
+  & .mw-preprofile__collab-button {
+    border: 1px solid transparent; border-radius: 10px;
+    background: var(--pp-key); box-shadow: var(--pp-key-shadow);
+    color: #dfe4ef;
+  }
+  & .mw-preprofile__button:not(.is-active):hover,
+  & .mw-preprofile__contact-button:hover,
+  & .mw-preprofile__collab-button:hover {
+    border-color: #aebcd248; background: var(--pp-key);
+    box-shadow: inset 0 1px #e8efff26, 0 0 10px #a8b7d00b; color: #fff;
+  }
+  & .mw-preprofile__button--primary.is-active {
+    background:
+      radial-gradient(ellipse at 24% -18%, #f4dfff9c, transparent 62%),
+      radial-gradient(ellipse at 65% 120%, #a665ffd9, transparent 65%),
+      linear-gradient(165deg, #7144ad, #3b176a 43%, #210b42 76%, #6532a4);
+    border-color: #d5b0ffba;
+    box-shadow: inset 0 1px 1px #f2dcff9c, inset 0 -1px 2px #c38aff8c,
+      inset 0 0 10px #ba81ff45, 0 0 12px #a252ff70, 0 2px 5px #0008;
+    color: #f4e8ff;
+  }
+  & .mw-preprofile__button--primary.is-active svg { filter: drop-shadow(0 0 4px #ddb1ffb3); }
+  & .mw-preprofile__pin {
+    border: 1px solid #a8b6ca20;
+    border-radius: 11px; background: linear-gradient(150deg, #171b22a6, #080a0ee6);
+    box-shadow: inset 0 1px #d3ddef09;
+  }
+  & .mw-preprofile__pin strong { color: #c5cbd7; }
+  & .mw-preprofile__pin small { color: #7f8897; }
+  & .mw-preprofile__bio { border-color: #a3b4cd16; }
+  & .mw-preprofile__bio p { color: #afb6c4; }
+  & .mw-preprofile__tabs {
+    border: 1px solid #a9b6cb29;
+    border-radius: 10px; background: linear-gradient(#171a20, #040507 66%);
+    box-shadow: inset 0 1px #d7e0ee0b;
+  }
+  & .mw-preprofile__tabs button { color: #818b9d; border-radius: 7px; }
+  & .mw-preprofile__tabs button.is-active {
+    color: #e5ddf4; background: linear-gradient(#30253970, #100c19b3);
+    box-shadow: inset 0 1px #d5b8ff12;
+  }
+  & .mw-preprofile__tabs button::after { height: 1px; background: #bc96f7; box-shadow: 0 0 5px #b991f760; }
+  & .mw-preprofile__overview-card,
+  & .mw-preprofile__overview-audio-card,
+  & .mw-preprofile__audio-card,
+  & .mw-preprofile__audio-card.is-cyan,
+  & .mw-preprofile__audio-cover-card {
+    border: 1px solid #a7b6ce24; border-radius: 11px;
+    background: radial-gradient(ellipse at 15% -30%, #a1b4d42b, transparent 65%), linear-gradient(145deg, #171c25, #080a10 62%, #0c1018);
+    box-shadow: inset 0 1px #d5e1f90c;
+  }
+  & .mw-preprofile__overview-card::before { display: none; }
+  & .mw-preprofile__overview-play,
+  & .mw-preprofile__overview-audio-play,
+  & .mw-preprofile__audio-play,
+  & .mw-preprofile__audio-cover-play {
+    border: 1px solid #a8bbd447; background: var(--pp-key);
+    color: #c9d4e9; box-shadow: inset 0 1px #d5e3ff21, 0 2px 6px #0004;
+  }
+  & .is-playing .mw-preprofile__overview-audio-play,
+  & .is-playing .mw-preprofile__audio-play,
+  & .is-playing .mw-preprofile__audio-cover-play {
+    color: #d7b8ff; border-color: #c19aed78;
+    background: radial-gradient(ellipse at 50% 100%, #9860e149, transparent 70%), #17101f;
+    box-shadow: inset 0 1px #e8c4ff33, 0 0 12px #aa70eb30;
+  }
+  & .mw-preprofile__overview-audio-head strong,
+  & .mw-preprofile__overview-copy strong,
+  & .mw-preprofile__audio-copy strong { color: #d4dceb; }
+  & .mw-preprofile__overview-wave i, & .mw-preprofile__wave i { background: #a5b3cf; opacity: .65; }
+  & .mw-preprofile__footer { border-color: #a4b5cf18; }
+  & .mw-preprofile__collab-button::before { display: none; }
+  & .mw-preprofile__collab-icon {
+    border-radius: 9px;
+    border: 1px solid #b29ad03b; background: linear-gradient(#372b43, #100d17);
+    box-shadow: inset 0 1px #d1b8ee20; color: #bda2dc;
+  }
+  & .mw-preprofile__collab-copy strong { color: #e0dce9; }
+  & .mw-preprofile__collab-copy small { color: #868392; }
+  & .mw-collaboration-composer-shell, & .mw-collaboration-composer {
+    background: linear-gradient(155deg, #14181f, #030406 40%); border-color: #96a7c136;
+  }
+  & .mw-collaboration-composer__header, & .mw-collaboration-composer__message,
+  & .mw-collaboration-composer__footer { background: #090c11; border-color: #96a7c120; }
+  & .mw-collaboration-composer__title strong { color: #e3e7f0; }
+  & button:focus-visible, & [role="button"]:focus-visible { outline-color: #bdcde8; }
+}

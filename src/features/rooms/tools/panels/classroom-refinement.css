@@ -1,0 +1,526 @@
+/* La Classe — blue optical glass. Reflections are static paint layers: the
+   roster needs no per-card backdrop blur or continuously animated filters. */
+.room-tools-shell.is-classe .room-tool-panel.is-classroom {
+  container: classroom / size;
+  /* An opaque inner layer keeps the border gradient on the rim. */
+  --classroom-seat-surface: linear-gradient(155deg, #142238, #080f19 64%, #0d1a2b);
+  --classroom-dock-surface:
+    linear-gradient(160deg, rgba(159, 181, 229, .085), transparent 45%) padding-box,
+    linear-gradient(180deg, #10141d, #080b11) padding-box,
+    linear-gradient(125deg, rgba(177, 196, 232, .24), rgba(127, 149, 192, .07) 55%, rgba(127, 149, 192, .13)) border-box;
+  --classroom-dock-control:
+    linear-gradient(150deg, rgba(194, 207, 240, .07), transparent 62%),
+    linear-gradient(180deg, #181e2a, #0f141e);
+  --classroom-dock-control-shadow: inset 0 1px rgba(224, 232, 255, .08), 0 2px 4px rgba(0, 0, 0, .18);
+  gap: 8px;
+  padding: 5px 8px 8px;
+  background:
+    radial-gradient(ellipse 55% 35% at 100% 5%, rgba(40, 70, 135, .19), transparent 80%),
+    radial-gradient(ellipse 52% 28% at 0% 90%, rgba(38, 76, 124, .13), transparent 80%),
+    #030911;
+  color: #edf2fc;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.room-tools-shell.is-classe .is-classroom .classroom-roster { padding: 2px 1px 1px; }
+.room-tools-shell.is-classe .is-classroom .classroom-seats { gap: 5px; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat {
+  container-type: size;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse 110% 50% at 2% 0%, rgba(144, 179, 239, .08), transparent 68%) padding-box,
+    radial-gradient(ellipse 34% 80% at 100% 100%, rgba(93, 145, 222, .09), transparent 75%) padding-box,
+    var(--classroom-seat-surface) padding-box,
+    linear-gradient(145deg, rgba(160, 196, 255, .52), rgba(76, 115, 169, .12) 36%, rgba(17, 41, 70, .14) 65%, rgba(110, 165, 234, .44)) border-box;
+  box-shadow:
+    inset 0 1px 1px rgba(205, 226, 255, .07),
+    inset 1px 0 1px rgba(122, 170, 236, .04),
+    inset 0 -1px 1px rgba(115, 166, 239, .2),
+    0 2px 5px rgba(0, 0, 0, .36);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transform: none;
+  transition: box-shadow 140ms ease, border-color 140ms ease;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 70% 5% at 32% 0%, rgba(191, 216, 255, .2), transparent),
+    radial-gradient(ellipse 8% 60% at 100% 80%, rgba(130, 172, 237, .14), transparent);
+  content: "";
+  pointer-events: none;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat:is(:hover, :focus-within) {
+  border: 1px solid rgba(145, 186, 247, .46);
+  box-shadow:
+    inset 0 1px 2px rgba(204, 228, 255, .22),
+    inset 0 0 13px rgba(104, 159, 241, .12),
+    0 2px 6px rgba(0, 0, 0, .36);
+  transform: none;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-selected {
+  border: 1px solid rgba(159, 200, 255, .78);
+  background:
+    radial-gradient(ellipse at 70% -12%, rgba(111, 171, 255, .28), transparent 72%),
+    var(--classroom-seat-surface);
+  box-shadow: inset 0 1px 2px rgba(218, 235, 255, .32), inset 0 0 16px rgba(83, 146, 237, .16), 0 0 8px rgba(79, 142, 240, .2);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transform: none;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__person {
+  gap: 4px;
+  padding: 4px 5px;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__person:focus-visible {
+  outline: 2px solid #adc6ff;
+  outline-offset: -2px;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__person:hover:not(:disabled):not(:focus-visible) {
+  outline: none;
+  background: transparent;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__avatar,
+.room-tools-shell.is-classe .is-classroom .classroom-seat__empty > span {
+  --portrait-size: min(40cqi, clamp(20px, calc(100cqh - 26px), 50px));
+  width: var(--portrait-size);
+  height: var(--portrait-size);
+  flex-basis: var(--portrait-size);
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  box-shadow: none;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat .classroom-seat__portrait {
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(164, 195, 237, .08), 0 1px 3px rgba(0, 0, 0, .25);
+  isolation: isolate;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__portrait > img {
+  transform: scale(var(--portrait-crop, 1));
+  transform-origin: var(--portrait-origin, 50% 50%);
+}
+/* These existing demo images include room backgrounds. Reframe just those
+   assets; real member profile images retain their original framing. */
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-02.webp"] { --portrait-crop: 1.55; --portrait-origin: 53% 43%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-03.webp"] { --portrait-crop: 1.7; --portrait-origin: 40% 41%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-04.webp"] { --portrait-crop: 1.55; --portrait-origin: 56% 43%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-06.webp"] { --portrait-crop: 1.65; --portrait-origin: 43% 45%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-07.webp"] { --portrait-crop: 1.7; --portrait-origin: 50% 40%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-14.webp"] { --portrait-crop: 1.65; --portrait-origin: 54% 39%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-16.webp"] { --portrait-crop: 1.6; --portrait-origin: 62% 39%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-17.webp"] { --portrait-crop: 1.65; --portrait-origin: 47% 37%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-18.webp"] { --portrait-crop: 1.5; --portrait-origin: 54% 38%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-20.webp"] { --portrait-crop: 1.55; --portrait-origin: 59% 37%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-35.webp"] { --portrait-crop: 1.25; --portrait-origin: 53% 47%; }
+.room-tools-shell.is-classe .is-classroom img[src$="/profile-38.webp"] { --portrait-crop: 1.55; --portrait-origin: 50% 37%; }
+
+.room-tools-shell.is-classe .is-classroom .classroom-seat__identity { gap: 0; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__person strong {
+  color: #edf3ff;
+  font-size: clamp(9px, 10cqi, 10px);
+  font-weight: 560;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-selected strong { color: #fff; text-shadow: none; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__number {
+  top: 6px;
+  left: 6px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #819bc0;
+  font-size: 8px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: .02em;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-selected .classroom-seat__number { color: #b9ceff; background: transparent; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal {
+  top: 5px;
+  right: 5px;
+  width: clamp(19px, 24cqi, 24px);
+  height: clamp(19px, 24cqi, 24px);
+  border: 1px solid rgba(190, 145, 251, .38);
+  border-radius: 7px;
+  background: radial-gradient(ellipse at 25% 0%, rgba(201, 164, 255, .2), transparent 75%), linear-gradient(145deg, #36274a, #211833);
+  color: #d6a5ff;
+  box-shadow: inset 0 1px rgba(237, 217, 255, .14), inset 0 0 8px rgba(155, 97, 245, .14), 0 0 6px rgba(166, 102, 240, .14);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal svg,
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal .classroom-raised-hand-glyph {
+  width: 12px;
+  height: 12px;
+  stroke-width: 1.7;
+  transform: none;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal.is-speaking {
+  border-color: rgba(80, 229, 203, .4);
+  background: radial-gradient(ellipse at 25% 0%, rgba(102, 255, 232, .18), transparent 75%), linear-gradient(145deg, #104740, #0c292c);
+  color: #52edd7;
+  box-shadow: inset 0 1px rgba(159, 255, 235, .2), inset 0 0 7px rgba(37, 205, 176, .17), 0 0 8px rgba(27, 221, 187, .18);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal.is-private {
+  border-color: rgba(123, 164, 255, .24);
+  background: #203863;
+  color: #a6c4ff;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal:is(.is-muted, .is-disconnected) {
+  border-color: rgba(225, 119, 150, .35);
+  background: radial-gradient(ellipse at 25% 0%, rgba(229, 146, 172, .12), transparent 75%), linear-gradient(145deg, #3b2b3b, #1e1d2c);
+  color: #ec789b;
+  box-shadow: inset 0 1px rgba(246, 177, 198, .12), 0 0 6px rgba(214, 79, 129, .08);
+}
+
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock {
+  min-height: 52px;
+  gap: 0;
+  padding: 3px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse 85% 42% at 36% -12%, #ffffff24, transparent 76%) padding-box,
+    linear-gradient(112deg, #ffffff0b, transparent 25%, transparent 76%, #ffffff04) padding-box,
+    linear-gradient(180deg, #252627 0%, #111213 12%, #050505 36%, #010101 68%, #080909 91%, #141516 100%) padding-box,
+    linear-gradient(125deg, #d4d5d699, #66686966 22%, #24262780 52%, #85878880 84%, #c0c2c380) border-box;
+  box-shadow:
+    inset 0 1px 1px #ffffff38,
+    inset 1px 0 2px #ffffff12,
+    inset -1px 0 2px #ffffff0a,
+    inset 0 -2px 3px #000,
+    0 1px 0 #000,
+    0 3px 0 #020202,
+    0 7px 14px #0009;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button {
+  min-height: 44px;
+  gap: 0;
+  padding: 0;
+  color: #a5b8d6;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: -.015em;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button > span { display: none; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button > svg {
+  width: 20px;
+  height: 20px;
+  padding: 8px 10px;
+  border: 1px solid #bfc0c13d;
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse at 23% -8%, #ffffff26, transparent 65%),
+    linear-gradient(160deg, #303132, #101112 34%, #030303 72%, #111213);
+  color: #d0d2d5;
+  box-shadow:
+    inset 0 1px 1px #ffffff38,
+    inset 0 -1px 3px #000,
+    0 2px 0 #010101,
+    0 4px 6px #0009;
+  stroke-width: 1.65;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button.is-active { color: var(--classroom-dock-button-color); font-weight: 550; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button.is-active > svg {
+  border-color: color-mix(in srgb, var(--classroom-dock-button-color) 70%, transparent);
+  background:
+    radial-gradient(ellipse at 22% -5%, color-mix(in srgb, var(--classroom-dock-button-color) 48%, transparent), transparent 60%),
+    linear-gradient(150deg, color-mix(in srgb, var(--classroom-dock-button-color) 28%, #102033), color-mix(in srgb, var(--classroom-dock-button-color) 14%, #070e20) 72%);
+  color: var(--classroom-dock-button-color);
+  box-shadow:
+    inset 0 1px 2px rgba(237, 240, 255, .48),
+    inset 0 0 8px color-mix(in srgb, var(--classroom-dock-button-color) 28%, transparent),
+    0 0 10px color-mix(in srgb, var(--classroom-dock-button-color) 32%, transparent),
+    0 4px 9px rgba(0, 0, 0, .25);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > .is-hand-action { --classroom-dock-button-color: #ce91ff; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > .is-profile-action { --classroom-dock-button-color: #b7c9ee; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > .is-spotlight-action { --classroom-dock-button-color: #ffc17e; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > .is-floor-action.is-active { --classroom-dock-button-color: #60f0dc; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button:hover:not(:disabled):not(.is-active) > svg {
+  border-color: #d5d6d77a;
+  color: #f0f1f2;
+  box-shadow: inset 0 1px 2px #ffffff59, inset 0 0 9px #ffffff08, 0 2px 0 #010101, 0 4px 6px #0009;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button::after { display: none; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button.is-active::after { width: 0; box-shadow: none; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button > i {
+  top: 0;
+  right: calc(50% - 25px);
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border: 1px solid rgba(190, 217, 255, .32);
+  background: linear-gradient(150deg, #739eff, #4c75df);
+  box-shadow: inset 0 1px rgba(240, 247, 255, .25), 0 0 7px rgba(93, 147, 255, .28);
+  font-size: 8px;
+  font-weight: 650;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > .is-hand-action > i { background: linear-gradient(150deg, #da91ff, #aa59e7); box-shadow: inset 0 1px rgba(254, 238, 255, .3), 0 0 7px rgba(183, 106, 250, .32); }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button:disabled { color: #929599; }
+.room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button:disabled > svg {
+  color: #929599;
+  border-color: #a7a9ab26;
+  background: radial-gradient(ellipse at 25% 0%, #ffffff12, transparent 68%), linear-gradient(160deg, #1c1d1e, #060606 76%);
+  box-shadow: inset 0 1px #ffffff1f, 0 2px 0 #010101, 0 3px 6px #0006;
+}
+
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer {
+  width: min(352px, calc(100vw - 24px));
+  border-color: rgba(153, 183, 242, .24);
+  border-radius: 18px;
+  background: radial-gradient(ellipse at 10% 0, rgba(101, 142, 232, .12), transparent 70%), #101722;
+  box-shadow: inset 0 1px rgba(213, 227, 255, .07), 0 24px 70px rgba(0, 0, 0, .6);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer form { gap: 14px; padding: 17px; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer header { grid-template-columns: 38px minmax(0, 1fr) 28px; gap: 10px; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer header img { width: 38px; height: 38px; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer header small { color: #8aa6dc; font-size: 8px; font-weight: 650; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer header strong { font-size: 14px; font-weight: 650; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer label { font-size: 11px; color: #9eacc5; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer label small { font-size: 10px; color: #7e8da7; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer textarea {
+  min-height: 100px;
+  padding: 11px 12px;
+  border-color: rgba(163, 187, 228, .14);
+  border-radius: 11px;
+  background: #0a101a;
+  box-shadow: none;
+  font: 450 13px/1.55 Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer textarea::placeholder { color: #7988a2; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer footer > span { font-size: 10px; color: #8c9bb4; }
+.room-tools-shell.is-classe .is-classroom .classroom-private-composer footer > button {
+  min-height: 34px;
+  min-width: 88px;
+  border-color: rgba(174, 199, 255, .32);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #4a6cc0, #354e91);
+  box-shadow: inset 0 1px rgba(215, 229, 255, .15);
+  font-size: 11px;
+}
+
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel {
+  width: min(360px, 100%);
+  max-height: min(320px, 55dvh);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px;
+  border-color: rgba(153, 183, 242, .24);
+  border-radius: 17px;
+  background: radial-gradient(ellipse at 10% 0, rgba(101, 142, 232, .12), transparent 70%), #101722;
+  box-shadow: inset 0 1px rgba(213, 227, 255, .07), 0 20px 50px rgba(0, 0, 0, .6);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel > header { gap: 8px; padding: 0 0 11px; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel > header small { font-size: 7px; font-weight: 650; color: #8aa6dc; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel > header strong { font-size: 13px; font-weight: 650; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel button {
+  min-height: 32px;
+  background: #1b273c;
+  border-color: rgba(162, 185, 227, .16);
+  box-shadow: inset 0 1px rgba(213, 227, 255, .05);
+}
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel button:hover:not(:disabled) { background: #23344f; transform: none; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel button:focus-visible { outline: 2px solid #adc6ff; outline-offset: 2px; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel button:disabled { opacity: .4; cursor: not-allowed; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel__add { padding-inline: 9px; font-size: 10px; font-weight: 600; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel__close { width: 32px; border: 0; background: transparent; box-shadow: none; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-empty { min-height: 98px; padding: 14px 9px; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-empty > svg { width: 26px; height: 26px; flex-shrink: 0; stroke-width: 1.5; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-empty strong { font-size: 12px; font-weight: 600; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-empty small { font-size: 10px; color: #8f9fba; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-list { gap: 5px; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-list article {
+  grid-template-columns: 34px minmax(0, 1fr) 32px;
+  gap: 9px;
+  padding: 9px 7px;
+  border-radius: 10px;
+  background: #151f30;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-resource-list article > span:first-child { width: 34px; height: 34px; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-list article strong { font-size: 11px; font-weight: 600; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-list article small { font-size: 8px; color: #92a2bd; font-weight: 500; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-list article > button { width: 32px; }
+.room-tools-shell.is-classe .is-classroom .classroom-resource-panel > p { font-size: 10px; line-height: 1.4; }
+
+/* The player state, rather than a height threshold, owns roster scrolling. */
+.place-mixer.has-classroom-player.is-classroom-player-collapsed .room-tools-shell.is-classe .is-classroom .classroom-roster {
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+.place-mixer.has-classroom-player.is-classroom-player-collapsed .room-tools-shell.is-classe .is-classroom .classroom-seats {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+}
+.place-mixer.has-classroom-player:not(.is-classroom-player-collapsed) .room-tools-shell.is-classe .is-classroom .classroom-roster {
+    overflow-y: auto;
+    scrollbar-color: #40567f transparent;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+}
+.place-mixer.has-classroom-player:not(.is-classroom-player-collapsed) .room-tools-shell.is-classe .is-classroom .classroom-seats {
+    height: auto;
+    min-height: 409px;
+    grid-template-rows: repeat(6, minmax(64px, 1fr));
+}
+
+/* Questions: quiet lacquer cards; status lives in the badge, never a side stripe. */
+.room-tools-shell.is-classe .is-class-questions .class-questions__viewport {
+  scrollbar-color: #55585c transparent;
+}
+.room-tools-shell.is-classe .is-class-questions .class-questions__section-heading {
+  min-height: 30px;
+  padding: 0 2px;
+  border: 0;
+}
+.room-tools-shell.is-classe .is-class-questions .class-questions__section-heading > span {
+  color: #c7cbd2;
+  font-weight: 600;
+  letter-spacing: .035em;
+}
+.room-tools-shell.is-classe .is-class-questions .class-questions__list { gap: 9px; }
+.room-tools-shell.is-classe .is-class-questions .class-question-card,
+.room-tools-shell.is-classe .is-class-questions .class-questions__list > .class-question-card {
+  height: auto;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+  padding: 11px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse 90% 42px at 25% -20px, #ffffff14, transparent 85%) padding-box,
+    linear-gradient(165deg, #141516, #070808 45%, #030303) padding-box,
+    linear-gradient(125deg, #ffffff2b, #ffffff09 45%, #ffffff12) border-box;
+  box-shadow: inset 0 1px #ffffff09, 0 2px 0 #000, 0 5px 12px #0006;
+  transform: none;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card::before { display: none; content: none; }
+.room-tools-shell.is-classe .is-class-questions .class-question-card:hover {
+  border-color: #ffffff26;
+  transform: none;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card.is-featured {
+  padding: 13px;
+  background:
+    radial-gradient(ellipse 110% 65px at 30% -30px, #ffffff24, transparent 85%) padding-box,
+    linear-gradient(165deg, #1c1d1f, #080909 45%, #020303) padding-box,
+    linear-gradient(125deg, #e1e5eb55, #ffffff0b 45%, #b7c0cb29) border-box;
+  box-shadow: inset 0 1px #ffffff17, inset 0 -1px #000, 0 5px 16px #0008;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card > .class-question-card__header {
+  grid-column: 1;
+  grid-row: 1;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question__author { gap: 8px; }
+.room-tools-shell.is-classe .is-class-questions .class-question__author strong { font-size: 11px; font-weight: 600; line-height: 1.3; }
+.room-tools-shell.is-classe .is-class-questions .class-question__author img {
+  border-color: #ffffff26;
+  box-shadow: 0 1px 3px #0007;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question__meta > b {
+  border: 0;
+  background: #ffffff07;
+  color: #9da5b2;
+  font-weight: 500;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card > blockquote,
+.room-tools-shell.is-classe .is-class-questions .class-questions__list > .class-question-card > blockquote {
+  display: block;
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  padding: 0;
+  color: #e6e8ec;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  -webkit-line-clamp: unset;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card.is-featured > blockquote {
+  color: #f5f6f8;
+  font-size: 13px;
+  font-weight: 550;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card > .class-question__actions {
+  grid-column: 1;
+  grid-row: 3;
+  gap: 5px;
+  padding-top: 2px;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card .class-question__actions > button {
+  width: auto;
+  min-width: 0;
+  min-height: 30px;
+  padding: 0 8px;
+  gap: 5px;
+  border: 1px solid #ffffff1f;
+  border-radius: 9px;
+  background: linear-gradient(165deg, #ffffff0d, transparent 40%), linear-gradient(#1c1d1e, #070707 70%);
+  box-shadow: inset 0 1px #ffffff12, 0 2px 0 #000;
+  color: #b4bac3;
+  font-size: 8px;
+  font-weight: 550;
+}
+.room-tools-shell.is-classe .is-class-questions .class-question-card .class-question__actions > button > span,
+.room-tools-shell.is-classe .is-class-questions .class-question-card .class-question__actions > button:not(.is-display-action) > span { display: inline; }
+.room-tools-shell.is-classe .is-class-questions .class-question__actions > button.is-display-action { color: #b9d5fb; border-color: #9bc5ff30; }
+.room-tools-shell.is-classe .is-class-questions .class-question__actions > button:hover:not(:disabled) {
+  background: linear-gradient(#262728, #0c0c0d);
+  border-color: #ffffff40;
+  color: #fff;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-tools-shell.is-classe .is-classroom .classroom-seat,
+  .room-tools-shell.is-classe .is-classroom .classroom-command-dock__controls > button > svg { transition: none; }
+  .room-tools-shell.is-classe .is-classroom .classroom-resource-panel { animation: none; }
+}
+
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking { border-color:#53e7a0; box-shadow:inset 0 0 0 1px #53e7a0,0 0 12px #34dd8038; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking .classroom-seat__portrait { outline:2px solid #53e7a0; outline-offset:2px; }
+.classroom-seat-price { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:11px; }
+.classroom-seat-price input { width:78px; padding:5px; background:#090a0c; border:1px solid #555; border-radius:8px; }
+
+.classe-private-bubble { position:absolute; z-index:12; bottom:66px; left:12px; right:12px; max-width:390px; margin-left:auto; padding:12px; border:1px solid #8e75ad; border-radius:18px; background:linear-gradient(150deg,#28282b,#080809 65%); box-shadow:inset 0 1px #ffffff38,0 12px 32px #000b; }
+.classe-private-bubble header,.classe-private-bubble form { display:flex; align-items:center; gap:8px; }
+.classe-private-bubble header strong { flex:1; font-size:12px; }
+.classe-private-bubble svg { width:18px; height:18px; }
+.classe-private-bubble__messages { max-height:150px; overflow:auto; }
+.classe-private-bubble p { font-size:13px; padding:8px; margin:6px 0; border-radius:8px; background:#ffffff09; }
+.classe-private-bubble p.is-own { margin-left:20px; background:#9864df25; }
+.classe-private-bubble input { min-width:0; flex:1; background:#060607; border:1px solid #655970; border-radius:10px; padding:9px; font-size:13px; }
+.classe-private-reopen { position:absolute; right:18px; bottom:70px; z-index:12; }
+.classe-student-workspace,.room-tool-panel.is-classroom { position:relative; }
+
+.room-tool-panel.is-classroom > .classroom-seat-price {display:grid;gap:4px;grid-row:1;}
+.classroom-seat-price > label {display:flex;align-items:center;justify-content:space-between;gap:12px;color:#dce1eb;}
+.classroom-seat-price__display {display:flex;align-items:center;gap:7px;padding:7px 12px;border:1px solid #ffffff26;border-radius:11px;background:linear-gradient(160deg,#22252b,#090b10 70%);box-shadow:inset 0 1px #ffffff16;color:#d3d8e3;}
+.classroom-seat-price .classroom-seat-price__display input {width:68px;padding:0;border:0;border-radius:0;background:transparent;color:#f4f6fa;font:600 15px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;text-align:right;outline:none;}
+.classroom-seat-price__display:focus-within {border-color:#b48af0;box-shadow:0 0 0 2px #a77bea20;}
+.classroom-seat-price small {color:#c9c3d3;font-size:11px;}.classroom-seat-price small[role=alert] {color:#ffb4bd;}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "profileStatus": "locally_scanned_registry_only",
+  "canonicalPluginId": "sixthsample.spoton",
+  "verifiedVendor": "Sixth Sample",
+  "verifiedClassIds": ["ABCDEF019182FAEB536978744C737733"],
+  "acceptedVersionPrefixes": ["1.1."],
+  "parameterBindings": {
+    "key": null,
+    "scale": null,
+    "correctionAmount": "733630552",
+    "retuneSpeed": "109641799",
+    "humanize": null,
+    "formant": null,
+    "preset": null
+  },
+  "localProbeEvidence": {
+    "observedPluginName": "Spoton",
+    "observedVersion": "1.1.2",
+    "platform": "windows-x64",
+    "sampleRateHz": 48000,
+    "observedParameterCount": 16,
+    "reportedLatencySamples": 0,
+    "reportedLatencyMsAt48kHz": 0,
+    "instantiated": true,
+    "processedSyntheticSignal": true,
+    "outputFinite": true,
+    "outputNonSilent": true,
+    "liveAudioTested": false,
+    "roomPublicationTested": false
+  },
+  "notes": [
+    "The installed VST3 was identified by exact vendor and class ID; its Amount and Speed parameter IDs were read from that binary.",
+    "Spoton exposes twelve note toggles rather than one canonical key and one canonical scale parameter, so key/scale translation needs a dedicated adapter.",
+    "No humanize parameter was observed. MeeWav must not display a working Humanisation control for Spoton until a real mapping exists.",
+    "Synthetic processing proves execution, not audible pitch-correction quality, microphone monitoring stability or Room publication.",
+    "The plugin may enter the verified local registry, but it must stay unavailable in the user selector until the adapter and audio-plane gates pass."
+  ]
+}

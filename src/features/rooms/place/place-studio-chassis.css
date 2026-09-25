@@ -1,0 +1,165 @@
+/* Canonical studio enclosure for all six rooms and every surface.
+ * Imported after room themes: only the chassis/navigation live here.
+ * Player, chat, guests and specialized tools keep their own styles and state. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  overflow: hidden;
+  isolation: isolate;
+  grid-template-rows: 72px minmax(0, 1fr);
+  padding: 0 6px;
+  border-radius: 22px;
+  background: radial-gradient(ellipse at 0 0, rgba(117, 134, 168, .1), transparent 46%), linear-gradient(110deg, #15191f, #07090d 20%, #030507 75%, #10141a);
+  box-shadow: 0 0 0 1px #030405, inset 0 0 25px #000, 0 14px 35px rgba(0, 0, 0, .65);
+}
+
+/* One continuous machined rim, hollowed out so it never covers the content. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed)::before {
+  display: block;
+  position: absolute;
+  z-index: 20;
+  box-sizing: border-box;
+  inset: 0;
+  padding: 1.5px;
+  border: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(110px 90px at 0 0, rgba(236, 244, 255, .58), transparent 75%),
+    radial-gradient(110px 80px at 100% 100%, rgba(211, 227, 249, .27), transparent 80%),
+    linear-gradient(112deg, #777e8b 0%, #323843 13%, #151a22 27%, #080b10 56%, #303742 84%, #555f6e 100%);
+  box-shadow: inset 0 1px rgba(236, 244, 255, .5), inset 0 -1px rgba(167, 186, 215, .23), inset 1px 0 rgba(212, 229, 255, .19), inset 0 0 2px #050609;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  content: "";
+  opacity: 1;
+  pointer-events: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed)::after {
+  display: block;
+  position: absolute;
+  z-index: 19;
+  inset: 5px;
+  border: 1px solid rgba(144, 159, 186, .12);
+  border-radius: 17px;
+  background: transparent;
+  box-shadow: inset 0 1px 2px #000;
+  content: "";
+  pointer-events: none;
+}
+
+/* Navigation does not change height, material or active color between tabs. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar {
+  position: relative;
+  z-index: 6;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 6px;
+  height: 62px;
+  min-height: 62px;
+  margin: 8px 4px 2px;
+  padding: 7px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background: linear-gradient(115deg, rgba(215, 226, 247, .055), transparent 43%), linear-gradient(#101318, #05070a);
+  box-shadow: inset 0 1px rgba(224, 235, 255, .11), 0 1px #000, 0 3px 6px rgba(0, 0, 0, .5);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs {
+  display: grid;
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 2px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  gap: 4px;
+  width: calc(100% - 4px);
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 3px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: transparent;
+  box-shadow: none;
+  color: #9ca5b5;
+  font: 550 10px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  text-shadow: none;
+  transform: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button > span {
+  display: inline;
+  white-space: nowrap;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button::before { display: none; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button::after { display: none; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button > svg {
+  width: 13px;
+  height: 13px;
+  min-width: 13px;
+  color: inherit;
+  filter: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button:hover:not(.is-active) {
+  background: linear-gradient(145deg, rgba(163, 191, 234, .09), rgba(75, 105, 153, .035));
+  color: #e0e9f8;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"] {
+  --studio-tab-color: #d4b5ff;
+  --studio-tab-face: linear-gradient(150deg, rgba(213, 177, 255, .12), transparent 50%) padding-box, linear-gradient(#291d3b, #130c20) padding-box, linear-gradient(140deg, #a68bc8, #48315f 65%, #74509a) border-box;
+  --studio-tab-light: linear-gradient(90deg, transparent, #b183ff 30%, #e0c5ff 50%, #b183ff 70%, transparent);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button.is-active {
+  background: var(--studio-tab-face, linear-gradient(150deg, rgba(161, 194, 255, .09), transparent 50%) padding-box, linear-gradient(#1b2538, #0a101d) padding-box, linear-gradient(140deg, #7897c3, #24354e 65%, #405e89) border-box);
+  box-shadow: inset 0 1px rgba(206, 225, 255, .14), 0 2px 3px #000;
+  color: #f2f6ff;
+  text-shadow: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button.is-active > svg { color: var(--studio-tab-color, #abc7ff); filter: none; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::after {
+  display: block;
+  position: absolute;
+  right: 12%;
+  bottom: 0;
+  left: 12%;
+  height: 1px;
+  background: var(--studio-tab-light, linear-gradient(90deg, transparent, #88b6ff 30%, #bedbff 50%, #88b6ff 70%, transparent));
+  box-shadow: 0 -2px 6px rgba(108, 163, 255, .2);
+  content: "";
+  opacity: 1;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__collapse {
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+  min-height: 38px;
+  align-self: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: linear-gradient(117deg, rgba(255, 255, 255, .16), transparent 35%) padding-box, linear-gradient(#24262a, #0d0e10 58%, #020203) padding-box, linear-gradient(120deg, rgba(248, 249, 251, .68), rgba(116, 121, 130, .27) 46%, rgba(208, 212, 218, .38)) border-box;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .92), inset 0 1px rgba(255, 255, 255, .22), inset 0 -2px 2px rgba(0, 0, 0, .94), 0 5px 11px rgba(0, 0, 0, .5);
+  color: #aab5c7;
+  transform: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__collapse:hover { color: #e4edff; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-studio-panel__tabs > button, .place-studio-panel__collapse):focus-visible {
+  outline: 2px solid #a9c5ff;
+  outline-offset: -3px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__content {
+  border-radius: 0 0 17px 17px;
+  overflow: hidden;
+}

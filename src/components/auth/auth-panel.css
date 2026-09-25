@@ -1,0 +1,183 @@
+.auth-panel-shell {
+  position: relative;
+  width: min(413px, 100%);
+  aspect-ratio: 413 / 600;
+  isolation: isolate;
+  flex-shrink: 0;
+}
+
+.auth-panel-stroke {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-panel-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding:
+    clamp(16px, 4.4%, 22px)
+    clamp(28px, 8.2%, 38px)
+    clamp(10px, 3.2%, 14px);
+  color: #ffffff;
+}
+
+/* ---------------------------------- */
+/* SÉPARATEUR SOUS LE SOUS-TITRE      */
+/* ---------------------------------- */
+
+.subtitle-divider {
+  width: 100%;
+  max-width: 150px;
+  height: 1px;
+  margin: 18px auto 30px;
+  position: relative;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0) 0%,
+    rgba(139, 92, 246, 0.16) 18%,
+    rgba(139, 92, 246, 0.70) 42%,
+    rgba(255, 255, 255, 0.90) 50%,
+    rgba(139, 92, 246, 0.70) 58%,
+    rgba(139, 92, 246, 0.16) 82%,
+    rgba(139, 92, 246, 0) 100%
+  );
+  box-shadow:
+    0 0 7px rgba(139, 92, 246, 0.34),
+    0 0 1px rgba(255, 255, 255, 0.28);
+  opacity: 0.94;
+}
+
+.subtitle-divider::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(2.4px);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+/* ---------------------------------- */
+/* SÉPARATEUR CENTRAL + PETITES BARRES */
+/* ---------------------------------- */
+
+.mid-separator {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin: 18px 0 0;
+}
+
+.mid-separator-line {
+  flex: 1;
+  min-width: 0;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.05) 0%,
+    rgba(139, 92, 246, 0.22) 24%,
+    rgba(139, 92, 246, 0.38) 50%,
+    rgba(139, 92, 246, 0.22) 76%,
+    rgba(139, 92, 246, 0.05) 100%
+  );
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.12);
+}
+
+.mid-separator-eq {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 20px;
+  min-width: 48px;
+}
+
+.mid-separator-eq i {
+  display: block;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(230, 214, 255, 0.96) 50%,
+    rgba(255, 255, 255, 0.92) 100%
+  );
+  box-shadow:
+    0 0 8px rgba(218, 188, 255, 0.26),
+    0 0 2px rgba(255, 255, 255, 0.16);
+  transform-origin: center;
+  animation: premium-eq-wave 3.0s ease-in-out infinite;
+}
+
+.mid-separator-eq i:nth-child(1) { height: 7px; opacity: 0.70; animation-delay: 0.2s; animation-duration: 2.6s; }
+.mid-separator-eq i:nth-child(2) { height: 11px; opacity: 0.82; animation-delay: 0.6s; animation-duration: 3.2s; }
+.mid-separator-eq i:nth-child(3) { height: 17px; opacity: 0.95; animation-delay: 1.0s; animation-duration: 2.8s; }
+.mid-separator-eq i:nth-child(4) { height: 21px; opacity: 1; animation-delay: 0s; animation-duration: 3.4s; }
+.mid-separator-eq i:nth-child(5) { height: 17px; opacity: 0.95; animation-delay: 0.8s; animation-duration: 3.0s; }
+.mid-separator-eq i:nth-child(6) { height: 11px; opacity: 0.82; animation-delay: 0.4s; animation-duration: 2.6s; }
+.mid-separator-eq i:nth-child(7) { height: 7px; opacity: 0.70; animation-delay: 1.2s; animation-duration: 3.6s; }
+
+@keyframes premium-eq-wave {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.45);
+  }
+}
+
+/* ---------------------------------- */
+/* BLOC BAS                           */
+/* ---------------------------------- */
+
+.switch-mode {
+  margin-top: auto;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* ---------------------------------- */
+/* AIDE AU POSITIONNEMENT             */
+/* ---------------------------------- */
+
+.auth-panel-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.auth-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-panel-main-cta {
+  margin-top: 16px;
+}
+
+.auth-panel-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 18px;
+}

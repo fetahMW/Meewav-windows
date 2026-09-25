@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "wave": 9,
+  "generatedAt": "2026-07-14T19:12:49.620Z",
+  "selection": {
+    "order": "explicit final-five quarantine target order",
+    "geographicScope": "metropolitan France and Corsica",
+    "eligibility": "exact Guide Alpha semantic quarantines with strict official contained evidence",
+    "semanticSubset": "final_five_quarantines",
+    "requestedCount": 5,
+    "scannedCandidateCount": 5,
+    "semanticResolverReadyCount": 5,
+    "semanticResolverUnresolvedCount": 0,
+    "sourcePlanRequestedCount": 5
+  },
+  "source": {
+    "provider": "IGN / INSEE - Contours IRIS WFS Géoplateforme",
+    "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+    "wfsUrl": "https://data.geopf.fr/wfs/ows",
+    "typeName": "STATISTICALUNITS.IRIS:contours_iris",
+    "vintage": "2026",
+    "license": "Licence Ouverte / Open Licence 2.0"
+  },
+  "totals": {
+    "cities": 5,
+    "officialIris": 15,
+    "split": 5,
+    "splitWaveEligible": 5,
+    "singlePlate": 0,
+    "singlePlateOutsideSplitWave": 0,
+    "inventoryResolutionRequired": 0,
+    "missingOfficialSplit": 0,
+    "classificationReasons": {
+      "multiple_official_iris": 5
+    },
+    "semanticResolutionRequired": 0,
+    "pendingSemanticReview": 0,
+    "semanticExceptionsResolved": 5
+  },
+  "deferredCandidates": [],
+  "semanticExceptionResolution": {
+    "policyVersion": 2,
+    "generatedAt": "2026-07-14T19:12:49.620Z",
+    "provenance": {
+      "inputPaths": [
+        {
+          "path": "geo/work/france-wave-9-risk-plan.json",
+          "sha256": "d2ef4df6cf0f20c2adb0803743ce31c7d47c95bb5fd0289bd84f751ffeb7fbc4",
+          "generatedAt": "2026-06-14T09:12:07.922Z"
+        },
+        {
+          "path": "geo/work/france-wave-9-clean-plan.json",
+          "sha256": "2d96736f1a1e770ecf427b1993f2c9989948e8fada3e4b5bd335e81488525179",
+          "generatedAt": "2026-06-14T09:12:07.922Z"
+        }
+      ],
+      "quarantinePaths": [
+        {
+          "path": "geo/work/france-wave-9-risk-semantic-unresolved.json",
+          "sha256": "bbd35bfc186dd4e98e15be375fa4776044de6d3bf9fd8d6a5b788d3162b4f169"
+        },
+        {
+          "path": "geo/work/france-wave-9-national-clean-semantic-unresolved.json",
+          "sha256": "2345870e6fe2b7250f3045f306c0920ed7f31c3815fd7cfa9a29df593e6d4ead"
+        }
+      ],
+      "inspectedCityCount": 5,
+      "exactTargets": [
+        {
+          "id": "cappelle_la_grande",
+          "communeCode": "59131",
+          "sourceId": "591310102"
+        },
+        {
+          "id": "courcelles_les_lens",
+          "communeCode": "62249",
+          "sourceId": "622490101"
+        },
+        {
+          "id": "amplepuis",
+          "communeCode": "69006",
+          "sourceId": "690060101"
+        },
+        {
+          "id": "mandeure",
+          "communeCode": "25367",
+          "sourceId": "253670103"
+        },
+        {
+          "id": "la_talaudiere",
+          "communeCode": "42305",
+          "sourceId": "423050103"
+        }
+      ]
+    }
+  },
+  "cities": [
+    {
+      "rank": 391,
+      "id": "cappelle_la_grande",
+      "name": "Cappelle-la-Grande",
+      "featureId": "commune-59131",
+      "communeCode": "59131",
+      "population": 7839,
+      "departmentCode": "59",
+      "departmentName": "Nord",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.3716,
+        50.9953
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "sourceIris": [
+        {
+          "id": "591310101",
+          "label": "Centre",
+          "type": "H"
+        },
+        {
+          "id": "591310102",
+          "label": "Sud",
+          "type": "H"
+        },
+        {
+          "id": "591310103",
+          "label": "Ouest",
+          "type": "H"
+        },
+        {
+          "id": "591310104",
+          "label": "Cité des Cheminots-Cural",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [
+          "Centre",
+          "Sud",
+          "Ouest"
+        ]
+      },
+      "status": "ready"
+    },
+    {
+      "rank": 393,
+      "id": "courcelles_les_lens",
+      "name": "Courcelles-lès-Lens",
+      "featureId": "commune-62249",
+      "communeCode": "62249",
+      "population": 7830,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        3.0151,
+        50.4149
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "sourceIris": [
+        {
+          "id": "622490101",
+          "label": "Sud",
+          "type": "H"
+        },
+        {
+          "id": "622490102",
+          "label": "Centre Ouest",
+          "type": "H"
+        },
+        {
+          "id": "622490103",
+          "label": "Nord",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [
+          "Sud",
+          "Nord"
+        ]
+      },
+      "status": "ready"
+    },
+    {
+      "rank": 680,
+      "id": "amplepuis",
+      "name": "Amplepuis",
+      "featureId": "commune-69006",
+      "communeCode": "69006",
+      "population": 4876,
+      "departmentCode": "69",
+      "departmentName": "Rhône",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        4.317,
+        45.966
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "sourceIris": [
+        {
+          "id": "690060101",
+          "label": "Centre",
+          "type": "H"
+        },
+        {
+          "id": "690060102",
+          "label": "Contour",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [
+          "Centre"
+        ]
+      },
+      "status": "ready"
+    },
+    {
+      "rank": 699,
+      "id": "mandeure",
+      "name": "Mandeure",
+      "featureId": "commune-25367",
+      "communeCode": "25367",
+      "population": 4612,
+      "departmentCode": "25",
+      "departmentName": "Doubs",
+      "regionName": "Bourgogne-Franche-Comté",
+      "searchCenter": [
+        6.8125,
+        47.4315
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "sourceIris": [
+        {
+          "id": "253670101",
+          "label": "Courcelles",
+          "type": "H"
+        },
+        {
+          "id": "253670102",
+          "label": "Beaulieu",
+          "type": "H"
+        },
+        {
+          "id": "253670103",
+          "label": "Zone d'Activités",
+          "type": "A"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [
+          "Zone d'Activités"
+        ],
+        "directional": []
+      },
+      "status": "ready"
+    },
+    {
+      "rank": 279,
+      "id": "la_talaudiere",
+      "name": "La Talaudière",
+      "featureId": "commune-42305",
+      "communeCode": "42305",
+      "population": 7133,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        4.4257,
+        45.4775
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "sourceIris": [
+        {
+          "id": "423050101",
+          "label": "Le Roule-La Grande Vaure",
+          "type": "H"
+        },
+        {
+          "id": "423050102",
+          "label": "La Talaudière Nord",
+          "type": "H"
+        },
+        {
+          "id": "423050103",
+          "label": "La Talaudière Sud",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": []
+      },
+      "status": "ready"
+    }
+  ]
+}

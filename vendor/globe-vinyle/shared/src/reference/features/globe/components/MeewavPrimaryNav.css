@@ -1,0 +1,474 @@
+.meewav-primary-nav {
+  position: absolute;
+  top: 132px;
+  bottom: 24px;
+  left: 24px;
+  /* Keep the application destinations reachable above the Globe avatar popup.
+     The messaging route defines its own lower layer and modal ownership. */
+  z-index: 16020;
+  box-sizing: border-box;
+  display: flex;
+  width: 78px;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 18px 10px;
+  overflow: hidden;
+  border: 1px solid rgba(220, 210, 255, 0.18);
+  border-radius: 30px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 30%, transparent 70%, rgba(255, 255, 255, 0.06)),
+    linear-gradient(180deg, rgba(66, 42, 135, 0.62), rgba(31, 18, 78, 0.82) 48%, rgba(18, 10, 50, 0.9));
+  box-shadow:
+    inset 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset -1px 0 0 rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 28px 80px rgba(5, 3, 18, 0.58);
+  backdrop-filter: blur(18px) saturate(1.16);
+  -webkit-backdrop-filter: blur(18px) saturate(1.16);
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.meewav-primary-nav__l-chassis {
+  /* Anchor the shared L-shaped chrome to the viewport origin even when a
+     feature rail creates a containing block (for example through blur).
+     The rail already starts below the topbar, so compensate that offset
+     once instead of letting the SVG redraw the header one row too low. */
+  position: absolute;
+  z-index: 0;
+  top: calc(-1 * var(--mw-l-chassis-topbar-height, 0px));
+  left: 0;
+  display: var(--mw-l-chassis-display, none);
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.meewav-primary-nav__l-chassis > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.meewav-primary-nav__l-chassis-piece {
+  fill: url("#meewav-l-chassis-fill-gradient");
+  stroke: none;
+}
+
+.meewav-primary-nav__l-chassis-edge-main {
+  fill: none;
+  stroke: url("#meewav-l-chassis-edge-gradient");
+  stroke-width: 3.15px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter:
+    saturate(0.72)
+    brightness(1.12)
+    drop-shadow(0 0 2px rgba(255, 249, 255, 0.98))
+    drop-shadow(0 0 11px rgba(211, 143, 255, 1))
+    drop-shadow(0 0 28px rgba(128, 49, 243, 0.92));
+}
+
+.meewav-primary-nav__l-chassis-edge-tail {
+  fill: none;
+  stroke: url("#meewav-l-chassis-edge-tail-gradient");
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.meewav-primary-nav__l-chassis-edge-echo {
+  fill: none;
+  stroke: url("#meewav-l-chassis-edge-echo-gradient");
+  stroke-width: 1.95px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter:
+    drop-shadow(0 0 4px rgba(224, 174, 255, 0.98))
+    drop-shadow(0 0 19px rgba(126, 48, 238, 0.9));
+}
+
+.meewav-primary-nav.is-rooms-landing-chassis .meewav-primary-nav__l-chassis-edge-main {
+  stroke-width: 1.58px;
+  filter:
+    saturate(1.16)
+    brightness(1.16)
+    drop-shadow(0 0 2px rgba(255, 244, 255, .72))
+    drop-shadow(0 0 8px rgba(190, 103, 255, .82))
+    drop-shadow(0 0 18px rgba(121, 45, 225, .48));
+}
+
+.meewav-primary-nav:not(.is-rooms-landing-chassis) .meewav-primary-nav__l-chassis-edge-tail {
+  display: none;
+}
+
+.meewav-primary-nav.is-rooms-landing-chassis .meewav-primary-nav__l-chassis-edge-echo {
+  display: block;
+  stroke-width: 1.28px;
+  opacity: .95;
+  filter:
+    saturate(1.32)
+    brightness(1.42)
+    drop-shadow(0 0 3px rgba(205, 132, 255, .72))
+    drop-shadow(0 0 10px rgba(126, 48, 228, .48));
+}
+
+.meewav-primary-nav__l-chassis-hotspot {
+  fill: none;
+  stroke: url("#meewav-l-chassis-hotspot-gradient");
+  stroke-linecap: round;
+  stroke-width: 1.12px;
+  filter:
+    brightness(1.06)
+    drop-shadow(0 0 3.2px rgba(255, 247, 255, .98))
+    drop-shadow(0 0 4.5px rgba(205, 125, 255, .68))
+    drop-shadow(0 0 28px rgba(145, 62, 244, .6));
+}
+
+.meewav-primary-nav.is-rooms-landing-chassis .meewav-primary-nav__pillars {
+  transform: translateY(calc(clamp(16px, 3.1vh, 28px) + 6px));
+}
+
+.meewav-primary-nav.is-rooms-landing-chassis .meewav-primary-nav__account {
+  transform: translateY(6px);
+}
+
+.meewav-primary-nav__pillars,
+.meewav-primary-nav__account {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meewav-primary-nav__pillars {
+  min-height: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: 14px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.meewav-primary-nav__pillars::-webkit-scrollbar {
+  display: none;
+}
+
+.meewav-primary-nav__account {
+  position: relative;
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 19px;
+}
+
+.meewav-primary-nav__account::before {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  left: 9px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(234, 224, 255, 0.34) 24%,
+    rgba(181, 144, 255, 0.58) 50%,
+    rgba(234, 224, 255, 0.34) 76%,
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(167, 113, 255, 0.22);
+  content: "";
+  pointer-events: none;
+}
+
+.meewav-primary-nav *,
+.meewav-primary-nav *::before,
+.meewav-primary-nav *::after {
+  box-sizing: border-box;
+}
+
+.meewav-primary-nav__item {
+  appearance: none;
+  position: relative;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  flex: 0 0 52px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: transparent;
+  color: rgba(234, 228, 255, 0.72);
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.meewav-primary-nav__item svg {
+  width: 27px;
+  height: 27px;
+  stroke-width: 1.85;
+  filter: none;
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.meewav-primary-nav__item:hover,
+.meewav-primary-nav__item:focus-visible {
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: color-mix(in srgb, var(--accent) 34%, rgba(255, 255, 255, 0.16));
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.06),
+    0 0 20px var(--accent-glow),
+    0 0 36px color-mix(in srgb, var(--accent) 18%, transparent);
+  transform: translateY(-1px);
+}
+
+.meewav-primary-nav__item:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 78%, #fff);
+  outline-offset: 2px;
+}
+
+.meewav-primary-nav__item:hover svg,
+.meewav-primary-nav__item:focus-visible svg {
+  filter:
+    drop-shadow(0 0 8px var(--accent))
+    drop-shadow(0 0 16px var(--accent-glow));
+  transform: scale(1.04);
+}
+
+.meewav-primary-nav__item:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.meewav-primary-nav__item.is-active {
+  color: rgba(234, 228, 255, 0.72);
+  background: transparent;
+  border-color: transparent;
+}
+
+.meewav-primary-nav__item.is-active:hover,
+.meewav-primary-nav__item.is-active:focus-visible {
+  color: var(--accent);
+}
+
+.meewav-primary-nav__item.is-active:not(.is-map) {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 42%, rgba(255, 255, 255, 0.14));
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 64%),
+    color-mix(in srgb, var(--accent) 9%, rgba(255, 255, 255, 0.045));
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.055),
+    0 0 20px var(--accent-glow),
+    0 0 34px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.meewav-primary-nav__item.is-active:not(.is-map) svg {
+  filter:
+    drop-shadow(0 0 8px var(--accent))
+    drop-shadow(0 0 14px var(--accent-glow));
+}
+
+.meewav-primary-nav__item.is-active:not(.is-map)::after {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 3px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent), 0 0 18px var(--accent-glow);
+  content: "";
+  transform: translateY(-50%);
+}
+
+.meewav-primary-nav__material-glint {
+  display: none;
+}
+
+.meewav-primary-nav__label {
+  display: none;
+}
+
+.meewav-primary-nav__globe {
+  position: relative;
+  display: block;
+  --meewav-nav-globe-map-width: 72px;
+  width: 38px;
+  height: 38px;
+  overflow: hidden;
+  isolation: isolate;
+  transform: translateZ(0);
+  border: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.92), transparent 13%),
+    radial-gradient(circle at 38% 35%, #f4ecff 0, #b38cff 23%, #6d3dff 49%, #25106f 72%, #03020d 100%);
+  box-shadow:
+    inset -10px -8px 15px rgba(1, 0, 10, 0.78),
+    inset 5px 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.meewav-primary-nav__globe-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.meewav-primary-nav__globe-light {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.54), transparent 12%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.16), transparent 38%, rgba(2, 0, 12, 0.4) 74%);
+  box-shadow: inset -8px -5px 12px rgba(2, 0, 12, 0.55);
+}
+
+.meewav-primary-nav__item.is-map:hover .meewav-primary-nav__globe,
+.meewav-primary-nav__item.is-map:focus-visible .meewav-primary-nav__globe {
+  box-shadow:
+    0 0 14px var(--accent-glow),
+    inset -10px -8px 15px rgba(1, 0, 10, 0.78),
+    inset 5px 4px 9px rgba(255, 255, 255, 0.26);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meewav-primary-nav__item,
+  .meewav-primary-nav__item svg {
+    transition: none;
+  }
+
+
+}
+
+@media (max-height: 680px) and (min-width: 761px) {
+  .meewav-primary-nav {
+    top: 118px;
+    padding: 14px 10px;
+  }
+
+  .meewav-primary-nav__pillars {
+    gap: 8px;
+  }
+
+  .meewav-primary-nav__account {
+    padding-top: 15px;
+  }
+
+  .meewav-primary-nav__account::before {
+    top: 6px;
+  }
+
+  .meewav-primary-nav__item {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+
+  .meewav-primary-nav__item svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 760px) {
+  .meewav-primary-nav__l-chassis {
+    display: none;
+  }
+
+  .meewav-primary-nav {
+    top: auto;
+    right: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    left: 50%;
+    width: min(430px, calc(100vw - 16px));
+    min-height: 0;
+    height: 66px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 8px 12px;
+    overflow: hidden;
+    border-radius: 22px;
+    transform: translateX(-50%);
+  }
+
+  .meewav-primary-nav__pillars {
+    min-width: 0;
+    height: 100%;
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+
+  .meewav-primary-nav__account {
+    width: auto;
+    height: 100%;
+    flex: 0 0 auto;
+    flex-direction: row;
+    margin-top: 0;
+    margin-left: 7px;
+    padding-top: 0;
+    padding-left: 8px;
+  }
+
+  .meewav-primary-nav__account::before {
+    top: 7px;
+    right: auto;
+    bottom: 7px;
+    left: 0;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(234, 224, 255, 0.34) 24%,
+      rgba(181, 144, 255, 0.58) 50%,
+      rgba(234, 224, 255, 0.34) 76%,
+      transparent
+    );
+  }
+
+  .meewav-primary-nav__item {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border-radius: 16px;
+    scroll-snap-align: center;
+  }
+
+  .meewav-primary-nav__item.is-active:not(.is-map)::after {
+    top: auto;
+    bottom: 3px;
+    left: 50%;
+    width: 18px;
+    height: 3px;
+    transform: translateX(-50%);
+  }
+}

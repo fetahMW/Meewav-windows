@@ -1,0 +1,207 @@
+/* Shared interior finish: Place, Loge, Wave, Cage, Classe and Scene.
+ * Keep geometry, outer chassis, signal colours and interaction states intact.
+ * Opaque black bodies, with a gently crowned reflection on the mixer fascias. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed):is(.is-mixer, .is-tools, .is-chat, .is-guests) {
+  --studio-black-fill:
+    linear-gradient(180deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .012) 2px, transparent 5px) padding-box,
+    linear-gradient(#010101, #000 18%) padding-box;
+  --studio-black-edge:
+    linear-gradient(118deg, #66686b, #242528 18%, #09090a 48%, #171719 80%, #414245) border-box;
+  --studio-black-face: var(--studio-black-fill), var(--studio-black-edge);
+  /* A curved highlight rolls off within 28px. The face stays black underneath;
+   * no diagonal grey film, moving glare, or extra layer over the controls. */
+  --studio-convex-face:
+    radial-gradient(ellipse 76% 32px at 42% -13px, rgba(230, 238, 250, .12), rgba(185, 201, 223, .025) 50%, transparent 76%) padding-box,
+    linear-gradient(180deg, rgba(225, 235, 249, .045), rgba(170, 185, 207, .012) 12px, transparent 28px) padding-box,
+    radial-gradient(ellipse 68% 16px at 50% calc(100% + 6px), rgba(168, 186, 213, .04), transparent 74%) padding-box,
+    linear-gradient(180deg, #101216, #07090c 9px, #020304 27px, #000 54%, #000 79%, #040506) padding-box,
+    var(--studio-black-edge);
+  --studio-convex-shadow:
+    inset 0 1px rgba(230, 239, 251, .2),
+    inset 0 2px 1px rgba(0, 0, 0, .8),
+    inset 1px 0 rgba(203, 221, 244, .055),
+    inset -1px 0 rgba(0, 0, 0, .8),
+    inset 0 -1px #000,
+    inset 0 -2px rgba(134, 154, 183, .075),
+    0 2px 3px rgba(0, 0, 0, .8),
+    0 6px 10px rgba(0, 0, 0, .6);
+  --studio-black-key:
+    linear-gradient(180deg, rgba(255, 255, 255, .095), transparent 3px) padding-box,
+    linear-gradient(180deg, #0a0a0b, #010101 38%, #000) padding-box,
+    var(--studio-black-edge);
+  /* Compatibility with the newer Hi-Fi skins; no need to duplicate finishes. */
+  --cage-hifi-face: var(--studio-black-face);
+  --classe-hifi-face: var(--studio-black-face);
+  --cage-hifi-key: var(--studio-black-key);
+  --classe-hifi-key: var(--studio-black-key);
+}
+
+/* The approved Place navigation finish is canonical, not a room-specific variant. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed):is(.is-host-panel, .is-guest-panel, .is-viewer-panel) > .place-studio-panel__bar {
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02) 24%, transparent 39%) padding-box,
+    radial-gradient(82% 110% at 4% -22%, rgba(255, 255, 255, .043), transparent 48%) padding-box,
+    linear-gradient(#090a0b, #030304 58%, #010102) padding-box,
+    linear-gradient(112deg, rgba(229, 234, 240, .3), rgba(143, 149, 158, .106) 31%, rgba(55, 58, 64, .035) 68%, rgba(169, 174, 182, .1)) border-box;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"].is-active {
+  border-color: transparent;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, .13), rgba(255, 255, 255, .027) 28%, transparent 43%) padding-box,
+    radial-gradient(at 50% 112%, rgba(165, 81, 255, .22), rgba(115, 47, 190, .05) 49%, transparent 72%) padding-box,
+    linear-gradient(#120f15, #070609 55%, #010102) padding-box,
+    linear-gradient(100deg, rgba(165, 104, 247, .92), rgba(229, 161, 255, .98) 49%, rgba(118, 66, 213, .82)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .24), inset 0 -11px 21px rgba(116, 48, 190, .16), inset 0 0 16px #00000038, 0 1px #000e, 0 6px 15px #0008, 0 8px 22px rgba(137, 57, 226, .24);
+  color: #fff;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"].is-active > svg {
+  color: #c780ff;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"].is-active::after {
+  background: linear-gradient(90deg, transparent, #9347ff 14%, #d486ff 50%, #9347ff 86%, transparent);
+  box-shadow: 0 -3px 10px rgba(161, 70, 255, .52);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer__subnav.has-twists {
+  background: linear-gradient(108deg, rgba(255, 255, 255, .035), transparent 31%), linear-gradient(#070708, #020203);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer__subnav.has-twists > button.is-active {
+  background: radial-gradient(at 50% 116%, rgba(157, 74, 246, .094), transparent 57%), linear-gradient(rgba(255, 255, 255, .024), transparent 50%);
+  color: #f8f4fc;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer__subnav.has-twists > button.is-active > svg {
+  color: #b26aff;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer__subnav.has-twists > button.is-active::after {
+  background: linear-gradient(90deg, transparent, #8b46ee 12%, #c478ff 50%, #8b46ee 88%, transparent);
+  box-shadow: 0 -2px 7px rgba(157, 72, 247, .28), 0 0 2px rgba(215, 166, 255, .35);
+}
+
+/* Classe uses a neutral white active accent; Mixeur retains its violet. */
+.rooms-page .place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-shared-studio-chassis .place-studio-panel__tabs > button[data-surface="tools"] {
+  --studio-tab-color: #f5f7fb;
+  --studio-tab-face:
+    linear-gradient(150deg, rgba(255, 255, 255, .075), transparent 50%) padding-box,
+    linear-gradient(#15171b, #07090c) padding-box,
+    linear-gradient(140deg, #b6becb, #434953 65%, #7b8492) border-box;
+  --studio-tab-light: linear-gradient(90deg, transparent, #d0d7e1 30%, #fff 50%, #d0d7e1 70%, transparent);
+}
+.rooms-page .place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-shared-studio-chassis .place-studio-panel__tabs > button[data-surface="tools"].is-active {
+  box-shadow: inset 0 1px rgba(255, 255, 255, .18), 0 2px 3px #000;
+  color: #fff;
+}
+.rooms-page .place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-shared-studio-chassis .place-studio-panel__tabs > button[data-surface="tools"].is-active::after {
+  box-shadow: 0 -2px 6px rgba(224, 232, 245, .16);
+}
+
+/* Compatibility while the shared chassis rolls out: no feet or reserved gap. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel > .place-studio-panel__hifi-feet {
+  display: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  margin-bottom: 0;
+}
+
+/* No blue/purple wash behind the content. Do not paint over the outer frame. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-studio-panel__surface {
+  background: #000;
+}
+
+/* Only the fader fascias and player are crowned. Chat, guests and keys retain
+ * their approved finish. Fixed-pixel reflections also suit the folded player. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) :is(
+  .place-mixer-audio,
+  .place-mixer-audio.has-track,
+  .place-mixer-audio.is-empty,
+  .place-mixer-audio:is(.is-classroom-collapsible, .is-room-collapsible)
+),
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > :is(
+  .place-volume-row,
+  .place-volume-row:first-child,
+  .place-volume-row.is-music-channel,
+  .place-volume-row.is-master,
+  .place-volume-row:hover,
+  .place-volume-row:focus-within
+) {
+  background: var(--studio-convex-face);
+  box-shadow: var(--studio-convex-shadow);
+}
+
+/* Remove the broad grey diagonal film, not the lit rim or functional meters. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > .place-volume-row::after,
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio::after {
+  background: none;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > .place-volume-row:is(:hover, :focus-within) {
+  box-shadow: inset 0 1px rgba(255, 255, 255, .27), var(--studio-convex-shadow);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio__waveform {
+  background: #000;
+}
+
+/* Neutral keys, with existing muted/active/recording states left untouched.
+ * The legacy player skins use !important backgrounds on these exact controls. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer:is(.has-audio-player, .has-classroom-player) :is(
+  .place-volume-row__mute,
+  .place-volume-row__camera,
+  .place-volume-row__playlist,
+  .place-volume-row__transport,
+  .place-mixer-audio__import,
+  .place-mixer-audio__transport-buttons > button:not(.place-mixer-audio__play),
+  .place-mixer-audio__regie-button,
+  .place-mixer-audio__cue-return,
+  .place-mixer-audio__playback-menu-button
+):not(.is-active):not(.is-talking) {
+  background: var(--studio-black-key) !important;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio__play {
+  background:
+    radial-gradient(ellipse at 50% 1%, rgba(255, 255, 255, .12), transparent 24%) padding-box,
+    radial-gradient(circle at 50% 42%, #070707, #000 72%) padding-box,
+    var(--studio-black-edge) !important;
+}
+
+/* The collapse control has one visible face. Its transparent hit area must not
+ * inherit the legacy !important button skin or intercept the waveform below. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:is(.is-classroom-collapsible, .is-room-collapsible) :is(.place-mixer-audio__classroom-toggle, .place-mixer-audio__collapse-toggle) {
+  top: 4px;
+  height: 32px;
+  min-height: 32px;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:is(.is-classroom-collapsible, .is-room-collapsible) :is(.place-mixer-audio__classroom-toggle, .place-mixer-audio__collapse-toggle)::before {
+  background: var(--studio-black-key);
+  border: 1px solid transparent;
+  box-shadow: inset 0 1px rgba(235, 242, 255, .14), 0 1px 2px rgba(0, 0, 0, .65);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:is(.is-classroom-collapsible, .is-room-collapsible) :is(.place-mixer-audio__classroom-toggle, .place-mixer-audio__collapse-toggle):focus-visible {
+  outline-offset: -1px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:is(.is-classroom-collapsed, .is-room-collapsed) :is(.place-mixer-audio__classroom-toggle, .place-mixer-audio__collapse-toggle) {
+  top: 2px;
+  height: 44px;
+  min-height: 44px;
+}
+
+/* Guest cards and keys own their shared material in the guest stylesheets. */
+
+/* Chat is a black reading surface. Names, badges and selected items keep colour. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat :is(.place-chat, .place-chat__messages, .place-chat-workspace) {
+  background: #000;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat :is(.place-chat__composer, .place-chat__pinned, .place-chat__message.is-host),
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-chat .place-chat-workspace :is(.place-tool-card, .place-chat-message-picker label, .place-chat-poll__options > button) {
+  background: var(--studio-black-fill);
+}

@@ -1,0 +1,79 @@
+{
+  "contract": "meewav-grade-levels",
+  "schemaVersion": 1,
+  "assetVersion": "grades-v1",
+  "levels": [
+    {
+      "level": 1,
+      "code": "beginner",
+      "label": "Débutant",
+      "shortLabel": "N1",
+      "description": "Premiers pas dans le réseau.",
+      "visualKey": "grade-white",
+      "mainColor": "#FFFFFF",
+      "softColor": "#F8FAFC",
+      "darkColor": "#2A243A",
+      "minimumPoints": 0
+    },
+    {
+      "level": 2,
+      "code": "emerging",
+      "label": "Émergent",
+      "shortLabel": "N2",
+      "description": "Présence musicale en progression.",
+      "visualKey": "grade-orange",
+      "mainColor": "#F59E0B",
+      "softColor": "#FDE68A",
+      "darkColor": "#78350F",
+      "minimumPoints": 1000
+    },
+    {
+      "level": 3,
+      "code": "confirmed",
+      "label": "Confirmé",
+      "shortLabel": "N3",
+      "description": "Activité et réseau solides.",
+      "visualKey": "grade-green",
+      "mainColor": "#34D399",
+      "softColor": "#86EFAC",
+      "darkColor": "#064E3B",
+      "minimumPoints": 2000
+    },
+    {
+      "level": 4,
+      "code": "elite",
+      "label": "Élite",
+      "shortLabel": "N4",
+      "description": "Profil remarqué dans la communauté.",
+      "visualKey": "grade-pink",
+      "mainColor": "#EC4899",
+      "softColor": "#F9A8D4",
+      "darkColor": "#831843",
+      "minimumPoints": 3000
+    },
+    {
+      "level": 5,
+      "code": "master",
+      "label": "Maître",
+      "shortLabel": "N5",
+      "description": "Statut prestigieux reconnu.",
+      "visualKey": "grade-blue",
+      "mainColor": "#2563FF",
+      "softColor": "#93C5FD",
+      "darkColor": "#102A6B",
+      "minimumPoints": 4000
+    },
+    {
+      "level": 6,
+      "code": "legendary",
+      "label": "Légendaire",
+      "shortLabel": "LEG",
+      "description": "Icône du réseau Meewav.",
+      "visualKey": "grade-legendary",
+      "mainColor": "#6A00FF",
+      "softColor": "#F0D5FF",
+      "darkColor": "#1B003C",
+      "minimumPoints": 6000
+    }
+  ]
+}

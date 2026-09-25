@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://meewav.com/schemas/audio-engine/plugin-scan-response.v1.json",
+  "title": "MeeWav isolated plugin scan response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractVersion", "status", "plugins"],
+  "properties": {
+    "contractVersion": { "const": 1 },
+    "status": { "enum": ["ok", "partial", "backend_unavailable", "error"] },
+    "message": { "type": "string", "maxLength": 1024 },
+    "plugins": {
+      "type": "array",
+      "maxItems": 512,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pluginId", "classId", "vendor", "name", "version", "format", "architecture", "available", "scanFailed", "installationToken", "licenseStatus", "latencySamples", "parameters"],
+        "properties": {
+          "pluginId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "classId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "vendor": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+          "format": { "enum": ["vst3", "internal"] },
+          "architecture": { "enum": ["arm64", "x64", "universal", "unknown"] },
+          "available": { "type": "boolean" },
+          "scanFailed": { "type": "boolean" },
+          "installationToken": { "type": "string", "minLength": 16, "maxLength": 1024 },
+          "latencySamples": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+          "licenseStatus": {
+            "enum": ["unknown", "activated", "activation_required", "unavailable"]
+          },
+          "parameters": {
+            "type": "array",
+            "maxItems": 4096,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["stableId", "displayName", "unit", "defaultNormalizedValue", "automatable", "readOnly"],
+              "properties": {
+                "stableId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                "displayName": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "unit": { "type": "string", "maxLength": 64 },
+                "defaultNormalizedValue": { "type": "number", "minimum": 0, "maximum": 1 },
+                "automatable": { "type": "boolean" },
+                "readOnly": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

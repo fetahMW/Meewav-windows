@@ -1,0 +1,106 @@
+/* Reflet argent de l'onglet Invités sur une base graphite opaque.
+ * Les dimensions, comportements et indicateurs d'état restent indépendants. */
+.place-room-shell .place-studio-panel.is-guests .place-guest-row {
+  --guest-accent: #bebebe;
+  /* Le noir vient du fond, sans voile qui ternit le reflet argent. */
+  background:
+    linear-gradient(112deg, rgba(214, 214, 214, .075) 0%, rgba(214, 214, 214, .014) 28%, transparent 43%),
+    radial-gradient(ellipse at 50% 112%, rgba(168, 168, 168, .22), rgba(104, 104, 104, .052) 49%, transparent 72%),
+    linear-gradient(180deg, #0f0f0f 0%, #070707 55%, #010101 100%);
+  border-color: rgba(151, 151, 151, .28);
+  border-top-color: rgba(212, 212, 212, .42);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .075),
+    inset 0 -9px 18px rgba(112, 112, 112, .09),
+    0 3px 12px rgba(144, 144, 144, .055),
+    0 5px 14px rgba(0, 0, 0, .20);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row:hover {
+  border-color: rgba(190, 190, 190, .46);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .10),
+    inset 0 -9px 18px rgba(112, 112, 112, .12),
+    0 3px 14px rgba(144, 144, 144, .10),
+    0 5px 14px rgba(0, 0, 0, .20);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-selected {
+  border-color: rgba(212, 212, 212, .64);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .10),
+    inset 0 -9px 18px rgba(112, 112, 112, .14),
+    0 3px 14px rgba(144, 144, 144, .12);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__avatar {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Portraits sans anneau dans les trois listes ; les pastilles restent intactes. */
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__avatar > img {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__lower {
+  border-top: 0;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__lower::before {
+  display: none;
+  content: none;
+}
+
+/* Une seule finition pour les déplacements, sans couleur de destination. */
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary[data-direction] {
+  border-color: rgba(175, 175, 175, .32);
+  background: linear-gradient(135deg, #242424, #181818);
+  color: #d8d8d8;
+  box-shadow: inset 0 1px rgba(238, 238, 238, .05);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary[data-direction]:hover:not(:disabled) {
+  border-color: rgba(196, 196, 196, .58);
+  background: linear-gradient(135deg, #2e2e2e, #222222);
+  color: #f3f3f3;
+  box-shadow: inset 0 1px rgba(238, 238, 238, .08), 0 0 9px rgba(161, 161, 161, .13);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary[data-direction]:focus-visible {
+  outline: 1px solid #bebebe;
+  outline-offset: 2px;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary[data-direction]:disabled {
+  border-color: rgba(175, 175, 175, .22);
+  background: linear-gradient(135deg, #242424, #181818);
+  color: #d8d8d8;
+  box-shadow: none;
+  opacity: .48;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary[data-direction] > svg {
+  color: inherit;
+}
+
+/* En Coulisses seulement : montée et retour reprennent la finition orange.
+ * Même distinction au clavier ; aucune surbrillance si la scène est pleine. */
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-backstage .place-guest-row__primary[data-direction="up"]:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(190, 190, 190, .58);
+  background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+  color: #eeeeee;
+  outline-color: #bebebe;
+  box-shadow: inset 0 1px rgba(230, 230, 230, .10), 0 0 9px rgba(166, 166, 166, .16);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-backstage .place-guest-row__primary[data-direction="down"]:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(212, 212, 212, .65);
+  background: linear-gradient(135deg, #3e3e3e, #262626);
+  color: #f6f6f6;
+  box-shadow: inset 0 1px rgba(245, 245, 245, .12), 0 0 10px rgba(187, 187, 187, .18);
+}

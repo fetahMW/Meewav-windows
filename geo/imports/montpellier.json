@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "montpellier-official-subdistricts",
+  "title": "Sous-quartiers de Montpellier",
+  "datasetUrl": "https://data.montpellier3m.fr/dataset/sous-quartiers-de-montpellier",
+  "sourceUrl": "https://data.montpellier3m.fr/sites/default/files/ressources/VilleMTP_MTP_SousQuartiers.json",
+  "outputPath": "public/map/montpellier-quartiers.geojson",
+  "sourceProvider": "Montpellier Méditerranée Métropole Open Data",
+  "sourceVintage": "2026",
+  "sourceUpdatedAt": "2026-07-06",
+  "generatedAt": "2026-07-13T00:00:00.000Z",
+  "license": "ODbL 1.0",
+  "communeCode": "34172",
+  "communeName": "Montpellier",
+  "sourceCommuneValue": "MONTPELLIER",
+  "zoneIdPrefix": "montpellier",
+  "expectedFeatureCount": 31,
+  "propertyMap": {
+    "label": "name",
+    "parentLabel": "quartier",
+    "communeName": "commune"
+  }
+}

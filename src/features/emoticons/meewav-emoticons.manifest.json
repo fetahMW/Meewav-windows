@@ -1,0 +1,863 @@
+{
+  "name": "MeeWav — Pack 50 émoticônes musique 3D",
+  "version": "1.0.0",
+  "count": 50,
+  "layout": {
+    "columns": 10,
+    "rows": 5
+  },
+  "background": "transparent",
+  "recommendedUsage": "React + Vite, web et mobile",
+  "items": [
+    {
+      "id": 1,
+      "name": "micro-flamme",
+      "label": "Micro en flamme",
+      "category": "live",
+      "sourceIndex": 1,
+      "sprite": {
+        "row": 0,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/micro-flamme.png",
+        "png256": "png/256/micro-flamme.png",
+        "png512": "png/512/micro-flamme.png",
+        "webp256": "webp/256/micro-flamme.webp"
+      }
+    },
+    {
+      "id": 2,
+      "name": "casque-studio",
+      "label": "Casque studio",
+      "category": "studio",
+      "sourceIndex": 2,
+      "sprite": {
+        "row": 0,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/casque-studio.png",
+        "png256": "png/256/casque-studio.png",
+        "png512": "png/512/casque-studio.png",
+        "webp256": "webp/256/casque-studio.webp"
+      }
+    },
+    {
+      "id": 3,
+      "name": "guitare-electrique-flamme",
+      "label": "Guitare électrique en flamme",
+      "category": "instrument",
+      "sourceIndex": 3,
+      "sprite": {
+        "row": 0,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/guitare-electrique-flamme.png",
+        "png256": "png/256/guitare-electrique-flamme.png",
+        "png512": "png/512/guitare-electrique-flamme.png",
+        "webp256": "webp/256/guitare-electrique-flamme.webp"
+      }
+    },
+    {
+      "id": 4,
+      "name": "saxophone",
+      "label": "Saxophone",
+      "category": "instrument",
+      "sourceIndex": 4,
+      "sprite": {
+        "row": 0,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/saxophone.png",
+        "png256": "png/256/saxophone.png",
+        "png512": "png/512/saxophone.png",
+        "webp256": "webp/256/saxophone.webp"
+      }
+    },
+    {
+      "id": 5,
+      "name": "platine-vinyle",
+      "label": "Platine vinyle",
+      "category": "dj",
+      "sourceIndex": 5,
+      "sprite": {
+        "row": 0,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/platine-vinyle.png",
+        "png256": "png/256/platine-vinyle.png",
+        "png512": "png/512/platine-vinyle.png",
+        "webp256": "webp/256/platine-vinyle.webp"
+      }
+    },
+    {
+      "id": 6,
+      "name": "note-en-flamme",
+      "label": "Note en flamme",
+      "category": "reaction",
+      "sourceIndex": 6,
+      "sprite": {
+        "row": 0,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/note-en-flamme.png",
+        "png256": "png/256/note-en-flamme.png",
+        "png512": "png/512/note-en-flamme.png",
+        "webp256": "webp/256/note-en-flamme.webp"
+      }
+    },
+    {
+      "id": 7,
+      "name": "batterie",
+      "label": "Batterie",
+      "category": "instrument",
+      "sourceIndex": 7,
+      "sprite": {
+        "row": 0,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/batterie.png",
+        "png256": "png/256/batterie.png",
+        "png512": "png/512/batterie.png",
+        "webp256": "webp/256/batterie.webp"
+      }
+    },
+    {
+      "id": 8,
+      "name": "enceinte-studio",
+      "label": "Enceinte studio",
+      "category": "studio",
+      "sourceIndex": 8,
+      "sprite": {
+        "row": 0,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/enceinte-studio.png",
+        "png256": "png/256/enceinte-studio.png",
+        "png512": "png/512/enceinte-studio.png",
+        "webp256": "webp/256/enceinte-studio.webp"
+      }
+    },
+    {
+      "id": 9,
+      "name": "notes-couronne",
+      "label": "Notes couronnées",
+      "category": "reaction",
+      "sourceIndex": 9,
+      "sprite": {
+        "row": 0,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/notes-couronne.png",
+        "png256": "png/256/notes-couronne.png",
+        "png512": "png/512/notes-couronne.png",
+        "webp256": "webp/256/notes-couronne.webp"
+      }
+    },
+    {
+      "id": 10,
+      "name": "coeur-casque",
+      "label": "Cœur avec casque",
+      "category": "reaction",
+      "sourceIndex": 10,
+      "sprite": {
+        "row": 0,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/coeur-casque.png",
+        "png256": "png/256/coeur-casque.png",
+        "png512": "png/512/coeur-casque.png",
+        "webp256": "webp/256/coeur-casque.webp"
+      }
+    },
+    {
+      "id": 11,
+      "name": "signe-rock",
+      "label": "Signe rock",
+      "category": "reaction",
+      "sourceIndex": 11,
+      "sprite": {
+        "row": 1,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/signe-rock.png",
+        "png256": "png/256/signe-rock.png",
+        "png512": "png/512/signe-rock.png",
+        "webp256": "webp/256/signe-rock.webp"
+      }
+    },
+    {
+      "id": 12,
+      "name": "pad-midi",
+      "label": "Pad MIDI",
+      "category": "production",
+      "sourceIndex": 12,
+      "sprite": {
+        "row": 1,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/pad-midi.png",
+        "png256": "png/256/pad-midi.png",
+        "png512": "png/512/pad-midi.png",
+        "webp256": "webp/256/pad-midi.webp"
+      }
+    },
+    {
+      "id": 13,
+      "name": "onde-audio",
+      "label": "Onde audio",
+      "category": "digital",
+      "sourceIndex": 13,
+      "sprite": {
+        "row": 1,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/onde-audio.png",
+        "png256": "png/256/onde-audio.png",
+        "png512": "png/512/onde-audio.png",
+        "webp256": "webp/256/onde-audio.webp"
+      }
+    },
+    {
+      "id": 14,
+      "name": "micro-vintage",
+      "label": "Micro vintage",
+      "category": "live",
+      "sourceIndex": 14,
+      "sprite": {
+        "row": 1,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/micro-vintage.png",
+        "png256": "png/256/micro-vintage.png",
+        "png512": "png/512/micro-vintage.png",
+        "webp256": "webp/256/micro-vintage.webp"
+      }
+    },
+    {
+      "id": 15,
+      "name": "boite-a-rythmes-808",
+      "label": "Boîte à rythmes 808",
+      "category": "production",
+      "sourceIndex": 15,
+      "sprite": {
+        "row": 1,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/boite-a-rythmes-808.png",
+        "png256": "png/256/boite-a-rythmes-808.png",
+        "png512": "png/512/boite-a-rythmes-808.png",
+        "webp256": "webp/256/boite-a-rythmes-808.webp"
+      }
+    },
+    {
+      "id": 16,
+      "name": "fusee-musicale",
+      "label": "Fusée musicale",
+      "category": "reaction",
+      "sourceIndex": 16,
+      "sprite": {
+        "row": 1,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/fusee-musicale.png",
+        "png256": "png/256/fusee-musicale.png",
+        "png512": "png/512/fusee-musicale.png",
+        "webp256": "webp/256/fusee-musicale.webp"
+      }
+    },
+    {
+      "id": 17,
+      "name": "disque-vinyle",
+      "label": "Disque vinyle",
+      "category": "dj",
+      "sourceIndex": 17,
+      "sprite": {
+        "row": 1,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/disque-vinyle.png",
+        "png256": "png/256/disque-vinyle.png",
+        "png512": "png/512/disque-vinyle.png",
+        "webp256": "webp/256/disque-vinyle.webp"
+      }
+    },
+    {
+      "id": 18,
+      "name": "couronne-mw",
+      "label": "Couronne MW",
+      "category": "brand",
+      "sourceIndex": 18,
+      "sprite": {
+        "row": 1,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/couronne-mw.png",
+        "png256": "png/256/couronne-mw.png",
+        "png512": "png/512/couronne-mw.png",
+        "webp256": "webp/256/couronne-mw.webp"
+      }
+    },
+    {
+      "id": 19,
+      "name": "globe-casque",
+      "label": "Globe avec casque",
+      "category": "community",
+      "sourceIndex": 20,
+      "sprite": {
+        "row": 1,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/globe-casque.png",
+        "png256": "png/256/globe-casque.png",
+        "png512": "png/512/globe-casque.png",
+        "webp256": "webp/256/globe-casque.webp"
+      }
+    },
+    {
+      "id": 20,
+      "name": "nuage-musical",
+      "label": "Nuage musical",
+      "category": "digital",
+      "sourceIndex": 22,
+      "sprite": {
+        "row": 1,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/nuage-musical.png",
+        "png256": "png/256/nuage-musical.png",
+        "png512": "png/512/nuage-musical.png",
+        "webp256": "webp/256/nuage-musical.webp"
+      }
+    },
+    {
+      "id": 21,
+      "name": "boombox",
+      "label": "Boombox",
+      "category": "music",
+      "sourceIndex": 23,
+      "sprite": {
+        "row": 2,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/boombox.png",
+        "png256": "png/256/boombox.png",
+        "png512": "png/512/boombox.png",
+        "webp256": "webp/256/boombox.webp"
+      }
+    },
+    {
+      "id": 22,
+      "name": "micro-studio",
+      "label": "Micro studio",
+      "category": "studio",
+      "sourceIndex": 24,
+      "sprite": {
+        "row": 2,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/micro-studio.png",
+        "png256": "png/256/micro-studio.png",
+        "png512": "png/512/micro-studio.png",
+        "webp256": "webp/256/micro-studio.webp"
+      }
+    },
+    {
+      "id": 23,
+      "name": "coeur-en-flamme",
+      "label": "Cœur en flamme",
+      "category": "reaction",
+      "sourceIndex": 25,
+      "sprite": {
+        "row": 2,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/coeur-en-flamme.png",
+        "png256": "png/256/coeur-en-flamme.png",
+        "png512": "png/512/coeur-en-flamme.png",
+        "webp256": "webp/256/coeur-en-flamme.webp"
+      }
+    },
+    {
+      "id": 24,
+      "name": "dj-cool",
+      "label": "DJ cool",
+      "category": "reaction",
+      "sourceIndex": 26,
+      "sprite": {
+        "row": 2,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/dj-cool.png",
+        "png256": "png/256/dj-cool.png",
+        "png512": "png/512/dj-cool.png",
+        "webp256": "webp/256/dj-cool.webp"
+      }
+    },
+    {
+      "id": 25,
+      "name": "clavier-midi",
+      "label": "Clavier MIDI",
+      "category": "production",
+      "sourceIndex": 27,
+      "sprite": {
+        "row": 2,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/clavier-midi.png",
+        "png256": "png/256/clavier-midi.png",
+        "png512": "png/512/clavier-midi.png",
+        "webp256": "webp/256/clavier-midi.webp"
+      }
+    },
+    {
+      "id": 26,
+      "name": "notes-pop",
+      "label": "Notes pop",
+      "category": "reaction",
+      "sourceIndex": 28,
+      "sprite": {
+        "row": 2,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/notes-pop.png",
+        "png256": "png/256/notes-pop.png",
+        "png512": "png/512/notes-pop.png",
+        "webp256": "webp/256/notes-pop.webp"
+      }
+    },
+    {
+      "id": 27,
+      "name": "guitare-acoustique",
+      "label": "Guitare acoustique",
+      "category": "instrument",
+      "sourceIndex": 29,
+      "sprite": {
+        "row": 2,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/guitare-acoustique.png",
+        "png256": "png/256/guitare-acoustique.png",
+        "png512": "png/512/guitare-acoustique.png",
+        "webp256": "webp/256/guitare-acoustique.webp"
+      }
+    },
+    {
+      "id": 28,
+      "name": "egaliseur",
+      "label": "Égaliseur",
+      "category": "production",
+      "sourceIndex": 31,
+      "sprite": {
+        "row": 2,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/egaliseur.png",
+        "png256": "png/256/egaliseur.png",
+        "png512": "png/512/egaliseur.png",
+        "webp256": "webp/256/egaliseur.webp"
+      }
+    },
+    {
+      "id": 29,
+      "name": "beatpad-en-flamme",
+      "label": "Beat pad en flamme",
+      "category": "production",
+      "sourceIndex": 32,
+      "sprite": {
+        "row": 2,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/beatpad-en-flamme.png",
+        "png256": "png/256/beatpad-en-flamme.png",
+        "png512": "png/512/beatpad-en-flamme.png",
+        "webp256": "webp/256/beatpad-en-flamme.webp"
+      }
+    },
+    {
+      "id": 30,
+      "name": "trompette",
+      "label": "Trompette",
+      "category": "instrument",
+      "sourceIndex": 33,
+      "sprite": {
+        "row": 2,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/trompette.png",
+        "png256": "png/256/trompette.png",
+        "png512": "png/512/trompette.png",
+        "webp256": "webp/256/trompette.webp"
+      }
+    },
+    {
+      "id": 31,
+      "name": "scratch-dj",
+      "label": "Scratch DJ",
+      "category": "dj",
+      "sourceIndex": 34,
+      "sprite": {
+        "row": 3,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/scratch-dj.png",
+        "png256": "png/256/scratch-dj.png",
+        "png512": "png/512/scratch-dj.png",
+        "webp256": "webp/256/scratch-dj.webp"
+      }
+    },
+    {
+      "id": 32,
+      "name": "cassette",
+      "label": "Cassette",
+      "category": "music",
+      "sourceIndex": 35,
+      "sprite": {
+        "row": 3,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/cassette.png",
+        "png256": "png/256/cassette.png",
+        "png512": "png/512/cassette.png",
+        "webp256": "webp/256/cassette.webp"
+      }
+    },
+    {
+      "id": 33,
+      "name": "coeur-musical",
+      "label": "Cœur musical",
+      "category": "reaction",
+      "sourceIndex": 37,
+      "sprite": {
+        "row": 3,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/coeur-musical.png",
+        "png256": "png/256/coeur-musical.png",
+        "png512": "png/512/coeur-musical.png",
+        "webp256": "webp/256/coeur-musical.webp"
+      }
+    },
+    {
+      "id": 34,
+      "name": "partition-notes",
+      "label": "Partition de notes",
+      "category": "music",
+      "sourceIndex": 38,
+      "sprite": {
+        "row": 3,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/partition-notes.png",
+        "png256": "png/256/partition-notes.png",
+        "png512": "png/512/partition-notes.png",
+        "webp256": "webp/256/partition-notes.webp"
+      }
+    },
+    {
+      "id": 35,
+      "name": "etoile-casque",
+      "label": "Étoile avec casque",
+      "category": "reaction",
+      "sourceIndex": 39,
+      "sprite": {
+        "row": 3,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/etoile-casque.png",
+        "png256": "png/256/etoile-casque.png",
+        "png512": "png/512/etoile-casque.png",
+        "webp256": "webp/256/etoile-casque.webp"
+      }
+    },
+    {
+      "id": 36,
+      "name": "table-mixage",
+      "label": "Table de mixage",
+      "category": "production",
+      "sourceIndex": 41,
+      "sprite": {
+        "row": 3,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/table-mixage.png",
+        "png256": "png/256/table-mixage.png",
+        "png512": "png/512/table-mixage.png",
+        "webp256": "webp/256/table-mixage.webp"
+      }
+    },
+    {
+      "id": 37,
+      "name": "casque-en-flamme",
+      "label": "Casque en flamme",
+      "category": "reaction",
+      "sourceIndex": 42,
+      "sprite": {
+        "row": 3,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/casque-en-flamme.png",
+        "png256": "png/256/casque-en-flamme.png",
+        "png512": "png/512/casque-en-flamme.png",
+        "webp256": "webp/256/casque-en-flamme.webp"
+      }
+    },
+    {
+      "id": 38,
+      "name": "vinyle-notes",
+      "label": "Vinyle et notes",
+      "category": "dj",
+      "sourceIndex": 43,
+      "sprite": {
+        "row": 3,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/vinyle-notes.png",
+        "png256": "png/256/vinyle-notes.png",
+        "png512": "png/512/vinyle-notes.png",
+        "webp256": "webp/256/vinyle-notes.webp"
+      }
+    },
+    {
+      "id": 39,
+      "name": "synthetiseur",
+      "label": "Synthétiseur",
+      "category": "production",
+      "sourceIndex": 44,
+      "sprite": {
+        "row": 3,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/synthetiseur.png",
+        "png256": "png/256/synthetiseur.png",
+        "png512": "png/512/synthetiseur.png",
+        "webp256": "webp/256/synthetiseur.webp"
+      }
+    },
+    {
+      "id": 40,
+      "name": "pad-tactile",
+      "label": "Pad tactile",
+      "category": "production",
+      "sourceIndex": 45,
+      "sprite": {
+        "row": 3,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/pad-tactile.png",
+        "png256": "png/256/pad-tactile.png",
+        "png512": "png/512/pad-tactile.png",
+        "webp256": "webp/256/pad-tactile.webp"
+      }
+    },
+    {
+      "id": 41,
+      "name": "boule-disco-casque",
+      "label": "Boule disco avec casque",
+      "category": "dj",
+      "sourceIndex": 46,
+      "sprite": {
+        "row": 4,
+        "column": 0
+      },
+      "files": {
+        "png128": "png/128/boule-disco-casque.png",
+        "png256": "png/256/boule-disco-casque.png",
+        "png512": "png/512/boule-disco-casque.png",
+        "webp256": "webp/256/boule-disco-casque.webp"
+      }
+    },
+    {
+      "id": 42,
+      "name": "ampoule-musicale",
+      "label": "Ampoule musicale",
+      "category": "creation",
+      "sourceIndex": 48,
+      "sprite": {
+        "row": 4,
+        "column": 1
+      },
+      "files": {
+        "png128": "png/128/ampoule-musicale.png",
+        "png256": "png/256/ampoule-musicale.png",
+        "png512": "png/512/ampoule-musicale.png",
+        "webp256": "webp/256/ampoule-musicale.webp"
+      }
+    },
+    {
+      "id": 43,
+      "name": "micro-pop-filter",
+      "label": "Micro avec filtre anti-pop",
+      "category": "studio",
+      "sourceIndex": 49,
+      "sprite": {
+        "row": 4,
+        "column": 2
+      },
+      "files": {
+        "png128": "png/128/micro-pop-filter.png",
+        "png256": "png/256/micro-pop-filter.png",
+        "png512": "png/512/micro-pop-filter.png",
+        "webp256": "webp/256/micro-pop-filter.webp"
+      }
+    },
+    {
+      "id": 44,
+      "name": "onde-neon",
+      "label": "Onde néon",
+      "category": "digital",
+      "sourceIndex": 50,
+      "sprite": {
+        "row": 4,
+        "column": 3
+      },
+      "files": {
+        "png128": "png/128/onde-neon.png",
+        "png256": "png/256/onde-neon.png",
+        "png512": "png/512/onde-neon.png",
+        "webp256": "webp/256/onde-neon.webp"
+      }
+    },
+    {
+      "id": 45,
+      "name": "laptop-waveform",
+      "label": "Ordinateur avec forme d’onde",
+      "category": "digital",
+      "sourceIndex": 53,
+      "sprite": {
+        "row": 4,
+        "column": 4
+      },
+      "files": {
+        "png128": "png/128/laptop-waveform.png",
+        "png256": "png/256/laptop-waveform.png",
+        "png512": "png/512/laptop-waveform.png",
+        "webp256": "webp/256/laptop-waveform.webp"
+      }
+    },
+    {
+      "id": 46,
+      "name": "vinyle-couronne",
+      "label": "Vinyle couronné",
+      "category": "reaction",
+      "sourceIndex": 54,
+      "sprite": {
+        "row": 4,
+        "column": 5
+      },
+      "files": {
+        "png128": "png/128/vinyle-couronne.png",
+        "png256": "png/256/vinyle-couronne.png",
+        "png512": "png/512/vinyle-couronne.png",
+        "webp256": "webp/256/vinyle-couronne.webp"
+      }
+    },
+    {
+      "id": 47,
+      "name": "partition-crayon",
+      "label": "Partition et crayon",
+      "category": "creation",
+      "sourceIndex": 55,
+      "sprite": {
+        "row": 4,
+        "column": 6
+      },
+      "files": {
+        "png128": "png/128/partition-crayon.png",
+        "png256": "png/256/partition-crayon.png",
+        "png512": "png/512/partition-crayon.png",
+        "webp256": "webp/256/partition-crayon.webp"
+      }
+    },
+    {
+      "id": 48,
+      "name": "collaboration",
+      "label": "Collaboration",
+      "category": "community",
+      "sourceIndex": 56,
+      "sprite": {
+        "row": 4,
+        "column": 7
+      },
+      "files": {
+        "png128": "png/128/collaboration.png",
+        "png256": "png/256/collaboration.png",
+        "png512": "png/512/collaboration.png",
+        "webp256": "webp/256/collaboration.webp"
+      }
+    },
+    {
+      "id": 49,
+      "name": "disque-or",
+      "label": "Disque d’or",
+      "category": "reward",
+      "sourceIndex": 58,
+      "sprite": {
+        "row": 4,
+        "column": 8
+      },
+      "files": {
+        "png128": "png/128/disque-or.png",
+        "png256": "png/256/disque-or.png",
+        "png512": "png/512/disque-or.png",
+        "webp256": "webp/256/disque-or.webp"
+      }
+    },
+    {
+      "id": 50,
+      "name": "planete-musicale",
+      "label": "Planète musicale",
+      "category": "community",
+      "sourceIndex": 60,
+      "sprite": {
+        "row": 4,
+        "column": 9
+      },
+      "files": {
+        "png128": "png/128/planete-musicale.png",
+        "png256": "png/256/planete-musicale.png",
+        "png512": "png/512/planete-musicale.png",
+        "webp256": "webp/256/planete-musicale.webp"
+      }
+    }
+  ]
+}

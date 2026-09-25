@@ -1,0 +1,250 @@
+/* La Classe — piano-black receiver. Material only: the canonical Place player,
+   signal values, controls and audio routing stay mounted and unchanged. */
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) {
+  --classe-hifi-face:
+    linear-gradient(119deg, transparent 10%, rgba(214, 225, 245, .045) 10.2%, rgba(222, 232, 249, .018) 31%, transparent 31.2%) padding-box,
+    linear-gradient(180deg, #25282e 0%, #171a1f 5%, #0b0d11 27%, #050608 63%, #090b0e 94%, #13161b 100%) padding-box,
+    linear-gradient(122deg, #6b727e 0%, #363b45 23%, #161920 57%, #343943 100%) border-box;
+  --classe-hifi-edge:
+    inset 0 1px rgba(235, 241, 252, .18),
+    inset 0 -1px #020304,
+    0 1px 0 #030405,
+    0 3px 0 #020304,
+    0 6px 9px rgba(0, 0, 0, .64);
+  --classe-hifi-key:
+    linear-gradient(145deg, rgba(255, 255, 255, .1), transparent 46%) padding-box,
+    linear-gradient(180deg, #292e37, #15181e 49%, #090c10) padding-box,
+    linear-gradient(145deg, #79818e, #333944 35%, #181d25 70%, #414955) border-box;
+  --classe-hifi-key-shadow: inset 0 1px rgba(240, 246, 255, .17), inset 0 -1px #030405, 0 2px 0 #020304, 0 4px 5px rgba(0, 0, 0, .65);
+  --hifi-signal: linear-gradient(90deg, #7979f5, #6386ff 42%, #69b7ff);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 0 0, rgba(117, 134, 168, .1), transparent 46%),
+    linear-gradient(110deg, #15191f, #07090d 20%, #030507 75%, #10141a);
+  box-shadow: 0 0 0 1px #030405, inset 0 0 25px #000, 0 14px 35px rgba(0, 0, 0, .65);
+}
+
+/* A continuous machined rim: specular corners, darker sidewalls, inner gasket. */
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools)::before {
+  inset: 0;
+  padding: 5px;
+  border: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(110px 90px at 0 0, rgba(236, 244, 255, .58), transparent 75%),
+    radial-gradient(110px 80px at 100% 100%, rgba(211, 227, 249, .27), transparent 80%),
+    linear-gradient(112deg, #777e8b 0%, #323843 13%, #151a22 27%, #080b10 56%, #303742 84%, #555f6e 100%);
+  box-shadow: inset 0 1px rgba(236, 244, 255, .5), inset 0 -1px rgba(167, 186, 215, .23), inset 1px 0 rgba(212, 229, 255, .19), inset 0 0 2px #050609;
+  opacity: 1;
+  pointer-events: none;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools)::after {
+  display: block;
+  position: absolute;
+  z-index: 19;
+  inset: 5px;
+  border: 1px solid rgba(144, 159, 186, .12);
+  border-radius: 17px;
+  background: transparent;
+  box-shadow: inset 0 1px 2px #000;
+  content: "";
+  pointer-events: none;
+}
+
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) .place-studio-panel__bar {
+  background: linear-gradient(115deg, rgba(215, 226, 247, .055), transparent 43%), linear-gradient(#101318, #05070a);
+  box-shadow: inset 0 1px rgba(224, 235, 255, .11), 0 1px #000, 0 3px 6px rgba(0, 0, 0, .5);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) .place-studio-panel__tabs > button {
+  gap: 4px;
+  padding-inline: 3px;
+  font-size: 10px;
+  font-weight: 550;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) .place-studio-panel__tabs > button > svg {
+  width: 13px;
+  height: 13px;
+  min-width: 13px;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) .place-studio-panel__tabs > button.is-active {
+  background: linear-gradient(150deg, rgba(161, 194, 255, .09), transparent 50%) padding-box, linear-gradient(#1b2538, #0a101d) padding-box, linear-gradient(140deg, #7897c3, #24354e 65%, #405e89) border-box;
+  box-shadow: inset 0 1px rgba(206, 225, 255, .14), 0 2px 3px #000;
+  text-shadow: none;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) .place-studio-panel__tabs > button.is-active > svg {
+  color: #abc7ff;
+  filter: none;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-host-panel:not(.is-collapsed):is(.is-mixer, .is-tools) .place-studio-panel__tabs > button.is-active::after {
+  background: linear-gradient(90deg, transparent, #88b6ff 30%, #bedbff 50%, #88b6ff 70%, transparent);
+  box-shadow: 0 -2px 6px rgba(108, 163, 255, .2);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-mixer__subnav.has-twists {
+  background: linear-gradient(115deg, rgba(219, 230, 250, .065), transparent 40%), linear-gradient(#15191f, #07090c);
+  box-shadow: inset 0 1px rgba(224, 235, 255, .16), 0 2px 0 #020304, 0 4px 7px rgba(0, 0, 0, .6);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-mixer__subnav.has-twists > button.is-active {
+  background: radial-gradient(ellipse at 50% 116%, rgba(105, 158, 255, .12), transparent 65%);
+  text-shadow: none;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-mixer__subnav.has-twists > button.is-active > svg { color: #abc7ff; }
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-mixer__subnav.has-twists > button.is-active::after {
+  background: linear-gradient(90deg, transparent, #81aaff 30%, #c0d9ff 50%, #81aaff 70%, transparent);
+  box-shadow: 0 -2px 6px rgba(108, 163, 255, .17);
+}
+
+/* Raised channel fascias. Their footprint is unchanged, including the Master. */
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player :is(.place-volume-list, .place-master-dock) > .place-volume-row,
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player :is(.place-volume-list, .place-master-dock) > .place-volume-row:is(:first-child, .is-music-channel, :hover) {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--classe-hifi-face);
+  box-shadow: var(--classe-hifi-edge);
+  transform: none;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player :is(.place-volume-list, .place-master-dock) > .place-volume-row:hover {
+  box-shadow: inset 0 1px rgba(245, 248, 255, .3), inset 0 -1px #020304, 0 1px 0 #030405, 0 3px 0 #020304, 0 6px 9px rgba(0, 0, 0, .64);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__identity strong {
+  color: #e3e8f1;
+  font: 650 12px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -.015em;
+  text-shadow: 0 1px 1px #000;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row output {
+  color: #aab8cd;
+  font: 500 9.5px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 7px rgba(120, 169, 244, .13);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__meter {
+  /* The old narrow-screen skin hid this already-reserved meter row. */
+  display: block;
+  border-radius: 2px;
+  background-color: #020407;
+  box-shadow: inset 0 1px 2px #000, 0 1px rgba(220, 230, 248, .055);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row:not(.is-muted):not(.is-clipping) .place-volume-row__meter i {
+  background: var(--hifi-signal);
+  filter: drop-shadow(0 0 2px rgba(104, 147, 251, .28));
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__portrait {
+  border: 0;
+  box-shadow: 0 0 0 1px #020304, 0 1px 0 1px rgba(158, 175, 205, .15);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__source-icon {
+  border-color: rgba(151, 178, 236, .35);
+  background: linear-gradient(145deg, #282d39, #070a0f 62%);
+  box-shadow: inset 0 1px rgba(222, 235, 255, .2), 0 0 0 2px #05070a, 0 3px 5px #000;
+  color: #9fbaff;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__source-icon > svg { color: inherit; }
+
+/* Recessed rails and satin-metal slider caps; hit areas and values are retained. */
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__fader::-webkit-slider-runnable-track {
+  height: 3px;
+  background: var(--hifi-signal) 0 0 / var(--gain-pct) 100% no-repeat, #030508;
+  box-shadow: inset 0 1px 2px #000, 0 1px rgba(225, 236, 255, .1);
+  border-radius: 3px;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__fader::-webkit-slider-thumb {
+  width: 11px;
+  height: 15px;
+  margin-top: -6px;
+  border: 1px solid #bac2cc;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #eef2f7, #a5adb9 38%, #e4e9ef 44%, #7c8796 52%, #d0d8e3 62%, #606d7d);
+  box-shadow: inset 1px 0 rgba(255, 255, 255, .5), 0 1px 1px #000, 0 2px 4px #000;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__fader::-moz-range-track {
+  height: 3px;
+  background: #030508;
+  box-shadow: inset 0 1px 2px #000, 0 1px rgba(225, 236, 255, .1);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__fader::-moz-range-progress { height: 3px; background: var(--hifi-signal); }
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row__fader::-moz-range-thumb {
+  width: 9px;
+  height: 13px;
+  border: 1px solid #bac2cc;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #eef2f7, #a5adb9 38%, #e4e9ef 44%, #7c8796 52%, #d0d8e3 62%, #606d7d);
+  box-shadow: inset 1px 0 rgba(255, 255, 255, .5), 0 2px 4px #000;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row > button:not(.is-active) {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--classe-hifi-key);
+  box-shadow: var(--classe-hifi-key-shadow);
+  color: #bac4d4;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row > button.is-active {
+  border: 1px solid #624050;
+  border-radius: 8px;
+  background: linear-gradient(155deg, #301b25, #130e15);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .8), 0 1px rgba(210, 169, 190, .1);
+  color: #f0a4bb;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row > button:focus-visible {
+  outline: 2px solid #a9c5ff;
+  outline-offset: 2px;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row > button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 4px #000, 0 1px rgba(181, 204, 241, .1);
+}
+
+/* The same canonical player, now behind a smoke-glass front panel. */
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio.is-classroom-collapsible {
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background: var(--classe-hifi-face);
+  box-shadow: var(--classe-hifi-edge);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio__waveform {
+  border-radius: 7px;
+  background: linear-gradient(135deg, rgba(110, 141, 192, .065), transparent 48%), #030609;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, .9), inset 0 0 0 1px rgba(133, 159, 203, .065), 0 1px rgba(187, 207, 240, .045);
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio__waveform-empty {
+  color: #8293ae;
+  font-size: 8px;
+  font-weight: 550;
+  letter-spacing: .12em;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio__track-icon {
+  color: #a0b9ff;
+  background: linear-gradient(145deg, #232b3b, #070b13);
+  border-color: rgba(157, 185, 238, .35);
+  box-shadow: inset 0 1px rgba(220, 234, 255, .15), 0 2px 4px #000;
+}
+/* The shared shell declares these surfaces important. Keep the override local
+   and exclude talkback's live warning and routing's active-state treatment. */
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio :is(
+  .place-mixer-audio__import,
+  .place-mixer-audio__transport-buttons > button:not(.place-mixer-audio__play),
+  .place-mixer-audio__utility-actions > button:not(.is-talking):not(.is-active)
+) {
+  border-radius: 8px;
+  background: var(--classe-hifi-key) !important;
+  box-shadow: var(--classe-hifi-key-shadow) !important;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio__play {
+  border-color: #545e6d;
+  background: radial-gradient(circle at 37% 24%, #2e3541, #11161d 44%, #05080d 78%) !important;
+  box-shadow: inset 0 1px rgba(221, 233, 255, .3), inset 0 -2px #020304, 0 0 0 2px #030508, 0 3px 0 #000, 0 6px 9px rgba(0, 0, 0, .7) !important;
+  color: #bacdff;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio__classroom-toggle {
+  background: transparent;
+  box-shadow: none;
+}
+.place-room-shell[data-room-presentation="classe"] .place-studio-panel:is(.is-mixer, .is-tools) .place-mixer.has-classroom-player .place-mixer-audio__classroom-toggle::before {
+  background: var(--classe-hifi-key);
+  border-color: transparent;
+  box-shadow: var(--classe-hifi-key-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row,
+  .place-room-shell[data-room-presentation="classe"] .place-studio-panel.is-mixer .place-mixer.has-classroom-player .place-volume-row > button { transition: none; }
+}

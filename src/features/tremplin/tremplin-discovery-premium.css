@@ -1,0 +1,121 @@
+/* One editorial card for every Discover collection and token lifecycle. */
+.tremplin-home-rail,
+.tremplin-home-rail.is-first-projects { --tremplin-rail-card-width: min(1000px, 87vw); }
+.tremplin-home-rail__viewport-shell { --rail-edge-inset: 18px 0 28px; }
+.tremplin-home-rail__viewport { width: 100%; max-width: 100%; }
+.tremplin-home-rail__track { align-items: stretch; gap: 22px; }
+.tremplin-home-rail__track > div { display: flex; align-self: stretch; width: var(--tremplin-rail-card-width); flex: 0 0 var(--tremplin-rail-card-width); height: 548px; }
+.tremplin-home-wall__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1000px)); align-items: stretch; gap: 24px; }
+.tremplin-home-card.tremplin-discovery-card.tremplin-home-card--rail,
+.tremplin-home-card.tremplin-discovery-card.tremplin-home-card--wall {
+  --talent-accent: #ad80e7 !important;
+  position: relative; isolation: isolate; display: grid; grid-template-columns: 34% minmax(0,1fr); grid-template-rows: minmax(0,1fr) 113px;
+  width: 100%; min-width: 0; height: 548px; min-height: 548px; align-self: stretch; overflow: hidden; padding: 7px;
+  border: 1px solid #a18bbb99; border-radius: 28px;
+  background: radial-gradient(ellipse at 100% 0, #7947a927, transparent 49%), linear-gradient(135deg, #ffffff09, transparent 32% 67%, #a47ad90c 68%, transparent 83%), linear-gradient(145deg, #100e16, #040405 52%, #0d0a13);
+  box-shadow: inset 0 1px 2px #f2e8ff6b, inset 0 -1px 2px #b589e85e, 0 12px 30px #0008;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+.tremplin-discovery-card::after { content: ''; position: absolute; z-index: 0; pointer-events: none; inset: 0; border-radius: inherit; background: radial-gradient(ellipse 45px 5px at 8% 0, #f1deff9e, transparent), radial-gradient(ellipse 5px 46px at 100% 82%, #bc96f585, transparent); }
+.tremplin-home-card.tremplin-discovery-card:hover { transform: none; border-color: #bab5ce55; box-shadow: inset 0 1px #ffffff24, 0 14px 30px #0008; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__visual { grid-column: 1; grid-row: 1 / -1; width: 100%; height: 100%; min-height: 0; aspect-ratio: auto; border: 1px solid #ffffff12; border-radius: 22px; overflow: hidden; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__visual img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; transform: none; filter: none; }
+.tremplin-discovery-card .tremplin-home-card__visual::after { background: linear-gradient(0deg,#08060cab,transparent 35% 78%,#0c071e25); }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__follow { top: 16px; right: 16px; width: 45px; height: 45px; min-width: 45px; min-height: 45px; border: 1px solid #ceb6e580; border-radius: 50%; background: radial-gradient(circle at 30% 10%,#b597d02b,transparent 60%), #08070bd6; color: #fff; box-shadow: inset 0 1px 2px #ffffff27,0 4px 10px #0006; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__follow.is-followed { background: #271635de; color: #d9b4fa; border-color: #b287da; }
+.tremplin-discovery-card .tremplin-home-card__audio-overlay { right: 16px; bottom: 18px; left: auto; min-height: 45px; padding: 8px 17px; gap: 10px; border: 1px solid #b7a3ca9c; border-radius: 24px; background: linear-gradient(160deg,#39313e,#08070bea 52%); box-shadow: inset 0 1px 2px #ffffff78,0 4px 12px #000a; font-size: 15px; color: #fff; }
+.tremplin-discovery-card .tremplin-home-card__audio-overlay svg { width: 19px; height: 19px; }
+.tremplin-discovery-card .tremplin-home-card__rank { top: auto; bottom: 80px; left: 16px; max-width: calc(100% - 32px); padding: 6px 8px; border: 1px solid #cab2e433; background: #09070cb3; color: #e1d3ee; font-size: 9px; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__body { grid-column: 2; grid-row: 1; display: grid; grid-template-rows: 106px 98px minmax(0,1fr); gap: 12px; align-content: stretch; min-height: 0; padding: 23px 25px 14px 28px; }
+.tremplin-discovery-card .tremplin-home-card__heading { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px; align-items: start; }
+.tremplin-discovery-card .tremplin-home-card__heading > div { min-width: 0; }
+.tremplin-discovery-card .tremplin-home-card__name { display: block; padding: 0; text-align: left; background: none; border: 0; color: #faf8fc; }
+.tremplin-discovery-card .tremplin-home-card__name strong { display: -webkit-box; white-space: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-family: Georgia, "Times New Roman", serif; font-size: 40px; line-height: 1.06; font-weight: 600; letter-spacing: -.025em; }
+.tremplin-discovery-card .tremplin-home-card__identity-meta { display: grid; gap: 4px; margin: 7px 0 0; color: #bdb3cb; font-size: 11px; line-height: 1.35; }
+.tremplin-discovery-card .tremplin-home-card__identity-meta > span { display: flex; align-items: center; gap: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tremplin-discovery-card .tremplin-home-card__identity-meta svg { flex-shrink: 0; color: #c5a4e8; }
+.tremplin-discovery-card .tremplin-home-card__grade { display: flex; align-items: center; gap: 4px; padding: 5px 10px 5px 4px; border: 1px solid #b084d945; border-radius: 32px; background: linear-gradient(125deg,#2a173d55,#0c0812); box-shadow: inset 0 1px 1px #d1a8f32b; color: #e5c9f5; font-size: 10px; }
+.tremplin-discovery-card .tremplin-home-card__grade .mw-grade-badge { --mw-grade-size: 47px !important; width: 47px; height: 47px; flex-shrink: 0; }
+.tremplin-discovery-card .tremplin-home-card__project { display: grid; align-content: start; gap: 5px; min-height: 0; margin: 0; padding: 11px 0 0; border-top: 1px solid #aa8cce35; }
+.tremplin-discovery-card .tremplin-home-card__project > small { color: #cba5ec; font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.tremplin-discovery-card .tremplin-home-card__project > strong { font-family: Georgia, "Times New Roman", serif; font-size: 26px; font-weight: 600; line-height: 1.2; color: #f2edf8; -webkit-line-clamp: 1; }
+.tremplin-discovery-card .tremplin-home-card__project > p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin: 0; color: #b5a9c5; font-size: 11px; line-height: 1.4; }
+.tremplin-discovery-card .tremplin-home-card__token-summary { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 5px; min-height: 0; margin: 0; padding: 11px 13px; border: 1px solid #ab8bcc80; border-radius: 18px; background: radial-gradient(ellipse at 0 0,#c1a0e020,transparent 60%), linear-gradient(165deg,#24202b,#09070e 38%,#110c1a); box-shadow: inset 0 1px 2px #e9d9ff45,inset 0 -1px 2px #b18adc27,0 4px 9px #0006; }
+.tremplin-discovery-card .tremplin-home-card__token-summary[data-token-stage="active"] { background: radial-gradient(ellipse at 100% 0,#a470df20,transparent 60%),linear-gradient(165deg,#272031,#0a070f 45%,#150e1e); border-color: #b68fd994; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header { display: flex; align-items: center; gap: 8px; min-height: 24px; padding-left: 35px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header > span { flex: 1; color: #f6f1fb; font-size: 12px; font-weight: 650; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header > strong { color: #d3b3f1; font-size: 11px; }
+.tremplin-discovery-card__status-icon { position: absolute; left: 12px; top: 13px; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #bb93e071; border-radius: 50%; background: radial-gradient(circle at 35% 15%,#b887df4a,#100b18 70%); box-shadow: inset 0 1px 1px #ffffff2b; }
+.tremplin-discovery-card__status-icon > svg { width: 28px; height: 28px; }
+.tremplin-discovery-card__status-icon > span { width: 10px; height: 10px; border-radius: 50%; background: #be94e6; box-shadow: inset 0 1px 2px #fff9,0 0 8px #c08ee34d; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > p { margin: 0; padding-left: 35px; color: #b8abc6; font-size: 10px; line-height: 1.4; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > .tremplin-home-card__token-context { display: grid; grid-template-columns: 1fr; gap: 3px; margin-top: 8px; padding: 8px 0 0; border-top: 1px solid #b08ace28; }
+.tremplin-discovery-card .tremplin-home-card__token-context > span { font-size: 8px; font-weight: 500; letter-spacing: .05em; color: #a69bb4; }
+.tremplin-discovery-card .tremplin-home-card__token-context > strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: #ded4e9; font-size: 11px; line-height: 1.3; }
+.tremplin-discovery-card .tremplin-home-card__token-data { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 3px 0 0; padding-top: 7px; border-top: 1px solid #b08ace28; }
+.tremplin-discovery-card .tremplin-home-card__token-data > div + div { border-left: 1px solid #b08ace35; padding-left: 18px; }
+.tremplin-discovery-card .tremplin-home-card__token-data dt { font-size: 10px; color: #b9a9c9; }
+.tremplin-discovery-card .tremplin-home-card__token-data dd { margin: 2px 0 0; color: #fff; font-size: 17px; line-height: 1.2; font-weight: 680; }
+.tremplin-discovery-card .tremplin-home-card__updated { color: #9f92ad; font-size: 9px; line-height: 1.3; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__actions { display: grid; grid-column: 2; grid-row: 2; grid-template-columns: minmax(0,1.45fr) minmax(0,1fr); grid-template-rows: 52px 28px; gap: 6px 11px; align-items: center; align-self: end; margin: 0; padding: 0 25px 18px 28px; }
+.tremplin-discovery-card .tremplin-home-card__actions button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; width: 100%; min-height: 44px; height: 44px; padding: 7px 12px; border: 1px solid #ab8ccb8a; border-radius: 16px; background: linear-gradient(165deg,#312938,#09070d 50%,#140c1e); color: #efe5fa; font-size: 11px; line-height: 1.3; font-weight: 620; white-space: normal; box-shadow: inset 0 1px 2px #f2e1ff63,inset 0 -1px 2px #be8ce44a,0 4px 9px #0007; transition: border-color 160ms ease,box-shadow 160ms ease; }
+.tremplin-discovery-card .tremplin-home-card__actions button > svg { flex-shrink: 0; width: 17px; height: 17px; color: #ceaae9; }
+.tremplin-discovery-card .tremplin-home-card__actions button > .meewav-token-icon { width: 24px; height: 24px; flex-basis: 24px; }
+.tremplin-discovery-card[data-token-stage="active"] .tremplin-home-card__primary { color: #fff; border-color: rgba(183, 166, 236, 0.6313725490196078); background: radial-gradient(ellipse at 0 0,rgba(228, 221, 248, 0.4392156862745098),transparent 38%),linear-gradient(165deg,#5438a8,#493192 50%,#3d297a); }
+.tremplin-home-card.tremplin-discovery-card:not([data-token-stage="active"]) .tremplin-home-card__primary { grid-column: 1 / -1; width: 100%; min-width: 0; }
+.tremplin-discovery-card .tremplin-home-card__actions .tremplin-home-card__profile { grid-column: 1 / -1; grid-row: 2; justify-self: start; justify-content: flex-start; min-height: 28px !important; height: 28px; width: auto; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; color: #c8b3de; font-size: 11px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #b094cd50; }
+.tremplin-discovery-card .tremplin-home-card__actions button:hover { border-color: #b5a1ea70; box-shadow: inset 0 1px #ffffff30,0 4px 12px #37257435; filter: none; }
+.tremplin-discovery-card button:focus-visible { outline: 2px solid #d1b2f0 !important; outline-offset: 3px; }
+/* Edge highlights follow the curved glass, leaving the content fully live. */
+.tremplin-home-card.tremplin-discovery-card.tremplin-home-card--rail,
+.tremplin-home-card.tremplin-discovery-card.tremplin-home-card--wall {
+  background: radial-gradient(ellipse 72% 80% at 102% -20%,#8777d34a,transparent 70%),linear-gradient(142deg,transparent 44%,#ad9fda0c 44.2%,transparent 63%),linear-gradient(155deg,#17151f,#040408 48%,#0e0b1c);
+  border-color:#aeb2bf30; border-top-color:#c8cbd643; box-shadow:inset 0 1px #ffffff16,inset 0 -1px #0009,0 12px 28px #0007;
+}
+.tremplin-discovery-card::after { z-index:2; inset:0; background:radial-gradient(ellipse 110px 1px at 22% 0,#ffffff48,transparent),radial-gradient(ellipse 1px 60px at 100% 24%,#d4c6f026,transparent); box-shadow:none; }
+.tremplin-discovery-card .tremplin-home-card__identity-meta { font-size:14px; color:#bcb4ce; }
+.tremplin-discovery-card .tremplin-home-card__grade { padding:6px 13px 6px 6px; font-size:11px; border-color:#b0a1c52b; background:radial-gradient(ellipse at 30% 0,#943d9f28,transparent 70%),linear-gradient(150deg,#1e122b,#08070c 65%); box-shadow:inset 0 1px #ffffff10; }
+.tremplin-discovery-card .tremplin-home-card__project > small { font-size:10px; letter-spacing:.18em; }
+.tremplin-discovery-card .tremplin-home-card__project > p { font-size:13px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary,
+.tremplin-discovery-card .tremplin-home-card__token-summary[data-token-stage="active"] { padding:14px 18px 11px; gap:5px; border-color:#b0b4c126; border-radius:19px; background:radial-gradient(ellipse at 12% -40%,#ffffff0c,transparent 65%),linear-gradient(155deg,#19191f,#0b0b10 58%,#100e17); box-shadow:inset 0 1px #ffffff12,0 4px 10px #0004; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header { padding-left:46px; min-height:24px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header > span { font-size:14px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header > strong { font-size:13px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > p { padding-left:46px; font-size:12px; }
+.tremplin-discovery-card__status-icon { left:15px; top:13px; width:40px; height:40px; border-color:#b6a4d333; box-shadow:inset 0 1px #ffffff18; }
+.tremplin-discovery-card__status-icon > .meewav-token-icon { width:38px; height:38px; }
+.tremplin-discovery-card .tremplin-home-card__token-data { margin-top:6px; padding-top:9px; }
+.tremplin-discovery-card .tremplin-home-card__token-data dt { font-size:11px; }
+.tremplin-discovery-card .tremplin-home-card__token-data dd { font-size:21px; }
+.tremplin-discovery-card .tremplin-home-card__updated { font-size:10px; }
+.tremplin-discovery-card .tremplin-home-card__actions button { height:52px; min-height:52px; font-size:15px; font-weight:500; border-radius:19px; border-color:#b0b4c133; background:linear-gradient(125deg,#ffffff0a,transparent 45%),linear-gradient(180deg,#212127,#0d0c12); box-shadow:inset 0 1px #ffffff1c,inset 0 -1px #0008,0 4px 10px #0005; }
+.tremplin-discovery-card[data-token-stage="active"] .tremplin-home-card__primary { background:radial-gradient(ellipse 80% 95% at 8% -20%,#e3d8ff52,transparent 67%),linear-gradient(180deg,#5137a1,#4e349f 54%,#372574); border-color:#b5a1ea50; box-shadow:inset 0 1px #e3d8ff30,inset 0 -1px #11092a61,0 4px 12px #25165030; }
+.tremplin-discovery-card .tremplin-home-card__actions .tremplin-home-card__profile { font-size:12px; }
+@media (max-width: 760px) {
+  .tremplin-home-rail,
+  .tremplin-home-rail.is-first-projects { --tremplin-rail-card-width: min(88vw, 430px); }
+  .tremplin-home-rail__track { gap: 16px; }
+  .tremplin-home-rail__track > div { height: 752px; }
+  .tremplin-home-card.tremplin-discovery-card.tremplin-home-card--rail,
+  .tremplin-home-card.tremplin-discovery-card.tremplin-home-card--wall { grid-template-columns: 1fr; grid-template-rows: 260px minmax(0,1fr) 104px; height: 752px; min-height: 752px; border-radius: 24px; }
+  .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__visual { grid-column: 1; grid-row: 1; min-height: 0; border-radius: 18px; }
+  .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__body { grid-column: 1; grid-row: 2; padding: 18px 13px 12px; grid-template-rows: 93px 89px minmax(0,1fr); gap: 10px; }
+  .tremplin-discovery-card .tremplin-home-card__heading { gap: 5px; }
+  .tremplin-discovery-card .tremplin-home-card__name strong { font-size: 23px; }
+  .tremplin-discovery-card .tremplin-home-card__grade { flex-direction: column; gap: 0; padding: 3px 5px; border-radius: 15px; font-size: 8px; }
+  .tremplin-discovery-card .tremplin-home-card__grade .mw-grade-badge { --mw-grade-size: 38px !important; width: 38px; height: 38px; }
+  .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__actions { grid-column: 1; grid-row: 3; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); grid-template-rows: 44px 32px; padding: 0 13px 15px; gap: 7px; }
+  .tremplin-discovery-card .tremplin-home-card__actions button { padding-inline: 8px; font-size: 10px; }
+  .tremplin-discovery-card .tremplin-home-card__actions .tremplin-home-card__profile { min-height: 32px !important; height: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tremplin-home-rail__viewport { scroll-behavior: auto; }
+  .tremplin-home-card.tremplin-discovery-card,
+  .tremplin-discovery-card button { transition: none; }
+}
+
+@media (max-width:760px) { .tremplin-discovery-card .tremplin-home-card__project > strong { font-size:21px; } .tremplin-discovery-card .tremplin-home-card__identity-meta { font-size:11px; } .tremplin-discovery-card .tremplin-home-card__actions button { height:44px; min-height:44px; } .tremplin-discovery-card .tremplin-home-card__token-summary > header > span { font-size:12px; } .tremplin-discovery-card .tremplin-home-card__token-summary > p { font-size:10px; } }
+
+/* A single hairline responds to interaction without stacked outer rings. */
+.tremplin-home-card.tremplin-discovery-card:is(:hover, :focus-within) { border-color: #bab5ce55; box-shadow: inset 0 1px #ffffff24, 0 14px 30px #0008; }

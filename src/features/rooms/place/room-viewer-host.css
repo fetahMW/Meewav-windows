@@ -1,0 +1,29 @@
+.rooms-topbar.place-room-shellbar.is-viewer .room-viewer-host { display:flex; align-items:center; justify-content:flex-end; gap:8px; margin-left:auto; position:relative; min-width:0; }
+.room-viewer-host button { display:flex; align-items:center; justify-content:center; gap:7px; min-height:38px; padding:7px 10px; border:1px solid #aaa5b04d; border-radius:12px; background:linear-gradient(180deg,#202125c9,#101115e8 55%,#0c0d10ed); box-shadow:inset 0 1px #ffffff1f,inset 0 -1px #0003; color:#e9e6ee; font:500 12px/1.3 Inter,system-ui,sans-serif; cursor:pointer; }
+.room-viewer-host output { cursor:default; }
+.room-viewer-host svg { width:17px; height:17px; flex:none; }
+.room-viewer-host .room-viewer-host__identity { padding:3px 8px 3px 3px; border:0; background:none; box-shadow:none; }
+.room-viewer-host__identity img { width:36px; height:36px; border-radius:50%; object-fit:cover; border:1px solid #aaa0b6; }
+.room-viewer-host__identity > span { display:grid; gap:3px; text-align:left; }
+.room-viewer-host__identity strong { font-size:12px; white-space:nowrap; max-width:150px; overflow:hidden; text-overflow:ellipsis; }
+.room-viewer-host__identity small { font-size:10px; color:#a8a2b0; white-space:nowrap; }
+.room-viewer-host button.is-following { color:#c7afe7; border-color:#aa80dd; }
+.room-viewer-host button:focus-visible { outline:2px solid #bc8eff; outline-offset:2px; }
+.room-viewer-host > p { position:absolute; right:0; top:100%; z-index:40; background:#17151d; color:#ddd; border:1px solid #83728e; border-radius:9px; padding:9px; font-size:12px; }
+@media(max-width:900px){.rooms-topbar.place-room-shellbar.is-viewer { flex-wrap:wrap; height:auto; min-height:70px; gap:8px; }.room-viewer-host { gap:4px; }.room-viewer-host button { padding:6px; }.room-viewer-host__identity strong { max-width:100px; }}
+
+
+.room-viewer-host__identity > img { transition:transform 160ms ease,border-color 160ms ease,box-shadow 160ms ease; }
+.room-viewer-host__identity:hover > img,.room-viewer-host__identity:focus-visible > img { transform:scale(1.08); border-color:#b889ff; box-shadow:0 0 0 2px #b889ff,0 0 12px #9d62ff55; }
+.room-viewer-host__identity .meewav-grade-badge { flex:none; }
+@media(prefers-reduced-motion:reduce){.room-viewer-host__identity > img { transition:none; }}
+
+.room-viewer-host__name { display:flex; align-items:center; gap:4px; }
+.room-viewer-host .room-viewer-host__share { width:33px; min-height:33px; height:33px; padding:0; border-radius:10px; flex:none; }
+.room-viewer-host .room-viewer-host__share svg { width:16px; height:16px; }
+.room-viewer-host .room-viewer-host__follow { border-color:#a98bc168; background:linear-gradient(180deg,#30283bc9,#1b1623e8 60%,#15111ced); box-shadow:inset 0 1px #ffffff24,inset 0 -1px #0003; font-weight:600; }
+.room-viewer-host .room-viewer-host__follow:hover:not(:disabled) { border-color:#b894de; background:linear-gradient(180deg,#3b3049d9,#211a2ceb); }
+.room-viewer-host .room-viewer-host__leave { border-color:#ffffff24; color:#b9bac3; background:linear-gradient(#191a1ec0,#0e0f12e8); box-shadow:inset 0 1px #ffffff12; }
+.room-viewer-host .room-viewer-host__share:hover,.room-viewer-host .room-viewer-host__leave:hover { border-color:#ffffff48; color:#eee; }
+
+.place-room-shellbar.is-viewer .place-room-shellbar__audience-group { margin-left:8px; display:inline-flex; align-items:center; flex:none; }

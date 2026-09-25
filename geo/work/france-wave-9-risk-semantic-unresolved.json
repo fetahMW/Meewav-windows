@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "kind": "guide_alpha_semantic_resolution_unresolved",
+  "wave": 9,
+  "generatedAt": "2026-07-14T18:56:03.503Z",
+  "provenance": {
+    "inputPath": "geo/work/france-wave-9-risk-plan.json",
+    "inputSha256": "d2ef4df6cf0f20c2adb0803743ce31c7d47c95bb5fd0289bd84f751ffeb7fbc4",
+    "inputWave": 9,
+    "inputGeneratedAt": "2026-06-14T09:12:07.922Z",
+    "sourcePlanGeneratedAt": "2026-06-14T09:12:07.922Z",
+    "inspectedCityCount": 728
+  },
+  "auditPolicy": {
+    "version": 1,
+    "noInvention": true,
+    "decision": "Resolve only deterministic 1:1 strict-contained official evidence or exhaustive connected numbered families; otherwise quarantine.",
+    "habitationPriority": "Validated non-fictive Quartier urbain, then other quartier/inhabited-place evidence; importance then area.",
+    "roadFallback": "An official named road is eligible only when at least 80% and 40 m of its sampled geometry lie strictly inside the exact IRIS.",
+    "collisionRule": "A visible normalized label and an evidence feature may each resolve at most one source IRIS per commune.",
+    "mergeRule": "Only exhaustive contiguous 1..N semantic-base families whose exact geometry adjacency graph and union are connected."
+  },
+  "summary": {
+    "inputCities": 728,
+    "resolvedCities": 724,
+    "manualCurationRequired": 4,
+    "unresolvedSourceIris": 4
+  },
+  "cities": [
+    {
+      "id": "cappelle_la_grande",
+      "name": "Cappelle-la-Grande",
+      "communeCode": "59131",
+      "rank": 391,
+      "sourceFeatureCount": 4,
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "no_high_confidence_1_to_1_resolution",
+          "detail": "habitation: no eligible collision-free contained candidate; named road: the highest substantive evidence score is ambiguous",
+          "sourceIds": [
+            "591310102"
+          ],
+          "labels": [
+            "Sud"
+          ],
+          "semanticRisks": [
+            "direction_only_label"
+          ]
+        }
+      ],
+      "partialOperations": [
+        {
+          "id": "cappelle_la_grande-591310101-rename-rue-guilleminot",
+          "type": "rename",
+          "sourceId": "591310101",
+          "expectedLabel": "Centre",
+          "label": "Rue Guilleminot",
+          "evidenceRefs": [
+            "ign-insee-contours-iris-2026",
+            "ign-bdtopo-named-roads-2026",
+            "guide-alpha-semantic-resolver-v1"
+          ],
+          "containedEvidence": [
+            {
+              "name": "Rue Guilleminot",
+              "layer": "BDTOPO_V3:voie_nommee",
+              "sourceFeatureId": "VOIE_NOM0000002339373689",
+              "coordinates": [
+                2.36856385,
+                50.99859727
+              ],
+              "insideLengthMeters": 620,
+              "insideRatio": 1,
+              "strictContainmentVerified": true
+            }
+          ],
+          "containmentRule": "strict_point_in_exact_source_polygon",
+          "rationale": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+        },
+        {
+          "id": "cappelle_la_grande-591310103-rename-rue-du-pappe-veld",
+          "type": "rename",
+          "sourceId": "591310103",
+          "expectedLabel": "Ouest",
+          "label": "Rue du Pappe Veld",
+          "evidenceRefs": [
+            "ign-insee-contours-iris-2026",
+            "ign-bdtopo-named-roads-2026",
+            "guide-alpha-semantic-resolver-v1"
+          ],
+          "containedEvidence": [
+            {
+              "name": "Rue du Pappe Veld",
+              "layer": "BDTOPO_V3:voie_nommee",
+              "sourceFeatureId": "VOIE_NOM0000002339373850",
+              "coordinates": [
+                2.35432162,
+                50.99723892
+              ],
+              "insideLengthMeters": 1865.9,
+              "insideRatio": 1,
+              "strictContainmentVerified": true
+            }
+          ],
+          "containmentRule": "strict_point_in_exact_source_polygon",
+          "rationale": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+        }
+      ]
+    },
+    {
+      "id": "courcelles_les_lens",
+      "name": "Courcelles-lès-Lens",
+      "communeCode": "62249",
+      "rank": 393,
+      "sourceFeatureCount": 3,
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "no_high_confidence_1_to_1_resolution",
+          "detail": "habitation: no eligible collision-free contained candidate; named road: the highest substantive evidence score is ambiguous",
+          "sourceIds": [
+            "622490101"
+          ],
+          "labels": [
+            "Sud"
+          ],
+          "semanticRisks": [
+            "direction_only_label"
+          ]
+        }
+      ],
+      "partialOperations": [
+        {
+          "id": "courcelles_les_lens-622490103-rename-chemin-de-la-gare-d-eau",
+          "type": "rename",
+          "sourceId": "622490103",
+          "expectedLabel": "Nord",
+          "label": "Chemin de la Gare d'Eau",
+          "evidenceRefs": [
+            "ign-insee-contours-iris-2026",
+            "ign-bdtopo-named-roads-2026",
+            "guide-alpha-semantic-resolver-v1"
+          ],
+          "containedEvidence": [
+            {
+              "name": "Chemin de la Gare d'Eau",
+              "layer": "BDTOPO_V3:voie_nommee",
+              "sourceFeatureId": "VOIE_NOM0000002338443491",
+              "coordinates": [
+                3.02808446,
+                50.4261165
+              ],
+              "insideLengthMeters": 1558.1,
+              "insideRatio": 1,
+              "strictContainmentVerified": true
+            }
+          ],
+          "containmentRule": "strict_point_in_exact_source_polygon",
+          "rationale": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+        }
+      ]
+    },
+    {
+      "id": "amplepuis",
+      "name": "Amplepuis",
+      "communeCode": "69006",
+      "rank": 680,
+      "sourceFeatureCount": 2,
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "no_high_confidence_1_to_1_resolution",
+          "detail": "habitation: no eligible collision-free contained candidate; named road: the highest substantive evidence score is ambiguous",
+          "sourceIds": [
+            "690060101"
+          ],
+          "labels": [
+            "Centre"
+          ],
+          "semanticRisks": [
+            "direction_only_label",
+            "generic_territorial_label"
+          ]
+        }
+      ],
+      "partialOperations": []
+    },
+    {
+      "id": "mandeure",
+      "name": "Mandeure",
+      "communeCode": "25367",
+      "rank": 699,
+      "sourceFeatureCount": 3,
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "no_high_confidence_1_to_1_resolution",
+          "detail": "habitation: no eligible collision-free contained candidate; named road: no eligible collision-free contained candidate",
+          "sourceIds": [
+            "253670103"
+          ],
+          "labels": [
+            "Zone d'Activités"
+          ],
+          "semanticRisks": [
+            "operational_label"
+          ]
+        }
+      ],
+      "partialOperations": []
+    }
+  ]
+}

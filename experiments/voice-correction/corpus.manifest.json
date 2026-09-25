@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "name": "MeeWav voice-correction reproducible test corpus",
+  "purpose": "Latency, smoke, robustness and manually supervised vocal evaluation only.",
+  "qualityScorePolicy": "No automatic or synthetic vocal-quality score is defined. Synthetic signals must never be described as human voice.",
+  "hashAlgorithm": "sha256",
+  "generator": {
+    "script": "generate-synthetic-fixtures.mjs",
+    "runtimeVerified": "Node.js 24.12.0",
+    "sampleRateHz": 48000,
+    "encoding": "mono PCM signed 16-bit little-endian WAV"
+  },
+  "manualIngestRules": {
+    "requiredRights": [
+      "signed performer release",
+      "recording ownership or written test licence",
+      "documented consent for internal audio processing"
+    ],
+    "requiredFormat": {
+      "container": "wav",
+      "codec": "pcm_s16le_or_pcm_f32le",
+      "sampleRateHz": 48000,
+      "channels": 1
+    },
+    "requiredBeforeUse": [
+      "replace null file with a repository-external controlled corpus URI",
+      "record byte length and sha256",
+      "complete rights evidence reference",
+      "verify that no personally identifying speech is present unless explicitly consented"
+    ]
+  },
+  "entries": [
+    {
+      "id": "manual-low-voice",
+      "case": "voix grave",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-high-voice",
+      "case": "voix aiguë",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-soft-voice",
+      "case": "voix douce",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-powerful-voice",
+      "case": "voix puissante",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-vibrato",
+      "case": "vibrato",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-glissando",
+      "case": "glissando",
+      "purpose": "manual_vocal_quality_and_tracking",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-melismas",
+      "case": "mélismes",
+      "purpose": "manual_vocal_quality_and_tracking",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-sustained-notes",
+      "case": "notes tenues",
+      "purpose": "manual_vocal_quality_and_stability",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 15, "max": 45 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-fast-note-changes",
+      "case": "changements rapides de notes",
+      "purpose": "manual_vocal_quality_and_tracking",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-melodic-rap",
+      "case": "rap mélodique",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 15, "max": 45 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-slightly-out-of-tune",
+      "case": "chant légèrement faux",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-very-out-of-tune",
+      "case": "chant très faux",
+      "purpose": "manual_vocal_quality_and_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-background-noise",
+      "case": "voix avec bruit de fond",
+      "purpose": "manual_vocal_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 15, "max": 45 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null, "notes": "Background recording rights must also be cleared." }
+    },
+    {
+      "id": "manual-music-bleed",
+      "case": "musique qui repasse dans le microphone",
+      "purpose": "manual_vocal_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 15, "max": 45 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null, "notes": "The music and vocal performance both require documented rights." }
+    },
+    {
+      "id": "manual-normal-speech",
+      "case": "parole normale",
+      "purpose": "manual_vocal_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-plosives-sibilants",
+      "case": "plosives et sifflantes",
+      "purpose": "manual_vocal_transient_and_artifact_evaluation",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "manual-multiple-voices",
+      "case": "plusieurs voix simultanées",
+      "purpose": "document_monophonic_limit",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 10, "max": 30 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null, "notes": "A release is required for every performer." }
+    },
+    {
+      "id": "manual-instrument-and-voice",
+      "case": "instrument et voix dans le même microphone",
+      "purpose": "document_monophonic_limit",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 15, "max": 45 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null, "notes": "Instrument composition and performance rights must be cleared." }
+    },
+    {
+      "id": "manual-strong-reverb",
+      "case": "voix avec réverbération importante",
+      "purpose": "manual_vocal_robustness",
+      "availability": "manual_required",
+      "file": null,
+      "format": { "container": "wav", "codec": "pcm_s16le_or_pcm_f32le", "sampleRateHz": 48000, "channels": 1, "durationSeconds": { "min": 15, "max": 45 } },
+      "integrity": { "algorithm": "sha256", "value": null, "bytes": null, "status": "pending_manual_ingest" },
+      "rights": { "status": "manual_required", "rightsHolder": null, "licence": null, "evidenceRef": null }
+    },
+    {
+      "id": "synthetic-silence",
+      "case": "silence numérique",
+      "purpose": "smoke_only_not_human_voice",
+      "availability": "generated_on_demand",
+      "file": "generated/synthetic-silence.wav",
+      "format": { "container": "wav", "codec": "pcm_s16le", "sampleRateHz": 48000, "channels": 1, "frames": 48000, "bytes": 96044 },
+      "integrity": { "algorithm": "sha256", "value": "0a8f76d89c709043814cb74f331a4578d17ff61256303bd0019a263d053f86e8", "bytes": 96044, "status": "reproducible" },
+      "rights": { "status": "cleared_internal", "rightsHolder": "MeeWav", "licence": "MeeWav internal test fixture", "evidenceRef": "generate-synthetic-fixtures.mjs", "notes": "Mathematical samples only; no human voice or third-party recording." }
+    },
+    {
+      "id": "synthetic-impulse",
+      "case": "impulsion de référence",
+      "purpose": "latency_only_not_human_voice",
+      "availability": "generated_on_demand",
+      "file": "generated/synthetic-impulse.wav",
+      "format": { "container": "wav", "codec": "pcm_s16le", "sampleRateHz": 48000, "channels": 1, "frames": 48000, "bytes": 96044 },
+      "integrity": { "algorithm": "sha256", "value": "4f0284b11b88930b4d5a626911325dfc402debc38c23279ed7dafe3573d91d96", "bytes": 96044, "status": "reproducible" },
+      "rights": { "status": "cleared_internal", "rightsHolder": "MeeWav", "licence": "MeeWav internal test fixture", "evidenceRef": "generate-synthetic-fixtures.mjs", "notes": "Mathematical samples only; no human voice or third-party recording." }
+    },
+    {
+      "id": "synthetic-log-sweep",
+      "case": "balayage logarithmique 30 Hz–18 kHz",
+      "purpose": "latency_and_signal_path_smoke_only_not_human_voice",
+      "availability": "generated_on_demand",
+      "file": "generated/synthetic-log-sweep.wav",
+      "format": { "container": "wav", "codec": "pcm_s16le", "sampleRateHz": 48000, "channels": 1, "frames": 96000, "bytes": 192044 },
+      "integrity": { "algorithm": "sha256", "value": "9752cb6335ab900b4a5f80da5004a06f492e7b3376634e63d685487e1be84376", "bytes": 192044, "status": "reproducible" },
+      "rights": { "status": "cleared_internal", "rightsHolder": "MeeWav", "licence": "MeeWav internal test fixture", "evidenceRef": "generate-synthetic-fixtures.mjs", "notes": "Mathematical oscillator only; never present it as human voice." }
+    },
+    {
+      "id": "synthetic-note-sequence",
+      "case": "notes sinusoïdales C4, E4, G4",
+      "purpose": "pitch_path_smoke_only_not_human_voice",
+      "availability": "generated_on_demand",
+      "file": "generated/synthetic-note-sequence.wav",
+      "format": { "container": "wav", "codec": "pcm_s16le", "sampleRateHz": 48000, "channels": 1, "frames": 144000, "bytes": 288044 },
+      "integrity": { "algorithm": "sha256", "value": "af1d1edc5f0c6225ef1f1b178195d8e7bde1eb976142b73d76918d00a295167c", "bytes": 288044, "status": "reproducible" },
+      "rights": { "status": "cleared_internal", "rightsHolder": "MeeWav", "licence": "MeeWav internal test fixture", "evidenceRef": "generate-synthetic-fixtures.mjs", "notes": "Mathematical oscillator notes only; never present them as human voice." }
+    },
+    {
+      "id": "synthetic-major-chord",
+      "case": "accord sinusoïdal C majeur",
+      "purpose": "document_monophonic_limit_smoke_only_not_human_voice",
+      "availability": "generated_on_demand",
+      "file": "generated/synthetic-major-chord.wav",
+      "format": { "container": "wav", "codec": "pcm_s16le", "sampleRateHz": 48000, "channels": 1, "frames": 96000, "bytes": 192044 },
+      "integrity": { "algorithm": "sha256", "value": "d4ddd43be6e488012eced3cf8e1d294209a91138eed39f1fb799a43ebde0f749", "bytes": 192044, "status": "reproducible" },
+      "rights": { "status": "cleared_internal", "rightsHolder": "MeeWav", "licence": "MeeWav internal test fixture", "evidenceRef": "generate-synthetic-fixtures.mjs", "notes": "Mathematical oscillator chord only; it cannot validate vocal quality." }
+    }
+  ]
+}

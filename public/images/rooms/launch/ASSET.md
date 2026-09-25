@@ -1,0 +1,8 @@
+# Room launch atmospheres
+
+Generated with the built-in image_gen tool on 8 September 2026.
+Asset: `room-atmospheres.png`. One 2 × 3 atlas, sampled with CSS; no rasterized controls or text.
+
+## Final prompt
+
+Create a single background sprite atlas for a premium music livestream website. Exact seamless layout: 2 equal columns by 3 equal rows, no gutters, no margins, no borders. Each of the 6 rectangular cells has aspect ratio 2.15:1, overall canvas roughly 1.43:1 landscape. Only cinematic environmental photography/backgrounds, absolutely no text, letters, UI, icons, badges, frames or logos. Consistent dark luxurious black and midnight navy mood. Keep left half of EACH cell very dark and visually quiet for overlaying text; put detailed imagery mainly right half. Top left: intimate backstage dressing room vanity mirror with warm golden bulbs and dark velvet, gold atmosphere. Top right: blurred silhouettes of audience in concert room, silver blue haze and soft overhead lights. Middle left: beautiful flowing luminous CYAN soundwave ribbons on black, turquoise not royal blue. Middle right: close-up concert battle cage chainlink fence lit crimson magenta red from a vertical light strip, smoky black. Bottom left: rows of empty upholstered auditorium chairs lit electric blue, looking toward small dark teaching stage. Bottom right: empty music stage and microphone stand with violet purple theatrical spotlights and haze. High-end photoreal cinematic lighting, realistic subtle volumetric smoke and bokeh, restrained luminous highlights, elegant. All six cells edge to edge with no outlines, no decorative card chrome. This is one texture atlas to be sampled with CSS background-position.

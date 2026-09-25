@@ -1,0 +1,9 @@
+.room-launch-confirmation { display:grid; justify-items:center; gap:16px; padding:36px 20px; text-align:center; }
+.room-launch-confirmation .room-launch-confirmation__icon { display:grid; place-items:center; width:58px; height:58px; border:1px solid #9561ff66; border-radius:18px; color:#b99aff; background:linear-gradient(135deg,#9561ff26,#9561ff08); }
+.room-launch-confirmation .room-launch-confirmation__icon svg { width:26px; height:26px; }
+.room-launch-confirmation h3 { margin:0; color:#f0f1f5; font-size:24px; overflow-wrap:anywhere; }
+.room-launch-confirmation.room-launch-confirmation small { color:#a99ac9; font-size:10px; letter-spacing:.12em; }
+.room-launch-confirmation.room-launch-confirmation p { max-width:440px; margin:0; color:#a8aebb; font-size:13px; line-height:1.7; }
+.room-launch-confirmation.room-launch-confirmation button { display:inline-flex; justify-content:center; align-items:center; gap:10px; margin-top:8px; padding:13px 22px; border:1px solid #b38dff; border-radius:11px; background:linear-gradient(145deg,#9561ff,#6838d9); color:#fff; font:600 13px Inter,system-ui,sans-serif; cursor:pointer; box-shadow:inset 0 1px #ffffff30,0 6px 20px #9561ff22; }
+.room-launch-confirmation.room-launch-confirmation button:disabled { opacity:.5; cursor:wait; }
+.room-launch-confirmation.room-launch-confirmation button:focus-visible { outline:2px solid #b99aff; outline-offset:3px; }

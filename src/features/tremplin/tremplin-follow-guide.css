@@ -1,0 +1,69 @@
+#tremplin-follow {
+  container-type:inline-size; isolation:isolate; overflow:hidden; padding:4.9% 2.8% 2.8%;
+  border:1px solid #a58ac278; border-radius:22px;
+  background:radial-gradient(ellipse at 100% 0,#4b267130,transparent 58%),linear-gradient(130deg,#0b090f,#030304 57%,#08060c);
+  box-shadow:inset 0 1px 1px #eee0ff52,inset 0 -1px 2px #aa83d05e,0 12px 30px #0007;
+}
+#tremplin-follow::after { content:''; position:absolute; pointer-events:none; inset:0; border-radius:inherit; background:radial-gradient(ellipse 40px 2px at 13% 0,#eee2ff,transparent),radial-gradient(ellipse 55px 3px at 96% 0,#cfb0ff,transparent),radial-gradient(ellipse 4px 35px at 0 98%,#cbb3ffb3,transparent); }
+#tremplin-follow .tremplin-how__section-heading { position:relative; z-index:1; grid-template-columns:5.9cqw minmax(0,1fr); gap:1.6cqw; max-width:none; width:66%; min-height:11.3cqw; }
+#tremplin-follow .tremplin-how__section-heading > span { width:5.9cqw; height:5.9cqw; border-radius:1.5cqw; color:#c398ef; font-size:2.3cqw; font-weight:650; border-color:#af8cdc94; background:radial-gradient(ellipse at 0 0,#63378055,transparent 65%),linear-gradient(145deg,#15101f,#07060b); box-shadow:inset 0 1px 2px #edcfff8c,inset 0 -1px 2px #ae89d666; }
+#tremplin-follow .tremplin-how__section-heading small { display:block; margin:.5cqw 0 0; color:#c49feb; font-size:.94cqw; font-weight:630; line-height:1.3; letter-spacing:.32em; }
+#tremplin-follow .tremplin-how__section-heading h2 { margin:1.3cqw 0 0; color:#faf8fd; font-size:4cqw; line-height:1.09; font-weight:680; letter-spacing:-.035em; white-space:nowrap; }
+#tremplin-follow .tremplin-how__section-heading h2 em { font-style:normal; color:#a974ed; background:linear-gradient(105deg,#b568ef,#9261e8); background-clip:text; -webkit-text-fill-color:transparent; }
+#tremplin-follow .tremplin-how__section-heading p { margin:1cqw 0 0; color:#c1bacb; font-size:1.65cqw; line-height:1.4; }
+#tremplin-follow .tremplin-how__follow-art { position:absolute; z-index:-1; top:0; right:0; width:40%; aspect-ratio:675 / 317; background-image:url('/images/tremplin/tremplin-follow-guide-reference.png'); background-size:268.15% auto; background-position:96.9% 8.15%; mask-image:linear-gradient(90deg,transparent,#000 18%),linear-gradient(0deg,transparent,#000 10%); mask-composite:intersect; }
+#tremplin-follow:focus { outline:none; }
+#tremplin-follow .tremplin-how__follow-card {
+  position:relative; display:grid; grid-template-columns:9cqw minmax(0,1fr) 29%; align-items:start; gap:3.8cqw;
+  margin-top:2.65cqw; min-height:25.4cqw; padding:3cqw 2.7cqw 2.4cqw 3.8cqw;
+  border:1px solid #b79bd5b3; border-radius:2cqw;
+  background:radial-gradient(ellipse at 20% -5%,#29173722,transparent 65%),linear-gradient(150deg,#0d0a13,#030304 56%,#0a070e);
+  box-shadow:inset 0 1px 2px #f0daff91,inset 0 -1px 2px #d5b3fda3,0 0 0 2px #44315230,0 9px 23px #0006;
+}
+#tremplin-follow .tremplin-how__follow-card::after { content:''; position:absolute; pointer-events:none; inset:0; border-radius:inherit; background:radial-gradient(ellipse 60px 3px at 4% 0,#efdbff,transparent),radial-gradient(ellipse 4px 45px at 0 91%,#dfb8ffb3,transparent),radial-gradient(ellipse 50px 3px at 97% 100%,#ebd7ff,transparent); }
+#tremplin-follow .tremplin-how__follow-heart { display:grid; place-items:center; width:9cqw; height:8.8cqw; margin:1cqw 0 0; border:1px solid #ad86d29c; border-radius:2cqw; background:radial-gradient(ellipse at 0 0,#a450de40,transparent 65%),linear-gradient(150deg,#171020,#09060e 70%,#261530); box-shadow:inset 0 1px 2px #e6c4ff85,inset 0 -1px 2px #ba8ade52; }
+#tremplin-follow .tremplin-how__follow-heart svg { width:4.1cqw; height:4.1cqw; stroke:#f6e3ff; stroke-width:1.8; filter:drop-shadow(0 0 3px #ac3aff) drop-shadow(0 0 6px #a845ee); }
+#tremplin-follow .tremplin-how__follow-copy { min-width:0; padding-top:.75cqw; }
+#tremplin-follow .tremplin-how__follow-copy h3 { margin:0; color:#faf8fc; font-size:2.6cqw; line-height:1.2; font-weight:680; letter-spacing:-.025em; }
+#tremplin-follow .tremplin-how__follow-copy p { margin:1.15cqw 0 0; max-width:none; color:#c1b9cc; font-size:1.6cqw; line-height:1.5; }
+#tremplin-follow .tremplin-how__follow-copy > button { display:flex; align-items:center; justify-content:center; gap:1.25cqw; height:5.1cqw; min-height:0; width:max-content; max-width:100%; margin:2cqw 0 0; padding:0 2.2cqw; border:1px solid rgba(192, 177, 238, 0.6509803921568628); border-radius:1.4cqw; color:#fff; font-size:1.55cqw; font-weight:620; background:radial-gradient(ellipse at 0 0,rgba(205, 193, 242, 0.47843137254901963),transparent 44%),linear-gradient(150deg,#5136a2,#472f8d 60%,#422294); box-shadow:inset 0 1px 2px rgba(229, 222, 248, 0.6),inset 0 -1px 2px rgba(91, 61, 183, 0.5686274509803921),0 4px 13px rgba(67, 45, 134, 0.1803921568627451); }
+#tremplin-follow .tremplin-how__follow-copy > button svg { width:2.2cqw; height:2.2cqw; flex-shrink:0; }
+#tremplin-follow .tremplin-how__follow-copy > button svg:last-child { width:1.65cqw; height:1.65cqw; }
+#tremplin-follow .tremplin-how__follow-copy > button.is-followed { border-color:#cbbef1; background:linear-gradient(150deg,#38256f,#19122e); }
+#tremplin-follow .tremplin-how__follow-copy > small { display:block; min-height:2.6cqw; max-width:none; margin:1.65cqw 0 0; color:#a28cb9; font-size:1.07cqw; line-height:1.4; }
+#tremplin-follow .tremplin-how__follow-card ul { display:grid; grid-template-columns:1fr; gap:1.4cqw; align-self:stretch; padding:0 0 0 3.2cqw; margin:0; border-left:1px solid #a78ab744; list-style:none; }
+#tremplin-follow .tremplin-how__follow-card li { display:block; padding:0; margin:0; border:0; border-radius:0; background:none; }
+#tremplin-follow .tremplin-how__follow-card li button { display:grid; grid-template-columns:2.5cqw minmax(0,1fr) 1.7cqw; align-items:center; gap:1.8cqw; width:100%; height:5.4cqw; min-height:0; padding:0 1.8cqw; margin:0; border:1px solid #bfa7db94; border-radius:1.4cqw; background:radial-gradient(ellipse 22% 30% at 0 0,#e4ccff66,transparent 85%),linear-gradient(170deg,#221b2b,#060509 40% 75%,#17111d); color:#f9f5fc; font-size:1.2cqw; font-weight:630; box-shadow:inset 0 1px 2px #eddaffad,inset 0 -1px 2px #b697d570,0 4px 9px #0007; }
+#tremplin-follow .tremplin-how__follow-card li button svg { width:2.3cqw; height:2.3cqw; color:#d5aff6; }
+#tremplin-follow .tremplin-how__follow-card li button svg:last-child { width:1.7cqw; height:1.7cqw; color:#f7f2fb; }
+#tremplin-follow .tremplin-how__follow-card li button span { text-align:left; }
+#tremplin-follow button:hover { border-color:#eddaff; filter:brightness(1.1); }
+#tremplin-follow button:focus-visible { outline:2px solid #cfabf2; outline-offset:4px; }
+#tremplin-grades { margin-top:18px; scroll-margin-top:104px; }
+.tremplin-how > #tremplin-grades { width:100%; max-width:none; margin:18px 0 0; }
+#tremplin-grades .tremplin-how__grade-method { margin:20px 10px 0; padding-top:13px; border-top:1px solid #8d719c35; color:#cbb3e0; font-size:12px; }
+#tremplin-grades .tremplin-how__grade-method summary { cursor:pointer; width:fit-content; }
+#tremplin-grades .tremplin-how__prior-career { background:none; border:0; padding:10px 0 0; }
+@media (max-width:760px) {
+  #tremplin-follow { padding:25px 18px 20px; }
+  #tremplin-follow .tremplin-how__section-heading { width:100%; grid-template-columns:40px minmax(0,1fr); gap:12px; }
+  #tremplin-follow .tremplin-how__section-heading > span { width:40px; height:40px; font-size:21px; border-radius:12px; }
+  #tremplin-follow .tremplin-how__section-heading small { font-size:9px; letter-spacing:.15em; }
+  #tremplin-follow .tremplin-how__section-heading h2 { margin-top:10px; font-size:29px; white-space:normal; }
+  #tremplin-follow .tremplin-how__section-heading p { font-size:14px; margin-top:12px; }
+  #tremplin-follow .tremplin-how__follow-art { width:80%; opacity:.25; }
+  #tremplin-follow .tremplin-how__follow-card { grid-template-columns:46px minmax(0,1fr); gap:14px; margin-top:23px; padding:22px 15px; border-radius:18px; }
+  #tremplin-follow .tremplin-how__follow-heart { width:46px; height:46px; border-radius:13px; }
+  #tremplin-follow .tremplin-how__follow-heart svg { width:27px; height:27px; }
+  #tremplin-follow .tremplin-how__follow-copy h3 { font-size:22px; }
+  #tremplin-follow .tremplin-how__follow-copy p { margin-top:10px; font-size:13px; }
+  #tremplin-follow .tremplin-how__follow-copy p br { display:none; }
+  #tremplin-follow .tremplin-how__follow-copy > button { width:100%; height:46px; margin-top:18px; padding:0 8px; border-radius:12px; font-size:11px; gap:7px; }
+  #tremplin-follow .tremplin-how__follow-copy > button svg { width:20px; height:20px; }
+  #tremplin-follow .tremplin-how__follow-copy > button svg:last-child { width:14px; height:14px; }
+  #tremplin-follow .tremplin-how__follow-copy > small { font-size:10px; margin-top:12px; min-height:42px; }
+  #tremplin-follow .tremplin-how__follow-card ul { grid-column:1/-1; gap:10px; padding:15px 0 0; border-left:0; border-top:1px solid #a78ab744; }
+  #tremplin-follow .tremplin-how__follow-card li button { grid-template-columns:25px 1fr 18px; height:50px; padding:0 15px; gap:12px; font-size:13px; border-radius:13px; }
+  #tremplin-follow .tremplin-how__follow-card li button svg { width:24px; height:24px; }
+  #tremplin-follow .tremplin-how__follow-card li button svg:last-child { width:18px; height:18px; }
+}

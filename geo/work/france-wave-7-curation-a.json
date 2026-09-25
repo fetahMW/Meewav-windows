@@ -1,0 +1,3914 @@
+{
+  "schemaVersion": 1,
+  "wave": 7,
+  "batch": "a",
+  "source": {
+    "provider": "IGN / INSEE - Contours IRIS WFS Géoplateforme",
+    "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+    "wfsUrl": "https://data.geopf.fr/wfs/ows",
+    "typeName": "STATISTICALUNITS.IRIS:contours_iris",
+    "vintage": "2026",
+    "license": "Licence Ouverte / Open Licence 2.0"
+  },
+  "generatedAt": "2026-07-14T17:22:00.000Z",
+  "auditPolicy": {
+    "activationRule": "A city is ready only when every visible plate has a unique human place name and every merge is exact-ID, same-base and geometrically connected.",
+    "noInvention": true,
+    "exhaustiveReview": "Every official label in all 34 cities was inspected, not only planner lexical risks.",
+    "suffixRule": "A numeric suffix family is dissolved only when all members have the exact same human base and the official polygons form a connected graph with at least two shared vertices per graph edge at seven decimals.",
+    "exactAcceptRule": "A generic, directional, operational, station or genuine numeric human label is retained only through an exact-ID documented accept when no safer official polygon crosswalk exists.",
+    "technicalRule": "Opaque technical inventories require one unique exact-ID human rename per source cell supported by IGN coordinates strictly contained in that exact polygon. Nearest-point assignment is forbidden.",
+    "geometryAdjacency": "At least two shared official boundary vertices at seven decimal places; every merged family must form one connected graph.",
+    "evidenceSources": [
+      {
+        "id": "ign-geoplateforme-toponymy-2026",
+        "provider": "IGN Géoplateforme - geocoding named places, streets and addresses",
+        "datasetUrl": "https://geoservices.ign.fr/geocodage-geoplateforme",
+        "apiUrl": "https://data.geopf.fr/geocodage/",
+        "role": "Coordinates of human toponyms and addresses, checked by strict point-in-polygon containment."
+      },
+      {
+        "id": "guide-alpha-editorial-review-wave-7-2026-07-14",
+        "provider": "Meewav Guide Alpha editorial review",
+        "datasetUrl": "docs/geospatial/france-semantic-recovery.md",
+        "role": "Dated exact-ID review for official labels and safe connected suffix dissolves."
+      }
+    ]
+  },
+  "summary": {
+    "cityCount": 34,
+    "sourceFeatureCount": 339,
+    "expectedOutputFeatureCount": 334,
+    "readyCount": 34,
+    "resolutionRequiredCount": 0,
+    "noCurationReadyCount": 13,
+    "explicitCurationCityCount": 21,
+    "mergeOperationCount": 4,
+    "acceptOperationCount": 38,
+    "renameOperationCount": 10,
+    "strictContainmentEvidencePointCount": 19
+  },
+  "cities": [
+    {
+      "id": "cenon",
+      "name": "Cenon",
+      "code": "33119",
+      "population": 26834,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "331190101",
+          "label": "Palmer 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190102",
+          "label": "Palmer 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190103",
+          "label": "Cavaillès-Camparian",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190104",
+          "label": "Gravières-Gravette-Beaulieu-Lagrue-Plaisance",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190105",
+          "label": "Saraillère-Ronceval-Seiglière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190106",
+          "label": "Grand Pavois-Cimetière Saint-Paul",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190107",
+          "label": "Marègue",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190108",
+          "label": "Bas Cenon-Cours Victor Hugo-Gambetta",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331190109",
+          "label": "Bas Cenon-Cours Verdun-Testaud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "numbered_family",
+          "severity": "info",
+          "sourceIds": [
+            "331190101",
+            "331190102"
+          ],
+          "labels": [
+            "Palmer 1",
+            "Palmer 2"
+          ],
+          "baseLabel": "Palmer",
+          "contiguous": true,
+          "geometryAudit": {
+            "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+            "connectedGraph": true,
+            "edges": [
+              {
+                "sourceIds": [
+                  "331190101",
+                  "331190102"
+                ],
+                "sharedBoundaryVertices": 14
+              }
+            ]
+          },
+          "detail": "Same-base suffix family dissolved only after the official polygons passed the connected shared-boundary test.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "cenon-palmer-merge"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "cenon-palmer-merge",
+            "type": "merge",
+            "sourceIds": [
+              "331190101",
+              "331190102"
+            ],
+            "expectedLabels": [
+              "Palmer 1",
+              "Palmer 2"
+            ],
+            "label": "Palmer",
+            "outputId": "cenon_33119_group_palmer",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "geometryAudit": {
+              "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "331190101",
+                    "331190102"
+                  ],
+                  "sharedBoundaryVertices": 14
+                }
+              ]
+            },
+            "rationale": "The exact official cells share the same human base “Palmer” and form one connected polygon graph. Only the statistical suffix is removed."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bretigny_sur_orge",
+      "name": "Brétigny-sur-Orge",
+      "code": "91103",
+      "population": 26658,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "911030101",
+          "label": "La Fontaine Daumones",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911030102",
+          "label": "Carouge Joncs Marins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911030103",
+          "label": "Rosière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911030104",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911030105",
+          "label": "Vétille Quatre-Vingts Arpents",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911030106",
+          "label": "Moinerie Maison Neuve",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911030107",
+          "label": "Cendrennes Babin",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "911030104"
+          ],
+          "labels": [
+            "Centre Ville"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "bretigny_sur_orge-911030104-accept-centre-ville"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "bretigny_sur_orge-911030104-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "911030104",
+            "expectedLabel": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Ville” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "lunel",
+      "name": "Lunel",
+      "code": "34145",
+      "population": 26623,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "341450101",
+          "label": "Centre Ville-Mairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341450102",
+          "label": "Abrivado",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341450103",
+          "label": "Fernand Brunel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341450105",
+          "label": "Route de Nîmes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341450106",
+          "label": "La Roquette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341450107",
+          "label": "Périphérie",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "341450108",
+          "label": "Louis Abric Zone Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341450109",
+          "label": "Louis Abric Zone Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "341450107"
+          ],
+          "labels": [
+            "Périphérie"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "lunel-341450107-accept-peripherie"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "lunel-341450107-accept-peripherie",
+            "type": "accept",
+            "sourceId": "341450107",
+            "expectedLabel": "Périphérie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Périphérie” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "la_garde",
+      "name": "La Garde",
+      "code": "83062",
+      "population": 26476,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "830620101",
+          "label": "Le Plan-Beautégas-Les Lones",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620102",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620103",
+          "label": "Le Thouar",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620104",
+          "label": "Les Plantades-Pierrascas",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "830620106",
+          "label": "Les Savels",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620107",
+          "label": "Le Pouverel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620108",
+          "label": "Sainte-Musse",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620109",
+          "label": "Sainte-Marguerite",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620110",
+          "label": "La Planquette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830620111",
+          "label": "Rabasson",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "elancourt",
+      "name": "Élancourt",
+      "code": "78208",
+      "population": 26365,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "782080101",
+          "label": "Nouveaux Horizons Coudrays",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080102",
+          "label": "Nouvelle Amsterdam Les Sept Mares",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080103",
+          "label": "Les Petits Prés",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080104",
+          "label": "Le Gandouget Pré Yvelines Parc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080105",
+          "label": "La Villedieu Réaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080106",
+          "label": "La Commanderie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080107",
+          "label": "Le Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782080108",
+          "label": "La Clef Saint-Pierre",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saumur",
+      "name": "Saumur",
+      "code": "49328",
+      "population": 26241,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "493280101",
+          "label": "Centre Ville-Fenet-Petit Puy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280102",
+          "label": "Delessert-Saint-Louis-Nantilly",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280103",
+          "label": "Gare-Croix Verte-Île Offard-Millocheau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280104",
+          "label": "Hauts Quartiers-Clos Coutard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280105",
+          "label": "Le Chemin Vert-Clos Bonnet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280107",
+          "label": "Saint-Hilaire Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280108",
+          "label": "Saint-Hilaire Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280109",
+          "label": "Saint-Lambert-des-Levées Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280110",
+          "label": "Saint-Lambert-des-Levées Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280111",
+          "label": "Dampierre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493280114",
+          "label": "Bagneux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "aurillac",
+      "name": "Aurillac",
+      "code": "15014",
+      "population": 26214,
+      "sourceFeatureCount": 13,
+      "officialLabels": [
+        {
+          "sourceId": "150140101",
+          "label": "République",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140102",
+          "label": "Saint-Géraud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140103",
+          "label": "Aristide Briand",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140104",
+          "label": "Saint-Eugène",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140105",
+          "label": "Tivoli",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140106",
+          "label": "Vialenc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140107",
+          "label": "Alouettes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140108",
+          "label": "Limagne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140109",
+          "label": "Zone Verte",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "150140110",
+          "label": "Ponétie",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "150140111",
+          "label": "Marmiers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140112",
+          "label": "Tronquières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "150140113",
+          "label": "Belbex",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "150140109"
+          ],
+          "labels": [
+            "Zone Verte"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "aurillac-150140109-accept-zone-verte"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 13,
+        "operations": [
+          {
+            "id": "aurillac-150140109-accept-zone-verte",
+            "type": "accept",
+            "sourceId": "150140109",
+            "expectedLabel": "Zone Verte",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Zone Verte” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "eaubonne",
+      "name": "Eaubonne",
+      "code": "95203",
+      "population": 26211,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "952030101",
+          "label": "Les Callais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030102",
+          "label": "L'Alliance",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030103",
+          "label": "Le Parc du Château",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030104",
+          "label": "Les Robinettes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030105",
+          "label": "La Cerisaie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030106",
+          "label": "L'Orangerie-Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030107",
+          "label": "Les Franchises",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030108",
+          "label": "Les Dures Terres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030109",
+          "label": "La Grille Dorée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952030110",
+          "label": "Le Bois du Luat",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "biarritz",
+      "name": "Biarritz",
+      "code": "64122",
+      "population": 26206,
+      "sourceFeatureCount": 12,
+      "officialLabels": [
+        {
+          "sourceId": "641220101",
+          "label": "Front de Mer",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220102",
+          "label": "Mairie-Marne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220103",
+          "label": "Les Rocailles-Lahouze",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220104",
+          "label": "République-Beau Rivage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220105",
+          "label": "La Rochefoucauld-Aguilera",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220106",
+          "label": "Saint-Charles-Golf",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220107",
+          "label": "Halles-Hurlague",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220108",
+          "label": "Labordotte-La Colline",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220109",
+          "label": "Saint-Martin-Cité des Fleurs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220110",
+          "label": "Parme-La Négresse",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220111",
+          "label": "Parc d'Hiver-Marion-Mouriscot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641220112",
+          "label": "Pétricot-Reptou",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "muret",
+      "name": "Muret",
+      "code": "31395",
+      "population": 26079,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "313950101",
+          "label": "Centre Historique",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950102",
+          "label": "Delpech",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950103",
+          "label": "Quartier Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950104",
+          "label": "Occitanie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950105",
+          "label": "Barri-Brioudes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950106",
+          "label": "Lycée Aragon-Estantens",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950107",
+          "label": "Vasconia-L'Ermitage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950108",
+          "label": "Boutbouilhes-Ox",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950109",
+          "label": "Saudrune",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "313950110",
+          "label": "Zone d'Activités Nord",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "313950103",
+            "313950110"
+          ],
+          "labels": [
+            "Quartier Nord",
+            "Zone d'Activités Nord"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "muret-313950103-accept-quartier-nord",
+            "muret-313950110-accept-zone-d-activites-nord"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 10,
+        "operations": [
+          {
+            "id": "muret-313950103-accept-quartier-nord",
+            "type": "accept",
+            "sourceId": "313950103",
+            "expectedLabel": "Quartier Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Quartier Nord” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "muret-313950110-accept-zone-d-activites-nord",
+            "type": "accept",
+            "sourceId": "313950110",
+            "expectedLabel": "Zone d'Activités Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Zone d'Activités Nord” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "castelnau_le_lez",
+      "name": "Castelnau-le-Lez",
+      "code": "34057",
+      "population": 26058,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "340570101",
+          "label": "Quartier Sud",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "340570102",
+          "label": "Galine-Stade Jean Fournier-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "340570103",
+          "label": "Castelnau-Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "340570104",
+          "label": "Sablas-Mendrous Ouest-Languedoc Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "340570105",
+          "label": "Mendrous Est-Languedoc Est-Aube Rouge-Devois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "340570106",
+          "label": "Quartier Nord-Est",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "340570107",
+          "label": "Courtarelle-Cantagril-Mûriers",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "340570101",
+            "340570106"
+          ],
+          "labels": [
+            "Quartier Sud",
+            "Quartier Nord-Est"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "castelnau_le_lez-340570101-accept-quartier-sud",
+            "castelnau_le_lez-340570106-accept-quartier-nord-est"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "castelnau_le_lez-340570101-accept-quartier-sud",
+            "type": "accept",
+            "sourceId": "340570101",
+            "expectedLabel": "Quartier Sud",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Quartier Sud” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "castelnau_le_lez-340570106-accept-quartier-nord-est",
+            "type": "accept",
+            "sourceId": "340570106",
+            "expectedLabel": "Quartier Nord-Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Quartier Nord-Est” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "les_ulis",
+      "name": "Les Ulis",
+      "code": "91692",
+      "population": 25886,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "916920101",
+          "label": "Champagne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920102",
+          "label": "Bourgogne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920103",
+          "label": "Cévennes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920104",
+          "label": "Franche-Comté",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920105",
+          "label": "Saintonge",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920106",
+          "label": "Anjou",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920107",
+          "label": "Île-de-France",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "916920108",
+          "label": "Queue d'Oiseau",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sevremoine",
+      "name": "Sèvremoine",
+      "code": "49301",
+      "population": 25797,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "493010101",
+          "label": "Girardrie à Gambetta-Lieux-Dits",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010102",
+          "label": "Agglomération Ouest-Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010201",
+          "label": "La Renaudière et Roussay",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010202",
+          "label": "Saint-Germain-sur-Moine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010203",
+          "label": "Saint-Crespin-sur-Moine et Tillières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010204",
+          "label": "Montfaucon-Montigné",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010205",
+          "label": "Torfou",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010206",
+          "label": "Le Longeron",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493010207",
+          "label": "Saint-André-de-la-Marche",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "493010102"
+          ],
+          "labels": [
+            "Agglomération Ouest-Sud-Ouest"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "sevremoine-493010102-accept-agglomeration-ouest-sud-ouest"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 9,
+        "operations": [
+          {
+            "id": "sevremoine-493010102-accept-agglomeration-ouest-sud-ouest",
+            "type": "accept",
+            "sourceId": "493010102",
+            "expectedLabel": "Agglomération Ouest-Sud-Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Agglomération Ouest-Sud-Ouest” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "le_grand_quevilly",
+      "name": "Le Grand-Quevilly",
+      "code": "76322",
+      "population": 25789,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "763220101",
+          "label": "Verdun",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220102",
+          "label": "Camus",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220103",
+          "label": "Parc Provinces",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220201",
+          "label": "Roosevelt Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220202",
+          "label": "Sainte-Lucie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220301",
+          "label": "Village Scolaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220302",
+          "label": "Delacroix",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220401",
+          "label": "Chêne à Leu",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220402",
+          "label": "Plaine de Jeux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220403",
+          "label": "Gendarmerie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763220501",
+          "label": "Le Bourg",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "lormont",
+      "name": "Lormont",
+      "code": "33249",
+      "population": 25769,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "332490101",
+          "label": "Cité Carriet 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490102",
+          "label": "Cité Carriet 2-La Croix Rouge",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490103",
+          "label": "Le Bourg-Le Vieux Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490104",
+          "label": "Génicart 3",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490105",
+          "label": "Génicart 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490106",
+          "label": "Résidences des Hauts de Lormont",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490107",
+          "label": "Génicart 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490108",
+          "label": "Lissandre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490109",
+          "label": "ZUP",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332490110",
+          "label": "Z.I. Quatre Pavillons-La Gardette",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "numbered_family",
+          "severity": "info",
+          "sourceIds": [
+            "332490104",
+            "332490105",
+            "332490107"
+          ],
+          "labels": [
+            "Génicart 3",
+            "Génicart 2",
+            "Génicart 1"
+          ],
+          "baseLabel": "Génicart",
+          "contiguous": true,
+          "geometryAudit": {
+            "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+            "connectedGraph": true,
+            "edges": [
+              {
+                "sourceIds": [
+                  "332490104",
+                  "332490105"
+                ],
+                "sharedBoundaryVertices": 9
+              },
+              {
+                "sourceIds": [
+                  "332490105",
+                  "332490107"
+                ],
+                "sharedBoundaryVertices": 9
+              },
+              {
+                "sourceIds": [
+                  "332490104",
+                  "332490107"
+                ],
+                "sharedBoundaryVertices": 0
+              }
+            ]
+          },
+          "detail": "Same-base suffix family dissolved only after the official polygons passed the connected shared-boundary test.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "lormont-genicart-merge"
+          ]
+        },
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "332490101",
+            "332490109",
+            "332490110"
+          ],
+          "labels": [
+            "Cité Carriet 1",
+            "ZUP",
+            "Z.I. Quatre Pavillons-La Gardette"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "lormont-332490101-accept-cite-carriet-1",
+            "lormont-332490109-accept-zup",
+            "lormont-332490110-accept-z-i-quatre-pavillons-la-gardette"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "lormont-332490101-accept-cite-carriet-1",
+            "type": "accept",
+            "sourceId": "332490101",
+            "expectedLabel": "Cité Carriet 1",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "“Cité Carriet 1” is retained exactly: the adjacent official cell is the distinct compound “Cité Carriet 2-La Croix Rouge”, so stripping or merging would erase an official semantic distinction."
+          },
+          {
+            "id": "lormont-genicart-merge",
+            "type": "merge",
+            "sourceIds": [
+              "332490104",
+              "332490105",
+              "332490107"
+            ],
+            "expectedLabels": [
+              "Génicart 3",
+              "Génicart 2",
+              "Génicart 1"
+            ],
+            "label": "Génicart",
+            "outputId": "lormont_33249_group_genicart",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "geometryAudit": {
+              "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "332490104",
+                    "332490105"
+                  ],
+                  "sharedBoundaryVertices": 9
+                },
+                {
+                  "sourceIds": [
+                    "332490105",
+                    "332490107"
+                  ],
+                  "sharedBoundaryVertices": 9
+                },
+                {
+                  "sourceIds": [
+                    "332490104",
+                    "332490107"
+                  ],
+                  "sharedBoundaryVertices": 0
+                }
+              ]
+            },
+            "rationale": "The exact official cells share the same human base “Génicart” and form one connected polygon graph. Only the statistical suffix is removed."
+          },
+          {
+            "id": "lormont-332490109-accept-zup",
+            "type": "accept",
+            "sourceId": "332490109",
+            "expectedLabel": "ZUP",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “ZUP” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "lormont-332490110-accept-z-i-quatre-pavillons-la-gardette",
+            "type": "accept",
+            "sourceId": "332490110",
+            "expectedLabel": "Z.I. Quatre Pavillons-La Gardette",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Z.I. Quatre Pavillons-La Gardette” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "henin_beaumont",
+      "name": "Hénin-Beaumont",
+      "code": "62427",
+      "population": 25688,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "624270101",
+          "label": "Champ de l'Abbaye",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270102",
+          "label": "Quartier Pasteur",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270103",
+          "label": "Zone d'Activités Hénin-Beaumont-Montigny",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270104",
+          "label": "Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270105",
+          "label": "Zone Artisanale-Cité de Croix",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270106",
+          "label": "Quartier de la Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270107",
+          "label": "Centre Administratif",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270108",
+          "label": "Les Hauts Marchés",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270109",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270112",
+          "label": "Le Bord des Eaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "624270113",
+          "label": "Quartier de Beaumont",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "624270103",
+            "624270104",
+            "624270105",
+            "624270107",
+            "624270109"
+          ],
+          "labels": [
+            "Zone d'Activités Hénin-Beaumont-Montigny",
+            "Sud-Ouest",
+            "Zone Artisanale-Cité de Croix",
+            "Centre Administratif",
+            "Centre"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "henin_beaumont-624270103-accept-zone-d-activites-henin-beaumont-montigny",
+            "henin_beaumont-624270104-accept-sud-ouest",
+            "henin_beaumont-624270105-accept-zone-artisanale-cite-de-croix",
+            "henin_beaumont-624270107-accept-centre-administratif",
+            "henin_beaumont-624270109-accept-centre"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 11,
+        "operations": [
+          {
+            "id": "henin_beaumont-624270103-accept-zone-d-activites-henin-beaumont-montigny",
+            "type": "accept",
+            "sourceId": "624270103",
+            "expectedLabel": "Zone d'Activités Hénin-Beaumont-Montigny",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Zone d'Activités Hénin-Beaumont-Montigny” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "henin_beaumont-624270104-accept-sud-ouest",
+            "type": "accept",
+            "sourceId": "624270104",
+            "expectedLabel": "Sud-Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Sud-Ouest” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "henin_beaumont-624270105-accept-zone-artisanale-cite-de-croix",
+            "type": "accept",
+            "sourceId": "624270105",
+            "expectedLabel": "Zone Artisanale-Cité de Croix",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Zone Artisanale-Cité de Croix” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "henin_beaumont-624270107-accept-centre-administratif",
+            "type": "accept",
+            "sourceId": "624270107",
+            "expectedLabel": "Centre Administratif",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Administratif” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "henin_beaumont-624270109-accept-centre",
+            "type": "accept",
+            "sourceId": "624270109",
+            "expectedLabel": "Centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "brunoy",
+      "name": "Brunoy",
+      "code": "91114",
+      "population": 25643,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "911140101",
+          "label": "La Pyramide",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911140102",
+          "label": "Les Bords de L'Yerres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911140103",
+          "label": "Brunoy Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911140104",
+          "label": "Les Deux Vallées",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911140105",
+          "label": "Les Hauts de Brunoy",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "cavaillon",
+      "name": "Cavaillon",
+      "code": "84035",
+      "population": 25636,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "840350101",
+          "label": "Les Jardins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350102",
+          "label": "Condamines",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350103",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350104",
+          "label": "Le Cagnard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350201",
+          "label": "Docteur Ayme",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350202",
+          "label": "Ratacans",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350203",
+          "label": "Vignères-Saint-Jacques",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350301",
+          "label": "Basses Ferrailles-Jas",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350302",
+          "label": "Hautes Ferrailles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350303",
+          "label": "Les Banquets-Vautes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840350304",
+          "label": "Route de Pertuis",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "840350103"
+          ],
+          "labels": [
+            "Centre Ville"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "cavaillon-840350103-accept-centre-ville"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 11,
+        "operations": [
+          {
+            "id": "cavaillon-840350103-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "840350103",
+            "expectedLabel": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Ville” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_ouen_l_aumone",
+      "name": "Saint-Ouen-l'Aumône",
+      "code": "95572",
+      "population": 25578,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "955720101",
+          "label": "Blanche de Castille-Clos Roi-Giono",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720102",
+          "label": "Hôtel de Ville-St Louis-Cop Rénovation",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720103",
+          "label": "Lycée-Île-de-France-Prés Saint-Ouen",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720104",
+          "label": "Parc le Nôtre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720105",
+          "label": "Chennevières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720106",
+          "label": "Maubuisson-Bourseaux-Saint-Prix",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720108",
+          "label": "Bellevues-Liesse",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "955720112",
+          "label": "Centre Ville-Mail-Golf-Épluches-Pont Petit",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955720116",
+          "label": "Hauguel-Zone d'Activités Épluches",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "955720117",
+          "label": "Vert Galant",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "955720118",
+          "label": "Bethunes",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "955720116"
+          ],
+          "labels": [
+            "Hauguel-Zone d'Activités Épluches"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "saint_ouen_l_aumone-955720116-accept-hauguel-zone-d-activites-epluches"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 11,
+        "operations": [
+          {
+            "id": "saint_ouen_l_aumone-955720116-accept-hauguel-zone-d-activites-epluches",
+            "type": "accept",
+            "sourceId": "955720116",
+            "expectedLabel": "Hauguel-Zone d'Activités Épluches",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Hauguel-Zone d'Activités Épluches” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "alencon",
+      "name": "Alençon",
+      "code": "61001",
+      "population": 25490,
+      "sourceFeatureCount": 14,
+      "officialLabels": [
+        {
+          "sourceId": "610010101",
+          "label": "Centre Ville-Saint-Léonard-Notre-Dame",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010102",
+          "label": "Halle aux Toiles-Centre-Préfecture",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010103",
+          "label": "Montsort",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010201",
+          "label": "Courteille Bord de Sarthe",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010202",
+          "label": "Courteilles Aviateurs-Alençon Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010203",
+          "label": "Courteille Point du Jour",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010301",
+          "label": "Fuie des Vignes",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "610010302",
+          "label": "Perseigne Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010303",
+          "label": "Perseigne Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010304",
+          "label": "Perseigne Haut Éclair",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010401",
+          "label": "Villeneuve",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010402",
+          "label": "Lancrel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010403",
+          "label": "Lyautey-Croix Mercier",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "610010404",
+          "label": "Écouves",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saintes",
+      "name": "Saintes",
+      "code": "17415",
+      "population": 25363,
+      "sourceFeatureCount": 12,
+      "officialLabels": [
+        {
+          "sourceId": "174150101",
+          "label": "Geoffroy Martel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150102",
+          "label": "Saint-Sorlin La Recluse",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150201",
+          "label": "Sébastien de Brouard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150202",
+          "label": "La Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150203",
+          "label": "La Fenêtre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150301",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150302",
+          "label": "Saint-Eutrope",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150303",
+          "label": "Recouvrance",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150304",
+          "label": "Z.A. l'Ormeau de Pied",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "174150401",
+          "label": "Bellevue",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150402",
+          "label": "La Grange",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "174150403",
+          "label": "Les Boiffiers",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "174150202",
+            "174150301",
+            "174150304"
+          ],
+          "labels": [
+            "La Gare",
+            "Centre",
+            "Z.A. l'Ormeau de Pied"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "saintes-174150202-accept-la-gare",
+            "saintes-174150301-accept-centre",
+            "saintes-174150304-accept-z-a-l-ormeau-de-pied"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 12,
+        "operations": [
+          {
+            "id": "saintes-174150202-accept-la-gare",
+            "type": "accept",
+            "sourceId": "174150202",
+            "expectedLabel": "La Gare",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “La Gare” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "saintes-174150301-accept-centre",
+            "type": "accept",
+            "sourceId": "174150301",
+            "expectedLabel": "Centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "saintes-174150304-accept-z-a-l-ormeau-de-pied",
+            "type": "accept",
+            "sourceId": "174150304",
+            "expectedLabel": "Z.A. l'Ormeau de Pied",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Z.A. l'Ormeau de Pied” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "vernon",
+      "name": "Vernon",
+      "code": "27681",
+      "population": 25290,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "276810101",
+          "label": "Bizy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810102",
+          "label": "Montgomery-Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810103",
+          "label": "Les Églantiers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810104",
+          "label": "Gamilly",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810105",
+          "label": "Croix d'Épine-Fontenelles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810106",
+          "label": "Futaie-Briqueterie-Blanchères-Pote",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810107",
+          "label": "Boutardes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810108",
+          "label": "Saint-Lazare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810109",
+          "label": "Paris-Île-de-France",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "276810110",
+          "label": "Vernonnet",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bethune",
+      "name": "Béthune",
+      "code": "62119",
+      "population": 25224,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "621190101",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190102",
+          "label": "Catorive Mont Sorel Rabat Espace Industriel Fleming",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190103",
+          "label": "Beau Marais-Gare d'Eau-Espace Lafayette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190104",
+          "label": "Pierrette Jardin Public",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190105",
+          "label": "Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190106",
+          "label": "Mont Liebaut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190107",
+          "label": "Cheminots Huit Ter",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "621190108",
+          "label": "Rue de Lille-Faubourg d'Arras",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "621190101",
+            "621190105",
+            "621190107"
+          ],
+          "labels": [
+            "Centre Ville",
+            "Gare",
+            "Cheminots Huit Ter"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "bethune-621190101-accept-centre-ville",
+            "bethune-621190105-accept-gare",
+            "bethune-621190107-accept-cheminots-huit-ter"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "bethune-621190101-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "621190101",
+            "expectedLabel": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Ville” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "bethune-621190105-accept-gare",
+            "type": "accept",
+            "sourceId": "621190105",
+            "expectedLabel": "Gare",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Gare” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "bethune-621190107-accept-cheminots-huit-ter",
+            "type": "accept",
+            "sourceId": "621190107",
+            "expectedLabel": "Cheminots Huit Ter",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "“Cheminots Huit Ter” is the exact official human sector name; “Huit Ter” is intrinsic to the established label and is not a generated cell suffix."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "vichy",
+      "name": "Vichy",
+      "code": "03310",
+      "population": 25115,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "033100101",
+          "label": "Hôtel de Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100102",
+          "label": "Marché",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100103",
+          "label": "Denière Les Romains",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100104",
+          "label": "Les Garets-Bellevue",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100105",
+          "label": "France et Rosières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100106",
+          "label": "Thermal-Vieux Vican",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100107",
+          "label": "Les Bains-République",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100108",
+          "label": "Jeanne d'Arc-Stade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100109",
+          "label": "Les Ailes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "033100110",
+          "label": "Beauséjour-Les Graves-Les Bartins",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "le_bouscat",
+      "name": "Le Bouscat",
+      "code": "33069",
+      "population": 25081,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "330690101",
+          "label": "Jean Moulin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690102",
+          "label": "Centre-Ermitage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690103",
+          "label": "La Garenne-Baudin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690104",
+          "label": "Ausone-Les Écus",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690105",
+          "label": "Jean-Jaurès-Ravezies",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690106",
+          "label": "Marceau-Tivoli",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690107",
+          "label": "Barrière du Médoc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690108",
+          "label": "Chêneraie-Lavigne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330690109",
+          "label": "Hippodrome-Lafon-Féline",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "vierzon",
+      "name": "Vierzon",
+      "code": "18279",
+      "population": 25068,
+      "sourceFeatureCount": 13,
+      "officialLabels": [
+        {
+          "sourceId": "182790101",
+          "label": "Centre Ville 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790102",
+          "label": "Centre Ville 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790201",
+          "label": "Bois d'Yèvre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790301",
+          "label": "Vieux Domaine-Forges",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790401",
+          "label": "Chaillot-Les Crèles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790501",
+          "label": "Bourgneuf 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790502",
+          "label": "Bourgneuf 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790601",
+          "label": "Villages",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790701",
+          "label": "Bois Marteau-Grelet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790801",
+          "label": "Colombier-Cité Scolaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182790901",
+          "label": "Clos du Roy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182791001",
+          "label": "Henri Sellier-Aujonnière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "182791101",
+          "label": "Rural",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "numbered_family",
+          "severity": "info",
+          "sourceIds": [
+            "182790101",
+            "182790102"
+          ],
+          "labels": [
+            "Centre Ville 1",
+            "Centre Ville 2"
+          ],
+          "baseLabel": "Centre Ville",
+          "contiguous": true,
+          "geometryAudit": {
+            "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+            "connectedGraph": true,
+            "edges": [
+              {
+                "sourceIds": [
+                  "182790101",
+                  "182790102"
+                ],
+                "sharedBoundaryVertices": 26
+              }
+            ]
+          },
+          "detail": "Same-base suffix family dissolved only after the official polygons passed the connected shared-boundary test.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "vierzon-centre-ville-merge"
+          ]
+        },
+        {
+          "type": "numbered_family",
+          "severity": "info",
+          "sourceIds": [
+            "182790501",
+            "182790502"
+          ],
+          "labels": [
+            "Bourgneuf 1",
+            "Bourgneuf 2"
+          ],
+          "baseLabel": "Bourgneuf",
+          "contiguous": true,
+          "geometryAudit": {
+            "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+            "connectedGraph": true,
+            "edges": [
+              {
+                "sourceIds": [
+                  "182790501",
+                  "182790502"
+                ],
+                "sharedBoundaryVertices": 3
+              }
+            ]
+          },
+          "detail": "Same-base suffix family dissolved only after the official polygons passed the connected shared-boundary test.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "vierzon-bourgneuf-merge"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 11,
+        "operations": [
+          {
+            "id": "vierzon-centre-ville-merge",
+            "type": "merge",
+            "sourceIds": [
+              "182790101",
+              "182790102"
+            ],
+            "expectedLabels": [
+              "Centre Ville 1",
+              "Centre Ville 2"
+            ],
+            "label": "Centre Ville",
+            "outputId": "vierzon_18279_group_centre_ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "geometryAudit": {
+              "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "182790101",
+                    "182790102"
+                  ],
+                  "sharedBoundaryVertices": 26
+                }
+              ]
+            },
+            "rationale": "The exact official cells share the same human base “Centre Ville” and form one connected polygon graph. Only the statistical suffix is removed."
+          },
+          {
+            "id": "vierzon-bourgneuf-merge",
+            "type": "merge",
+            "sourceIds": [
+              "182790501",
+              "182790502"
+            ],
+            "expectedLabels": [
+              "Bourgneuf 1",
+              "Bourgneuf 2"
+            ],
+            "label": "Bourgneuf",
+            "outputId": "vierzon_18279_group_bourgneuf",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "geometryAudit": {
+              "criterion": "At least two shared official boundary vertices at seven decimal places; the family graph must be connected.",
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "182790501",
+                    "182790502"
+                  ],
+                  "sharedBoundaryVertices": 3
+                }
+              ]
+            },
+            "rationale": "The exact official cells share the same human base “Bourgneuf” and form one connected polygon graph. Only the statistical suffix is removed."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "libourne",
+      "name": "Libourne",
+      "code": "33243",
+      "population": 25036,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "332430101",
+          "label": "Condat",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430102",
+          "label": "Montaudon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430103",
+          "label": "La Bastide",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430104",
+          "label": "Carré-le Verdet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430105",
+          "label": "La Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430106",
+          "label": "Charrauds-le Pentey",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430107",
+          "label": "Avenue Foch-la Ganne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430108",
+          "label": "Lamberte-Hôpital",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332430109",
+          "label": "La Plante",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "All official labels were reviewed: they are human, unique and contain no statistical suffix or opaque inventory requiring transformation."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "eysines",
+      "name": "Eysines",
+      "code": "33162",
+      "population": 24825,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "331620101",
+          "label": "Cantinolle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331620102",
+          "label": "Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331620103",
+          "label": "La Lesque",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331620104",
+          "label": "Vigean",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331620105",
+          "label": "Derby",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331620106",
+          "label": "Grand Louis",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331620107",
+          "label": "Migron",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "331620102"
+          ],
+          "labels": [
+            "Bourg"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "eysines-331620102-accept-bourg"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "eysines-331620102-accept-bourg",
+            "type": "accept",
+            "sourceId": "331620102",
+            "expectedLabel": "Bourg",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Bourg” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montbeliard",
+      "name": "Montbéliard",
+      "code": "25388",
+      "population": 24672,
+      "sourceFeatureCount": 15,
+      "officialLabels": [
+        {
+          "sourceId": "253880101",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880102",
+          "label": "Hôpital-Lizaine",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "253880103",
+          "label": "Citadelle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880104",
+          "label": "Chiffogne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880106",
+          "label": "Faubourg-Mont Bart",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880107",
+          "label": "Petite Hollande-Coteau Jouvent",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880108",
+          "label": "Petite Hollande-Petit Chênois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880109",
+          "label": "Petite Hollande Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880110",
+          "label": "Petite Hollande-Lulli",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880111",
+          "label": "Petite Hollande-Hexagone",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880112",
+          "label": "Petite Hollande Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880113",
+          "label": "Le Pied des Gouttes",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "253880114",
+          "label": "Peugeot (Sochaux et Exincourt)",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "253880115",
+          "label": "Prairie-Grands Jardins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253880116",
+          "label": "Batteries du Parc",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "253880101"
+          ],
+          "labels": [
+            "Centre Ville"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "montbeliard-253880101-accept-centre-ville"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 15,
+        "operations": [
+          {
+            "id": "montbeliard-253880101-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "253880101",
+            "expectedLabel": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Ville” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "laon",
+      "name": "Laon",
+      "code": "02408",
+      "population": 24220,
+      "sourceFeatureCount": 12,
+      "officialLabels": [
+        {
+          "sourceId": "024080101",
+          "label": "Saint-Exupéry-Moulin Roux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080102",
+          "label": "Centre Social",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080103",
+          "label": "La Fontaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080201",
+          "label": "Cité du Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080301",
+          "label": "Gare Saint-Marcel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080401",
+          "label": "Individuels",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080402",
+          "label": "Prévert-Maraîchers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080501",
+          "label": "Plateau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080601",
+          "label": "Vaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080701",
+          "label": "Zone Industrielle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080801",
+          "label": "Montreuil-La Neuville-Marquette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "024080901",
+          "label": "Ardon-Leuilly-Semilly",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "024080102",
+            "024080401",
+            "024080501",
+            "024080701"
+          ],
+          "labels": [
+            "Centre Social",
+            "Individuels",
+            "Plateau",
+            "Zone Industrielle"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "laon-024080102-accept-centre-social",
+            "laon-024080401-accept-individuels",
+            "laon-024080501-accept-plateau",
+            "laon-024080701-accept-zone-industrielle"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 12,
+        "operations": [
+          {
+            "id": "laon-024080102-accept-centre-social",
+            "type": "accept",
+            "sourceId": "024080102",
+            "expectedLabel": "Centre Social",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Social” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "laon-024080401-accept-individuels",
+            "type": "accept",
+            "sourceId": "024080401",
+            "expectedLabel": "Individuels",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Individuels” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "laon-024080501-accept-plateau",
+            "type": "accept",
+            "sourceId": "024080501",
+            "expectedLabel": "Plateau",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Plateau” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "laon-024080701-accept-zone-industrielle",
+            "type": "accept",
+            "sourceId": "024080701",
+            "expectedLabel": "Zone Industrielle",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Zone Industrielle” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "frontignan",
+      "name": "Frontignan",
+      "code": "34108",
+      "population": 24136,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "341080101",
+          "label": "ZUS de la Peyrade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080201",
+          "label": "La Plage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080301",
+          "label": "Le Mas de Chave",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080302",
+          "label": "ZUS Quartier Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080303",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080305",
+          "label": "Les Crozes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080307",
+          "label": "Terres Blanches",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341080308",
+          "label": "La Périphérie",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "341080101",
+            "341080302",
+            "341080303",
+            "341080308"
+          ],
+          "labels": [
+            "ZUS de la Peyrade",
+            "ZUS Quartier Nord",
+            "Centre Ville",
+            "La Périphérie"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "frontignan-341080101-accept-zus-de-la-peyrade",
+            "frontignan-341080302-accept-zus-quartier-nord",
+            "frontignan-341080303-accept-centre-ville",
+            "frontignan-341080308-accept-la-peripherie"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "frontignan-341080101-accept-zus-de-la-peyrade",
+            "type": "accept",
+            "sourceId": "341080101",
+            "expectedLabel": "ZUS de la Peyrade",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “ZUS de la Peyrade” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "frontignan-341080302-accept-zus-quartier-nord",
+            "type": "accept",
+            "sourceId": "341080302",
+            "expectedLabel": "ZUS Quartier Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “ZUS Quartier Nord” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "frontignan-341080303-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "341080303",
+            "expectedLabel": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Centre Ville” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "frontignan-341080308-accept-la-peripherie",
+            "type": "accept",
+            "sourceId": "341080308",
+            "expectedLabel": "La Périphérie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “La Périphérie” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montgeron",
+      "name": "Montgeron",
+      "code": "91421",
+      "population": 24022,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "914210101",
+          "label": "Zone S2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210102",
+          "label": "Zone S3",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210103",
+          "label": "Zone S4",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210104",
+          "label": "Zone S5",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210105",
+          "label": "Zone S6",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210106",
+          "label": "Zone S7",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210107",
+          "label": "Zone S8",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210108",
+          "label": "Zone S9",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210109",
+          "label": "Zone S10",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914210110",
+          "label": "Zone S11",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "technical_numbered_family",
+          "severity": "info",
+          "sourceIds": [
+            "914210101",
+            "914210102",
+            "914210103",
+            "914210104",
+            "914210105",
+            "914210106",
+            "914210107",
+            "914210108",
+            "914210109",
+            "914210110"
+          ],
+          "labels": [
+            "Zone S2",
+            "Zone S3",
+            "Zone S4",
+            "Zone S5",
+            "Zone S6",
+            "Zone S7",
+            "Zone S8",
+            "Zone S9",
+            "Zone S10",
+            "Zone S11"
+          ],
+          "detail": "Every opaque technical source label is replaced 1:1 by a unique human label supported only by IGN coordinates strictly contained in the exact source polygon.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "montgeron-914210101-rename-chalandray-parc-des-cascades",
+            "montgeron-914210102-rename-concy-prairie",
+            "montgeron-914210103-rename-rottembourg-joseph-piette",
+            "montgeron-914210104-rename-val-d-oly-rouvres",
+            "montgeron-914210105-rename-nouzet-chateau",
+            "montgeron-914210106-rename-soleil-pervenches",
+            "montgeron-914210107-rename-plantes-bosserons",
+            "montgeron-914210108-rename-clos-de-senart-venerie",
+            "montgeron-914210109-rename-mainville-quinconces",
+            "montgeron-914210110-rename-centre-commercial-de-la-foret"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-geoplateforme-toponymy-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 10,
+        "operations": [
+          {
+            "id": "montgeron-914210101-rename-chalandray-parc-des-cascades",
+            "type": "rename",
+            "sourceId": "914210101",
+            "expectedLabel": "Zone S2",
+            "label": "Chalandray–Parc des Cascades",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Rue de Chalandray",
+                "coordinates": [
+                  2.464018,
+                  48.703926
+                ],
+                "sourceFeatureId": "91421_0670",
+                "banId": "30e8febb-2d3f-4d46-9afb-17528c68aaf9",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "résidence du parc des cascades",
+                "coordinates": [
+                  2.466578,
+                  48.705433
+                ],
+                "sourceFeatureId": "91421_A195",
+                "banId": "7bf9e9aa-8aa5-496d-a147-cf4c561e7664",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210102-rename-concy-prairie",
+            "type": "rename",
+            "sourceId": "914210102",
+            "expectedLabel": "Zone S3",
+            "label": "Concy–Prairie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Rue de Concy",
+                "coordinates": [
+                  2.469119,
+                  48.707725
+                ],
+                "sourceFeatureId": "91421_1080",
+                "banId": "8b07b649-4a74-4067-9efb-065ed0ef1ebc",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Chemin de la Prairie",
+                "coordinates": [
+                  2.473581,
+                  48.708101
+                ],
+                "sourceFeatureId": "91421_3230",
+                "banId": "896e08cb-c327-4731-a35c-c507c0df7f8f",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210103-rename-rottembourg-joseph-piette",
+            "type": "rename",
+            "sourceId": "914210103",
+            "expectedLabel": "Zone S4",
+            "label": "Rottembourg–Joseph-Piette",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Place de Rottembourg",
+                "coordinates": [
+                  2.456297,
+                  48.706992
+                ],
+                "sourceFeatureId": "91421_3580",
+                "banId": "b3766b76-c5e8-4bc7-b837-273304fb3074",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Place Joseph Piette",
+                "coordinates": [
+                  2.462052,
+                  48.707684
+                ],
+                "sourceFeatureId": "91421_2182",
+                "banId": "64b92d04-e172-46bb-a6e1-b76c64b4f187",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210104-rename-val-d-oly-rouvres",
+            "type": "rename",
+            "sourceId": "914210104",
+            "expectedLabel": "Zone S5",
+            "label": "Val d’Oly–Rouvres",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Centre Comm du Val d'Oly",
+                "coordinates": [
+                  2.435819,
+                  48.713913
+                ],
+                "sourceFeatureId": "91421_A047",
+                "banId": "a14c06de-aa10-41ae-9160-0d9afd75a689",
+                "ignType": "locality",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Rue de Rouvres",
+                "coordinates": [
+                  2.440467,
+                  48.704575
+                ],
+                "sourceFeatureId": "91421_3590",
+                "banId": "07b79a43-cdac-4553-b54e-28bdc073ab22",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210105-rename-nouzet-chateau",
+            "type": "rename",
+            "sourceId": "914210105",
+            "expectedLabel": "Zone S6",
+            "label": "Nouzet–Château",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Rue du Nouzet",
+                "coordinates": [
+                  2.443502,
+                  48.708845
+                ],
+                "sourceFeatureId": "91421_2860",
+                "banId": "b3cd12bc-f2b6-41e8-8320-4ce3db97d007",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Impasse du Château",
+                "coordinates": [
+                  2.453191,
+                  48.707966
+                ],
+                "sourceFeatureId": "91421_0825",
+                "banId": "a9ee2ceb-2dd1-4231-b438-82b0283b0632",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210106-rename-soleil-pervenches",
+            "type": "rename",
+            "sourceId": "914210106",
+            "expectedLabel": "Zone S7",
+            "label": "Soleil–Pervenches",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Place du Soleil",
+                "coordinates": [
+                  2.442522,
+                  48.703196
+                ],
+                "sourceFeatureId": "91421_3760",
+                "banId": "0788323f-69e9-4a6b-9786-a6f1dfb469a4",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Square des Pervenches",
+                "coordinates": [
+                  2.442407,
+                  48.700118
+                ],
+                "sourceFeatureId": "91421_3040",
+                "banId": "d9f0443a-fd76-4300-b5dc-baa4e993fc20",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210107-rename-plantes-bosserons",
+            "type": "rename",
+            "sourceId": "914210107",
+            "expectedLabel": "Zone S8",
+            "label": "Plantes–Bosserons",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Rue des Plantes",
+                "coordinates": [
+                  2.44947,
+                  48.698602
+                ],
+                "sourceFeatureId": "91421_3120",
+                "banId": "71788916-b182-4151-b342-63ca5543d359",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Route Forestière des Bosserons",
+                "coordinates": [
+                  2.488956,
+                  48.68376
+                ],
+                "sourceFeatureId": "91421_1661",
+                "banId": "29e1df13-b3f7-4b70-917d-33056ecd5fe5",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210108-rename-clos-de-senart-venerie",
+            "type": "rename",
+            "sourceId": "914210108",
+            "expectedLabel": "Zone S9",
+            "label": "Clos de Sénart–Vènerie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Avenue du Clos de Sénart",
+                "coordinates": [
+                  2.4661,
+                  48.695231
+                ],
+                "sourceFeatureId": "91421_1000",
+                "banId": "f4181410-40a4-4919-9976-de118c395c93",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Avenue de la Vènerie",
+                "coordinates": [
+                  2.459053,
+                  48.702619
+                ],
+                "sourceFeatureId": "91421_3940",
+                "banId": "c397bb13-5a18-4809-af9b-351088b0a942",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210109-rename-mainville-quinconces",
+            "type": "rename",
+            "sourceId": "914210109",
+            "expectedLabel": "Zone S10",
+            "label": "Mainville–Quinconces",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "Rue de Mainville",
+                "coordinates": [
+                  2.453721,
+                  48.702
+                ],
+                "sourceFeatureId": "91421_2450",
+                "banId": "5c512f54-47f5-47ab-8609-d032257201b1",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "Rue des Quinconces",
+                "coordinates": [
+                  2.454682,
+                  48.700985
+                ],
+                "sourceFeatureId": "91421_3360",
+                "banId": "c3848cbc-faa2-460b-9a3c-5c71b9dde1c8",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          },
+          {
+            "id": "montgeron-914210110-rename-centre-commercial-de-la-foret",
+            "type": "rename",
+            "sourceId": "914210110",
+            "expectedLabel": "Zone S11",
+            "label": "Centre commercial de la Forêt",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-geoplateforme-toponymy-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "containedToponyms": [
+              {
+                "name": "centre commercial de la forêt",
+                "coordinates": [
+                  2.455361,
+                  48.696649
+                ],
+                "sourceFeatureId": "91421_gzviei",
+                "banId": "76efd7b7-96c0-411e-8fc4-25c83bbc1346",
+                "ignType": "street",
+                "index": "IGN Géoplateforme geocoding address index",
+                "strictContainmentVerified": true
+              }
+            ],
+            "rationale": "Every cited IGN Géoplateforme coordinate is strictly inside this exact official IRIS polygon. The concise human label uses only those contained names; no nearest-point assignment, polygon merge, split or dropped cell is used."
+          }
+        ],
+        "justification": "All ten opaque Zone S2–S11 cells receive unique exact-ID human labels from official IGN points strictly contained in their own IRIS; nearest assignment is forbidden."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "beaupreau_en_mauges",
+      "name": "Beaupréau-en-Mauges",
+      "code": "49023",
+      "population": 23989,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "490230101",
+          "label": "Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230102",
+          "label": "Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230103",
+          "label": "Sud Sud-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230201",
+          "label": "Gesté",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230202",
+          "label": "Villedieu-la-Blouère",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230203",
+          "label": "Chapelle - Saint-Philbert",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230204",
+          "label": "Andrezé-Jubaudière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230205",
+          "label": "Jallais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490230206",
+          "label": "Pin-Poitevinière",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "490230101",
+            "490230102",
+            "490230103"
+          ],
+          "labels": [
+            "Ouest",
+            "Nord-Est",
+            "Sud Sud-Est"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "beaupreau_en_mauges-490230101-accept-ouest",
+            "beaupreau_en_mauges-490230102-accept-nord-est",
+            "beaupreau_en_mauges-490230103-accept-sud-sud-est"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 9,
+        "operations": [
+          {
+            "id": "beaupreau_en_mauges-490230101-accept-ouest",
+            "type": "accept",
+            "sourceId": "490230101",
+            "expectedLabel": "Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Ouest” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "beaupreau_en_mauges-490230102-accept-nord-est",
+            "type": "accept",
+            "sourceId": "490230102",
+            "expectedLabel": "Nord-Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Nord-Est” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          },
+          {
+            "id": "beaupreau_en_mauges-490230103-accept-sud-sud-est",
+            "type": "accept",
+            "sourceId": "490230103",
+            "expectedLabel": "Sud Sud-Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "The exact official IGN/INSEE label “Sud Sud-Est” is explicitly retained for this exact source ID after full Guide Alpha review. It is a locally qualified human sector or land-use label, and the official datasets available to the pipeline provide no safer polygon crosswalk for a 1:1 rename."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "rodez",
+      "name": "Rodez",
+      "code": "12202",
+      "population": 23981,
+      "sourceFeatureCount": 12,
+      "officialLabels": [
+        {
+          "sourceId": "122020101",
+          "label": "Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020201",
+          "label": "Amphithéâtre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020202",
+          "label": "Camonil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020301",
+          "label": "Sacré-Cœur-Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020302",
+          "label": "Mouly-Fayet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020303",
+          "label": "Lalande",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020401",
+          "label": "15 Arbres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020402",
+          "label": "Pontviel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020403",
+          "label": "Gourgan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020501",
+          "label": "Bourran",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020502",
+          "label": "Saint-Félix",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "122020503",
+          "label": "Belair",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "explicit_exact_label_review",
+          "severity": "info",
+          "sourceIds": [
+            "122020401"
+          ],
+          "labels": [
+            "15 Arbres"
+          ],
+          "detail": "Potentially generic, directional, operational or numeric-looking exact labels were reviewed one by one and explicitly retained without invention.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "rodez-122020401-accept-15-arbres"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-7-2026-07-14"
+        ],
+        "expectedFeatureCount": 12,
+        "operations": [
+          {
+            "id": "rodez-122020401-accept-15-arbres",
+            "type": "accept",
+            "sourceId": "122020401",
+            "expectedLabel": "15 Arbres",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-7-2026-07-14"
+            ],
+            "rationale": "“15 Arbres” is the exact official human place name. Its leading number is intrinsic to the toponym and is explicitly accepted rather than expanded or stripped."
+          }
+        ],
+        "justification": "Only exact-ID reviewed operations are applied. Same-base suffixes merge only after connected geometry verification; all other retained labels remain separate."
+      },
+      "status": "ready"
+    }
+  ]
+}

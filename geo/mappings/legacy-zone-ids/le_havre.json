@@ -1,0 +1,703 @@
+{
+  "schemaVersion": 1,
+  "scope": "le_havre",
+  "namespace": "7f8da20d-f3d2-5e73-94f2-52fda65537ce",
+  "entries": [
+    {
+      "legacyZoneId": "le_havre_763510101_centre_ville_saint_michel",
+      "stableZoneId": "89b904a9-8119-5582-ae02-30433f9629ee",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510102_centre_ville_le_perrey",
+      "stableZoneId": "b8b41f5b-18ec-5c57-812c-93a76c9ec545",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510103_centre_ville_porte_oceane",
+      "stableZoneId": "87304962-7b00-5df6-b20e-bb4392a43ca1",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510104_centre_ville_saint_francois_notre_dame",
+      "stableZoneId": "4f1f31d0-1b74-5379-9449-1fa3d70447a2",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510105_centre_ville_port_de_plaisance",
+      "stableZoneId": "264a86e3-0057-5108-a80d-769ce5bacc89",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510106_centre_ville_saint_roch",
+      "stableZoneId": "18aab993-cb62-5849-9dfe-80d7aa85db57",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510107_centre_ville_saint_joseph",
+      "stableZoneId": "bea34091-1fe9-565c-b837-6f5bab2edaa8",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510108_centre_ville_bourse",
+      "stableZoneId": "f731e12b-9363-50a7-866b-6fab617d91f7",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510201_saint_vincent",
+      "stableZoneId": "f3aee6d7-150d-534e-9f40-3de39ebc4dc6",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510301_cote_ouest_ormeaux_gobelins",
+      "stableZoneId": "f7452e0b-39b1-5c74-a86c-3c747bd88ae4",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510302_cote_ouest_ormeaux_hopital",
+      "stableZoneId": "4c991c83-1213-5786-b769-4f73b3237333",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510303_cote_ouest_ormeaux_pasteur",
+      "stableZoneId": "1f0b200b-f5d7-53e4-b7d8-f358a7107c67",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510304_cote_ouest_ormeaux_funiculaire",
+      "stableZoneId": "149b6281-3d50-54ec-8de1-ced465aaffbb",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510401_anatole_france_danton_gallieni",
+      "stableZoneId": "e5939986-9bb9-5a2b-9878-fe1f87171334",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510402_anatole_france_danton_gabriel_peri",
+      "stableZoneId": "19726269-91d3-5f1e-b06c-43f658247f98",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510403_anatole_france_danton_sainte_anne",
+      "stableZoneId": "8b441ad3-5c05-59f3-ac00-97dd6ecbe3e9",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510404_anatole_france_danton_douanes",
+      "stableZoneId": "6548885c-590c-555b-aa5f-d564362c70da",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510405_anatole_france_danton_franklin",
+      "stableZoneId": "6e12ecd5-09b8-581e-8520-28f25eb3c082",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510501_sanvic_chateaux_d_eau",
+      "stableZoneId": "fe18acf8-ae52-5396-bb7e-1ceed7077215",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510502_sanvic_fort_de_sainte_adresse",
+      "stableZoneId": "6172cba3-b130-5b0f-9d11-2c21cd1ae58d",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510503_sanvic_cavee_verte",
+      "stableZoneId": "1207770d-e28b-5215-81d6-d7b891c2e414",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510504_sanvic_mairie",
+      "stableZoneId": "0c26e0f9-6438-5b87-9e45-f1dfbc9ab04d",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510505_sanvic_val_soleil",
+      "stableZoneId": "151e9038-6da9-5923-a10e-be0864b32f2b",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510506_sanvic_belfort",
+      "stableZoneId": "7ff9ea02-ecaf-514e-87fd-eaea04e3a144",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510507_sanvic_fernand_leger",
+      "stableZoneId": "fe1a2c97-a112-541c-9125-2778d65ae603",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510601_tourneville_fort",
+      "stableZoneId": "cc3f514f-8086-50c6-a9d7-81cf5dd06cbe",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510602_tourneville_haut_graville",
+      "stableZoneId": "54a9ca62-f803-56fa-a6f4-f8b518361113",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510701_cote_est_soquence_rond_point_observatoire",
+      "stableZoneId": "f238bde0-1bd0-5d19-8b05-2bc14e6d8da5",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510702_cote_est_soquence_montmorency",
+      "stableZoneId": "d5b80e48-008a-5690-a432-c7df9bdfd1d4",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510703_cote_est_soquence_abbaye",
+      "stableZoneId": "05f7c570-b8b5-5289-b117-4c3d3c17a8d0",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510801_sainte_marie_saint_leon_eglise",
+      "stableZoneId": "0b002c87-8ac4-556f-93f2-1e86566e9385",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510802_sainte_marie_saint_leon_massillon",
+      "stableZoneId": "3e58c70e-c52c-5d96-a9dc-6ea91d9b89cb",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510803_sainte_marie_saint_leon_universite",
+      "stableZoneId": "a5fdaf8a-7913-5867-b36d-8f661e14933c",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510901_arcole_brindeau_amiral_mouchez",
+      "stableZoneId": "934318f6-3b89-500b-8d99-04b6b1176891",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763510902_arcole_brindeau_humbert",
+      "stableZoneId": "02cbc390-3a22-57c6-b956-080b45bc32df",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511001_eure",
+      "stableZoneId": "c25f4963-5b7a-5ef2-8b45-ab28c269c8c2",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511101_points_cardinaux_theophile_gautier",
+      "stableZoneId": "aa05addb-5088-5148-8cee-a4d10e51fa1a",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511102_points_cardinaux_saint_just",
+      "stableZoneId": "34496c7d-559a-5949-b739-9d7befccdc80",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511201_bleville_sous_bretonne",
+      "stableZoneId": "13f97cc0-1c5c-5224-a46d-14e8c92d87b1",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511202_bleville_le_hanail",
+      "stableZoneId": "c7674038-1032-5bf5-97ee-375933e48293",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511203_bleville_mairie",
+      "stableZoneId": "4af47be3-b9ea-5515-b360-d6b6dcf7af74",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511204_bleville_renaissance",
+      "stableZoneId": "c9a9347c-6d1d-507c-93b6-66f05727e413",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511301_mare_rouge_chateaudun",
+      "stableZoneId": "9fa78ae8-7afd-502f-baba-ad9b5803245d",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511302_mare_rouge_george_sand",
+      "stableZoneId": "3199103f-b55a-5a0d-91e6-cf14eba9c470",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511303_mare_rouge_piscine",
+      "stableZoneId": "3131d5cd-e25f-53d3-a68c-e2b15a63a443",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511401_bois_de_bleville_henri_dunant",
+      "stableZoneId": "07cd935b-acd3-5f3e-915e-b1f7cfdfe395",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511402_bois_de_bleville_porte_de_la_foret",
+      "stableZoneId": "a516dbec-501f-551b-83d9-6c0a5b4f79e8",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511501_mare_au_clerc_bois_au_coq",
+      "stableZoneId": "146b43bb-7d8e-5b27-8f02-9058fd515e12",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511502_mare_au_clerc_acacias",
+      "stableZoneId": "0b476404-adca-53ac-acf6-44df792cfc98",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511503_mare_au_clerc_la_hetraie",
+      "stableZoneId": "811344f9-f96e-583a-a149-22412c4db127",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511504_mare_au_clerc_foret_de_montgeon",
+      "stableZoneId": "692b67ac-bc86-53c2-b569-5f7878aefa5d",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511601_sainte_cecile_eglise",
+      "stableZoneId": "033a4394-624a-592d-ac14-a6680a07158b",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511602_sainte_cecile_hallates",
+      "stableZoneId": "9d8d7893-a007-56e9-9977-ce064d5b38c7",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511603_sainte_cecile_frileuse",
+      "stableZoneId": "d62caad2-6e79-5871-af69-372b09e2a424",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511701_aplemont_robinson",
+      "stableZoneId": "ec033f65-d9e7-598f-83ce-c827cdfde73e",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511702_aplemont_saint_paul",
+      "stableZoneId": "5eef37ac-33ea-55de-af0e-42d67c9c651b",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511703_aplemont_la_pommeraie",
+      "stableZoneId": "cff30453-221a-5534-8ad3-e226747ff7ac",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511704_aplemont_saules",
+      "stableZoneId": "f5bf0612-a006-5d84-b590-926ad0c65c0f",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511801_graville_rivoli",
+      "stableZoneId": "f3aaee21-e8e8-5502-93b1-163c09a927b1",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511802_graville_gare",
+      "stableZoneId": "d7d6d311-0d43-599b-9b55-e76df4756ecc",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511803_graville_mairie",
+      "stableZoneId": "278f0a08-d2d4-5daf-ab30-f93a071b6793",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511804_graville_stade",
+      "stableZoneId": "1032df31-1fc8-51c9-a041-5ad3fafbb76b",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511901_vallee_bereult_trefileries_champs_barets",
+      "stableZoneId": "0f034ece-1537-5a8d-9fff-74e6d58acf96",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511902_vallee_bereult_pressense",
+      "stableZoneId": "779bfa5e-4d24-5db8-b64e-ddebf7435930",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763511903_vallee_bereult_sud",
+      "stableZoneId": "217d259f-a37b-578a-97e4-d6c767e48a0f",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512001_les_neiges",
+      "stableZoneId": "e492ca1e-6123-5d11-91df-3f5d9212f509",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512101_dollemard_stendhal",
+      "stableZoneId": "86a44641-d81e-57e6-b310-12f47b929bf7",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512102_dollemard_le_grand_hameau",
+      "stableZoneId": "a3cbd60c-ca13-5bea-b713-196d1228e62c",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512201_mont_gaillard_capuchet",
+      "stableZoneId": "a2ce1494-d119-56e9-a536-03dd281130a6",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512202_mont_gaillard_centre",
+      "stableZoneId": "5dd65ef4-87a1-5dd4-8669-faa4d51d8f75",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512203_mont_gaillard_centre_hippique",
+      "stableZoneId": "001b5380-832a-5cc7-8ac3-483e9a3aa18d",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512204_mont_gaillard_sainte_catherine",
+      "stableZoneId": "2e8720ea-3d6e-5871-95e2-c6069ebdcb91",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512205_mont_gaillard_coulee_verte",
+      "stableZoneId": "82fa45e5-f1d1-56a0-a0c0-db282d6a8e10",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512301_caucriauville_lut",
+      "stableZoneId": "f93938b8-7e60-5efa-894b-6d8ae0f5a7c4",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512302_caucriauville_quatre_sergents",
+      "stableZoneId": "a53b8020-fd0b-5ad0-871f-7a68e147190c",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512303_caucriauville_eugene_varlin",
+      "stableZoneId": "30b90c99-e414-5019-984d-b3e8475f8d5a",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512304_caucriauville_saint_pierre",
+      "stableZoneId": "b7cd1a1e-47c2-54b1-a871-24d6036f5eeb",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512305_caucriauville_mont_le_comte",
+      "stableZoneId": "89ad5e91-c927-5e76-9346-7e70d8d271e0",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512306_caucriauville_jules_ladoumegue",
+      "stableZoneId": "e668aab7-88c2-5e59-848c-d8771273fae1",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512307_caucriauville_edouard_vaillant",
+      "stableZoneId": "114ff7a2-d601-5d7e-aff3-f7fcbf17e4ea",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512308_caucriauville_louise_michel",
+      "stableZoneId": "7f4fd42e-df02-5d3b-9d7c-268c48c82041",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512309_caucriauville_gerard_philipe",
+      "stableZoneId": "f024ce7e-cf46-5e6b-bc1e-91f5f8f00f7d",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512401_le_port_ouest",
+      "stableZoneId": "e49b0caf-b613-5be1-a989-7a7edf9ea6e4",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512402_le_port_sud",
+      "stableZoneId": "f70ab783-2f7b-5059-9442-f8308640e0ea",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512403_le_port_est",
+      "stableZoneId": "c711028c-47e1-59f7-8f98-f1c29c32af19",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512404_le_port_nord",
+      "stableZoneId": "f99748cc-3b77-5816-bba5-a72296a2701b",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "le_havre_763512501_rouelles",
+      "stableZoneId": "603a0491-dbda-5a5e-a398-dd052b72afc9",
+      "sourceDataset": "le-havre-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "le_havre_parent_76351_le_havre",
+      "stableParentZoneId": null
+    }
+  ]
+}

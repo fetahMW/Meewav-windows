@@ -1,0 +1,109 @@
+/* Two editorial rhythms: a featured story, then quick project discovery. */
+.tremplin-scroll:has(> .tremplin-home-discovery) { padding-inline: 0; }
+.tremplin-home-discovery { max-width: none; margin-inline: 0; --discovery-copy-inset: clamp(18px, 1.5vw, 28px); }
+/* Use the full chassis width with a small, persistent breathing space. */
+.tremplin-scroll > .tremplin-home-discovery > .tremplin-home-discovery__hero,
+.tremplin-scroll > .tremplin-home-discovery > .tremplin-home-wall { padding-inline: var(--discovery-copy-inset); }
+.tremplin-home-discovery .tremplin-home-rail__header { padding-inline: var(--discovery-copy-inset); }
+.tremplin-home-discovery .tremplin-home-rail__viewport-shell { margin-inline: 20px; }
+.tremplin-home-discovery .tremplin-home-rail__viewport { width: 100%; max-width: none; margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0; }
+.tremplin-home-rail, .tremplin-home-rail.is-first-projects { --tremplin-rail-card-width: 290px; padding-top: 16px; margin-top: 4px; }
+.tremplin-home-rail.is-featured { --tremplin-rail-card-width: 880px; padding-top: 12px; }
+.tremplin-home-rail__track { gap: 20px; }
+.tremplin-home-rail__track > div { height: 210px; }
+.tremplin-home-rail.is-featured .tremplin-home-rail__track > div { height: 440px; }
+.tremplin-home-rail__viewport { padding-block: 8px 16px; }
+.tremplin-home-rail__viewport-shell { --rail-edge-inset: 8px 0 16px; }
+.tremplin-home-rail__header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 8px; }
+.tremplin-home-rail__header > div > h2 { font-size: 24px; line-height: 1.2; letter-spacing: -.025em; }
+.tremplin-home-rail.is-featured .tremplin-home-rail__header h2 { max-width: 640px; font-size: 28px; }
+.tremplin-home-rail__header > div > p { margin-top: 6px; font-size: 12px; }
+.tremplin-home-rail:not(.is-featured) .tremplin-home-rail__header > div > p { display: none; }
+.tremplin-home-rail__header-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+.tremplin-home-discovery .tremplin-home-discovery__hero { padding: 0; margin: 0; min-height: 0; border: 0; background: none; }
+.tremplin-home-discovery .tremplin-home-discovery__finder { width: 100%; margin: 0; padding: 0; }
+.tremplin-home-rail__header-actions .tremplin-home-discovery__hero { width: 340px; }
+.tremplin-home-rail__header-actions .tremplin-home-rail__more { padding: 3px 0; min-height: 24px; border: 0; background: none; font-size: 11px; }
+.tremplin-home-wall__grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 18px; }
+.tremplin-home-card.tremplin-discovery-card.tremplin-home-card--rail { height: 440px; min-height: 440px; grid-template-columns: 36% minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) 65px; border-radius: 22px; padding: 5px; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__visual { border-radius: 17px; }
+.tremplin-home-rail .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__visual { min-height: 0; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__body { grid-template-rows: 85px 76px minmax(0, 1fr); gap: 10px; padding: 20px 19px 12px 23px; }
+.tremplin-discovery-card .tremplin-home-card__name strong { font-family: inherit; font-size: 26px; font-weight: 730; line-height: 1.12; }
+.tremplin-discovery-card .tremplin-home-card__identity-meta { font-size: 12px; gap: 3px; }
+.tremplin-discovery-card .tremplin-home-card__grade { padding: 4px 9px 4px 4px; gap: 3px; font-size: 9px; }
+.tremplin-discovery-card .tremplin-home-card__grade .mw-grade-badge { --mw-grade-size: 37px !important; width: 37px; height: 37px; }
+.tremplin-discovery-card .tremplin-home-card__project > small { font-size: 9px; }
+.tremplin-discovery-card .tremplin-home-card__project > strong { font-family: inherit; font-size: 19px; font-weight: 680; line-height: 1.2; }
+.tremplin-discovery-card .tremplin-home-card__project > p { font-size: 11px; line-height: 1.4; }
+.tremplin-discovery-card .tremplin-home-card__token-summary,
+.tremplin-discovery-card .tremplin-home-card__token-summary[data-token-stage="active"] { border-radius: 14px; padding: 11px 13px 9px; gap: 3px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header { padding-left: 36px; min-height: 20px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header > span { font-size: 12px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > header > strong { font-size: 11px; }
+.tremplin-discovery-card .tremplin-home-card__token-summary > p { padding-left: 36px; font-size: 10px; }
+.tremplin-discovery-card__status-icon { top: 10px; left: 12px; width: 31px; height: 31px; }
+.tremplin-discovery-card__status-icon > .meewav-token-icon { width: 29px; height: 29px; }
+.tremplin-discovery-card .tremplin-home-card__token-data { margin-top: 4px; padding-top: 6px; }
+.tremplin-discovery-card .tremplin-home-card__token-data dt { font-size: 10px; }
+.tremplin-discovery-card .tremplin-home-card__token-data dd { font-size: 18px; }
+.tremplin-discovery-card .tremplin-home-card__updated { font-size: 9px; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__actions { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto; grid-template-rows: 40px; gap: 12px; padding: 0 19px 16px 23px; }
+.tremplin-discovery-card .tremplin-home-card__actions button { height: 40px; min-height: 40px; border-radius: 13px; padding: 6px 10px; font-size: 11px; gap: 6px; }
+.tremplin-discovery-card .tremplin-home-card__actions button > .meewav-token-icon { width: 19px; height: 19px; flex-basis: 19px; }
+.tremplin-home-card.tremplin-discovery-card:not([data-token-stage="active"]) .tremplin-home-card__primary { grid-column: 1 / 3; }
+.tremplin-discovery-card .tremplin-home-card__actions .tremplin-home-card__profile { grid-column: 3; grid-row: 1; font-size: 10px; white-space: nowrap; }
+.tremplin-home-card.tremplin-discovery-card .tremplin-home-card__follow { width: 37px; height: 37px; min-width: 37px; min-height: 37px; top: 12px; right: 12px; }
+.tremplin-discovery-card .tremplin-home-card__audio-overlay { left: 14px; right: auto; bottom: 15px; min-height: 36px; font-size: 12px; padding: 6px 12px; }
+.tremplin-project-mini { position: relative; isolation: isolate; display: grid; grid-template-columns: 35% minmax(0, 1fr); width: 100%; min-width: 0; height: 210px; overflow: hidden; border: 1px solid #ae8cdd7d; border-radius: 13px; background: radial-gradient(ellipse at 95% 0, #76569c26, transparent 60%), linear-gradient(145deg, #191323, #060609 65%); box-shadow: inset 0 1px 2px #e3d1ff65, inset 0 -1px 2px #ac7ed52b, 0 6px 16px #0006; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.tremplin-project-mini:hover { border-color: #cfadf0; box-shadow: inset 0 1px 2px #fff8, 0 0 16px #a371cd24; }
+.tremplin-project-mini button { color: inherit; cursor: pointer; }
+.tremplin-project-mini__visual { position: relative; min-width: 0; overflow: hidden; }
+.tremplin-project-mini__visual img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.tremplin-project-mini__visual::after { content: ''; position: absolute; inset: 50% 0 0; background: linear-gradient(transparent, #08060b94); pointer-events: none; }
+.tremplin-project-mini__portrait { position: absolute; inset: 0; border: 0; background: transparent; }
+.tremplin-project-mini__audio { position: absolute; z-index: 1; bottom: 12px; left: 9px; display: flex; align-items: center; gap: 6px; min-height: 28px; padding: 4px 8px; border: 1px solid #ddc6ed65; border-radius: 16px; background: #09070ddc; font-size: 10px !important; }
+.tremplin-project-mini__body { display: flex; flex-direction: column; min-width: 0; padding: 12px 11px; }
+.tremplin-project-mini__body header { display: flex; align-items: flex-start; gap: 4px; min-height: 32px; }
+.tremplin-project-mini__body header > button { flex: 1; min-width: 0; padding: 0; border: 0; background: none; text-align: left; font-size: 14px; line-height: 1.2; }
+.tremplin-project-mini__body header strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-weight: 700; }
+.tremplin-project-mini__grade { flex: 0 0 28px; }
+.tremplin-project-mini__grade .mw-grade-badge { --mw-grade-size: 28px !important; width: 28px; height: 28px; }
+.tremplin-project-mini__discipline { margin: 5px 0; color: #c3b7d4; font-size: 10px; line-height: 1.4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.tremplin-project-mini__city { display: flex; align-items: center; gap: 4px; margin: 0; color: #b2a2c4; font-size: 10px; }
+.tremplin-project-mini__project { margin: 12px 0 6px; font-size: 12px; font-weight: 620; line-height: 1.4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.tremplin-project-mini__body footer { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: auto; }
+.tremplin-project-mini__body footer button { display: inline-flex; align-items: center; gap: 4px; padding: 5px 0; border: 0; background: none; font-size: 10px; color: #ddc8f1; }
+.tremplin-project-mini__body footer .tremplin-project-mini__follow { justify-content: center; width: 26px; height: 26px; border: 1px solid #b496ce55; border-radius: 50%; }
+.tremplin-project-mini__follow[aria-pressed="true"] { color: #d5a3ff; }
+@media (max-width: 1100px) and (min-width: 761px) {
+  .tremplin-home-rail.is-featured { --tremplin-rail-card-width: 760px; }
+  .tremplin-home-rail__header-actions .tremplin-home-discovery__hero { width: 280px; }
+  .tremplin-home-rail.is-featured .tremplin-home-rail__header h2 { font-size: 24px; }
+  .tremplin-discovery-card .tremplin-home-card__heading { grid-template-columns: minmax(0, 1fr) 105px; }
+  .tremplin-discovery-card .tremplin-home-card__grade { font-size: 8px; }
+  .tremplin-discovery-card .tremplin-home-card__name strong { font-size: 23px; }
+}
+@media (max-width: 760px) {
+  .tremplin-home-discovery .tremplin-home-rail__viewport-shell { margin-inline: 12px; }
+  .tremplin-home-rail, .tremplin-home-rail.is-first-projects { --tremplin-rail-card-width: min(76vw, 290px); }
+  .tremplin-home-rail.is-featured { --tremplin-rail-card-width: calc(100vw - 40px); }
+  .tremplin-home-rail__header { gap: 10px; }
+  .tremplin-home-rail.is-featured .tremplin-home-rail__header { flex-direction: column; align-items: stretch; }
+  .tremplin-home-rail__header-actions { align-items: stretch; }
+  .tremplin-home-rail__header-actions .tremplin-home-discovery__hero { width: 100%; }
+  .tremplin-home-rail__header > div > h2, .tremplin-home-rail.is-featured .tremplin-home-rail__header h2 { font-size: 22px; }
+  .tremplin-home-rail__header-actions .tremplin-home-rail__more { align-self: flex-end; }
+  .tremplin-home-rail.is-featured .tremplin-home-rail__track > div { height: 585px; }
+  .tremplin-home-card.tremplin-discovery-card.tremplin-home-card--rail { grid-template-columns: 1fr; grid-template-rows: 185px minmax(0, 1fr) 74px; height: 585px; min-height: 585px; }
+  .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__visual { grid-column: 1; grid-row: 1; }
+  .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__body { grid-column: 1; grid-row: 2; grid-template-rows: 65px 67px minmax(0, 1fr); gap: 8px; padding: 12px; }
+  .tremplin-discovery-card .tremplin-home-card__name strong { font-size: 22px; }
+  .tremplin-discovery-card .tremplin-home-card__identity-meta { font-size: 10px; }
+  .tremplin-discovery-card .tremplin-home-card__grade { flex-direction: row; max-width: 122px; font-size: 8px; }
+  .tremplin-discovery-card .tremplin-home-card__project > strong { font-size: 16px; }
+  .tremplin-home-card.tremplin-discovery-card .tremplin-home-card__actions { grid-column: 1; grid-row: 3; grid-template-columns: 1.4fr 1fr; grid-template-rows: 36px 20px; gap: 5px 10px; padding: 0 12px 10px; }
+  .tremplin-discovery-card .tremplin-home-card__actions button { height: 36px; min-height: 36px; font-size: 10px; }
+  .tremplin-discovery-card .tremplin-home-card__actions .tremplin-home-card__profile { grid-column: 1 / -1; grid-row: 2; min-height: 20px !important; height: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .tremplin-project-mini { transition: none; } }

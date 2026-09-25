@@ -1,0 +1,67 @@
+.scene-recommendation-settings {
+  display: grid;
+  width: min(100%, 1120px);
+  gap: 18px;
+  margin: 0 auto;
+  padding: 8px 0 56px;
+  color: rgba(255, 255, 255, .96);
+}
+
+.scene-recommendation-settings > header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(189, 144, 255, .14);
+}
+
+.scene-recommendation-settings button {
+  min-height: 44px;
+}
+
+.scene-recommendation-settings > header > button,
+.scene-recommendation-settings__reset > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid rgba(189, 144, 255, .18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .035);
+  color: rgba(255, 255, 255, .82);
+  cursor: pointer;
+}
+
+.scene-recommendation-settings > header svg,
+.scene-recommendation-settings__reset button svg { width: 16px; height: 16px; }
+.scene-recommendation-settings > header span { color: #b98aff; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.scene-recommendation-settings > header span svg { margin-right: 7px; vertical-align: -3px; }
+.scene-recommendation-settings > header h1 { max-width: 720px; margin: 8px 0; font-size: clamp(28px, 4vw, 48px); line-height: 1.02; }
+.scene-recommendation-settings > header p { max-width: 720px; margin: 0; color: rgba(238, 232, 247, .68); line-height: 1.55; }
+.scene-recommendation-settings > header > small { display: inline-flex; align-items: center; gap: 7px; color: rgba(238, 232, 247, .58); white-space: nowrap; }
+
+.scene-recommendation-settings__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.scene-recommendation-settings__grid > section { padding: 20px; border: 1px solid rgba(189, 144, 255, .13); border-radius: 18px; background: rgba(16, 12, 28, .72); }
+.scene-recommendation-settings h2 { margin: 0 0 16px; font-size: 17px; }
+.scene-recommendation-settings label { display: flex; min-height: 70px; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 0; border-top: 1px solid rgba(255, 255, 255, .06); }
+.scene-recommendation-settings label:first-of-type { border-top: 0; }
+.scene-recommendation-settings label span { display: grid; gap: 5px; }
+.scene-recommendation-settings label small, .scene-recommendation-settings__reset p { color: rgba(238, 232, 247, .58); line-height: 1.45; }
+.scene-recommendation-settings label input { width: 21px; height: 21px; accent-color: #9563f7; }
+.scene-recommendation-settings__styles { display: flex; flex-wrap: wrap; gap: 8px; }
+.scene-recommendation-settings__styles button { padding: 0 14px; border: 1px solid rgba(189, 144, 255, .15); border-radius: 999px; background: rgba(255, 255, 255, .025); color: rgba(255, 255, 255, .7); cursor: pointer; }
+.scene-recommendation-settings__styles button[aria-pressed="true"] { border-color: rgba(170, 109, 247, .6); background: rgba(149, 99, 247, .18); color: #fff; }
+.scene-recommendation-settings__reset { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; }
+.scene-recommendation-settings__reset > svg { width: 28px; height: 28px; color: #b98aff; }
+.scene-recommendation-settings__reset h2, .scene-recommendation-settings__reset p { margin: 0; }
+.scene-recommendation-settings__status { min-height: 22px; margin: 0; color: #64e6ad; }
+
+@media (max-width: 760px) {
+  .scene-recommendation-settings > header { grid-template-columns: 1fr; }
+  .scene-recommendation-settings > header > button { justify-self: start; }
+  .scene-recommendation-settings__grid { grid-template-columns: 1fr; }
+  .scene-recommendation-settings__reset { grid-column: auto; grid-template-columns: auto minmax(0, 1fr); }
+  .scene-recommendation-settings__reset > button { grid-column: 1 / -1; }
+}

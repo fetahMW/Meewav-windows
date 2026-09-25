@@ -1,0 +1,90 @@
+.place-room-shell .place-mixer-audio .place-mixer-cue {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: max-content;
+  height: max-content;
+}
+
+.place-room-shell .place-mixer-audio .place-mixer-loop {
+  position: absolute;
+  z-index: 4;
+  inset: 10px 0 3px;
+  pointer-events: none;
+}
+.place-room-shell .place-mixer-audio .place-mixer-loop__selection {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #9d63ea25, #4f83f420);
+  border-top: 1px solid #b881ef80;
+  border-bottom: 1px solid #8f6add40;
+}
+/* Les poignées ne sont pas des boutons de transport : annuler leurs anciens
+ * effets de façade pour garder la forme d'onde lisible pendant le glissement. */
+.place-room-shell .place-mixer-audio .place-mixer-audio__waveform .place-mixer-loop > button.place-mixer-loop__handle,
+.place-room-shell .place-mixer-audio .place-mixer-audio__waveform .place-mixer-loop > button.place-mixer-loop__handle:hover,
+.place-room-shell .place-mixer-audio .place-mixer-audio__waveform .place-mixer-loop > button.place-mixer-loop__handle:active {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: block;
+  width: 18px;
+  min-width: 18px;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 3px;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #f7efff !important;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  touch-action: none;
+  cursor: col-resize;
+}
+.place-room-shell .place-mixer-audio .place-mixer-loop__handle.is-start { --loop-color: #b77bfa; }
+.place-room-shell .place-mixer-audio .place-mixer-loop__handle.is-end { --loop-color: #6b9eff; }
+.place-room-shell .place-mixer-audio .place-mixer-loop__handle > span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  margin: 0 auto;
+  border: 1px solid var(--loop-color);
+  border-radius: 5px;
+  background: #21192e;
+  color: var(--loop-color);
+  font-size: 10px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+.place-room-shell .place-mixer-audio .place-mixer-loop__handle > i {
+  position: absolute;
+  top: 15px;
+  bottom: 0;
+  left: calc(50% - .5px);
+  width: 1px;
+  background: var(--loop-color);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--loop-color) 40%, transparent);
+}
+.place-room-shell .place-mixer-audio .place-mixer-loop__handle:focus-visible { outline: 1px solid var(--loop-color); outline-offset: 2px; z-index: 2; }
+
+/* Musical controls remain flat over the waveform, not raised transport buttons. */
+.place-room-shell .place-mixer-audio .place-mixer-audio__waveform .place-mixer-loop.is-musical > .place-mixer-loop__selection:is(button, :hover, :active) {
+  position: absolute; top: 0; bottom: 0; display: grid; place-items: center;
+  height: auto; min-height: 0; min-width: 0; padding: 0; overflow: hidden;
+  border: 0 !important; border-radius: 2px; background: linear-gradient(90deg, #9d63ea20, #4f83f418) !important;
+  box-shadow: none !important; color: #cec7db; font-size: 8px; font-weight: 500;
+  transform: none; touch-action: none; cursor: grab; pointer-events: auto;
+}
+.place-room-shell .place-mixer-audio .place-mixer-audio__waveform .place-mixer-loop.is-musical > .place-mixer-loop__selection:active { cursor: grabbing; }
+.place-room-shell .place-mixer-audio .place-mixer-audio__waveform .place-mixer-loop.is-musical > .place-mixer-loop__handle { cursor: grab; overflow: visible; }
+.place-room-shell .place-mixer-audio .place-mixer-loop.is-musical .place-mixer-loop__handle.is-start > span { transform: translateX(8px); }
+.place-room-shell .place-mixer-audio .place-mixer-loop.is-musical .place-mixer-loop__handle.is-end > span { transform: translateX(-8px); }
+.place-room-shell .place-mixer-audio .place-mixer-loop.is-musical .place-mixer-loop__handle > span > svg {
+  width: 12px; height: 12px; fill: none; stroke-width: 2; color: inherit; pointer-events: none;
+}

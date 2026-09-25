@@ -1,0 +1,31 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "nice-castle-hill",
+      "properties": {
+        "name": "Colline du Château",
+        "city": "Nice",
+        "country": "France"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [7.27485, 43.6969],
+            [7.27585, 43.69475],
+            [7.27825, 43.69275],
+            [7.2821, 43.69215],
+            [7.2857, 43.69355],
+            [7.28705, 43.69605],
+            [7.28555, 43.69835],
+            [7.2823, 43.69935],
+            [7.27825, 43.69875],
+            [7.27485, 43.6969]
+          ]
+        ]
+      }
+    }
+  ]
+}

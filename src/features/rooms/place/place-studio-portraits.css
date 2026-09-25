@@ -1,0 +1,69 @@
+/* Portraits are photographs, not illuminated controls. Keep their circular
+   crop and status dots, but remove every decorative ring across Studio.
+   This deliberately overrides selected/hover and legacy per-surface styles. */
+.place-room-shell .place-studio-panel :is(
+  .place-volume-row__portrait,
+  .place-volume-row__avatar,
+  .place-guest-row__avatar,
+  .wave-loop-card__avatar,
+  .wave-bottom-bar__avatar,
+  .wave-sas-card__avatar,
+  .wave-collective__avatar,
+  .wave-vote-dock__avatar,
+  .place-fx-view__voice > img
+) {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.place-room-shell .place-studio-panel :is(
+  .place-volume-row__portrait,
+  .place-guest-row__avatar,
+  .wave-loop-card__avatar,
+  .wave-bottom-bar__avatar,
+  .wave-sas-card__avatar,
+  .wave-collective__avatar,
+  .wave-vote-dock__avatar
+) > img {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.place-room-shell .place-studio-panel :is(
+  .place-volume-row__portrait,
+  .place-guest-row__avatar,
+  .wave-loop-card__avatar,
+  .wave-bottom-bar__avatar,
+  .wave-sas-card__avatar,
+  .wave-collective__avatar,
+  .wave-vote-dock__avatar
+)::before,
+.place-room-shell .place-studio-panel :is(
+  .place-volume-row__portrait,
+  .place-guest-row__avatar,
+  .wave-loop-card__avatar,
+  .wave-bottom-bar__avatar,
+  .wave-sas-card__avatar,
+  .wave-collective__avatar,
+  .wave-vote-dock__avatar
+)::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Cage guest portraits open the same sliding pre-profile as the room tools. */
+.place-room-shell .place-studio-panel .place-guest-row__avatar.is-profile-trigger {
+  padding: 0; cursor: pointer; overflow: visible;
+  transition: transform 180ms ease;
+}
+.place-room-shell .place-studio-panel .place-guest-row__avatar.is-profile-trigger:is(:hover, :focus-visible) {
+  transform: scale(1.06);
+  outline: 2px solid #9465df !important;
+  outline-offset: 3px !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-studio-panel .place-guest-row__avatar.is-profile-trigger { transition: none; }
+}

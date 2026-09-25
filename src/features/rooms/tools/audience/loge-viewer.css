@@ -1,0 +1,536 @@
+/* Loge viewer: shared charcoal hardware, violet reserved for active actions. */
+.room-audience-interactions.is-loge {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  --audience-accent: #b18be8;
+  --audience-accent-rgb: 177, 139, 232;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+  background: #060708;
+  color: #f1f2f5;
+}
+.room-audience-interactions.is-loge > .room-audience-interactions__body {
+  flex: 1;
+  overflow: hidden;
+  height: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
+}
+.loge-viewer {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: auto;
+  padding: 18px;
+  gap: 16px;
+  font:
+    13px/1.5 Inter,
+    system-ui,
+    sans-serif;
+  box-sizing: border-box;
+  background:
+    radial-gradient(ellipse at 0 0, #b18be80a, transparent 50%), #060708;
+}
+.loge-viewer button,
+.loge-viewer a {
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+.loge-viewer button {
+  border: 1px solid #ffffff24;
+  border-radius: 12px;
+  background: linear-gradient(165deg, #26272c, #111215 55%, #08090b);
+  box-shadow:
+    inset 0 1px #ffffff14,
+    inset 0 -1px #0008;
+  transition:
+    border-color 0.18s,
+    background 0.18s;
+}
+.loge-viewer button:hover:not(:disabled) {
+  border-color: #b18be880;
+  background: linear-gradient(165deg, #302b39, #111215 65%);
+}
+.loge-viewer button:focus-visible,
+.loge-viewer a:focus-visible {
+  outline: 2px solid #b18be8;
+  outline-offset: 3px;
+}
+.loge-viewer button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.loge-viewer svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  stroke-width: 1.6;
+}
+.loge-viewer__welcome {
+  padding: 5px 3px 1px;
+  flex-shrink: 0;
+}
+.loge-viewer__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #bdb4d0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+.loge-viewer__eyebrow > span:last-child {
+  margin-left: auto;
+  border: 1px solid #ffffff20;
+  border-radius: 20px;
+  padding: 4px 8px;
+  font-size: 8px;
+  color: #a6a8b2;
+  letter-spacing: 0.1em;
+}
+.loge-viewer__live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b18be8;
+  box-shadow: 0 0 9px #b18be859;
+}
+.loge-viewer h2 {
+  font-size: clamp(24px, 2vw, 30px);
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+  margin: 13px 0 8px;
+  font-weight: 650;
+}
+.loge-viewer h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  margin: 12px 0 8px;
+}
+.loge-viewer h4 {
+  font-size: 12px;
+  color: #dadbe2;
+  margin: 0 0 10px;
+}
+.loge-viewer p {
+  color: #999da8;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+.loge-viewer__welcome p {
+  margin: 0;
+  color: #a4a6b0;
+  font-size: 12px;
+}
+.loge-viewer__welcome strong {
+  color: #dedfe7;
+  font-weight: 500;
+}
+.loge-viewer__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  flex-shrink: 0;
+}
+.loge-viewer__tabs button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-height: 46px;
+  font-size: 11px;
+  color: #9fa2ac;
+  padding: 8px 5px;
+}
+.loge-viewer__tabs button[aria-pressed="true"] {
+  border-color: #b18be883;
+  color: #f6f0ff;
+  background: linear-gradient(150deg, #352c44, #151119 75%);
+  box-shadow:
+    inset 0 1px #dfc5ff35,
+    0 3px 10px #0006;
+}
+.loge-viewer__tabs b {
+  border-radius: 10px;
+  background: #b18be825;
+  padding: 1px 5px;
+  font-size: 9px;
+}
+.loge-viewer__content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #343039 transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 1px 1px 8px;
+}
+.loge-viewer__card {
+  padding: 18px;
+  border: 1px solid #ffffff20;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #1a1b1f, #0b0c0f 50%, #070809);
+  box-shadow:
+    inset 0 1px #ffffff12,
+    0 6px 16px #0003;
+}
+.loge-viewer__section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b8b3c3;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+.loge-viewer__section-label small {
+  font-size: 9px;
+  color: #a7a9b2;
+  margin-left: auto;
+  letter-spacing: 0;
+  white-space: nowrap;
+  font-weight: 400;
+}
+.loge-viewer__waiting {
+  margin-top: 18px;
+  padding: 23px 14px;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid #ffffff0e;
+  background: #05060880;
+}
+.loge-viewer__waiting > svg {
+  display: block;
+  margin: 0 auto 12px;
+  width: 30px;
+  height: 30px;
+  color: #ab93ca;
+}
+.loge-viewer__waiting strong {
+  font-size: 13px;
+  display: block;
+}
+.loge-viewer__waiting p {
+  margin: 7px auto 0;
+  max-width: 280px;
+  font-size: 11px;
+}
+.loge-viewer .room-audience-preview {
+  background: #08090b;
+  border-color: #ffffff18;
+  color: #eee;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+.loge-viewer__question-cta {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-align: left;
+  padding: 15px;
+  flex-shrink: 0;
+}
+.loge-viewer__question-cta > svg:first-child {
+  color: #c1a3e6;
+  width: 22px;
+  height: 22px;
+}
+.loge-viewer__question-cta > svg:last-child {
+  margin-left: auto;
+  width: 15px;
+}
+.loge-viewer__question-cta span {
+  display: grid;
+  gap: 3px;
+}
+.loge-viewer__question-cta strong {
+  font-size: 13px;
+  font-weight: 550;
+}
+.loge-viewer__question-cta small {
+  font-size: 10px;
+  color: #9a9ca6;
+}
+.loge-viewer button.loge-viewer__chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 11px;
+  color: #a2a4af;
+  padding: 9px;
+}
+.loge-viewer__selected small {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #bd9de4;
+}
+.loge-viewer__selected blockquote {
+  margin: 9px 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #e4e4eb;
+}
+.loge-viewer__selected > span {
+  font-size: 11px;
+  color: #8f929e;
+}
+.loge-viewer__question {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.loge-viewer__question label {
+  display: flex;
+  justify-content: space-between;
+  color: #c4c6ce;
+  font-size: 11px;
+}
+.loge-viewer__question label small {
+  color: #828591;
+}
+.loge-viewer__question textarea {
+  box-sizing: border-box;
+  resize: vertical;
+  width: 100%;
+  min-height: 105px;
+  max-height: 180px;
+  background: #060709;
+  color: #eee;
+  font:
+    13px/1.5 Inter,
+    system-ui,
+    sans-serif;
+  border: 1px solid #ffffff24;
+  border-radius: 11px;
+  padding: 13px;
+  outline: none;
+}
+.loge-viewer__question textarea:focus {
+  border-color: #b18be8;
+}
+.loge-viewer__question button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border-color: #b18be852;
+}
+.loge-viewer__history {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #ffffff12;
+}
+.loge-viewer__history article {
+  padding: 11px 0;
+  border-bottom: 1px solid #ffffff0d;
+}
+.loge-viewer__history article p {
+  margin: 0 0 5px;
+  color: #d8d9df;
+  font-size: 12px;
+}
+.loge-viewer__history article small {
+  font-size: 10px;
+  color: #b09bcc;
+}
+.loge-viewer p.loge-viewer__success {
+  color: #9bd7b6;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.loge-viewer__error {
+  color: #ffb5bf !important;
+  flex-shrink: 0;
+}
+.loge-viewer__empty {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 28px 14px;
+}
+.loge-viewer__empty > svg {
+  width: 30px;
+  height: 30px;
+  color: #ad99c7;
+}
+.loge-viewer__empty p {
+  margin: 0;
+  max-width: 270px;
+}
+.loge-viewer__invitation {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 10px;
+  border: 1px solid #b18be860;
+  border-radius: 15px;
+  padding: 14px;
+  background: linear-gradient(125deg, #27222f, #0c0d10);
+}
+.loge-viewer__invitation > div:not(.loge-viewer__actions) {
+  flex: 1;
+  min-width: 170px;
+  display: grid;
+  gap: 4px;
+}
+.loge-viewer__invitation small {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: #bda1df;
+}
+.loge-viewer__invitation strong {
+  font-size: 13px;
+}
+.loge-viewer__invitation p {
+  font-size: 10px;
+  margin: 0;
+}
+.loge-viewer__actions {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+.loge-viewer__actions button {
+  flex: 1;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+}
+.loge-viewer__moments {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.loge-viewer__moments article {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #ffffff12;
+  border-radius: 12px;
+  background: #08090b;
+}
+.loge-viewer__moment-icon {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  background: #ffffff05;
+  border-radius: 10px;
+  color: #bda5d8;
+}
+.loge-viewer__moments article > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  flex: 1;
+}
+.loge-viewer__moments strong {
+  font-size: 12px;
+}
+.loge-viewer__moments small {
+  font-size: 10px;
+  color: #9ea0ab;
+}
+.loge-viewer__moments a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #c7b1e6;
+  margin-top: 5px;
+}
+.loge-viewer__moments audio,
+.loge-viewer__moments video {
+  width: 100%;
+  max-height: 180px;
+}
+@media (max-height: 800px) {
+  .loge-viewer {
+    padding: 12px;
+    gap: 11px;
+  }
+  .loge-viewer__welcome h2 {
+    font-size: 24px;
+    margin-top: 9px;
+  }
+  .loge-viewer__card {
+    padding: 14px;
+  }
+  .loge-viewer__waiting {
+    padding: 16px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loge-viewer button {
+    transition: none;
+  }
+}
+
+.loge-viewer__moment {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.loge-viewer__moment[hidden] {
+  display: none;
+}
+
+.place-studio-panel__surface:has(.loge-viewer) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+.place-studio-panel__surface:has(.loge-viewer)
+  > :not(.room-audience-interactions) {
+  flex-shrink: 0;
+}
+.loge-viewer__enable-audio { display:flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; grid-column:1 / -1; }
+
+@media (max-width: 600px) {
+  .loge-viewer { padding:12px; gap:10px; }
+  .loge-viewer h2 { font-size:22px; margin:9px 0 6px; }
+  .loge-viewer h3 { font-size:17px; }
+  .loge-viewer__welcome p { font-size:11px; }
+  .loge-viewer__eyebrow { font-size:8px; }
+  .loge-viewer__tabs button { flex-direction:column; gap:3px; font-size:10px; min-height:49px; position:relative; }
+  .loge-viewer__tabs b { position:absolute; right:4px; top:3px; }
+  .loge-viewer__tabs span { white-space:nowrap; }
+  .loge-viewer__card { padding:13px; }
+  .loge-viewer__waiting { padding:15px 9px; }
+}
+/* Extend only the scrollport into the right inset; compensate inside it so
+   cards keep precisely the same origin and available width. */
+.loge-viewer { --loge-scroll-outset: 16px; }
+.loge-viewer__content {
+  margin-right:calc(-1 * var(--loge-scroll-outset));
+  padding-right:calc(1px + var(--loge-scroll-outset));
+}
+@media (max-height:800px), (max-width:600px) {
+  .loge-viewer { --loge-scroll-outset:10px; }
+}

@@ -1,0 +1,33 @@
+.class-student-pre-profile-viewport {
+  position: fixed; z-index: 15000; overflow: hidden; pointer-events: none;
+}
+.class-student-pre-profile {
+  --mw-bubble-w: 100%; --mw-bubble-h: 100%;
+  position: absolute; top: 0; right: 0; pointer-events: auto;
+  width: 413px; height: 588px; max-width: none; max-height: none;
+  padding: 0; overflow: visible; border: 0; background: transparent; color: #eee;
+  animation: class-profile-enter 220ms cubic-bezier(.22,.7,.25,1) both;
+}
+.class-student-pre-profile.is-closing { animation: class-profile-leave 180ms ease-in both; }
+@keyframes class-profile-enter { from { transform: translateX(100%); opacity: .3; } to { transform: translateX(0); opacity: 1; } }
+@keyframes class-profile-leave { to { transform: translateX(100%); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .class-student-pre-profile, .class-student-pre-profile.is-closing { animation: none; }
+}
+.class-student-pre-profile__close {
+  position: absolute; z-index: 21; top: 10px; right: 12px;
+  display: grid; place-items: center; width: 30px; height: 30px;
+  padding: 0; border: 1px solid #bfc0c15c; border-radius: 8px;
+  background:
+    radial-gradient(ellipse at 23% -8%, #ffffff26, transparent 65%),
+    linear-gradient(160deg, #303132, #101112 34%, #030303 72%, #111213);
+  box-shadow: inset 0 1px 1px #ffffff38, inset 0 -1px 3px #000, 0 2px 0 #010101, 0 4px 6px #0009;
+  color: #d0d2d5; cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.class-student-pre-profile__close svg { width: 15px; height: 15px; stroke-width: 1.65; }
+.class-student-pre-profile__close:hover { border-color: #d4dae5a3; color: #fff; }
+.class-student-pre-profile__close:active { transform: translateY(1px); box-shadow: inset 0 2px 4px #000, 0 1px 0 #010101; }
+.class-student-pre-profile__close:focus-visible { outline: 2px solid #c0ccdf; outline-offset: 3px; }
+
+/* Keep the original content layout; extra room height belongs to the frame. */

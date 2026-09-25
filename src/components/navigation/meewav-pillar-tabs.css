@@ -1,0 +1,204 @@
+.meewav-pillar-tabs {
+  position: relative;
+  display: grid;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 700px;
+  min-width: 0;
+  height: 100%;
+  grid-template-columns: repeat(var(--meewav-pillar-tab-count, 4), minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0;
+  margin: 0 auto;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.meewav-pillar-tabs > button {
+  position: relative;
+  z-index: 2;
+  appearance: none;
+  display: flex;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(227, 218, 244, .5);
+  cursor: pointer;
+  font: inherit;
+  transition: color 180ms ease;
+}
+
+.meewav-pillar-tabs > button:hover {
+  color: rgba(247, 241, 255, .82);
+}
+
+.meewav-pillar-tabs > button.is-active {
+  color: #fff;
+}
+
+.meewav-pillar-tabs__icon {
+  display: grid;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .035);
+  color: rgba(222, 212, 242, .48);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.meewav-pillar-tabs__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.meewav-pillar-tabs > button.is-active .meewav-pillar-tabs__icon {
+  border-color: color-mix(in srgb, var(--meewav-pillar-tab-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--meewav-pillar-tab-accent) 11%, transparent);
+  color: color-mix(in srgb, var(--meewav-pillar-tab-accent) 76%, white);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--meewav-pillar-tab-accent) 14%, transparent);
+}
+
+.meewav-pillar-tabs.is-unframed-icons > button .meewav-pillar-tabs__icon {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: color 180ms ease;
+}
+
+.meewav-pillar-tabs > button strong {
+  overflow: hidden;
+  font-size: 11.5px;
+  font-weight: 720;
+  letter-spacing: -.015em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-shadow: none;
+  white-space: nowrap;
+  transition: text-shadow 180ms ease;
+}
+
+.meewav-pillar-tabs > button.is-active strong {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--meewav-pillar-tab-accent) 24%, transparent);
+}
+
+.meewav-pillar-tabs__indicator {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 4px;
+  height: 2px;
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--meewav-pillar-tab-accent) 72%, #8b5cff),
+    color-mix(in srgb, var(--meewav-pillar-tab-accent) 82%, #fff)
+  );
+  box-shadow: 0 0 14px color-mix(in srgb, var(--meewav-pillar-tab-accent) 32%, transparent);
+  pointer-events: none;
+  transition:
+    transform 460ms cubic-bezier(.18, .9, .28, 1.16),
+    width 180ms ease,
+    opacity 160ms ease;
+}
+
+.meewav-pillar-tabs > button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--meewav-pillar-tab-accent) 65%, white);
+  outline-offset: -5px;
+  border-radius: 10px;
+}
+
+@media (min-width: 1081px) and (max-width: 1449px) {
+  .meewav-pillar-tabs > button strong {
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .meewav-pillar-tabs > button {
+    gap: 0;
+    padding-inline: 4px;
+  }
+
+  .meewav-pillar-tabs > button strong {
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 760px) {
+  .meewav-pillar-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: start;
+    padding-inline: 3px;
+    scrollbar-width: none;
+  }
+
+  .meewav-pillar-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .meewav-pillar-tabs > button {
+    min-width: 42px;
+    padding-inline: 6px;
+  }
+
+  .meewav-pillar-tabs > button.is-active {
+    height: calc(100% - 6px);
+  }
+
+  .meewav-pillar-tabs > button strong {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meewav-pillar-tabs__indicator {
+    transition: none;
+  }
+}
+
+/* Shared Rooms/Profile hairline indicator. */
+.meewav-pillar-tabs.is-fine-indicator .meewav-pillar-tabs__indicator {
+  bottom: 5px;
+  height: 1px;
+  background: none;
+  box-shadow: none;
+  clip-path: none;
+}
+
+.meewav-pillar-tabs.is-fine-indicator .meewav-pillar-tabs__indicator::before,
+.meewav-pillar-tabs.is-fine-indicator .meewav-pillar-tabs__indicator::after {
+  content: "";
+  position: absolute;
+  inset: 0 14%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #9274d8 18%, #d7c6ff 50%, #9274d8 82%, transparent);
+}
+
+.meewav-pillar-tabs.is-fine-indicator .meewav-pillar-tabs__indicator::before {
+  top: -2px;
+  bottom: -2px;
+  background: linear-gradient(90deg, transparent, #8060cc 24%, #b39aef 50%, #8060cc 76%, transparent);
+  opacity: .6;
+  filter: blur(3px);
+}

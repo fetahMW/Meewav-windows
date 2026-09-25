@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://meewav.app/schemas/geography/dataset-version.schema.json",
+  "title": "Meewav Geography DatasetVersion",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "datasetId",
+    "version",
+    "scope",
+    "status",
+    "createdAt",
+    "sources",
+    "administrativeZones",
+    "musicZones"
+  ],
+  "properties": {
+    "datasetId": { "type": "string", "format": "uuid" },
+    "version": { "type": "string", "minLength": 1 },
+    "scope": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["draft", "validated", "published"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["provider", "sourceType", "vintage", "license"],
+        "properties": {
+          "provider": { "type": "string", "minLength": 1 },
+          "sourceType": { "type": "string", "minLength": 1 },
+          "vintage": { "type": "string", "minLength": 1 },
+          "license": { "type": "string", "minLength": 1 },
+          "url": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "administrativeZones": {
+      "type": "array",
+      "items": { "$ref": "administrative-zone.schema.json" }
+    },
+    "musicZones": {
+      "type": "array",
+      "items": { "$ref": "music-zone.schema.json" }
+    }
+  }
+}

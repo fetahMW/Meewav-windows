@@ -1,0 +1,336 @@
+/* The Cage display overlays the stage without changing the shared header height. */
+.cage-battle-banner.is-clock-only.is-motion-banner {
+  --clock-core-width: 52cqw;
+  --display-extension: 24px;
+  overflow: visible;
+  filter: none;
+}
+
+/* One continuous shell: compact portrait wings and a deeper announcement center. */
+
+.place-room-shellbar[data-room-presentation="cage"]:has(.is-motion-banner) { padding-bottom: 0; }
+.place-room-shellbar[data-room-presentation="cage"] .cage-battle-banner.is-clock-only.is-motion-banner { overflow: visible; }
+
+@media (min-width: 761px) {
+  .place-room-shellbar[data-room-presentation="cage"] > .place-room-shellbar__broadcast-cluster[data-matchup-active="true"] {
+    top: 8px;
+    height: 68px;
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1381px) {
+  .place-room-shellbar[data-room-presentation="cage"] > .place-room-shellbar__broadcast-cluster[data-matchup-active="true"]:has(.is-motion-banner) {
+    width: clamp(340px, calc(100vw - 1040px), 610px);
+    min-width: clamp(340px, calc(100vw - 1040px), 610px);
+    max-width: clamp(340px, calc(100vw - 1040px), 610px);
+  }
+}
+
+.cage-battle-banner.is-clock-only .cage-battle-banner__display-chassis {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  bottom: calc(-1 * var(--display-extension));
+  left: 0;
+  width: 100%;
+  height: calc(100% + var(--display-extension) - 4px);
+  overflow: visible;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .38));
+  pointer-events: none;
+}
+
+.is-motion-banner .cage-battle-banner__clock-person {
+  grid-template-columns: 50px minmax(0, 1fr);
+  top: calc(50% - 23px);
+  bottom: auto;
+  height: 50px;
+  width: calc((100% - var(--clock-core-width)) / 2 - 4px);
+  align-items: center;
+  align-content: center;
+  gap: 7px;
+  overflow: visible;
+}
+
+.is-motion-banner .cage-battle-banner__clock-person.is-right {
+  grid-template-columns: minmax(0, 1fr) 50px;
+}
+.is-motion-banner .cage-battle-banner__clock-person.is-left { left: 5px; }
+.is-motion-banner .cage-battle-banner__clock-person.is-right { right: 5px; }
+
+.cage-battle-banner__person-portrait {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(var(--battle-left-rgb), 0.52);
+  border-radius: 9px;
+  background: #101421;
+}
+
+.is-right > .cage-battle-banner__person-portrait {
+  grid-column: 2;
+  grid-row: 1;
+  border-color: rgba(var(--battle-right-rgb), 0.52);
+}
+
+.cage-battle-banner__person-portrait > img,
+.cage-battle-banner__person-initials {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  border-radius: 8px;
+  object-fit: cover;
+  color: #c8c5d9;
+  font: 650 14px Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.cage-battle-banner__person-portrait > img[src$="rapper-studio.jpg"] { object-position: 50% 20%; }
+.cage-battle-banner__person-portrait > img[src$="rapper-stage.jpg"] { object-position: 59% 45%; }
+
+.cage-battle-banner__person-grade {
+  position: static;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  background: transparent;
+}
+
+.cage-battle-banner__person-name { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.is-motion-banner .cage-battle-banner__person-name > strong { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; font-size: clamp(10px, 2.15cqw, 14px); line-height: 1.13; }
+.is-right .cage-battle-banner__person-name { flex-direction: row-reverse; }
+
+.cage-battle-banner__person-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.is-right > .cage-battle-banner__person-copy { grid-column: 1; grid-row: 1; justify-items: end; }
+
+.cage-battle-banner.is-clock-only .cage-ring-display {
+  --ring-accent: #b6a8de;
+  --ring-entry-x: 110%;
+  top: 20px;
+  bottom: calc(10px - var(--display-extension));
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-content: stretch;
+  gap: 6px;
+  border-inline: 0;
+  background: none;
+}
+
+.cage-battle-banner.is-clock-only .cage-ring-display.is-left { --ring-accent: #8eb5ff; }
+.cage-battle-banner.is-clock-only .cage-ring-display.is-right { --ring-accent: #c0a1ff; --ring-entry-x: -110%; }
+
+.cage-ring-display__screen {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cage-ring-display__clock,
+.cage-ring-display__announcement {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  transition: opacity 140ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cage-ring-display__clock {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cage-battle-banner.is-clock-only .cage-ring-display__clock > time,
+.cage-battle-banner.is-clock-only .cage-ring-display__clock > .cage-battle-banner__clock-countdown {
+  min-height: 0;
+  font-size: clamp(28px, 4.8cqw, 34px);
+  line-height: 1.2;
+  padding-inline: .12em;
+  letter-spacing: -.02em;
+}
+
+.cage-ring-display__announcement {
+  padding-inline: 16px;
+  opacity: 0;
+  transform: translateX(-24%);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  text-align: center;
+}
+
+.is-announcement > .cage-ring-display__screen > .cage-ring-display__clock {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.94);
+}
+
+.is-announcement > .cage-ring-display__screen > .cage-ring-display__announcement {
+  opacity: 1;
+  transform: translateX(0);
+  animation: cage-ring-message-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cage-ring-display__announcement small {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cage-ring-display__announcement strong {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding-inline: 3px;
+  color: #f4f0fb;
+  font-size: clamp(12px, 3.1cqw, 20px);
+  font-style: italic;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+}
+
+.cage-ring-display__announcement strong > span {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.cage-ring-display__screen::after {
+  position: absolute;
+  right: 14%;
+  bottom: 1px;
+  left: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ring-accent), transparent);
+  opacity: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.is-announcement > .cage-ring-display__screen::after {
+  animation: cage-ring-message-streak 520ms ease-out both;
+}
+
+.cage-ring-display.is-interrupted .cage-ring-display__announcement,
+.cage-ring-display.is-interrupted .cage-ring-display__screen::after {
+  animation: none;
+}
+
+.cage-battle-banner__clock-core.cage-ring-display > em {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-inline: 18px;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 5.8px;
+  font-weight: 550;
+  letter-spacing: 0.035em;
+}
+
+.cage-ring-display__backup-clock {
+  display: none;
+  padding-left: 6px;
+  border-left: 1px solid rgba(221, 212, 242, 0.22);
+  color: #d7cfe9;
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.is-announcement > em > .cage-ring-display__backup-clock { display: inline; }
+
+.cage-ring-display__playback {
+  position: absolute;
+  z-index: 2;
+  right: 3px;
+  bottom: 0;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: rgba(219, 212, 235, 0.5);
+  cursor: pointer;
+}
+
+.cage-ring-display__playback svg { width: 10px; height: 10px; }
+.cage-ring-display__playback:hover,
+.cage-ring-display__playback[aria-pressed="true"] { background: rgba(165, 141, 207, 0.09); color: #e5ddf1; }
+.cage-ring-display__playback:focus-visible { outline: 1px solid #b8a0e9; outline-offset: 1px; }
+
+@container cage-battle-banner (max-width: 470px) {
+  .is-motion-banner .cage-battle-banner__clock-person { grid-template-columns: 44px minmax(0, 1fr); gap: 5px; height: 44px; }
+  .is-motion-banner .cage-battle-banner__clock-person.is-right { grid-template-columns: minmax(0, 1fr) 44px; }
+  .cage-battle-banner__person-portrait { width: 44px; height: 44px; border-radius: 7px; }
+  .cage-battle-banner__person-portrait > img { border-radius: 6px; }
+  .cage-ring-display__announcement { padding-inline: 8px; }
+  .cage-ring-display__announcement strong { font-size: clamp(11px, 3.1cqw, 15px); }
+  .cage-battle-banner__clock-core.cage-ring-display > em { font-size: 5px; gap: 4px; padding-inline: 20px; }
+  .cage-ring-display__backup-clock { font-size: 7px; padding-left: 4px; }
+}
+
+@container cage-battle-banner (max-width: 400px) {
+  .cage-battle-banner.is-clock-only.is-motion-banner { --clock-core-width: calc(100cqw - 100px); }
+  .is-motion-banner .cage-battle-banner__clock-person,
+  .is-motion-banner .cage-battle-banner__clock-person.is-right {
+    display: grid;
+    width: 44px;
+    grid-template-columns: 44px;
+    justify-items: center;
+  }
+  .is-motion-banner .cage-battle-banner__clock-person.is-left { left: 8px; }
+  .is-motion-banner .cage-battle-banner__clock-person.is-right { right: 8px; }
+  .is-motion-banner .cage-battle-banner__person-copy { display: none; }
+  .is-right > .cage-battle-banner__person-portrait { grid-column: 1; }
+  .cage-ring-display__announcement { padding-inline: 5px; }
+  .cage-ring-display__announcement strong { font-size: clamp(10px, 3.55cqw, 14px); }
+  .cage-ring-display__playback { right: 0; width: 18px; }
+}
+
+@keyframes cage-ring-message-in {
+  0% { opacity: 0; transform: translateX(var(--ring-entry-x)) skewX(-14deg); }
+  22% { opacity: 1; }
+  68% { transform: translateX(-4px) skewX(2deg); }
+  100% { opacity: 1; transform: translateX(0) skewX(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .is-motion-banner .cage-battle-banner__clock-person { animation: cage-display-identity-in .28s ease-out both; }
+}
+@keyframes cage-display-identity-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+@keyframes cage-ring-message-streak {
+  0% { opacity: 0; transform: translateX(-35%) scaleX(0.3); }
+  25% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateX(35%) scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cage-ring-display__clock,
+  .cage-ring-display__announcement,
+  .cage-ring-display__screen::after { animation: none !important; transition: none; transform: none !important; }
+}
+
+@media (max-width: 760px) {
+
+  .place-room-shellbar[data-room-presentation="cage"]:has(.is-motion-banner) { padding-bottom: 0; }
+  .cage-battle-banner.is-clock-only.is-motion-banner { --display-extension: 20px; }
+  .cage-battle-banner.is-clock-only .cage-ring-display { top: 17px; gap: 5px; }
+}

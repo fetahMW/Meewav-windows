@@ -1,0 +1,174 @@
+/* Mes artistes: compact portfolio cards and a quieter status row. */
+.tremplin-my-dashboard { max-width: 1460px; margin-inline: auto; }
+.tremplin-my-dashboard__overview { gap: 25px; }
+.tremplin-my-dashboard__holdings { gap: 18px; }
+.tremplin-my-dashboard__holdings > header { position: relative; isolation: isolate; padding: 18px 22px 0; min-height: 130px; }
+.tremplin-my-dashboard__holding-art { position: absolute; z-index: -1; inset: -12px 0 auto auto; width: 58%; height: 145px; background: url('/images/tremplin/tremplin-my-artists-reference.png') right top / auto 763px no-repeat; mask-image: linear-gradient(90deg,transparent,#000 28%),linear-gradient(transparent,#000 12% 65%,transparent 96%); mask-composite: intersect; pointer-events: none; }
+.tremplin-my-dashboard__holdings > header .tremplin-kicker,
+.tremplin-my-dashboard__watch > header .tremplin-kicker { font-size: 10px; letter-spacing: .3em; color: #ba8fec; font-weight: 700; }
+.tremplin-my-dashboard__holdings > header h2 { margin: 9px 0 0; font-size: clamp(32px,3.5vw,49px); font-weight: 750; letter-spacing: -.035em; line-height: 1.12; }
+.tremplin-my-dashboard__holdings > header h2 em { font-style: normal; color: #c397ee; background: linear-gradient(100deg,#edc7f0,#b885e9); background-clip: text; -webkit-text-fill-color: transparent; }
+.tremplin-my-dashboard__holdings > header p { margin-top: 9px; color: #c2b9d6; font-size: 14px; }
+.tremplin-my-dashboard .tremplin-my-token-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; align-items: stretch; }
+.tremplin-my-dashboard .tremplin-my-token-card {
+  --my-card-light: #6856bb;
+  position: relative; isolation: isolate; display: grid; grid-template-rows: 88px 74px 59px minmax(56px,1fr) auto; gap: 0;
+  min-width: 0; min-height: 412px; padding: 16px 22px 15px; overflow: hidden; border: 1px solid #9681d383; border-radius: 12px;
+  background: radial-gradient(ellipse at 101% 105%,color-mix(in srgb,var(--my-card-light) 26%,transparent),transparent 43%),radial-gradient(ellipse at 80% -15%,color-mix(in srgb,var(--my-card-light) 22%,transparent),transparent 55%),linear-gradient(140deg,#111022,#060710 60%,#0d1020);
+  box-shadow: inset 0 1px 2px #d0b9ff3b,inset 0 -1px 2px #ba9bed2e,0 8px 22px #0005;
+}
+.tremplin-my-dashboard .tremplin-my-token-card:nth-child(2) { --my-card-light: #8951ac; }
+.tremplin-my-dashboard .tremplin-my-token-card:nth-child(3) { --my-card-light: #586994; }
+.tremplin-my-dashboard .tremplin-my-token-card::before { content: ''; position: absolute; z-index: -1; inset: 0; pointer-events: none; background: linear-gradient(130deg,transparent 19%,#b38cda08 19.3%,transparent 30% 49%,#b099ec09 49.3%,transparent 61%),radial-gradient(ellipse 80% 14% at 85% 12%,color-mix(in srgb,var(--my-card-light) 20%,transparent),transparent 75%); }
+.tremplin-my-dashboard .tremplin-my-token-card__header { grid-template-columns: 76px minmax(0,1fr) 45px; gap: 17px; padding-bottom: 12px; }
+.tremplin-my-dashboard .tremplin-my-token-card__header > img { width: 76px; height: 76px; border-radius: 15px; border: 1px solid #ac8adb7d; object-fit: cover; object-position: center 25%; }
+.tremplin-my-dashboard .tremplin-my-token-card__header small { font-size: 10px; letter-spacing: .27em; font-weight: 670; color: #c99beb; }
+.tremplin-my-dashboard .tremplin-my-token-card__header h3 { margin-top: 4px; font-size: 21px; font-weight: 720; letter-spacing: -.02em; }
+.tremplin-my-dashboard .tremplin-my-token-card__header p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin: 4px 0 0; color: #a99ac4; font-size: 12px; line-height: 1.3; }
+.tremplin-my-dashboard .tremplin-my-token-card__header .mw-grade-badge { --mw-grade-size: 45px !important; width: 45px; height: 45px; }
+.tremplin-my-dashboard .tremplin-my-token-card__market { grid-template-columns: minmax(0,1fr) auto; align-items: center; padding-block: 11px; border-color: #9780c52a; }
+.tremplin-my-dashboard .tremplin-my-token-card__market > div > span { font-size: 12px; color: #b7aecf; }
+.tremplin-my-dashboard .tremplin-my-token-card__market > div > strong { font-size: 26px; line-height: 1.15; font-weight: 720; }
+.tremplin-my-dashboard .tremplin-my-token-card__market .tremplin-my-artists__change { display: flex; justify-content: flex-end; gap: 9px; }
+.tremplin-my-dashboard .tremplin-my-token-card__market .tremplin-my-artists__change > span { font-size: 13px; }
+.tremplin-my-dashboard .tremplin-my-token-card__holding { grid-template-columns: repeat(3,minmax(0,1fr)); align-items: center; gap: 0; padding: 10px 0; }
+.tremplin-my-dashboard .tremplin-my-token-card__holding > div { padding: 0 14px; border-right: 1px solid #9274be2b; }
+.tremplin-my-dashboard .tremplin-my-token-card__holding > div:first-child { padding-left: 0; }
+.tremplin-my-dashboard .tremplin-my-token-card__holding > div:last-child { padding-right: 0; border: 0; }
+.tremplin-my-dashboard .tremplin-my-token-card__holding dt { font-size: 11px; color: #b6aacb; }
+.tremplin-my-dashboard .tremplin-my-token-card__holding dd { margin-top: 6px; font-size: 14px; font-weight: 650; }
+.tremplin-my-dashboard .tremplin-my-token-card__update { align-items: flex-start; gap: 14px; padding: 12px 0 14px; font-size: 12px; color: #c4b6dc; }
+.tremplin-my-dashboard .tremplin-my-token-card__update > i { display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border: 1px solid #8d60bf66; border-radius: 13px; background: radial-gradient(ellipse at 0 0,#6838935c,transparent 75%),#121020; }
+.tremplin-my-dashboard .tremplin-my-token-card__update > i .meewav-token-icon { width: 26px; height: 26px; }
+.tremplin-my-dashboard .tremplin-my-token-card__update > span { gap: 5px; }
+.tremplin-my-dashboard .tremplin-my-token-card__update small { color: #ac7fdf; font-size: 9px; letter-spacing: .06em; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer { grid-template-columns: minmax(0,1.4fr) minmax(0,1fr); grid-template-rows: 49px 25px; gap: 12px 10px; margin-top: auto; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button { min-height: 0; border-radius: 10px; font-size: 12px; font-weight: 650; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button.is-primary { gap: 12px; border-color: #b5a1ea61; background: linear-gradient(115deg,#ffffff12,transparent 48%),linear-gradient(180deg,#5137a1,#4e349f 54%,#372574); box-shadow: inset 0 1px 0 #e3d8ff29,inset 0 -1px 2px #11092a61,0 5px 12px #25165038; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button.is-primary svg { width: 21px; height: 21px; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button.is-primary svg:last-child { width: 15px; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button.is-stats { border-color: #8877bd6b; background: linear-gradient(150deg,#25203b80,#11111e 65%,#22263a); box-shadow: inset 0 1px 1px #b39ce429; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button.is-stats svg { color: #c6a5ec; width: 20px; height: 20px; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button.is-link { min-height: 25px; font-size: 12px; font-weight: 550; gap: 8px; }
+.tremplin-my-dashboard .tremplin-my-token-card > footer > button:not(.is-link):hover { border-color: #c7b9ed; filter: brightness(1.08); }
+.tremplin-my-dashboard__watch { gap: 14px; }
+.tremplin-my-dashboard__watch > header { padding: 0 8px; }
+.tremplin-my-dashboard__watch > header h2 { margin-top: 7px; font-size: clamp(26px,2.7vw,38px); line-height: 1.1; letter-spacing: -.025em; }
+.tremplin-my-dashboard__watch > div { gap: 16px; }
+.tremplin-my-dashboard__watch article { grid-template-columns: 55px minmax(0,1fr) auto; gap: 12px; min-height: 82px; padding: 10px 13px; border-radius: 11px; border-color: #75639642; background: radial-gradient(ellipse at 100% 0,#42335d35,transparent 60%),linear-gradient(135deg,#121022,#0b0b17 65%,#121429); box-shadow: inset 0 1px 1px #ab8bcc17; }
+.tremplin-my-dashboard__watch article > img { width: 55px; height: 57px; border-radius: 12px; object-fit: cover; object-position: center 25%; border: 1px solid #9776bd4d; }
+.tremplin-my-dashboard__watch article > div { min-width: 0; }
+.tremplin-my-dashboard__watch article strong { font-size: 13px; }
+.tremplin-my-dashboard__watch article span { font-size: 9px; color: #ad83e1; font-weight: 680; }
+.tremplin-my-dashboard__watch article[data-token-stage="review"] span { color: #e3be68; }
+.tremplin-my-dashboard__watch article p { font-size: 11px; margin-top: 4px; }
+.tremplin-my-dashboard__watch article > button { display: inline-flex; align-items: center; justify-content: flex-end; gap: 7px; padding: 0; font-size: 10px; font-weight: 650; white-space: normal; max-width: 126px; text-align: right; }
+.tremplin-my-dashboard__watch article > button svg { width: 13px; height: 13px; flex-shrink: 0; }
+@media (max-width: 1200px) and (min-width: 761px) {
+  .tremplin-my-dashboard .tremplin-my-token-card { padding-inline: 15px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__header { grid-template-columns: 57px minmax(0,1fr) 33px; gap: 10px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__header > img { width: 57px; height: 64px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__header h3 { font-size: 18px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__holding > div { padding-inline: 6px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__holding dd { font-size: 12px; }
+  .tremplin-my-dashboard .tremplin-my-token-card > footer > button { font-size: 10px; gap: 6px; }
+  .tremplin-my-dashboard__watch article { grid-template-columns: 45px minmax(0,1fr); }
+  .tremplin-my-dashboard__watch article > img { width: 45px; height: 52px; grid-row: 1 / 3; }
+  .tremplin-my-dashboard__watch article > button { grid-column: 2; justify-content: flex-start; max-width: none; text-align: left; }
+}
+@media (max-width: 760px) {
+  .tremplin-my-dashboard__holdings > header { padding: 10px 0 0; min-height: 126px; }
+  .tremplin-my-dashboard__holding-art { display: none; }
+  .tremplin-my-dashboard__holdings > header h2 { font-size: 31px; }
+  .tremplin-my-dashboard__holdings > header p { max-width: 35ch; font-size: 12px; line-height: 1.5; }
+  .tremplin-my-dashboard .tremplin-my-token-grid { grid-template-columns: minmax(0,1fr); }
+  .tremplin-my-dashboard .tremplin-my-token-card { padding: 15px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__header { grid-template-columns: 66px minmax(0,1fr) 36px; gap: 11px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__header > img { width: 66px; height: 72px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__header h3 { font-size: 19px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__holding > div { padding-inline: 7px; }
+  .tremplin-my-dashboard .tremplin-my-token-card__holding dd { font-size: 12px; }
+  .tremplin-my-dashboard .tremplin-my-token-card > footer > button { font-size: 11px; }
+  .tremplin-my-dashboard__watch > div { grid-template-columns: 1fr; }
+  .tremplin-my-dashboard__watch article { min-height: 86px; }
+  .tremplin-my-dashboard__watch article > button { max-width: 90px; }
+}
+
+/* Mes artistes: opaque graphite surfaces keep the scenery outside the cards. */
+.tremplin-my-dashboard {
+  --my-panel-surface: linear-gradient(135deg, #ffffff06, transparent 45%), linear-gradient(160deg, #131519, #090a0d 65%);
+  --my-card-surface: radial-gradient(ellipse at 18% -45%, #ffffff10, transparent 65%), linear-gradient(160deg, #1a1c21, #101115 48%, #0a0b0e);
+  --my-surface-border: #b0b5c02b;
+  --my-surface-edge: inset 0 1px #ffffff16, inset 0 -1px #0009, 0 7px 20px #0004;
+}
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__activity, .tremplin-my-dashboard__rooms, .tremplin-my-dashboard__operations, .tremplin-my-dashboard__empty) {
+  background: var(--my-panel-surface);
+  border-color: var(--my-surface-border);
+  box-shadow: var(--my-surface-edge);
+}
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__activity article, .tremplin-my-dashboard__rooms article, .tremplin-my-dashboard__watch article, .tremplin-my-dashboard__followed article, .tremplin-my-dashboard__followed-preview > div > button, .tremplin-my-artists-summary > article, .tremplin-my-token-card) {
+  background: var(--my-card-surface);
+  border-color: var(--my-surface-border);
+  box-shadow: var(--my-surface-edge);
+  opacity: 1;
+}
+.tremplin-my-dashboard .tremplin-my-token-card::before { background: linear-gradient(130deg, #ffffff04, transparent 35%); }
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article.is-unread { border-color: #b0b5c038; }
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article.is-unread::before {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 20px;
+  left: 0;
+  top: calc(50% - 10px);
+  border-radius: 0 3px 3px 0;
+  background: #9272d8;
+}
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article.is-read > div { opacity: .75; }
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__activity article, .tremplin-my-dashboard__rooms article) small { color: #acaebc; }
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__activity article, .tremplin-my-dashboard__rooms article) p { color: #a1a4af; }
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__activity, .tremplin-my-dashboard__rooms) .tremplin-kicker { color: #aeb0bc; }
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__feed-filters select, .tremplin-my-dashboard__feed-filters button, .tremplin-my-dashboard__feed-filters .is-checkbox, .tremplin-my-dashboard__rooms article footer button, .tremplin-my-dashboard__followed article > button, .tremplin-my-dashboard__operations header button) {
+  color: #d6d8df;
+  background: linear-gradient(125deg, #ffffff08, transparent 45%), linear-gradient(180deg, #202228, #101115);
+  border-color: #b0b5c030;
+  box-shadow: inset 0 1px #ffffff15, 0 3px 8px #0003;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.tremplin-my-dashboard .tremplin-my-dashboard__feed-filters label { color: #a6a9b4; }
+.tremplin-my-dashboard .tremplin-my-dashboard__feed-filters select { color-scheme: dark; }
+.tremplin-my-dashboard .tremplin-my-dashboard__feed-filters .is-checkbox input { accent-color: #5137a1; }
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__feed-filters button, .tremplin-my-dashboard__rooms article footer button, .tremplin-my-dashboard__followed article > button, .tremplin-my-dashboard__operations header button):hover {
+  background: linear-gradient(125deg, #ffffff10, transparent 45%), linear-gradient(180deg, #5137a1, #372574);
+  border-color: #b5a1ea60;
+  box-shadow: inset 0 1px #ffffff25, 0 4px 12px #37257438;
+  color: #fff;
+}
+.tremplin-my-dashboard .tremplin-my-dashboard__rooms article footer button.is-reminded {
+  background: linear-gradient(180deg, #282136, #17131f);
+  border-color: #a48ad85c;
+  color: #d1c3ec;
+}
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article > button { color: #c7c5d3; }
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article > button:hover { color: #bba5ee; }
+.tremplin-my-dashboard :is(.tremplin-my-dashboard__activity, .tremplin-my-dashboard__rooms, .tremplin-my-dashboard__followed, .tremplin-my-dashboard__operations) :is(button, select, input):focus-visible {
+  outline: 2px solid #b5a1ea;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tremplin-my-dashboard :is(.tremplin-my-dashboard__feed-filters button, .tremplin-my-dashboard__rooms article footer button, .tremplin-my-dashboard__followed article > button, .tremplin-my-dashboard__operations header button) { transition: none; }
+}
+
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  line-height: 1;
+}
+.tremplin-my-dashboard .tremplin-my-dashboard__activity article > button > svg {
+  display: block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}

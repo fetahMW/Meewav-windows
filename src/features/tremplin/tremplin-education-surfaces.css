@@ -1,0 +1,53 @@
+/* Night-violet lacquer shared by the Comment ça marche containers. */
+.tremplin-how {
+  --how-surface-border: #9788af75;
+  --how-surface-panel:
+    radial-gradient(ellipse 110px 3px at 18% 0, #eee4ffb3, transparent),
+    radial-gradient(ellipse 3px 90px at 100% 78%, #b599dd69, transparent),
+    radial-gradient(ellipse 28% 22% at 0 0, #b8acc51c, transparent 80%),
+    radial-gradient(ellipse 46% 30% at 88% 100%, #436e601c, transparent 78%),
+    linear-gradient(124deg, #ded1ec09, transparent 23% 70%, #a98bbe08 88%, transparent),
+    radial-gradient(ellipse at 100% 0, #35204750, transparent 50%),
+    linear-gradient(120deg, #0c0b10, #030405 48%, #0b0811);
+  --how-surface-inset:
+    radial-gradient(ellipse 75px 3px at 16% 0, #e6d4ff9e, transparent),
+    radial-gradient(ellipse 70% 30% at 0 0, #d8cce91c, transparent 78%),
+    radial-gradient(ellipse 65% 35% at 100% 100%, #41685926, transparent 78%),
+    linear-gradient(135deg, #cdbbe610, transparent 34% 66%, #9b7cbe08, transparent),
+    radial-gradient(ellipse at 100% 0, #32203f45, transparent 58%),
+    linear-gradient(145deg, #110e17, #050607 64%, #100b18);
+}
+
+.tremplin-how > .tremplin-how__hero,
+.tremplin-how #tremplin-discovery,
+.tremplin-how #tremplin-follow,
+.tremplin-how #tremplin-grades.tremplin-gateway__levels,
+.tremplin-how #tremplin-token-mw .tremplin-how__mw-essential,
+.tremplin-how #tremplin-token-mw .tremplin-how__mw-before,
+.tremplin-how #tremplin-token-mw .tremplin-how__mw-conclusion {
+  background: var(--how-surface-panel);
+  border-color: var(--how-surface-border);
+  box-shadow: inset 0 1px 1px #e8dcff52, inset 1px 0 2px #c4b0df24,
+    inset 0 -1px 2px #a197bd3d, 0 12px 30px #0006;
+}
+
+.tremplin-how #tremplin-token-mw .tremplin-how__mw-essential::before {
+  background: radial-gradient(ellipse at 0 74%, #5d32762b, transparent 30%);
+}
+
+/* Blend the existing artwork into the darker surface without a rectangular seam. */
+.tremplin-how #tremplin-token-mw .tremplin-how__mw-artist-art {
+  clip-path: none;
+  mask-image: linear-gradient(90deg, transparent 35%, #000 70%), linear-gradient(#000 65%, transparent);
+}
+
+.tremplin-how #tremplin-discovery .tremplin-how__channels article,
+.tremplin-how #tremplin-follow .tremplin-how__follow-card,
+.tremplin-how #tremplin-grades .tremplin-public-home__level-note,
+.tremplin-how #tremplin-grades .tremplin-how__prior-career,
+.tremplin-how #tremplin-token-mw .tremplin-how__mw-summary-example {
+  background: var(--how-surface-inset);
+  border-color: var(--how-surface-border);
+  box-shadow: inset 0 1px 2px #eee2ff59, inset 0 -1px 2px #a1b7ac38,
+    inset -1px 0 2px #c4a4ef33, 0 7px 18px #0007;
+}

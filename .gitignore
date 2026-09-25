@@ -1,0 +1,62 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+public/globe-vinyle/
+# This pinned runtime dataset is part of the feature, even when a local
+# .git/info/exclude ignores generic data/ or README.md names.
+!vendor/globe-vinyle/data/
+!vendor/globe-vinyle/data/**
+!vendor/globe-vinyle/README.md
+!vendor/globe-vinyle/**/README.md
+!vendor/meewav-vinyl/README.md
+build/
+.next/
+out/
+
+# Local verification artifacts
+.tmp/
+tmp/
+artifacts/
+screenshot UX/
+coverage/
+playwright-report/
+test-results/
+
+# Supabase
+supabase/.temp/
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+!.env.example
+!.env.*.example
+*.local
+server/mvt-tile-server/.env
+.vite/
+*.tsbuildinfo
+
+
+# Secrets locaux (clés API)
+test sprite/
+testsprite_tests/tmp/
+testsprite_tests/tmp/config.json

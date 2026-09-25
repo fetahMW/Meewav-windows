@@ -1,0 +1,516 @@
+/* These slots reuse the Mixer's grid. The player is never portaled or remounted. */
+.place-mixer > .wave-tools-nav { grid-row: 1; min-width: 0; }
+.place-mixer > .wave-tools-body { grid-row: 3; min-height: 0; min-width: 0; overflow: hidden; }
+.place-mixer > .wave-tools-nav[hidden], .place-mixer > .wave-tools-body[hidden] { display: none; }
+.place-mixer.is-wave-tools > :not(.place-mixer-audio):not(.wave-tools-nav):not(.wave-tools-body) { display: none !important; }
+.place-mixer.is-wave-tools > .place-mixer-audio { grid-row: 2; }
+.wave-tools-nav > :is(.room-tools-shell, .place-tools-console) { display: contents !important; }
+.place-room-shell .place-studio-panel.has-tools-deck .place-mixer > .wave-tools-body > .room-tools-shell {
+  height: 100%; min-height: 0; min-width: 0; grid-template-rows: minmax(0, 1fr); padding: 0; overflow: hidden;
+}
+.place-room-shell .place-studio-panel.has-tools-deck .place-mixer > .wave-tools-body > .place-tools-console__portaled-body {
+  display: grid; height: 100%; min-height: 0; min-width: 0; padding: 0; overflow-x: hidden; overflow-y: auto;
+  overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: #55565e #ffffff05;
+}
+.place-mixer > .wave-tools-body > .room-tools-shell > .room-tools-shell__panel {
+  height: 100%; min-height: 0; min-width: 0; overflow-x: hidden; overflow-y: auto;
+  overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: #55565e #ffffff05;
+}
+.place-mixer > .wave-tools-body > .room-tools-shell > .room-tools-shell__panel::-webkit-scrollbar { width: 6px; }
+.place-mixer > .wave-tools-body > .room-tools-shell > .room-tools-shell__panel::-webkit-scrollbar-thumb { border-radius: 8px; background: #55565e; }
+.place-mixer > .wave-tools-body > .room-tools-shell[data-active-tool="screen"] > .room-tools-shell__panel {
+  overflow-y: scroll; scrollbar-gutter: stable; padding-bottom: 12px;
+}
+.place-mixer > .wave-tools-body > .room-tools-shell[data-active-tool="wave-gate"] > .room-tools-shell__panel { overflow: hidden; }
+.wave-tools-nav .place-tools-switch { height: 100%; margin: 0; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-loop-card__quick-actions > .wave-vote-queue__volume {
+  grid-column: 1 / -1; width: 90px; min-width: 0; margin: 0; height: 20px;
+  appearance: none; -webkit-appearance: none; padding: 0; border: 0;
+  background: transparent; box-shadow: none; cursor: pointer; outline-offset: 3px;
+}
+/* Vote must keep the exact compact row geometry used by the Sas. Older
+   canonical responsive rules are loaded later and must not stretch it. */
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue .wave-loop-card.has-quick-actions {
+  width: calc(100% - 10px) !important; max-width: calc(100% - 10px) !important;
+  justify-self: start; box-sizing: border-box;
+  height: 58px !important; min-height: 58px !important;
+  grid-template-columns: 34px minmax(0, 1fr) 96px 86px 36px !important;
+  grid-template-rows: auto !important; gap: 4px !important; padding: 6px !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-sas__queue {
+  overflow-y: auto !important; scrollbar-gutter: auto !important;
+  padding-inline: 5px 3px !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue .wave-loop-card__avatar {
+  width: 34px !important; height: 34px !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue .wave-loop-card__play {
+  width: 36px !important; height: 36px !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-vote-queue__volume::-webkit-slider-runnable-track {
+  height: 2px; border: 0; border-radius: 999px; box-shadow: none;
+  background: linear-gradient(to right, #aaaab4 var(--volume-fill), #ffffff1a var(--volume-fill));
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-vote-queue__volume::-webkit-slider-thumb {
+  appearance: none; -webkit-appearance: none; width: 8px; height: 8px; margin-top: -3px;
+  border: 0; border-radius: 50%; background: linear-gradient(#c9c9cf, #868690);
+  box-shadow: 0 1px 3px #0009;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-vote-queue__volume::-moz-range-track {
+  height: 2px; border: 0; border-radius: 999px; background: #ffffff1a;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-vote-queue__volume::-moz-range-progress {
+  height: 2px; border-radius: 999px; background: #aaaab4;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-vote-queue__volume::-moz-range-thumb {
+  width: 8px; height: 8px; border: 0; border-radius: 50%; background: #b5b5be;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue .wave-vote-queue__volume:hover::-webkit-slider-thumb { background: #e1e1e7; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-sas__queue { padding-bottom: 72px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board {
+  display: grid; grid-template-columns: minmax(86px, 1.2fr) repeat(3, minmax(44px, .62fr)) minmax(86px, .9fr);
+  align-items: center; gap: 3px; min-height: 48px; margin: 0 9px 0 5px; padding: 6px;
+  border: 1px solid #ffffff14; border-radius: 11px;
+  background: linear-gradient(115deg, #16161cdd, #07070aeb 64%); box-shadow: inset 0 1px #ffffff0d, 0 4px 12px #0005;
+  color: #c3c3cc;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board > span:not(.wave-vote-queue__board-state) { display: grid; text-align: center; border-left: 1px solid #ffffff10; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board strong { font-size: 12px; color: #ececf2; line-height: 1.1; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board small { font-size: 7px; color: #777782; text-transform: uppercase; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__total strong { color: #c8a6ff; text-shadow: 0 0 9px #a855f733; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split > span { display: grid; gap: 1px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split > span + span { border-left: 1px solid #ffffff10; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split .is-for strong { color: #5ee89a; text-shadow: 0 0 9px #35d77b33; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split .is-against strong { color: #ff8290; text-shadow: 0 0 9px #ff536833; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split .is-for small { color: #62b987; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board .wave-vote-queue__split .is-against small { color: #c4747e; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board-state { display: flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 750; letter-spacing: .04em; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board-state i { width: 6px; height: 6px; border-radius: 50%; background: #85858f; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board.is-live { border-color: #a855f743; box-shadow: inset 0 1px #ffffff12, 0 0 13px #a855f713; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board.is-live .wave-vote-queue__board-state i { background: #b468f1; box-shadow: 0 0 7px #a855f7; animation: wave-vote-pulse 1s ease-in-out infinite; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board.is-finished { border-color: #ffffff22; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board > b { justify-self: stretch; padding: 6px 5px; border: 1px solid #ffffff15; border-radius: 7px; font-size: 7px; color: #aaaab4; text-align: center; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board > b.is-accepted { border-color: #45dc8752; color: #76e9a9; background: #29bd6a0c; box-shadow: inset 0 0 8px #35d77b0b, 0 0 9px #35d77b12; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board > b.is-rejected { border-color: #ff607044; color: #ff929d; background: #d92f450b; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__board.is-finished .wave-vote-queue__board-state i { background: #5ee89a; box-shadow: 0 0 7px #35d77b66; }
+@keyframes wave-vote-pulse { 50% { opacity: .45; transform: scale(.82); } }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-bottom-bar .wave-bottom-bar__controls > button.wave-vote-queue__launch {
+  width: 110px; min-width: 110px; height: 34px; padding: 0 9px; border-radius: 10px;
+  border: 1px solid #ffffff28; color: #d6d3df; font-size: 10px; font-weight: 650;
+  background: linear-gradient(180deg, #28272d, #101014 48%, #050506);
+  box-shadow: inset 0 1px #ffffff24, inset 0 -1px #000, 0 2px 5px #0008;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-bottom-bar .wave-bottom-bar__controls > button.wave-vote-queue__launch:hover:not(:disabled) {
+  border-color: #b18bd778; color: #f1e9ff; box-shadow: inset 0 1px #ffffff28, 0 0 9px #a855f718;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-bottom-bar .wave-bottom-bar__controls {
+  grid-template-columns: repeat(2, 34px) 58px 58px 110px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-bottom-bar {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-bottom-bar .wave-bottom-bar__identity { display: none !important; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue > .wave-bottom-bar .wave-bottom-bar__controls { justify-content: center; }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__remove {
+  width: 58px; min-width: 58px; height: 34px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__duration {
+  position: relative; display: flex; align-items: center; width: 58px; height: 34px; padding: 0 5px;
+  border: 1px solid #ffffff1c; border-radius: 9px; background: linear-gradient(180deg, #17171c, #08080b);
+  color: #85858f; font-size: 8px; box-shadow: inset 0 1px #ffffff0d, 0 2px 5px #0007;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__duration > button {
+  display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; min-width: 0; height: 28px;
+  padding: 0; border: 0; background: transparent; box-shadow: none; color: #d9d9e0; font-size: 10px; white-space: nowrap;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-vote-queue__duration > button svg {
+  box-sizing: border-box; width: 12px; height: 12px; padding: 0; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; transition: transform 140ms ease;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__duration.is-open > button svg { transform: rotate(180deg); }
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__duration-menu {
+  position: absolute; z-index: 20; right: 0; bottom: calc(100% + 7px); display: grid; width: 96px; padding: 4px;
+  border: 1px solid #ffffff25; border-radius: 10px; background: linear-gradient(155deg, #202027f5, #09090df8 65%);
+  backdrop-filter: blur(18px) saturate(125%); box-shadow: inset 0 1px #ffffff18, 0 10px 24px #000c;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__duration-menu > button {
+  width: 100%; height: 29px; padding: 0 8px; border: 0; border-radius: 7px; background: transparent;
+  box-shadow: none; color: #aaaab4; font-size: 9px; text-align: left;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-vote-queue__duration-menu > button:is(:hover, [aria-selected="true"]) {
+  color: #f0e8fa; background: linear-gradient(90deg, #a855f729, #a855f709); box-shadow: inset 0 0 0 1px #b06cff35;
+}
+.wave-audition-settings { display: grid; gap: 8px; padding: 10px; margin: 6px 0; border: 1px solid #ffffff20; border-radius: 10px; color: #c4c4ca; font-size: 12px; }
+.wave-audition-settings label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.wave-audition-settings input, .wave-audition-settings select { width: 100px; min-width: 0; background: #08090c; color: #d9d9df; border: 1px solid #ffffff25; border-radius: 6px; padding: 5px; }
+.place-mixer-loop__selection.is-musical { pointer-events: auto; touch-action: none; cursor: grab; background: #a88acf22; border: 0; color: #d5cedf; font-size: 9px; }
+/* Only the lower Sas changes: compact glass rows and a stationary action dock. */
+.wave-tools-body .room-tools-shell.is-wave .wave-sas.wave-sas--premium {
+  position: relative; height: 100%; min-height: 0; overflow: hidden;
+  grid-template-rows: auto minmax(0, 1fr); gap: 8px; padding: 8px 6px 0;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-sas__header {
+  min-height: 32px; flex-wrap: nowrap; align-items: center; gap: 8px; padding: 0 5px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-sas__header > span { flex: 1 1 auto; min-width: 0; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-sas__header strong {
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(12px, 2.8cqi, 15px);
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-sas__header-actions { width: auto; gap: 6px; justify-content: flex-end; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-sas__header-actions > button {
+  min-height: 30px; gap: 6px; padding: 0 9px; border-radius: 10px; font-size: 10px; white-space: nowrap;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-sas__header-actions svg { width: 14px; height: 14px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-sas__intake > .wave-sas__intake-chevron { display: block; width: 11px; height: 11px; opacity: .65; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-sas__queue {
+  min-height: 0; gap: 5px; padding: 3px 5px 64px; overflow-y: auto;
+  scroll-padding-block: 6px 64px; scrollbar-gutter: stable;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-sas__queue::-webkit-scrollbar-thumb {
+  background: #50515a; box-shadow: none;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions {
+  grid-template-columns: 34px minmax(0, 1fr) 96px 86px 36px;
+  grid-template-rows: auto; align-items: center; gap: 4px;
+  height: 58px; min-height: 58px; padding: 6px; border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 68% 130%, color-mix(in srgb, var(--wave-loop-accent) 8%, transparent), transparent 65%) padding-box,
+    linear-gradient(115deg, #ffffff08, #ffffff01 46%, transparent) padding-box,
+    linear-gradient(145deg, #111217db, #050609ed 76%) padding-box,
+    linear-gradient(110deg, #e5eaf02d, #9ca4b412 32%, #0000 64%, #a4a9b012) border-box;
+  backdrop-filter: blur(10px) saturate(110%);
+  box-shadow: inset 0 1px #e6eaf01a, inset 0 -1px #000a, 0 3px 9px #0004;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions:is(:hover, .is-playing) {
+  background:
+    radial-gradient(ellipse at 68% 130%, color-mix(in srgb, var(--wave-loop-accent) 13%, transparent), transparent 72%) padding-box,
+    linear-gradient(115deg, #ffffff0b, #ffffff02 46%, transparent) padding-box,
+    linear-gradient(145deg, #14151adb, #060709ed 76%) padding-box,
+    linear-gradient(110deg, #e5eaf03d, color-mix(in srgb, var(--wave-loop-accent) 22%, #ffffff12) 55%, #a4a9b021) border-box;
+  box-shadow: inset 0 1px #e6eaf020, inset 0 -1px #000a, 0 3px 12px color-mix(in srgb, var(--wave-loop-accent) 5%, #0004);
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions.is-selected {
+  border-color: transparent;
+  filter: none;
+  background:
+    radial-gradient(ellipse at 68% 130%, color-mix(in srgb, var(--wave-loop-accent) 8%, transparent), transparent 65%) padding-box,
+    linear-gradient(115deg, #ffffff08, #ffffff01 46%, transparent) padding-box,
+    linear-gradient(145deg, #111217db, #050609ed 76%) padding-box;
+  box-shadow: inset 0 1px #e6eaf01a, inset 0 -1px #000a, 0 3px 9px #0004;
+}
+/* A masked hairline keeps the category reflection on the edge only. The
+   centre stays black; most of the perimeter fades back into the surface. */
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions.is-selected::before {
+  content: ""; display: block; position: absolute; inset: 0; z-index: 2;
+  width: auto; height: auto; padding: 1px; border: 0; border-radius: inherit;
+  background: linear-gradient(115deg,
+    color-mix(in srgb, var(--wave-loop-accent) 85%, #eee 15%),
+    color-mix(in srgb, var(--wave-loop-accent) 55%, transparent) 22%,
+    color-mix(in srgb, var(--wave-loop-accent) 18%, transparent) 48%,
+    color-mix(in srgb, var(--wave-loop-accent) 30%, transparent) 70%,
+    color-mix(in srgb, var(--wave-loop-accent) 70%, transparent));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 1; box-shadow: none; transform: none; pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions { transition: none; }
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions.is-selected {
+  box-shadow: inset 0 1px #ffffff24,
+    inset 0 -9px 18px -15px color-mix(in srgb, var(--wave-loop-accent) 65%, transparent),
+    0 0 10px color-mix(in srgb, var(--wave-loop-accent) 17%, transparent), 0 3px 9px #0006;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-base-queue > .wave-bottom-bar .wave-bottom-bar__controls {
+  grid-template-columns: repeat(2, 34px) minmax(86px, 112px);
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-beat-queue > .wave-bottom-bar {
+  grid-template-columns: minmax(0, 156px) 34px !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-beat-queue > .wave-bottom-bar .wave-bottom-bar__identity {
+  display: grid !important; padding-right: 3px; border-right: 0;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-beat-queue > .wave-bottom-bar .wave-bottom-bar__controls {
+  display: flex !important;
+  width: 34px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue > .wave-bottom-bar .wave-profile-button {
+  width: 34px; height: 34px; border: 1px solid #bfc0c15c; border-radius: 10px;
+  background: radial-gradient(ellipse at 23% -8%, #ffffff26, transparent 65%), linear-gradient(160deg, #303132, #101112 34%, #030303 72%, #111213);
+  box-shadow: inset 0 1px 1px #ffffff38, inset 0 -1px 3px #000, 0 2px 0 #010101, 0 4px 6px #0009;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue > .wave-bottom-bar .wave-profile-button svg { width: 17px; height: 17px; padding: 0; }
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-muted {
+  opacity: .55; border-color: #66687352; box-shadow: inset 0 1px #ffffff08;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-solo {
+  border-color: var(--wave-loop-accent);
+  box-shadow: inset 0 1px #ffffff1c, 0 0 14px color-mix(in srgb, var(--wave-loop-accent) 22%, transparent);
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue.wave-beat-queue .wave-loop-card.has-quick-actions {
+  grid-template-columns: 34px minmax(0, 1fr) 96px minmax(156px, 196px) !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card__quick-actions {
+  display: block; width: 100%; min-width: 0; justify-self: stretch;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls {
+  display: grid; grid-template-columns: 28px 28px minmax(84px, 1fr);
+  align-items: center; gap: 5px; width: 100%; min-width: 0;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls:has(.wave-beat-card__replacement) {
+  grid-template-columns: 28px 28px 28px minmax(42px, 1fr);
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls > button {
+  display: grid; place-items: center; width: 28px; height: 28px; padding: 0;
+  border: 1px solid #ffffff15; border-radius: 8px; color: #898b95;
+  background: linear-gradient(180deg, #18191f99, #090a0eaa); box-shadow: inset 0 1px #ffffff0b, 0 2px 5px #0005;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls > button svg {
+  width: 13px; height: 13px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls > button:hover:not(:disabled) {
+  border-color: #ffffff2e; color: #e2e3e8;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls > button.is-active {
+  border-color: color-mix(in srgb, var(--wave-loop-accent) 56%, #ffffff16);
+  color: color-mix(in srgb, var(--wave-loop-accent) 62%, #fff);
+  background: color-mix(in srgb, var(--wave-loop-accent) 11%, #0a0b10);
+  box-shadow: 0 0 9px color-mix(in srgb, var(--wave-loop-accent) 18%, transparent), inset 0 1px #ffffff18;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls__volume {
+  display: flex; min-width: 0; align-items: center; gap: 4px; color: #737681;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls__volume > svg {
+  width: 11px; height: 11px; flex: 0 0 11px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls__volume > input {
+  width: 100% !important; min-width: 0 !important;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue > .wave-bottom-bar .wave-bottom-bar__controls > button.is-active {
+  border-color: color-mix(in srgb, var(--wave-loop-accent) 66%, #fff 8%);
+  background: color-mix(in srgb, var(--wave-loop-accent) 14%, #0a0b12);
+  color: color-mix(in srgb, var(--wave-loop-accent) 72%, #fff 28%);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--wave-loop-accent) 18%, transparent), inset 0 1px #ffffff1a;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-volume {
+  display: flex; min-width: 86px; align-items: center; gap: 6px; padding-inline: 5px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-volume > svg {
+  width: 13px; height: 13px; flex: 0 0 13px; color: #aaaeb8;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-volume > input {
+  width: 100%; min-width: 0; accent-color: var(--wave-loop-accent);
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card::after { opacity: .18; }
+
+/* Beat shares the Sas card and floating control surfaces. */
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium {
+  position: relative; min-height: 0; height: 100%; padding: 8px 5px;
+  background: transparent; border: 0; box-shadow: none; overflow: hidden;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-collective__tracks {
+  display: flex; flex-direction: column; min-height: 0; height: 100%;
+  background: transparent; border: 0; box-shadow: none; padding: 0;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-collective__section-heading {
+  min-height: 40px; padding: 5px 9px 10px; background: transparent; border: 0;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-collective__section-title small { display: none; }
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-collective__track-list {
+  display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 5px;
+  padding: 3px 5px 82px; overflow-y: auto; scrollbar-gutter: stable; background: transparent;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-loop-card.has-quick-actions {
+  flex: 0 0 58px; grid-template-columns: 34px minmax(0, 1fr) 100px 66px 36px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-loop-card__quick-actions {
+  display: grid; grid-template-columns: 30px 30px; gap: 6px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-loop-card__meta { display: grid; }
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-loop-card__meta small { display: block; }
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-bottom-bar__controls {
+  grid-template-columns: repeat(3, 34px) 88px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-beat-volume {
+  display: flex; align-items: center; gap: 5px; width: 88px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-beat-volume svg { width: 13px; color: #a5a5af; }
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-beat-volume input { width: 65px; accent-color: #b5b5c0; }
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-collective__footer,
+.wave-tools-body .room-tools-shell.is-wave .wave-beat--premium .wave-collective__shared-transport-note { display: none; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-loop-card__avatar {
+  grid-area: auto; width: 34px; height: 34px; border: 0; outline: 0; box-shadow: none;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__identity { grid-area: auto; overflow: visible; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__name { gap: 4px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__name strong { font-size: clamp(12px, 2.6cqi, 15px); }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-sas-card__grade {
+  --mw-grade-size: 23px !important; width: 23px; height: 23px; flex: 0 0 23px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__meta {
+  display: grid; grid-area: auto; gap: 3px; justify-items: center;
+  min-width: 0; padding-inline: 2px; text-align: center;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__meta small {
+  display: block; font-size: 8px; font-weight: 500; white-space: nowrap; color: #91929d;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__quick-actions {
+  grid-area: auto; justify-self: end; grid-template-columns: 28px 54px; gap: 4px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__quick-actions > button { width: 28px; height: 30px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__quick-actions > .wave-sas-card__quick-reject {
+  width: 54px; padding-inline: 5px; font-size: 9px; font-weight: 600;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-loop-card__play { grid-area: auto; width: 36px; height: 36px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas.wave-sas--premium > .wave-bottom-bar {
+  position: absolute; z-index: 5; inset: auto 12px 10px;
+  grid-template-columns: minmax(0, 156px) auto; grid-template-rows: auto; align-items: center; gap: 10px;
+  width: max-content; max-width: calc(100% - 24px); height: auto; min-height: 0; max-height: none;
+  margin: 0 auto !important; padding: 5px 12px; border-radius: 999px;
+  background:
+    linear-gradient(115deg, #ffffff07, transparent 46%) padding-box,
+    linear-gradient(180deg, #1c1d246e, #090a106b) padding-box,
+    linear-gradient(110deg, #dce2ee26, #818a9e0b 50%, #c0c6d118) border-box;
+  backdrop-filter: blur(20px) saturate(110%); -webkit-backdrop-filter: blur(20px) saturate(110%);
+  box-shadow: inset 0 1px #ffffff0e, inset 0 -1px #0006, 0 5px 16px #0006;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__identity {
+  display: grid; grid-template-columns: 28px minmax(0, 1fr); grid-template-rows: auto; align-items: center;
+  min-width: 0; gap: 7px; padding: 0 10px 0 3px; border: 0; border-right: 1px solid #ffffff12;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__avatar {
+  display: grid; place-items: center; width: 28px; height: 28px; overflow: hidden;
+  border: 0; outline: 0; border-radius: 50%; box-shadow: none;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__avatar > em { font-size: 11px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__identity > span:last-child { gap: 3px; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__name strong { font-size: 10px; font-weight: 650; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__meta b {
+  color: color-mix(in srgb, var(--wave-loop-accent) 65%, #c4c7cf); font-size: 8px; font-weight: 600;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls {
+  grid-template-columns: repeat(3, 34px) 54px; grid-template-rows: auto; gap: 8px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls > button:nth-child(n) {
+  min-height: 34px; flex-direction: row; gap: 0; padding: 2px; font-size: 10px; color: #b7b8c2;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls button svg {
+  flex: 0 0 16px; width: 16px; height: 16px; padding: 6px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls > .is-danger {
+  height: 30px; min-height: 30px; padding: 0 5px; border: 1px solid transparent; border-radius: 8px;
+  background: var(--sas-control-surface); box-shadow: var(--sas-control-shadow); font-size: 9px;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls > button:hover:not(:disabled) { color: #f1f0f5; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls > .is-validate:hover:not(:disabled) { color: #80ce9d; }
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls > .is-danger:hover:not(:disabled) { color: #e69aac; }
+@container wave-tools (max-width: 420px) {
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-quick-actions {
+    grid-template-columns: 30px minmax(0, 1fr) 81px 32px; grid-template-rows: 20px 18px; gap: 2px 5px;
+  }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-loop-card__avatar { grid-column: 1; grid-row: 1 / 3; width: 30px; height: 30px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__identity { grid-column: 2; grid-row: 1; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__meta { grid-column: 2; grid-row: 2; padding-inline: 0; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__meta small { display: none; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-sas-card__grade { --mw-grade-size: 18px !important; width: 18px; height: 18px; flex-basis: 18px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__quick-actions { grid-column: 3; grid-row: 1 / 3; grid-template-columns: 27px 50px; gap: 4px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__quick-actions > button { width: 27px; height: 27px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__quick-actions > .wave-sas-card__quick-reject { width: 50px; padding-inline: 3px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-loop-card__play { grid-column: 4; grid-row: 1 / 3; width: 32px; height: 32px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.wave-vote-queue.wave-beat-queue .wave-loop-card.has-quick-actions {
+    grid-template-columns: 30px minmax(0, 1fr) minmax(136px, 158px) !important;
+    grid-template-rows: 20px 18px !important;
+  }
+  .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card__quick-actions {
+    grid-column: 3; grid-row: 1 / 3; width: 100%;
+  }
+  .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-beat-card-controls {
+    grid-template-columns: 28px 28px minmax(72px, 1fr); gap: 4px;
+  }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar { padding: 5px 12px; }
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium > .wave-bottom-bar .wave-bottom-bar__controls { gap: 4px; }
+}
+@container wave-tools (max-width: 340px) {
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-sas__rules-trigger > span { display: none; }
+}
+
+/* Beat mixer: fully custom neutral fader and unambiguous audible states. */
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"] {
+  width: 100%; min-width: 0; height: 16px; margin: 0; padding: 0; border: 0;
+  appearance: none !important; -webkit-appearance: none !important;
+  accent-color: transparent; background: transparent !important; box-shadow: none; cursor: pointer;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-webkit-slider-runnable-track {
+  height: 2px; border: 0; border-radius: 999px;
+  background: linear-gradient(to right, #a6a8b0 var(--volume-fill), #ffffff18 var(--volume-fill));
+  box-shadow: inset 0 1px #ffffff0a;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-webkit-slider-thumb {
+  width: 9px; height: 9px; margin-top: -3.5px; border: 1px solid #ffffff36; border-radius: 50%;
+  appearance: none !important; -webkit-appearance: none !important;
+  background: linear-gradient(145deg, #d8d9de, #8f9199); box-shadow: 0 1px 3px #000b;
+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]:is(:hover, :focus-visible)::-webkit-slider-thumb {
+  border-color: #fff9; background: #f7f7f9; box-shadow: 0 0 0 2px #ffffff0c, 0 1px 4px #000c;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-moz-range-track {
+  height: 2px; border: 0; border-radius: 999px; background: #ffffff18; box-shadow: inset 0 1px #ffffff0a;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-moz-range-progress {
+  height: 2px; border: 0; border-radius: 999px; background: #a6a8b0;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-moz-range-thumb {
+  width: 9px; height: 9px; border: 1px solid #ffffff36; border-radius: 50%;
+  background: linear-gradient(145deg, #d8d9de, #8f9199); box-shadow: 0 1px 3px #000b;
+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]:is(:hover, :focus-visible)::-moz-range-thumb {
+  border-color: #fff9; background: #f7f7f9; box-shadow: 0 0 0 2px #ffffff0c, 0 1px 4px #000c;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.has-quick-actions {
+  transition: opacity 150ms ease, filter 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-sas__queue:has(.wave-loop-card.is-solo) .wave-loop-card:not(.is-solo),
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-out-of-mix:not(.is-muted) {
+  opacity: .62; filter: saturate(.4) brightness(.7);
+  border-color: #ffffff12; background: linear-gradient(145deg, #08090c, #020204 76%) padding-box !important;
+  box-shadow: inset 0 1px #ffffff08, 0 2px 7px #0005;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-solo {
+  opacity: 1; filter: none; border-color: #d9dde629;
+  background:
+    linear-gradient(115deg, #ffffff08, transparent 48%) padding-box,
+    linear-gradient(145deg, #121318, #050609 76%) padding-box !important;
+  box-shadow: inset 0 1px #ffffff17, inset 0 -1px #0009, 0 3px 9px #0005;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-solo.is-selected::before {
+  background: linear-gradient(115deg, #eef1f56b, #aeb4be27 48%, #d8dde63d); opacity: .58;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-muted {
+  opacity: .42; filter: saturate(.18) brightness(.56); border-color: #ffffff0b;
+  background: linear-gradient(145deg, #050608, #010102 76%) padding-box !important;
+  box-shadow: inset 0 1px #ffffff05, 0 2px 6px #0007;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-out-of-mix .wave-loop-card__name strong {
+  color: #f3f3f6; filter: brightness(1.55); text-shadow: 0 0 7px #ffffff12;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-out-of-mix .wave-loop-card__meta b {
+  filter: brightness(1.42); text-shadow: 0 0 6px currentColor;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-muted .wave-loop-card__name strong {
+  color: #fff; filter: brightness(2.2); text-shadow: 0 0 8px #ffffff1a;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-muted .wave-loop-card__meta b {
+  filter: brightness(2); text-shadow: 0 0 6px currentColor;
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.is-muted::before { opacity: .08; }
+@media (prefers-reduced-motion: reduce) {
+  .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-loop-card.has-quick-actions,
+  .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-webkit-slider-thumb,
+  .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-moz-range-thumb { transition: none; }
+}

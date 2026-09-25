@@ -1,0 +1,439 @@
+/* Let the main container show through both nested studio backgrounds. */
+.place-room-shell .place-studio-panel.is-guests > .place-studio-panel__content,
+.place-room-shell .place-studio-panel.is-guests > .place-studio-panel__content > .place-studio-panel__surface {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Invités : barre compacte et palette noir / bleu électrique.
+ * Les cartes de participants, leurs actions et le cadre PVC sont inchangés. */
+.place-room-shell .place-studio-panel.is-guests .place-guests {
+  --guests-subnav-height: 34px;
+  --guests-subnav-row: 29px;
+  grid-template-rows: max-content minmax(0, 1fr);
+  gap: 0;
+  padding: 0 5px 7px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments {
+  position: relative;
+  z-index: 5;
+  box-sizing: border-box;
+  display: grid;
+  width: auto;
+  min-width: 0;
+  height: var(--guests-subnav-height);
+  min-height: var(--guests-subnav-height);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: var(--guests-subnav-row);
+  gap: 0;
+  /* 5px du panneau + 1px ici = les 6px latéraux du sous-menu Mixeur. */
+  margin: 3px 1px 4px;
+  padding: 4px 7px 0;
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 10px;
+  background:
+    linear-gradient(108deg, rgba(255, 255, 255, .035), transparent 31%),
+    linear-gradient(180deg, #070707 0%, #020202 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(236, 236, 236, .165),
+    inset 0 -1px 0 rgba(0, 0, 0, .98),
+    0 3px 8px rgba(0, 0, 0, .34);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments::before {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(112deg, rgba(236, 236, 236, .33), rgba(165, 165, 165, .105) 29%, rgba(61, 61, 61, .035) 66%, rgba(180, 180, 180, .105));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  content: "";
+  pointer-events: none;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button {
+  --guest-accent: #8da8ff;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  width: auto;
+  min-width: 0;
+  height: var(--guests-subnav-row);
+  min-height: var(--guests-subnav-row);
+  grid-row: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 6px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: rgba(193, 193, 193, .62);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 10.5px;
+  font-weight: 730;
+  line-height: 1.12;
+  text-shadow: none;
+  transform: none;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button + button::before {
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 0;
+  display: block;
+  width: 1px;
+  background: rgba(203, 203, 203, .12);
+  content: "";
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button > svg {
+  flex: 0 0 18px;
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments .place-guests__segment-copy {
+  display: flex !important;
+  width: auto;
+  min-width: 0;
+  align-items: center;
+  gap: 5px !important;
+  filter: none;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments .place-guests__segment-copy > small {
+  width: auto;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments .place-guests__segment-copy > strong {
+  box-sizing: border-box;
+  display: inline-grid;
+  width: auto;
+  min-width: 16px !important;
+  height: 16px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0 4px;
+  border: 1px solid rgba(185, 185, 185, .15);
+  border-radius: 5px;
+  background: rgba(168, 168, 168, .06);
+  color: inherit !important;
+  font-size: 9px !important;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .025), transparent);
+  color: #f7f7f7;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button.is-active {
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(169, 169, 169, .095), transparent 57%),
+    linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 50%);
+  color: #f8f8f8;
+  text-shadow: 0 0 7px rgba(194, 194, 194, .2);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button::after {
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  left: 8px;
+  width: auto;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, #9f9f9f 12%, #d6d6d6 50%, #9f9f9f 88%, transparent 100%);
+  box-shadow: 0 -2px 7px rgba(169, 169, 169, .28), 0 0 2px rgba(213, 213, 213, .35);
+  filter: none;
+  content: "";
+  opacity: 0;
+  transform: scaleX(.45);
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button:not(:disabled):is(:hover, :focus-visible, .is-active) > svg {
+  color: #8da8ff;
+  filter: drop-shadow(0 0 4px rgba(169, 169, 169, .32));
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button:focus-visible {
+  outline: 1px solid rgba(75, 111, 255, .72);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+@media (min-width: 900px) and (min-height: 900px) {
+  .place-room-shell .place-studio-panel.is-guests .place-guests {
+    --guests-subnav-height: 37px;
+    --guests-subnav-row: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-studio-panel.is-guests .place-guests__segments > button::after { transition: none; }
+}
+
+/* The guest accent also follows controls rendered outside the card or in portals. */
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger, .place-guests__bulk-select, .place-guests__add-contact) {
+  border-color: rgba(75, 111, 255, .18);
+  background: linear-gradient(180deg, #1c1c1c, #0d0d0d);
+}
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger, .place-guests__bulk-select, .place-guests__add-contact) > svg,
+.place-room-shell .place-studio-panel.is-guests .place-guests__bulk-bar > span > svg,
+.place-room-shell .place-studio-panel.is-guests .place-guests__tip > svg { color: #8da8ff; }
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger, .place-guests__bulk-select, .place-guests__add-contact):not(:disabled):is(:hover, :focus-visible, .is-open, .is-active, [aria-expanded="true"]) {
+  border-color: rgba(75, 111, 255, .48);
+  background: linear-gradient(180deg, #2a2a2a, #151515);
+  color: #f5f5f5;
+  box-shadow: inset 0 1px rgba(235, 235, 235, .09), 0 0 12px rgba(165, 165, 165, .14);
+}
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger, .place-guests__bulk-select) > b {
+  background: linear-gradient(135deg, #c8c8c8, #8d8d8d);
+  color: #191919;
+  box-shadow: 0 0 9px rgba(165, 165, 165, .2);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests__bulk-bar {
+  border-color: rgba(75, 111, 255, .22);
+  background: linear-gradient(90deg, rgba(106, 106, 106, .16), rgba(62, 62, 62, .09));
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests__bulk-bar > button,
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer > footer > button.is-primary {
+  border-color: rgba(75, 111, 255, .48);
+  background: linear-gradient(135deg, #585858, #393939);
+  color: #f4f4f4;
+  box-shadow: inset 0 1px rgba(235, 235, 235, .12), 0 0 12px rgba(165, 165, 165, .14);
+}
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger, .place-guests__bulk-select, .place-guests__add-contact, .place-guests__bulk-bar > button, .place-guest-row__selection):focus-visible {
+  outline: 2px solid #8da8ff;
+  outline-offset: 2px;
+}
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__selection[aria-pressed="true"] {
+  border-color: rgba(75, 111, 255, .68);
+  background: linear-gradient(135deg, #c8c8c8, #8d8d8d);
+  color: #191919;
+  box-shadow: 0 0 12px rgba(165, 165, 165, .24);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer {
+  border-left-color: rgba(75, 111, 255, .3);
+  background: radial-gradient(circle at 78% 5%, rgba(142, 142, 142, .14), transparent 31%), linear-gradient(180deg, #121212, #0b0b0b);
+  box-shadow: -24px 0 70px rgba(0, 0, 0, .66), -1px 0 22px rgba(138, 138, 138, .12);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer::before {
+  background: linear-gradient(90deg, transparent, #8da8ff, #9d9d9d, transparent);
+  box-shadow: 0 0 13px rgba(75, 111, 255, .35);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer__glyph {
+  border-color: rgba(75, 111, 255, .3);
+  background: radial-gradient(circle at 50% 35%, rgba(171, 171, 171, .22), rgba(47, 47, 47, .2));
+  color: #8da8ff;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), 0 0 18px rgba(147, 147, 147, .09);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer > header small,
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer__content > section > div small,
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer > footer > span strong { color: #8da8ff; }
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer__content { scrollbar-color: #757575 rgba(255, 255, 255, .025); }
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer > footer { background: #0c0c0c; }
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer :is(.place-guests-filter__readiness, .place-guests-filter__grades) > span > button.is-active,
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer .place-guests-filter__roles .artist-filter-option:is(.is-active, .is-selected, [aria-pressed="true"]) {
+  border-color: rgba(75, 111, 255, .42);
+  background: linear-gradient(145deg, rgba(149, 149, 149, .19), rgba(96, 96, 96, .1));
+  color: #f6f6f6;
+  box-shadow: inset 0 0 18px rgba(151, 151, 151, .08);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__readiness > span > button.is-active > i {
+  border-color: rgba(75, 111, 255, .45);
+  background: rgba(164, 164, 164, .16);
+  color: #8da8ff;
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer__close:hover {
+  border-color: rgba(75, 111, 255, .35);
+  background: rgba(151, 151, 151, .1);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter-drawer button:focus-visible { outline: 2px solid #8da8ff; outline-offset: 2px; }
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__roles .artist-filter-option::after { background: radial-gradient(circle, rgba(75, 111, 255, .16), transparent 68%); }
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__roles .artist-filter-option__avatar {
+  border-color: rgba(75, 111, 255, .15);
+  background: radial-gradient(circle at 50% 62%, rgba(75, 111, 255, .16), transparent 62%), rgba(14, 14, 14, .38);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__roles .artist-filter-option.is-active .artist-filter-option__avatar {
+  border-color: rgba(75, 111, 255, .62);
+  background: radial-gradient(circle at 50% 62%, rgba(75, 111, 255, .26), transparent 62%), rgba(139, 139, 139, .22);
+  box-shadow: 0 0 16px rgba(75, 111, 255, .18), inset 0 1px rgba(255, 255, 255, .09);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__roles .artist-filter-option__check { border-color: #1b1b1b; background: #707070; }
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__roles .artist-filter-option.is-active .artist-filter-option__check {
+  background: radial-gradient(circle at 50% 50%, #fff 0 27%, transparent 30%), linear-gradient(135deg, #c8c8c8, #8d8d8d);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests-filter__roles .artist-filter-option.is-active .artist-filter-option__count { background: rgba(75, 111, 255, .13); color: #d6d6d6; }
+
+.place-guests-invite[role="dialog"] {
+  border-color: rgba(75, 111, 255, .34);
+  background: radial-gradient(circle at 16% 0%, rgba(136, 136, 136, .2), transparent 42%), linear-gradient(150deg, #121212, #0c0c0c);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .68), 0 0 28px rgba(139, 139, 139, .13), inset 0 1px rgba(255, 255, 255, .055);
+}
+.place-guests-invite[role="dialog"] > header small,
+.place-guests-invite[role="dialog"] .place-guests-invite__list button > svg { color: #8da8ff; }
+.place-guests-invite[role="dialog"] > nav { border-color: rgba(75, 111, 255, .12); background: #0c0c0c; }
+.place-guests-invite[role="dialog"] > nav button.is-active { background: linear-gradient(135deg, #4c4c4c, #2f2f2f); color: #f2f2f2; }
+.place-guests-invite[role="dialog"] > label { border-color: rgba(75, 111, 255, .2); background: #0c0c0c; }
+.place-guests-invite[role="dialog"] .place-guests-invite__list { scrollbar-color: #757575 transparent; }
+.place-guests-invite[role="dialog"] .place-guests-invite__list > button { border-color: rgba(75, 111, 255, .13); background: linear-gradient(145deg, #1c1c1c, #0e0e0e); }
+.place-guests-invite[role="dialog"] .place-guests-invite__list > button:hover:not(:disabled) { border-color: rgba(75, 111, 255, .4); background: radial-gradient(circle at 15% 50%, rgba(128, 128, 128, .24), #181818); }
+.place-guests-invite[role="dialog"] .place-guests-invite__list img { border-color: rgba(75, 111, 255, .35); }
+.place-guests-invite[role="dialog"] :is(button, input):focus-visible { outline: 2px solid #8da8ff; outline-offset: 2px; }
+
+.place-guest-row-popover[role="menu"] { border-color: rgba(75, 111, 255, .28); background: #111111; }
+.place-guest-row-popover[role="menu"] > button:not(.is-remove) > svg { color: #8da8ff; }
+.place-guest-row-popover[role="menu"] > button:not(.is-remove):is(:hover, :focus-visible) { background: rgba(176, 176, 176, .12); color: #f5f5f5; }
+.place-guest-row-popover[role="menu"] > button.is-remove:is(:hover, :focus-visible) { background: rgba(255, 99, 128, .12); color: #ff8da0; }
+.place-guest-row-popover[role="menu"] > button:focus-visible { outline: 1px solid #8da8ff; outline-offset: -1px; }
+
+/* Electric cobalt accents and restrained card reflections for the guest console. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="guests"] {
+  --studio-tab-color: #a8bdff;
+  --studio-tab-face: linear-gradient(145deg,#4b6fff16,transparent 55%) padding-box, linear-gradient(#151b2a,#080b13) padding-box, linear-gradient(140deg,#6c8aff,#253761 65%,#4566ba) border-box;
+  --studio-tab-light: linear-gradient(90deg,transparent,#4b6fff 25%,#b3c7ff 50%,#4b6fff 75%,transparent);
+}
+.place-room-shell .place-studio-panel.is-guests .place-guests { font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button.is-active { color:#f2f3f5; background:linear-gradient(#ffffff05,transparent); text-shadow:none; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button::after { height:1px; background:linear-gradient(90deg,transparent,#4165ff 25%,#a6bdff 50%,#4165ff 75%,transparent); box-shadow:0 0 5px #4b6fff30; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__segments > button:not(:disabled):is(:hover,:focus-visible,.is-active) > svg { color:#8ba8ff; filter:none; }
+/* Fixed-size controls above a single flexible, scrolling list of people. */
+.place-room-shell .place-studio-panel.is-guests .place-guests__list:not([hidden]) { display:flex; flex-direction:column; min-height:0; gap:10px; padding-top:8px; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__list > :not(.place-guests__rows) { flex:0 0 auto; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__list > .place-guests__rows { flex:1 1 0; min-height:0; overflow-y:auto; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__section-head.is-capacity-only { display:flex; align-items:center; flex-wrap:wrap; gap:10px; min-height:28px; margin:0; padding:0 6px; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__section-head.is-capacity-only .place-guests__section-tools { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0; }
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger,.place-guests__bulk-select,.place-guests__add-contact),
+.place-room-shell .place-studio-panel.is-guests .room-jury-control > button { box-sizing:border-box; height:28px; min-height:28px; padding:0 9px; border:1px solid #6488ff35; border-radius:8px; background:linear-gradient(#151b29,#090c13); color:#d7e0f5; font:600 10px/1.2 Inter,ui-sans-serif,system-ui,sans-serif; box-shadow:inset 0 1px #ffffff08; }
+/* One white toolbar finish for every guest list; Jury keeps its blue selection state. */
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger,.place-guests__bulk-select,.place-guests__add-contact) {
+  border-color:#ffffff30;
+  background:linear-gradient(#191b20,#0b0c0f);
+  color:#f5f5f7;
+}
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger,.place-guests__bulk-select,.place-guests__add-contact) > svg { width:14px; height:14px; color:currentColor; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__capacity { margin-left:auto; padding:5px 8px; border-color:#ffffff16; background:#ffffff03; color:#a9adb7; font-family:inherit; }
+.place-room-shell .place-studio-panel.is-guests .place-guests__capacity strong { color:inherit; font:500 10px/1.3 Inter,ui-sans-serif,system-ui,sans-serif; }
+/* Satin glass: fine diagonal grain, a broad reflection and a bevelled blue edge.
+ * The texture lives on the card background; portraits and text stay crisp. */
+.place-room-shell .place-studio-panel.is-guests .place-guest-row {
+  --guest-accent: #4b6fff;
+  --guest-card-reflection: .11;
+  --guest-card-blue: .19;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(112deg,rgba(226,237,255,var(--guest-card-reflection)),rgba(180,204,255,.025) 24%,transparent 44%,rgba(131,161,255,.04)) padding-box,
+    repeating-linear-gradient(115deg,rgba(184,208,255,.025) 0 1px,transparent 1px 4px) padding-box,
+    radial-gradient(ellipse at 104% 105%,rgba(51,89,237,var(--guest-card-blue)),transparent 65%) padding-box,
+    radial-gradient(ellipse at 0 0,rgba(67,107,255,.12),transparent 60%) padding-box,
+    linear-gradient(145deg,#131b2b,#080c15 58%,#0a1222) padding-box,
+    linear-gradient(120deg,#bbcfff66,#527be02e 32%,#24315422 62%,#748bc650) border-box;
+  box-shadow: inset 0 1px #e4edff10,inset 0 -1px #0009,0 4px 12px #0005;
+}
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row:is(.is-selected,.is-juror) { --guest-card-reflection:.14; --guest-card-blue:.26; border-color:#7898ff55; box-shadow:inset 0 1px #dce5ff18,inset 0 -1px #0009,0 4px 12px #0005; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row::before { background:transparent; box-shadow:none; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__avatar > i { background:#789aff; border-color:#131a28; box-shadow:none; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__role { color:#9b9fa9; font-family:inherit; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary:is(.is-cyan,.is-violet,.is-amber,.is-jury) { max-width:none; min-width:0; height:24px; min-height:24px; gap:4px; padding:4px 8px; border:1px solid #6d8efb38; border-radius:7px; background:linear-gradient(#151c2a,#090d16); color:#c9d7fc; font:500 9px/1.2 Inter,ui-sans-serif,system-ui,sans-serif; box-shadow:inset 0 1px #ffffff06; }
+/* A fine blue stroke gains a quarter-pixel inner reflection without moving the button.
+ * This scope also takes precedence over archived up/down grey hover rules. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests .place-guest-row .place-guest-row__primary[data-direction] {
+  box-sizing: border-box;
+  height: var(--guest-key-height);
+  min-height: var(--guest-key-height);
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--guest-key-radius);
+  background: var(--guest-key-face);
+  color: var(--guest-key-color);
+  box-shadow: var(--guest-key-shadow);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests .place-guest-row .place-guest-row__primary[data-direction]:is(:hover,:focus-visible):not(:disabled) {
+  border-color: #7292ffc4;
+  background: var(--guest-key-face);
+  box-shadow: var(--guest-key-shadow), inset 0 0 0 .25px #7292ff70;
+  color: #e6edff;
+  outline-color: #829aff;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests .place-guest-row .place-guest-row__primary[data-direction] { transition: none; }
+}
+.place-room-shell .place-studio-panel.is-guests .place-guest-row .place-guest-row__primary:is(.is-cyan,.is-violet,.is-amber,.is-jury):disabled { opacity:.35; cursor:not-allowed; border-color:#ffffff18; background:#0c0d0f; color:#9297a1; box-shadow:none; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__status-pill:is(.is-ready,.is-queue,.is-stage) { border-color:#ffffff1c; background:#ffffff04; color:#aeb4be; box-shadow:none; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__status-pill:is(.is-ready,.is-queue,.is-stage) svg { color:#bfc4cc; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__headline { flex-wrap:wrap; row-gap:4px; }
+
+.place-room-shell .place-studio-panel.is-guests .place-guest-row:is(:hover,:focus-within) { --guest-card-reflection:.17; --guest-card-blue:.28; border-color:#7898ff66; border-top-color:#b5c9ff75; box-shadow:inset 0 1px #e2ebff20,inset 0 -1px #0009,0 5px 15px #0006; }
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger,.place-guests__bulk-select,.place-guests__add-contact):not(:disabled):is(:hover,:focus-visible,.is-open,.is-active,[aria-expanded="true"]) { border-color:#ffffff66; background:linear-gradient(#191b20,#0b0c0f); color:#fff; box-shadow:inset 0 1px #ffffff12; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row__selection[aria-pressed="true"] { border-color:#6e92ff; background:linear-gradient(#4b6fff,#294ccd); color:#fff; box-shadow:none; }
+.place-room-shell .place-studio-panel.is-guests :is(.place-guests-filter-trigger,.place-guests__bulk-select) > b { background:#4669e3; color:#fff; box-shadow:none; }
+
+/* Compact only the waiting list. Backstage and on-stage card heights stay intact. */
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue {
+  --guest-avatar-size: 44px;
+  height: auto;
+  min-height: 72px;
+  max-height: none;
+  grid-template-columns: 44px minmax(0,1fr);
+  grid-template-areas: "avatar main";
+  gap: 9px;
+  padding: 7px 8px;
+  margin-bottom: 6px;
+}
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue:last-child { margin-bottom:0; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__main {
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: 5px;
+}
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__upper { padding:0 65px 0 0; min-height:0; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__identity { gap:2px; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__headline strong { font-size:12px; line-height:1.15; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__headline .mw-grade-badge { width:18px; min-width:18px; height:18px; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__role { font-size:9px; line-height:1.2; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__lower { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 8px; min-height:0; padding:0; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__lower::before { content:none; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__selection { left:38px; top:auto; bottom:7px; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__status-line.is-corner { top:7px; right:29px; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__status-line.is-corner .place-guest-row__status-pill { min-height:16px; padding:2px 4px; font-size:8px; }
+.place-room-shell .place-studio-panel.is-guests .place-guest-row.is-queue .place-guest-row__status-line.is-corner .place-guest-row__status-pill svg { width:10px; height:10px; }
+
+/* Return to queue follows the camera/message hover stroke exactly. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests .place-guest-row .place-guest-row__primary.is-cyan[data-direction="down"]:is(:hover,:focus-visible):not(:disabled) {
+  border-color: var(--guest-key-hover-stroke);
+  box-shadow: var(--guest-key-shadow);
+  outline-color: var(--guest-key-hover-stroke);
+}

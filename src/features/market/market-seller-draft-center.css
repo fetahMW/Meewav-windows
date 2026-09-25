@@ -1,0 +1,266 @@
+.market-seller-drafts {
+  --draft-accent: #a864ff;
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  color: #f8f5ff;
+  border: 1px solid rgba(166, 119, 255, 0.22);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(143, 75, 229, 0.14), transparent 34%),
+    linear-gradient(145deg, rgba(15, 11, 29, 0.97), rgba(7, 7, 18, 0.98));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+}
+
+.market-seller-drafts__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.market-seller-drafts__eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  color: #b69bd8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.market-seller-drafts h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  letter-spacing: -0.025em;
+}
+
+.market-seller-drafts__header p {
+  margin: 6px 0 0;
+  color: #9e94af;
+  font-size: 0.9rem;
+}
+
+.market-seller-drafts button {
+  font: inherit;
+}
+
+.market-seller-drafts__create,
+.market-seller-drafts__resume,
+.market-seller-drafts__publish,
+.market-seller-drafts__notice button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid rgba(183, 133, 255, 0.42);
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, #8b45e8, #6833ca);
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.market-seller-drafts__create {
+  padding: 0 17px;
+  font-weight: 750;
+}
+
+.market-seller-drafts__create svg,
+.market-seller-drafts__notice svg {
+  width: 17px;
+  height: 17px;
+}
+
+.market-seller-drafts__create:hover,
+.market-seller-drafts__resume:hover,
+.market-seller-drafts__publish:hover,
+.market-seller-drafts__notice button:hover {
+  border-color: rgba(221, 197, 255, 0.78);
+  box-shadow: 0 9px 28px rgba(118, 52, 216, 0.28);
+  transform: translateY(-1px);
+}
+
+.market-seller-drafts__create:focus-visible,
+.market-seller-drafts__resume:focus-visible,
+.market-seller-drafts__publish:focus-visible,
+.market-seller-drafts__notice button:focus-visible {
+  outline: 2px solid #e2caff;
+  outline-offset: 3px;
+}
+
+.market-seller-drafts__list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.market-seller-drafts__list li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 15px;
+  min-height: 82px;
+  padding: 11px 12px;
+  border: 1px solid rgba(146, 119, 190, 0.18);
+  border-radius: 17px;
+  background: rgba(16, 12, 30, 0.82);
+}
+
+.market-seller-drafts__icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(168, 100, 255, 0.35);
+  border-radius: 14px;
+  color: #c99cff;
+  background: rgba(119, 61, 194, 0.14);
+}
+
+.market-seller-drafts__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.market-seller-drafts__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.market-seller-drafts__copy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.market-seller-drafts__copy span,
+.market-seller-drafts__copy small {
+  overflow: hidden;
+  color: #92899f;
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-seller-drafts__copy strong {
+  overflow: hidden;
+  font-size: 0.98rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-seller-drafts__resume {
+  min-height: 38px;
+  padding: 0 15px;
+  color: #dbc5fb;
+  font-size: 0.82rem;
+  font-weight: 750;
+  background: rgba(114, 63, 184, 0.15);
+}
+
+.market-seller-drafts__actions { display: flex; gap: 8px; }
+.market-seller-drafts__actions button { white-space: nowrap; }
+.market-seller-drafts__publish { min-height: 38px; padding: 0 15px; font-size: 0.82rem; font-weight: 750; }
+.market-seller-drafts__active { display: grid; gap: 10px; }
+.market-seller-drafts__active h3,
+.market-seller-drafts__section-title { margin: 0; color: #ede7f7; font-size: 0.9rem; }
+.market-seller-drafts__status { margin: 0; color: #c5a8ef; font-size: 0.83rem; }
+.market-seller-drafts button:disabled { opacity: 0.55; cursor: wait; transform: none; }
+
+.market-seller-drafts__notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 121, 158, 0.26);
+  border-radius: 14px;
+  color: #ffc6d6;
+  background: rgba(88, 21, 47, 0.2);
+}
+
+.market-seller-drafts__notice button {
+  min-height: 34px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.market-seller-drafts__empty {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  color: #9e94af;
+  text-align: center;
+}
+
+.market-seller-drafts__empty svg {
+  width: 30px;
+  height: 30px;
+  color: #b47aff;
+}
+
+.market-seller-drafts__empty strong {
+  color: #f4effb;
+}
+
+.market-seller-drafts__loading {
+  display: grid;
+  gap: 10px;
+}
+
+.market-seller-drafts__loading > span:not(.sr-only) {
+  height: 74px;
+  border-radius: 16px;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.035), rgba(164, 103, 255, 0.1), rgba(255, 255, 255, 0.035));
+  background-size: 220% 100%;
+  animation: market-drafts-loading 1.35s ease-in-out infinite;
+}
+
+@keyframes market-drafts-loading {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@media (max-width: 720px) {
+  .market-seller-drafts {
+    padding: 18px;
+  }
+
+  .market-seller-drafts__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .market-seller-drafts__list li {
+    grid-template-columns: 46px minmax(0, 1fr);
+  }
+
+  .market-seller-drafts__actions,
+  .market-seller-drafts__active .market-seller-drafts__resume {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .market-seller-drafts__actions button { flex: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-seller-drafts__loading > span:not(.sr-only) {
+    animation: none;
+  }
+
+  .market-seller-drafts__create,
+  .market-seller-drafts__resume,
+  .market-seller-drafts__publish,
+  .market-seller-drafts__notice button {
+    transition: none;
+  }
+}

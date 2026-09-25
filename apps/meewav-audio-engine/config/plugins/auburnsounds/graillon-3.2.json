@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "profileStatus": "locally_scanned_registry_only",
+  "canonicalPluginId": "auburnsounds.graillon3",
+  "verifiedVendor": "Auburn Sounds",
+  "verifiedClassIds": ["0B20BA920CE0B1456E62754133317340"],
+  "acceptedVersionPrefixes": ["3.2."],
+  "parameterBindings": {
+    "key": null,
+    "scale": null,
+    "correctionAmount": "17",
+    "retuneSpeed": null,
+    "humanize": null,
+    "formant": "16",
+    "preset": null
+  },
+  "observedParameterCandidates": {
+    "smooth": "18",
+    "inertia": "21",
+    "snapMinimum": "59",
+    "snapMaximum": "19"
+  },
+  "localProbeEvidence": {
+    "observedPluginName": "Graillon 3",
+    "observedVersion": "3.2.0",
+    "platform": "windows-x64",
+    "sampleRateHz": 48000,
+    "observedParameterCount": 2147,
+    "reportedLatencySamples": 1074,
+    "reportedLatencyMsAt48kHz": 22.375,
+    "instantiated": true,
+    "processedSyntheticSignal": true,
+    "outputFinite": true,
+    "outputNonSilent": true,
+    "liveAudioTested": false,
+    "roomPublicationTested": false
+  },
+  "notes": [
+    "The installed VST3 was identified by exact vendor and class ID; Corr. Amount, Smooth and Formant Amount IDs were read from that binary.",
+    "Graillon exposes twelve Allow-note parameters rather than one canonical key and one canonical scale parameter, so key/scale translation needs a dedicated adapter.",
+    "The manual defines Smooth as pitch-transition speed, with the minimum producing hard tuning. A dedicated adapter must invert/normalize it before it can represent MeeWav Retune speed.",
+    "No Humanisation binding is asserted: Smooth, Inertia and Snap controls must be evaluated with real voice before choosing a canonical mapping.",
+    "Synthetic processing proves execution, not audible pitch-correction quality, microphone monitoring stability or Room publication.",
+    "The plugin may enter the verified local registry, but it must stay unavailable in the user selector until the adapter and audio-plane gates pass."
+  ]
+}

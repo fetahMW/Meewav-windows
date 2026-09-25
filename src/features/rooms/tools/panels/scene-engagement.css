@@ -1,0 +1,88 @@
+/* Audience tools, finished like the Scene's black lacquer equipment. */
+.room-tools-shell.is-scene .scene-engagement { --scene-engagement-text:#f3f4f5; --scene-engagement-muted:#9b9fa6; grid-auto-rows:max-content; }
+.room-tools-shell.is-scene .scene-engagement .scene-engagement__selector { gap:7px; font-size:10px; }
+.room-tools-shell.is-scene .scene-engagement .scene-engagement__selector select { height:39px; font-size:11px; }
+.scene-review,.scene-campaign,.scene-engagement__controls,.scene-campaign__form { min-width:0; padding:15px; border:1px solid #34373b; border-radius:13px; background:linear-gradient(162deg,#202225 0,#101112 17%,#070808 57%,#101112 100%); box-shadow:inset 0 1px 0 #ffffff12,0 5px 15px #0005; }
+.scene-engagement__identity,.scene-campaign>header { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.scene-engagement__identity>span:first-child { display:grid; min-width:0; gap:4px; }
+.scene-engagement__identity small,.scene-campaign__title>span { color:var(--scene-engagement-muted); font-size:11px; }
+.scene-engagement h3 { margin:0; color:var(--scene-engagement-text); font-size:17px; font-weight:670; line-height:1.25; letter-spacing:-.025em; overflow-wrap:anywhere; }
+.scene-engagement__badge { display:inline-flex; flex:0 0 auto; align-items:center; gap:5px; padding:5px 7px; border:1px solid #ffffff21; border-radius:6px; background:#ffffff04; color:#afb3b9; font-size:9px; white-space:nowrap; }
+.scene-engagement__badge svg { width:12px; height:12px; }
+.scene-engagement__badge.is-live { color:#ffb7ab; border-color:#ffb7ab36; }
+.scene-review__score { display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:20px 0 17px; }
+.scene-review__score>span { display:flex; align-items:baseline; gap:6px; }
+.scene-review__score>span+span { padding-left:15px; border-left:1px solid #ffffff14; }
+.scene-review__score svg { width:17px; height:17px; align-self:center; color:#a8afb8; }
+.scene-review__score strong { color:#fff; font-size:29px; font-weight:550; font-variant-numeric:tabular-nums; letter-spacing:-.05em; }
+.scene-review__score small { color:var(--scene-engagement-muted); font-size:10px; }
+.scene-review__reactions { display:grid; gap:11px; padding-top:13px; border-top:1px solid #ffffff10; }
+.scene-review__reactions>div { display:grid; grid-template-columns:70px minmax(0,1fr) 36px; align-items:center; gap:10px; font-size:10px; }
+.scene-review__reactions span { color:#b8bcc2; }
+.scene-review__reactions i,.scene-campaign__progress { display:block; height:5px; overflow:hidden; border-radius:20px; background:#ffffff0c; box-shadow:inset 0 1px 3px #000; }
+.scene-review__reactions i>b,.scene-campaign__progress>i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#626a76,#c2c9d2); box-shadow:0 0 8px #cbd5e52b; }
+.scene-review__reactions strong { color:#d2d5da; font-size:10px; font-weight:550; text-align:right; font-variant-numeric:tabular-nums; }
+.scene-engagement__hint { margin:0; color:var(--scene-engagement-muted); font-size:10px; line-height:1.55; }
+.scene-engagement__controls { display:grid; gap:14px; padding:14px; }
+.scene-engagement__switch { position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer; }
+.scene-engagement__switch>span,.scene-review__publication>span>span { display:grid; gap:4px; }
+.scene-engagement__switch strong,.scene-review__publication strong { color:#e3e5e8; font-size:11px; font-weight:600; }
+.scene-engagement__switch small,.scene-review__publication small { color:var(--scene-engagement-muted); font-size:9px; line-height:1.4; }
+.scene-engagement__switch input { position:absolute; right:0; width:36px; height:22px; opacity:0; cursor:pointer; }
+.scene-engagement__switch>i { width:36px; height:22px; flex:0 0 auto; padding:3px; border:1px solid #4a4e55; border-radius:18px; background:#131416; box-shadow:inset 0 2px 4px #000; pointer-events:none; }
+.scene-engagement__switch>i::before { display:block; width:14px; height:14px; border-radius:50%; background:linear-gradient(#aeb3ba,#676c73); content:""; transition:transform 150ms ease; }
+.scene-engagement__switch input:checked+i { border-color:#79888b; background:#293432; }
+.scene-engagement__switch input:checked+i::before { transform:translateX(14px); background:linear-gradient(#f0faf7,#9eafa9); }
+.scene-engagement__switch input:focus-visible+i { outline:2px solid #d7e4eb; outline-offset:3px; }
+.scene-engagement__switch input:disabled+i { opacity:.45; }
+.scene-review__publication { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-top:13px; border-top:1px solid #ffffff12; }
+.scene-review__publication>span { display:flex; align-items:center; gap:9px; min-width:0; }
+.scene-review__publication>span>svg { width:16px; height:16px; flex:0 0 auto; color:#9da6b0; }
+.room-tools-shell.is-scene .scene-engagement .scene-review__publication button { flex:0 0 auto; padding-inline:11px; font-size:10px; }
+.scene-engagement__details { min-width:0; padding:0 4px; border-top:1px solid #ffffff12; color:var(--scene-engagement-muted); }
+.scene-engagement__details>summary { min-height:38px; align-content:center; cursor:pointer; font-size:10px; }
+.scene-engagement__details>summary svg { width:13px; height:13px; margin-right:6px; vertical-align:middle; }
+.scene-engagement__details[open]>.room-tool-field { margin-bottom:10px; }
+.scene-engagement__details>.scene-engagement__hint { margin-bottom:8px; }
+.scene-engagement__eyebrow { color:#90969f; font-size:8px; font-weight:600; letter-spacing:.12em; }
+.scene-campaign { display:grid; gap:17px; }
+.scene-campaign.is-highlighted { border-color:#8a939e; box-shadow:inset 0 1px #ffffff30,0 0 22px #bdcde00e; }
+.scene-campaign__cover { width:100%; max-height:125px; object-fit:cover; border:1px solid #ffffff1c; border-radius:8px; }
+.scene-campaign__title { display:grid; gap:7px; }
+.scene-campaign__title p { margin:0; color:#9da2aa; font-size:10px; line-height:1.6; overflow-wrap:anywhere; }
+.scene-campaign__amount { display:flex; align-items:baseline; gap:8px; padding-top:3px; }
+.scene-campaign__amount>strong { color:#f9fafb; font-size:32px; font-weight:550; letter-spacing:-.055em; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.scene-campaign__amount>span { color:#8c939d; font-size:10px; white-space:nowrap; }
+.scene-campaign__amount>b { margin-left:auto; color:#c3cbd5; font-size:12px; font-weight:500; }
+.scene-campaign__progress { height:6px; margin-top:-7px; }
+.scene-campaign>footer { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; color:#959da7; font-size:9px; }
+.scene-campaign>footer>span { display:flex; align-items:center; gap:5px; }
+.scene-campaign>footer svg { width:12px; height:12px; }
+.scene-engagement__availability { display:flex; align-items:center; gap:7px; margin:0; padding:0 3px; color:#a9a59d; font-size:9px; line-height:1.4; }
+.scene-engagement__availability svg { width:14px; height:14px; flex:0 0 auto; }
+.scene-campaign__live { display:grid; gap:9px; }
+.scene-campaign__live-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__live button { min-height:37px; font-size:10px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__live button[aria-pressed="true"] { border-color:#7a8794; color:#fff; background:linear-gradient(#363b43,#111318); }
+.scene-campaign__management { display:flex; align-items:center; justify-content:space-between; gap:9px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__management button { min-height:30px; border-color:transparent; background:transparent; box-shadow:none; color:#adb4bd; font-size:10px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__management .scene-campaign__close { color:#c49f9d; }
+.scene-campaign__form { gap:12px; }
+.scene-campaign__form>header { display:grid; gap:4px; }
+.scene-campaign__form>header strong { font-size:13px; }
+.scene-campaign__form>header span { color:#9299a3; font-size:10px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__form .room-tool-field { gap:6px; font-size:10px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__form input,.room-tools-shell.is-scene .scene-engagement .scene-campaign__form textarea { color-scheme:dark; font-size:11px; }
+.scene-campaign__form>footer { display:flex; justify-content:flex-end; gap:8px; }
+.room-tools-shell.is-scene .scene-engagement .scene-campaign__form>footer button { min-height:35px; padding-inline:13px; font-size:10px; }
+.scene-engagement__error,.scene-engagement__saved { display:flex; align-items:center; gap:6px; margin:0; padding:8px 4px; font-size:11px; line-height:1.4; }
+.scene-engagement__error { color:#f2aaa1; }
+.scene-engagement__saved { color:#adc7bb; }
+.scene-engagement__saved svg { width:15px; height:15px; }
+@container (max-width:330px) {
+  .scene-review,.scene-campaign,.scene-engagement__controls,.scene-campaign__form { padding:11px; }
+  .scene-campaign__amount>strong { font-size:27px; }
+  .scene-review__score { gap:10px; }
+  .scene-review__score>span { flex-wrap:wrap; }
+  .scene-campaign__live-actions { grid-template-columns:1fr; }
+}

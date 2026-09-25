@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 1,
+  "wave": 7,
+  "batch": "ranks-35-67",
+  "generatedAt": "2026-07-14T16:21:44.1838857Z",
+  "auditMode": {
+    "browserUsed": false,
+    "readOnlyExceptReport": true,
+    "method": "Static runtime, legacy neighbor swap, source geometry, registry, search and first-action fly audit"
+  },
+  "inputs": {
+    "plan": "geo/work/france-wave-7-plan.json",
+    "curation": "geo/work/france-wave-7-curation-b.json",
+    "catalog": "geo/catalog/france-city-iris.json",
+    "runtimeManifest": "src/features/globe/geography/franceGuideAlphaCities.generated.ts",
+    "searchIndex": "public/search/france-communes-index.json"
+  },
+  "stableRuntimeHashes": {
+    "src/features/globe/geography/nationalGeoPipeline.ts": "AF5885C84C871B7BCFC568662A13FF6B6DB69EEF122901EB7DA4F45573909385",
+    "src/features/globe/selectedExtrusion/selectedZoneExtrusionController.ts": "B8F6C4DCA84C6C3FADD8526F96E1BB1174592CCCC33F1D12342DCBC458700DE9",
+    "src/features/globe/selectedExtrusion/selectedZoneExtrusionLayers.ts": "A68187C91016A717D9C04E40786EB98B2B3F9FE3AF38F4663B2E6CA33CC6D254",
+    "src/features/globe/selectedExtrusion/selectedZoneExtrusionTypes.ts": "A12EFAD14BBC001023C2280B7A18B50F66EA7641CA4EA2B6FD946A2797BFEA15",
+    "src/features/globe/components/GlobeMapV2.tsx": "D91C165746E1511D5C9873F869EEE7737DC6F2C72A6B647F36969B89F960FAEA"
+  },
+  "globalChecks": {
+    "guideAlphaCuration": "PASS",
+    "generatedCityAndCommuneAliases": "PASS",
+    "searchCommuneCodeFallback": "PASS",
+    "premiumFlyPresetCalculable": "PASS",
+    "firstActionPreloadAndRestore": "PASS",
+    "legacyNeighborClickActivatesAndFliesInOneAction": "PASS",
+    "activeCommuneUsesParisCenterDarkColor": "PASS",
+    "activeSubdivisionsKeepTheirOwnPalette": "PASS",
+    "visibleNeighborCommunesUseLightPalette": "PASS",
+    "eligibleNeighborRemainsLightUntilItBecomesActive": "PASS",
+    "previousActiveReturnsLightWhenStillInsideNewFlyFootprint": "PASS",
+    "legacyNeighborSelectionUsesViewportAndBoundaryAdjacency": "PASS",
+    "colorIndependentFromPopulationSizeAndEligibility": "PASS",
+    "officialSinglePlateRuleUsesUniqueZOr0000Iris": "PASS",
+    "noSyntheticTechnicalOrNumberedLabels": "PASS"
+  },
+  "validation": {
+    "waveAuditValidator": "PASS (100 cities, 950 official IRIS, 926 visible plates; 202 accepts, 33 renames, 12 merges)",
+    "runtimeAndManifestTests": "PASS (19/19)",
+    "typescript": "PASS"
+  },
+  "legacyNeighborContext": {
+    "auditViewportWidth": 2048,
+    "citiesWithAtLeastOneEligibleVisibleNeighbor": 19,
+    "directedNeighborRelations": 89,
+    "reciprocalRelations": 84,
+    "nonReciprocalRelationsOutsideReverseFlyFootprint": 5,
+    "neighborSelectionSingleAction": true,
+    "sizeOrPopulationCriterionUsed": false
+  },
+  "summary": {
+    "status": "PASS",
+    "cityCount": 33,
+    "passed": 33,
+    "failed": 0,
+    "sourceIrisCount": 328,
+    "visiblePlateCount": 316,
+    "runtimeModes": {
+      "standalone_split": 33,
+      "single_plate": 0
+    }
+  },
+  "cities": [
+    {
+      "rank": 35,
+      "id": "dole",
+      "name": "Dole",
+      "communeCode": "39198",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 14,
+      "visiblePlateCount": 14,
+      "status": "PASS"
+    },
+    {
+      "rank": 36,
+      "id": "la_valette_du_var",
+      "name": "La Valette-du-Var",
+      "communeCode": "83144",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 37,
+      "id": "dammarie_les_lys",
+      "name": "Dammarie-les-Lys",
+      "communeCode": "77152",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 38,
+      "id": "olivet",
+      "name": "Olivet",
+      "communeCode": "45232",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 39,
+      "id": "herouville_saint_clair",
+      "name": "Hérouville-Saint-Clair",
+      "communeCode": "14327",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 14,
+      "visiblePlateCount": 14,
+      "status": "PASS"
+    },
+    {
+      "rank": 40,
+      "id": "rochefort",
+      "name": "Rochefort",
+      "communeCode": "17299",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 11,
+      "status": "PASS"
+    },
+    {
+      "rank": 41,
+      "id": "combs_la_ville",
+      "name": "Combs-la-Ville",
+      "communeCode": "77122",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 11,
+      "status": "PASS"
+    },
+    {
+      "rank": 42,
+      "id": "lanester",
+      "name": "Lanester",
+      "communeCode": "56098",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 11,
+      "status": "PASS"
+    },
+    {
+      "rank": 43,
+      "id": "roissy_en_brie",
+      "name": "Roissy-en-Brie",
+      "communeCode": "77390",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 44,
+      "id": "saint_jean_de_braye",
+      "name": "Saint-Jean-de-Braye",
+      "communeCode": "45284",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 10,
+      "visiblePlateCount": 10,
+      "status": "PASS"
+    },
+    {
+      "rank": 45,
+      "id": "deuil_la_barre",
+      "name": "Deuil-la-Barre",
+      "communeCode": "95197",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 46,
+      "id": "maisons_laffitte",
+      "name": "Maisons-Laffitte",
+      "communeCode": "78358",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 10,
+      "visiblePlateCount": 10,
+      "status": "PASS"
+    },
+    {
+      "rank": 47,
+      "id": "velizy_villacoublay",
+      "name": "Vélizy-Villacoublay",
+      "communeCode": "78640",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 11,
+      "status": "PASS"
+    },
+    {
+      "rank": 48,
+      "id": "challans",
+      "name": "Challans",
+      "communeCode": "85047",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 6,
+      "status": "PASS"
+    },
+    {
+      "rank": 49,
+      "id": "saint_dizier",
+      "name": "Saint-Dizier",
+      "communeCode": "52448",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 14,
+      "visiblePlateCount": 14,
+      "status": "PASS"
+    },
+    {
+      "rank": 50,
+      "id": "torcy",
+      "name": "Torcy",
+      "communeCode": "77468",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 11,
+      "status": "PASS"
+    },
+    {
+      "rank": 51,
+      "id": "saint_louis",
+      "name": "Saint-Louis",
+      "communeCode": "68297",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 52,
+      "id": "manosque",
+      "name": "Manosque",
+      "communeCode": "04112",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 10,
+      "visiblePlateCount": 10,
+      "status": "PASS"
+    },
+    {
+      "rank": 53,
+      "id": "gif_sur_yvette",
+      "name": "Gif-sur-Yvette",
+      "communeCode": "91272",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 10,
+      "visiblePlateCount": 10,
+      "status": "PASS"
+    },
+    {
+      "rank": 54,
+      "id": "oyonnax",
+      "name": "Oyonnax",
+      "communeCode": "01283",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 12,
+      "visiblePlateCount": 12,
+      "status": "PASS"
+    },
+    {
+      "rank": 55,
+      "id": "montigny_les_cormeilles",
+      "name": "Montigny-lès-Cormeilles",
+      "communeCode": "95424",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 4,
+      "status": "PASS"
+    },
+    {
+      "rank": 56,
+      "id": "auch",
+      "name": "Auch",
+      "communeCode": "32013",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 11,
+      "visiblePlateCount": 11,
+      "status": "PASS"
+    },
+    {
+      "rank": 57,
+      "id": "abbeville",
+      "name": "Abbeville",
+      "communeCode": "80001",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 58,
+      "id": "villeneuve_sur_lot",
+      "name": "Villeneuve-sur-Lot",
+      "communeCode": "47323",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 4,
+      "status": "PASS"
+    },
+    {
+      "rank": 59,
+      "id": "mantes_la_ville",
+      "name": "Mantes-la-Ville",
+      "communeCode": "78362",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 60,
+      "id": "montereau_fault_yonne",
+      "name": "Montereau-Fault-Yonne",
+      "communeCode": "77305",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 61,
+      "id": "acheres",
+      "name": "Achères",
+      "communeCode": "78005",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 62,
+      "id": "le_petit_quevilly",
+      "name": "Le Petit-Quevilly",
+      "communeCode": "76498",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 12,
+      "visiblePlateCount": 12,
+      "status": "PASS"
+    },
+    {
+      "rank": 63,
+      "id": "epernay",
+      "name": "Épernay",
+      "communeCode": "51230",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 12,
+      "visiblePlateCount": 12,
+      "status": "PASS"
+    },
+    {
+      "rank": 64,
+      "id": "gujan_mestras",
+      "name": "Gujan-Mestras",
+      "communeCode": "33199",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 5,
+      "visiblePlateCount": 5,
+      "status": "PASS"
+    },
+    {
+      "rank": 65,
+      "id": "dax",
+      "name": "Dax",
+      "communeCode": "40088",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 66,
+      "id": "millau",
+      "name": "Millau",
+      "communeCode": "12145",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 10,
+      "visiblePlateCount": 10,
+      "status": "PASS"
+    },
+    {
+      "rank": 67,
+      "id": "fontaine",
+      "name": "Fontaine",
+      "communeCode": "38169",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 12,
+      "visiblePlateCount": 12,
+      "status": "PASS"
+    }
+  ]
+}

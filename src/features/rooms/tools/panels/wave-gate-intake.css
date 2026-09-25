@@ -1,0 +1,53 @@
+.wave-gate-intake-menu {
+  position: fixed; z-index: 10000; box-sizing: border-box;
+  width: 260px; max-width: calc(100vw - 16px); padding: 12px; overflow-y: auto;
+  border: 1px solid #ffffff26; border-radius: 16px;
+  background: linear-gradient(140deg, #191a1ded, #08090bf5 72%);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 1px #ffffff14, 0 10px 32px #0009;
+  color: #cacbd1; font: 500 12px/1.4 Inter, system-ui, sans-serif;
+}
+.wave-gate-intake-menu header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.wave-gate-intake-menu header strong { font-size: 13px; color: #e5e5e9; }
+.wave-gate-intake-menu button { font: inherit; cursor: pointer; }
+.wave-gate-intake-menu header button { display: grid; place-items: center; width: 24px; height: 24px; padding: 3px; border: 0; border-radius: 7px; background: #ffffff06; color: #92939c; }
+.wave-gate-intake-menu header svg { width: 14px; height: 14px; }
+.wave-gate-intake-menu__switch { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 9px 0; border: 0; background: transparent; color: #d5d5da; }
+.wave-gate-intake-menu__switch i { position: relative; width: 30px; height: 18px; flex: 0 0 30px; border-radius: 999px; background: #45464e; }
+.wave-gate-intake-menu__switch i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; border-radius: 50%; background: #c5c7cc; transition: transform 120ms ease; }
+.wave-gate-intake-menu__switch[aria-checked="true"] i { background: #35654b; }
+.wave-gate-intake-menu__switch[aria-checked="true"] i::after { transform: translateX(12px); background: #b9e7cc; }
+.wave-gate-intake-menu fieldset { display: grid; gap: 4px; min-width: 0; margin: 10px 0 0; padding: 0; border: 0; }
+.wave-gate-intake-menu legend { padding: 0 0 6px; color: #92939c; font-size: 11px; }
+.wave-gate-intake-menu__all { justify-self: end; margin-bottom: 3px; padding: 3px 0; border: 0; background: transparent; color: #c3c5d0; font-size: 11px !important; }
+.wave-gate-intake-menu label {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  min-height: 32px; padding: 3px 9px; border: 1px solid transparent; border-radius: 9px;
+  background: #05060840; cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.wave-gate-intake-menu label input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.wave-gate-intake-menu .wave-category-chip { min-width: 74px; min-height: 22px; font-size: 9px; }
+.wave-gate-intake-menu__check {
+  display: grid; place-items: center; flex: 0 0 17px; width: 17px; height: 17px; box-sizing: border-box;
+  border: 1px solid #9299a02e; border-radius: 5px; background: #0003; color: #d5d9e0;
+}
+.wave-gate-intake-menu__check svg { width: 11px; height: 11px; opacity: 0; stroke-width: 2; }
+.wave-gate-intake-menu label:has(input:checked) { background: #ffffff03; border-color: #c5ccd618; box-shadow: inset 0 1px #ffffff03; }
+.wave-gate-intake-menu label:has(input:checked) .wave-gate-intake-menu__check { border-color: #adb8c14a; background: linear-gradient(150deg, #34383e, #191c21); }
+.wave-gate-intake-menu label:has(input:checked) svg { opacity: .9; }
+.wave-gate-intake-menu label:has(input:not(:checked)) .wave-category-chip { opacity: .55; }
+.wave-gate-intake-menu label:hover { background: #ffffff07; border-color: #b2bbc330; }
+.wave-gate-intake-menu label:hover .wave-category-chip { opacity: 1; }
+.wave-gate-intake-menu label:has(input:focus-visible), .wave-gate-intake-menu button:focus-visible { outline: 2px solid #babdc9; outline-offset: 2px; }
+.wave-gate-intake-menu p { margin: 10px 0; color: #898b96; font-size: 10px; line-height: 1.5; }
+.wave-gate-intake-menu p.is-error { color: #df94a2; }
+.wave-gate-intake-menu footer { display: flex; justify-content: flex-end; gap: 6px; }
+.wave-gate-intake-menu footer button { min-height: 30px; padding: 0 10px; border: 1px solid #ffffff1c; border-radius: 8px; background: #ffffff04; color: #b4b5be; }
+.wave-gate-intake-menu footer button.is-primary { background: linear-gradient(#ffffff14, #ffffff07); color: #e0e1e7; }
+.wave-gate-intake-menu button:hover:not(:disabled) { color: #fff; }
+.wave-gate-intake-menu button:disabled, .wave-gate-intake-menu fieldset:disabled { opacity: .5; cursor: not-allowed; }
+.wave-gate-intake-menu label:has(input:disabled) { cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) {
+  .wave-gate-intake-menu__switch i::after, .wave-gate-intake-menu label { transition: none; }
+}

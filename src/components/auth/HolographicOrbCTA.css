@@ -1,0 +1,254 @@
+/* Layout centering: Use CSS Grid to position the globe directly in column 3 of the step-credentials-content on desktop */
+.holographic-orb-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  pointer-events: none;
+  position: relative; /* Base relative positioning to keep the absolute alert toast anchored under the globe without moving it */
+  
+  /* Smooth opacity and scaling transition */
+  transition: opacity 450ms cubic-bezier(0.25, 1, 0.5, 1), transform 450ms cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
+}
+
+.holographic-orb-cta.is-hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.85) translateY(12px) !important;
+}
+
+.holographic-orb-cta.is-visible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: scale(1) translateY(0) !important;
+}
+
+@media (min-width: 992px) {
+  .holographic-orb-cta {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    width: clamp(200px, 18vw, 300px);
+  }
+}
+
+.holographic-orb-cta__copy {
+  width: 100%;
+  max-width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  text-align: center;
+  pointer-events: none;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+.holographic-orb-cta.is-active .holographic-orb-cta__copy {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.holographic-orb-cta__title {
+  font-size: clamp(15px, 1.2vw, 21px);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+  white-space: nowrap;
+}
+
+.holographic-orb-cta__subtitle {
+  margin-top: 4px;
+  font-size: clamp(11px, 0.82vw, 14px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(216, 180, 254, 0.78);
+  white-space: nowrap;
+}
+
+.holographic-orb-cta__arrows {
+  margin-top: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  font-size: clamp(24px, 2vw, 34px);
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(216, 180, 254, 0.52);
+}
+
+.holographic-orb-cta.is-active .holographic-orb-cta__arrows span {
+  animation: orbArrowPulse 1.35s ease-in-out infinite;
+}
+
+.holographic-orb-cta.is-active .holographic-orb-cta__arrows span:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.holographic-orb-cta__button {
+  position: relative;
+
+  width: clamp(208px, 18.2vw, 312px);
+  height: clamp(208px, 18.2vw, 312px);
+
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+
+  background: transparent;
+  display: grid;
+  place-items: center;
+
+  pointer-events: auto;
+  cursor: pointer;
+
+  opacity: 1;
+
+  transition:
+    transform 260ms ease,
+    opacity 260ms ease;
+}
+
+.holographic-orb-cta__button canvas {
+  position: relative;
+  z-index: 2;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  background: transparent !important;
+  filter: none;
+}
+
+.holographic-orb-cta.is-idle .holographic-orb-cta__button {
+  cursor: not-allowed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Centered static alerts rendered directly below the 3D globe button */
+.holographic-orb-alert-container {
+  position: absolute;
+  top: calc(100% + 45px); /* Positioned absolutely below the globe, completely out of flow to prevent pushing the globe! */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.holographic-orb-alert-container.is-showing {
+  animation: premiumOrbSlideIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.holographic-orb-alert-container.is-hiding {
+  animation: premiumOrbSlideOut 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.holographic-orb-alert-container .auth-toast-container {
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100%;
+  margin: 0 !important;
+  z-index: 10;
+}
+
+@keyframes premiumOrbSlideIn {
+  0% {
+    opacity: 0;
+    transform: translate(calc(-50% - 120px), 0) scale(0.9); /* Smooth slide-in from left to right while keeping horizontal auto-centering! */
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes premiumOrbSlideOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% - 120px), 0) scale(0.9); /* Smooth slide-out back to the left! */
+    filter: blur(4px);
+  }
+}
+
+.holographic-orb-cta.is-active .holographic-orb-cta__button:hover {
+  transform: translateY(-5px) scale(1.035);
+}
+
+.holographic-orb-cta.is-active .holographic-orb-cta__button:active {
+  transform: translateY(-1px) scale(0.985);
+}
+
+.holographic-orb-cta__button:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(216, 180, 254, 0.52) !important;
+}
+
+@keyframes orbArrowPulse {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(5px) scale(1.1);
+  }
+}
+
+@media (max-width: 900px) {
+  .holographic-orb-cta {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 22px;
+  }
+
+  .holographic-orb-cta__button {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holographic-orb-cta,
+  .holographic-orb-cta * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

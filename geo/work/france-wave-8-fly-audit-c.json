@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 2,
+  "wave": 8,
+  "batch": "c",
+  "scope": {
+    "rankFrom": 68,
+    "rankTo": 100,
+    "cityCount": 33
+  },
+  "generatedAt": "2026-07-14T18:03:07.652Z",
+  "status": "PASS",
+  "auditMode": {
+    "browserUsed": false,
+    "networkUsed": false,
+    "readOnlyExceptReport": true,
+    "visualClaim": false,
+    "method": "offline static final artifact and runtime source-contract audit"
+  },
+  "hashes": {
+    "algorithm": "sha256",
+    "inputs": {
+      "geo/work/france-wave-8-plan.json": "fff5db1eaa59a3a57e1519a78c42ca6a238cbc95b7571994a6d900370cb2e290",
+      "geo/work/france-wave-8-curation-c.json": "d44a1f8b0d8044105ca525bee98751e4fa349bdb0bf383b5d256779cad82f25c",
+      "geo/catalog/france-city-iris.json": "90551f5e3febf50b519af59bf938d8664ec36bb3b6d01d655f0c212a91325676",
+      "geo/catalog/existing-datasets.json": "cba79907be42644320d9f260b68c6444d75290a6608125c9a6f97a3d7c8e29f7",
+      "public/search/france-communes-index.json": "5bb45173b271ad387eb99420113d36ec248ca31c34caf09c18d9de16ee201084",
+      "geo/output/all.canonical.json": "a8114584731351cdd66c788a4f750a46c238955b481d57c13ce2f45e254ecc2d",
+      "geo/mappings/legacy-zone-ids/all.json": "702de5be7fcaf271f4b9fd4fd78245496ae8aa4e9c5e39c975d0968778106f1b"
+    },
+    "runtime": {
+      "src/features/globe/geography/franceGuideAlphaCities.generated.ts": "ca576bb02755b974cea8eb245e278c87306ce6f8f9dbbc84a947da1ccd856364",
+      "src/features/globe/components/GlobeMapV2.tsx": "d91c165746e1511d5c9873f869eee7737dc6f2c72a6b647f36969b89f960faea",
+      "src/features/globe/geography/nationalGeoPipeline.ts": "af5885c84c871b7bcfc568662a13ff6b6db69eef122901eb7da4f45573909385",
+      "src/features/globe/selectedExtrusion/citySubdivisionConfig.ts": "1a94c15b4961abdf2036b0be22387d9a95a57e464a5dca7114a1c14118d4e908",
+      "src/features/globe/selectedExtrusion/selectedZoneExtrusionController.ts": "b8f6c4dca84c6c3fadd8526f96e1bb1174592cccc33f1d12342dcbc458700de9",
+      "src/features/globe/selectedExtrusion/selectedZoneExtrusionLayers.ts": "a68187c91016a717d9c04e40786eb98b2b3f9fe3af38f4663b2e6ca33cc6d254",
+      "src/features/globe/selectedExtrusion/selectedZoneExtrusionTypes.ts": "a12efad14bbc001023c2280b7a18b50f66ea7641ca4ea2b6fd946a2797bfea15",
+      "tests/geospatial/runtime-contract.test.mjs": "cc7f802b499da962d022873df369e75cff23d9214176fe499e42cd04b0626acb"
+    },
+    "batchGeoJson": {
+      "sha256": "5ba769153ab1ef1ec7461c78ec4794d15155f82e3fd04636eb08971590bd0ce8",
+      "canonicalization": "sorted outputPath + ':' + file sha256 + LF"
+    }
+  },
+  "artifactTotals": {
+    "runtimeCities": 404,
+    "ownershipEntries": 838,
+    "globalCanonicalAdministrativeZones": 9671,
+    "globalCanonicalMusicZones": 9671,
+    "cities": 33,
+    "sourceIris": 230,
+    "visiblePlates": 224,
+    "validRawGeometries": 224,
+    "rawStrictInteriorLabelPoints": 224,
+    "canonicalAdministrativeZones": 224,
+    "canonicalMusicZones": 224,
+    "canonicalStrictInteriorLabelPoints": 224,
+    "stableIdMappings": 224
+  },
+  "checks": {
+    "planCatalogCurationIdentityAndCommuneCode": "PASS",
+    "sourceInventoryAndVisiblePlateCounts": "PASS",
+    "uniqueRawFeatureAndZoneIds": "PASS",
+    "validPolygonOrMultiPolygonAndBbox": "PASS",
+    "rawLabelPointsStrictlyInside": "PASS",
+    "canonicalAdministrativeAndMusicParity": "PASS",
+    "canonicalLabelPointsStrictlyInside": "PASS",
+    "stableIdMappingsUniqueAndComplete": "PASS",
+    "searchExactNameAndCommuneId": "PASS",
+    "generatedCityAliasesAndOwnership": "PASS",
+    "cameraAndPremiumFlyPreset": "PASS",
+    "firstActionActivatesPreloadsFliesAndRestores": "PASS",
+    "noSecondClickRequired": "PASS",
+    "activeParentDark": "PASS",
+    "neighborParentLight": "PASS",
+    "navigationColorsIndependentOfCitySize": "PASS"
+  },
+  "runtimeContract": {
+    "status": "PASS",
+    "productMode": "legacy",
+    "oneAction": {
+      "activatesTarget": true,
+      "startsPreloadDuringFly": true,
+      "startsPremiumFly": true,
+      "restoresOnMoveEndOrFallback": true,
+      "boundedRetryWithoutSecondClick": true
+    },
+    "colors": {
+      "activeParent": "#1B1234",
+      "neighborPalette": [
+        "#B18EFF",
+        "#A985F4",
+        "#9C7AE9",
+        "#C2A2FF",
+        "#9270E4",
+        "#B996FF",
+        "#8566D5",
+        "#CBB2FF"
+      ],
+      "drivenByNavigationRoleNotPopulationAreaOrFeatureCount": true
+    },
+    "testEvidence": {
+      "command": "node --test tests/geospatial/runtime-contract.test.mjs",
+      "status": "PASS",
+      "passed": 16,
+      "failed": 0,
+      "reused": true
+    }
+  },
+  "summary": {
+    "status": "PASS",
+    "citiesPassed": 33,
+    "citiesFailed": 0,
+    "sourceIris": 230,
+    "visiblePlates": 224,
+    "failures": []
+  },
+  "cities": [
+    {
+      "rank": 68,
+      "id": "sallanches",
+      "name": "Sallanches",
+      "communeCode": "74256",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/sallanches-quartiers.geojson",
+      "outputSha256": "0d1540c360617685d725a5b9d4d6dbe484715e4f3f91909eddbf99271ef930c0",
+      "status": "PASS"
+    },
+    {
+      "rank": 69,
+      "id": "saran",
+      "name": "Saran",
+      "communeCode": "45302",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/saran-quartiers.geojson",
+      "outputSha256": "bef198dbdd572a35afaa0576fbf318b31e46053492da387d446a4917af0fbc11",
+      "status": "PASS"
+    },
+    {
+      "rank": 70,
+      "id": "fecamp",
+      "name": "Fécamp",
+      "communeCode": "76259",
+      "sourceIris": 11,
+      "visiblePlates": 11,
+      "outputPath": "public/map/fecamp-quartiers.geojson",
+      "outputSha256": "9a399d2ec7b33c559b45b2716f57ec67aa57bd4589275d3ade4addd1204864a9",
+      "status": "PASS"
+    },
+    {
+      "rank": 71,
+      "id": "annonay",
+      "name": "Annonay",
+      "communeCode": "07010",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/annonay-quartiers.geojson",
+      "outputSha256": "6e71215a770326b70556ff30ea10e845380d93de5d9087567aeea470d238be6a",
+      "status": "PASS"
+    },
+    {
+      "rank": 72,
+      "id": "lamballe_armor",
+      "name": "Lamballe-Armor",
+      "communeCode": "22093",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/lamballe-armor-quartiers.geojson",
+      "outputSha256": "af19f7ae2106293900fa57bee86c94cb9b8f38ab19cb907e212331ae79a44f70",
+      "status": "PASS"
+    },
+    {
+      "rank": 73,
+      "id": "viroflay",
+      "name": "Viroflay",
+      "communeCode": "78686",
+      "sourceIris": 8,
+      "visiblePlates": 8,
+      "outputPath": "public/map/viroflay-quartiers.geojson",
+      "outputSha256": "19d8d3db4641337f55767bbaf77157a34852a22d231e09c90c4f0282a25dab7e",
+      "status": "PASS"
+    },
+    {
+      "rank": 74,
+      "id": "blanquefort",
+      "name": "Blanquefort",
+      "communeCode": "33056",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/blanquefort-quartiers.geojson",
+      "outputSha256": "939d9ede162593a9b7c6b488f760188e847010526b6de245238b894dc2fe7e86",
+      "status": "PASS"
+    },
+    {
+      "rank": 75,
+      "id": "oree_d_anjou",
+      "name": "Orée d'Anjou",
+      "communeCode": "49126",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/oree-d-anjou-quartiers.geojson",
+      "outputSha256": "2229e7262b6c4e426aa58f122bdfe295e82f34956179e14425f40f07a2d36831",
+      "status": "PASS"
+    },
+    {
+      "rank": 76,
+      "id": "montceau_les_mines",
+      "name": "Montceau-les-Mines",
+      "communeCode": "71306",
+      "sourceIris": 10,
+      "visiblePlates": 10,
+      "outputPath": "public/map/montceau-les-mines-quartiers.geojson",
+      "outputSha256": "9e87ce628aca18075a5d98fb5c8671d3118dcd1903b5e65d83f8e438e5970a28",
+      "status": "PASS"
+    },
+    {
+      "rank": 77,
+      "id": "firminy",
+      "name": "Firminy",
+      "communeCode": "42095",
+      "sourceIris": 9,
+      "visiblePlates": 9,
+      "outputPath": "public/map/firminy-quartiers.geojson",
+      "outputSha256": "09f7a25b6a50981a964cebab9f4bb93b5c1d5621170f9710a31e28f1be0e9454",
+      "status": "PASS"
+    },
+    {
+      "rank": 78,
+      "id": "saint_cyr_sur_loire",
+      "name": "Saint-Cyr-sur-Loire",
+      "communeCode": "37214",
+      "sourceIris": 6,
+      "visiblePlates": 5,
+      "outputPath": "public/map/saint-cyr-sur-loire-quartiers.geojson",
+      "outputSha256": "27e96a13eb85426e009a39f46c7fca06e7fea166f69458bdd76f432798bb0aa8",
+      "status": "PASS"
+    },
+    {
+      "rank": 79,
+      "id": "la_baule_escoublac",
+      "name": "La Baule-Escoublac",
+      "communeCode": "44055",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/la-baule-escoublac-quartiers.geojson",
+      "outputSha256": "cdbfc8753f65ef1921dc2264eae1804140180f4bcbfd2f59e988bb4ce1887863",
+      "status": "PASS"
+    },
+    {
+      "rank": 80,
+      "id": "verdun",
+      "name": "Verdun",
+      "communeCode": "55545",
+      "sourceIris": 8,
+      "visiblePlates": 8,
+      "outputPath": "public/map/verdun-quartiers.geojson",
+      "outputSha256": "5665f0540fcf9ac6b9f187ce5f6e655ad0f317eb28615b4919f452245a46c3d7",
+      "status": "PASS"
+    },
+    {
+      "rank": 81,
+      "id": "guerande",
+      "name": "Guérande",
+      "communeCode": "44069",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/guerande-quartiers.geojson",
+      "outputSha256": "ea5c8a7a856d607ca5f89832ab03b528313f890dcbed73518dad407cf285ccc1",
+      "status": "PASS"
+    },
+    {
+      "rank": 82,
+      "id": "les_clayes_sous_bois",
+      "name": "Les Clayes-sous-Bois",
+      "communeCode": "78165",
+      "sourceIris": 6,
+      "visiblePlates": 5,
+      "outputPath": "public/map/les-clayes-sous-bois-quartiers.geojson",
+      "outputSha256": "50fad9346967c87e4520e64a034ec7e5cb2830de4900c37486680b66b74610bd",
+      "status": "PASS"
+    },
+    {
+      "rank": 83,
+      "id": "saint_jean_de_la_ruelle",
+      "name": "Saint-Jean-de-la-Ruelle",
+      "communeCode": "45285",
+      "sourceIris": 8,
+      "visiblePlates": 8,
+      "outputPath": "public/map/saint-jean-de-la-ruelle-quartiers.geojson",
+      "outputSha256": "a1da5b6ab698ed5e7691d4b7ceca81c8318d094313ae8b09323d7a38dc3497ec",
+      "status": "PASS"
+    },
+    {
+      "rank": 84,
+      "id": "loire_authion",
+      "name": "Loire-Authion",
+      "communeCode": "49307",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/loire-authion-quartiers.geojson",
+      "outputSha256": "16a71f3b768c24bde3e5c2804e55a5ac0f99884eb0447e7df31bb3161e2590b8",
+      "status": "PASS"
+    },
+    {
+      "rank": 85,
+      "id": "marly_le_roi",
+      "name": "Marly-le-Roi",
+      "communeCode": "78372",
+      "sourceIris": 8,
+      "visiblePlates": 8,
+      "outputPath": "public/map/marly-le-roi-quartiers.geojson",
+      "outputSha256": "6ef3091715159cd5ba786814d88c671b67cef0d1ca1859959b1e9b7bedc31b0d",
+      "status": "PASS"
+    },
+    {
+      "rank": 86,
+      "id": "valserhone",
+      "name": "Valserhône",
+      "communeCode": "01033",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/valserhone-quartiers.geojson",
+      "outputSha256": "ff0db6f2fe9e52cc143fd88f03cb8906bff25ec764ac1c640d8798d4dba6fbb3",
+      "status": "PASS"
+    },
+    {
+      "rank": 87,
+      "id": "sedan",
+      "name": "Sedan",
+      "communeCode": "08409",
+      "sourceIris": 11,
+      "visiblePlates": 7,
+      "outputPath": "public/map/sedan-quartiers.geojson",
+      "outputSha256": "e507c0d9d92673de0e05509b5baac272ddc444b6b139429dddbd681095df3765",
+      "status": "PASS"
+    },
+    {
+      "rank": 88,
+      "id": "cestas",
+      "name": "Cestas",
+      "communeCode": "33122",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/cestas-quartiers.geojson",
+      "outputSha256": "cb8c1f680f00bf687ba6f0ad9f05e7eb2dce03d33927a34c26890a6d01e4ed3a",
+      "status": "PASS"
+    },
+    {
+      "rank": 89,
+      "id": "lons_le_saunier",
+      "name": "Lons-le-Saunier",
+      "communeCode": "39300",
+      "sourceIris": 8,
+      "visiblePlates": 8,
+      "outputPath": "public/map/lons-le-saunier-quartiers.geojson",
+      "outputSha256": "e87c74b2ddd045955c08af2e722efca74324e914bc9370ab55657e2685ebd0a4",
+      "status": "PASS"
+    },
+    {
+      "rank": 90,
+      "id": "bois_d_arcy",
+      "name": "Bois-d'Arcy",
+      "communeCode": "78073",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/bois-d-arcy-quartiers.geojson",
+      "outputSha256": "c89bf1e0c92e963d88e8ee7efd0004ac7ae3da95d9ac96b8af84ecb33ea74993",
+      "status": "PASS"
+    },
+    {
+      "rank": 91,
+      "id": "chateau_gontier_sur_mayenne",
+      "name": "Château-Gontier-sur-Mayenne",
+      "communeCode": "53062",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/chateau-gontier-sur-mayenne-quartiers.geojson",
+      "outputSha256": "d250970837188af40e545bdddc0720b2439d38a68e6d7088f9bb7174faf5e856",
+      "status": "PASS"
+    },
+    {
+      "rank": 92,
+      "id": "chateaurenard",
+      "name": "Châteaurenard",
+      "communeCode": "13027",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/chateaurenard-quartiers.geojson",
+      "outputSha256": "679d9694205acc895462d1599b4c4bcc6647a51f5d999af61ae64f39e019a047",
+      "status": "PASS"
+    },
+    {
+      "rank": 93,
+      "id": "mauguio",
+      "name": "Mauguio",
+      "communeCode": "34154",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/mauguio-quartiers.geojson",
+      "outputSha256": "217afe6e9d8d2c877368f5ecbdef9692d61d5c2f727e3430f01b2709bb94dd56",
+      "status": "PASS"
+    },
+    {
+      "rank": 94,
+      "id": "les_herbiers",
+      "name": "Les Herbiers",
+      "communeCode": "85109",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/les-herbiers-quartiers.geojson",
+      "outputSha256": "d587842c23ca95bcac404e1ee1ee824521ba6c550c2eae918b665abe47bb9f05",
+      "status": "PASS"
+    },
+    {
+      "rank": 95,
+      "id": "orsay",
+      "name": "Orsay",
+      "communeCode": "91471",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/orsay-quartiers.geojson",
+      "outputSha256": "70c41188350d767889f94e42845d223804cce1f79f397f60251f07414fc7f45d",
+      "status": "PASS"
+    },
+    {
+      "rank": 96,
+      "id": "pamiers",
+      "name": "Pamiers",
+      "communeCode": "09225",
+      "sourceIris": 7,
+      "visiblePlates": 7,
+      "outputPath": "public/map/pamiers-quartiers.geojson",
+      "outputSha256": "67d68720cb7e04c6b48d39940a4f115ae77a537763b39a1276c01a05f0e3e22a",
+      "status": "PASS"
+    },
+    {
+      "rank": 97,
+      "id": "rumilly",
+      "name": "Rumilly",
+      "communeCode": "74225",
+      "sourceIris": 4,
+      "visiblePlates": 4,
+      "outputPath": "public/map/rumilly-quartiers.geojson",
+      "outputSha256": "12900a0b694a18b3e5ebe17762a1a0c63f5d5cc745b189e07b3bccc8b56ac37b",
+      "status": "PASS"
+    },
+    {
+      "rank": 98,
+      "id": "mennecy",
+      "name": "Mennecy",
+      "communeCode": "91386",
+      "sourceIris": 5,
+      "visiblePlates": 5,
+      "outputPath": "public/map/mennecy-quartiers.geojson",
+      "outputSha256": "c6009917c62a94637dc4644d6a199b7862e9fe1d0301eaae95b685ff93004b7b",
+      "status": "PASS"
+    },
+    {
+      "rank": 99,
+      "id": "coulommiers",
+      "name": "Coulommiers",
+      "communeCode": "77131",
+      "sourceIris": 5,
+      "visiblePlates": 5,
+      "outputPath": "public/map/coulommiers-quartiers.geojson",
+      "outputSha256": "4e8e48ab8cf14b2df63be5206503c90608a761310bbfa4a14ef826f96d0c31ec",
+      "status": "PASS"
+    },
+    {
+      "rank": 100,
+      "id": "landerneau",
+      "name": "Landerneau",
+      "communeCode": "29103",
+      "sourceIris": 6,
+      "visiblePlates": 6,
+      "outputPath": "public/map/landerneau-quartiers.geojson",
+      "outputSha256": "0b302ea8d6744765ccc95a8bdc605acf43441395610ef523653977d665ede581",
+      "status": "PASS"
+    }
+  ]
+}

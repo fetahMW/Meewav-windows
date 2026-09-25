@@ -1,0 +1,11 @@
+/* Shared finish: the intake picker reuses the Sas row's category chips. */
+.wave-category-chip,
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card__meta > .wave-category-chip {
+  display: grid; place-items: center; box-sizing: border-box;
+  width: auto; min-height: 17px; padding: 1px 5px;
+  border: 1px solid color-mix(in srgb, var(--wave-loop-accent) 21%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--wave-loop-accent) 5%, transparent);
+  color: color-mix(in srgb, var(--wave-loop-accent) 68%, #c4c7cf);
+  font-size: 8px; font-weight: 650; letter-spacing: .025em; white-space: nowrap;
+}

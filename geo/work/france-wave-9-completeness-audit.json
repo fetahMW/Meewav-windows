@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "kind": "france_wave_9_national_multi_iris_completeness_audit",
+  "auditedAt": "2026-07-14T22:00:41.9476463+02:00",
+  "status": "PASS",
+  "scope": "Metropolitan France and Corsica; exact audit of the 1,140 previously remaining standalone_split communes and reconciliation with the complete national runtime",
+  "issues": [],
+  "assertions": {
+    "inventoryPartition": {
+      "status": "PASS",
+      "detail": "The four disjoint curation partitions contain 280 + 724 + 131 + 5 = 1,140 unique commune codes and their union equals the inventory standalone_split set exactly."
+    },
+    "sourceIdentity": {
+      "status": "PASS",
+      "detail": "For every commune, source IRIS count, official ID, official label and IRIS type match the national inventory exactly; all 4,078 source IRIS are covered once."
+    },
+    "curation": {
+      "status": "PASS",
+      "detail": "All operations target exact source IDs once, expected labels match, all anomalies are resolved, and the catalog preserves the complete resolved contracts: 1,849 strict-contained evidence records and 8 connected topology proofs match the four audit partitions exactly."
+    },
+    "geojsonOutputs": {
+      "status": "PASS",
+      "detail": "All 1,140 output files exist. Feature counts, metadata, source coverage, IDs and labels equal the deterministic plan plus curation result; output IDs and source IRIS IDs are globally unique."
+    },
+    "catalogsAndRuntime": {
+      "status": "PASS",
+      "detail": "The 1,544-city catalog, the 1,544-entry generated runtime and the 1,978-entry ownership registry agree exactly. An in-memory runtime rebuild is byte-equivalent to both generated arrays."
+    },
+    "canonicalCorpus": {
+      "status": "PASS",
+      "detail": "The canonical validator reports VALID with zero errors and zero warnings. Dataset features, administrative zones, music zones and legacy mappings are all 13,740, with a bijection between mapping stable IDs and music-zone IDs."
+    },
+    "nationalCoverage": {
+      "status": "PASS",
+      "detail": "The 34,746 indexed communes reconcile exactly as 1,976 indexed subdivision-registry entries + 32,762 mono-plate communes + 8 direct special-city datasets."
+    }
+  },
+  "metrics": {
+    "inventory": {
+      "indexedMetropolitanCommunes": 34746,
+      "coveredMetropolitanCommunesExcludedInitially": 844,
+      "remainingCommunesInventoried": 33902,
+      "remainingOfficialIris": 36840,
+      "standaloneSplitCommunes": 1140,
+      "singlePlateCommunes": 32762,
+      "resolutionRequired": 0,
+      "splitClean": 412,
+      "splitSemanticRisk": 728
+    },
+    "wave9": {
+      "plan": "geo/work/france-wave-9-plan.json",
+      "cities": 1140,
+      "sourceOfficialIris": 4078,
+      "outputPlates": 4069,
+      "filesChecked": 1140,
+      "renameOperations": 1849,
+      "containedProofOperations": 1849,
+      "containedEvidenceEntries": 1849,
+      "mergeOperations": 8,
+      "topologyProofs": 8,
+      "mergeReduction": 9,
+      "acceptOperations": 0,
+      "partitions": {
+        "aSafe": {
+          "file": "geo/work/france-wave-9-curation-a.json",
+          "cities": 280,
+          "officialIris": 1010,
+          "outputPlates": 1010,
+          "renames": 0,
+          "merges": 0
+        },
+        "bSemanticRisk": {
+          "file": "geo/work/france-wave-9-curation-b.json",
+          "cities": 724,
+          "officialIris": 2546,
+          "outputPlates": 2537,
+          "renames": 1655,
+          "merges": 8
+        },
+        "cSemanticCleanExceptions": {
+          "file": "geo/work/france-wave-9-curation-c.json",
+          "cities": 131,
+          "officialIris": 507,
+          "outputPlates": 507,
+          "renames": 185,
+          "merges": 0
+        },
+        "dFinalFive": {
+          "file": "geo/work/france-wave-9-curation-d.json",
+          "cities": 5,
+          "officialIris": 15,
+          "outputPlates": 15,
+          "renames": 9,
+          "merges": 0
+        }
+      }
+    },
+    "catalogs": {
+      "standaloneCities": 1544,
+      "preExistingStandaloneCities": 404,
+      "wave9StandaloneCities": 1140,
+      "curationEntries": 1067,
+      "curationSources": 14,
+      "datasetEntries": 1565,
+      "datasetFeatures": 13740,
+      "preExistingDatasetFeatures": 9671,
+      "wave9DatasetFeatures": 4069
+    },
+    "runtime": {
+      "standaloneCities": 1544,
+      "subdivisionRegistryEntries": 1978,
+      "indexedSubdivisionRegistryEntries": 1976,
+      "primaryOwners": {
+        "standalone": 1544,
+        "metropolitan": 311,
+        "grand_paris": 123
+      },
+      "availableOwnerCandidates": 1984,
+      "nonIndexedAssociatedCommunes": [
+        {
+          "communeCode": "59298",
+          "name": "Hellemmes-Lille",
+          "owner": "metropolitan",
+          "ownerId": "lille"
+        },
+        {
+          "communeCode": "59355",
+          "name": "Lomme",
+          "owner": "metropolitan",
+          "ownerId": "lille"
+        }
+      ]
+    },
+    "canonical": {
+      "valid": true,
+      "errors": 0,
+      "warnings": 0,
+      "status": "draft",
+      "administrativeZones": 13740,
+      "musicZones": 13740,
+      "mappingEntries": 13740,
+      "preExistingZones": 9671,
+      "wave9Zones": 4069
+    },
+    "national": {
+      "indexedCommunes": 34746,
+      "coverageEquation": "1976 + 32762 + 8 = 34746",
+      "currentIndexedSubdivisionRegistry": 1976,
+      "singlePlateCommunes": 32762,
+      "directSpecialCommunes": [
+        { "communeCode": "06088", "name": "Nice" },
+        { "communeCode": "13055", "name": "Marseille" },
+        { "communeCode": "34172", "name": "Montpellier" },
+        { "communeCode": "44109", "name": "Nantes" },
+        { "communeCode": "59350", "name": "Lille" },
+        { "communeCode": "69123", "name": "Lyon" },
+        { "communeCode": "75056", "name": "Paris" },
+        { "communeCode": "78621", "name": "Trappes" }
+      ],
+      "remainingRawOfficialIris": 36840,
+      "remainingVisiblePlates": 36831,
+      "remainingMergeReduction": 9,
+      "canonicalPlusSinglePlateRecords": 46502,
+      "singlePlateManifest": {
+        "communeCount": 32762,
+        "fragmentCount": 92,
+        "geometryLoading": "one_department_fragment_at_a_time",
+        "activeCollectionFeatureCount": 1
+      }
+    }
+  },
+  "inputSha256": {
+    "geo/work/france-iris-national-inventory.json": "3769d2fdbc155f43b10303eee1121947bffbe5379f84d53b340b94a5acbe85a1",
+    "geo/work/france-wave-9-plan.json": "06bcacbec5abf0cec7d6dcf16ef1b02e1a120e2a5e83ee3cb8c91c280709a101",
+    "geo/work/france-wave-9-curation-a.json": "172ae84c627692d97e4a2edb5501cfc853c435c0ccc89a4f09142b98c5b11090",
+    "geo/work/france-wave-9-curation-b.json": "9d5544bb7a7500ec07c1ad159816ae82bdedf72e8b1ca9168bdf431e29b035ce",
+    "geo/work/france-wave-9-curation-c.json": "dbe62b28530958dfb9e8ebe6c74128b4ec2f80c22d5928862a72c3e3050b69e4",
+    "geo/work/france-wave-9-curation-d.json": "05f43f9a77a10e25106285a13c097aa7a5a69dec8ede72c45407c329e23429e7",
+    "geo/catalog/france-city-iris.json": "bd43ed8bea5c7d598df7d0961abbe14b28f6dfab6c73a840a1093695828f3b18",
+    "geo/catalog/france-city-curation.json": "0040d4688322e7434c45e5527ebc67a1b0221ea32477e0cfc7b8494fb0f0b1a7",
+    "geo/catalog/existing-datasets.json": "5245f429c9a1b971ab05cc77f36bad161ed73594c8d2f268043e4588a41db709",
+    "src/features/globe/geography/franceGuideAlphaCities.generated.ts": "0edd68854b11313dbba627da60e1980849ff2d59a32b79602c4afde04c333ead",
+    "geo/output/all.canonical.json": "c265d638e3772a5bb4348f0f781867cd652b568c0498a0937d55ba659567ee8a",
+    "geo/mappings/legacy-zone-ids/all.json": "310a14569ae0fd30d02ac4baff3977d06a5a96b7d8efe08c9d6b80e98b938eba",
+    "public/map/france-single-plate/2026/manifest.json": "f6fbc71a516f9b80e7e1d5cabd4adbc720a3d7c4d477921e4371049a693b7142"
+  }
+}

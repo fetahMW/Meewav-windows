@@ -1,0 +1,87 @@
+/* Android WaveMixerTheme + WaveMixerMaterials. No change to the Room backdrop. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer {
+  background: linear-gradient(180deg, #1f2126, #181a1f 32%, #101216 70%, #08090c);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer {
+  background: transparent;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer__subnav {
+  display: flex; align-items: center; gap: 4px; min-height: 38px;
+  padding: 4px 8px; border: 0; background: #141517;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer__subnav > button {
+  flex: 1; display: flex; justify-content: center; align-items: center; gap: 5px;
+  height: 30px; min-height: 30px; padding: 0 7px; border: 1px solid transparent;
+  border-radius: 15px; background: transparent; color: #ffffff75; font-size: 11px;
+  box-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer__subnav > button.is-active {
+  color: #fff; border-color: #a98ef057;
+  background: linear-gradient(180deg, #a98ef038, #7e44e329);
+  box-shadow: inset 0 1px #ffffff20;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer__subnav > button::after { display: none; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer__subnav svg { width: 14px; height: 14px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-fx-view.is-android-fx {
+  display: block; padding: 8px 12px 12px; overflow: auto; min-height: 0; background: transparent;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .is-android-fx .place-fx-accordion-stack[hidden] { display: none !important; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 8px; height: 32px; margin-bottom: 12px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-toolbar > div { display: flex; gap: 2px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-toolbar button { height: 26px; padding: 0 10px; border: 1px solid transparent; border-radius: 13px; background: transparent; color: #ffffff75; font-size: 12px; cursor: pointer; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-toolbar button[aria-pressed="true"] { color: #fff; border-color: #a98ef050; background: linear-gradient(#a98ef040, #7e44e329); box-shadow: inset 0 1px #ffffff20; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-toolbar .android-fx-monitor { display: grid; place-items: center; width: 26px; padding: 0; background-color: #111214; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-monitor svg { width: 12px; height: 12px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-cards { display: grid; gap: 12px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card {
+  position: relative; min-width: 0; padding: 8px 12px 12px; border: 1px solid #ffffff16; border-top-color: #ffffff29; border-bottom-color: #000a; border-radius: 12px;
+  background: linear-gradient(90deg, #0003, transparent 14%, transparent 86%, #0003), linear-gradient(180deg, #1a1b1e, #17181b 12%, #111214 32%, #090a0c 65%, #050608 91%, #030405);
+  box-shadow: inset 0 1px #ffffff0e, 0 2px 3px #0008;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; min-height: 24px; color: #ffffff6b; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > header > svg { width: 14px; height: 14px; margin: 0 5px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > header strong { flex: 1; font-size: 11px; font-weight: 600; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card[data-active="true"] > header { color: #ffffffe6; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card[data-active="true"] > header > svg { color: #a98ef0; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > header > button { display: grid; place-items: center; width: 28px; height: 24px; padding: 0; border: 1px solid #ffffff18; border-radius: 8px; background: linear-gradient(#1a1c1f, #090a0b, #020202); box-shadow: inset 0 1px #ffffff30; color: #ffffff47; cursor: pointer; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > header > button[aria-pressed="true"] { color: #a98ef0; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card[aria-label="Réverbération simple"][data-active="true"] {
+  border-color: #b84dffb3;
+  box-shadow: inset 0 1px #d998ff40, 0 0 0 1px #aa35ef42, 0 0 20px #8e25dc42;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card[aria-label="Réverbération simple"][data-active="true"] > header > :is(svg, button[aria-pressed="true"]),
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card[aria-label="Réverbération simple"][data-active="true"] .android-fx-range-label output { color: #ca65ff; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > header > button svg { width: 12px; height: 12px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card button:disabled, .android-fx-card input:disabled { opacity: .4; cursor: default; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors { display: grid; grid-template-columns: 2fr 3fr; gap: 8px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors .place-autotune-select__trigger {
+  display: grid; grid-template-columns: 1fr 10px; grid-template-rows: 15px 30px; gap: 5px 0;
+  height: 50px; min-height: 0; padding: 0; border: 0; border-radius: 6px; background: transparent; box-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors .place-autotune-select__trigger > span { grid-column: 1 / -1; font-size: 10px; color: #ffffff99; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors .place-autotune-select__trigger > strong { grid-column: 1 / -1; grid-row: 2; display: flex; align-items: center; height: 30px; padding: 0 22px 0 8px; border-radius: 6px; font-size: 13px; color: #fffffff0; background: linear-gradient(#2c2e33, #17181b 60%, #101114); box-shadow: inset 0 1px #ffffff25, 0 1px 2px #0008; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors .place-autotune-select__trigger > svg { grid-column: 2; grid-row: 2; align-self: center; width: 8px; height: 8px; color: #ffffff80; margin-left: -6px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors .place-autotune-select__listbox {
+  padding: 9px; gap: 6px; border: 1px solid #ffffff20; border-radius: 12px; background: linear-gradient(#1a1b1e, #030405); box-shadow: 0 8px 24px #000b; min-width: 180px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors [data-selector="key"] .place-autotune-select__listbox { display: grid; grid-template-columns: repeat(4, 1fr); }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors [data-selector="scale"] .place-autotune-select__listbox { display: grid; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors [role="option"] { min-height: 30px; padding: 4px 8px; border: 1px solid #ffffff18; border-radius: 8px; background: linear-gradient(145deg, #ffffff10, transparent 50%), linear-gradient(#1a1c1f, #090a0b, #020202); color: #d4d0da; font-size: 12px; box-shadow: inset 0 1px #ffffff47; cursor: pointer; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-selectors [role="option"][aria-selected="true"] { border-color: #c27aff66; background: linear-gradient(#c27aff1f, #c27aff1f), linear-gradient(#1a1c1f, #090a0b, #020202); color: #a98ef0; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range-label { display: flex; justify-content: space-between; color: #ffffff99; font-size: 10px; margin-bottom: 5px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range-label output { color: #a98ef0; font-variant-numeric: tabular-nums; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range { appearance: none; width: 100%; height: 30px; margin: 0; padding: 0 8px; box-sizing: border-box; border: 0; border-radius: 6px; background: linear-gradient(#2c2e33, #17181b 60%, #101114); box-shadow: inset 0 1px #ffffff25; cursor: pointer; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: #a98ef070; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; margin-top: -5.5px; border: 1px solid #fff; border-radius: 50%; background: #eeeaf5; box-shadow: 0 2px 4px #0009; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range::-webkit-slider-thumb {
+  width: 11px; height: 15px; margin-top: -6px; border: 1px solid #d49afa; border-radius: 4px;
+  background: linear-gradient(145deg, #f4d5ff, #a258d9 24%, #1b0e27 55%, #050308);
+  box-shadow: inset 0 1px #fff8, 0 1px 4px #000d, 0 0 7px #b26aff78;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-range::-moz-range-thumb {
+  width: 11px; height: 15px; border: 1px solid #d49afa; border-radius: 4px;
+  background: linear-gradient(145deg, #f4d5ff, #a258d9 24%, #1b0e27 55%, #050308);
+  box-shadow: inset 0 1px #fff8, 0 1px 4px #000d, 0 0 7px #b26aff78;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .android-fx-card > small { display: block; margin-top: 8px; color: #e99a9e; font-size: 11px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .is-android-fx button:focus-visible, .is-android-fx input:focus-visible { outline: 2px solid #a98ef0; outline-offset: 3px; }

@@ -1,0 +1,8 @@
+/* Shared optical materials; dimensions and interactions belong to each component. */
+.rooms-page {
+  --live-glass-shell: radial-gradient(ellipse at 50% 0%, #f1edff0b, transparent 48%), linear-gradient(180deg, #0a0b0e 0%, #050608 24%, #020304 63%, #07080c 100%);
+  --live-glass-rim: linear-gradient(145deg, #edf0ffcf, #777b8866 18%, #181a22 35%, #b5b7c566 55%, #9691a8cc 83%, #d2c4ffb3 94%, #3a394a);
+  --live-glass-key: radial-gradient(ellipse 48% 52% at 25% 0%, #f4f5ff29, transparent 77%), linear-gradient(160deg, #202227, #080a0e 44%, #050609 72%, #12141b);
+  --live-glass-ink: #e5e5ee;
+  --live-glass-purple: #d6c7ff;
+}

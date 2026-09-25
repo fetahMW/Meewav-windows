@@ -1,0 +1,85 @@
+/* Android's portrait cards, with the existing desktop Room actions retained. */
+.rooms-page .place-room-shell .place-studio-panel.is-guests .place-guests__rows {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  align-content: start;
+  gap: 12px;
+  padding: 6px 8px 12px;
+}
+
+.rooms-page .place-room-shell .place-studio-panel.is-guests .place-guest-row.is-portrait-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: stretch;
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ffffff24;
+  border-radius: 16px;
+  background: #101114;
+  box-shadow: inset 0 1px #ffffff18, 0 4px 12px #0005;
+
+  &::before { content: none; }
+  &:is(.is-selected, :focus-within) { border-color: #9561ff; }
+
+  & .place-guest-row__avatar {
+    position: absolute;
+    inset: 0;
+    grid-area: auto;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    background: #101114;
+    box-shadow: none;
+    transform: none;
+  }
+  & .place-guest-row__avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  & .place-guest-row__avatar > i { display: none; }
+  & .place-guest-row__avatar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, #0005, transparent 25%, #08090bc7 58%, #08090b 100%);
+  }
+  & .place-guest-row__main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    gap: 10px;
+    padding: 54px 12px 12px;
+    pointer-events: none;
+  }
+  & .place-guest-row__main button { pointer-events: auto; }
+  & .place-guest-row__upper { display: contents; }
+  & .place-guest-row__identity { display: grid; width: 100%; min-width: 0; gap: 4px; padding: 0; text-align: left; }
+  & .place-guest-row__headline { display: flex; flex-wrap: nowrap; justify-content: space-between; gap: 6px; }
+  & .place-guest-row__headline strong { min-width: 0; font: 650 15px/1.2 Inter, sans-serif; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  & .place-guest-row__headline .mw-grade-badge { flex: 0 0 26px; width: 26px; height: 26px; }
+  & .place-guest-row__role { font: 450 11px/1.3 Inter, sans-serif; color: #c4c4ce; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  & .place-guest-row__status-line { position: absolute; top: 12px; left: 12px; right: 42px; display: flex; flex-wrap: wrap; gap: 4px; margin: 0; }
+  &.is-selectable .place-guest-row__status-line { left: 44px; }
+  & .place-guest-row__status-pill { min-height: 20px; padding: 3px 6px; font: 500 10px/1.2 Inter, sans-serif; background: #090a0dcc; border: 1px solid #ffffff24; color: #e8e8ee; }
+  & .place-guest-row__selection { z-index: 2; top: 10px; left: 10px; bottom: auto; width: 26px; height: 26px; }
+  & .place-guest-row__lower { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-end; gap: 8px; padding: 0; min-height: 0; }
+  & .place-guest-row__lower::before { content: none; }
+  & .place-guest-row__media-details { display: flex; flex-wrap: wrap; gap: 5px; padding: 0; }
+  & .place-guest-row__media-details small { font-size: 10px; }
+  & .place-guest-row__actions { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+  & .place-guest-row__primary[data-direction] { flex: 1 1 auto; width: auto; min-width: 0; max-width: none; min-height: 30px; height: auto; padding: 6px; font-size: 10px; }
+  & .place-guest-row__primary[data-direction] > span { white-space: normal; }
+  & .place-guest-row__menu-trigger { z-index: 2; top: 10px; right: 10px; background: #090a0dcc; }
+}

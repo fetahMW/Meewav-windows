@@ -1,0 +1,202 @@
+.room-tools-shell.is-wave .wave-vote-inbox {
+  --vote-surface: rgba(7, 9, 21, .97);
+  position: relative; display: grid; min-width: 0; min-height: 0; height: 100%;
+  grid-template-rows: minmax(0, 1fr) auto; gap: 7px; padding: 3px 9px 8px; overflow: hidden;
+  color: #f7f3ff;
+  background: radial-gradient(circle at 12% -5%, rgba(151, 83, 237, .1), transparent 27%), linear-gradient(180deg, rgba(7, 8, 20, .99), rgba(3, 5, 13, .99));
+}
+.room-tools-shell.is-wave .wave-vote-inbox button,
+.room-tools-shell.is-wave .wave-vote-inbox select { font: inherit; }
+
+.room-tools-shell.is-wave .wave-vote-inbox__queue {
+  display: grid; min-width: 0; min-height: 0; align-content: start; gap: 4px; padding: 0 6px 5px 0;
+  overflow-x: hidden; overflow-y: auto; overflow-anchor: none; overscroll-behavior: contain; scroll-padding-block-end: 8px;
+  scrollbar-color: rgba(159, 93, 244, .84) rgba(255, 255, 255, .025); scrollbar-width: thin;
+}
+.room-tools-shell.is-wave .wave-vote-inbox__queue::-webkit-scrollbar { width: 5px; }
+.room-tools-shell.is-wave .wave-vote-inbox__queue::-webkit-scrollbar-track { border-radius: 999px; background: rgba(255, 255, 255, .025); }
+.room-tools-shell.is-wave .wave-vote-inbox__queue::-webkit-scrollbar-thumb { border-radius: 999px; background: linear-gradient(#b06bff, #654cdb); box-shadow: 0 0 9px rgba(158, 90, 246, .5); }
+.room-tools-shell.is-wave .wave-vote-inbox__toolbar { position: sticky; z-index: 10; top: 0; display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) 106px; align-items: stretch; gap: 6px; }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head {
+  display: grid; min-height: 38px; grid-template-columns: minmax(86px,1.2fr) repeat(3,minmax(54px,.68fr)); align-items: center; gap: 4px;
+  padding: 4px 7px; border: 1px solid rgba(147,125,190,.24); border-radius: 10px; background: linear-gradient(135deg,rgba(15,14,39,.98),rgba(6,8,20,.98)); box-shadow: 0 8px 22px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.04); backdrop-filter: blur(12px);
+}
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head > strong { color: #efe8f8; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head > span { display: grid; min-width: 0; justify-items: center; gap: 1px; padding-left: 6px; border-left: 1px solid rgba(148,130,182,.15); }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head b { color: #fff; font-size: 10px; font-variant-numeric: tabular-nums; }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head small { color: rgba(218,211,231,.62); font-size: 7px; font-weight: 760; text-transform: uppercase; }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head.is-live { border-color: rgba(255,91,128,.42); box-shadow: 0 0 18px rgba(255,64,108,.1),inset 0 1px rgba(255,255,255,.04); }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head.is-live > strong { color: #ff829d; }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head.is-final { border-color: rgba(73,222,158,.35); }
+.room-tools-shell.is-wave .wave-vote-inbox__queue-head.is-final > strong { color: #69eab3; }
+.room-tools-shell.is-wave .wave-vote-inbox__import { display: inline-flex; min-width: 0; align-items: center; justify-content: center; gap: 6px; padding: 0 9px; border: 1px solid rgba(168,101,246,.5); border-radius: 10px; background: radial-gradient(circle at 30% 0,rgba(176,103,255,.18),transparent 58%),rgba(10,9,27,.97); color: #ead9ff; box-shadow: inset 0 1px rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.28); cursor: pointer; }
+.room-tools-shell.is-wave .wave-vote-inbox__import svg { width: 15px; height: 15px; color: #b773ff; filter: drop-shadow(0 0 5px rgba(177,105,255,.45)); }
+.room-tools-shell.is-wave .wave-vote-inbox__import span { font-size: 7px; font-weight: 900; line-height: 1.14; text-align: left; text-transform: uppercase; }
+.room-tools-shell.is-wave .wave-vote-inbox__import:hover:not(:disabled) { border-color: #ba76ff; background: radial-gradient(circle at 30% 0,rgba(190,122,255,.3),transparent 58%),rgba(29,17,55,.98); box-shadow: 0 0 18px rgba(157,82,239,.22),inset 0 1px rgba(255,255,255,.1); }
+
+.room-tools-shell.is-wave .wave-vote-row {
+  --vote-category: #a855f7; position: relative; display: grid; min-width: 0; min-height: 76px;
+  grid-template-columns: minmax(0, 1fr) 112px 48px; align-items: stretch; overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--vote-category) 20%, rgba(124, 116, 155, .17)); border-radius: 11px;
+  background: radial-gradient(circle at 0 50%, color-mix(in srgb, var(--vote-category) 7%, transparent), transparent 31%), rgba(8, 10, 24, .96);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .025);
+  transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease, opacity 150ms ease, transform 150ms ease;
+}
+.room-tools-shell.is-wave .wave-vote-row::before { position: absolute; z-index: 2; inset: 6px auto 6px 0; width: 4px; border-radius: 0 3px 3px 0; background: var(--vote-category); box-shadow: 0 0 11px color-mix(in srgb, var(--vote-category) 56%, transparent); content: ""; opacity: 0; transition: opacity 150ms ease, box-shadow 150ms ease; }
+.room-tools-shell.is-wave .wave-vote-row:hover { border-color: color-mix(in srgb, var(--vote-category) 68%, white 4%); background: radial-gradient(circle at 18% 50%, color-mix(in srgb, var(--vote-category) 13%, transparent), transparent 54%), rgba(10, 12, 29, .99); box-shadow: 0 0 20px color-mix(in srgb, var(--vote-category) 15%, transparent), inset 0 1px rgba(255, 255, 255, .045); transform: translateX(1px); }
+.room-tools-shell.is-wave .wave-vote-row:hover::before { box-shadow: 0 0 15px color-mix(in srgb, var(--vote-category) 76%, transparent); }
+.room-tools-shell.is-wave .wave-vote-row:hover .wave-vote-row__select { background: linear-gradient(90deg, color-mix(in srgb, var(--vote-category) 10%, transparent), transparent 46%); }
+.room-tools-shell.is-wave .wave-vote-row.is-selected { border-color: color-mix(in srgb, var(--vote-category) 78%, white 5%); background: radial-gradient(circle at 0 50%, color-mix(in srgb, var(--vote-category) 16%, transparent), transparent 40%), rgba(12, 13, 33, .995); box-shadow: 0 0 0 1px color-mix(in srgb, var(--vote-category) 22%, transparent), 0 0 24px color-mix(in srgb, var(--vote-category) 17%, transparent), inset 0 1px rgba(255, 255, 255, .05); transform: translateX(1px); }
+.room-tools-shell.is-wave .wave-vote-row.is-selected::before { inset-block: 4px; opacity: 1; box-shadow: 0 0 14px color-mix(in srgb, var(--vote-category) 74%, transparent); }
+.room-tools-shell.is-wave .wave-vote-row.is-live { box-shadow: 0 0 22px rgba(157, 91, 255, .15), inset 0 1px rgba(255, 255, 255, .04); }
+.room-tools-shell.is-wave .wave-vote-row.is-locked:not(.is-selected) { opacity: .82; }
+.room-tools-shell.is-wave .wave-vote-row__order { display: none; }
+.room-tools-shell.is-wave .wave-vote-row__select {
+  position: relative; display: grid; min-width: 0; grid-template-columns: 44px minmax(150px, 1fr) 94px;
+  align-items: center; gap: 8px; padding: 6px 14px 6px 16px; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer;
+}
+.room-tools-shell.is-wave .wave-vote-row__select:disabled { cursor: not-allowed; }
+.room-tools-shell.is-wave .wave-vote-row__select:focus-visible { outline: 2px solid color-mix(in srgb, var(--vote-category) 75%, white); outline-offset: -3px; }
+.room-tools-shell.is-wave .wave-vote-row__avatar { position: relative; display: grid; width: 42px; height: 42px; place-items: center; overflow: hidden; border: 1px solid color-mix(in srgb, var(--vote-category) 58%, transparent); border-radius: 50%; background: #171126; box-shadow: 0 0 11px color-mix(in srgb, var(--vote-category) 14%, transparent); }
+.room-tools-shell.is-wave .wave-vote-row__avatar em { color: #e5c8ff; font-size: 10px; font-style: normal; font-weight: 850; }
+.room-tools-shell.is-wave .wave-vote-row__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.room-tools-shell.is-wave .wave-vote-row__identity { display: flex; min-width: 0; align-items: center; justify-content: flex-start; gap: 5px; }
+.room-tools-shell.is-wave .wave-vote-row__identity > strong { display: block; width: max-content; min-width: 0; overflow: visible; color: #fbf9fd; font-size: 12px; font-weight: 880; letter-spacing: -.012em; text-overflow: clip; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-row__grade { --mw-grade-size: 18px !important; width: 18px; height: 18px; flex: 0 0 18px; }
+.room-tools-shell.is-wave .wave-vote-row__meta { display: flex; min-width: 0; align-items: center; justify-content: center; }
+.room-tools-shell.is-wave .wave-vote-row__meta b { display: inline-flex; width: 88px; min-width: 88px; min-height: 25px; box-sizing: border-box; align-items: center; justify-content: center; padding: 5px 7px; border: 1px solid color-mix(in srgb, var(--vote-category) 68%, transparent); border-radius: 7px; background: color-mix(in srgb, var(--vote-category) 11%, transparent); color: color-mix(in srgb, var(--vote-category) 88%, white 8%); font-size: 7px; font-weight: 900; letter-spacing: .025em; text-align: center; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-row__meta small { color: rgba(221, 213, 234, .56); font-size: 7.5px; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-row__volume { display: grid; min-width: 0; grid-template-columns: 15px minmax(66px, 1fr); align-items: center; gap: 7px; padding: 0 8px; color: var(--vote-category); }
+.room-tools-shell.is-wave .wave-vote-row__volume svg { width: 14px; height: 14px; }
+.room-tools-shell.is-wave .wave-vote-row__volume input { width: 100%; min-width: 0; height: 4px; margin: 0; accent-color: var(--vote-category); cursor: pointer; }
+.room-tools-shell.is-wave .wave-vote-row__preview { align-self: center; display: grid; width: 34px; height: 34px; place-items: center; justify-self: center; padding: 0; border: 1px solid color-mix(in srgb, var(--vote-category) 54%, transparent); border-radius: 50%; background: radial-gradient(circle at 35% 24%, rgba(255, 255, 255, .18), transparent 30%), color-mix(in srgb, var(--vote-category) 12%, rgba(8, 9, 23, .96)); color: color-mix(in srgb, var(--vote-category) 78%, white 16%); box-shadow: 0 0 13px color-mix(in srgb, var(--vote-category) 12%, transparent); cursor: pointer; transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease, transform 150ms ease; }
+.room-tools-shell.is-wave .wave-vote-row__preview svg { width: 13px; height: 13px; fill: currentColor; }
+.room-tools-shell.is-wave .wave-vote-row__preview:hover:not(:disabled),
+.room-tools-shell.is-wave .wave-vote-row__preview.is-playing { border-color: color-mix(in srgb, var(--vote-category) 82%, white 8%); background: linear-gradient(145deg, color-mix(in srgb, var(--vote-category) 76%, #b768ff), color-mix(in srgb, var(--vote-category) 45%, #251345)); color: #fff; box-shadow: 0 0 20px color-mix(in srgb, var(--vote-category) 44%, transparent), inset 0 1px rgba(255, 255, 255, .3); transform: scale(1.05); }
+
+.room-tools-shell.is-wave .wave-vote-dock {
+  --vote-category: #a855f7; --candidate-category: #a855f7; position: sticky; z-index: 30; bottom: 0; display: grid; min-width: 0;
+  grid-template-rows: minmax(58px, auto) 48px; gap: 6px; padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--vote-category) 80%, rgba(255, 255, 255, .16)); border-radius: 16px;
+  background: radial-gradient(circle at 10% 0, color-mix(in srgb, var(--vote-category) 15%, transparent), transparent 34%), linear-gradient(135deg, rgba(17, 15, 41, .985), rgba(5, 7, 19, .99));
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .66), 0 0 32px color-mix(in srgb, var(--vote-category) 25%, transparent), inset 0 1px rgba(255, 255, 255, .08);
+  backdrop-filter: blur(22px) saturate(1.25); isolation: isolate;
+}
+.room-tools-shell.is-wave .wave-vote-dock::before { position: absolute; z-index: -1; inset: 0 13% auto; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--vote-category) 86%, white 8%), transparent); content: ""; }
+.room-tools-shell.is-wave .wave-vote-dock::after { display: none; }
+.room-tools-shell.is-wave .wave-vote-dock__main { display: grid; min-width: 0; grid-template-areas: "mode identity duration"; grid-template-columns: minmax(156px, .92fr) minmax(168px, 1.1fr) 88px; align-items: stretch; gap: 7px; }
+.room-tools-shell.is-wave .wave-vote-dock__identity { position: relative; display: grid; min-width: 0; grid-area: identity; grid-template-columns: 36px minmax(0, 1fr); align-items: center; gap: 7px; padding: 4px 7px 4px 9px; border-right: 1px solid rgba(157, 135, 194, .14); }
+.room-tools-shell.is-wave .wave-vote-dock__identity::before { position: absolute; inset: 5px auto 5px 0; width: 3px; border-radius: 999px; background: var(--candidate-category); box-shadow: 0 0 12px color-mix(in srgb, var(--candidate-category) 62%, transparent); content: ""; }
+.room-tools-shell.is-wave .wave-vote-dock__avatar { position: relative; display: grid; width: 36px; height: 36px; place-items: center; overflow: hidden; border: 1px solid color-mix(in srgb, var(--candidate-category) 64%, transparent); border-radius: 50%; background: #171126; box-shadow: 0 0 13px color-mix(in srgb, var(--candidate-category) 18%, transparent); }
+.room-tools-shell.is-wave .wave-vote-dock__avatar em { color: #ead2ff; font-size: 10px; font-style: normal; font-weight: 900; }
+.room-tools-shell.is-wave .wave-vote-dock__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.room-tools-shell.is-wave .wave-vote-dock__candidate { display: grid; min-width: 0; align-content: center; gap: 2px; padding-right: 4px; }
+.room-tools-shell.is-wave .wave-vote-dock__candidate > small { overflow: hidden; color: color-mix(in srgb, var(--vote-category) 78%, white 15%); font-size: 6.5px; font-weight: 900; letter-spacing: .075em; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-dock__candidate-name { display: flex; min-width: 0; align-items: center; justify-content: flex-start; gap: 4px; }
+.room-tools-shell.is-wave .wave-vote-dock__candidate-name > strong { overflow: hidden; color: #fff; font-size: 12px; font-weight: 880; line-height: 1.04; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-dock__grade { --mw-grade-size: 20px !important; width: 20px; height: 20px; flex: 0 0 20px; }
+.room-tools-shell.is-wave .wave-vote-dock__category { justify-self: start; padding: 4px 7px; border: 1px solid color-mix(in srgb, var(--candidate-category) 64%, transparent); border-radius: 6px; background: color-mix(in srgb, var(--candidate-category) 10%, transparent); color: color-mix(in srgb, var(--candidate-category) 88%, white 8%); font-size: 7px; font-weight: 900; letter-spacing: .035em; }
+.room-tools-shell.is-wave .wave-vote-dock__status { position: absolute; top: 0; right: 5px; display: inline-flex; min-height: 18px; align-items: center; gap: 3px; padding: 0 6px; border: 1px solid color-mix(in srgb, var(--vote-category) 38%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--vote-category) 10%, rgba(5, 6, 17, .8)); color: #ead6ff; font-size: 5.8px; font-style: normal; font-weight: 900; letter-spacing: .05em; box-shadow: 0 0 12px color-mix(in srgb, var(--vote-category) 10%, transparent); }
+.room-tools-shell.is-wave .wave-vote-dock__status svg { width: 8px; height: 8px; color: color-mix(in srgb, var(--vote-category) 80%, white); }
+.room-tools-shell.is-wave .wave-vote-dock__status.is-live { border-color: rgba(255, 96, 135, .34); background: rgba(190, 42, 80, .12); color: #ff84a0; }
+.room-tools-shell.is-wave .wave-vote-dock__status.is-final { border-color: rgba(79, 220, 158, .3); background: rgba(41, 174, 116, .1); color: #72e8b2; }
+.room-tools-shell.is-wave .wave-vote-dock__mode button { display: inline-grid; place-items: center; padding: 0; border: 1px solid rgba(151, 133, 190, .2); background: rgba(255, 255, 255, .025); color: rgba(232, 225, 242, .67); cursor: pointer; }
+.room-tools-shell.is-wave .wave-vote-dock__mode { position: relative; display: grid; min-width: 0; height: 48px; grid-area: mode; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; margin: 0; padding: 3px; border: 1px solid rgba(149, 132, 188, .18); border-radius: 12px; background: rgba(4, 5, 16, .3); }
+.room-tools-shell.is-wave .wave-vote-dock__mode legend { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-dock__mode button { display: inline-flex; min-width: 0; height: 40px; align-items: center; justify-content: center; gap: 4px; border-radius: 9px; font-size: 8px; font-weight: 800; }
+.room-tools-shell.is-wave .wave-vote-dock__mode button svg { width: 12px; height: 12px; }
+.room-tools-shell.is-wave .wave-vote-dock__mode button.is-active { border-color: color-mix(in srgb, var(--vote-category) 62%, white 6%); background: linear-gradient(145deg, color-mix(in srgb, var(--vote-category) 48%, transparent), rgba(82, 39, 151, .4)); color: #fff; box-shadow: 0 0 18px color-mix(in srgb, var(--vote-category) 18%, transparent), inset 0 1px rgba(255, 255, 255, .1); }
+.room-tools-shell.is-wave .wave-vote-dock__duration { display: grid; min-width: 0; grid-area: duration; align-content: center; }
+.room-tools-shell.is-wave .wave-vote-dock__duration > span { display: inline-flex; align-items: center; justify-content: center; gap: 3px; color: rgba(218, 208, 231, .48); font-size: 6px; }
+.room-tools-shell.is-wave .wave-vote-dock__duration > span svg { width: 9px; height: 9px; }
+.room-tools-shell.is-wave .wave-vote-dock__duration select { width: 100%; min-width: 0; height: 48px; padding: 0 9px; border: 1px solid color-mix(in srgb, var(--vote-category) 64%, transparent); border-radius: 12px; outline: 0; background: linear-gradient(145deg, rgba(42, 22, 72, .94), rgba(7, 8, 21, .99)); color: #fff; font-size: 11px; font-weight: 900; text-align: center; text-align-last: center; box-shadow: inset 0 1px rgba(255, 255, 255, .08), 0 0 15px color-mix(in srgb, var(--vote-category) 15%, transparent); }
+.room-tools-shell.is-wave .wave-vote-dock__actions { display: grid; min-width: 0; align-items: center; }
+.room-tools-shell.is-wave .wave-vote-dock__launch { position: relative; display: flex; width: 100%; min-width: 0; min-height: 48px; align-items: center; justify-content: center; gap: 10px; overflow: hidden; padding: 0 54px; border: 1px solid rgba(225, 174, 255, .9); border-radius: 12px; background: radial-gradient(circle at 50% -55%, rgba(255, 221, 255, .34), transparent 48%), linear-gradient(135deg, #b45af4 0%, #813be1 50%, #5728bd 100%); color: #fff; box-shadow: 0 0 30px rgba(159, 70, 240, .36), inset 0 1px rgba(255, 255, 255, .32), inset 0 -12px 26px rgba(54, 19, 119, .18); cursor: pointer; }
+.room-tools-shell.is-wave .wave-vote-dock__launch::after { position: absolute; right: -18px; bottom: -50px; width: 120px; height: 120px; border: 1px solid rgba(222, 173, 255, .14); border-radius: 50%; box-shadow: 0 0 0 7px rgba(222, 173, 255, .05), 0 0 0 14px rgba(222, 173, 255, .045), 0 0 0 21px rgba(222, 173, 255, .04), 0 0 0 28px rgba(222, 173, 255, .035); content: ""; }
+.room-tools-shell.is-wave .wave-vote-dock__launch > svg { position: absolute; z-index: 1; left: 20px; box-sizing: content-box; width: 17px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, .3)); }
+.room-tools-shell.is-wave .wave-vote-dock__launch > span { z-index: 1; display: grid; min-width: 0; gap: 1px; text-align: center; }
+.room-tools-shell.is-wave .wave-vote-dock__launch small { color: rgba(250, 240, 255, .78); font-size: 7px; letter-spacing: .035em; }
+.room-tools-shell.is-wave .wave-vote-dock__launch strong { font-size: 11px; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-dock__launch.is-live { border-color: rgba(255, 100, 136, .42); background: radial-gradient(circle at 50% -55%, rgba(255, 190, 218, .16), transparent 48%), linear-gradient(135deg, #8b244d, #541c42); box-shadow: 0 0 20px rgba(219, 54, 97, .18), inset 0 1px rgba(255, 255, 255, .12); }
+.room-tools-shell.is-wave .wave-vote-dock button:disabled,
+.room-tools-shell.is-wave .wave-vote-dock fieldset:disabled { cursor: not-allowed; opacity: .78; }
+.room-tools-shell.is-wave .wave-vote-dock__viewer { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(148, 127, 190, .15); border-radius: 11px; color: rgba(226, 217, 237, .58); font-size: 7px; }
+.room-tools-shell.is-wave .wave-vote-dock__viewer svg { width: 12px; }
+.room-tools-shell.is-wave .wave-vote-inbox > .room-tool-notice { position: absolute; z-index: 40; right: 18px; bottom: 138px; left: 18px; margin: 0; }
+.room-tools-shell.is-wave .wave-vote-inbox button:hover:not(:disabled):not(.wave-vote-row__select):not(.wave-vote-row__preview) { border-color: rgba(185, 116, 255, .52); color: #fff; }
+.room-tools-shell.is-wave .wave-vote-audio-engine { display: none; }
+.room-tools-shell.is-wave .wave-vote-inbox button:focus-visible,
+.room-tools-shell.is-wave .wave-vote-inbox select:focus-visible { outline: 2px solid rgba(187, 117, 255, .86); outline-offset: 2px; }
+
+.room-tools-shell.is-wave .wave-vote-import-modal { position: absolute; z-index: 70; inset: 0; display: grid; place-items: center; padding: 14px; background: rgba(2,3,12,.79); backdrop-filter: blur(13px); }
+.room-tools-shell.is-wave .wave-vote-import-modal > form { display: grid; width: min(430px,100%); gap: 12px; padding: 16px; border: 1px solid rgba(172,105,250,.6); border-radius: 18px; background: radial-gradient(circle at 15% 0,rgba(139,76,229,.2),transparent 43%),linear-gradient(145deg,#0c0b21,#060713); box-shadow: 0 24px 60px rgba(0,0,0,.7),0 0 28px rgba(136,69,224,.2),inset 0 1px rgba(255,255,255,.07); }
+.room-tools-shell.is-wave .wave-vote-import-modal header,.room-tools-shell.is-wave .wave-vote-import-modal header > span,.room-tools-shell.is-wave .wave-vote-import-modal footer { display: flex; align-items: center; }
+.room-tools-shell.is-wave .wave-vote-import-modal header { justify-content: space-between; }
+.room-tools-shell.is-wave .wave-vote-import-modal header > span { gap: 9px; }
+.room-tools-shell.is-wave .wave-vote-import-modal header > span > svg { width: 21px; height: 21px; color: #b66dff; filter: drop-shadow(0 0 7px rgba(172,93,250,.45)); }
+.room-tools-shell.is-wave .wave-vote-import-modal header span span { display: grid; gap: 2px; }
+.room-tools-shell.is-wave .wave-vote-import-modal header small { color: #a983d4; font-size: 7px; font-weight: 900; letter-spacing: .08em; }
+.room-tools-shell.is-wave .wave-vote-import-modal header strong { color: #fff; font-size: 16px; }
+.room-tools-shell.is-wave .wave-vote-import-modal header button { display: grid; width: 32px; height: 32px; place-items: center; padding: 0; border: 1px solid rgba(155,139,185,.26); border-radius: 9px; background: rgba(5,6,17,.8); color: #cfc8da; }
+.room-tools-shell.is-wave .wave-vote-import-modal header button svg { width: 15px; }
+.room-tools-shell.is-wave .wave-vote-import-modal__file { display: flex; min-height: 70px; align-items: center; gap: 12px; padding: 10px 13px; border: 1px dashed rgba(177,111,248,.48); border-radius: 13px; background: rgba(106,57,177,.08); color: #dcd5e7; text-align: left; cursor: pointer; }
+.room-tools-shell.is-wave .wave-vote-import-modal__file.has-file { border-style: solid; border-color: rgba(79,221,156,.48); background: rgba(37,152,106,.08); }
+.room-tools-shell.is-wave .wave-vote-import-modal__file > svg { width: 28px; height: 28px; color: #ae68f7; }
+.room-tools-shell.is-wave .wave-vote-import-modal__file > span { display: grid; min-width: 0; gap: 4px; }
+.room-tools-shell.is-wave .wave-vote-import-modal__file strong { overflow: hidden; color: #fff; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-vote-import-modal__file small { color: #9d96aa; font-size: 7.5px; }
+.room-tools-shell.is-wave .wave-vote-import-modal__fields { display: grid; grid-template-columns: minmax(0,1fr) minmax(118px,.65fr); gap: 8px; }
+.room-tools-shell.is-wave .wave-vote-import-modal__fields label { display: grid; gap: 5px; color: #bfb6cb; font-size: 8px; font-weight: 850; text-transform: uppercase; }
+.room-tools-shell.is-wave .wave-vote-import-modal :is(input[type="text"],select),.room-tools-shell.is-wave .wave-vote-import-modal__fields input { width: 100%; min-width: 0; min-height: 40px; box-sizing: border-box; padding: 0 10px; border: 1px solid rgba(158,139,190,.3); border-radius: 10px; outline: 0; background: rgba(5,6,18,.86); color: #fff; font-size: 10px; }
+.room-tools-shell.is-wave .wave-vote-import-modal > form > p { display: flex; align-items: center; gap: 7px; margin: 0; color: #a69ead; font-size: 8px; }
+.room-tools-shell.is-wave .wave-vote-import-modal > form > p :is(b,span) { padding: 4px 7px; border: 1px solid rgba(155,139,185,.2); border-radius: 999px; background: rgba(255,255,255,.025); }
+.room-tools-shell.is-wave .wave-vote-import-modal > form > p b { color: #c992ff; }
+.room-tools-shell.is-wave .wave-vote-import-modal__rights { display: flex; align-items: center; gap: 8px; color: #bcb4c8; font-size: 8px; line-height: 1.35; }
+.room-tools-shell.is-wave .wave-vote-import-modal__rights input { width: 15px; height: 15px; flex: 0 0 15px; accent-color: #9b56ed; }
+.room-tools-shell.is-wave .wave-vote-import-modal footer { justify-content: flex-end; gap: 7px; }
+.room-tools-shell.is-wave .wave-vote-import-modal footer button { display: inline-flex; min-height: 39px; align-items: center; justify-content: center; gap: 6px; padding: 0 13px; border: 1px solid rgba(155,139,185,.28); border-radius: 10px; background: rgba(6,7,19,.8); color: #d8d1e2; font-size: 9px; font-weight: 850; }
+.room-tools-shell.is-wave .wave-vote-import-modal footer button.is-primary { border-color: #ad66fa; background: linear-gradient(135deg,#a355ef,#6932ca); color: #fff; box-shadow: 0 0 17px rgba(152,74,233,.22),inset 0 1px rgba(255,255,255,.18); }
+.room-tools-shell.is-wave .wave-vote-import-modal footer button:disabled { opacity: .4; }
+
+@container wave-tools (max-width: 610px) {
+  .room-tools-shell.is-wave .wave-vote-row__select { grid-template-columns: 42px minmax(122px, 1fr) 80px; gap: 7px; padding-inline: 14px 12px; }
+  .room-tools-shell.is-wave .wave-vote-row__meta b { width: 76px; min-width: 76px; }
+  .room-tools-shell.is-wave .wave-vote-row__meta small:nth-of-type(2) { display: none; }
+  .room-tools-shell.is-wave .wave-vote-dock__main { grid-template-columns: minmax(144px, .9fr) minmax(152px, 1fr) 82px; gap: 5px; }
+}
+
+@container wave-tools (max-width: 470px) {
+  .room-tools-shell.is-wave .wave-vote-inbox { gap: 6px; padding: 2px 7px 7px; }
+  .room-tools-shell.is-wave .wave-vote-inbox__toolbar { grid-template-columns: minmax(0,1fr) 78px; gap: 4px; }
+  .room-tools-shell.is-wave .wave-vote-inbox__queue-head { grid-template-columns: minmax(65px,1fr) repeat(3,minmax(42px,.66fr)); gap: 2px; padding-inline: 5px; }
+  .room-tools-shell.is-wave .wave-vote-inbox__queue-head > strong { font-size: 7.5px; }
+  .room-tools-shell.is-wave .wave-vote-inbox__queue-head small { font-size: 5.8px; }
+  .room-tools-shell.is-wave .wave-vote-inbox__import { gap: 4px; padding-inline: 6px; }
+  .room-tools-shell.is-wave .wave-vote-inbox__import span { font-size: 6px; }
+  .room-tools-shell.is-wave .wave-vote-row { min-height: 72px; grid-template-columns: minmax(0, 1fr) 86px 40px; }
+  .room-tools-shell.is-wave .wave-vote-row__select { grid-template-columns: 38px minmax(104px, 1fr) 68px; gap: 6px; padding-inline: 12px 9px; }
+  .room-tools-shell.is-wave .wave-vote-row__avatar { width: 38px; height: 38px; }
+  .room-tools-shell.is-wave .wave-vote-row__meta b { width: 62px; min-width: 62px; padding-inline: 3px; font-size: 6px; }
+  .room-tools-shell.is-wave .wave-vote-row__volume { grid-template-columns: 13px minmax(52px, 1fr); gap: 4px; padding-inline: 5px; }
+  .room-tools-shell.is-wave .wave-vote-dock { grid-template-rows: auto 46px; padding: 7px; }
+  .room-tools-shell.is-wave .wave-vote-dock__main { grid-template-areas: "identity identity" "mode duration"; grid-template-columns: minmax(0, 1fr) 64px; grid-template-rows: 51px 49px; }
+  .room-tools-shell.is-wave .wave-vote-dock__identity { grid-column: 1 / -1; grid-row: 1; border-right: 0; border-bottom: 1px solid rgba(157, 135, 194, .12); }
+  .room-tools-shell.is-wave .wave-vote-dock__mode { grid-column: 1; grid-row: 2; }
+  .room-tools-shell.is-wave .wave-vote-dock__duration { grid-column: 2; grid-row: 2; }
+  .room-tools-shell.is-wave .wave-vote-dock__launch { min-height: 46px; padding: 0 36px; }
+  .room-tools-shell.is-wave .wave-vote-dock__launch > svg { left: 14px; }
+  .room-tools-shell.is-wave .wave-vote-dock fieldset:disabled { opacity: .78; }
+  .room-tools-shell.is-wave .wave-vote-inbox > .room-tool-notice { bottom: 180px; }
+  .room-tools-shell.is-wave .wave-vote-import-modal { padding: 8px; }
+  .room-tools-shell.is-wave .wave-vote-import-modal > form { gap: 9px; padding: 12px; }
+  .room-tools-shell.is-wave .wave-vote-import-modal__fields { grid-template-columns: 1fr; }
+}
+
+@container wave-tools (max-width: 380px) {
+  .room-tools-shell.is-wave .wave-vote-dock__mode button { gap: 3px; font-size: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-tools-shell.is-wave .wave-vote-row,
+  .room-tools-shell.is-wave .wave-vote-row__preview { transition: none; }
+}

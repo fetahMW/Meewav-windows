@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "wave": 8,
+  "batch": "ranks-35-67",
+  "generatedAt": "2026-07-14T17:43:42.9810807Z",
+  "auditMode": {
+    "browserUsed": false,
+    "readOnlyExceptReport": true,
+    "method": "Static final GeoJSON, canonical, stable-ID mapping, search, ownership, camera and first-action fly audit"
+  },
+  "inputs": {
+    "plan": "geo/work/france-wave-8-plan.json",
+    "curation": "geo/work/france-wave-8-curation-b.json",
+    "catalog": "geo/catalog/france-city-iris.json",
+    "datasetCatalog": "geo/catalog/existing-datasets.json",
+    "runtimeManifest": "src/features/globe/geography/franceGuideAlphaCities.generated.ts",
+    "searchIndex": "public/search/france-communes-index.json",
+    "canonical": "geo/output/all.canonical.json",
+    "stableIdMappings": "geo/mappings/legacy-zone-ids/all.json"
+  },
+  "stableRuntimeHashes": {
+    "src/features/globe/geography/nationalGeoPipeline.ts": "AF5885C84C871B7BCFC568662A13FF6B6DB69EEF122901EB7DA4F45573909385",
+    "src/features/globe/selectedExtrusion/selectedZoneExtrusionController.ts": "B8F6C4DCA84C6C3FADD8526F96E1BB1174592CCCC33F1D12342DCBC458700DE9",
+    "src/features/globe/selectedExtrusion/selectedZoneExtrusionLayers.ts": "A68187C91016A717D9C04E40786EB98B2B3F9FE3AF38F4663B2E6CA33CC6D254",
+    "src/features/globe/selectedExtrusion/selectedZoneExtrusionTypes.ts": "A12EFAD14BBC001023C2280B7A18B50F66EA7641CA4EA2B6FD946A2797BFEA15",
+    "src/features/globe/selectedExtrusion/citySubdivisionConfig.ts": "1A94C15B4961ABDF2036B0BE22387D9A95A57E464A5DCA7114A1C14118D4E908",
+    "src/features/globe/components/GlobeMapV2.tsx": "D91C165746E1511D5C9873F869EEE7737DC6F2C72A6B647F36969B89F960FAEA",
+    "src/features/globe/geography/franceGuideAlphaCities.generated.ts": "CA576BB02755B974CEA8EB245E278C87306CE6F8F9DBBC84A947DA1CCD856364"
+  },
+  "finalDataHashes": {
+    "geo/output/all.canonical.json": "A8114584731351CDD66C788A4F750A46C238955B481D57C13CE2F45E254ECC2D",
+    "geo/mappings/legacy-zone-ids/all.json": "702DE5BE7FCAF271F4B9FD4FD78245496AE8AA4E9C5E39C975D0968778106F1B",
+    "public/search/france-communes-index.json": "5BB45173B271AD387EB99420113D36EC248CA31C34CAF09C18D9DE16EE201084"
+  },
+  "globalChecks": {
+    "guideAlphaCuration": "PASS",
+    "cityIdentityAndCommuneCode": "PASS",
+    "sourceAndVisiblePlateCounts": "PASS",
+    "uniqueRawFeatureAndZoneIds": "PASS",
+    "validRawPolygonAndMultiPolygonGeometry": "PASS",
+    "rawLabelPointsStrictlyInterior": "PASS",
+    "canonicalAdministrativeAndMusicZones": "PASS",
+    "canonicalLabelPointsStrictlyInterior": "PASS",
+    "stableIdMappings": "PASS",
+    "generatedCityAndCommuneAliases": "PASS",
+    "searchNameAndCommuneCodeFallback": "PASS",
+    "subdivisionOwnership": "PASS",
+    "cameraAndPremiumFlyPreset": "PASS",
+    "firstActionActivatesAndFlies": "PASS",
+    "preloadStartsDuringFly": "PASS",
+    "subdivisionsRestoreAutomaticallyAfterFly": "PASS",
+    "noSecondClickRequired": "PASS",
+    "activeCommuneUsesParisCenterDarkColor": "PASS",
+    "visibleNeighborCommunesUseLightPalette": "PASS",
+    "inactiveTerritoriesUseNormalGroundColor": "PASS",
+    "colorIndependentFromPopulationSizeAndEligibility": "PASS"
+  },
+  "artifactTotals": {
+    "runtimeCityCount": 404,
+    "ownershipCount": 838,
+    "globalCanonicalAdministrativeZoneCount": 9671,
+    "globalCanonicalMusicZoneCount": 9671,
+    "batchSourceIrisCount": 239,
+    "batchVisiblePlateCount": 235,
+    "batchValidatedGeometryCount": 235,
+    "batchRawStrictInteriorLabelPointCount": 235,
+    "batchCanonicalStrictInteriorLabelPointCount": 235,
+    "batchCanonicalAdministrativeZoneCount": 235,
+    "batchCanonicalMusicZoneCount": 235,
+    "batchStableIdMappingCount": 235
+  },
+  "firstActionFlyEvidence": {
+    "allCityFeatureIdsResolveToGeneratedPresets": true,
+    "allCommuneFeatureIdsResolveToGeneratedPresets": true,
+    "allSearchResultsResolveByCommuneCode": true,
+    "activationAndPremiumFlyOccurInTheSameClickHandler": true,
+    "preloadIsStartedBeforeWaitingForMoveEnd": true,
+    "restoreRunsOnMoveEndWithAutomaticFallback": true,
+    "manualSecondActionRequired": false
+  },
+  "navigationColorEvidence": {
+    "activeGroundColor": "#1B1234",
+    "selectedStatePrecedesNeighborState": true,
+    "neighborStateUsesLightEightColorPalette": true,
+    "normalStateUsesDatasetGroundColor": true,
+    "neighborSelectionUsesVisibleCommuneState": true,
+    "populationOrCitySizeUsedByColorState": false
+  },
+  "validation": {
+    "waveAuditValidator": "PASS (100 cities, 751 official IRIS, 741 visible plates; 212 accepts, 109 renames, 9 merges)",
+    "runtimeAndManifestTests": "PASS (19/19)",
+    "batchArtifactAudit": "PASS (33 cities, 239 official IRIS, 235 visible plates, 235 raw and canonical strict-interior label points)"
+  },
+  "summary": {
+    "status": "PASS",
+    "cityCount": 33,
+    "passed": 33,
+    "failed": 0,
+    "sourceIrisCount": 239,
+    "visiblePlateCount": 235,
+    "runtimeModes": {
+      "standalone_split": 33,
+      "single_plate": 0
+    }
+  },
+  "cities": [
+    {
+      "rank": 35,
+      "id": "le_puy_en_velay",
+      "name": "Le Puy-en-Velay",
+      "communeCode": "43157",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 36,
+      "id": "sanary_sur_mer",
+      "name": "Sanary-sur-Mer",
+      "communeCode": "83123",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 37,
+      "id": "cognac",
+      "name": "Cognac",
+      "communeCode": "16102",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 38,
+      "id": "moissy_cramayel",
+      "name": "Moissy-Cramayel",
+      "communeCode": "77296",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 6,
+      "status": "PASS"
+    },
+    {
+      "rank": 39,
+      "id": "eragny_sur_oise",
+      "name": "Éragny-sur-Oise",
+      "communeCode": "95218",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 40,
+      "id": "le_pontet",
+      "name": "Le Pontet",
+      "communeCode": "84092",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 41,
+      "id": "romorantin_lanthenay",
+      "name": "Romorantin-Lanthenay",
+      "communeCode": "41194",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 42,
+      "id": "floirac",
+      "name": "Floirac",
+      "communeCode": "33167",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 43,
+      "id": "luneville",
+      "name": "Lunéville",
+      "communeCode": "54329",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 44,
+      "id": "bagnols_sur_ceze",
+      "name": "Bagnols-sur-Cèze",
+      "communeCode": "30028",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 45,
+      "id": "hendaye",
+      "name": "Hendaye",
+      "communeCode": "64260",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 4,
+      "visiblePlateCount": 4,
+      "status": "PASS"
+    },
+    {
+      "rank": 46,
+      "id": "pontarlier",
+      "name": "Pontarlier",
+      "communeCode": "25462",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 47,
+      "id": "soisy_sous_montmorency",
+      "name": "Soisy-sous-Montmorency",
+      "communeCode": "95598",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 48,
+      "id": "saint_egreve",
+      "name": "Saint-Égrève",
+      "communeCode": "38382",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 49,
+      "id": "digne_les_bains",
+      "name": "Digne-les-Bains",
+      "communeCode": "04070",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 9,
+      "visiblePlateCount": 9,
+      "status": "PASS"
+    },
+    {
+      "rank": 50,
+      "id": "osny",
+      "name": "Osny",
+      "communeCode": "95476",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 51,
+      "id": "carvin",
+      "name": "Carvin",
+      "communeCode": "62215",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 5,
+      "status": "PASS"
+    },
+    {
+      "rank": 52,
+      "id": "saint_maximin_la_sainte_baume",
+      "name": "Saint-Maximin-la-Sainte-Baume",
+      "communeCode": "83116",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 6,
+      "status": "PASS"
+    },
+    {
+      "rank": 53,
+      "id": "limay",
+      "name": "Limay",
+      "communeCode": "78335",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 6,
+      "status": "PASS"
+    },
+    {
+      "rank": 54,
+      "id": "jouy_le_moutier",
+      "name": "Jouy-le-Moutier",
+      "communeCode": "95323",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 55,
+      "id": "brignoles",
+      "name": "Brignoles",
+      "communeCode": "83023",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 5,
+      "status": "PASS"
+    },
+    {
+      "rank": 56,
+      "id": "cluses",
+      "name": "Cluses",
+      "communeCode": "74081",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 57,
+      "id": "balma",
+      "name": "Balma",
+      "communeCode": "31044",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 58,
+      "id": "segre_en_anjou_bleu",
+      "name": "Segré-en-Anjou Bleu",
+      "communeCode": "49331",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 59,
+      "id": "ambares_et_lagrave",
+      "name": "Ambarès-et-Lagrave",
+      "communeCode": "33003",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 4,
+      "visiblePlateCount": 4,
+      "status": "PASS"
+    },
+    {
+      "rank": 60,
+      "id": "villeneuve_loubet",
+      "name": "Villeneuve-Loubet",
+      "communeCode": "06161",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 61,
+      "id": "l_isle_d_abeau",
+      "name": "L'Isle-d'Abeau",
+      "communeCode": "38193",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 6,
+      "visiblePlateCount": 6,
+      "status": "PASS"
+    },
+    {
+      "rank": 62,
+      "id": "chamalieres",
+      "name": "Chamalières",
+      "communeCode": "63075",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 63,
+      "id": "vire_normandie",
+      "name": "Vire Normandie",
+      "communeCode": "14762",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 10,
+      "visiblePlateCount": 10,
+      "status": "PASS"
+    },
+    {
+      "rank": 64,
+      "id": "avion",
+      "name": "Avion",
+      "communeCode": "62065",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 65,
+      "id": "yutz",
+      "name": "Yutz",
+      "communeCode": "57757",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 7,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    },
+    {
+      "rank": 66,
+      "id": "lattes",
+      "name": "Lattes",
+      "communeCode": "34129",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 8,
+      "status": "PASS"
+    },
+    {
+      "rank": 67,
+      "id": "marmande",
+      "name": "Marmande",
+      "communeCode": "47157",
+      "runtimeMode": "standalone_split",
+      "sourceIrisCount": 8,
+      "visiblePlateCount": 7,
+      "status": "PASS"
+    }
+  ]
+}

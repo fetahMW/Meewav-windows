@@ -1,0 +1,105 @@
+/* Shared Hi-Fi material: raised anthracite faces, recessed displays and rails. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player :is(.place-volume-list, .place-master-dock) > .place-volume-row,
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player :is(.place-volume-list, .place-master-dock) > .place-volume-row:hover {
+  --studio-convex-face:
+    radial-gradient(100% 130% at 48% -70%, #ffffff16, transparent 72%) padding-box,
+    linear-gradient(180deg, #222429 0%, #17191d 16%, #0f1115 52%, #0b0c10 86%, #17191d 100%) padding-box,
+    linear-gradient(165deg, #9a9da5a6, #44474d80 38%, #090a0ce6 78%, #60636c70) border-box;
+  --studio-convex-shadow: inset 0 1px 1px #ffffff38, inset 1px 0 1px #ffffff0c,
+    inset 0 -2px 3px #000000c0, 0 2px 2px #000000a0, 0 5px 10px #00000050;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio {
+  --studio-convex-face:
+    radial-gradient(110% 65% at 38% -22%, #ffffff15, transparent 75%) padding-box,
+    linear-gradient(180deg, #23252a 0%, #181a1e 12%, #0f1114 42%, #0c0d10 80%, #1b1d22 100%) padding-box,
+    linear-gradient(145deg, #a2a5afaa, #45485080 35%, #0c0d10e0 77%, #64687480) border-box;
+  --studio-convex-shadow: inset 0 1px 1px #ffffff40, inset 1px 0 2px #ffffff0b,
+    inset 0 -3px 5px #000000c0, 0 3px 3px #00000080, 0 8px 18px #00000060;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-volume-row__fader::-webkit-slider-thumb {
+  background: linear-gradient(180deg, #d0d2d8 0%, #9196a0 17%, #41454e 43%, #30343c 55%, #767c87 88%, #a5aab4 100%);
+  border: 1px solid #bec3ce88;
+  box-shadow: inset 0 1px 1px #ffffffa0, inset 0 -1px 2px #000000b0, 0 2px 4px #000000bb;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-volume-row__fader::-moz-range-thumb {
+  background: linear-gradient(180deg, #d0d2d8, #9196a0 17%, #41454e 43%, #30343c 55%, #767c87 88%, #a5aab4);
+  border: 1px solid #bec3ce88;
+  box-shadow: inset 0 1px 1px #ffffffa0, inset 0 -1px 2px #000000b0, 0 2px 4px #000000bb;
+}
+
+/* Personal rows include a status line: reserve its height and fill the rail. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.is-personal-mix.has-audio-player .place-volume-list > .place-volume-row {
+  width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  flex: 0 0 64px;
+  height: 64px;
+  min-height: 64px;
+  max-height: 64px;
+  grid-template-rows: 30px 5px 15px;
+  align-content: center;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.is-personal-mix .place-volume-row__identity {
+  align-self: center;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.is-personal-mix.has-audio-player > .place-volume-view {
+  grid-template-rows: minmax(0, 1fr) 88px;
+  padding-bottom: 16px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.is-personal-mix.has-audio-player .place-master-dock {
+  display: grid;
+  grid-template-rows: 18px 64px;
+  height: 88px;
+  min-height: 88px;
+  max-height: 88px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.is-personal-mix.has-audio-player .place-master-dock > .place-volume-row {
+  height: 64px;
+  min-height: 64px;
+  max-height: 64px;
+  box-sizing: border-box;
+  grid-template-rows: 30px 5px 15px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio__track {
+  transform: translateY(-3px);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio__track-icon {
+  max-height: 28px;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio__import {
+  transform: translateY(-2px);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player {
+  --hifi-signal: linear-gradient(90deg, #8054d9 0%, #7955dd 35%, #6b60e5 65%, #568cf5 100%);
+}
+
+/* Keep the transport row clear of the lower and right chassis edges. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio__controls {
+  transform: translate(-4px, -4px);
+  width: calc(100% - 4px);
+  box-sizing: border-box;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio.has-track .place-mixer-audio__timeline {
+  transform: translateY(-5px);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio__track-icon > svg {
+  color: #9364e4;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio {
+  --studio-black-key: linear-gradient(180deg, #ffffff1c, transparent 4px) padding-box,
+    linear-gradient(180deg, #24262b, #17191d 42%, #0a0b0e) padding-box,
+    var(--studio-black-edge);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__routing > button {
+  background: var(--studio-black-key) !important;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__transport-buttons > .place-mixer-audio__play {
+  background: radial-gradient(ellipse at 50% 1%, #ffffff22, transparent 30%) padding-box,
+    radial-gradient(circle at 50% 32%, #25272c, #101115 72%) padding-box,
+    var(--studio-black-edge) !important;
+}

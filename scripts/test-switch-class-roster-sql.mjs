@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
+const {PGlite}=await import(pathToFileURL(process.env.PGLITE_MODULE_PATH).href);
+const db=new PGlite();
+const host='51000000-0000-4000-8000-000000000001',room='52000000-0000-4000-8000-000000000001';
+const ids=Array.from({length:24},(_,i)=>`53000000-0000-4000-8000-${String(i+1).padStart(12,'0')}`);
+try {
+await db.exec(`create role anon;create role authenticated;create schema auth;create function auth.uid() returns uuid language sql as $$select current_setting('request.jwt.claim.sub')::uuid$$;
+create function rooms_live_call_room_access_revoked_v1(uuid,uuid) returns boolean language sql as $$select false$$;
+create table rooms_v2(id uuid primary key,host_id uuid);create table room_experience_requests_v1(room_id uuid,request_id uuid);
+create table room_queue_v2(room_id uuid,user_id uuid,removed_at timestamptz);
+create table room_classe_seat_entitlements_v1(room_id uuid,seat_number smallint,student_id uuid,access_kind text,status text,granted_by uuid,source_reference text,revoked_at timestamptz,updated_at timestamptz,primary key(room_id,seat_number));
+create table room_specialized_state_v1(room_id uuid,room_type text,state jsonb);
+create function rooms_project_classe_seats_v1(uuid,jsonb,uuid,boolean) returns jsonb language sql as $$select $2$$;
+create function rooms_switch_experience_v1(uuid,bigint,uuid,text,jsonb) returns jsonb language plpgsql as $$begin if $2=-1 then raise exception 'switch_conflict';end if;return '{"ok":true}'::jsonb;end$$;
+insert into rooms_v2 values('${room}','${host}');select set_config('request.jwt.claim.sub','${host}',false);`);
+for(const id of ids)await db.query('insert into room_queue_v2 values($1,$2,null)',[room,id]);
+await db.exec(await readFile('supabase/migrations/20260907220000_rooms_switch_class_roster_v1.sql','utf8'));
+const call=(studentIds,version=0)=>db.query('select rooms_switch_experience_v1($1,$2,$3,$4,$5)',[room,version,crypto.randomUUID(),'classe',{studentIds,launch:{values:{seats:24}}}]);
+await assert.rejects(call([]),/switch_class_selection/);
+await assert.rejects(call([...ids.slice(1),ids[1]]),/switch_class_selection/);
+await db.query('update room_queue_v2 set removed_at=now() where user_id=$1',[ids[0]]);
+await assert.rejects(call(ids),/switch_class_selection/);
+await db.exec('update room_queue_v2 set removed_at=null');
+await assert.rejects(call(ids,-1),/switch_conflict/);
+assert.equal((await db.query('select count(*)::int n from room_classe_seat_entitlements_v1')).rows[0].n,0);
+await call(ids.slice(0,8));
+assert.equal((await db.query("select count(*)::int n from room_classe_seat_entitlements_v1 where access_kind='manual_grant'")).rows[0].n,8);
+await db.exec(`select set_config('request.jwt.claim.sub','${ids[0]}',false)`);
+await assert.rejects(call(ids),/switch_forbidden/);
+console.log('PASS: 1–24 unique queued students, withdrawal, host authority, rollback and 8 manual entitlements. Projection is a fixture; remote delivery is not tested.');
+}finally{await db.close();}

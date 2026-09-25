@@ -1,0 +1,219 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "generatedBy": "scripts/generate-france-region-plates.ts",
+    "source": "/geo/france-regions-metropole-simplified.geojson",
+    "featureCount": 13,
+    "displayMode": "country-region-ground-labels"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "ile-de-france-label",
+      "properties": {
+        "regionId": "ile-de-france",
+        "name": "Île-de-France",
+        "priority": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.45,
+          48.68
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hauts-de-france-label",
+      "properties": {
+        "regionId": "hauts-de-france",
+        "name": "Hauts-de-France",
+        "priority": 2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.85,
+          50.26
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "grand-est-label",
+      "properties": {
+        "regionId": "grand-est",
+        "name": "Grand Est",
+        "priority": 2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.65,
+          48.72
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "auvergne-rhone-alpes-label",
+      "properties": {
+        "regionId": "auvergne-rhone-alpes",
+        "name": "Auvergne-Rhône-Alpes",
+        "priority": 2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.62,
+          45.55
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "provence-alpes-cote-d-azur-label",
+      "properties": {
+        "regionId": "provence-alpes-cote-d-azur",
+        "name": "Provence-Alpes-Côte d’Azur",
+        "priority": 2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.2,
+          43.95
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "normandie-label",
+      "properties": {
+        "regionId": "normandie",
+        "name": "Normandie",
+        "priority": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.15,
+          49.08
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "pays-de-la-loire-label",
+      "properties": {
+        "regionId": "pays-de-la-loire",
+        "name": "Pays de la Loire",
+        "priority": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.95,
+          47.42
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bretagne-label",
+      "properties": {
+        "regionId": "bretagne",
+        "name": "Bretagne",
+        "priority": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.85,
+          48.18
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "nouvelle-aquitaine-label",
+      "properties": {
+        "regionId": "nouvelle-aquitaine",
+        "name": "Nouvelle-Aquitaine",
+        "priority": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.18,
+          45.25
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "occitanie-label",
+      "properties": {
+        "regionId": "occitanie",
+        "name": "Occitanie",
+        "priority": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.15,
+          43.75
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "corse-label",
+      "properties": {
+        "regionId": "corse",
+        "name": "Corse",
+        "priority": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.08,
+          42.12
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "centre-val-de-loire-label",
+      "properties": {
+        "regionId": "centre-val-de-loire",
+        "name": "Centre-Val de Loire",
+        "priority": 4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.55,
+          47.45
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bourgogne-franche-comte-label",
+      "properties": {
+        "regionId": "bourgogne-franche-comte",
+        "name": "Bourgogne-Franche-Comté",
+        "priority": 4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.75,
+          47.25
+        ]
+      }
+    }
+  ]
+}

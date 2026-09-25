@@ -1,0 +1,5 @@
+-- Intentionally minimal.
+--
+-- Canonical catalogs are seeded by versioned migrations. Database contract
+-- tests create and roll back their own users. Investor demo artists remain in
+-- the dedicated Paris dataset and are never copied into a developer seed.

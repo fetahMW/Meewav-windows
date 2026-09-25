@@ -1,0 +1,911 @@
+{
+  "schemaVersion": 1,
+  "scope": "strasbourg",
+  "namespace": "7f8da20d-f3d2-5e73-94f2-52fda65537ce",
+  "entries": [
+    {
+      "legacyZoneId": "strasbourg_67482_group_canardiere",
+      "stableZoneId": "f3f53149-2448-5bec-8776-944f942a694a",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820101_mairie_nord",
+      "stableZoneId": "97da611e-5b94-5dbc-93f4-38a43c3baa40",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820102_mairie_sud",
+      "stableZoneId": "061abde8-d180-5194-8b80-9622625306b8",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820201_petite_france_nord_est",
+      "stableZoneId": "61142757-828f-5acb-bde1-35c039b5e17b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820202_petite_france_nord_ouest",
+      "stableZoneId": "0608370c-e503-5069-bae2-097935f76e4c",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820203_petite_france_centre",
+      "stableZoneId": "ff86100c-3d15-5481-acf2-68ec5867a187",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820204_petite_france_sud",
+      "stableZoneId": "4e5e9836-7da5-5014-b175-cc9b0326cf9e",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820301_gare_sud_ouest",
+      "stableZoneId": "249bb390-3f17-5752-9a3a-6765da0dbf11",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820302_gare_sud_est",
+      "stableZoneId": "128e2565-b1de-53ea-9050-ad03f1522c3c",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820303_gare_nord_ouest",
+      "stableZoneId": "79510a46-f28a-513e-849b-f2ddb8fc759b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820304_gare_centre",
+      "stableZoneId": "87a5c269-e456-59ce-92cf-1a754a79d4bf",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820305_gare_nord_est",
+      "stableZoneId": "1af134e5-1ec2-5fec-9b05-83e02a50b7b3",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820401_poincare_ouest",
+      "stableZoneId": "facf5258-0314-5013-b4a4-7e887c3aded8",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820402_poincare_est",
+      "stableZoneId": "f6190daf-6f90-5ca1-a9b6-7b7a21789a0b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820501_kable_nord",
+      "stableZoneId": "dbb042ca-a16e-5aef-9666-3e071c76238c",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820502_kable_sud_est",
+      "stableZoneId": "cd941421-9d99-543d-8daf-58c0173b362b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820503_kable_sud_ouest",
+      "stableZoneId": "ae714fed-565d-5f35-8fac-c738fe020789",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820601_contades_sud",
+      "stableZoneId": "1e2854ae-b858-56b5-97e3-4dd00663caec",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820602_contades_centre",
+      "stableZoneId": "9e72b9c8-472b-5f04-860e-0b7fa03d4a2b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820603_contades_nord",
+      "stableZoneId": "4f49bbc3-6944-5724-aeb3-34d50907bb1d",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820701_orangerie_est",
+      "stableZoneId": "aeba4661-2c6d-5def-9887-9dc6f9daadd3",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820702_orangerie_ouest",
+      "stableZoneId": "c92fce4b-9572-5fac-bbcd-574b881fd150",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820801_foret_noire_est",
+      "stableZoneId": "9e09d93c-2a62-51e2-9bd0-ed4a02912930",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820802_foret_noire_centre",
+      "stableZoneId": "aa8660cf-d78e-5827-a46c-648956147aaa",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820803_foret_noire_ouest",
+      "stableZoneId": "133259a9-f76b-50af-99a3-ee246f0e3ed4",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820804_foret_noire_sud",
+      "stableZoneId": "231ad25a-3f99-5ed3-be83-383755be18e0",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820901_vauban_sud",
+      "stableZoneId": "62cbb0cb-12d0-5987-ad8c-b3b694849d74",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820902_vauban_est",
+      "stableZoneId": "8381bed9-7758-5ddb-b473-e64f72a9a223",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674820903_vauban_ouest",
+      "stableZoneId": "9db6175b-4dc4-55f2-8c53-a97e04fc4049",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821001_esplanade_sud_est",
+      "stableZoneId": "233c3398-59cb-57f8-bde6-25ed736d4e62",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821002_esplanade_sud_ouest",
+      "stableZoneId": "f73faadd-89ed-568e-ba24-9ffe43834666",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821004_esplanade_nord_est",
+      "stableZoneId": "567076e4-5080-54f6-a7f6-d791b6deb49e",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821005_esplanade_nord_ouest",
+      "stableZoneId": "dd3a538c-ab47-532b-a142-f8476045d086",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821101_krutenau_centre_ouest",
+      "stableZoneId": "49afe874-f741-585a-bdbf-f6f0694ffeae",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821102_krutenau_centre_est",
+      "stableZoneId": "3a737d82-89e3-5fe0-98d7-04283384b207",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821103_krutenau_nord_ouest",
+      "stableZoneId": "4c57b7ff-bac6-5155-afa7-1c362428513a",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821104_krutenau_nord_est",
+      "stableZoneId": "5c14f1dd-317d-58e5-9af9-8782df2c1c42",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821201_neudorf_ouest_sud_est",
+      "stableZoneId": "b56982b7-8484-572a-bae0-5cddc16a5c31",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821202_neudorf_ouest_centre_est",
+      "stableZoneId": "d9b2e49e-2f61-5ab8-8fc7-c340801aa676",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821203_neudorf_ouest_sud",
+      "stableZoneId": "26dc26e9-749b-5bff-a488-80a16089ea57",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821204_neudorf_ouest_centre_ouest",
+      "stableZoneId": "e8dfa4d0-14d7-5df1-b09e-7e5312167705",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821205_neudorf_ouest_nord_ouest",
+      "stableZoneId": "9cd73cac-c742-5d9f-bf60-9d526db47184",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821206_neudorf_ouest_centre",
+      "stableZoneId": "79429d30-0023-52d6-a74e-ee87e138599b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821207_neudorf_ouest_nord_est",
+      "stableZoneId": "9b3c5dc2-9c4e-5594-ba7e-44a6b96c4685",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821301_elsau_centre",
+      "stableZoneId": "65d29b4e-7821-570f-ae76-f2b4557dd979",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821302_elsau_ouest",
+      "stableZoneId": "387f146a-e70f-57d0-9e06-906043b839be",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821303_elsau_est",
+      "stableZoneId": "2dd682df-0bba-5368-a450-aef5f79975fe",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821401_montagne_verte_sud_est",
+      "stableZoneId": "dc0e9a38-9937-532a-afc7-ac690011f239",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821402_montagne_verte_sud",
+      "stableZoneId": "8a190405-4679-55a6-9329-347a009d9e2f",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821403_montagne_verte_centre_ouest",
+      "stableZoneId": "cb5044af-5a1b-5ef4-aeb8-37361e9a3ba7",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821404_montagne_verte_nord_ouest",
+      "stableZoneId": "09ea68d3-8b2b-5fbb-ae95-50f5ac2ff26c",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821405_montagne_verte_nord_est",
+      "stableZoneId": "8a8de1bc-7aff-5e5b-897d-ddb2df659719",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821501_koenigshoffen_est_ouest",
+      "stableZoneId": "bc9776fe-83b7-50c9-8f08-9e32be142aa5",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821502_koenigshoffen_est_est",
+      "stableZoneId": "a568d1ed-b902-591c-8d88-233a33926a6b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821503_koenigshoffen_est_sud",
+      "stableZoneId": "861f6082-81ff-561b-ace9-22d8da31fafc",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821601_koenigshoffen_ouest_centre_ouest",
+      "stableZoneId": "83678281-2703-5e2c-a202-67ab40dc239f",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821603_koenigshoffen_ouest_nord_ouest",
+      "stableZoneId": "13305c47-7159-55f6-a57e-2c6d570fa475",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821604_koenigshoffen_ouest_nord_est",
+      "stableZoneId": "ba90e0f7-ffeb-5bda-8a07-ee3700a359d2",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821605_koenigshoffen_ouest_sud",
+      "stableZoneId": "653c3e3f-3828-54af-a995-f780c3567b8a",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821606_koenigshoffen_ouest_centre_est",
+      "stableZoneId": "07155950-76ed-52fd-9453-0aa47df61e66",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821701_hautepierre_ouest",
+      "stableZoneId": "6d19e42c-3c02-5adc-a059-d98cb7c34a36",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821702_hautepierre_nord_est",
+      "stableZoneId": "f19443ba-ba76-5e63-b0bf-1cf9955ed84e",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821703_hautepierre_nord",
+      "stableZoneId": "d30dc534-c6ad-51fb-82f5-c1dfbf93a374",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821704_hautepierre_sud_est",
+      "stableZoneId": "4d73d103-e4f0-5f99-8dcc-55cfb12b1dd1",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821705_hautepierre_centre",
+      "stableZoneId": "7a5f20a5-b488-5f64-8f6a-df1da6155984",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821706_hautepierre_sud_ouest",
+      "stableZoneId": "a6c1d941-8bed-5d27-92d1-3608984e07d9",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821801_cronenbourg_ouest_sud",
+      "stableZoneId": "11d69356-7a66-55f9-bcab-acb43b44d835",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821802_cronenbourg_ouest_nord_est",
+      "stableZoneId": "6cdbb2b3-3d7f-5b25-b60f-c18f1f9a13e3",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821803_cronenbourg_ouest_nord_ouest",
+      "stableZoneId": "bf6f0ee8-6de3-5848-af77-1c8c1b22adaf",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821804_cronenbourg_ouest_est",
+      "stableZoneId": "4d3f8a69-a89b-5b48-9a64-2308c4419fbd",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821805_cronenbourg_ouest_ouest",
+      "stableZoneId": "167110f5-de1e-5a20-8c2e-348c0ea65405",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821901_cronenbourg_est_nord_est",
+      "stableZoneId": "bf4983a5-e10c-5ebf-80e2-3a0e26fe3af8",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821902_cronenbourg_est_nord_ouest",
+      "stableZoneId": "ecc82cd0-97c4-5c5f-8785-c5257c5ec200",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821903_cronenbourg_est_centre_est",
+      "stableZoneId": "dfbfd0b5-57d4-53a0-9afe-b187b5ff2425",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821904_cronenbourg_est_centre_ouest",
+      "stableZoneId": "a68547e3-6d9e-5f4d-b66b-6e581db5c98e",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674821905_cronenbourg_est_sud",
+      "stableZoneId": "4cd6a65e-b137-531f-bc7c-4e09cc4f5050",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822001_cite_de_l_ill_ouest",
+      "stableZoneId": "4351a378-2afd-5be3-9e95-f911e340fe4a",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822002_cite_de_l_ill_est",
+      "stableZoneId": "faf59c25-ba45-5032-9526-8daee0acfc73",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822101_robertsau_sud_ouest",
+      "stableZoneId": "8b7b9d1f-f759-5906-9b5c-3a7e1b2affff",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822102_robertsau_ouest",
+      "stableZoneId": "89f16ba3-a710-5ca4-968b-150c0536c32c",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822103_robertsau_nord",
+      "stableZoneId": "dc268cc3-1a56-5525-ab36-ad73b7bd01ec",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822104_robertsau_centre",
+      "stableZoneId": "2fd76a70-3e71-5940-990c-5d4e6af3e68e",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822105_robertsau_sud_est",
+      "stableZoneId": "573a2da7-68ed-5140-b3f3-9defb7eed7ff",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822106_robertsau_est",
+      "stableZoneId": "a0c945bc-fe6c-556b-a078-51471dc6b468",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822201_port_du_rhin_centre_ouest",
+      "stableZoneId": "22fb56a7-16cb-5c72-a661-df9a61f58eed",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822202_port_du_rhin_centre_est",
+      "stableZoneId": "5bb444bf-7bad-5309-9af9-0eaea1a20fac",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822203_port_du_rhin_nord",
+      "stableZoneId": "cdf01b5c-96c0-5563-9e76-239620af1341",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822204_port_du_rhin_centre",
+      "stableZoneId": "64f78839-9605-52d3-872e-ece434b8501c",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822205_port_du_rhin_sud_ouest",
+      "stableZoneId": "9a318d6c-9e51-59ec-ab90-852dcd7e7460",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822206_port_du_rhin_sud",
+      "stableZoneId": "4b099199-e2aa-50da-bab8-9a7c0799ecba",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822301_neudorf_est_sud",
+      "stableZoneId": "1f15c7b5-ab33-5c94-8f47-ae597b8ba57f",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822302_neudorf_est_centre_est",
+      "stableZoneId": "b5346679-17bc-5772-ac95-e0c9d6dcdc75",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822303_neudorf_est_centre",
+      "stableZoneId": "fbff5662-212e-597b-9a87-39dbcc476837",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822304_neudorf_est_centre_ouest",
+      "stableZoneId": "37ed0aed-5362-5fed-8e06-d27df031a0b7",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822305_neudorf_est_nord",
+      "stableZoneId": "1f1050e2-c122-5329-b623-d5c22e42b931",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822401_neudorf_sud_sud",
+      "stableZoneId": "1bda6ac5-df01-5ac0-91a4-ea88dc6f0217",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822402_neudorf_sud_sud_est",
+      "stableZoneId": "45c42b38-0ab4-5565-8ae7-b2fea6bf94b3",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822403_neudorf_sud_centre_est",
+      "stableZoneId": "fe662614-6b4f-55ba-b980-0150cd3ba507",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822404_neudorf_sud_nord",
+      "stableZoneId": "eac9654e-a63f-5b07-9081-33099ff90adc",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822405_neudorf_sud_centre",
+      "stableZoneId": "71f5fffc-0cd9-5b01-a195-2174731be5cd",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822406_neudorf_sud_centre_ouest",
+      "stableZoneId": "25056de8-5639-5213-9309-0ab0f1ace874",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822407_neudorf_sud_sud_ouest",
+      "stableZoneId": "9e4824e5-970d-5bdf-b520-4944c6e4f818",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822501_plaine_des_bouchers_ouest",
+      "stableZoneId": "b96bba54-c15d-51df-91d1-8a321240dcbb",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822502_plaine_des_bouchers_est",
+      "stableZoneId": "92e3167c-7f7b-54dc-9e9f-6f76bb3ac429",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822503_plaine_des_bouchers_centre",
+      "stableZoneId": "de5986e8-467a-56e2-94c0-97866b08d258",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822801_polygone_est",
+      "stableZoneId": "6e89c610-4c49-5126-9652-30791e2c905e",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822802_polygone_sud",
+      "stableZoneId": "bfff55f8-7cd9-5bb4-8c8e-7c3d75e4c519",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822804_polygone_ouest",
+      "stableZoneId": "19fc5df5-882c-5347-a747-afc07c4b0edb",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822901_neuhof_nord",
+      "stableZoneId": "bfbfc5a3-1673-5e4e-8ac1-8fea5d6a377d",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674822902_neuhof_sud",
+      "stableZoneId": "f4ffe4ec-22bb-5a99-a380-9677b8e2901b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674823001_stockfeld_est",
+      "stableZoneId": "6bd87284-fe5c-514b-92dc-fd31532c42a2",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674823002_stockfeld_ouest",
+      "stableZoneId": "736a2568-0396-5951-a200-283a9d63454b",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    },
+    {
+      "legacyZoneId": "strasbourg_674823003_stockfeld_nord",
+      "stableZoneId": "988bd3bf-80ed-5e2b-93c9-aa3d041658eb",
+      "sourceDataset": "strasbourg-districts",
+      "runtimeMode": "national",
+      "legacyParentZoneId": "strasbourg_parent_67482_strasbourg",
+      "stableParentZoneId": null
+    }
+  ]
+}

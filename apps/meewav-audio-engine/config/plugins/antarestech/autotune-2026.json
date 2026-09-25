@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "profileStatus": "locally_scanned_prototype_only",
+  "canonicalPluginId": "antares.autotune",
+  "verifiedVendor": "Antares",
+  "verifiedClassIds": ["565354415438314175746F2D54756E65"],
+  "acceptedVersionPrefixes": ["11."],
+  "parameterBindings": {
+    "key": "2",
+    "scale": "1",
+    "correctionAmount": null,
+    "retuneSpeed": "4",
+    "humanize": "61",
+    "formant": "70",
+    "preset": null
+  },
+  "localProbeEvidence": {
+    "observedPluginName": "Auto-Tune Pro",
+    "observedVersion": "11.0.0",
+    "platform": "windows-x64",
+    "sampleRateHz": 48000,
+    "blockFrames": 128,
+    "observedParameterCount": 182,
+    "reportedLatencySamples": 2670,
+    "reportedLatencyMsAt48kHz": 55.625,
+    "instantiated": true,
+    "processedSyntheticBlock": true,
+    "activationStatus": "not_verified",
+    "liveAudioTested": false,
+    "roomPublicationTested": false
+  },
+  "notes": [
+    "Identity, version, latency and parameter IDs were observed locally through the isolated VST3 metadata/probe executable.",
+    "Successful instantiation and one synthetic block do not prove vendor activation status, license rights, audible correction or stability.",
+    "Parameter bindings identify matching metadata only; correctionAmount and preset remain unset because their semantics were not verified.",
+    "Do not infer or hardcode vendor parameter IDs from marketing documentation.",
+    "The production allowlist remains disabled until legal, live-monitoring and adapter behavior gates pass."
+  ]
+}

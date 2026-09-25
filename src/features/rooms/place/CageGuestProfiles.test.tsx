@@ -1,0 +1,21 @@
+import { afterEach, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { CAGE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPresentation";
+import { createPlaceDemoState } from "./place.fixtures";
+import { ParticipantRow } from "./PlaceStudioPanel";
+vi.mock("../../globe/components/preProfile/HoverPreProfileContent", () => ({default:({artist}:{artist:{name:string}})=><div>{artist.name}</div>}));
+vi.mock("../../globe/components/PreProfileFrame", () => ({PreProfileFrame:({children}:{children:React.ReactNode})=><>{children}</>}));
+afterEach(cleanup);
+it.each(["queue","backstage","onstage"] as const)("opens the shared sliding pre-profile from a %s portrait and returns focus on close", async variant => {
+  const participant=createPlaceDemoState().participants[0];
+  const navigate=vi.fn(), move=vi.fn();
+  render(<RoomPresentationProvider presentation={CAGE_ROOM_PRESENTATION}><div className="place-studio-panel"><ParticipantRow participant={participant} profileSource="demo" variant={variant} actions={[{direction:"up",tone:"amber",label:"Monter",text:"Monter",onAction:move}]} statusText="Prêt" onOpenProfile={navigate} onMessageProfile={()=>{}} onCollaborateProfile={()=>{}} /></div></RoomPresentationProvider>);
+  const portrait=screen.getByRole("button",{name:`Ouvrir le pré-profil de ${participant.profile.displayName}`});
+  fireEvent.click(portrait);
+  const dialog=await screen.findByRole("dialog",{name:`Pré-profil de ${participant.profile.displayName}`});
+  expect(dialog.classList.contains("class-student-pre-profile")).toBe(true);
+  expect(navigate).not.toHaveBeenCalled(); expect(move).not.toHaveBeenCalled();
+  fireEvent.keyDown(dialog,{key:"Escape"});
+  await waitFor(()=>expect(screen.queryByRole("dialog")).toBeNull());
+  await waitFor(()=>expect(document.activeElement).toBe(portrait));
+});

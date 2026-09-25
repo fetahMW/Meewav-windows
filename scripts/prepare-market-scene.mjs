@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import sharp from 'sharp';
+const [source, id] = process.argv.slice(2);
+if (!source || !/^[a-z0-9-]+$/.test(id)) throw new Error('Expected generated source and safe scene ID');
+const folder = path.resolve('public/images/market/scenes');
+await fs.mkdir(folder, {recursive:true});
+const destination = path.join(folder, id + '.webp');
+await sharp(source).resize({width:1200,height:1200,fit:'inside',withoutEnlargement:true}).webp({quality:86}).toFile(destination);
+console.log(destination);

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "scope": "france",
+  "activationPolicy": "manual_after_paris_parity",
+  "automaticDownload": false,
+  "canonicalInputRequired": true,
+  "collections": [
+    {
+      "sourceLayer": "regions",
+      "sourceType": "region",
+      "preferredProvider": "IGN ADMIN EXPRESS COG",
+      "status": "awaiting_validated_national_input"
+    },
+    {
+      "sourceLayer": "departments",
+      "sourceType": "department",
+      "preferredProvider": "IGN ADMIN EXPRESS COG",
+      "status": "awaiting_validated_national_input"
+    },
+    {
+      "sourceLayer": "communes",
+      "sourceType": "commune",
+      "preferredProvider": "IGN ADMIN EXPRESS COG",
+      "status": "awaiting_validated_national_input"
+    },
+    {
+      "sourceLayer": "music_zones",
+      "sourceType": "iris",
+      "preferredProvider": "IGN / INSEE Contours IRIS",
+      "fallback": "commune_fallback",
+      "status": "awaiting_validated_national_input"
+    }
+  ]
+}

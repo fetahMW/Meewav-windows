@@ -1,0 +1,167 @@
+/* Shared navigation follows the approved mixer: only the section accent changes.
+   Room-specific tools and their own navigation are deliberately outside this scope. */
+.rooms-page .place-room-shell .place-studio-panel.is-mixer { --studio-section-rgb: 178, 106, 255; --studio-section-light: #c478ff; }
+.rooms-page .place-room-shell .place-studio-panel.is-chat { --studio-section-rgb: 134, 189, 255; --studio-section-light: #abd0ff; }
+.rooms-page .place-room-shell .place-studio-panel.is-guests { --studio-section-rgb: 75, 111, 255; --studio-section-light: #9fb7ff; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"] { --studio-key-rgb: 178, 106, 255; --studio-key-light: #e5a1ff; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="chat"] { --studio-key-rgb: 134, 189, 255; --studio-key-light: #b9daff; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="guests"] { --studio-key-rgb: 75, 111, 255; --studio-key-light: #9fb7ff; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button:is([data-surface="mixer"], [data-surface="chat"], [data-surface="guests"]).is-active {
+  border-color: transparent;
+  background:
+    linear-gradient(112deg, #ffffff21, #ffffff07 28%, transparent 43%) padding-box,
+    radial-gradient(at 50% 112%, rgba(var(--studio-key-rgb), .22), rgba(var(--studio-key-rgb), .05) 49%, transparent 72%) padding-box,
+    linear-gradient(#120f15, #070609 55%, #010102) padding-box,
+    linear-gradient(100deg, rgba(var(--studio-key-rgb), .92), var(--studio-key-light) 49%, rgba(var(--studio-key-rgb), .82)) border-box;
+  box-shadow: inset 0 1px #ffffff3d, inset 0 -11px 21px rgba(var(--studio-key-rgb), .16), inset 0 0 16px #00000038, 0 1px #000e, 0 6px 15px #0008, 0 8px 22px rgba(var(--studio-key-rgb), .24);
+  color: #fff;
+  text-shadow: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button:is([data-surface="mixer"], [data-surface="chat"], [data-surface="guests"]).is-active > svg {
+  color: rgb(var(--studio-key-rgb));
+  filter: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button:is([data-surface="mixer"], [data-surface="chat"], [data-surface="guests"]).is-active::after {
+  background: linear-gradient(90deg, transparent, rgb(var(--studio-key-rgb)) 14%, var(--studio-key-light) 50%, rgb(var(--studio-key-rgb)) 86%, transparent);
+  box-shadow: 0 -3px 10px rgba(var(--studio-key-rgb), .52);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(var(--studio-nav-columns, 4), minmax(0, 1fr));
+  grid-template-rows: 29px;
+  align-items: center;
+  width: auto;
+  height: 34px;
+  min-height: 34px;
+  gap: 0;
+  margin: 3px 6px 4px;
+  padding: 2px 7px 1px;
+  border: 0;
+  border-bottom: 1px solid #ffffff0d;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.rooms-page .place-room-shell .place-guests__segments { --studio-nav-columns: 3; }
+.rooms-page .place-room-shell .place-studio-panel.is-viewer-panel .place-mixer__subnav { --studio-nav-columns: 3; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments)::before {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(112deg, #e8ecf254, #a0a6af1b 29%, #3a3d4309 66%, #b0b5bc1b);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  content: none;
+  pointer-events: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  grid-row: 1;
+  min-width: 0;
+  height: 29px;
+  min-height: 29px;
+  gap: 7px;
+  margin: 0;
+  padding: 0 7px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #c2c0c99e;
+  font: 730 10.5px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: normal;
+  text-shadow: none;
+  transform: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button > span { font: inherit; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button > svg {
+  flex: 0 0 18px;
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  color: inherit;
+  filter: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button + button::before {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 0;
+  width: 1px;
+  background: transparent;
+  content: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button::after {
+  position: absolute;
+  inset: auto 12px 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgb(var(--studio-section-rgb)) 12%, var(--studio-section-light) 50%, rgb(var(--studio-section-rgb)) 88%, transparent);
+  box-shadow: 0 -2px 7px rgba(var(--studio-section-rgb), .28), 0 0 2px rgba(var(--studio-section-rgb), .35);
+  content: "";
+  opacity: 0;
+  transform: scaleX(.45);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button:hover:not(:disabled) {
+  background: linear-gradient(#ffffff06, transparent);
+  color: #f4f1f8db;
+  box-shadow: none;
+  transform: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button.is-active {
+  background: transparent;
+  color: #f8f4fc;
+  box-shadow: none;
+  text-shadow: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button.is-active::after { opacity: 1; transform: scaleX(1); }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button:is(.is-active, :focus-visible) > svg {
+  color: rgb(var(--studio-section-rgb));
+  filter: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button:focus-visible { outline: 1px solid rgb(var(--studio-section-rgb)); outline-offset: -2px; }
+
+/* Compact rails use the same horizontal layout in each section. */
+@container (max-width: 360px) {
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button { gap: 3px; padding: 0; font-size: 9.5px; }
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button > svg { flex-basis: 15px; width: 15px; min-width: 15px; height: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer.has-audio-player .place-mixer__subnav.has-twists, .place-chat-workspace > .place-tools-console__switch, .place-chat-workspace__nav, .classe-chat-workspace > .place-tools-console__switch, .place-guests .place-guests__segments) > button::after { transition: none; }
+}
+
+/* Host consoles: one fine light in the submenu, none inside the main keys. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-host-panel.is-shared-studio-chassis .place-studio-panel__tabs > button[data-surface]::after {
+  content: none;
+  display: none !important;
+  box-shadow: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-host-panel.is-tools { --studio-section-rgb: 210, 221, 240; --studio-section-light: #eef1f7; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-host-panel.is-shared-studio-chassis:not(.is-collapsed) :is(.place-mixer__subnav.has-twists, .place-tools-console__switch, .place-chat-workspace__nav, .place-guests__segments) > button::after {
+  top: auto;
+  bottom: 0;
+  left: 14%;
+  right: 14%;
+  width: auto;
+  height: 1px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgb(var(--studio-section-rgb, 210, 221, 240)) 14%, var(--studio-section-light, #eef1f7) 50%, rgb(var(--studio-section-rgb, 210, 221, 240)) 86%, transparent);
+  box-shadow: 0 -1px 5px rgba(var(--studio-section-rgb, 210, 221, 240), .3);
+  filter: none;
+}
+
+/* Guest navigation uses electric cobalt; Chat retains its lighter sky blue. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="guests"].is-active { background:var(--studio-tab-face); box-shadow:inset 0 1px #ffffff16,0 2px 3px #000; }
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="guests"].is-active::after { box-shadow:none; }

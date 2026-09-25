@@ -1,0 +1,61 @@
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { DemoRoomToolsRepository } from "../roomTools.service";
+import { createRoomToolsFixture } from "../roomTools.fixtures";
+import { LogeRequestLists, LogeQueueControls } from "./LogeRequests";
+import type { RoomToolsCommand } from "../roomTools.types";
+afterEach(cleanup);
+const viewer = createRoomToolsFixture("loge").loge!.questions[0].author;
+describe("Loge request lists", () => {
+  it("enforces identity, eligibility, host opening and one active request per kind; cancellation stays personal", async () => {
+    const repo = new DemoRoomToolsRepository(), roomId = `requests-${crypto.randomUUID()}`;
+    await repo.execute("loge", roomId, "host", {type:"loge.queue.setOpen",kind:"dedication",open:false});
+    const join: RoomToolsCommand = {type:"loge.request.join",kind:"dedication",person:viewer};
+    await expect(repo.execute("loge",roomId,"viewer",join,viewer.id)).rejects.toThrow("loge_queue_closed");
+    await expect(repo.execute("loge",roomId,"viewer",{type:"loge.queue.setOpen",kind:"dedication",open:true},viewer.id)).rejects.toThrow("forbidden");
+    await repo.execute("loge",roomId,"host",{type:"loge.queue.setOpen",kind:"dedication",open:true});
+    await expect(repo.execute("loge",roomId,"viewer",join,"impostor")).rejects.toThrow("account_mismatch");
+    await expect(repo.execute("loge",roomId,"viewer",{...join,person:{...viewer,id:"outsider"}},"outsider")).rejects.toThrow("loge_access_required");
+    await repo.execute("loge",roomId,"viewer",join,viewer.id);
+    const state = await repo.execute("loge",roomId,"viewer",join,viewer.id);
+    const requests = state.loge!.moments.filter((m)=>m.requested && m.beneficiary.id===viewer.id && m.kind==="dedication");
+    expect(requests).toHaveLength(1);
+    const reloaded = await new DemoRoomToolsRepository().projectionForRole("loge",roomId,"viewer",viewer.id);
+    expect(reloaded.loge!.moments).toContainEqual(requests[0]);
+    const host = await repo.projectionForRole("loge",roomId,"host","host");
+    expect(host.loge!.moments).toContainEqual(requests[0]);
+    const cancel: RoomToolsCommand = {type:"loge.request.cancel",momentId:requests[0].id,accountId:viewer.id};
+    await repo.execute("loge",roomId,"viewer",cancel,viewer.id);
+    const own = await repo.projectionForRole("loge",roomId,"viewer",viewer.id);
+    expect(own.loge!.moments.find((m)=>m.id===requests[0].id)?.status).toBe("cancelled");
+  });
+  it("lets a fan join, shows the confirmed request, and leave without creating a gift", async () => {
+    const loge = {...createRoomToolsFixture("loge").loge!, moments:[]};
+    const execute = vi.fn(async (_command:RoomToolsCommand)=>undefined);
+    const props={loge,viewer,disabled:false,execute};
+    const {rerender}=render(<LogeRequestLists {...props}/>);
+    fireEvent.click(screen.getByRole("button",{name:"Demander mon cadeau"}));
+    await waitFor(()=>expect(screen.getByRole("status")).toHaveTextContent("enregistrée"));
+    expect(execute).toHaveBeenCalledWith({type:"loge.request.join",kind:"gift-redemption",person:viewer});
+    rerender(<LogeRequestLists {...props} loge={{...loge,moments:[{id:"request",kind:"gift-redemption",title:"Demande",beneficiary:viewer,status:"pending",requested:true}]}}/>);
+    expect(screen.queryByRole("button",{name:"Demander mon cadeau"})).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button",{name:"Quitter cette liste"}));
+    await waitFor(()=>expect(execute).toHaveBeenLastCalledWith({type:"loge.request.cancel",momentId:"request",accountId:viewer.id}));
+  });
+  it("shows closed lists and retains retry after a failed submission", async () => {
+    const loge={...createRoomToolsFixture("loge").loge!,moments:[],requestQueues:{dedication:true}};
+    const execute=vi.fn(async()=>{throw new Error("offline");});
+    render(<LogeRequestLists loge={loge} viewer={viewer} disabled={false} execute={execute}/>);
+    expect(screen.getByRole("button",{name:"Demander mon cadeau"})).toBeDisabled();
+    fireEvent.click(screen.getByRole("button",{name:"Rejoindre la file des dédicaces"}));
+    await waitFor(()=>expect(screen.getByRole("status")).toHaveTextContent("pas pu"));
+    expect(screen.getByRole("button",{name:"Rejoindre la file des dédicaces"})).toBeEnabled();
+  });
+  it("lets the host pause a list and invite a waiting fan without activating their microphone", async () => {
+    const execute=vi.fn(async()=>undefined);
+    const loge={...createRoomToolsFixture("loge").loge!,moments:[{id:"req",kind:"face-to-face" as const,title:"Demande",beneficiary:viewer,status:"pending" as const,requested:true}]};
+    render(<LogeQueueControls loge={loge} disabled={false} execute={execute}/>);
+    fireEvent.click(screen.getByRole("button",{name:"Inviter"}));
+    await waitFor(()=>expect(execute).toHaveBeenCalledWith({type:"loge.moment.status",momentId:"req",status:"scheduled"}));
+  });
+});

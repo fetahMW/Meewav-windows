@@ -1,0 +1,6 @@
+.vinyl-globe-page { position:fixed; inset:0; background:#05060b; overflow:hidden; }
+.vinyl-globe-frame { display:block; width:100%; height:100%; border:0; color-scheme:dark; transition:opacity .24s ease; }
+.vinyl-globe-frame[data-loading="true"] { opacity:0; }
+@media (prefers-reduced-motion:reduce) {
+  .vinyl-globe-frame { transition:none; }
+}

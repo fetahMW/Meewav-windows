@@ -1,0 +1,202 @@
+/* La Classe conserve le lecteur de La Place monté en permanence, mais peut
+ * replier sa façade pour rendre la hauteur au contenu pédagogique. */
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer.has-classroom-player {
+  transition: grid-template-rows 180ms cubic-bezier(.22, .8, .24, 1);
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsible {
+  isolation: isolate;
+  transition:
+    height 180ms cubic-bezier(.22, .8, .24, 1),
+    min-height 180ms cubic-bezier(.22, .8, .24, 1),
+    max-height 180ms cubic-bezier(.22, .8, .24, 1),
+    margin 180ms cubic-bezier(.22, .8, .24, 1);
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsible .place-mixer-audio__surface {
+  transform-origin: 50% 0;
+  transition:
+    opacity 140ms ease,
+    transform 180ms cubic-bezier(.22, .8, .24, 1),
+    visibility 0s linear 0s;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsible .place-mixer-audio__track {
+  padding-right: 48px;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle {
+  position: absolute;
+  z-index: 12;
+  top: 2px;
+  right: 3px;
+  display: grid;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  color: rgba(226, 232, 255, .78);
+  background: transparent;
+  box-shadow: none;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle::before {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(147, 169, 255, .18);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(100, 125, 230, .15), rgba(31, 39, 78, .08));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+  content: "";
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle > svg {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle:is(:hover, :focus-visible) {
+  color: #f6f8ff;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle:is(:hover, :focus-visible)::before {
+  border-color: rgba(148, 173, 255, .42);
+  background: linear-gradient(180deg, rgba(105, 136, 255, .26), rgba(39, 52, 108, .16));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    0 0 0 3px rgba(94, 122, 234, .1);
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle:focus-visible {
+  outline: 2px solid rgba(156, 177, 255, .82);
+  outline-offset: -5px;
+}
+
+.place-mixer-audio__classroom-summary {
+  position: absolute;
+  z-index: 4;
+  inset: 0 50px 0 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  padding: 6px 4px 6px 11px;
+  color: #f1f4ff;
+  opacity: 0;
+  transform: translateY(5px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    transform 160ms cubic-bezier(.22, .8, .24, 1),
+    visibility 0s linear 180ms;
+}
+
+.place-mixer-audio__classroom-summary-icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid rgba(136, 159, 255, .2);
+  border-radius: 9px;
+  color: #9eb4ff;
+  background: linear-gradient(145deg, rgba(89, 113, 220, .2), rgba(28, 35, 69, .12));
+}
+
+.place-mixer-audio__classroom-summary-icon > svg {
+  width: 15px;
+  height: 15px;
+}
+
+.place-mixer-audio__classroom-summary > span:last-child {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.place-mixer-audio__classroom-summary small {
+  overflow: hidden;
+  color: rgba(174, 190, 246, .6);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-mixer-audio__classroom-summary strong {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: -.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer.has-audio-player.is-wave-tools.has-classroom-player.is-classroom-player-collapsed {
+  grid-template-rows: 39px 54px minmax(0, 1fr) !important;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsed,
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsed.has-track,
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsed.is-empty {
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsed .place-mixer-audio__surface {
+  opacity: 0;
+  transform: translateY(-7px) scaleY(.96);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 100ms ease,
+    transform 160ms cubic-bezier(.22, .8, .24, 1),
+    visibility 0s linear 100ms;
+}
+
+.place-mixer-audio.is-classroom-collapsed .place-mixer-audio__classroom-summary {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition-delay: 70ms, 70ms, 0s;
+}
+
+.place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsed .place-mixer-audio__classroom-toggle {
+  top: 2px;
+}
+
+@media (min-width: 900px) and (min-height: 900px) {
+  .place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer.has-audio-player.is-wave-tools.has-classroom-player.is-classroom-player-collapsed {
+    grid-template-rows: 40px 58px minmax(0, 1fr) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer.has-classroom-player,
+  .place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsible,
+  .place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio.is-classroom-collapsible .place-mixer-audio__surface,
+  .place-mixer-audio__classroom-summary,
+  .place-room-shell .place-studio-panel:is(.is-mixer, .has-wave-transport) .place-mixer-audio .place-mixer-audio__classroom-toggle::before {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+}

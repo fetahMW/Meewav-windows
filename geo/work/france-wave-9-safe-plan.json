@@ -1,0 +1,7330 @@
+{
+  "schemaVersion": 1,
+  "wave": 9,
+  "generatedAt": "2026-07-14T18:44:20.168Z",
+  "selection": {
+    "order": "population desc, French label asc, commune code asc",
+    "geographicScope": "metropolitan France and Corsica",
+    "eligibility": "multiple distinct official INSEE IRIS",
+    "excludedDirectCommuneCount": 846,
+    "requestedCount": 135,
+    "scannedCandidateCount": 500,
+    "deferredSinglePlateCount": 13,
+    "deferredInventoryResolutionCount": 0,
+    "autoCuratedSafeCount": 135,
+    "autoCurationExceptionCount": 365,
+    "sourcePlanRequestedCount": 500
+  },
+  "source": {
+    "provider": "IGN / INSEE - Contours IRIS WFS Géoplateforme",
+    "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+    "wfsUrl": "https://data.geopf.fr/wfs/ows",
+    "typeName": "STATISTICALUNITS.IRIS:contours_iris",
+    "vintage": "2026",
+    "license": "Licence Ouverte / Open Licence 2.0"
+  },
+  "totals": {
+    "cities": 135,
+    "officialIris": 617,
+    "split": 135,
+    "splitWaveEligible": 135,
+    "singlePlate": 0,
+    "singlePlateOutsideSplitWave": 0,
+    "inventoryResolutionRequired": 0,
+    "missingOfficialSplit": 0,
+    "classificationReasons": {
+      "multiple_official_iris": 135
+    },
+    "semanticResolutionRequired": 0,
+    "pendingSemanticReview": 0,
+    "autoCuratedReady": 135
+  },
+  "deferredCandidates": [],
+  "cities": [
+    {
+      "rank": 2,
+      "id": "verneuil_sur_seine",
+      "name": "Verneuil-sur-Seine",
+      "featureId": "commune-78642",
+      "communeCode": "78642",
+      "population": 16280,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        1.9659,
+        48.9874
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "786420101",
+          "label": "Les Hauts de Verneuil",
+          "type": "H"
+        },
+        {
+          "id": "786420102",
+          "label": "Le Vieux Verneuil",
+          "type": "H"
+        },
+        {
+          "id": "786420103",
+          "label": "Richelieu",
+          "type": "H"
+        },
+        {
+          "id": "786420104",
+          "label": "Cité SNCF",
+          "type": "H"
+        },
+        {
+          "id": "786420105",
+          "label": "Clairières",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 4,
+      "id": "gaillac",
+      "name": "Gaillac",
+      "featureId": "commune-81099",
+      "communeCode": "81099",
+      "population": 16162,
+      "departmentCode": "81",
+      "departmentName": "Tarn",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.8898,
+        43.9119
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "810990101",
+          "label": "Vieux Gaillac",
+          "type": "H"
+        },
+        {
+          "id": "810990102",
+          "label": "Gare-La Clavelle",
+          "type": "H"
+        },
+        {
+          "id": "810990103",
+          "label": "Saint-Roch-Charles de Gaulle",
+          "type": "H"
+        },
+        {
+          "id": "810990104",
+          "label": "Quartier Périphérique Ouest",
+          "type": "H"
+        },
+        {
+          "id": "810990105",
+          "label": "Quartier Périphérique Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 5,
+      "id": "saint_leu_la_foret",
+      "name": "Saint-Leu-la-Forêt",
+      "featureId": "commune-95563",
+      "communeCode": "95563",
+      "population": 16138,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.243,
+        49.0211
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "955630101",
+          "label": "La Forêt",
+          "type": "D"
+        },
+        {
+          "id": "955630102",
+          "label": "La Châtaigneraie",
+          "type": "H"
+        },
+        {
+          "id": "955630103",
+          "label": "Marcel Pagnol",
+          "type": "H"
+        },
+        {
+          "id": "955630104",
+          "label": "Le Rosaire",
+          "type": "H"
+        },
+        {
+          "id": "955630105",
+          "label": "Les Lutins",
+          "type": "H"
+        },
+        {
+          "id": "955630106",
+          "label": "Les Diablots",
+          "type": "H"
+        },
+        {
+          "id": "955630107",
+          "label": "Les Cancelles",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 6,
+      "id": "montbrison",
+      "name": "Montbrison",
+      "featureId": "commune-42147",
+      "communeCode": "42147",
+      "population": 16123,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        4.0719,
+        45.6016
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "421470101",
+          "label": "Estiallet-Le Bouchet",
+          "type": "H"
+        },
+        {
+          "id": "421470102",
+          "label": "Intra-Muros",
+          "type": "H"
+        },
+        {
+          "id": "421470201",
+          "label": "Moingt",
+          "type": "H"
+        },
+        {
+          "id": "421470202",
+          "label": "Les Purelles",
+          "type": "H"
+        },
+        {
+          "id": "421470301",
+          "label": "Maupas Survaure",
+          "type": "H"
+        },
+        {
+          "id": "421470302",
+          "label": "Beauregard",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 9,
+      "id": "domont",
+      "name": "Domont",
+      "featureId": "commune-95199",
+      "communeCode": "95199",
+      "population": 16065,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.3243,
+        49.0289
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "951990101",
+          "label": "Le Lycée",
+          "type": "H"
+        },
+        {
+          "id": "951990102",
+          "label": "Le Marché",
+          "type": "H"
+        },
+        {
+          "id": "951990103",
+          "label": "Vieux Village",
+          "type": "H"
+        },
+        {
+          "id": "951990104",
+          "label": "Les Coquelicots",
+          "type": "H"
+        },
+        {
+          "id": "951990105",
+          "label": "Bas Domont",
+          "type": "H"
+        },
+        {
+          "id": "951990106",
+          "label": "Haut Domont-Plaine des Cercelets",
+          "type": "H"
+        },
+        {
+          "id": "951990107",
+          "label": "Quartier d'Ombreval",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 11,
+      "id": "noisiel",
+      "name": "Noisiel",
+      "featureId": "commune-77337",
+      "communeCode": "77337",
+      "population": 16053,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.6187,
+        48.8461
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "773370101",
+          "label": "Ville Ancienne",
+          "type": "H"
+        },
+        {
+          "id": "773370201",
+          "label": "Ville Nouvelle Nord",
+          "type": "H"
+        },
+        {
+          "id": "773370202",
+          "label": "Ville Nouvelle Centre-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "773370203",
+          "label": "Ville Nouvelle Ouest",
+          "type": "H"
+        },
+        {
+          "id": "773370204",
+          "label": "Ville Nouvelle Sud-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "773370205",
+          "label": "Ville Nouvelle Est",
+          "type": "H"
+        },
+        {
+          "id": "773370206",
+          "label": "Ville Nouvelle Centre-Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 20,
+      "id": "saint_just_saint_rambert",
+      "name": "Saint-Just-Saint-Rambert",
+      "featureId": "commune-42279",
+      "communeCode": "42279",
+      "population": 15764,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        4.2464,
+        45.4919
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "422790101",
+          "label": "Le Bourg Nord-Est",
+          "type": "H"
+        },
+        {
+          "id": "422790102",
+          "label": "Petite Couronne",
+          "type": "H"
+        },
+        {
+          "id": "422790103",
+          "label": "Grande Couronne",
+          "type": "H"
+        },
+        {
+          "id": "422790201",
+          "label": "Collonges-Avernay-Sud",
+          "type": "H"
+        },
+        {
+          "id": "422790202",
+          "label": "Centre Loire",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 22,
+      "id": "montrevault_sur_evre",
+      "name": "Montrevault-sur-Èvre",
+      "featureId": "commune-49218",
+      "communeCode": "49218",
+      "population": 15726,
+      "departmentCode": "49",
+      "departmentName": "Maine-et-Loire",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -1.0204,
+        47.2494
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "492180101",
+          "label": "Le Fief-Sauvin",
+          "type": "H"
+        },
+        {
+          "id": "492180102",
+          "label": "Le Fuilet",
+          "type": "H"
+        },
+        {
+          "id": "492180103",
+          "label": "Saint-Pierre-Montlimart",
+          "type": "H"
+        },
+        {
+          "id": "492180104",
+          "label": "Chaudron-en-Mauges",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 23,
+      "id": "saint_fargeau_ponthierry",
+      "name": "Saint-Fargeau-Ponthierry",
+      "featureId": "commune-77407",
+      "communeCode": "77407",
+      "population": 15724,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.5291,
+        48.541
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "774070101",
+          "label": "Guiche-Villers",
+          "type": "H"
+        },
+        {
+          "id": "774070102",
+          "label": "Fargeau-Tilly-Wimpey",
+          "type": "H"
+        },
+        {
+          "id": "774070103",
+          "label": "Cités Leroy",
+          "type": "H"
+        },
+        {
+          "id": "774070104",
+          "label": "Moulin Clair-Moulin de la Seine",
+          "type": "H"
+        },
+        {
+          "id": "774070105",
+          "label": "Florelites-Constant Gallon",
+          "type": "H"
+        },
+        {
+          "id": "774070106",
+          "label": "Moulignon-Auxonnettes-Jonville",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 24,
+      "id": "beaucaire",
+      "name": "Beaucaire",
+      "featureId": "commune-30032",
+      "communeCode": "30032",
+      "population": 15692,
+      "departmentCode": "30",
+      "departmentName": "Gard",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        4.5912,
+        43.7815
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "300320101",
+          "label": "La Plaine",
+          "type": "H"
+        },
+        {
+          "id": "300320102",
+          "label": "Le Plateau",
+          "type": "H"
+        },
+        {
+          "id": "300320103",
+          "label": "Les Cariatides",
+          "type": "H"
+        },
+        {
+          "id": "300320104",
+          "label": "Les Fontêtes",
+          "type": "H"
+        },
+        {
+          "id": "300320105",
+          "label": "Le Sizen",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 27,
+      "id": "fontainebleau",
+      "name": "Fontainebleau",
+      "featureId": "commune-77186",
+      "communeCode": "77186",
+      "population": 15583,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.6817,
+        48.4236
+      ],
+      "sourceFeatureCount": 8,
+      "distinctOfficialIrisCount": 8,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "771860101",
+          "label": "Ville Sud",
+          "type": "H"
+        },
+        {
+          "id": "771860102",
+          "label": "Ville Sud-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "771860103",
+          "label": "Centre Ville Centre",
+          "type": "H"
+        },
+        {
+          "id": "771860104",
+          "label": "Centre Ville Ouest",
+          "type": "H"
+        },
+        {
+          "id": "771860105",
+          "label": "Centre Ville Nord-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "771860106",
+          "label": "Ville Nord",
+          "type": "H"
+        },
+        {
+          "id": "771860107",
+          "label": "Centre Ville Nord-Est",
+          "type": "H"
+        },
+        {
+          "id": "771860108",
+          "label": "Forêt de Fontainebleau",
+          "type": "D"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 32,
+      "id": "elbeuf",
+      "name": "Elbeuf",
+      "featureId": "commune-76231",
+      "communeCode": "76231",
+      "population": 15474,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "searchCenter": [
+        0.9974,
+        49.2773
+      ],
+      "sourceFeatureCount": 8,
+      "distinctOfficialIrisCount": 8,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "762310101",
+          "label": "Hôtel de Ville",
+          "type": "H"
+        },
+        {
+          "id": "762310102",
+          "label": "Cerisaie",
+          "type": "H"
+        },
+        {
+          "id": "762310103",
+          "label": "Puchot Grandin",
+          "type": "H"
+        },
+        {
+          "id": "762310104",
+          "label": "Parc Saint-Cyr",
+          "type": "H"
+        },
+        {
+          "id": "762310105",
+          "label": "Blin Gare",
+          "type": "H"
+        },
+        {
+          "id": "762310106",
+          "label": "Mesliers Mont Duve",
+          "type": "H"
+        },
+        {
+          "id": "762310107",
+          "label": "Buquet",
+          "type": "H"
+        },
+        {
+          "id": "762310108",
+          "label": "Puchot Saint-Jean",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 39,
+      "id": "ramonville_saint_agne",
+      "name": "Ramonville-Saint-Agne",
+      "featureId": "commune-31446",
+      "communeCode": "31446",
+      "population": 15158,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.4784,
+        43.5438
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "314460101",
+          "label": "Marnac",
+          "type": "H"
+        },
+        {
+          "id": "314460102",
+          "label": "La Peyrade",
+          "type": "H"
+        },
+        {
+          "id": "314460103",
+          "label": "Cité Rose",
+          "type": "H"
+        },
+        {
+          "id": "314460104",
+          "label": "Parc Technologique",
+          "type": "A"
+        },
+        {
+          "id": "314460105",
+          "label": "Port Sud",
+          "type": "H"
+        },
+        {
+          "id": "314460106",
+          "label": "Les Coteaux",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 42,
+      "id": "montmagny",
+      "name": "Montmagny",
+      "featureId": "commune-95427",
+      "communeCode": "95427",
+      "population": 15105,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.3471,
+        48.9677
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "954270101",
+          "label": "Les Sablons",
+          "type": "H"
+        },
+        {
+          "id": "954270102",
+          "label": "La Plante des Champs-Tas de Cailloux",
+          "type": "D"
+        },
+        {
+          "id": "954270103",
+          "label": "Lévriers-Gare",
+          "type": "H"
+        },
+        {
+          "id": "954270104",
+          "label": "Centre Ville Sud",
+          "type": "H"
+        },
+        {
+          "id": "954270105",
+          "label": "Centre Ville Nord",
+          "type": "H"
+        },
+        {
+          "id": "954270106",
+          "label": "Carrières Faucilles-Butte Pinson",
+          "type": "H"
+        },
+        {
+          "id": "954270107",
+          "label": "Barrage",
+          "type": "D"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 49,
+      "id": "saint_avertin",
+      "name": "Saint-Avertin",
+      "featureId": "commune-37208",
+      "communeCode": "37208",
+      "population": 14999,
+      "departmentCode": "37",
+      "departmentName": "Indre-et-Loire",
+      "regionName": "Centre-Val de Loire",
+      "searchCenter": [
+        0.7338,
+        47.3545
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "372080101",
+          "label": "Centre-Le Lac-Grand Cour",
+          "type": "H"
+        },
+        {
+          "id": "372080102",
+          "label": "Hôpital-La Mauberdière",
+          "type": "H"
+        },
+        {
+          "id": "372080103",
+          "label": "Les Cigognes-Les Grands Champs",
+          "type": "H"
+        },
+        {
+          "id": "372080104",
+          "label": "La Camusière",
+          "type": "H"
+        },
+        {
+          "id": "372080105",
+          "label": "Cangé-Aubinière",
+          "type": "H"
+        },
+        {
+          "id": "372080106",
+          "label": "Les Onze Arpents-Les Champs de l'Ormeau",
+          "type": "H"
+        },
+        {
+          "id": "372080107",
+          "label": "Sud-Nouveau Bois Bellerie",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 50,
+      "id": "woippy",
+      "name": "Woippy",
+      "featureId": "commune-57751",
+      "communeCode": "57751",
+      "population": 14967,
+      "departmentCode": "57",
+      "departmentName": "Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.1552,
+        49.1651
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "577510101",
+          "label": "Saint-Rémy Route de Thionville",
+          "type": "A"
+        },
+        {
+          "id": "577510103",
+          "label": "Quartier du Roi",
+          "type": "H"
+        },
+        {
+          "id": "577510104",
+          "label": "Quatre Bornes",
+          "type": "H"
+        },
+        {
+          "id": "577510105",
+          "label": "Pré-Génie",
+          "type": "H"
+        },
+        {
+          "id": "577510106",
+          "label": "Saint-Éloy Mairie Annexe",
+          "type": "H"
+        },
+        {
+          "id": "577510107",
+          "label": "Saint-Éloy Chapelle",
+          "type": "H"
+        },
+        {
+          "id": "577510110",
+          "label": "Route de Norroy Château Le Village",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 56,
+      "id": "carrieres_sur_seine",
+      "name": "Carrières-sur-Seine",
+      "featureId": "commune-78124",
+      "communeCode": "78124",
+      "population": 14791,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.1812,
+        48.9128
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "781240101",
+          "label": "Les Alouettes",
+          "type": "H"
+        },
+        {
+          "id": "781240102",
+          "label": "Champignon Vignes Blanches La Plaine",
+          "type": "H"
+        },
+        {
+          "id": "781240103",
+          "label": "Victor Hugo Bezons",
+          "type": "H"
+        },
+        {
+          "id": "781240104",
+          "label": "Village Doumer",
+          "type": "H"
+        },
+        {
+          "id": "781240105",
+          "label": "Berteaux Fermettes",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 63,
+      "id": "villers_les_nancy",
+      "name": "Villers-lès-Nancy",
+      "featureId": "commune-54578",
+      "communeCode": "54578",
+      "population": 14718,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.1276,
+        48.6603
+      ],
+      "sourceFeatureCount": 9,
+      "distinctOfficialIrisCount": 9,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "545780101",
+          "label": "Forêt Domaniale de Haye",
+          "type": "D"
+        },
+        {
+          "id": "545780102",
+          "label": "Clairlieu-Valonnière Bois de l'Hospice",
+          "type": "H"
+        },
+        {
+          "id": "545780103",
+          "label": "Clairlieu-Champelle Essarts Sance",
+          "type": "H"
+        },
+        {
+          "id": "545780104",
+          "label": "Technopole Nancy-Brabois",
+          "type": "A"
+        },
+        {
+          "id": "545780105",
+          "label": "Hardeval Cottages Chanoine Piéron",
+          "type": "H"
+        },
+        {
+          "id": "545780106",
+          "label": "Rémicourt Parc de Brabois",
+          "type": "H"
+        },
+        {
+          "id": "545780107",
+          "label": "Gec Village",
+          "type": "H"
+        },
+        {
+          "id": "545780108",
+          "label": "Placieux Coteaux République",
+          "type": "H"
+        },
+        {
+          "id": "545780109",
+          "label": "Baudricourt",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 69,
+      "id": "saint_brevin_les_pins",
+      "name": "Saint-Brevin-les-Pins",
+      "featureId": "commune-44154",
+      "communeCode": "44154",
+      "population": 14541,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -2.154,
+        47.2441
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "441540101",
+          "label": "Mindin",
+          "type": "H"
+        },
+        {
+          "id": "441540102",
+          "label": "Les Pins",
+          "type": "H"
+        },
+        {
+          "id": "441540103",
+          "label": "L'Océan",
+          "type": "H"
+        },
+        {
+          "id": "441540104",
+          "label": "Les Villages",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 70,
+      "id": "bois_guillaume",
+      "name": "Bois-Guillaume",
+      "featureId": "commune-76108",
+      "communeCode": "76108",
+      "population": 14539,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "searchCenter": [
+        1.1194,
+        49.4729
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "761080101",
+          "label": "Le Mont Fortin",
+          "type": "H"
+        },
+        {
+          "id": "761080102",
+          "label": "L'Église",
+          "type": "H"
+        },
+        {
+          "id": "761080103",
+          "label": "Cité de l'Agriculture",
+          "type": "H"
+        },
+        {
+          "id": "761080104",
+          "label": "La Bretèque",
+          "type": "H"
+        },
+        {
+          "id": "761080105",
+          "label": "Rue Herbeuse",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 71,
+      "id": "saint_paul_les_dax",
+      "name": "Saint-Paul-lès-Dax",
+      "featureId": "commune-40279",
+      "communeCode": "40279",
+      "population": 14481,
+      "departmentCode": "40",
+      "departmentName": "Landes",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -1.0941,
+        43.7485
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "402790101",
+          "label": "Mairie-Albine",
+          "type": "H"
+        },
+        {
+          "id": "402790102",
+          "label": "Bourg Sud",
+          "type": "H"
+        },
+        {
+          "id": "402790103",
+          "label": "Lac-La Pince",
+          "type": "H"
+        },
+        {
+          "id": "402790104",
+          "label": "Écarts Nord",
+          "type": "H"
+        },
+        {
+          "id": "402790105",
+          "label": "Bourg Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 72,
+      "id": "flers",
+      "name": "Flers",
+      "featureId": "commune-61169",
+      "communeCode": "61169",
+      "population": 14432,
+      "departmentCode": "61",
+      "departmentName": "Orne",
+      "regionName": "Normandie",
+      "searchCenter": [
+        -0.5603,
+        48.7389
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "611690101",
+          "label": "La Planchette",
+          "type": "H"
+        },
+        {
+          "id": "611690102",
+          "label": "Le Pont Féron",
+          "type": "H"
+        },
+        {
+          "id": "611690201",
+          "label": "Paulette Duhalde",
+          "type": "H"
+        },
+        {
+          "id": "611690202",
+          "label": "Bénardière-Saint-Michel",
+          "type": "H"
+        },
+        {
+          "id": "611690203",
+          "label": "La Blanchardière",
+          "type": "H"
+        },
+        {
+          "id": "611690301",
+          "label": "Saint-Sauveur",
+          "type": "H"
+        },
+        {
+          "id": "611690302",
+          "label": "La Géroudière",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 76,
+      "id": "billere",
+      "name": "Billère",
+      "featureId": "commune-64129",
+      "communeCode": "64129",
+      "population": 14384,
+      "departmentCode": "64",
+      "departmentName": "Pyrénées-Atlantiques",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.3952,
+        43.3064
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "641290101",
+          "label": "Laffite",
+          "type": "H"
+        },
+        {
+          "id": "641290102",
+          "label": "Lacaou",
+          "type": "H"
+        },
+        {
+          "id": "641290103",
+          "label": "Asptt",
+          "type": "H"
+        },
+        {
+          "id": "641290104",
+          "label": "La Poste",
+          "type": "H"
+        },
+        {
+          "id": "641290105",
+          "label": "Marnières",
+          "type": "H"
+        },
+        {
+          "id": "641290106",
+          "label": "La Plaine",
+          "type": "H"
+        },
+        {
+          "id": "641290107",
+          "label": "La Linière",
+          "type": "A"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 88,
+      "id": "morangis",
+      "name": "Morangis",
+      "featureId": "commune-91432",
+      "communeCode": "91432",
+      "population": 14129,
+      "departmentCode": "91",
+      "departmentName": "Essonne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.3361,
+        48.7022
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "914320101",
+          "label": "Croix Boisselière-Blés d'Or",
+          "type": "H"
+        },
+        {
+          "id": "914320102",
+          "label": "L'Avenir",
+          "type": "H"
+        },
+        {
+          "id": "914320103",
+          "label": "Ormeteau",
+          "type": "H"
+        },
+        {
+          "id": "914320104",
+          "label": "Poirier-Marlé",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 89,
+      "id": "sainte_maxime",
+      "name": "Sainte-Maxime",
+      "featureId": "commune-83115",
+      "communeCode": "83115",
+      "population": 14118,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        6.6139,
+        43.3584
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "831150101",
+          "label": "Basse Suane-Les Virgiles",
+          "type": "H"
+        },
+        {
+          "id": "831150102",
+          "label": "Les Bouteillers",
+          "type": "H"
+        },
+        {
+          "id": "831150103",
+          "label": "Le Capet",
+          "type": "H"
+        },
+        {
+          "id": "831150104",
+          "label": "Ville-Les Saquèdes-Le Bouillonnet",
+          "type": "H"
+        },
+        {
+          "id": "831150105",
+          "label": "Nartelle-Noyer-Bellevue-Boulevard des Sardinaux",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 92,
+      "id": "fontenay_le_comte",
+      "name": "Fontenay-le-Comte",
+      "featureId": "commune-85092",
+      "communeCode": "85092",
+      "population": 14059,
+      "departmentCode": "85",
+      "departmentName": "Vendée",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -0.7887,
+        46.4587
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "850920101",
+          "label": "Grissais-Gros Noyer",
+          "type": "H"
+        },
+        {
+          "id": "850920102",
+          "label": "Rabelais-Le Porteau",
+          "type": "H"
+        },
+        {
+          "id": "850920103",
+          "label": "Commerce-Marchoux",
+          "type": "H"
+        },
+        {
+          "id": "850920104",
+          "label": "Centre-Loges-Pommeraie-Sablière",
+          "type": "H"
+        },
+        {
+          "id": "850920105",
+          "label": "Les Moulins",
+          "type": "H"
+        },
+        {
+          "id": "850920106",
+          "label": "Charzais",
+          "type": "H"
+        },
+        {
+          "id": "850920107",
+          "label": "Saint-Médard",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 105,
+      "id": "fleury_merogis",
+      "name": "Fleury-Mérogis",
+      "featureId": "commune-91235",
+      "communeCode": "91235",
+      "population": 13721,
+      "departmentCode": "91",
+      "departmentName": "Essonne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.3712,
+        48.6327
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "912350101",
+          "label": "Pavillonnaire",
+          "type": "H"
+        },
+        {
+          "id": "912350102",
+          "label": "H.L.M.",
+          "type": "H"
+        },
+        {
+          "id": "912350103",
+          "label": "Prison et Reste",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 106,
+      "id": "fontenay_le_fleury",
+      "name": "Fontenay-le-Fleury",
+      "featureId": "commune-78242",
+      "communeCode": "78242",
+      "population": 13680,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.0477,
+        48.8169
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "782420101",
+          "label": "Parc Saint-Cyr Haut de Fontenay",
+          "type": "H"
+        },
+        {
+          "id": "782420102",
+          "label": "Vendôme-César Franck",
+          "type": "H"
+        },
+        {
+          "id": "782420103",
+          "label": "Marché Schweitzer",
+          "type": "H"
+        },
+        {
+          "id": "782420104",
+          "label": "Hôtel de Ville Beaumarchais",
+          "type": "H"
+        },
+        {
+          "id": "782420105",
+          "label": "Vieux Village Missionnaires",
+          "type": "H"
+        },
+        {
+          "id": "782420106",
+          "label": "Parc Montaigne Église",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 113,
+      "id": "gien",
+      "name": "Gien",
+      "featureId": "commune-45155",
+      "communeCode": "45155",
+      "population": 13459,
+      "departmentCode": "45",
+      "departmentName": "Loiret",
+      "regionName": "Centre-Val de Loire",
+      "searchCenter": [
+        2.6687,
+        47.7175
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "451550101",
+          "label": "Faïencerie",
+          "type": "H"
+        },
+        {
+          "id": "451550102",
+          "label": "Loire et Beaujeu",
+          "type": "H"
+        },
+        {
+          "id": "451550201",
+          "label": "Gien le Vieux",
+          "type": "H"
+        },
+        {
+          "id": "451550202",
+          "label": "Montfort",
+          "type": "H"
+        },
+        {
+          "id": "451550301",
+          "label": "Chantemerle",
+          "type": "H"
+        },
+        {
+          "id": "451550302",
+          "label": "Arrabloy la Bosserie",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 114,
+      "id": "plougastel_daoulas",
+      "name": "Plougastel-Daoulas",
+      "featureId": "commune-29189",
+      "communeCode": "29189",
+      "population": 13434,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -4.3912,
+        48.3628
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "291890103",
+          "label": "Élorn-Tinduff",
+          "type": "H"
+        },
+        {
+          "id": "291890104",
+          "label": "Armorique",
+          "type": "H"
+        },
+        {
+          "id": "291890105",
+          "label": "Keraliou-Passage",
+          "type": "H"
+        },
+        {
+          "id": "291890106",
+          "label": "Bourg Nord",
+          "type": "H"
+        },
+        {
+          "id": "291890107",
+          "label": "Bourg Sud",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 126,
+      "id": "lourdes",
+      "name": "Lourdes",
+      "featureId": "commune-65286",
+      "communeCode": "65286",
+      "population": 13266,
+      "departmentCode": "65",
+      "departmentName": "Hautes-Pyrénées",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        -0.0806,
+        43.109
+      ],
+      "sourceFeatureCount": 10,
+      "distinctOfficialIrisCount": 10,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "652860101",
+          "label": "Centre-Mairie",
+          "type": "H"
+        },
+        {
+          "id": "652860102",
+          "label": "Centre-Soum",
+          "type": "H"
+        },
+        {
+          "id": "652860103",
+          "label": "Ophite-Chantecler",
+          "type": "H"
+        },
+        {
+          "id": "652860104",
+          "label": "Centre-Gare",
+          "type": "H"
+        },
+        {
+          "id": "652860105",
+          "label": "Sarsan-Anclades",
+          "type": "H"
+        },
+        {
+          "id": "652860106",
+          "label": "Pic du Ger",
+          "type": "D"
+        },
+        {
+          "id": "652860107",
+          "label": "Bois de Mourles-Forêt de Béout",
+          "type": "D"
+        },
+        {
+          "id": "652860108",
+          "label": "Secteur Hôtelier-Sanctuaire",
+          "type": "A"
+        },
+        {
+          "id": "652860109",
+          "label": "La Bastide-Lannedarre",
+          "type": "H"
+        },
+        {
+          "id": "652860110",
+          "label": "Monge-Saux",
+          "type": "A"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 128,
+      "id": "canet_en_roussillon",
+      "name": "Canet-en-Roussillon",
+      "featureId": "commune-66037",
+      "communeCode": "66037",
+      "population": 13227,
+      "departmentCode": "66",
+      "departmentName": "Pyrénées-Orientales",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        3.002,
+        42.6809
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "660370101",
+          "label": "Village Centre",
+          "type": "H"
+        },
+        {
+          "id": "660370102",
+          "label": "Village Sud",
+          "type": "H"
+        },
+        {
+          "id": "660370103",
+          "label": "Plage Centre",
+          "type": "H"
+        },
+        {
+          "id": "660370104",
+          "label": "Plage Sud",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 132,
+      "id": "villeneuve_les_avignon",
+      "name": "Villeneuve-lès-Avignon",
+      "featureId": "commune-30351",
+      "communeCode": "30351",
+      "population": 13148,
+      "departmentCode": "30",
+      "departmentName": "Gard",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        4.792,
+        43.9776
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "303510101",
+          "label": "Abbaye-La Motte",
+          "type": "H"
+        },
+        {
+          "id": "303510102",
+          "label": "Bellecroix-Pont d'Avignon",
+          "type": "H"
+        },
+        {
+          "id": "303510103",
+          "label": "Montagne des Chèvres",
+          "type": "H"
+        },
+        {
+          "id": "303510104",
+          "label": "Charbonnières Montagné",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 141,
+      "id": "fonsorbes",
+      "name": "Fonsorbes",
+      "featureId": "commune-31187",
+      "communeCode": "31187",
+      "population": 12954,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.2429,
+        43.5332
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "311870104",
+          "label": "Trépadé",
+          "type": "H"
+        },
+        {
+          "id": "311870105",
+          "label": "Béouzo",
+          "type": "H"
+        },
+        {
+          "id": "311870106",
+          "label": "Cantelauze",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 145,
+      "id": "nemours",
+      "name": "Nemours",
+      "featureId": "commune-77333",
+      "communeCode": "77333",
+      "population": 12889,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.7187,
+        48.2633
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "773330101",
+          "label": "Mairie Est",
+          "type": "H"
+        },
+        {
+          "id": "773330102",
+          "label": "Mairie Centre-Nord",
+          "type": "H"
+        },
+        {
+          "id": "773330103",
+          "label": "Mairie Centre-Sud",
+          "type": "H"
+        },
+        {
+          "id": "773330104",
+          "label": "Mairie Sud",
+          "type": "H"
+        },
+        {
+          "id": "773330201",
+          "label": "Rive du Loing",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 148,
+      "id": "moret_loing_et_orvanne",
+      "name": "Moret-Loing-et-Orvanne",
+      "featureId": "commune-77316",
+      "communeCode": "77316",
+      "population": 12810,
+      "departmentCode": "77",
+      "departmentName": "Seine-et-Marne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.8233,
+        48.3545
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "773160101",
+          "label": "Moret-sur-Loing",
+          "type": "H"
+        },
+        {
+          "id": "773160102",
+          "label": "Écuelles-Épisy-Montarlot",
+          "type": "H"
+        },
+        {
+          "id": "773160103",
+          "label": "Veneux-les-Sablons",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 149,
+      "id": "saint_andre_les_vergers",
+      "name": "Saint-André-les-Vergers",
+      "featureId": "commune-10333",
+      "communeCode": "10333",
+      "population": 12806,
+      "departmentCode": "10",
+      "departmentName": "Aube",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        4.0464,
+        48.2771
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "103330101",
+          "label": "Croix Blanche Ouest",
+          "type": "H"
+        },
+        {
+          "id": "103330102",
+          "label": "Croix Blanche Nord",
+          "type": "H"
+        },
+        {
+          "id": "103330103",
+          "label": "Croix Blanche Sud",
+          "type": "H"
+        },
+        {
+          "id": "103330201",
+          "label": "Bas Clos Nord-Est",
+          "type": "H"
+        },
+        {
+          "id": "103330202",
+          "label": "Bas Clos Sud-Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 150,
+      "id": "pornichet",
+      "name": "Pornichet",
+      "featureId": "commune-44132",
+      "communeCode": "44132",
+      "population": 12800,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -2.3225,
+        47.2599
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "441320101",
+          "label": "Gambetta",
+          "type": "H"
+        },
+        {
+          "id": "441320102",
+          "label": "Bonne Source-Saint-Sébastien",
+          "type": "H"
+        },
+        {
+          "id": "441320103",
+          "label": "Sainte-Marguerite",
+          "type": "H"
+        },
+        {
+          "id": "441320104",
+          "label": "Ermur-Les Forges",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 152,
+      "id": "chambray_les_tours",
+      "name": "Chambray-lès-Tours",
+      "featureId": "commune-37050",
+      "communeCode": "37050",
+      "population": 12720,
+      "departmentCode": "37",
+      "departmentName": "Indre-et-Loire",
+      "regionName": "Centre-Val de Loire",
+      "searchCenter": [
+        0.7205,
+        47.3329
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "370500101",
+          "label": "Fontaine Blanche",
+          "type": "H"
+        },
+        {
+          "id": "370500102",
+          "label": "Branchoire",
+          "type": "H"
+        },
+        {
+          "id": "370500103",
+          "label": "Centre Ville-Pommiers",
+          "type": "H"
+        },
+        {
+          "id": "370500104",
+          "label": "Hippodrome",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 156,
+      "id": "bayeux",
+      "name": "Bayeux",
+      "featureId": "commune-14047",
+      "communeCode": "14047",
+      "population": 12659,
+      "departmentCode": "14",
+      "departmentName": "Calvados",
+      "regionName": "Normandie",
+      "searchCenter": [
+        -0.7016,
+        49.2772
+      ],
+      "sourceFeatureCount": 8,
+      "distinctOfficialIrisCount": 8,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "140470101",
+          "label": "Cœur Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "140470102",
+          "label": "Partie Sud",
+          "type": "H"
+        },
+        {
+          "id": "140470103",
+          "label": "Sud Périphérique",
+          "type": "A"
+        },
+        {
+          "id": "140470201",
+          "label": "Quartier Saint-Patrice et au Nord",
+          "type": "H"
+        },
+        {
+          "id": "140470203",
+          "label": "Saint-Laurent-Saint-Jean",
+          "type": "H"
+        },
+        {
+          "id": "140470301",
+          "label": "Route de Vaux et Argouges",
+          "type": "H"
+        },
+        {
+          "id": "140470302",
+          "label": "Route de Port",
+          "type": "H"
+        },
+        {
+          "id": "140470303",
+          "label": "Route Saint-Patrice-Quartier Saint-Julien",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 157,
+      "id": "la_chapelle_saint_luc",
+      "name": "La Chapelle-Saint-Luc",
+      "featureId": "commune-10081",
+      "communeCode": "10081",
+      "population": 12648,
+      "departmentCode": "10",
+      "departmentName": "Aube",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        4.0303,
+        48.3165
+      ],
+      "sourceFeatureCount": 7,
+      "distinctOfficialIrisCount": 7,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "100810101",
+          "label": "Vieille Ville Sud-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "100810102",
+          "label": "Vieille Ville Centre",
+          "type": "H"
+        },
+        {
+          "id": "100810103",
+          "label": "Vieille Ville Nord-Est",
+          "type": "H"
+        },
+        {
+          "id": "100810201",
+          "label": "Chantereigne-Montvilliers Nord-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "100810202",
+          "label": "Chantereigne-Montvilliers Centre",
+          "type": "H"
+        },
+        {
+          "id": "100810203",
+          "label": "Chantereigne-Montvilliers Sud-Est",
+          "type": "H"
+        },
+        {
+          "id": "100810205",
+          "label": "Chantereigne-Montvilliers Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 164,
+      "id": "granville",
+      "name": "Granville",
+      "featureId": "commune-50218",
+      "communeCode": "50218",
+      "population": 12510,
+      "departmentCode": "50",
+      "departmentName": "Manche",
+      "regionName": "Normandie",
+      "searchCenter": [
+        -1.7657,
+        48.8724
+      ],
+      "sourceFeatureCount": 8,
+      "distinctOfficialIrisCount": 8,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "502180101",
+          "label": "Quartier Haute Ville et Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "502180102",
+          "label": "Quartier du Lude et du Rocher",
+          "type": "H"
+        },
+        {
+          "id": "502180103",
+          "label": "Quartier Saint-Paul",
+          "type": "H"
+        },
+        {
+          "id": "502180104",
+          "label": "Quartier des Ports",
+          "type": "D"
+        },
+        {
+          "id": "502180201",
+          "label": "Quartier Hacqueville et du Stade",
+          "type": "H"
+        },
+        {
+          "id": "502180202",
+          "label": "Quartier du Couvent",
+          "type": "A"
+        },
+        {
+          "id": "502180203",
+          "label": "Quartier de l'Agora",
+          "type": "H"
+        },
+        {
+          "id": "502180204",
+          "label": "Quartier du Prétot et du Saussey",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 166,
+      "id": "l_isle_adam",
+      "name": "L'Isle-Adam",
+      "featureId": "commune-95313",
+      "communeCode": "95313",
+      "population": 12493,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.2352,
+        49.1078
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "953130101",
+          "label": "Rives de l'Oise",
+          "type": "H"
+        },
+        {
+          "id": "953130102",
+          "label": "La Faisanderie",
+          "type": "H"
+        },
+        {
+          "id": "953130103",
+          "label": "Nogent-Cassan",
+          "type": "H"
+        },
+        {
+          "id": "953130104",
+          "label": "La Garenne",
+          "type": "H"
+        },
+        {
+          "id": "953130105",
+          "label": "Le Haut de l'Isle-Adam",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 167,
+      "id": "saint_ave",
+      "name": "Saint-Avé",
+      "featureId": "commune-56206",
+      "communeCode": "56206",
+      "population": 12470,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -2.7434,
+        47.7008
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "562060101",
+          "label": "Centre Bourg",
+          "type": "H"
+        },
+        {
+          "id": "562060102",
+          "label": "Péri Centre",
+          "type": "H"
+        },
+        {
+          "id": "562060103",
+          "label": "Berval Lesvellec",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 168,
+      "id": "quimperle",
+      "name": "Quimperlé",
+      "featureId": "commune-29233",
+      "communeCode": "29233",
+      "population": 12469,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -3.5586,
+        47.8558
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "292330101",
+          "label": "La Haute Ville",
+          "type": "H"
+        },
+        {
+          "id": "292330102",
+          "label": "Kerjouanneau-Kerbertrand",
+          "type": "H"
+        },
+        {
+          "id": "292330103",
+          "label": "Lézardeau-Kerneuzec",
+          "type": "H"
+        },
+        {
+          "id": "292330104",
+          "label": "Basse Ville",
+          "type": "H"
+        },
+        {
+          "id": "292330105",
+          "label": "Les Villages-La Forêt",
+          "type": "D"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 171,
+      "id": "pont_du_chateau",
+      "name": "Pont-du-Château",
+      "featureId": "commune-63284",
+      "communeCode": "63284",
+      "population": 12412,
+      "departmentCode": "63",
+      "departmentName": "Puy-de-Dôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        3.2361,
+        45.7972
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "632840101",
+          "label": "Vieux Pont-du-Château",
+          "type": "H"
+        },
+        {
+          "id": "632840102",
+          "label": "Les Sablons",
+          "type": "H"
+        },
+        {
+          "id": "632840103",
+          "label": "H.L.M.",
+          "type": "H"
+        },
+        {
+          "id": "632840104",
+          "label": "La Pradelle",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 172,
+      "id": "gisors",
+      "name": "Gisors",
+      "featureId": "commune-27284",
+      "communeCode": "27284",
+      "population": 12410,
+      "departmentCode": "27",
+      "departmentName": "Eure",
+      "regionName": "Normandie",
+      "searchCenter": [
+        1.7642,
+        49.2775
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "272840101",
+          "label": "Quartier Est",
+          "type": "H"
+        },
+        {
+          "id": "272840102",
+          "label": "Quartier Nord",
+          "type": "H"
+        },
+        {
+          "id": "272840103",
+          "label": "Quartier Sud",
+          "type": "H"
+        },
+        {
+          "id": "272840104",
+          "label": "Quartier Centre",
+          "type": "H"
+        },
+        {
+          "id": "272840105",
+          "label": "Quartier Ouest",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 173,
+      "id": "pont_sainte_maxence",
+      "name": "Pont-Sainte-Maxence",
+      "featureId": "commune-60509",
+      "communeCode": "60509",
+      "population": 12361,
+      "departmentCode": "60",
+      "departmentName": "Oise",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.6151,
+        49.308
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "605090101",
+          "label": "Sarron",
+          "type": "H"
+        },
+        {
+          "id": "605090201",
+          "label": "Pasteur",
+          "type": "H"
+        },
+        {
+          "id": "605090301",
+          "label": "Boilet",
+          "type": "H"
+        },
+        {
+          "id": "605090401",
+          "label": "Terriers",
+          "type": "H"
+        },
+        {
+          "id": "605090501",
+          "label": "Montignette",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 190,
+      "id": "saint_gaudens",
+      "name": "Saint-Gaudens",
+      "featureId": "commune-31483",
+      "communeCode": "31483",
+      "population": 12139,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        0.7254,
+        43.1209
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "314830101",
+          "label": "Cœur de Ville",
+          "type": "H"
+        },
+        {
+          "id": "314830102",
+          "label": "Quartier Ouest",
+          "type": "H"
+        },
+        {
+          "id": "314830103",
+          "label": "Quartier Nord",
+          "type": "H"
+        },
+        {
+          "id": "314830104",
+          "label": "Quartier Est",
+          "type": "H"
+        },
+        {
+          "id": "314830105",
+          "label": "Saint-Gaudens-Garonne",
+          "type": "A"
+        },
+        {
+          "id": "314830107",
+          "label": "Saint-Gaudens-Coteaux",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 196,
+      "id": "mios",
+      "name": "Mios",
+      "featureId": "commune-33284",
+      "communeCode": "33284",
+      "population": 12043,
+      "departmentCode": "33",
+      "departmentName": "Gironde",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.8913,
+        44.6105
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "332840101",
+          "label": "Lacanau",
+          "type": "H"
+        },
+        {
+          "id": "332840102",
+          "label": "Matalin-Surgenne",
+          "type": "H"
+        },
+        {
+          "id": "332840103",
+          "label": "Terres Vives",
+          "type": "H"
+        },
+        {
+          "id": "332840104",
+          "label": "Centre-Eyre",
+          "type": "H"
+        },
+        {
+          "id": "332840105",
+          "label": "Cassadotte-Masquet",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 197,
+      "id": "roquebrune_cap_martin",
+      "name": "Roquebrune-Cap-Martin",
+      "featureId": "commune-06104",
+      "communeCode": "06104",
+      "population": 12037,
+      "departmentCode": "06",
+      "departmentName": "Alpes-Maritimes",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        7.4576,
+        43.7638
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "061040101",
+          "label": "Carnoles",
+          "type": "H"
+        },
+        {
+          "id": "061040102",
+          "label": "Cap Martin",
+          "type": "H"
+        },
+        {
+          "id": "061040103",
+          "label": "Cabbe-Saint-Roman",
+          "type": "H"
+        },
+        {
+          "id": "061040104",
+          "label": "Village-Cros de Caste-Coupière-Mont Gros",
+          "type": "H"
+        },
+        {
+          "id": "061040105",
+          "label": "Val de Gorbio",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 210,
+      "id": "somain",
+      "name": "Somain",
+      "featureId": "commune-59574",
+      "communeCode": "59574",
+      "population": 11766,
+      "departmentCode": "59",
+      "departmentName": "Nord",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        3.2717,
+        50.3595
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "595740101",
+          "label": "Quartier de Sessevalle",
+          "type": "H"
+        },
+        {
+          "id": "595740102",
+          "label": "Quartier du Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "595740103",
+          "label": "Quartier de Villers-Campeau",
+          "type": "H"
+        },
+        {
+          "id": "595740104",
+          "label": "Quartier des Cheminots-Chauffour",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 213,
+      "id": "bauge_en_anjou",
+      "name": "Baugé-en-Anjou",
+      "featureId": "commune-49018",
+      "communeCode": "49018",
+      "population": 11712,
+      "departmentCode": "49",
+      "departmentName": "Maine-et-Loire",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -0.1143,
+        47.5598
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "490180101",
+          "label": "Baugé",
+          "type": "H"
+        },
+        {
+          "id": "490180102",
+          "label": "Vieil Baugé",
+          "type": "H"
+        },
+        {
+          "id": "490180103",
+          "label": "Bocé",
+          "type": "H"
+        },
+        {
+          "id": "490180201",
+          "label": "Clefs",
+          "type": "H"
+        },
+        {
+          "id": "490180202",
+          "label": "Cheviré le Rouge",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 217,
+      "id": "saint_cyr_sur_mer",
+      "name": "Saint-Cyr-sur-Mer",
+      "featureId": "commune-83112",
+      "communeCode": "83112",
+      "population": 11658,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        5.7055,
+        43.17
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "831120101",
+          "label": "Village-Cagueloup-Gueissard",
+          "type": "H"
+        },
+        {
+          "id": "831120102",
+          "label": "Plan de la Mer-Frégate-Rampale-Alon",
+          "type": "H"
+        },
+        {
+          "id": "831120103",
+          "label": "Les Lecques-Banette-Bourrasque-Pradeaux",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 218,
+      "id": "sassenage",
+      "name": "Sassenage",
+      "featureId": "commune-38474",
+      "communeCode": "38474",
+      "population": 11646,
+      "departmentCode": "38",
+      "departmentName": "Isère",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        5.6541,
+        45.2141
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "384740101",
+          "label": "La Falaise",
+          "type": "H"
+        },
+        {
+          "id": "384740102",
+          "label": "La Plaine",
+          "type": "H"
+        },
+        {
+          "id": "384740103",
+          "label": "Le Bourg-Les Côtes",
+          "type": "H"
+        },
+        {
+          "id": "384740104",
+          "label": "Engenières-Rolandière",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 233,
+      "id": "la_hague",
+      "name": "La Hague",
+      "featureId": "commune-50041",
+      "communeCode": "50041",
+      "population": 11484,
+      "departmentCode": "50",
+      "departmentName": "Manche",
+      "regionName": "Normandie",
+      "searchCenter": [
+        -1.8214,
+        49.6546
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "500410101",
+          "label": "Urville-Nacqueville",
+          "type": "H"
+        },
+        {
+          "id": "500410102",
+          "label": "Sainte-Croix-Hague",
+          "type": "H"
+        },
+        {
+          "id": "500410103",
+          "label": "Jobourg",
+          "type": "H"
+        },
+        {
+          "id": "500410104",
+          "label": "Beaumont-Hague",
+          "type": "H"
+        },
+        {
+          "id": "500410105",
+          "label": "Vasteville",
+          "type": "H"
+        },
+        {
+          "id": "500410106",
+          "label": "Flottemanville-Hague",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 239,
+      "id": "enghien_les_bains",
+      "name": "Enghien-les-Bains",
+      "featureId": "commune-95210",
+      "communeCode": "95210",
+      "population": 11432,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.305,
+        48.9706
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "952100101",
+          "label": "Quartier Nord Résidentiel",
+          "type": "H"
+        },
+        {
+          "id": "952100201",
+          "label": "Centre Ville-Commerce",
+          "type": "H"
+        },
+        {
+          "id": "952100301",
+          "label": "Residentiel-Place Verdun",
+          "type": "H"
+        },
+        {
+          "id": "952100401",
+          "label": "Residentiel-Barre d'Ormesson",
+          "type": "H"
+        },
+        {
+          "id": "952100501",
+          "label": "Centre Ville-Tour du Lac",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 246,
+      "id": "le_haillan",
+      "name": "Le Haillan",
+      "featureId": "commune-33200",
+      "communeCode": "33200",
+      "population": 11392,
+      "departmentCode": "33",
+      "departmentName": "Gironde",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.6903,
+        44.8713
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "332000101",
+          "label": "Baraillot",
+          "type": "H"
+        },
+        {
+          "id": "332000102",
+          "label": "Béchade",
+          "type": "H"
+        },
+        {
+          "id": "332000103",
+          "label": "Miotte",
+          "type": "H"
+        },
+        {
+          "id": "332000104",
+          "label": "Gasquet",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 249,
+      "id": "montlouis_sur_loire",
+      "name": "Montlouis-sur-Loire",
+      "featureId": "commune-37156",
+      "communeCode": "37156",
+      "population": 11335,
+      "departmentCode": "37",
+      "departmentName": "Indre-et-Loire",
+      "regionName": "Centre-Val de Loire",
+      "searchCenter": [
+        0.8432,
+        47.383
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "371560101",
+          "label": "Coteaux",
+          "type": "H"
+        },
+        {
+          "id": "371560102",
+          "label": "Centre-Baillet-Bodet",
+          "type": "H"
+        },
+        {
+          "id": "371560103",
+          "label": "Brossereaux-H.L.M. Croix Blanche",
+          "type": "H"
+        },
+        {
+          "id": "371560104",
+          "label": "Montlouis Sud et Ouest",
+          "type": "H"
+        },
+        {
+          "id": "371560105",
+          "label": "Cormier-Miltière-Husseau",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 253,
+      "id": "villefranche_de_rouergue",
+      "name": "Villefranche-de-Rouergue",
+      "featureId": "commune-12300",
+      "communeCode": "12300",
+      "population": 11271,
+      "departmentCode": "12",
+      "departmentName": "Aveyron",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        2.0296,
+        44.3471
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "123000101",
+          "label": "La Bastide",
+          "type": "H"
+        },
+        {
+          "id": "123000102",
+          "label": "Radel",
+          "type": "H"
+        },
+        {
+          "id": "123000103",
+          "label": "Tricot",
+          "type": "H"
+        },
+        {
+          "id": "123000104",
+          "label": "Quartier Nord-Est",
+          "type": "H"
+        },
+        {
+          "id": "123000105",
+          "label": "Ségala Sud",
+          "type": "H"
+        },
+        {
+          "id": "123000106",
+          "label": "Quartier Ouest",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 262,
+      "id": "arcachon",
+      "name": "Arcachon",
+      "featureId": "commune-33009",
+      "communeCode": "33009",
+      "population": 11092,
+      "departmentCode": "33",
+      "departmentName": "Gironde",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -1.1718,
+        44.6515
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "330090101",
+          "label": "Le Moulleau-Les Abatilles",
+          "type": "H"
+        },
+        {
+          "id": "330090102",
+          "label": "Pereire-Ville d'Hiver",
+          "type": "H"
+        },
+        {
+          "id": "330090103",
+          "label": "Ville d'Été",
+          "type": "H"
+        },
+        {
+          "id": "330090104",
+          "label": "Saint-Ferdinand",
+          "type": "H"
+        },
+        {
+          "id": "330090105",
+          "label": "Aiguillon",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 267,
+      "id": "mouans_sartoux",
+      "name": "Mouans-Sartoux",
+      "featureId": "commune-06084",
+      "communeCode": "06084",
+      "population": 11015,
+      "departmentCode": "06",
+      "departmentName": "Alpes-Maritimes",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        6.9677,
+        43.6192
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "060840101",
+          "label": "Les Aspres-Plan Sarrain",
+          "type": "H"
+        },
+        {
+          "id": "060840102",
+          "label": "Grand-Pièce-Les Plaines",
+          "type": "H"
+        },
+        {
+          "id": "060840103",
+          "label": "Les Indes-les Groulles",
+          "type": "H"
+        },
+        {
+          "id": "060840104",
+          "label": "Les Plantiers-Le Plan",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 274,
+      "id": "stiring_wendel",
+      "name": "Stiring-Wendel",
+      "featureId": "commune-57660",
+      "communeCode": "57660",
+      "population": 10956,
+      "departmentCode": "57",
+      "departmentName": "Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.9321,
+        49.2016
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "576600101",
+          "label": "Verrerie Sophie",
+          "type": "H"
+        },
+        {
+          "id": "576600102",
+          "label": "Vieux Stiring",
+          "type": "H"
+        },
+        {
+          "id": "576600103",
+          "label": "Centre-Coulée Verte",
+          "type": "H"
+        },
+        {
+          "id": "576600104",
+          "label": "Habsterdick Ouest",
+          "type": "H"
+        },
+        {
+          "id": "576600105",
+          "label": "Habsterdick Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 278,
+      "id": "le_pradet",
+      "name": "Le Pradet",
+      "featureId": "commune-83098",
+      "communeCode": "83098",
+      "population": 10933,
+      "departmentCode": "83",
+      "departmentName": "Var",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        6.0214,
+        43.0984
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "830980101",
+          "label": "Pradet Sud",
+          "type": "H"
+        },
+        {
+          "id": "830980102",
+          "label": "Pradet Ouest",
+          "type": "H"
+        },
+        {
+          "id": "830980103",
+          "label": "Pradet Nord",
+          "type": "H"
+        },
+        {
+          "id": "830980104",
+          "label": "Pradet Centre",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 281,
+      "id": "orthez",
+      "name": "Orthez",
+      "featureId": "commune-64430",
+      "communeCode": "64430",
+      "population": 10881,
+      "departmentCode": "64",
+      "departmentName": "Pyrénées-Atlantiques",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.7777,
+        43.4945
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "644300101",
+          "label": "Sainte-Suzanne-Magret-Marmonts",
+          "type": "H"
+        },
+        {
+          "id": "644300102",
+          "label": "Virginie-Castétarbe-Batiplex-Moutète",
+          "type": "H"
+        },
+        {
+          "id": "644300103",
+          "label": "Mounicq-Taranelle-Trinité-Soarns",
+          "type": "H"
+        },
+        {
+          "id": "644300104",
+          "label": "Goundet-Moncade-Lapeyrère",
+          "type": "H"
+        },
+        {
+          "id": "644300105",
+          "label": "Mairie-Stade-Bergérau-Départ",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 282,
+      "id": "brissac_loire_aubance",
+      "name": "Brissac Loire Aubance",
+      "featureId": "commune-49050",
+      "communeCode": "49050",
+      "population": 10878,
+      "departmentCode": "49",
+      "departmentName": "Maine-et-Loire",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -0.4087,
+        47.3392
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "490500101",
+          "label": "Brissac-Quincé",
+          "type": "H"
+        },
+        {
+          "id": "490500102",
+          "label": "Les Alleuds",
+          "type": "H"
+        },
+        {
+          "id": "490500103",
+          "label": "Chemellier",
+          "type": "H"
+        },
+        {
+          "id": "490500104",
+          "label": "Saint-Rémy-la-Varenne",
+          "type": "H"
+        },
+        {
+          "id": "490500105",
+          "label": "Saint-Saturnin-sur-Loire",
+          "type": "H"
+        },
+        {
+          "id": "490500106",
+          "label": "Vauchrétien",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 286,
+      "id": "passy",
+      "name": "Passy",
+      "featureId": "commune-74208",
+      "communeCode": "74208",
+      "population": 10856,
+      "departmentCode": "74",
+      "departmentName": "Haute-Savoie",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        6.7507,
+        45.9579
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "742080101",
+          "label": "Ouest et Nord",
+          "type": "H"
+        },
+        {
+          "id": "742080102",
+          "label": "Plaine",
+          "type": "H"
+        },
+        {
+          "id": "742080103",
+          "label": "Marlioz",
+          "type": "H"
+        },
+        {
+          "id": "742080104",
+          "label": "Chedde-Les Plagnes",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 292,
+      "id": "tinqueux",
+      "name": "Tinqueux",
+      "featureId": "commune-51573",
+      "communeCode": "51573",
+      "population": 10771,
+      "departmentCode": "51",
+      "departmentName": "Marne",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        3.9895,
+        49.2488
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "515730101",
+          "label": "Muire",
+          "type": "H"
+        },
+        {
+          "id": "515730102",
+          "label": "Haubette",
+          "type": "H"
+        },
+        {
+          "id": "515730201",
+          "label": "Champ Paveau",
+          "type": "H"
+        },
+        {
+          "id": "515730202",
+          "label": "Croix Cordier",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 295,
+      "id": "allonnes",
+      "name": "Allonnes",
+      "featureId": "commune-72003",
+      "communeCode": "72003",
+      "population": 10739,
+      "departmentCode": "72",
+      "departmentName": "Sarthe",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        0.1447,
+        47.9588
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "720030101",
+          "label": "Les Ruisseaux",
+          "type": "H"
+        },
+        {
+          "id": "720030102",
+          "label": "Le Chaoué",
+          "type": "H"
+        },
+        {
+          "id": "720030103",
+          "label": "La Tour aux Fées",
+          "type": "H"
+        },
+        {
+          "id": "720030104",
+          "label": "Les Perrières",
+          "type": "H"
+        },
+        {
+          "id": "720030105",
+          "label": "Campagne-Hautes Métairies",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 296,
+      "id": "beaumont",
+      "name": "Beaumont",
+      "featureId": "commune-63032",
+      "communeCode": "63032",
+      "population": 10728,
+      "departmentCode": "63",
+      "departmentName": "Puy-de-Dôme",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        3.0853,
+        45.75
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "630320101",
+          "label": "Quartier Stade-Bourg",
+          "type": "H"
+        },
+        {
+          "id": "630320102",
+          "label": "Quartier Artière-Molière",
+          "type": "H"
+        },
+        {
+          "id": "630320103",
+          "label": "Quartier Mairie-Masage",
+          "type": "H"
+        },
+        {
+          "id": "630320104",
+          "label": "Quartier Mont-Dore-Saint-Guillaume",
+          "type": "H"
+        },
+        {
+          "id": "630320105",
+          "label": "Quartier Châtaigneraie-Vallières",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 297,
+      "id": "epinay_sur_orge",
+      "name": "Épinay-sur-Orge",
+      "featureId": "commune-91216",
+      "communeCode": "91216",
+      "population": 10722,
+      "departmentCode": "91",
+      "departmentName": "Essonne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.3194,
+        48.6719
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "912160101",
+          "label": "Le Breuil",
+          "type": "H"
+        },
+        {
+          "id": "912160102",
+          "label": "La Terrasse",
+          "type": "H"
+        },
+        {
+          "id": "912160103",
+          "label": "Le Mauregard",
+          "type": "H"
+        },
+        {
+          "id": "912160104",
+          "label": "Centre Ville Les Graviers",
+          "type": "H"
+        },
+        {
+          "id": "912160105",
+          "label": "Les Gares",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 298,
+      "id": "etaples",
+      "name": "Étaples",
+      "featureId": "commune-62318",
+      "communeCode": "62318",
+      "population": 10710,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        1.6462,
+        50.5247
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "623180101",
+          "label": "Ville Ancienne",
+          "type": "H"
+        },
+        {
+          "id": "623180102",
+          "label": "Blanc Pavé-Sirènes-Bergeries",
+          "type": "H"
+        },
+        {
+          "id": "623180103",
+          "label": "Mont Levin-Les Pins-Puits d'Amour",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 299,
+      "id": "oloron_sainte_marie",
+      "name": "Oloron-Sainte-Marie",
+      "featureId": "commune-64422",
+      "communeCode": "64422",
+      "population": 10684,
+      "departmentCode": "64",
+      "departmentName": "Pyrénées-Atlantiques",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.5954,
+        43.1679
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "644220101",
+          "label": "Notre-Dame",
+          "type": "H"
+        },
+        {
+          "id": "644220102",
+          "label": "Sainte-Croix",
+          "type": "H"
+        },
+        {
+          "id": "644220103",
+          "label": "Sainte-Marie Sud",
+          "type": "H"
+        },
+        {
+          "id": "644220104",
+          "label": "Sainte-Marie Ouest",
+          "type": "H"
+        },
+        {
+          "id": "644220105",
+          "label": "Sainte-Marie Nord Gare Légugnon",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 303,
+      "id": "urrugne",
+      "name": "Urrugne",
+      "featureId": "commune-64545",
+      "communeCode": "64545",
+      "population": 10661,
+      "departmentCode": "64",
+      "departmentName": "Pyrénées-Atlantiques",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -1.7018,
+        43.3507
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "645450101",
+          "label": "Mendi Choko Karrikatxar Olhette",
+          "type": "H"
+        },
+        {
+          "id": "645450102",
+          "label": "Béhobie Socoa",
+          "type": "H"
+        },
+        {
+          "id": "645450103",
+          "label": "Bourg Kechiloa",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 306,
+      "id": "voisins_le_bretonneux",
+      "name": "Voisins-le-Bretonneux",
+      "featureId": "commune-78688",
+      "communeCode": "78688",
+      "population": 10624,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.047,
+        48.7598
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "786880101",
+          "label": "Bretonnière Grande Île B",
+          "type": "H"
+        },
+        {
+          "id": "786880102",
+          "label": "Le Lac - Grande Île A",
+          "type": "H"
+        },
+        {
+          "id": "786880103",
+          "label": "La Gravière Centre Village",
+          "type": "H"
+        },
+        {
+          "id": "786880104",
+          "label": "Plan de l'Église",
+          "type": "H"
+        },
+        {
+          "id": "786880105",
+          "label": "Chamfleury Port Royal",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 312,
+      "id": "chantilly",
+      "name": "Chantilly",
+      "featureId": "commune-60141",
+      "communeCode": "60141",
+      "population": 10591,
+      "departmentCode": "60",
+      "departmentName": "Oise",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.4876,
+        49.18
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "601410101",
+          "label": "Centre-Hôtel de Ville",
+          "type": "H"
+        },
+        {
+          "id": "601410201",
+          "label": "Centre-Gare",
+          "type": "H"
+        },
+        {
+          "id": "601410301",
+          "label": "La Canardière-Le Castel",
+          "type": "H"
+        },
+        {
+          "id": "601410401",
+          "label": "Saint-Denis",
+          "type": "H"
+        },
+        {
+          "id": "601410501",
+          "label": "Les Lycées-La Forêt-Le Château",
+          "type": "D"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 316,
+      "id": "longuenesse",
+      "name": "Longuenesse",
+      "featureId": "commune-62525",
+      "communeCode": "62525",
+      "population": 10548,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.2481,
+        50.7348
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "625250101",
+          "label": "Aviateurs",
+          "type": "H"
+        },
+        {
+          "id": "625250102",
+          "label": "Maillebois-Peintres",
+          "type": "H"
+        },
+        {
+          "id": "625250103",
+          "label": "Verte Écuelle-Écrivains",
+          "type": "H"
+        },
+        {
+          "id": "625250104",
+          "label": "Centre Ville-Bruyères",
+          "type": "H"
+        },
+        {
+          "id": "625250105",
+          "label": "Saint-Quentin-Sainte-Aldegonde",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 320,
+      "id": "biot",
+      "name": "Biot",
+      "featureId": "commune-06018",
+      "communeCode": "06018",
+      "population": 10511,
+      "departmentCode": "06",
+      "departmentName": "Alpes-Maritimes",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        7.0821,
+        43.6273
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "060180101",
+          "label": "Village-Saint-Julien-Saint-Pierre",
+          "type": "H"
+        },
+        {
+          "id": "060180102",
+          "label": "Vallée Verte-Issarts-Vignasses",
+          "type": "H"
+        },
+        {
+          "id": "060180103",
+          "label": "Bois Fleuri-Chèvre d'Or-Saint-Philippe",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 321,
+      "id": "pernes_les_fontaines",
+      "name": "Pernes-les-Fontaines",
+      "featureId": "commune-84088",
+      "communeCode": "84088",
+      "population": 10504,
+      "departmentCode": "84",
+      "departmentName": "Vaucluse",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        5.0289,
+        43.9966
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "840880101",
+          "label": "Secteur Ouest",
+          "type": "H"
+        },
+        {
+          "id": "840880102",
+          "label": "Secteur Nord",
+          "type": "H"
+        },
+        {
+          "id": "840880103",
+          "label": "Secteur Est",
+          "type": "H"
+        },
+        {
+          "id": "840880104",
+          "label": "Secteur Sud",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 322,
+      "id": "valentigney",
+      "name": "Valentigney",
+      "featureId": "commune-25580",
+      "communeCode": "25580",
+      "population": 10501,
+      "departmentCode": "25",
+      "departmentName": "Doubs",
+      "regionName": "Bourgogne-Franche-Comté",
+      "searchCenter": [
+        6.8243,
+        47.464
+      ],
+      "sourceFeatureCount": 9,
+      "distinctOfficialIrisCount": 9,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "255800101",
+          "label": "Centre Graviers",
+          "type": "H"
+        },
+        {
+          "id": "255800102",
+          "label": "Rives du Doubs",
+          "type": "A"
+        },
+        {
+          "id": "255800103",
+          "label": "Les Bruyères",
+          "type": "H"
+        },
+        {
+          "id": "255800104",
+          "label": "Pezole les Longines",
+          "type": "H"
+        },
+        {
+          "id": "255800105",
+          "label": "Les Tales sous Roches",
+          "type": "H"
+        },
+        {
+          "id": "255800106",
+          "label": "Les Buis Nord",
+          "type": "H"
+        },
+        {
+          "id": "255800107",
+          "label": "Les Buis Sud",
+          "type": "H"
+        },
+        {
+          "id": "255800108",
+          "label": "Belchamp",
+          "type": "D"
+        },
+        {
+          "id": "255800109",
+          "label": "Combottes",
+          "type": "A"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 325,
+      "id": "villers_cotterets",
+      "name": "Villers-Cotterêts",
+      "featureId": "commune-02810",
+      "communeCode": "02810",
+      "population": 10489,
+      "departmentCode": "02",
+      "departmentName": "Aisne",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        3.1025,
+        49.2197
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "028100102",
+          "label": "Avenue de Compiegne",
+          "type": "H"
+        },
+        {
+          "id": "028100202",
+          "label": "Château",
+          "type": "H"
+        },
+        {
+          "id": "028100302",
+          "label": "Pisseleux",
+          "type": "H"
+        },
+        {
+          "id": "028100401",
+          "label": "Vivières",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 326,
+      "id": "la_riche",
+      "name": "La Riche",
+      "featureId": "commune-37195",
+      "communeCode": "37195",
+      "population": 10487,
+      "departmentCode": "37",
+      "departmentName": "Indre-et-Loire",
+      "regionName": "Centre-Val de Loire",
+      "searchCenter": [
+        0.6371,
+        47.3815
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "371950101",
+          "label": "Sainte-Anne",
+          "type": "H"
+        },
+        {
+          "id": "371950102",
+          "label": "Ronsard Pagnol",
+          "type": "H"
+        },
+        {
+          "id": "371950103",
+          "label": "Louis XI",
+          "type": "H"
+        },
+        {
+          "id": "371950104",
+          "label": "Les Varennes",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 328,
+      "id": "caudebec_les_elbeuf",
+      "name": "Caudebec-lès-Elbeuf",
+      "featureId": "commune-76165",
+      "communeCode": "76165",
+      "population": 10476,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "searchCenter": [
+        1.0227,
+        49.2821
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "761650101",
+          "label": "Industries",
+          "type": "A"
+        },
+        {
+          "id": "761650102",
+          "label": "Centre Ancien",
+          "type": "H"
+        },
+        {
+          "id": "761650103",
+          "label": "Cavées Est",
+          "type": "H"
+        },
+        {
+          "id": "761650104",
+          "label": "Équipements Publics",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 336,
+      "id": "fouesnant",
+      "name": "Fouesnant",
+      "featureId": "commune-29058",
+      "communeCode": "29058",
+      "population": 10436,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -4.0403,
+        47.8444
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "290580101",
+          "label": "Mousterlin",
+          "type": "H"
+        },
+        {
+          "id": "290580102",
+          "label": "Beg-Meil",
+          "type": "H"
+        },
+        {
+          "id": "290580103",
+          "label": "Centre Cap Coz",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 337,
+      "id": "andrezieux_boutheon",
+      "name": "Andrézieux-Bouthéon",
+      "featureId": "commune-42005",
+      "communeCode": "42005",
+      "population": 10425,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        4.2773,
+        45.5353
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "420050101",
+          "label": "La Chapelle",
+          "type": "H"
+        },
+        {
+          "id": "420050104",
+          "label": "Nord Bouthéon Plaine",
+          "type": "H"
+        },
+        {
+          "id": "420050105",
+          "label": "Bourg d'Andrézieux",
+          "type": "H"
+        },
+        {
+          "id": "420050106",
+          "label": "Agglomération Sud",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 340,
+      "id": "aizenay",
+      "name": "Aizenay",
+      "featureId": "commune-85003",
+      "communeCode": "85003",
+      "population": 10365,
+      "departmentCode": "85",
+      "departmentName": "Vendée",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -1.6271,
+        46.7366
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "850030101",
+          "label": "Partie Est Campagne-Agglomération",
+          "type": "H"
+        },
+        {
+          "id": "850030102",
+          "label": "Partie Ouest Campagne-Agglomération",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 344,
+      "id": "oignies",
+      "name": "Oignies",
+      "featureId": "commune-62637",
+      "communeCode": "62637",
+      "population": 10323,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.9917,
+        50.4636
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "626370101",
+          "label": "Declercq-Bonniers-Verger",
+          "type": "H"
+        },
+        {
+          "id": "626370102",
+          "label": "Turelle-Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "626370103",
+          "label": "Perdsemence",
+          "type": "H"
+        },
+        {
+          "id": "626370104",
+          "label": "Justice",
+          "type": "H"
+        },
+        {
+          "id": "626370105",
+          "label": "Quartier Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 354,
+      "id": "carentan_les_marais",
+      "name": "Carentan-les-Marais",
+      "featureId": "commune-50099",
+      "communeCode": "50099",
+      "population": 10218,
+      "departmentCode": "50",
+      "departmentName": "Manche",
+      "regionName": "Normandie",
+      "searchCenter": [
+        -1.2118,
+        49.3061
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "500990101",
+          "label": "Centre Ancien",
+          "type": "H"
+        },
+        {
+          "id": "500990102",
+          "label": "Le Bocage Sud",
+          "type": "H"
+        },
+        {
+          "id": "500990103",
+          "label": "Le Marais Nord",
+          "type": "H"
+        },
+        {
+          "id": "500990202",
+          "label": "Brévands-Brucheville",
+          "type": "H"
+        },
+        {
+          "id": "500990401",
+          "label": "Saint-Hilaire-Petitville-Montmartin",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 358,
+      "id": "ploermel",
+      "name": "Ploërmel",
+      "featureId": "commune-56165",
+      "communeCode": "56165",
+      "population": 10163,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -2.3769,
+        47.9167
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "561650101",
+          "label": "Urbain et Villages Nord",
+          "type": "H"
+        },
+        {
+          "id": "561650102",
+          "label": "Urbain Sud",
+          "type": "H"
+        },
+        {
+          "id": "561650103",
+          "label": "Villages Sud",
+          "type": "H"
+        },
+        {
+          "id": "561650201",
+          "label": "Monterrein",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 361,
+      "id": "avranches",
+      "name": "Avranches",
+      "featureId": "commune-50025",
+      "communeCode": "50025",
+      "population": 10143,
+      "departmentCode": "50",
+      "departmentName": "Manche",
+      "regionName": "Normandie",
+      "searchCenter": [
+        -1.3452,
+        48.6759
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "500250101",
+          "label": "Quartier Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "500250102",
+          "label": "Quartier Périphérique Nord-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "500250103",
+          "label": "Quartier H.L.M.",
+          "type": "H"
+        },
+        {
+          "id": "500250201",
+          "label": "Saint-Martin-des-Champs",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 362,
+      "id": "parthenay",
+      "name": "Parthenay",
+      "featureId": "commune-79202",
+      "communeCode": "79202",
+      "population": 10140,
+      "departmentCode": "79",
+      "departmentName": "Deux-Sèvres",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.235,
+        46.6458
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "792020101",
+          "label": "Le Jardin Public",
+          "type": "H"
+        },
+        {
+          "id": "792020102",
+          "label": "La Mairie",
+          "type": "H"
+        },
+        {
+          "id": "792020103",
+          "label": "Les Grippeaux",
+          "type": "H"
+        },
+        {
+          "id": "792020104",
+          "label": "La Mara",
+          "type": "H"
+        },
+        {
+          "id": "792020105",
+          "label": "Les Loges",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 366,
+      "id": "villerupt",
+      "name": "Villerupt",
+      "featureId": "commune-54580",
+      "communeCode": "54580",
+      "population": 10102,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        5.9275,
+        49.466
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "545800101",
+          "label": "Micheville",
+          "type": "H"
+        },
+        {
+          "id": "545800102",
+          "label": "Verdun",
+          "type": "H"
+        },
+        {
+          "id": "545800103",
+          "label": "Michelet Chatrian",
+          "type": "H"
+        },
+        {
+          "id": "545800104",
+          "label": "Cantebonne",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 367,
+      "id": "saint_pierre_du_mont",
+      "name": "Saint-Pierre-du-Mont",
+      "featureId": "commune-40281",
+      "communeCode": "40281",
+      "population": 10092,
+      "departmentCode": "40",
+      "departmentName": "Landes",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.52,
+        43.8725
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "402810101",
+          "label": "Ouest-Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "402810102",
+          "label": "Lamoustey",
+          "type": "H"
+        },
+        {
+          "id": "402810103",
+          "label": "Biarnes",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 373,
+      "id": "saint_loubes",
+      "name": "Saint-Loubès",
+      "featureId": "commune-33433",
+      "communeCode": "33433",
+      "population": 10027,
+      "departmentCode": "33",
+      "departmentName": "Gironde",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.4257,
+        44.9223
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "334330101",
+          "label": "La Terrasse",
+          "type": "H"
+        },
+        {
+          "id": "334330102",
+          "label": "La Plaine",
+          "type": "H"
+        },
+        {
+          "id": "334330103",
+          "label": "Le Plateau",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 377,
+      "id": "mery_sur_oise",
+      "name": "Méry-sur-Oise",
+      "featureId": "commune-95394",
+      "communeCode": "95394",
+      "population": 9983,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.173,
+        49.0518
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "953940101",
+          "label": "Méry Centre",
+          "type": "H"
+        },
+        {
+          "id": "953940106",
+          "label": "Hameau de la Bonneville",
+          "type": "H"
+        },
+        {
+          "id": "953940109",
+          "label": "Hameau des Soignolles",
+          "type": "H"
+        },
+        {
+          "id": "953940110",
+          "label": "Hameau de Vaux",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 381,
+      "id": "leguevin",
+      "name": "Léguevin",
+      "featureId": "commune-31291",
+      "communeCode": "31291",
+      "population": 9945,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.2353,
+        43.5928
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "312910101",
+          "label": "La Bastide",
+          "type": "H"
+        },
+        {
+          "id": "312910102",
+          "label": "Castelnouvel",
+          "type": "H"
+        },
+        {
+          "id": "312910103",
+          "label": "Bayonne",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 383,
+      "id": "voreppe",
+      "name": "Voreppe",
+      "featureId": "commune-38565",
+      "communeCode": "38565",
+      "population": 9922,
+      "departmentCode": "38",
+      "departmentName": "Isère",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        5.6417,
+        45.2861
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "385650101",
+          "label": "Le Bourg-La Jacquinière",
+          "type": "H"
+        },
+        {
+          "id": "385650102",
+          "label": "L'Hoirie-Brandegaudière-Centr'Alp",
+          "type": "H"
+        },
+        {
+          "id": "385650103",
+          "label": "Bouvardière",
+          "type": "H"
+        },
+        {
+          "id": "385650104",
+          "label": "Sud Sud-Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 388,
+      "id": "saint_lys",
+      "name": "Saint-Lys",
+      "featureId": "commune-31499",
+      "communeCode": "31499",
+      "population": 9892,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.2023,
+        43.5106
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "314990101",
+          "label": "Mescurt",
+          "type": "H"
+        },
+        {
+          "id": "314990102",
+          "label": "Gazailla",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 396,
+      "id": "frouzins",
+      "name": "Frouzins",
+      "featureId": "commune-31203",
+      "communeCode": "31203",
+      "population": 9805,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.3125,
+        43.5218
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "312030101",
+          "label": "Roussimort",
+          "type": "H"
+        },
+        {
+          "id": "312030102",
+          "label": "Canal Saint-Martory",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 399,
+      "id": "grand_couronne",
+      "name": "Grand-Couronne",
+      "featureId": "commune-76319",
+      "communeCode": "76319",
+      "population": 9768,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "searchCenter": [
+        1.0097,
+        49.3508
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "763190101",
+          "label": "Les Essarts",
+          "type": "H"
+        },
+        {
+          "id": "763190201",
+          "label": "Les Bouttières",
+          "type": "H"
+        },
+        {
+          "id": "763190301",
+          "label": "Le Carabachet",
+          "type": "H"
+        },
+        {
+          "id": "763190401",
+          "label": "La Cavée",
+          "type": "H"
+        },
+        {
+          "id": "763190501",
+          "label": "Diderot",
+          "type": "H"
+        },
+        {
+          "id": "763190601",
+          "label": "Forêt du Rouvray",
+          "type": "D"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 409,
+      "id": "aucamville",
+      "name": "Aucamville",
+      "featureId": "commune-31022",
+      "communeCode": "31022",
+      "population": 9623,
+      "departmentCode": "31",
+      "departmentName": "Haute-Garonne",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.4243,
+        43.6714
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "310220101",
+          "label": "L'Hers",
+          "type": "H"
+        },
+        {
+          "id": "310220102",
+          "label": "Les Violettes",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 410,
+      "id": "saint_jean_d_illac",
+      "name": "Saint-Jean-d'Illac",
+      "featureId": "commune-33422",
+      "communeCode": "33422",
+      "population": 9616,
+      "departmentCode": "33",
+      "departmentName": "Gironde",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -0.8156,
+        44.7973
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "334220101",
+          "label": "Boulac",
+          "type": "H"
+        },
+        {
+          "id": "334220102",
+          "label": "Le Las",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 416,
+      "id": "darnetal",
+      "name": "Darnétal",
+      "featureId": "commune-76212",
+      "communeCode": "76212",
+      "population": 9566,
+      "departmentCode": "76",
+      "departmentName": "Seine-Maritime",
+      "regionName": "Normandie",
+      "searchCenter": [
+        1.1534,
+        49.4468
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "762120101",
+          "label": "Centre Rénovation",
+          "type": "H"
+        },
+        {
+          "id": "762120102",
+          "label": "Table de Pierre-Préaux-Val Saint-Martin",
+          "type": "H"
+        },
+        {
+          "id": "762120103",
+          "label": "Carville-Longpaon",
+          "type": "H"
+        },
+        {
+          "id": "762120104",
+          "label": "Secteur Branly",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 418,
+      "id": "sene",
+      "name": "Séné",
+      "featureId": "commune-56243",
+      "communeCode": "56243",
+      "population": 9554,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -2.7394,
+        47.6227
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "562430101",
+          "label": "Centre Bourg",
+          "type": "H"
+        },
+        {
+          "id": "562430102",
+          "label": "Poulfranc et Marais",
+          "type": "H"
+        },
+        {
+          "id": "562430103",
+          "label": "Presqu'île et Villages",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 419,
+      "id": "bures_sur_yvette",
+      "name": "Bures-sur-Yvette",
+      "featureId": "commune-91122",
+      "communeCode": "91122",
+      "population": 9548,
+      "departmentCode": "91",
+      "departmentName": "Essonne",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.1589,
+        48.6913
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "911220101",
+          "label": "Guyonnerie Vieux Parc",
+          "type": "H"
+        },
+        {
+          "id": "911220102",
+          "label": "Montjoy-Quatre Coins",
+          "type": "H"
+        },
+        {
+          "id": "911220103",
+          "label": "Centre Tilleuls Fauvettes",
+          "type": "H"
+        },
+        {
+          "id": "911220104",
+          "label": "Hacquinière Paris Chevreuse",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 420,
+      "id": "redon",
+      "name": "Redon",
+      "featureId": "commune-35236",
+      "communeCode": "35236",
+      "population": 9542,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -2.0787,
+        47.6557
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "352360101",
+          "label": "Centre-Le Port",
+          "type": "H"
+        },
+        {
+          "id": "352360102",
+          "label": "Beaumont-Nord",
+          "type": "H"
+        },
+        {
+          "id": "352360103",
+          "label": "Bellevue",
+          "type": "H"
+        },
+        {
+          "id": "352360104",
+          "label": "La Houssaye-Lanrua Nord",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 421,
+      "id": "l_isle_jourdain",
+      "name": "L'Isle-Jourdain",
+      "featureId": "commune-32160",
+      "communeCode": "32160",
+      "population": 9537,
+      "departmentCode": "32",
+      "departmentName": "Gers",
+      "regionName": "Occitanie",
+      "searchCenter": [
+        1.0826,
+        43.6159
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "321600101",
+          "label": "Hesteil",
+          "type": "H"
+        },
+        {
+          "id": "321600102",
+          "label": "Casse Martin",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 427,
+      "id": "tonneins",
+      "name": "Tonneins",
+      "featureId": "commune-47310",
+      "communeCode": "47310",
+      "population": 9459,
+      "departmentCode": "47",
+      "departmentName": "Lot-et-Garonne",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        0.3296,
+        44.3842
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "473100101",
+          "label": "Mairie-Centre Ville",
+          "type": "H"
+        },
+        {
+          "id": "473100102",
+          "label": "La Queille-Grand Jean",
+          "type": "H"
+        },
+        {
+          "id": "473100103",
+          "label": "Germillac-Bel-Air",
+          "type": "H"
+        },
+        {
+          "id": "473100104",
+          "label": "Ayet-Unet",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 429,
+      "id": "arques",
+      "name": "Arques",
+      "featureId": "commune-62040",
+      "communeCode": "62040",
+      "population": 9431,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.3177,
+        50.7388
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "620400101",
+          "label": "Rive Gauche",
+          "type": "H"
+        },
+        {
+          "id": "620400102",
+          "label": "Rive Droite",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 430,
+      "id": "landivisiau",
+      "name": "Landivisiau",
+      "featureId": "commune-29105",
+      "communeCode": "29105",
+      "population": 9426,
+      "departmentCode": "29",
+      "departmentName": "Finistère",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -4.0615,
+        48.5163
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "291050101",
+          "label": "Église-Lannouchen-Cité Marine",
+          "type": "H"
+        },
+        {
+          "id": "291050102",
+          "label": "Mairie-Kerzourat-Kerven",
+          "type": "H"
+        },
+        {
+          "id": "291050103",
+          "label": "Tiez Nevez-Épis d'Or-La Montagne",
+          "type": "H"
+        },
+        {
+          "id": "291050104",
+          "label": "Canick-La Vache Blanche-Le Drennec",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 431,
+      "id": "dombasle_sur_meurthe",
+      "name": "Dombasle-sur-Meurthe",
+      "featureId": "commune-54159",
+      "communeCode": "54159",
+      "population": 9424,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.3613,
+        48.6209
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "541590101",
+          "label": "Dombasle Nord Centre-Mairie",
+          "type": "H"
+        },
+        {
+          "id": "541590102",
+          "label": "Embanie à la Corée",
+          "type": "H"
+        },
+        {
+          "id": "541590103",
+          "label": "Crabouilleux Paul Bert",
+          "type": "H"
+        },
+        {
+          "id": "541590104",
+          "label": "Entre Les Deux Routes Champs Fleuris",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 433,
+      "id": "sallaumines",
+      "name": "Sallaumines",
+      "featureId": "commune-62771",
+      "communeCode": "62771",
+      "population": 9414,
+      "departmentCode": "62",
+      "departmentName": "Pas-de-Calais",
+      "regionName": "Hauts-de-France",
+      "searchCenter": [
+        2.8631,
+        50.4215
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "627710101",
+          "label": "Quartier Nord-Ouest",
+          "type": "H"
+        },
+        {
+          "id": "627710102",
+          "label": "Quartier Sud-Sud-Est",
+          "type": "H"
+        },
+        {
+          "id": "627710103",
+          "label": "Quartier Centre",
+          "type": "H"
+        },
+        {
+          "id": "627710104",
+          "label": "Quartier Est",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 434,
+      "id": "guichen",
+      "name": "Guichen",
+      "featureId": "commune-35126",
+      "communeCode": "35126",
+      "population": 9412,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -1.7969,
+        47.9623
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "351260101",
+          "label": "Guichen Bourg",
+          "type": "H"
+        },
+        {
+          "id": "351260102",
+          "label": "Pont Réan-Le Boël",
+          "type": "H"
+        },
+        {
+          "id": "351260103",
+          "label": "Habitat Épars",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 436,
+      "id": "saint_philbert_de_grand_lieu",
+      "name": "Saint-Philbert-de-Grand-Lieu",
+      "featureId": "commune-44188",
+      "communeCode": "44188",
+      "population": 9400,
+      "departmentCode": "44",
+      "departmentName": "Loire-Atlantique",
+      "regionName": "Pays de la Loire",
+      "searchCenter": [
+        -1.6443,
+        47.0689
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "441880101",
+          "label": "Nord Boulogne-Nord Bourg",
+          "type": "H"
+        },
+        {
+          "id": "441880102",
+          "label": "Sud Boulogne",
+          "type": "H"
+        },
+        {
+          "id": "441880103",
+          "label": "Sud Bourg",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 440,
+      "id": "rombas",
+      "name": "Rombas",
+      "featureId": "commune-57591",
+      "communeCode": "57591",
+      "population": 9371,
+      "departmentCode": "57",
+      "departmentName": "Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.0881,
+        49.2442
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "575910101",
+          "label": "Centre Ville Mairie Ville Basse",
+          "type": "H"
+        },
+        {
+          "id": "575910102",
+          "label": "Ville Haute",
+          "type": "H"
+        },
+        {
+          "id": "575910103",
+          "label": "Chantereine Petit Moulin",
+          "type": "H"
+        },
+        {
+          "id": "575910104",
+          "label": "Rond Bois-Champs Robert",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 441,
+      "id": "mont_saint_martin",
+      "name": "Mont-Saint-Martin",
+      "featureId": "commune-54382",
+      "communeCode": "54382",
+      "population": 9361,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        5.7872,
+        49.5469
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "543820101",
+          "label": "Val Saint-Martin Réole Sud",
+          "type": "H"
+        },
+        {
+          "id": "543820102",
+          "label": "Val Saint-Martin Europe Foch",
+          "type": "H"
+        },
+        {
+          "id": "543820103",
+          "label": "Gare Gambetta Piedmont",
+          "type": "H"
+        },
+        {
+          "id": "543820104",
+          "label": "Le Plateau",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 442,
+      "id": "jarville_la_malgrange",
+      "name": "Jarville-la-Malgrange",
+      "featureId": "commune-54274",
+      "communeCode": "54274",
+      "population": 9356,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.2057,
+        48.6676
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "542740101",
+          "label": "La Californie",
+          "type": "H"
+        },
+        {
+          "id": "542740102",
+          "label": "République",
+          "type": "H"
+        },
+        {
+          "id": "542740103",
+          "label": "Jarville Est Montaigu",
+          "type": "H"
+        },
+        {
+          "id": "542740104",
+          "label": "Jarville Ouest Gallieni",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 443,
+      "id": "liffre",
+      "name": "Liffré",
+      "featureId": "commune-35152",
+      "communeCode": "35152",
+      "population": 9339,
+      "departmentCode": "35",
+      "departmentName": "Ille-et-Vilaine",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -1.5064,
+        48.2025
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "351520101",
+          "label": "Endroit Joli",
+          "type": "H"
+        },
+        {
+          "id": "351520102",
+          "label": "Étangs",
+          "type": "H"
+        },
+        {
+          "id": "351520103",
+          "label": "Forêt",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 446,
+      "id": "le_passage",
+      "name": "Le Passage",
+      "featureId": "commune-47201",
+      "communeCode": "47201",
+      "population": 9326,
+      "departmentCode": "47",
+      "departmentName": "Lot-et-Garonne",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        0.5873,
+        44.1898
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "472010101",
+          "label": "Turquet-Monges",
+          "type": "H"
+        },
+        {
+          "id": "472010102",
+          "label": "Ganet-Galau",
+          "type": "H"
+        },
+        {
+          "id": "472010103",
+          "label": "Pégaux",
+          "type": "H"
+        },
+        {
+          "id": "472010104",
+          "label": "Bénasie-Dolmeyrac",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 448,
+      "id": "nogent_le_rotrou",
+      "name": "Nogent-le-Rotrou",
+      "featureId": "commune-28280",
+      "communeCode": "28280",
+      "population": 9292,
+      "departmentCode": "28",
+      "departmentName": "Eure-et-Loir",
+      "regionName": "Centre-Val de Loire",
+      "searchCenter": [
+        0.8071,
+        48.3197
+      ],
+      "sourceFeatureCount": 5,
+      "distinctOfficialIrisCount": 5,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "282800101",
+          "label": "Centre Ville Nord",
+          "type": "H"
+        },
+        {
+          "id": "282800102",
+          "label": "Plateau et Écarts Est",
+          "type": "H"
+        },
+        {
+          "id": "282800103",
+          "label": "Centre Ville Sud",
+          "type": "H"
+        },
+        {
+          "id": "282800104",
+          "label": "Gauchetières Sud et Écarts Ouest et Sud",
+          "type": "H"
+        },
+        {
+          "id": "282800105",
+          "label": "Gauchetières Nord et Écarts Nord",
+          "type": "A"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 449,
+      "id": "paray_le_monial",
+      "name": "Paray-le-Monial",
+      "featureId": "commune-71342",
+      "communeCode": "71342",
+      "population": 9291,
+      "departmentCode": "71",
+      "departmentName": "Saône-et-Loire",
+      "regionName": "Bourgogne-Franche-Comté",
+      "searchCenter": [
+        4.1115,
+        46.4429
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "713420101",
+          "label": "Quartier du Pape",
+          "type": "H"
+        },
+        {
+          "id": "713420102",
+          "label": "Quartier du Futur",
+          "type": "H"
+        },
+        {
+          "id": "713420103",
+          "label": "Quartier Vert",
+          "type": "H"
+        },
+        {
+          "id": "713420104",
+          "label": "Quartier du Soleil",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 454,
+      "id": "evian_les_bains",
+      "name": "Évian-les-Bains",
+      "featureId": "commune-74119",
+      "communeCode": "74119",
+      "population": 9267,
+      "departmentCode": "74",
+      "departmentName": "Haute-Savoie",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        6.5911,
+        46.3911
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "741190101",
+          "label": "Bord du Lac",
+          "type": "H"
+        },
+        {
+          "id": "741190102",
+          "label": "Ville Haute",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 460,
+      "id": "sarzeau",
+      "name": "Sarzeau",
+      "featureId": "commune-56240",
+      "communeCode": "56240",
+      "population": 9212,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -2.7584,
+        47.5253
+      ],
+      "sourceFeatureCount": 2,
+      "distinctOfficialIrisCount": 2,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "562400101",
+          "label": "Golfe Nord",
+          "type": "H"
+        },
+        {
+          "id": "562400102",
+          "label": "Campagne-Atlantique",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 463,
+      "id": "capbreton",
+      "name": "Capbreton",
+      "featureId": "commune-40065",
+      "communeCode": "40065",
+      "population": 9184,
+      "departmentCode": "40",
+      "departmentName": "Landes",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -1.4289,
+        43.6311
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "400650101",
+          "label": "Bouheben",
+          "type": "H"
+        },
+        {
+          "id": "400650102",
+          "label": "La Plage",
+          "type": "H"
+        },
+        {
+          "id": "400650103",
+          "label": "Les Sables",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 468,
+      "id": "bougival",
+      "name": "Bougival",
+      "featureId": "commune-78092",
+      "communeCode": "78092",
+      "population": 9134,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.1394,
+        48.8627
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "780920101",
+          "label": "Les Quais",
+          "type": "H"
+        },
+        {
+          "id": "780920102",
+          "label": "Bord de Seine",
+          "type": "H"
+        },
+        {
+          "id": "780920103",
+          "label": "Centre Ville Jonchère",
+          "type": "H"
+        },
+        {
+          "id": "780920104",
+          "label": "Les Hauts de Bougival",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 469,
+      "id": "tomblaine",
+      "name": "Tomblaine",
+      "featureId": "commune-54526",
+      "communeCode": "54526",
+      "population": 9117,
+      "departmentCode": "54",
+      "departmentName": "Meurthe-et-Moselle",
+      "regionName": "Grand Est",
+      "searchCenter": [
+        6.2212,
+        48.6851
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "545260101",
+          "label": "Centre Ville Picot",
+          "type": "H"
+        },
+        {
+          "id": "545260102",
+          "label": "Paix Jartom",
+          "type": "H"
+        },
+        {
+          "id": "545260103",
+          "label": "Ensanges Orée du Bois Sainte-Marguerite",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 475,
+      "id": "morieres_les_avignon",
+      "name": "Morières-lès-Avignon",
+      "featureId": "commune-84081",
+      "communeCode": "84081",
+      "population": 9019,
+      "departmentCode": "84",
+      "departmentName": "Vaucluse",
+      "regionName": "Provence-Alpes-Côte d'Azur",
+      "searchCenter": [
+        4.9078,
+        43.9298
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "840810101",
+          "label": "Hôtel de Ville",
+          "type": "H"
+        },
+        {
+          "id": "840810102",
+          "label": "Campveire",
+          "type": "H"
+        },
+        {
+          "id": "840810103",
+          "label": "Hameaux du Vallon",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 476,
+      "id": "joigny",
+      "name": "Joigny",
+      "featureId": "commune-89206",
+      "communeCode": "89206",
+      "population": 9016,
+      "departmentCode": "89",
+      "departmentName": "Yonne",
+      "regionName": "Bourgogne-Franche-Comté",
+      "searchCenter": [
+        3.4092,
+        48.0093
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "892060101",
+          "label": "Vieille Ville",
+          "type": "H"
+        },
+        {
+          "id": "892060102",
+          "label": "Rive Gauche",
+          "type": "H"
+        },
+        {
+          "id": "892060103",
+          "label": "Le Paradis",
+          "type": "H"
+        },
+        {
+          "id": "892060104",
+          "label": "Madeleine",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 477,
+      "id": "queven",
+      "name": "Quéven",
+      "featureId": "commune-56185",
+      "communeCode": "56185",
+      "population": 8991,
+      "departmentCode": "56",
+      "departmentName": "Morbihan",
+      "regionName": "Bretagne",
+      "searchCenter": [
+        -3.4172,
+        47.7871
+      ],
+      "sourceFeatureCount": 6,
+      "distinctOfficialIrisCount": 6,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "561850101",
+          "label": "B.A.N. Lann Bihoué",
+          "type": "A"
+        },
+        {
+          "id": "561850102",
+          "label": "Sud RN",
+          "type": "D"
+        },
+        {
+          "id": "561850103",
+          "label": "Le Ronquédo",
+          "type": "A"
+        },
+        {
+          "id": "561850104",
+          "label": "Golf",
+          "type": "H"
+        },
+        {
+          "id": "561850105",
+          "label": "Secteur Croizamus",
+          "type": "H"
+        },
+        {
+          "id": "561850106",
+          "label": "Secteur Kerzec Kerdual",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 480,
+      "id": "veauche",
+      "name": "Veauche",
+      "featureId": "commune-42323",
+      "communeCode": "42323",
+      "population": 8975,
+      "departmentCode": "42",
+      "departmentName": "Loire",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        4.29,
+        45.5616
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "423230101",
+          "label": "Cité Saint-Laurent",
+          "type": "H"
+        },
+        {
+          "id": "423230102",
+          "label": "Bourg Nord",
+          "type": "H"
+        },
+        {
+          "id": "423230103",
+          "label": "Bourg Sud",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 482,
+      "id": "boucau",
+      "name": "Boucau",
+      "featureId": "commune-64140",
+      "communeCode": "64140",
+      "population": 8968,
+      "departmentCode": "64",
+      "departmentName": "Pyrénées-Atlantiques",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -1.4814,
+        43.5259
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "641400101",
+          "label": "Couronne Boisée",
+          "type": "H"
+        },
+        {
+          "id": "641400102",
+          "label": "Haut Boucau",
+          "type": "H"
+        },
+        {
+          "id": "641400103",
+          "label": "Bas Boucau",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 484,
+      "id": "meulan_en_yvelines",
+      "name": "Meulan-en-Yvelines",
+      "featureId": "commune-78401",
+      "communeCode": "78401",
+      "population": 8950,
+      "departmentCode": "78",
+      "departmentName": "Yvelines",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        1.909,
+        49.0051
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "784010101",
+          "label": "Coteau Vexin",
+          "type": "H"
+        },
+        {
+          "id": "784010102",
+          "label": "Annonciades",
+          "type": "H"
+        },
+        {
+          "id": "784010103",
+          "label": "Coulée Verte",
+          "type": "H"
+        },
+        {
+          "id": "784010104",
+          "label": "Bords de Seine",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 485,
+      "id": "bellerive_sur_allier",
+      "name": "Bellerive-sur-Allier",
+      "featureId": "commune-03023",
+      "communeCode": "03023",
+      "population": 8943,
+      "departmentCode": "03",
+      "departmentName": "Allier",
+      "regionName": "Auvergne-Rhône-Alpes",
+      "searchCenter": [
+        3.4025,
+        46.1202
+      ],
+      "sourceFeatureCount": 4,
+      "distinctOfficialIrisCount": 4,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "030230101",
+          "label": "Centre Ville Haut",
+          "type": "H"
+        },
+        {
+          "id": "030230102",
+          "label": "Centre Ville Bas",
+          "type": "H"
+        },
+        {
+          "id": "030230103",
+          "label": "Extérieur Haut",
+          "type": "H"
+        },
+        {
+          "id": "030230104",
+          "label": "Extérieur Bas",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 492,
+      "id": "perigny",
+      "name": "Périgny",
+      "featureId": "commune-17274",
+      "communeCode": "17274",
+      "population": 8877,
+      "departmentCode": "17",
+      "departmentName": "Charente-Maritime",
+      "regionName": "Nouvelle-Aquitaine",
+      "searchCenter": [
+        -1.0798,
+        46.1559
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "172740101",
+          "label": "Rompsay",
+          "type": "H"
+        },
+        {
+          "id": "172740102",
+          "label": "Périgny Mairie",
+          "type": "H"
+        },
+        {
+          "id": "172740103",
+          "label": "Périgny Bourg",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    },
+    {
+      "rank": 493,
+      "id": "bessancourt",
+      "name": "Bessancourt",
+      "featureId": "commune-95060",
+      "communeCode": "95060",
+      "population": 8869,
+      "departmentCode": "95",
+      "departmentName": "Val-d'Oise",
+      "regionName": "Île-de-France",
+      "searchCenter": [
+        2.1998,
+        49.0364
+      ],
+      "sourceFeatureCount": 3,
+      "distinctOfficialIrisCount": 3,
+      "mode": "standalone_split",
+      "classificationReason": "multiple_official_iris",
+      "eligibleForSplitCityWave": true,
+      "status": "ready",
+      "sourceIris": [
+        {
+          "id": "950600101",
+          "label": "Église",
+          "type": "H"
+        },
+        {
+          "id": "950600102",
+          "label": "Base Aérienne",
+          "type": "H"
+        },
+        {
+          "id": "950600103",
+          "label": "Brosses et Malais",
+          "type": "H"
+        }
+      ],
+      "lexicalRisks": {
+        "technical": [],
+        "numbered": [],
+        "duplicates": [],
+        "operational": [],
+        "directional": [],
+        "generic": []
+      }
+    }
+  ],
+  "autoCuration": {
+    "policyVersion": 1,
+    "generatedAt": "2026-07-14T18:44:20.168Z",
+    "provenance": {
+      "inputPath": "geo/work/france-wave-9-plan.json",
+      "inputSha256": "d3e5e4e9ff029a20063312c590d69dafe3117005e568c3db8020de71525b3628",
+      "inputSchemaVersion": 1,
+      "inputWave": 9,
+      "inputGeneratedAt": "2026-07-14T18:34:44.159Z",
+      "inputCollectionKey": "cities",
+      "inputCityCount": 500
+    },
+    "exceptionCount": 365,
+    "deferredByLimit": 0
+  }
+}

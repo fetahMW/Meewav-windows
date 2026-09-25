@@ -1,0 +1,221 @@
+/* Profile finish: smoked glass, polished graphite and restrained brand accents.
+   Scoped here so the shared navigation and other pillars keep their finish. */
+.profile-page {
+  --profile-text: #f4f5f7;
+  --profile-muted: #a2a5af;
+  --profile-border: rgba(226, 231, 240, .13);
+  --profile-panel: rgba(13, 15, 19, .94);
+  --profile-purple-soft: #c3b7df;
+  --profile-glass: linear-gradient(125deg, rgba(255,255,255,.045), transparent 34%),
+    linear-gradient(180deg, rgba(20,22,27,.96), rgba(7,8,11,.96));
+  --profile-glass-edge: inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.7), 0 18px 42px rgba(0,0,0,.26);
+}
+
+/* One physical surface across dashboards, media and private workspaces. */
+.profile-page .profile-main :is(
+  .profile-panel, .profile-pulse-summary, .profile-pulse-chart,
+  .profile-hero__identity-card, .profile-hero__insights-card,
+  .profile-media-card, .profile-private-master-detail__surface,
+  .profile-private-wallet-balance, .profile-private-wallet-account,
+  .profile-private-wallet-activity, .profile-ranking-dashboard
+) {
+  background: var(--profile-glass);
+  border-color: var(--profile-border);
+  box-shadow: var(--profile-glass-edge);
+  backdrop-filter: blur(16px) saturate(.75);
+  -webkit-backdrop-filter: blur(16px) saturate(.75);
+}
+.profile-page .profile-main :is(.profile-hero__identity-card, .profile-hero__insights-card)::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.055), transparent);
+}
+.profile-page .profile-hero__avatar-orbit { border-color: rgba(226,231,240,.25); box-shadow: none; }
+.profile-page .profile-hero__avatar-shell > img { border-color: rgba(255,255,255,.18); box-shadow: 0 12px 30px #0008; }
+.profile-page .profile-main :is(.profile-hero__eyebrow, .profile-section-kicker, .profile-panel__eyebrow) { color: #b6b8c2; }
+.profile-page .profile-main :is(.profile-hero__bio, .profile-hero__role) { color: #b7bac3; }
+.profile-page .profile-main .profile-hero__location { color: #959aa6; }
+.profile-page .profile-main :is(.profile-signal-strip > button, .profile-stat-card) {
+  background: var(--profile-glass);
+  border-color: var(--profile-border);
+  box-shadow: inset 0 1px 0 #ffffff0c;
+}
+.profile-page .profile-main .profile-signal-strip__icon {
+  background: #ffffff06; border-color: #ffffff16; color: #c8c2d8;
+}
+
+/* Lacquered controls: a fine silver edge and a soft top reflection. */
+.profile-page :is(.profile-primary-button, .profile-private-route__action) {
+  color: #f7f7fa;
+  border-color: rgba(223,218,240,.30);
+  background: linear-gradient(180deg, #44434b 0%, #292a30 48%, #1b1c22 51%, #24252d 100%);
+  box-shadow: inset 0 1px 0 #ffffff26, inset 0 -1px 0 #0008, 0 5px 15px #0004;
+}
+.profile-page :is(.profile-primary-button, .profile-private-route__action):hover {
+  border-color: #c3b7df;
+  background: linear-gradient(180deg, #53515e, #303039 48%, #24242d 51%, #2b2a35);
+  box-shadow: inset 0 1px 0 #ffffff30, 0 6px 18px #0006;
+}
+.profile-page :is(.profile-soft-button, .profile-icon-button) {
+  background: linear-gradient(180deg, #ffffff09, #ffffff02), #121419;
+  border-color: #ffffff1c;
+  color: #c7c9d1;
+}
+.profile-page :is(.profile-soft-button, .profile-icon-button):hover { border-color: #ffffff38; color: #fff; }
+.profile-page .profile-main :is(.profile-period-switch, .profile-media-filters) > button.is-active {
+  background: linear-gradient(180deg, #38363f, #222229);
+  border-color: #c8bedb55;
+  box-shadow: inset 0 1px 0 #ffffff1a;
+}
+.profile-page .profile-main .profile-media-card {
+  border-color: #ffffff20;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+.profile-page .profile-main .profile-media-card:hover {
+  border-color: #c8bedb66;
+  box-shadow: inset 0 1px 0 #ffffff20, 0 20px 42px #0006;
+}
+.profile-page .profile-main .profile-media-card.is-selected { border-color: #c3a7ed; }
+.profile-page .profile-main .profile-media-card__abstract {
+  background: radial-gradient(ellipse at 35% 0%, #383943, transparent 65%), #0b0d11;
+  color: #c6c0d6;
+}
+.profile-page .profile-main .profile-media-card__visual::after {
+  background: linear-gradient(transparent, rgba(5,6,8,.82));
+}
+.profile-page .profile-main .profile-private-wallet-activity__identity {
+  background: transparent;
+}
+.profile-page .profile-main .profile-private-wallet-activity__identity small { color: #999da8; }
+.profile-page .profile-main .profile-private-wallet-activity__head { color: #a5a8b2; }
+.profile-page .profile-main .profile-private-wallet-activity__table > button:hover { background: #ffffff06; }
+
+/* The pulse section is a layout wrapper, not a glass tile. */
+.profile-page .profile-main.is-profile-home .profile-pulse-card {
+  background: transparent; box-shadow: none; backdrop-filter: none;
+}
+.profile-page .profile-main.is-profile-home .profile-pulse-card::before { display: none; }
+.profile-page .profile-main.is-profile-home .profile-pulse-dashboard .profile-pulse-chart {
+  background: var(--profile-glass); border-color: var(--profile-border);
+  box-shadow: var(--profile-glass-edge);
+}
+.profile-page .profile-main .profile-private-module-rail {
+  background: linear-gradient(110deg, #ffffff04, transparent 46%), #0b0d11;
+  border-color: var(--profile-border); box-shadow: inset 0 1px 0 #ffffff0e;
+}
+.profile-page .profile-main .profile-private-module-rail__item.is-active {
+  background: linear-gradient(110deg, #ffffff0b, #ffffff02);
+}
+.profile-page .profile-main :is(
+  .profile-studio-mode-heading, .profile-studio-tracking-card,
+  .profile-studio-detail-hero, .profile-gifts-overview-hero, .profile-gifts-inventory,
+  .profile-grade-overview, .profile-recognition-roadmap, .profile-recognition-card,
+  .profile-recognition-summary,
+  .profile-private-security-settings, .profile-private-security-devices,
+  .profile-private-security-history, .profile-private-security-identity,
+  .profile-private-contracts-workspace, .profile-private-contract-detail,
+  .profile-private-equipment-detail, .profile-private-equipment-list,
+  .profile-private-organization-workspace, .profile-private-organization-detail,
+  .profile-private-transactions-table, .profile-private-transactions-metrics > div
+) {
+  background: var(--profile-glass); border-color: var(--profile-border);
+  box-shadow: inset 0 1px 0 #ffffff0b;
+}
+.profile-page .profile-main :is(
+  .profile-private-contract-list, .profile-private-organization-members,
+  .profile-private-equipment-toolbar, .profile-private-transactions-toolbar
+) { background: #0b0d11; border-color: var(--profile-border); }
+.profile-page .profile-main .profile-private-contract-document {
+  background: linear-gradient(135deg, #eeeeef, #d4d5d8);
+}
+.profile-page .profile-main :is(.profile-kicker, .profile-private-module-rail__heading) { color: #afb0bf; }
+.profile-page .profile-main :is(
+  .profile-studio-tracking-card__copy > p, .profile-studio-tracking-card__copy > small,
+  .profile-recognition-card__copy > p, .profile-grade-overview p, .profile-recognition-roadmap p,
+  .profile-private-detail__facts small, .profile-private-wallet-balance__heading small,
+  .profile-private-wallet-balance__flow span
+) { color: #969ba7; }
+.profile-page .profile-main :is(.profile-media-card__body, .profile-media-card__info) { background: #0b0d11; }
+
+@media (max-width: 760px) {
+  .profile-page .profile-main .profile-private-route.is-embedded .profile-private-wallet-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .profile-page .profile-main .profile-private-wallet-activity { grid-column: 1; min-width: 0; }
+  .profile-page .profile-main .profile-private-wallet-balance__heading {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+  .profile-page .profile-main .profile-private-wallet-balance__heading > em { grid-column: 2; justify-self: start; }
+  .profile-page .profile-main .profile-private-wallet-balance__flow { grid-template-columns: 1fr; gap: 12px; }
+  .profile-page .profile-main .profile-private-wallet-balance__actions { flex-wrap: wrap; }
+  .profile-page .profile-main .profile-private-wallet-activity__table { overflow-x: auto; }
+  .profile-page .profile-main .profile-private-wallet-activity__table > :is(button, .profile-private-wallet-activity__head) {
+    min-width: 620px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .profile-page .profile-main .profile-hero {
+    background: var(--profile-glass);
+    border-color: var(--profile-border);
+    box-shadow: var(--profile-glass-edge);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-page .profile-main .profile-media-card { transition: none; }
+}
+.profile-page .profile-pulse-chart__plot {
+  --chart-accent: #c59bff;
+  cursor: crosshair;
+}
+
+.profile-page .profile-pulse-chart__plot:focus-visible {
+  outline: 1px solid rgba(197, 155, 255, .65);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
+.profile-page .profile-pulse-chart__tooltip {
+  background: rgba(15, 15, 19, .97);
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  gap: 2px;
+}
+
+.profile-page .profile-pulse-chart__tooltip span {
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.profile-page .profile-pulse-chart__tooltip strong {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* Accueil : progression en pleine largeur, actions et activité à sa suite. */
+.profile-page .profile-main.is-profile-home .profile-home-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "pulse pulse"
+    "journey journey"
+    "priority activity";
+  align-items: stretch;
+}
+
+.profile-page .profile-main.is-profile-home .profile-journey-card {
+  min-height: 0;
+}
+
+@media (min-width: 1100px) {
+  .profile-page .profile-home-view .profile-ranking-compact__scopes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .profile-page .profile-main.is-profile-home .profile-home-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "pulse" "journey" "priority" "activity";
+  }
+}

@@ -1,0 +1,219 @@
+.room-audience-interactions.is-classe .room-audience-callout.is-private {
+  border-color: rgba(158, 109, 255, .56);
+  background:
+    radial-gradient(circle at 8% 15%, rgba(151, 95, 255, .18), transparent 38%),
+    linear-gradient(135deg, rgba(35, 19, 65, .92), rgba(9, 11, 27, .9));
+  box-shadow: 0 12px 30px rgba(72, 30, 142, .16), inset 0 1px rgba(255, 255, 255, .04);
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border: 1px solid rgba(141, 123, 191, .16);
+  border-radius: 9px;
+  background: rgba(3, 5, 15, .46);
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions article.is-displayed {
+  border-color: rgba(var(--audience-accent-rgb), .52);
+  background: rgba(var(--audience-accent-rgb), .07);
+  box-shadow: 0 0 18px rgba(var(--audience-accent-rgb), .08);
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions article.is-answered {
+  opacity: .66;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions article > span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions small {
+  color: var(--audience-accent);
+  font: 750 6px/1 Inter, sans-serif;
+  letter-spacing: .12em;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions strong {
+  overflow: hidden;
+  color: #eeecf8;
+  font: 650 9px/1.35 Inter, sans-serif;
+  text-overflow: ellipsis;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions em {
+  color: #85899f;
+  font: 500 7px/1.2 Inter, sans-serif;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions button {
+  min-width: 44px;
+  min-height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 7px;
+  color: #aaa3c9;
+  font-size: 8px;
+  font-weight: 750;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions button[aria-pressed="true"] {
+  color: #fff;
+  border-color: rgba(var(--audience-accent-rgb), .58);
+  background: rgba(var(--audience-accent-rgb), .13);
+}
+
+.room-audience-interactions.is-classe .room-audience-class-questions button svg {
+  width: 11px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources {
+  display: grid;
+  gap: 6px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 1px solid rgba(126, 150, 229, .17);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(18, 22, 36, .74), rgba(5, 7, 13, .8));
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article > span:first-child {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(91, 127, 239, .13);
+  color: #91aaff;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article > span:first-child.is-audio {
+  background: rgba(160, 102, 238, .13);
+  color: #bd8cff;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article > span:first-child svg {
+  width: 14px;
+  height: 14px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article > span:nth-child(2) {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources strong {
+  overflow: hidden;
+  color: #f1f3fa;
+  font: 670 9px/1.2 Inter, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources small {
+  color: #848ba1;
+  font: 670 6px/1 Inter, sans-serif;
+  letter-spacing: .08em;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article > button {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  color: #b9c8fc;
+  font-size: 7px;
+  font-weight: 720;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources article > button svg {
+  width: 11px;
+  height: 11px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources > p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  color: #ff9caf;
+  font-size: 7px;
+}
+
+.room-audience-interactions.is-classe .room-audience-class-resources > p svg {
+  width: 11px;
+  height: 11px;
+}
+
+.room-audience-interactions.is-classe:has(.classe-student-workspace) { height:100%; min-height:0; }
+.room-audience-interactions.is-classe:has(.classe-student-workspace) > .room-audience-interactions__header { display:none; }
+.room-audience-interactions.is-classe:has(.classe-student-workspace) > .room-audience-interactions__body { height:100%; min-height:0; padding:0; overflow:auto; scrollbar-width:none; }
+.room-tools-shell.is-classe.classe-student-workspace { display:flex; flex-direction:column; min-height:100%; height:100%; padding:8px; gap:8px; overflow:auto; scrollbar-width:none; }
+.classe-student-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:8px; flex:none; }
+.classe-student-heading strong { color:#e8e3f0; font-size:12px; }
+.classe-student-heading small { color:#aaa6b7; font-size:11px; }
+.room-tools-shell.is-classe.classe-student-workspace > .room-tool-panel.is-classroom { flex:1; min-height:380px; padding:0; }
+.classe-student-workspace > .room-audience-section { flex:none; }
+
+
+.classe-student-navbar { position:sticky; bottom:0; z-index:3; flex:none; }
+.room-tools-shell.is-classe .classe-student-navbar .classroom-command-dock { margin:0; }
+.room-tools-shell.is-classe .classe-student-navbar .classroom-command-dock__controls { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.classe-ticket { position:absolute; z-index:20; inset:20% 16px auto; padding:24px; border:1px solid #9a73c9; border-radius:20px; background:linear-gradient(145deg,#242526,#050505 65%); box-shadow:0 16px 40px #000c; }
+.classe-ticket > button:first-child { float:right; }
+
+/* The content scrolls inside the console; the command bar never enters that flow. */
+.room-audience-interactions.is-classe:has(.classe-student-workspace) > .room-audience-interactions__body { overflow:hidden; }
+.room-tools-shell.is-classe.classe-student-workspace { min-height:0; overflow:hidden; }
+.classe-student-content { flex:1; min-height:0; overflow:auto; scrollbar-width:thin; scrollbar-color:#685379 transparent; }
+.classe-student-content > .room-tool-panel.is-classroom { height:100%; min-height:380px; padding:0; }
+.classe-student-navbar { position:relative; bottom:auto; flex:0 0 auto; }
+.classe-questions-panel { padding:12px; border:1px solid #8c8e9838; border-radius:18px; background:radial-gradient(ellipse at 20% 0,#ffffff0b,transparent 45%),linear-gradient(145deg,#17181b,#060708 75%); box-shadow:inset 0 1px #ffffff20; }
+.classe-questions-panel > header,.classe-questions-panel > header > span { display:flex; align-items:center; gap:9px; }
+.classe-questions-panel > header { justify-content:space-between; }
+.classe-questions-panel h2 { margin:0; font:650 20px/1.3 Inter,system-ui,sans-serif; color:#f4f1fa; }
+.classe-questions-panel > header svg { width:21px; color:#bc9ae9; }
+.classe-questions-panel > header small { color:#a6a1af; font-size:11px; }
+.classe-questions-panel .classe-questions-intro { font:400 12px/1.5 Inter,system-ui,sans-serif; color:#aaa8b3; margin:10px 0 16px; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-question { display:flex; flex-direction:column; gap:9px; padding:12px; border:1px solid #79718055; border-radius:14px; background:#070709; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-question label { display:flex; justify-content:space-between; font-size:12px; color:#ddd7e6; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-question label small { color:#908997; font-size:11px; }
+.room-audience-interactions.is-classe .classe-questions-panel textarea { width:100%; box-sizing:border-box; min-height:85px; padding:10px; border:1px solid #68616f70; border-radius:10px; background:#101013; color:#f1edf8; font:400 13px/1.5 Inter,system-ui,sans-serif; resize:vertical; }
+.room-audience-interactions.is-classe .classe-questions-panel textarea:focus { outline:2px solid #a779de; outline-offset:1px; }
+.room-audience-interactions.is-classe .classe-questions-panel button { border:1px solid #a9a4b14d; border-radius:10px; background:linear-gradient(#39383e,#121216 75%); box-shadow:inset 0 1px #ffffff30,0 2px 3px #0008; color:#eee8f6; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-question button { align-self:flex-end; min-height:38px; padding:8px 16px; font-size:12px; }
+.classe-questions-panel .classe-questions-list-title { margin:18px 0 10px; font:600 13px/1.3 Inter,system-ui,sans-serif; color:#c5bfce; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions { gap:10px; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions article { padding:13px 12px; border-radius:13px; background:linear-gradient(145deg,#202025,#0d0d10); border-color:#77727f45; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions article.is-just-sent { border-color:#9c7acd; box-shadow:inset 0 1px #b497dc24; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions strong { font:500 13px/1.5 Inter,system-ui,sans-serif; overflow-wrap:anywhere; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions small { font-size:9px; line-height:1.4; color:#b39bce; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions em { font-size:11px; line-height:1.5; font-style:normal; color:#99949f; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions button { min-height:38px; font-size:12px; }
+.room-audience-interactions.is-classe .classe-questions-panel .room-audience-class-questions button svg { width:15px; }
+.classe-question-feedback { display:flex; align-items:center; gap:7px; color:#a8dfbf; font:400 12px/1.5 Inter,system-ui,sans-serif; }
+.classe-question-feedback svg { width:16px; flex:none; }
+.classe-question-feedback.is-error { color:#ffabb8; }

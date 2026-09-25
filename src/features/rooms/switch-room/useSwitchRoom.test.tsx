@@ -1,0 +1,21 @@
+import {act,renderHook,waitFor,cleanup} from "@testing-library/react";
+import {afterEach,expect,it,vi} from "vitest";
+import {createPlaceDemoState} from "../place/place.fixtures";
+const mocks=vi.hoisted(()=>({get:vi.fn(),accept:vi.fn(),subscribe:vi.fn(()=>()=>{})}));
+vi.mock("./switchRoom.service",()=>({switchRoomService:mocks}));
+import {useSwitchRoom} from "./useSwitchRoom";
+afterEach(()=>{cleanup();vi.clearAllMocks();});
+it("keeps the accepted presentation when an invitation is deferred and changes it only after acceptance",async()=>{
+ const room=createPlaceDemoState();
+ let snapshot={roomId:room.id,current:"place",from:"place",version:0,acceptedVersion:0,changeId:null,changedAt:null,available:true};
+ mocks.get.mockImplementation(async()=>({...snapshot}));
+ mocks.accept.mockImplementation(async()=>{snapshot={...snapshot,acceptedVersion:snapshot.version};});
+ const {result}=renderHook(()=>useSwitchRoom(room,"place","viewer",false,true));
+ await waitFor(()=>expect(result.current.fresh).toBe(true));
+ snapshot={...snapshot,current:"scene",version:1};
+ await act(async()=>{await result.current.refresh();});
+ expect(result.current.current).toBe("scene");expect(result.current.displayed).toBe("place");expect(result.current.waiting).toBe(true);
+ act(()=>result.current.defer());expect(result.current.invite).toBe(false);expect(result.current.displayed).toBe("place");
+ await act(async()=>{await result.current.accept();});
+ expect(result.current.displayed).toBe("scene");expect(result.current.waiting).toBe(false);
+});

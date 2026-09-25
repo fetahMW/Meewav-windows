@@ -1,0 +1,13 @@
+export const FRANCE_REGION_PLATE_EXTRUSION_SOURCE_ID = "france-regions-plates-extrusion";
+export const FRANCE_REGION_PLATE_EXTRUSION_URL = "/geo/france-regions-metropole-outline.geojson";
+export const FRANCE_REGION_PLATE_OUTLINE_SOURCE_ID = "france-regions-plates-outline";
+export const FRANCE_REGION_PLATE_OUTLINE_URL = "/geo/france-regions-metropole-outline.geojson";
+export const FRANCE_REGION_PLATES_SOURCE_ID = FRANCE_REGION_PLATE_EXTRUSION_SOURCE_ID;
+export const FRANCE_REGION_PLATES_URL = FRANCE_REGION_PLATE_EXTRUSION_URL;
+export const FRANCE_REGION_GROUND_LABELS_SOURCE_ID = "france-region-ground-labels";
+export const FRANCE_REGION_GROUND_LABELS_URL = "/geo/france-regions-metropole-labels.geojson";
+export const FRANCE_REGION_PLATE_TOP_FILL_LAYER_ID = "france-region-plates-top-fill";
+export const FRANCE_REGION_PLATE_EXTRUSION_LAYER_ID = "france-region-plates-extrusion";
+export const FRANCE_REGION_PLATE_HITBOX_LAYER_ID = "france-region-plates-hitbox";
+export const FRANCE_REGION_GROUND_LABEL_LAYER_ID = "france-region-ground-labels";
+export const FRANCE_REGION_INTERNAL_BOUNDARY_LAYER_ID = "france-region-internal-boundaries";

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "kind": "guide_alpha_semantic_resolution_unresolved",
+  "wave": 9,
+  "generatedAt": "2026-07-14T19:00:28.525Z",
+  "provenance": {
+    "inputPath": "geo/work/france-wave-9-national-clean-exceptions.json",
+    "inputSha256": "29ae2c44b8219a55636275157ca46961c381981b2e6142ce17b92e73f581277c",
+    "inputWave": 9,
+    "inputGeneratedAt": "2026-07-14T18:46:35.233Z",
+    "sourcePlanGeneratedAt": "2026-06-14T09:12:07.922Z",
+    "inspectedCityCount": 132
+  },
+  "auditPolicy": {
+    "version": 1,
+    "noInvention": true,
+    "decision": "Resolve only deterministic 1:1 strict-contained official evidence or exhaustive connected numbered families; otherwise quarantine.",
+    "habitationPriority": "Validated non-fictive Quartier urbain, then other quartier/inhabited-place evidence; importance then area.",
+    "roadFallback": "An official named road is eligible only when at least 80% and 40 m of its sampled geometry lie strictly inside the exact IRIS.",
+    "collisionRule": "A visible normalized label and an evidence feature may each resolve at most one source IRIS per commune.",
+    "mergeRule": "Only exhaustive contiguous 1..N semantic-base families whose exact geometry adjacency graph and union are connected."
+  },
+  "summary": {
+    "inputCities": 132,
+    "resolvedCities": 131,
+    "manualCurationRequired": 1,
+    "unresolvedSourceIris": 1
+  },
+  "cities": [
+    {
+      "id": "la_talaudiere",
+      "name": "La Talaudière",
+      "communeCode": "42305",
+      "rank": 279,
+      "sourceFeatureCount": 3,
+      "status": "manual_curation_required",
+      "reasons": [
+        {
+          "code": "no_high_confidence_1_to_1_resolution",
+          "detail": "habitation: no eligible collision-free contained candidate; named road: the highest substantive evidence score is ambiguous",
+          "sourceIds": [
+            "423050103"
+          ],
+          "labels": [
+            "La Talaudière Sud"
+          ],
+          "semanticRisks": [
+            "technical_directional_label"
+          ]
+        }
+      ],
+      "partialOperations": [
+        {
+          "id": "la_talaudiere-423050102-rename-la-buissonniere",
+          "type": "rename",
+          "sourceId": "423050102",
+          "expectedLabel": "La Talaudière Nord",
+          "label": "la Buissonnière",
+          "evidenceRefs": [
+            "ign-insee-contours-iris-2026",
+            "ign-bdtopo-habitation-toponyms-2026",
+            "guide-alpha-semantic-resolver-v1"
+          ],
+          "containedEvidence": [
+            {
+              "name": "la Buissonnière",
+              "layer": "BDTOPO_V3:zone_d_habitation",
+              "sourceFeatureId": "PAIHABIT0000000012042451",
+              "coordinates": [
+                4.41649242,
+                45.48448639
+              ],
+              "nature": "Lieu-dit habité",
+              "detailedNature": null,
+              "importance": "3",
+              "fictive": false,
+              "strictContainmentVerified": true
+            }
+          ],
+          "containmentRule": "strict_point_in_exact_source_polygon",
+          "rationale": "The exact official IGN BD TOPO habitation toponym has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+        }
+      ]
+    }
+  ]
+}

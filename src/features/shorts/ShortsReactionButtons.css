@@ -1,0 +1,207 @@
+.shorts-reactions {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+  color: rgba(245, 244, 249, .84);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.shorts-reaction {
+  appearance: none;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(239, 238, 244, .72);
+  cursor: pointer;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 140ms ease;
+}
+
+.shorts-reaction:hover {
+  border-color: rgba(255, 255, 255, .1);
+  background: rgba(255, 255, 255, .055);
+  color: #fff;
+}
+
+.shorts-reaction:active {
+  transform: scale(.96);
+}
+
+.shorts-reaction:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .92);
+  outline-offset: 2px;
+}
+
+.shorts-reaction:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+  transform: none;
+}
+
+.shorts-reaction:disabled:hover {
+  border-color: transparent;
+  background: transparent;
+}
+
+.shorts-reaction.is-readonly {
+  cursor: default;
+  user-select: none;
+}
+
+.shorts-reaction.is-readonly:hover {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  transform: none;
+}
+
+.shorts-reaction__icon {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  place-items: center;
+}
+
+.shorts-reaction__icon svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 2;
+}
+
+.shorts-reaction__label {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shorts-reaction__count {
+  min-width: 1ch;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+.shorts-reaction--like.is-active {
+  border-color: rgba(255, 102, 148, .22);
+  background: rgba(255, 82, 137, .075);
+  color: #ff7ba5;
+}
+
+.shorts-reaction--like.is-active:hover {
+  border-color: rgba(255, 126, 167, .32);
+  background: rgba(255, 82, 137, .12);
+  color: #ff96b8;
+}
+
+.shorts-reaction--golden {
+  color: #f2ca67;
+}
+
+.shorts-reaction--golden:hover {
+  border-color: rgba(248, 205, 98, .22);
+  background: rgba(211, 157, 44, .075);
+  color: #ffe39a;
+  box-shadow: 0 0 18px rgba(218, 164, 53, .08);
+}
+
+.shorts-reaction--golden.is-given {
+  border-color: rgba(248, 205, 98, .24);
+  background: rgba(211, 157, 44, .09);
+  color: #ffe39a;
+  cursor: default;
+}
+
+.shorts-reaction--golden.is-given:active {
+  transform: none;
+}
+
+.shorts-reactions--compact {
+  gap: 2px;
+}
+
+.shorts-reactions--compact .shorts-reaction {
+  padding-inline: 7px;
+  border-radius: 9px;
+}
+
+.shorts-reactions--compact .shorts-reaction__icon,
+.shorts-reactions--compact .shorts-reaction__icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.shorts-reactions--compact .shorts-reaction__count {
+  font-size: 10px;
+}
+
+.shorts-reactions--player {
+  gap: 8px;
+}
+
+.shorts-reactions--player .shorts-reaction {
+  min-width: 96px;
+  padding-inline: 12px;
+  border-color: rgba(255, 255, 255, .105);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .04);
+}
+
+.shorts-reactions--player .shorts-reaction--golden {
+  min-width: 142px;
+  border-color: rgba(248, 205, 98, .2);
+  background: rgba(211, 157, 44, .065);
+}
+
+.shorts-reactions--player .shorts-reaction__count {
+  padding-left: 7px;
+  border-left: 1px solid rgba(255, 255, 255, .12);
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  .shorts-reactions--player {
+    width: 100%;
+  }
+
+  .shorts-reactions--player .shorts-reaction {
+    min-width: 0;
+    flex: 1 1 0;
+  }
+
+  .shorts-reactions--player .shorts-reaction--golden {
+    min-width: 0;
+  }
+
+  .shorts-reactions--player .shorts-reaction__label {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shorts-reaction {
+    transition: none;
+  }
+}

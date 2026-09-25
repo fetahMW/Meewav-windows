@@ -1,0 +1,170 @@
+.place-gift-draw-overlay {
+  --draw-accent: #9b62ff;
+  position: absolute;
+  z-index: 19;
+  top: 50%;
+  left: 50%;
+  width: min(31rem, calc(100% - 2rem));
+  padding: 1rem 1.1rem 1.05rem;
+  overflow: hidden;
+  color: #fff;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--draw-accent) 62%, transparent);
+  border-radius: 1.35rem;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(145, 80, 255, 0.25), transparent 47%),
+    linear-gradient(145deg, rgba(12, 8, 28, 0.97), rgba(4, 7, 18, 0.98));
+  box-shadow: 0 1.4rem 4rem rgba(0, 0, 0, 0.55), 0 0 2.5rem rgba(126, 68, 255, 0.22), inset 0 1px rgba(255, 255, 255, 0.08);
+  transform: translate(-50%, -50%);
+  isolation: isolate;
+}
+
+.place-gift-draw-overlay::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  opacity: 0.18;
+  background-image: linear-gradient(105deg, transparent 0 37%, rgba(255, 255, 255, 0.16) 46%, transparent 55%);
+  transform: translateX(-80%);
+  animation: place-gift-draw-sheen 2.5s ease-in-out infinite;
+}
+
+.place-gift-draw-overlay header,
+.place-gift-draw-overlay__drawing,
+.place-gift-draw-overlay__winner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.place-gift-draw-overlay header {
+  gap: 0.7rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(177, 145, 255, 0.16);
+}
+
+.place-gift-draw-overlay header > span:last-child,
+.place-gift-draw-overlay__winner > span:nth-last-of-type(1),
+.place-gift-draw-overlay__drawing > span:last-child {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+
+.place-gift-draw-overlay small {
+  color: #bca8eb;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.place-gift-draw-overlay header strong {
+  overflow: hidden;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.place-gift-draw-overlay__gift-icon,
+.place-gift-draw-overlay__trophy {
+  display: grid;
+  width: 2.35rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #d7c4ff;
+  border: 1px solid rgba(174, 123, 255, 0.46);
+  border-radius: 0.8rem;
+  background: rgba(127, 70, 239, 0.18);
+  box-shadow: inset 0 0.6rem 1rem rgba(177, 126, 255, 0.08);
+}
+
+.place-gift-draw-overlay svg { width: 1.15rem; height: 1.15rem; }
+
+.place-gift-draw-overlay__drawing {
+  justify-content: center;
+  gap: 1rem;
+  min-height: 5.1rem;
+}
+
+.place-gift-draw-overlay__drawing strong { font-size: 1.12rem; }
+.place-gift-draw-overlay__drawing small { color: #aaa1ba; letter-spacing: 0.02em; }
+
+.place-gift-draw-overlay__countdown {
+  display: grid;
+  width: 3.65rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  place-items: center;
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 900;
+  border: 1px solid rgba(192, 153, 255, 0.72);
+  border-radius: 50%;
+  background: radial-gradient(circle, #7242dc 0 41%, #2b145c 43% 56%, rgba(81, 38, 156, 0.22) 58%);
+  box-shadow: 0 0 0 0 rgba(158, 99, 255, 0.4), 0 0 1.4rem rgba(140, 75, 255, 0.5);
+  animation: place-gift-draw-pulse 1s ease-out infinite;
+}
+
+.place-gift-draw-overlay__winner {
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 5.1rem;
+}
+
+.place-gift-draw-overlay__winner img,
+.place-gift-draw-overlay__avatar-fallback {
+  width: 3.5rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border: 2px solid #b782ff;
+  border-radius: 50%;
+  box-shadow: 0 0 1.5rem rgba(153, 91, 255, 0.6);
+}
+
+.place-gift-draw-overlay__avatar-fallback {
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 900;
+  background: linear-gradient(145deg, #8a50ef, #342064);
+}
+
+.place-gift-draw-overlay__winner strong { font-size: 1.25rem; }
+.place-gift-draw-overlay__winner > svg { color: #c69aff; filter: drop-shadow(0 0 0.6rem rgba(176, 112, 255, 0.75)); }
+
+.place-gift-draw-overlay__aura { position: absolute; inset: 0; overflow: hidden; }
+.place-gift-draw-overlay__aura i { position: absolute; width: 0.22rem; aspect-ratio: 1; border-radius: 50%; background: #e1ccff; box-shadow: 0 0 0.7rem #a96cff; animation: place-gift-draw-float 2.1s ease-in-out infinite; }
+.place-gift-draw-overlay__aura i:nth-child(1) { top: 24%; left: 8%; }
+.place-gift-draw-overlay__aura i:nth-child(2) { top: 67%; right: 9%; animation-delay: -0.7s; }
+.place-gift-draw-overlay__aura i:nth-child(3) { top: 14%; right: 26%; animation-delay: -1.3s; }
+
+@keyframes place-gift-draw-pulse {
+  70% { box-shadow: 0 0 0 0.75rem rgba(158, 99, 255, 0), 0 0 1.4rem rgba(140, 75, 255, 0.5); }
+}
+
+@keyframes place-gift-draw-sheen {
+  60%, 100% { transform: translateX(110%); }
+}
+
+@keyframes place-gift-draw-float {
+  50% { opacity: 0.35; transform: translateY(-0.6rem) scale(1.8); }
+}
+
+@media (max-width: 680px) {
+  .place-gift-draw-overlay { top: 46%; width: calc(100% - 1rem); padding: 0.75rem; border-radius: 1rem; }
+  .place-gift-draw-overlay__drawing,
+  .place-gift-draw-overlay__winner { min-height: 4.35rem; }
+  .place-gift-draw-overlay__winner strong { font-size: 1.05rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-gift-draw-overlay::before,
+  .place-gift-draw-overlay__countdown,
+  .place-gift-draw-overlay__aura i { animation: none; }
+  .place-gift-draw-overlay__aura { display: none; }
+}

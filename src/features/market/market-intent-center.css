@@ -1,0 +1,260 @@
+.market-intents-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 240;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 54px);
+}
+
+.market-intents-layer__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: radial-gradient(circle at 70% 15%, rgba(47, 25, 86, 0.32), rgba(3, 2, 14, 0.88) 52%);
+}
+
+.market-intents {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(1120px, 100%);
+  max-height: min(820px, calc(100dvh - 36px));
+  overflow: hidden;
+  color: #f8f5ff;
+  border: 1px solid rgba(168, 119, 255, 0.3);
+  border-radius: 28px;
+  outline: none;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(117, 66, 211, 0.18), transparent 36%),
+    linear-gradient(145deg, rgba(17, 12, 37, 0.985), rgba(7, 6, 20, 0.99));
+  box-shadow: 0 38px 100px rgba(0, 0, 0, 0.56), inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.market-intents__header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 24px 26px 20px;
+  border-bottom: 1px solid rgba(170, 138, 230, 0.14);
+}
+
+.market-intents__symbol {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: #cda6ff;
+  border: 1px solid rgba(174, 115, 255, 0.32);
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(145, 80, 245, 0.23), rgba(91, 53, 168, 0.1));
+  box-shadow: 0 12px 32px rgba(107, 52, 197, 0.16);
+}
+
+.market-intents__symbol svg { width: 22px; height: 22px; }
+.market-intents__header > div:nth-child(2) { min-width: 0; }
+.market-intents__header span,
+.market-intents__header p { color: rgba(218, 207, 239, 0.62); }
+.market-intents__header span { font-size: 0.72rem; font-weight: 850; letter-spacing: 0.14em; text-transform: uppercase; }
+.market-intents__header h2 { margin: 4px 0 2px; font-size: clamp(1.28rem, 2vw, 1.72rem); letter-spacing: -0.025em; }
+.market-intents__header p { margin: 0; font-size: 0.86rem; }
+.market-intents__header > button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: rgba(241, 235, 255, 0.74);
+  border: 1px solid rgba(173, 145, 224, 0.17);
+  border-radius: 13px;
+  background: rgba(11, 8, 27, 0.7);
+}
+
+.market-intents__roles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px 10px;
+}
+
+.market-intents__roles > button,
+.market-intents__filters button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  color: rgba(225, 216, 243, 0.67);
+  border: 1px solid rgba(175, 144, 228, 0.14);
+  border-radius: 12px;
+  background: rgba(11, 8, 28, 0.66);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 760;
+}
+
+.market-intents__roles > button svg,
+.market-intents__filters button svg { width: 16px; height: 16px; }
+.market-intents__roles > button.is-active {
+  color: #fff;
+  border-color: rgba(179, 105, 255, 0.55);
+  background: linear-gradient(135deg, rgba(137, 70, 227, 0.48), rgba(80, 47, 145, 0.36));
+  box-shadow: 0 10px 34px rgba(120, 61, 215, 0.15);
+}
+
+.market-intents__summary {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+  color: rgba(213, 201, 235, 0.58);
+  font-size: 0.76rem;
+}
+.market-intents__summary span { display: inline-flex; align-items: center; gap: 6px; }
+.market-intents__summary svg { width: 14px; height: 14px; color: #a974ff; }
+
+.market-intents__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 4px 26px 15px;
+  border-bottom: 1px solid rgba(170, 138, 230, 0.11);
+}
+
+.market-intents__filters button { min-height: 32px; padding-inline: 12px; font-size: 0.74rem; border-radius: 999px; }
+.market-intents__filters button.is-active { color: #eadcff; border-color: rgba(181, 113, 255, 0.44); background: rgba(117, 59, 193, 0.24); }
+.market-intents__filters .market-intents__refresh { margin-left: auto; border-radius: 10px; }
+
+.market-intents__error {
+  margin: 12px 26px 0;
+  padding: 11px 14px;
+  color: #ffbdc8;
+  border: 1px solid rgba(245, 95, 122, 0.28);
+  border-radius: 12px;
+  background: rgba(106, 24, 47, 0.18);
+  font-size: 0.8rem;
+}
+
+.market-intents__content {
+  min-height: 280px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 16px 26px 26px;
+  scrollbar-color: rgba(158, 101, 238, 0.52) transparent;
+}
+
+.market-intents__limit {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(167, 129, 255, 0.2);
+  border-radius: 12px;
+  color: rgba(229, 221, 247, 0.7);
+  background: rgba(126, 79, 230, 0.07);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.market-intents__list { display: grid; gap: 10px; }
+.market-intent-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  min-height: 116px;
+  padding: 16px;
+  border: 1px solid rgba(170, 138, 230, 0.14);
+  border-radius: 18px;
+  background: linear-gradient(130deg, rgba(24, 17, 48, 0.69), rgba(9, 7, 24, 0.76));
+}
+.market-intent-card[data-status="accepted"] { border-color: rgba(75, 222, 162, 0.18); }
+.market-intent-card[data-status="declined"],
+.market-intent-card[data-status="cancelled"] { opacity: 0.74; }
+.market-intent-card__icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  color: #c18bff;
+  border: 1px solid rgba(175, 105, 255, 0.28);
+  border-radius: 13px;
+  background: rgba(103, 53, 177, 0.17);
+}
+.market-intent-card__icon svg { width: 19px; height: 19px; }
+.market-intent-card__main { min-width: 0; }
+.market-intent-card__eyebrow { display: flex; align-items: center; gap: 9px; color: #a981dc; font-size: 0.68rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
+.market-intent-card__status { padding: 4px 7px; color: #d9c2fa; border-radius: 999px; background: rgba(134, 77, 207, 0.16); }
+.market-intent-card[data-status="accepted"] .market-intent-card__status { color: #7ce5b8; background: rgba(34, 139, 98, 0.17); }
+.market-intent-card__main h3 { margin: 7px 0 5px; color: #f7f3ff; font-size: 1rem; }
+.market-intent-card__facts { display: flex; flex-wrap: wrap; gap: 8px 18px; color: rgba(216, 205, 235, 0.57); font-size: 0.74rem; }
+.market-intent-card__facts strong { color: rgba(239, 233, 250, 0.82); }
+.market-intent-card__main p { margin: 8px 0 0; color: rgba(218, 208, 237, 0.64); font-size: 0.76rem; line-height: 1.45; }
+.market-intent-card__actions { display: flex; gap: 7px; }
+.market-intent-card__actions button,
+.market-intent-card__confirm button {
+  min-height: 35px;
+  padding: 0 12px;
+  color: rgba(234, 225, 249, 0.73);
+  border: 1px solid rgba(174, 143, 225, 0.18);
+  border-radius: 10px;
+  background: rgba(12, 9, 29, 0.78);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 780;
+}
+.market-intent-card__actions button { display: inline-flex; align-items: center; gap: 6px; }
+.market-intent-card__actions button svg { width: 14px; height: 14px; }
+.market-intent-card__actions button.is-primary,
+.market-intent-card__confirm button.is-confirm { color: #fff; border-color: rgba(91, 60, 181, 0.52); background: linear-gradient(135deg, #5337a5, #47308f); }
+.market-intent-card__done { display: inline-flex; align-items: center; gap: 5px; color: rgba(212, 201, 231, 0.5); font-size: 0.72rem; }
+.market-intent-card__done svg { width: 13px; height: 13px; }
+.market-intent-card__confirm {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(174, 143, 225, 0.14);
+}
+.market-intent-card__confirm span { margin-right: auto; color: rgba(239, 232, 250, 0.84); font-size: 0.8rem; font-weight: 720; }
+
+.market-intents__loading,
+.market-intents__empty {
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  color: rgba(214, 201, 235, 0.57);
+  text-align: center;
+}
+.market-intents__loading { grid-template-columns: repeat(3, 8px); align-content: center; gap: 7px; }
+.market-intents__loading i { width: 8px; height: 8px; border-radius: 50%; background: #a65fff; animation: market-intents-pulse 0.9s ease-in-out infinite alternate; }
+.market-intents__loading i:nth-child(2) { animation-delay: 0.16s; }
+.market-intents__loading i:nth-child(3) { animation-delay: 0.32s; }
+.market-intents__loading span { grid-column: 1 / -1; margin-top: 8px; font-size: 0.82rem; }
+.market-intents__empty { align-content: center; }
+.market-intents__empty svg { width: 34px; height: 34px; color: #a268e9; }
+.market-intents__empty h3 { margin: 13px 0 4px; color: #f2ecfb; font-size: 1rem; }
+.market-intents__empty p { max-width: 440px; margin: 0; font-size: 0.8rem; line-height: 1.5; }
+
+@keyframes market-intents-pulse { to { opacity: 0.25; transform: translateY(-3px); } }
+
+@media (max-width: 760px) {
+  .market-intents-layer { align-items: end; padding: 0; }
+  .market-intents { width: 100%; max-height: 91dvh; border-radius: 24px 24px 0 0; }
+  .market-intents__header { padding: 19px 16px 16px; }
+  .market-intents__header p { display: none; }
+  .market-intents__roles { flex-wrap: wrap; padding-inline: 16px; }
+  .market-intents__summary { width: 100%; margin: 4px 0 0; }
+  .market-intents__filters { padding-inline: 16px; }
+  .market-intents__filters .market-intents__refresh { margin-left: 0; }
+  .market-intents__content { padding: 12px 16px 22px; }
+  .market-intent-card { grid-template-columns: auto minmax(0, 1fr); }
+  .market-intent-card__actions { grid-column: 1 / -1; padding-left: 57px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-intents__loading i { animation: none; }
+}

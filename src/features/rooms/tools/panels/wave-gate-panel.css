@@ -1,0 +1,196 @@
+.room-tools-shell.is-wave .wave-sas {
+  position: relative; display: grid; min-width: 0; min-height: 0; height: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto; gap: 8px; padding: 10px 11px 8px;
+  overflow: hidden; container: wave-sas / inline-size;
+  background: radial-gradient(circle at 12% -4%, rgba(145,76,234,.09), transparent 26%), linear-gradient(180deg, rgba(8,9,22,.99), rgba(4,6,15,.99));
+}
+.room-tools-shell.is-wave .wave-sas__header { position: relative; z-index: 20; display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 10px; }
+.room-tools-shell.is-wave .wave-sas__header > span { display: grid; min-width: 0; gap: 2px; }
+.room-tools-shell.is-wave .wave-sas__header > span > strong { color: #fff; font-size: 15px; font-weight: 850; letter-spacing: -.035em; }
+.room-tools-shell.is-wave .wave-sas__header > span > small { color: rgba(224,216,238,.54); font-size: 8.5px; }
+.room-tools-shell.is-wave .wave-sas__header-actions { display: flex; align-items: center; gap: 6px; }
+.room-tools-shell.is-wave .wave-sas__header-actions > b,
+.room-tools-shell.is-wave .wave-sas__header > b,
+.room-tools-shell.is-wave .wave-sas__rules-trigger,
+.room-tools-shell.is-wave .wave-sas__intake {
+  display: inline-flex; min-height: 30px; align-items: center; justify-content: center; gap: 5px; padding: 0 9px;
+  border: 1px solid rgba(151,123,203,.22); border-radius: 9px; background: rgba(255,255,255,.025);
+  color: rgba(231,224,240,.66); font-size: 8px; font-weight: 780; white-space: nowrap;
+}
+.room-tools-shell.is-wave .wave-sas__header-actions > b,
+.room-tools-shell.is-wave .wave-sas__header > b { border-color: rgba(174,103,255,.38); background: linear-gradient(135deg, rgba(145,72,233,.4), rgba(75,60,171,.2)); color: #e0c2ff; }
+.room-tools-shell.is-wave .wave-sas__rules-trigger,
+.room-tools-shell.is-wave .wave-sas__intake { cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas__rules-trigger svg,
+.room-tools-shell.is-wave .wave-sas__intake svg { width: 12px; height: 12px; }
+.room-tools-shell.is-wave .wave-sas__rules-trigger:hover,
+.room-tools-shell.is-wave .wave-sas__intake:hover:not(:disabled) { border-color: rgba(177,111,255,.48); color: #fff; background: rgba(155,89,239,.08); }
+.room-tools-shell.is-wave .wave-sas__intake i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 7px currentColor; }
+.room-tools-shell.is-wave .wave-sas__intake > span { overflow: hidden; text-overflow: ellipsis; }
+.room-tools-shell.is-wave .wave-sas__intake-label-compact { display: none; }
+.room-tools-shell.is-wave .wave-sas__intake.is-open { border-color: rgba(47,219,146,.26); color: #5ce1aa; }
+.room-tools-shell.is-wave .wave-sas__intake.is-closed { border-color: rgba(234,104,126,.28); color: #e98b9b; }
+.room-tools-shell.is-wave .wave-sas__intake:disabled { cursor: not-allowed; opacity: .4; }
+
+.room-tools-shell.is-wave .wave-sas__tabs { position: relative; z-index: 15; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px; padding: 4px; border: 1px solid rgba(139,121,190,.16); border-radius: 11px; background: rgba(5,7,17,.94); }
+.room-tools-shell.is-wave .wave-sas__tabs > button { display: flex; min-width: 0; min-height: 33px; align-items: center; justify-content: space-between; gap: 4px; padding: 0 9px; overflow: hidden; border: 1px solid transparent; border-radius: 8px; background: transparent; color: rgba(226,219,240,.52); font-size: 8px; font-weight: 760; cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas__tabs > button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas__tabs > button b { display: grid; min-width: 18px; height: 18px; place-items: center; border-radius: 6px; background: rgba(255,255,255,.05); color: rgba(228,221,240,.55); font-size: 7px; }
+.room-tools-shell.is-wave .wave-sas__tabs > button.is-active { border-color: rgba(180,111,255,.62); background: linear-gradient(135deg,rgba(149,76,239,.55),rgba(74,55,170,.28)); color: #fff; box-shadow: inset 0 1px rgba(255,255,255,.1), inset 0 -2px #b56dff, 0 0 18px rgba(124,72,225,.16); }
+.room-tools-shell.is-wave .wave-sas__tabs > button.is-active b { background: rgba(181,119,255,.22); color: #ead5ff; }
+
+.room-tools-shell.is-wave .wave-sas__queue { display: grid; min-width: 0; min-height: 0; align-content: start; gap: 4px; padding: 0 6px 3px 0; overflow-x: hidden; overflow-y: auto; overflow-anchor: none; overscroll-behavior: contain; scrollbar-color: rgba(159,93,244,.84) rgba(255,255,255,.025); scrollbar-width: thin; }
+.room-tools-shell.is-wave .wave-sas__queue::-webkit-scrollbar { width: 5px; }
+.room-tools-shell.is-wave .wave-sas__queue::-webkit-scrollbar-track { border-radius: 999px; background: rgba(255,255,255,.025); }
+.room-tools-shell.is-wave .wave-sas__queue::-webkit-scrollbar-thumb { border-radius: 999px; background: linear-gradient(#b06bff,#654cdb); box-shadow: 0 0 9px rgba(158,90,246,.52); }
+.room-tools-shell.is-wave .wave-sas-card {
+  --status-color: #60a5fa; position: relative; display: grid; min-width: 0; height: 76px; min-height: 76px;
+  grid-template-columns: minmax(210px,1.35fr) 40px 58px minmax(183px,1.25fr);
+  align-items: center; gap: 5px; padding: 5px 7px 5px 12px;
+  border: 1px solid color-mix(in srgb,var(--category-color) 20%,rgba(120,116,155,.16)); border-radius: 10px;
+  background: radial-gradient(circle at 0 50%,color-mix(in srgb,var(--category-color) 7%,transparent),transparent 30%), rgba(8,10,24,.94);
+  box-shadow: inset 0 1px rgba(255,255,255,.022); transition: border-color 150ms ease,background 150ms ease,box-shadow 150ms ease;
+}
+.room-tools-shell.is-wave .wave-sas-card::before { position: absolute; inset: 6px auto 6px 0; width: 3px; border-radius: 0 3px 3px 0; background: var(--category-color); box-shadow: 0 0 9px color-mix(in srgb,var(--category-color) 48%,transparent); content: ""; }
+.room-tools-shell.is-wave .wave-sas-card:hover,
+.room-tools-shell.is-wave .wave-sas-card.is-selected { border-color: color-mix(in srgb,var(--category-color) 54%,transparent); background: radial-gradient(circle at 0 50%,color-mix(in srgb,var(--category-color) 11%,transparent),transparent 35%), rgba(10,12,29,.98); box-shadow: 0 0 16px color-mix(in srgb,var(--category-color) 10%,transparent); }
+.room-tools-shell.is-wave .wave-sas-card.is-listening { border-color: color-mix(in srgb,var(--category-color) 72%,transparent); box-shadow: inset 0 1px rgba(255,255,255,.04),0 0 18px color-mix(in srgb,var(--category-color) 18%,transparent); }
+.room-tools-shell.is-wave .wave-sas-card.is-rework { --status-color: #f59e0b; }
+.room-tools-shell.is-wave .wave-sas-card.is-ready { --status-color: #8b5cf6; }
+.room-tools-shell.is-wave .wave-sas-card.is-rejected { --status-color: #ef4444; opacity: .78; }
+.room-tools-shell.is-wave .wave-sas-card__identity { display: grid; min-width: 0; grid-column: 1; grid-template-columns: 18px 40px minmax(0,1fr); align-items: center; gap: 7px; }
+.room-tools-shell.is-wave .wave-sas-card__index { color: color-mix(in srgb,var(--category-color) 72%,#fff); font-size: 8px; font-weight: 900; letter-spacing: -.03em; text-align: center; opacity: .72; }
+.room-tools-shell.is-wave .wave-sas-card__avatar { position: relative; display: grid; width: 40px; height: 40px; place-items: center; overflow: hidden; border: 1px solid color-mix(in srgb,var(--category-color) 52%,transparent); border-radius: 50%; background: #171126; color: #e1c2ff; box-shadow: 0 0 10px color-mix(in srgb,var(--category-color) 11%,transparent); }
+.room-tools-shell.is-wave .wave-sas-card__avatar em { font-size: 10px; font-style: normal; font-weight: 850; }
+.room-tools-shell.is-wave .wave-sas-card__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.room-tools-shell.is-wave .wave-sas-card__copy { display: grid; min-width: 0; gap: 4px; }
+.room-tools-shell.is-wave .wave-sas-card__title { overflow: hidden; color: #fbf8fd; font-size: 12px; font-weight: 860; line-height: 1.05; letter-spacing: -.018em; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas-card__byline { display: flex; min-width: 0; align-items: center; gap: 5px; overflow: hidden; }
+.room-tools-shell.is-wave .wave-sas-card__contributor { display: inline-flex; min-width: 0; align-items: center; gap: 4px; }
+.room-tools-shell.is-wave .wave-sas-card__contributor > em { overflow: hidden; color: rgba(229,222,239,.68); font-size: 7.6px; font-style: normal; font-weight: 720; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas-card__byline > small { display: inline-flex; min-width: 0; align-items: center; overflow: hidden; color: rgba(202,194,216,.43); font-size: 6.8px; text-overflow: ellipsis; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas-card__byline > small::before { width: 2px; height: 2px; flex: 0 0 2px; margin-right: 5px; border-radius: 50%; background: rgba(210,201,224,.35); content: ""; }
+.room-tools-shell.is-wave .wave-sas-card__grade { --mw-grade-size: 13px !important; width: 13px; height: 13px; flex: 0 0 13px; }
+.room-tools-shell.is-wave .wave-sas-card__metadata { display: flex; min-width: 0; flex-wrap: nowrap; align-items: center; gap: 3px; overflow: hidden; }
+.room-tools-shell.is-wave .wave-sas-card__metadata small { color: rgba(220,212,233,.55); font-size: 7px; font-weight: 650; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas-card__type { padding: 3px 6px; border: 1px solid color-mix(in srgb,var(--category-color) 68%,transparent); border-radius: 6px; background: color-mix(in srgb,var(--category-color) 11%,transparent); color: var(--category-color); font-size: 6.5px; font-weight: 900; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas-card__status { display: inline-flex; min-height: 24px; grid-column: 3; align-items: center; justify-self: end; gap: 4px; padding: 0 7px; border: 1px solid color-mix(in srgb,var(--status-color) 32%,transparent); border-radius: 999px; background: color-mix(in srgb,var(--status-color) 8%,rgba(5,7,18,.78)); color: var(--status-color); font-size: 6.7px; font-style: normal; font-weight: 850; text-transform: uppercase; white-space: nowrap; }
+.room-tools-shell.is-wave .wave-sas-card__status::before { width: 4px; height: 4px; border-radius: 50%; background: currentColor; box-shadow: 0 0 6px currentColor; content: ""; }
+.room-tools-shell.is-wave .wave-sas-card__status-label-compact { display: none; }
+.room-tools-shell.is-wave .wave-sas-card__transport { display: grid; min-width: 0; grid-column: 2; place-items: center; }
+.room-tools-shell.is-wave .wave-sas-card__transport > button,
+.room-tools-shell.is-wave .wave-sas-card__actions > button { display: grid; width: 25px; min-width: 25px; height: 27px; place-items: center; padding: 0; border: 1px solid rgba(140,126,180,.17); border-radius: 8px; background: rgba(5,7,18,.82); color: rgba(231,225,241,.62); cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas-card__transport > button { width: 36px; min-width: 36px; height: 36px; border-color: color-mix(in srgb,var(--category-color) 72%,transparent); border-radius: 50%; color: #fff; background: radial-gradient(circle at 36% 30%,color-mix(in srgb,var(--category-color) 36%,#2f174d),#090b19 68%); box-shadow: 0 0 12px color-mix(in srgb,var(--category-color) 20%,transparent); }
+.room-tools-shell.is-wave .wave-sas-card.is-listening .wave-sas-card__transport > button { box-shadow: 0 0 0 2px color-mix(in srgb,var(--category-color) 22%,transparent),0 0 15px color-mix(in srgb,var(--category-color) 35%,transparent); }
+.room-tools-shell.is-wave .wave-sas-card__actions { display: grid; min-width: 0; grid-column: 4; grid-template-columns: 43px repeat(5,25px); justify-content: end; gap: 3px; }
+.room-tools-shell.is-wave .wave-sas-card__actions > button.is-beat { display: inline-flex; width: 43px; gap: 4px; color: color-mix(in srgb,var(--category-color) 66%,#fff); }
+.room-tools-shell.is-wave .wave-sas-card__actions > button.is-beat span { font-size: 6.5px; font-weight: 820; }
+.room-tools-shell.is-wave .wave-sas-card__transport > button:hover:not(:disabled),
+.room-tools-shell.is-wave .wave-sas-card__actions > button:hover:not(:disabled) { border-color: color-mix(in srgb,var(--category-color) 48%,transparent); color: #fff; background: color-mix(in srgb,var(--category-color) 8%,rgba(5,7,18,.9)); }
+.room-tools-shell.is-wave .wave-sas-card__transport svg,
+.room-tools-shell.is-wave .wave-sas-card__actions svg { width: 11px; height: 11px; }
+.room-tools-shell.is-wave .wave-sas-card__transport svg { width: 14px; height: 14px; }
+.room-tools-shell.is-wave .wave-sas-card__transport > button svg { fill: currentColor; }
+.room-tools-shell.is-wave .wave-sas-card__actions > button.is-active { border-color: color-mix(in srgb,var(--category-color) 58%,transparent); color: var(--category-color); box-shadow: 0 0 10px color-mix(in srgb,var(--category-color) 15%,transparent); }
+.room-tools-shell.is-wave .wave-sas-card__actions > .is-download { color: #b9b1c6; }
+.room-tools-shell.is-wave .wave-sas-card__actions > .is-correct { position: relative; margin-left: 2px; color: #efa944; }
+.room-tools-shell.is-wave .wave-sas-card__actions > .is-correct::before { position: absolute; top: 4px; bottom: 4px; left: -4px; width: 1px; background: rgba(143,126,182,.18); content: ""; }
+.room-tools-shell.is-wave .wave-sas-card__actions > .is-ready { border-color: rgba(174,105,255,.34); color: #c694ff; background: rgba(131,63,219,.1); }
+.room-tools-shell.is-wave .wave-sas-card__actions > .is-reject { color: #e2768b; }
+.room-tools-shell.is-wave .wave-sas-card__actions > .is-message { border-color: rgba(117,155,255,.28); color: #8dafff; box-shadow: 0 0 10px rgba(76,111,232,.08); }
+.room-tools-shell.is-wave .wave-sas-card button:disabled { cursor: not-allowed; opacity: .28; }
+.room-tools-shell.is-wave .wave-sas__empty { display: grid; min-height: 90px; place-items: center; margin: 0; border: 1px dashed rgba(149,126,190,.2); border-radius: 10px; color: rgba(222,215,235,.38); font-size: 8px; }
+
+.room-tools-shell.is-wave .wave-sas__legend { display: flex; min-height: 24px; align-items: center; justify-content: space-between; gap: 10px; padding: 0 2px; color: rgba(218,211,231,.4); font-size: 6.5px; }
+.room-tools-shell.is-wave .wave-sas__legend em { font-style: italic; }
+.room-tools-shell.is-wave .wave-sas__legend > span { display: flex; align-items: center; gap: 5px; }
+.room-tools-shell.is-wave .wave-sas__legend b { display: grid; width: 20px; height: 20px; place-items: center; border: 1px solid rgba(148,127,190,.16); border-radius: 6px; color: #bc87ff; }
+.room-tools-shell.is-wave .wave-sas__legend b.is-reject { color: #e2768b; }
+.room-tools-shell.is-wave .wave-sas__legend svg { width: 9px; height: 9px; }
+
+.room-tools-shell.is-wave .wave-sas-modal { position: absolute; z-index: 60; inset: 0; display: grid; place-items: center; padding: 14px; background: rgba(2,3,9,.74); backdrop-filter: blur(5px); }
+.room-tools-shell.is-wave .wave-sas-modal > section { display: grid; width: min(330px,100%); max-height: 92%; gap: 10px; padding: 12px; overflow-y: auto; border: 1px solid rgba(165,102,248,.34); border-radius: 13px; background: #080916; box-shadow: 0 24px 60px rgba(0,0,0,.6),0 0 30px rgba(121,67,211,.1); }
+.room-tools-shell.is-wave .wave-sas-modal header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.room-tools-shell.is-wave .wave-sas-modal header > span { display: flex; align-items: center; gap: 7px; color: #c48cff; }
+.room-tools-shell.is-wave .wave-sas-modal header strong { color: #fff; font-size: 11px; }
+.room-tools-shell.is-wave .wave-sas-modal header svg { width: 15px; height: 15px; }
+.room-tools-shell.is-wave .wave-sas-modal header > button { display: grid; width: 28px; min-height: 28px; place-items: center; padding: 0; border: 1px solid rgba(143,126,182,.18); border-radius: 8px; background: rgba(255,255,255,.025); color: rgba(231,224,240,.62); cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas-modal > section > p { margin: 0; color: rgba(227,220,238,.52); font-size: 8px; }
+.room-tools-shell.is-wave .wave-sas-modal fieldset { display: grid; gap: 5px; margin: 0; padding: 0; border: 0; }
+.room-tools-shell.is-wave .wave-sas-modal legend { margin-bottom: 6px; color: rgba(225,218,237,.55); font-size: 7px; font-weight: 800; }
+.room-tools-shell.is-wave .wave-sas-modal fieldset label { display: flex; min-height: 31px; align-items: center; gap: 8px; padding: 0 9px; border: 1px solid rgba(143,126,182,.13); border-radius: 8px; background: rgba(255,255,255,.018); color: rgba(235,229,243,.72); font-size: 8px; cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas-modal fieldset input { accent-color: #a45dff; }
+.room-tools-shell.is-wave .wave-sas-modal__feedback { display: grid; gap: 5px; color: rgba(228,221,239,.58); font-size: 8px; }
+.room-tools-shell.is-wave .wave-sas-modal__feedback textarea,
+.room-tools-shell.is-wave .wave-sas-modal__feedback input { min-height: 36px; padding: 8px 9px; border: 1px solid rgba(143,126,182,.18); border-radius: 8px; outline: 0; background: #050711; color: #fff; font: inherit; resize: vertical; }
+.room-tools-shell.is-wave .wave-sas-modal__file { position: relative; display: grid; min-height: 58px; grid-template-columns: 22px minmax(0,1fr); align-items: center; gap: 9px; padding: 9px; border: 1px dashed rgba(165,100,249,.34); border-radius: 9px; cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas-modal__file > svg { color: #b77cff; }
+.room-tools-shell.is-wave .wave-sas-modal__file > span { display: grid; gap: 2px; }
+.room-tools-shell.is-wave .wave-sas-modal__file strong { color: rgba(247,243,251,.86); font-size: 9px; }
+.room-tools-shell.is-wave .wave-sas-modal__file small { color: rgba(218,211,232,.42); font-size: 7px; }
+.room-tools-shell.is-wave .wave-sas-modal__file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas-modal footer { display: flex; justify-content: flex-end; gap: 7px; }
+.room-tools-shell.is-wave .wave-sas-modal footer button { min-height: 32px; padding: 0 12px; border: 1px solid rgba(143,126,182,.18); border-radius: 8px; background: rgba(255,255,255,.025); color: rgba(230,223,240,.7); font-size: 8px; font-weight: 800; cursor: pointer; }
+.room-tools-shell.is-wave .wave-sas-modal footer button.is-primary { border-color: rgba(169,100,255,.5); background: linear-gradient(135deg,#9a50ee,#613bd0); color: #fff; }
+.room-tools-shell.is-wave .wave-sas-modal footer button.is-danger { border-color: rgba(235,85,115,.36); background: rgba(211,57,89,.12); color: #f19aab; }
+.room-tools-shell.is-wave .wave-sas-modal footer button:disabled { cursor: not-allowed; opacity: .38; }
+.room-tools-shell.is-wave .wave-sas-modal p.is-error { color: #f08b9f; }
+.room-tools-shell.is-wave .wave-sas-modal__rules-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.room-tools-shell.is-wave .wave-sas-modal__rules-grid label { display: grid; gap: 5px; color: rgba(229,222,239,.6); font-size: 7.5px; font-weight: 760; }
+.room-tools-shell.is-wave .wave-sas-modal__rules-grid input,
+.room-tools-shell.is-wave .wave-sas-modal__rules-grid select { width: 100%; min-height: 34px; padding: 0 9px; border: 1px solid rgba(143,126,182,.2); border-radius: 8px; outline: 0; background: #050711; color: #fff; font: inherit; }
+.room-tools-shell.is-wave .wave-sas-modal__rules-grid input:focus,
+.room-tools-shell.is-wave .wave-sas-modal__rules-grid select:focus { border-color: rgba(177,111,255,.68); box-shadow: 0 0 0 2px rgba(154,82,237,.1); }
+.room-tools-shell.is-wave .wave-sas-modal__rules-note { color: rgba(219,211,234,.42); font-size: 7px; }
+.room-tools-shell.is-wave .wave-sas button:focus-visible,
+.room-tools-shell.is-wave .wave-sas summary:focus-visible { outline: 2px solid rgba(177,111,255,.82); outline-offset: 2px; }
+
+@container wave-sas (max-width: 520px) {
+  .room-tools-shell.is-wave .wave-sas { padding: 8px; }
+  .room-tools-shell.is-wave .wave-sas__tabs > button { padding: 0 5px; font-size: 7px; }
+  .room-tools-shell.is-wave .wave-sas__header-actions > b { display: none; }
+  .room-tools-shell.is-wave .wave-sas__rules-trigger,
+  .room-tools-shell.is-wave .wave-sas__intake { padding: 0 7px; }
+  .room-tools-shell.is-wave .wave-sas-card { height: 78px; min-height: 78px; grid-template-columns: minmax(0,1fr) 36px 58px; grid-template-rows: 41px 25px; column-gap: 4px; row-gap: 2px; padding: 5px 7px 5px 10px; }
+  .room-tools-shell.is-wave .wave-sas-card__identity { grid-column: 1; grid-row: 1; grid-template-columns: 34px minmax(0,1fr); gap: 6px; padding-left: 10px; }
+  .room-tools-shell.is-wave .wave-sas-card__index { position: absolute; top: 24px; left: 4px; font-size: 6.8px; }
+  .room-tools-shell.is-wave .wave-sas-card__avatar { width: 34px; height: 34px; }
+  .room-tools-shell.is-wave .wave-sas-card__title { font-size: 10.5px; }
+  .room-tools-shell.is-wave .wave-sas-card__contributor > em { font-size: 7px; }
+  .room-tools-shell.is-wave .wave-sas-card__byline > small { font-size: 6.2px; }
+  .room-tools-shell.is-wave .wave-sas-card__metadata { justify-content: flex-start; gap: 3px; }
+  .room-tools-shell.is-wave .wave-sas-card__metadata small { font-size: 6.4px; }
+  .room-tools-shell.is-wave .wave-sas-card__type { padding: 2px 5px; font-size: 5.8px; }
+  .room-tools-shell.is-wave .wave-sas-card__transport { grid-column: 2; grid-row: 1; }
+  .room-tools-shell.is-wave .wave-sas-card__transport > button { width: 32px; min-width: 32px; height: 32px; }
+  .room-tools-shell.is-wave .wave-sas-card__status { grid-column: 3; grid-row: 1; }
+  .room-tools-shell.is-wave .wave-sas-card__actions { grid-column: 1 / 4; grid-row: 2; grid-template-columns: 40px repeat(5,24px); justify-content: end; gap: 3px; }
+  .room-tools-shell.is-wave .wave-sas-card__actions > button { width: 24px; min-width: 24px; height: 25px; }
+  .room-tools-shell.is-wave .wave-sas-card__actions > button.is-beat { width: 40px; }
+  .room-tools-shell.is-wave .wave-sas__legend > span { display: none; }
+}
+@container wave-sas (max-width: 390px) {
+  .room-tools-shell.is-wave .wave-sas__header { gap: 6px; }
+  .room-tools-shell.is-wave .wave-sas__intake { width: auto; min-width: 54px; padding: 0 7px; }
+  .room-tools-shell.is-wave .wave-sas__intake > svg,
+  .room-tools-shell.is-wave .wave-sas__intake-label { display: none; }
+  .room-tools-shell.is-wave .wave-sas__intake-label-compact { display: inline; }
+  .room-tools-shell.is-wave .wave-sas__tabs > button { justify-content: center; padding: 0 3px; }
+  .room-tools-shell.is-wave .wave-sas__tabs > button b { min-width: 15px; height: 15px; }
+  .room-tools-shell.is-wave .wave-sas-card { height: 78px; min-height: 78px; grid-template-columns: minmax(0,1fr) 32px 48px; grid-template-rows: 40px 24px; }
+  .room-tools-shell.is-wave .wave-sas-card__identity { grid-template-columns: 32px minmax(0,1fr); padding-left: 9px; }
+  .room-tools-shell.is-wave .wave-sas-card__index { top: 23px; left: 3px; }
+  .room-tools-shell.is-wave .wave-sas-card__avatar { width: 32px; height: 32px; }
+  .room-tools-shell.is-wave .wave-sas-card__title { font-size: 11.5px; }
+  .room-tools-shell.is-wave .wave-sas-card__contributor > em { font-size: 7.5px; }
+  .room-tools-shell.is-wave .wave-sas-card__byline > small { display: inline-flex; font-size: 6.5px; }
+  .room-tools-shell.is-wave .wave-sas-card__metadata small { font-size: 6.2px; }
+  .room-tools-shell.is-wave .wave-sas-card__transport > button { width: 30px; min-width: 30px; height: 30px; }
+  .room-tools-shell.is-wave .wave-sas-card__status { min-height: 21px; padding: 0 4px; font-size: 5.8px; }
+  .room-tools-shell.is-wave .wave-sas-card__status-label { display: none; }
+  .room-tools-shell.is-wave .wave-sas-card__status-label-compact { display: inline; }
+  .room-tools-shell.is-wave .wave-sas-card__actions { grid-template-columns: 40px repeat(5,24px); gap: 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .room-tools-shell.is-wave .wave-sas-card { transition: none; }
+}

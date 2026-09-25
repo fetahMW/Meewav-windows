@@ -1,0 +1,4645 @@
+{
+  "schemaVersion": 1,
+  "wave": 8,
+  "batch": "c",
+  "source": {
+    "id": "ign-insee-contours-iris-2026",
+    "provider": "IGN / INSEE - Contours IRIS WFS Geoplateforme",
+    "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+    "wfsUrl": "https://data.geopf.fr/wfs/ows",
+    "typeName": "STATISTICALUNITS.IRIS:contours_iris",
+    "vintage": "2026",
+    "license": "Licence Ouverte / Open Licence 2.0",
+    "populationSource": "public/search/france-communes-index.json (geo.api.gouv.fr snapshot)"
+  },
+  "generatedAt": "2026-07-14T17:05:08.829Z",
+  "auditPolicy": {
+    "activationRule": "A city is ready only when every visible plate has a unique human place name and every resolution targets exhaustive exact source IDs.",
+    "noInvention": true,
+    "exactIdRule": "Every ambiguous, numbered, directional or operational IRIS is explicitly accepted, renamed or merged by exact source ID.",
+    "acceptRule": "Accept is reserved for a real official human local name and records the dated Guide Alpha decision.",
+    "renameRule": "Rename requires official IGN BD TOPO evidence strictly inside the exact source IRIS. Nearest-point assignment is forbidden.",
+    "mergeRule": "Merge requires one semantic source family and a connected official polygon graph proven from shared boundary vertices.",
+    "geometryAdjacency": "Connected merge families are verified from official WFS boundary vertices rounded to eight decimal places.",
+    "strictToponymRule": "Every rename records an official IGN coordinate strictly inside the exact IRIS and strictContainmentVerified=true."
+  },
+  "evidenceSources": [
+    {
+      "id": "ign-insee-contours-iris-2026",
+      "provider": "IGN / INSEE - Contours IRIS WFS Geoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+      "layers": [
+        "STATISTICALUNITS.IRIS:contours_iris"
+      ],
+      "role": "Official geometry, exact source identifiers and labels",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "ign-bdtopo-named-roads-2026",
+      "provider": "IGN - BD TOPO WFS Geoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/bdtopo",
+      "wfsUrl": "https://data.geopf.fr/wfs/ows",
+      "layers": [
+        "BDTOPO_V3:voie_nommee"
+      ],
+      "role": "Official named-road vertices verified strictly inside exact source IRIS polygons",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "ign-bdtopo-habitation-toponyms-2026",
+      "provider": "IGN - BD TOPO WFS Geoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/bdtopo",
+      "wfsUrl": "https://data.geopf.fr/wfs/ows",
+      "layers": [
+        "BDTOPO_V3:zone_d_habitation"
+      ],
+      "role": "Official inhabited-place and quartier geometry vertices verified strictly inside exact source IRIS polygons",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+      "provider": "Meewav Guide Alpha editorial review",
+      "datasetUrl": "geo/work/france-wave-8-curation-c.json",
+      "role": "Versioned exact-ID semantic decisions; no nearest-point or invented-name assignment",
+      "vintage": "2026-07-14"
+    }
+  ],
+  "summary": {
+    "cityCount": 33,
+    "readyCount": 33,
+    "resolutionRequiredCount": 0,
+    "sourceFeatureCount": 230,
+    "outputFeatureCount": 224,
+    "noCurationReadyCount": 4,
+    "explicitCurationCityCount": 29,
+    "mergeOperationCount": 5,
+    "acceptOperationCount": 61,
+    "renameOperationCount": 37,
+    "curationOperationCount": 103,
+    "strictContainedRenameCount": 37
+  },
+  "cities": [
+    {
+      "id": "sallanches",
+      "name": "Sallanches",
+      "code": "74256",
+      "population": 17319,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "742560101",
+          "label": "Saint-Martin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742560102",
+          "label": "Z.A.",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "742560103",
+          "label": "Sud-Saint-Roch",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742560104",
+          "label": "Périphérie Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742560105",
+          "label": "Vouilloux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742560106",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742560107",
+          "label": "Périphérie Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "742560102",
+            "742560104",
+            "742560106",
+            "742560107"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "742560103"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "sallanches-742560102-rename-cusin",
+            "type": "rename",
+            "sourceId": "742560102",
+            "expectedLabel": "Z.A.",
+            "label": "Cusin",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Cusin",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000067383675",
+                "coordinates": [
+                  6.6278495,
+                  45.95527789
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "sallanches-742560103-accept-sud-saint-roch",
+            "type": "accept",
+            "sourceId": "742560103",
+            "expectedLabel": "Sud-Saint-Roch",
+            "label": "Sud-Saint-Roch",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "sallanches-742560104-rename-le-rosay",
+            "type": "rename",
+            "sourceId": "742560104",
+            "expectedLabel": "Périphérie Nord",
+            "label": "Le Rosay",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "le Rosay",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000067383673",
+                "coordinates": [
+                  6.62871748,
+                  45.94903639
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "sallanches-742560106-rename-grenette",
+            "type": "rename",
+            "sourceId": "742560106",
+            "expectedLabel": "Centre",
+            "label": "Grenette",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Place de la Grenette",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002338731812",
+                "coordinates": [
+                  6.62977764,
+                  45.9351697
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "sallanches-742560107-rename-domaine-de-warens",
+            "type": "rename",
+            "sourceId": "742560107",
+            "expectedLabel": "Périphérie Sud",
+            "label": "Domaine de Warens",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Domaine de Warens",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000309388200",
+                "coordinates": [
+                  6.63609532,
+                  45.93127712
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saran",
+      "name": "Saran",
+      "code": "45302",
+      "population": 17316,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "453020101",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "453020102",
+          "label": "Le Vilpot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "453020103",
+          "label": "Les Sablonnières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "453020104",
+          "label": "Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "453020105",
+          "label": "Le Chêne Maillard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "453020106",
+          "label": "Les Champs Gareaux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "453020104"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "453020101"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "saran-453020101-accept-centre",
+            "type": "accept",
+            "sourceId": "453020101",
+            "expectedLabel": "Centre",
+            "label": "Centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saran-453020104-rename-les-vallees",
+            "type": "rename",
+            "sourceId": "453020104",
+            "expectedLabel": "Sud-Ouest",
+            "label": "Les Vallées",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "les Vallées",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000006077300",
+                "coordinates": [
+                  1.8769981,
+                  47.93425041
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fecamp",
+      "name": "Fécamp",
+      "code": "76259",
+      "population": 17313,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "762590101",
+          "label": "La Côte de la Vierge",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590102",
+          "label": "Le Port",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590103",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590104",
+          "label": "Côte Saint-Jacques",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590105",
+          "label": "Saint-Benoît-Saint-Ouen",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590106",
+          "label": "Hôpital",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590107",
+          "label": "Dugle-Val aux Clercs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590108",
+          "label": "Le Ramponneau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590109",
+          "label": "Val de Bucaille",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590110",
+          "label": "Les Vikings",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762590111",
+          "label": "La Plage",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "762590103",
+            "762590106"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 11,
+        "operations": [
+          {
+            "id": "fecamp-762590103-accept-le-centre",
+            "type": "accept",
+            "sourceId": "762590103",
+            "expectedLabel": "Le Centre",
+            "label": "Le Centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "fecamp-762590106-accept-hopital",
+            "type": "accept",
+            "sourceId": "762590106",
+            "expectedLabel": "Hôpital",
+            "label": "Hôpital",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "annonay",
+      "name": "Annonay",
+      "code": "07010",
+      "population": 17274,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "070100101",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "070100102",
+          "label": "Fontanes-Marenton",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "070100103",
+          "label": "Charenton-Lombardière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "070100201",
+          "label": "Toissieu-Pupil-Bramefan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "070100202",
+          "label": "Bauregard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "070100203",
+          "label": "Vercors-Les Perrières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "070100204",
+          "label": "Vaure Zodiaque",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "070100101"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "annonay-070100101-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "070100101",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "lamballe_armor",
+      "name": "Lamballe-Armor",
+      "code": "22093",
+      "population": 17241,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "220930101",
+          "label": "Lamballe Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "220930102",
+          "label": "Lamballe Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "220930103",
+          "label": "Saint-Aaron-La Poterie-Trégomar",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "220930104",
+          "label": "Maroué Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "220930106",
+          "label": "Meslin",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "220930201",
+          "label": "Planguenoual",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "220930101",
+            "220930102",
+            "220930104"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "lamballe_armor-220930101-accept-lamballe-nord",
+            "type": "accept",
+            "sourceId": "220930101",
+            "expectedLabel": "Lamballe Nord",
+            "label": "Lamballe Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "lamballe_armor-220930102-accept-lamballe-sud",
+            "type": "accept",
+            "sourceId": "220930102",
+            "expectedLabel": "Lamballe Sud",
+            "label": "Lamballe Sud",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "lamballe_armor-220930104-accept-maroue-nord",
+            "type": "accept",
+            "sourceId": "220930104",
+            "expectedLabel": "Maroué Nord",
+            "label": "Maroué Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "viroflay",
+      "name": "Viroflay",
+      "code": "78686",
+      "population": 17237,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "786860101",
+          "label": "Forêt",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "786860102",
+          "label": "Rive Droite",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786860103",
+          "label": "Les Aulnettes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786860104",
+          "label": "La Ville au Bois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786860105",
+          "label": "Les Arcades",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786860106",
+          "label": "Le Haras",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786860107",
+          "label": "Rive Gauche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786860108",
+          "label": "Verdun",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "786860101",
+            "786860102",
+            "786860107"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "viroflay-786860101-accept-foret",
+            "type": "accept",
+            "sourceId": "786860101",
+            "expectedLabel": "Forêt",
+            "label": "Forêt",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "viroflay-786860102-accept-rive-droite",
+            "type": "accept",
+            "sourceId": "786860102",
+            "expectedLabel": "Rive Droite",
+            "label": "Rive Droite",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "viroflay-786860107-accept-rive-gauche",
+            "type": "accept",
+            "sourceId": "786860107",
+            "expectedLabel": "Rive Gauche",
+            "label": "Rive Gauche",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "blanquefort",
+      "name": "Blanquefort",
+      "code": "33056",
+      "population": 17215,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "330560101",
+          "label": "Marnières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330560102",
+          "label": "Caychac Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330560103",
+          "label": "Majolan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330560104",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330560105",
+          "label": "Saturne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330560106",
+          "label": "Zone Industrielle",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "330560107",
+          "label": "Bords de Garonne",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "330560106"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "330560104"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "blanquefort-330560104-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "330560104",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "blanquefort-330560106-rename-mataplan",
+            "type": "rename",
+            "sourceId": "330560106",
+            "expectedLabel": "Zone Industrielle",
+            "label": "Mataplan",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Mataplan",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000050814533",
+                "coordinates": [
+                  -0.61448123,
+                  44.90337104
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "oree_d_anjou",
+      "name": "Orée d'Anjou",
+      "code": "49126",
+      "population": 17162,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "491260101",
+          "label": "La Varenne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "491260102",
+          "label": "Champtoceaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "491260103",
+          "label": "Drain",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "491260104",
+          "label": "Landemont",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "491260105",
+          "label": "Saint-Laurent-des-Autels",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "491260106",
+          "label": "Liré",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "491260107",
+          "label": "Bouzillé",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "expectedFeatureCount": 7,
+        "justification": "All official labels are distinct human place names; no safe or necessary grouping or rename was found."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montceau_les_mines",
+      "name": "Montceau-les-Mines",
+      "code": "71306",
+      "population": 17064,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "713060101",
+          "label": "Le Bois du Verne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060102",
+          "label": "Magny-Bois Garnier",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060103",
+          "label": "La Saule",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060104",
+          "label": "Sainte-Salengro",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060105",
+          "label": "Bellevue",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060106",
+          "label": "Les Rives du Plessis",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060107",
+          "label": "Bois Roullot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060108",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060109",
+          "label": "Bel-Air",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713060110",
+          "label": "Zone d'Activités",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "713060110"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "713060108"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 10,
+        "operations": [
+          {
+            "id": "montceau_les_mines-713060108-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "713060108",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "montceau_les_mines-713060110-rename-bois-clair",
+            "type": "rename",
+            "sourceId": "713060110",
+            "expectedLabel": "Zone d'Activités",
+            "label": "Bois Clair",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue du Bois Clair",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002338679577",
+                "coordinates": [
+                  4.36365624,
+                  46.69368782
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "firminy",
+      "name": "Firminy",
+      "code": "42095",
+      "population": 17060,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "420950101",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950102",
+          "label": "Laprat-Benaud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950201",
+          "label": "Chazeau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950202",
+          "label": "Tardive",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950203",
+          "label": "Tremollet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950204",
+          "label": "Firminy-Vert",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950205",
+          "label": "Fayol",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950301",
+          "label": "Abattoir",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420950302",
+          "label": "Bas Mas",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "420950101",
+            "420950301"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 9,
+        "operations": [
+          {
+            "id": "firminy-420950101-accept-centre",
+            "type": "accept",
+            "sourceId": "420950101",
+            "expectedLabel": "Centre",
+            "label": "Centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "firminy-420950301-accept-abattoir",
+            "type": "accept",
+            "sourceId": "420950301",
+            "expectedLabel": "Abattoir",
+            "label": "Abattoir",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_cyr_sur_loire",
+      "name": "Saint-Cyr-sur-Loire",
+      "code": "37214",
+      "population": 17029,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "372140101",
+          "label": "Ouest 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372140102",
+          "label": "Ouest 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372140103",
+          "label": "Historique",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372140104",
+          "label": "Collectif",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372140105",
+          "label": "de Gaulle-Ménardière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372140106",
+          "label": "Économique",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "numbered_or_statistical_family",
+          "severity": "review",
+          "sourceIds": [
+            "372140101",
+            "372140102"
+          ],
+          "resolution": "connected_semantic_exact_id_merge"
+        },
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "372140103",
+            "372140104",
+            "372140106"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 5,
+        "operations": [
+          {
+            "id": "saint_cyr_sur_loire-la-bechellerie-merge",
+            "type": "merge",
+            "sourceIds": [
+              "372140101",
+              "372140102"
+            ],
+            "expectedLabels": [
+              "Ouest 1",
+              "Ouest 2"
+            ],
+            "label": "La Béchellerie",
+            "outputId": "saint_cyr_sur_loire_37214_group_la_bechellerie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Béchellerie",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000031121469",
+                "sourceIrisId": "372140101",
+                "coordinates": [
+                  0.65380239,
+                  47.41373526
+                ],
+                "strictContainmentVerified": true
+              },
+              {
+                "name": "la Béchellerie",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000031121469",
+                "sourceIrisId": "372140102",
+                "coordinates": [
+                  0.65335359,
+                  47.4149249
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_merged_exact_source_union",
+            "geometryAudit": {
+              "source": "IGN/INSEE Contours IRIS WFS geometry",
+              "criterion": "At least two shared official boundary vertices at eight decimal places; the exact-ID family graph must be connected.",
+              "roundingDecimals": 8,
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "372140101",
+                    "372140102"
+                  ],
+                  "sharedBoundaryVertices": 40
+                }
+              ],
+              "verifiedAt": "2026-07-14"
+            },
+            "rationale": "The exhaustive Ouest 1/Ouest 2 exact-ID family forms one connected official polygon graph. The final human label is the official IGN habitation toponym La Béchellerie, whose geometry has strictly contained vertices in both exact source IRIS; no directional-only label or unrelated cell remains."
+          },
+          {
+            "id": "saint_cyr_sur_loire-372140103-rename-la-grenadiere",
+            "type": "rename",
+            "sourceId": "372140103",
+            "expectedLabel": "Historique",
+            "label": "La Grenadière",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Grenadière",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000031121452",
+                "coordinates": [
+                  0.67028605,
+                  47.40009579
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "saint_cyr_sur_loire-372140104-rename-la-mesangerie",
+            "type": "rename",
+            "sourceId": "372140104",
+            "expectedLabel": "Collectif",
+            "label": "La Mésangerie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Mésangerie",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000031121456",
+                "coordinates": [
+                  0.67421612,
+                  47.40709821
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "saint_cyr_sur_loire-372140106-rename-la-rabelais",
+            "type": "rename",
+            "sourceId": "372140106",
+            "expectedLabel": "Économique",
+            "label": "La Rabelais",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Rabelais",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000031121305",
+                "coordinates": [
+                  0.66441904,
+                  47.43425356
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "la_baule_escoublac",
+      "name": "La Baule-Escoublac",
+      "code": "44055",
+      "population": 16912,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "440550101",
+          "label": "La Baule les Pins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440550102",
+          "label": "Centre-Benoît",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440550103",
+          "label": "Gare-Grand Clos",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440550104",
+          "label": "Beslon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440550105",
+          "label": "Escoublac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440550106",
+          "label": "Le Guézy",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "440550102",
+            "440550103"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "la_baule_escoublac-440550102-accept-centre-benoit",
+            "type": "accept",
+            "sourceId": "440550102",
+            "expectedLabel": "Centre-Benoît",
+            "label": "Centre-Benoît",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "la_baule_escoublac-440550103-accept-gare-grand-clos",
+            "type": "accept",
+            "sourceId": "440550103",
+            "expectedLabel": "Gare-Grand Clos",
+            "label": "Gare-Grand Clos",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "verdun",
+      "name": "Verdun",
+      "code": "55545",
+      "population": 16890,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "555450101",
+          "label": "Glorieux Saint-Barthélemy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450102",
+          "label": "Centre Ville-Cité Verte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450103",
+          "label": "Au Pré l'Évêque Anthouard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450104",
+          "label": "Centre Ville-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450105",
+          "label": "Au Dieu du Trice Cité Kennedy Louis Best",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450106",
+          "label": "Les Planchettes Champ Claudine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450107",
+          "label": "Les Grandes Plantes Faubourg Pavé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "555450108",
+          "label": "Faubourg Souville",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "555450102",
+            "555450104"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "verdun-555450102-accept-centre-ville-cite-verte",
+            "type": "accept",
+            "sourceId": "555450102",
+            "expectedLabel": "Centre Ville-Cité Verte",
+            "label": "Centre Ville-Cité Verte",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "verdun-555450104-accept-centre-ville-est",
+            "type": "accept",
+            "sourceId": "555450104",
+            "expectedLabel": "Centre Ville-Est",
+            "label": "Centre Ville-Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "guerande",
+      "name": "Guérande",
+      "code": "44069",
+      "population": 16804,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "440690101",
+          "label": "Le Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440690102",
+          "label": "Kerjeanne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440690103",
+          "label": "Léchet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440690104",
+          "label": "Z.A. Villejames",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "440690105",
+          "label": "Saillé la Nantaise",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440690106",
+          "label": "Le Marais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "440690107",
+          "label": "Madeleine-Poissevin",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "440690101",
+            "440690104"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "guerande-440690101-accept-le-centre",
+            "type": "accept",
+            "sourceId": "440690101",
+            "expectedLabel": "Le Centre",
+            "label": "Le Centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "guerande-440690104-accept-z-a-villejames",
+            "type": "accept",
+            "sourceId": "440690104",
+            "expectedLabel": "Z.A. Villejames",
+            "label": "Z.A. Villejames",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "les_clayes_sous_bois",
+      "name": "Les Clayes-sous-Bois",
+      "code": "78165",
+      "population": 16804,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "781650101",
+          "label": "Quartier Val Joyeux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781650102",
+          "label": "Quartier Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781650103",
+          "label": "Quartier Centre 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781650104",
+          "label": "Quartier Centre 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781650105",
+          "label": "Quartier Ouest Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781650106",
+          "label": "Quartier Ouest Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "numbered_or_statistical_family",
+          "severity": "review",
+          "sourceIds": [
+            "781650103",
+            "781650104"
+          ],
+          "resolution": "connected_semantic_exact_id_merge"
+        },
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "781650102",
+            "781650105",
+            "781650106"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 5,
+        "operations": [
+          {
+            "id": "les_clayes_sous_bois-781650102-rename-le-trianon",
+            "type": "rename",
+            "sourceId": "781650102",
+            "expectedLabel": "Quartier Nord",
+            "label": "Le Trianon",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "le Trianon",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000004827138",
+                "coordinates": [
+                  1.98631137,
+                  48.83073939
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "les_clayes_sous_bois-quartier-centre-merge",
+            "type": "merge",
+            "sourceIds": [
+              "781650103",
+              "781650104"
+            ],
+            "expectedLabels": [
+              "Quartier Centre 1",
+              "Quartier Centre 2"
+            ],
+            "label": "Quartier Centre",
+            "outputId": "les_clayes_sous_bois_78165_group_quartier_centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "geometryAudit": {
+              "source": "IGN/INSEE Contours IRIS WFS geometry",
+              "criterion": "At least two shared official boundary vertices at eight decimal places; the exact-ID family graph must be connected.",
+              "roundingDecimals": 8,
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "781650103",
+                    "781650104"
+                  ],
+                  "sharedBoundaryVertices": 7
+                }
+              ],
+              "verifiedAt": "2026-07-14"
+            },
+            "rationale": "The exhaustive exact-ID family shares one semantic statistical base and its official polygon graph is connected. No unrelated cell is dissolved."
+          },
+          {
+            "id": "les_clayes_sous_bois-781650105-rename-la-vigneraie",
+            "type": "rename",
+            "sourceId": "781650105",
+            "expectedLabel": "Quartier Ouest Nord",
+            "label": "La Vigneraie",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Vigneraie",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000004827139",
+                "coordinates": [
+                  1.97955402,
+                  48.8254617
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "les_clayes_sous_bois-781650106-rename-domaine-de-la-canopee",
+            "type": "rename",
+            "sourceId": "781650106",
+            "expectedLabel": "Quartier Ouest Sud",
+            "label": "Domaine de la Canopée",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Domaine de la Canopée",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000002011993201",
+                "coordinates": [
+                  1.97179626,
+                  48.81752437
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_jean_de_la_ruelle",
+      "name": "Saint-Jean-de-la-Ruelle",
+      "code": "45285",
+      "population": 16768,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "452850101",
+          "label": "Pôle d'Activités Charles Beauhaire Nord",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "452850102",
+          "label": "Parc d'activités Ingre Saint-Jean",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "452850103",
+          "label": "Grand Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452850104",
+          "label": "Sud Petite Espère",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452850105",
+          "label": "Salmoneries Prairie Pincevent ZRU",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452850106",
+          "label": "Grand Espère Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452850107",
+          "label": "Grand Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "452850108",
+          "label": "Les Chaises",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "452850101",
+            "452850102",
+            "452850103",
+            "452850104",
+            "452850105",
+            "452850106",
+            "452850107"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "saint_jean_de_la_ruelle-452850101-accept-pole-d-activites-charles-beauhaire-nord",
+            "type": "accept",
+            "sourceId": "452850101",
+            "expectedLabel": "Pôle d'Activités Charles Beauhaire Nord",
+            "label": "Pôle d'Activités Charles Beauhaire Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saint_jean_de_la_ruelle-452850102-accept-parc-d-activites-ingre-saint-jean",
+            "type": "accept",
+            "sourceId": "452850102",
+            "expectedLabel": "Parc d'activités Ingre Saint-Jean",
+            "label": "Parc d'activités Ingre Saint-Jean",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saint_jean_de_la_ruelle-452850103-accept-grand-ouest",
+            "type": "accept",
+            "sourceId": "452850103",
+            "expectedLabel": "Grand Ouest",
+            "label": "Grand Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saint_jean_de_la_ruelle-452850104-accept-sud-petite-espere",
+            "type": "accept",
+            "sourceId": "452850104",
+            "expectedLabel": "Sud Petite Espère",
+            "label": "Sud Petite Espère",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saint_jean_de_la_ruelle-452850105-accept-salmoneries-prairie-pincevent-zru",
+            "type": "accept",
+            "sourceId": "452850105",
+            "expectedLabel": "Salmoneries Prairie Pincevent ZRU",
+            "label": "Salmoneries Prairie Pincevent ZRU",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saint_jean_de_la_ruelle-452850106-accept-grand-espere-est",
+            "type": "accept",
+            "sourceId": "452850106",
+            "expectedLabel": "Grand Espère Est",
+            "label": "Grand Espère Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "saint_jean_de_la_ruelle-452850107-accept-grand-centre-ville",
+            "type": "accept",
+            "sourceId": "452850107",
+            "expectedLabel": "Grand Centre Ville",
+            "label": "Grand Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "loire_authion",
+      "name": "Loire-Authion",
+      "code": "49307",
+      "population": 16765,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "493070101",
+          "label": "Saint-Mathurin-sur-Loire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493070102",
+          "label": "La Daguenière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493070103",
+          "label": "Brain-sur-l'Authion",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493070104",
+          "label": "Andard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493070105",
+          "label": "Corné",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "493070106",
+          "label": "Bauné",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "expectedFeatureCount": 6,
+        "justification": "All official labels are distinct human place names; no safe or necessary grouping or rename was found."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "marly_le_roi",
+      "name": "Marly-le-Roi",
+      "code": "78372",
+      "population": 16756,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "783720101",
+          "label": "Grandes Terres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720102",
+          "label": "Quartier Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720103",
+          "label": "Quartier Witold",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720104",
+          "label": "Montréal",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720105",
+          "label": "Quartier Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720106",
+          "label": "L'Auberderie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720107",
+          "label": "L'Abreuvoir",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "783720108",
+          "label": "Forêt de Marly",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "783720102",
+            "783720105"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "783720108"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "marly_le_roi-783720102-rename-le-verger-de-marly",
+            "type": "rename",
+            "sourceId": "783720102",
+            "expectedLabel": "Quartier Est",
+            "label": "Le Verger de Marly",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "le Verger de Marly",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000004826782",
+                "coordinates": [
+                  2.1021226,
+                  48.87843359
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "marly_le_roi-783720105-rename-montval",
+            "type": "rename",
+            "sourceId": "783720105",
+            "expectedLabel": "Quartier Ouest",
+            "label": "Montval",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Montval",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000004826781",
+                "coordinates": [
+                  2.09021592,
+                  48.87657105
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "marly_le_roi-783720108-accept-foret-de-marly",
+            "type": "accept",
+            "sourceId": "783720108",
+            "expectedLabel": "Forêt de Marly",
+            "label": "Forêt de Marly",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "valserhone",
+      "name": "Valserhône",
+      "code": "01033",
+      "population": 16712,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "010330102",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010330103",
+          "label": "Lancrans-Coupy-Vanchy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010330201",
+          "label": "Arc Vouvray-Gare-Châtillon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010330202",
+          "label": "Plateau de Musinens",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010330301",
+          "label": "Arlod",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "010330401",
+          "label": "Châtillon-en-Michaille",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "010330102",
+            "010330201"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "valserhone-010330102-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "010330102",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "valserhone-010330201-accept-arc-vouvray-gare-chatillon",
+            "type": "accept",
+            "sourceId": "010330201",
+            "expectedLabel": "Arc Vouvray-Gare-Châtillon",
+            "label": "Arc Vouvray-Gare-Châtillon",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sedan",
+      "name": "Sedan",
+      "code": "08409",
+      "population": 16667,
+      "sourceFeatureCount": 11,
+      "officialLabels": [
+        {
+          "sourceId": "084090101",
+          "label": "Frénois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090102",
+          "label": "Torcy Cité",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090201",
+          "label": "Torcy 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090202",
+          "label": "Torcy 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090301",
+          "label": "Centre 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090302",
+          "label": "Centre 2a",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090303",
+          "label": "Centre 2b",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090401",
+          "label": "Résidence Ardennes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090402",
+          "label": "Fond de Givonne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090501",
+          "label": "ZUP 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "084090502",
+          "label": "ZUP 2",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "numbered_or_statistical_family",
+          "severity": "review",
+          "sourceIds": [
+            "084090201",
+            "084090202"
+          ],
+          "resolution": "connected_semantic_exact_id_merge"
+        },
+        {
+          "code": "numbered_or_statistical_family",
+          "severity": "review",
+          "sourceIds": [
+            "084090301",
+            "084090302",
+            "084090303"
+          ],
+          "resolution": "connected_semantic_exact_id_merge"
+        },
+        {
+          "code": "numbered_or_statistical_family",
+          "severity": "review",
+          "sourceIds": [
+            "084090501",
+            "084090502"
+          ],
+          "resolution": "connected_semantic_exact_id_merge"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "sedan-torcy-merge",
+            "type": "merge",
+            "sourceIds": [
+              "084090201",
+              "084090202"
+            ],
+            "expectedLabels": [
+              "Torcy 1",
+              "Torcy 2"
+            ],
+            "label": "Torcy",
+            "outputId": "sedan_08409_group_torcy",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "geometryAudit": {
+              "source": "IGN/INSEE Contours IRIS WFS geometry",
+              "criterion": "At least two shared official boundary vertices at eight decimal places; the exact-ID family graph must be connected.",
+              "roundingDecimals": 8,
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "084090201",
+                    "084090202"
+                  ],
+                  "sharedBoundaryVertices": 17
+                }
+              ],
+              "verifiedAt": "2026-07-14"
+            },
+            "rationale": "The exhaustive exact-ID family shares one semantic statistical base and its official polygon graph is connected. No unrelated cell is dissolved."
+          },
+          {
+            "id": "sedan-centre-merge",
+            "type": "merge",
+            "sourceIds": [
+              "084090301",
+              "084090302",
+              "084090303"
+            ],
+            "expectedLabels": [
+              "Centre 1",
+              "Centre 2a",
+              "Centre 2b"
+            ],
+            "label": "Centre",
+            "outputId": "sedan_08409_group_centre",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "geometryAudit": {
+              "source": "IGN/INSEE Contours IRIS WFS geometry",
+              "criterion": "At least two shared official boundary vertices at eight decimal places; the exact-ID family graph must be connected.",
+              "roundingDecimals": 8,
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "084090301",
+                    "084090302"
+                  ],
+                  "sharedBoundaryVertices": 2
+                },
+                {
+                  "sourceIds": [
+                    "084090301",
+                    "084090303"
+                  ],
+                  "sharedBoundaryVertices": 16
+                },
+                {
+                  "sourceIds": [
+                    "084090302",
+                    "084090303"
+                  ],
+                  "sharedBoundaryVertices": 10
+                }
+              ],
+              "verifiedAt": "2026-07-14"
+            },
+            "rationale": "The exhaustive exact-ID family shares one semantic statistical base and its official polygon graph is connected. No unrelated cell is dissolved."
+          },
+          {
+            "id": "sedan-le-lac-merge",
+            "type": "merge",
+            "sourceIds": [
+              "084090501",
+              "084090502"
+            ],
+            "expectedLabels": [
+              "ZUP 1",
+              "ZUP 2"
+            ],
+            "label": "Le Lac",
+            "outputId": "sedan_08409_group_le_lac",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "geometryAudit": {
+              "source": "IGN/INSEE Contours IRIS WFS geometry",
+              "criterion": "At least two shared official boundary vertices at eight decimal places; the exact-ID family graph must be connected.",
+              "roundingDecimals": 8,
+              "connectedGraph": true,
+              "edges": [
+                {
+                  "sourceIds": [
+                    "084090501",
+                    "084090502"
+                  ],
+                  "sharedBoundaryVertices": 11
+                }
+              ],
+              "verifiedAt": "2026-07-14"
+            },
+            "rationale": "The exhaustive exact-ID family shares one semantic statistical base and its official polygon graph is connected. No unrelated cell is dissolved. The final human label is supported by an official IGN toponym strictly contained in the merged exact-source union.",
+            "containedEvidence": [
+              {
+                "name": "le Lac",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000026840251",
+                "coordinates": [
+                  4.9438416,
+                  49.69563479
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_merged_exact_source_union"
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "cestas",
+      "name": "Cestas",
+      "code": "33122",
+      "population": 16666,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "331220101",
+          "label": "Gazinet Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331220102",
+          "label": "Gazinet Sud-Bouzet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331220103",
+          "label": "Mano",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331220104",
+          "label": "Bourg-Croix d'Hins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331220105",
+          "label": "Bellevue-Trigan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "331220106",
+          "label": "Écarts Ruraux",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "331220107",
+          "label": "Réjouits",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "331220106"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "331220101",
+            "331220102"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "cestas-331220101-accept-gazinet-nord",
+            "type": "accept",
+            "sourceId": "331220101",
+            "expectedLabel": "Gazinet Nord",
+            "label": "Gazinet Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "cestas-331220102-accept-gazinet-sud-bouzet",
+            "type": "accept",
+            "sourceId": "331220102",
+            "expectedLabel": "Gazinet Sud-Bouzet",
+            "label": "Gazinet Sud-Bouzet",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "cestas-331220106-rename-toctoucau",
+            "type": "rename",
+            "sourceId": "331220106",
+            "expectedLabel": "Écarts Ruraux",
+            "label": "Toctoucau",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Toctoucau",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000050819718",
+                "coordinates": [
+                  -0.73895409,
+                  44.75094655
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "lons_le_saunier",
+      "name": "Lons-le-Saunier",
+      "code": "39300",
+      "population": 16618,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "393000101",
+          "label": "Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "393000102",
+          "label": "Préfecture",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "393000103",
+          "label": "Les Mouillères",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "393000104",
+          "label": "Zone Industrielle",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "393000105",
+          "label": "La Marjorie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "393000106",
+          "label": "Val du Solvan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "393000107",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "393000108",
+          "label": "Nord",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "393000101",
+            "393000104",
+            "393000107",
+            "393000108"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "393000102"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 8,
+        "operations": [
+          {
+            "id": "lons_le_saunier-393000101-rename-les-creux",
+            "type": "rename",
+            "sourceId": "393000101",
+            "expectedLabel": "Sud",
+            "label": "Les Creux",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "les Creux",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000008261589",
+                "coordinates": [
+                  5.54617223,
+                  46.66597876
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "lons_le_saunier-393000102-accept-prefecture",
+            "type": "accept",
+            "sourceId": "393000102",
+            "expectedLabel": "Préfecture",
+            "label": "Préfecture",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "lons_le_saunier-393000104-rename-europe",
+            "type": "rename",
+            "sourceId": "393000104",
+            "expectedLabel": "Zone Industrielle",
+            "label": "Europe",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Boulevard de l'Europe",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002340044264",
+                "coordinates": [
+                  5.57121028,
+                  46.68069562
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "lons_le_saunier-393000107-rename-le-puits-sale",
+            "type": "rename",
+            "sourceId": "393000107",
+            "expectedLabel": "Centre",
+            "label": "Le Puits Salé",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "le Puits Salé",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000008261498",
+                "coordinates": [
+                  5.55670023,
+                  46.67649573
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "lons_le_saunier-393000108-rename-les-pendants",
+            "type": "rename",
+            "sourceId": "393000108",
+            "expectedLabel": "Nord",
+            "label": "Les Pendants",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "les Pendants",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000008261490",
+                "coordinates": [
+                  5.56039226,
+                  46.68804296
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bois_d_arcy",
+      "name": "Bois-d'Arcy",
+      "code": "78073",
+      "population": 16586,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "780730103",
+          "label": "L'Église",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780730104",
+          "label": "Les Communes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780730105",
+          "label": "La Chapelle Saint-Jean",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780730106",
+          "label": "La Butte du Moulin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780730107",
+          "label": "Bois de la Couronne",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "780730108",
+          "label": "La Croix Blanche-Les Langots",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "expectedFeatureCount": 6,
+        "justification": "All official labels are distinct human place names; no safe or necessary grouping or rename was found."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "chateau_gontier_sur_mayenne",
+      "name": "Château-Gontier-sur-Mayenne",
+      "code": "53062",
+      "population": 16584,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "530620102",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "530620103",
+          "label": "Route d'Angers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "530620104",
+          "label": "Bazouges-Centre ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "530620105",
+          "label": "Bazouges-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "530620108",
+          "label": "Faubourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "530620201",
+          "label": "Azé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "530620202",
+          "label": "Saint-Fort",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "530620102",
+            "530620104",
+            "530620105",
+            "530620108"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "chateau_gontier_sur_mayenne-530620102-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "530620102",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "chateau_gontier_sur_mayenne-530620104-accept-bazouges-centre-ville",
+            "type": "accept",
+            "sourceId": "530620104",
+            "expectedLabel": "Bazouges-Centre ville",
+            "label": "Bazouges-Centre ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "chateau_gontier_sur_mayenne-530620105-accept-bazouges-ouest",
+            "type": "accept",
+            "sourceId": "530620105",
+            "expectedLabel": "Bazouges-Ouest",
+            "label": "Bazouges-Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "chateau_gontier_sur_mayenne-530620108-accept-faubourg",
+            "type": "accept",
+            "sourceId": "530620108",
+            "expectedLabel": "Faubourg",
+            "label": "Faubourg",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "chateaurenard",
+      "name": "Châteaurenard",
+      "code": "13027",
+      "population": 16545,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "130270101",
+          "label": "Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130270102",
+          "label": "Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130270103",
+          "label": "Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130270104",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130270105",
+          "label": "Périphérie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "130270106",
+          "label": "Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "130270101",
+            "130270102",
+            "130270103",
+            "130270104",
+            "130270105",
+            "130270106"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "chateaurenard-130270101-rename-clos-reginel",
+            "type": "rename",
+            "sourceId": "130270101",
+            "expectedLabel": "Ouest",
+            "label": "Clos Réginel",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Clos Réginel",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000040320643",
+                "coordinates": [
+                  4.83956111,
+                  43.88125766
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "chateaurenard-130270102-rename-le-grand-quartier",
+            "type": "rename",
+            "sourceId": "130270102",
+            "expectedLabel": "Nord",
+            "label": "Le Grand Quartier",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "le Grand Quartier",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000040320647",
+                "coordinates": [
+                  4.83732492,
+                  43.89940598
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "chateaurenard-130270103-rename-pierredon",
+            "type": "rename",
+            "sourceId": "130270103",
+            "expectedLabel": "Est",
+            "label": "Pierredon",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Pierredon",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000040320639",
+                "coordinates": [
+                  4.86525614,
+                  43.87604794
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "chateaurenard-130270104-rename-rue-des-remparts",
+            "type": "rename",
+            "sourceId": "130270104",
+            "expectedLabel": "Centre",
+            "label": "Rue des Remparts",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue des Remparts",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000224537990",
+                "coordinates": [
+                  4.85675302,
+                  43.88301537
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "chateaurenard-130270105-rename-le-jambo",
+            "type": "rename",
+            "sourceId": "130270105",
+            "expectedLabel": "Périphérie",
+            "label": "Le Jambo",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "le Jambo",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000312385309",
+                "coordinates": [
+                  4.85972697,
+                  43.88536641
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "chateaurenard-130270106-rename-la-pavillone",
+            "type": "rename",
+            "sourceId": "130270106",
+            "expectedLabel": "Sud",
+            "label": "La Pavillone",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Pavillone",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000040320640",
+                "coordinates": [
+                  4.84879261,
+                  43.87939856
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mauguio",
+      "name": "Mauguio",
+      "code": "34154",
+      "population": 16522,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "341540101",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341540102",
+          "label": "Quartier Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341540103",
+          "label": "Quartier nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341540104",
+          "label": "Quartier Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341540105",
+          "label": "Carnon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "341540106",
+          "label": "Périphérie Ouest et Sud",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "341540107",
+          "label": "Périphérie Nord et Est",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "341540102",
+            "341540103",
+            "341540104",
+            "341540106",
+            "341540107"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "341540101"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "mauguio-341540101-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "341540101",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "mauguio-341540102-rename-moulin-a-vent",
+            "type": "rename",
+            "sourceId": "341540102",
+            "expectedLabel": "Quartier Ouest",
+            "label": "Moulin à Vent",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Moulin à Vent",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000220855703",
+                "coordinates": [
+                  4.00024808,
+                  43.61335367
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "mauguio-341540103-rename-saint-michel",
+            "type": "rename",
+            "sourceId": "341540103",
+            "expectedLabel": "Quartier nord",
+            "label": "Saint-Michel",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Saint-Michel",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000220856261",
+                "coordinates": [
+                  4.00138378,
+                  43.61966914
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "mauguio-341540104-rename-capouliere",
+            "type": "rename",
+            "sourceId": "341540104",
+            "expectedLabel": "Quartier Est",
+            "label": "Capoulière",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Capoulière",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000220855857",
+                "coordinates": [
+                  4.0145067,
+                  43.61412045
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "mauguio-341540106-rename-vauguieres-le-bas",
+            "type": "rename",
+            "sourceId": "341540106",
+            "expectedLabel": "Périphérie Ouest et Sud",
+            "label": "Vauguières le Bas",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Vauguières le Bas",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000044486481",
+                "coordinates": [
+                  3.94447076,
+                  43.58486559
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "mauguio-341540107-rename-la-cadoule",
+            "type": "rename",
+            "sourceId": "341540107",
+            "expectedLabel": "Périphérie Nord et Est",
+            "label": "La Cadoule",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Cadoule",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000044485998",
+                "coordinates": [
+                  4.02201051,
+                  43.62682623
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "les_herbiers",
+      "name": "Les Herbiers",
+      "code": "85109",
+      "population": 16521,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "851090101",
+          "label": "Le Grand Fief",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "851090102",
+          "label": "La Métairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "851090103",
+          "label": "Le Rouet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "851090104",
+          "label": "Le Landreau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "851090105",
+          "label": "La Hutte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "851090106",
+          "label": "Le Donjon",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "expectedFeatureCount": 6,
+        "justification": "All official labels are distinct human place names; no safe or necessary grouping or rename was found."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "orsay",
+      "name": "Orsay",
+      "code": "91471",
+      "population": 16498,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "914710101",
+          "label": "Fond Mondétour",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914710102",
+          "label": "Haut Mondétour",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914710103",
+          "label": "Viaduc Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914710104",
+          "label": "Viaduc Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914710105",
+          "label": "Haut Guichet-Centre Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914710106",
+          "label": "Bas Guichet Centre-Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "914710101",
+            "914710102",
+            "914710103",
+            "914710104",
+            "914710105",
+            "914710106"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "orsay-914710101-accept-fond-mondetour",
+            "type": "accept",
+            "sourceId": "914710101",
+            "expectedLabel": "Fond Mondétour",
+            "label": "Fond Mondétour",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "orsay-914710102-accept-haut-mondetour",
+            "type": "accept",
+            "sourceId": "914710102",
+            "expectedLabel": "Haut Mondétour",
+            "label": "Haut Mondétour",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "orsay-914710103-accept-viaduc-est",
+            "type": "accept",
+            "sourceId": "914710103",
+            "expectedLabel": "Viaduc Est",
+            "label": "Viaduc Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "orsay-914710104-accept-viaduc-ouest",
+            "type": "accept",
+            "sourceId": "914710104",
+            "expectedLabel": "Viaduc Ouest",
+            "label": "Viaduc Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "orsay-914710105-accept-haut-guichet-centre-ouest",
+            "type": "accept",
+            "sourceId": "914710105",
+            "expectedLabel": "Haut Guichet-Centre Ouest",
+            "label": "Haut Guichet-Centre Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "orsay-914710106-accept-bas-guichet-centre-est",
+            "type": "accept",
+            "sourceId": "914710106",
+            "expectedLabel": "Bas Guichet Centre-Est",
+            "label": "Bas Guichet Centre-Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "pamiers",
+      "name": "Pamiers",
+      "code": "09225",
+      "population": 16473,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "092250101",
+          "label": "Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "092250102",
+          "label": "Jeu du Mail-Lestang-Saint-Jean",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "092250103",
+          "label": "Z.I. de Pic",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "092250104",
+          "label": "Las Oules à la Croix de Verniolle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "092250105",
+          "label": "Quartier Sud-Est du Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "092250106",
+          "label": "La Gloriette-Le Foulon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "092250107",
+          "label": "Le Terrefort-La Plaine",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "092250101",
+            "092250103",
+            "092250105"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 7,
+        "operations": [
+          {
+            "id": "pamiers-092250101-accept-centre-ancien",
+            "type": "accept",
+            "sourceId": "092250101",
+            "expectedLabel": "Centre Ancien",
+            "label": "Centre Ancien",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "pamiers-092250103-accept-z-i-de-pic",
+            "type": "accept",
+            "sourceId": "092250103",
+            "expectedLabel": "Z.I. de Pic",
+            "label": "Z.I. de Pic",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "pamiers-092250105-accept-quartier-sud-est-du-centre-ancien",
+            "type": "accept",
+            "sourceId": "092250105",
+            "expectedLabel": "Quartier Sud-Est du Centre Ancien",
+            "label": "Quartier Sud-Est du Centre Ancien",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "rumilly",
+      "name": "Rumilly",
+      "code": "74225",
+      "population": 16442,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "742250101",
+          "label": "Rumilly Centre Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742250102",
+          "label": "Rumilly Centre Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742250103",
+          "label": "Rumilly Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742250104",
+          "label": "Rumilly Nord Ouest",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "742250101",
+            "742250102",
+            "742250103",
+            "742250104"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 4,
+        "operations": [
+          {
+            "id": "rumilly-742250101-rename-les-grumillons",
+            "type": "rename",
+            "sourceId": "742250101",
+            "expectedLabel": "Rumilly Centre Nord",
+            "label": "Les Grumillons",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "les Grumillons",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000067385889",
+                "coordinates": [
+                  5.94268615,
+                  45.87459854
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "rumilly-742250102-rename-robesson",
+            "type": "rename",
+            "sourceId": "742250102",
+            "expectedLabel": "Rumilly Centre Sud",
+            "label": "Robesson",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Robesson",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000067386141",
+                "coordinates": [
+                  5.94583873,
+                  45.85822325
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "rumilly-742250103-rename-les-grangettes",
+            "type": "rename",
+            "sourceId": "742250103",
+            "expectedLabel": "Rumilly Sud",
+            "label": "Les Grangettes",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "les Grangettes",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000067386140",
+                "coordinates": [
+                  5.95876902,
+                  45.8598074
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "rumilly-742250104-rename-broise",
+            "type": "rename",
+            "sourceId": "742250104",
+            "expectedLabel": "Rumilly Nord Ouest",
+            "label": "Broise",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Broise",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000067385890",
+                "coordinates": [
+                  5.93014126,
+                  45.88228664
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mennecy",
+      "name": "Mennecy",
+      "code": "91386",
+      "population": 16433,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "913860101",
+          "label": "Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "913860102",
+          "label": "Buisson Haudart",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "913860103",
+          "label": "Mennecy Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "913860104",
+          "label": "La Verville Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "913860105",
+          "label": "La Verville Ouest",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "913860101",
+            "913860103",
+            "913860104",
+            "913860105"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 5,
+        "operations": [
+          {
+            "id": "mennecy-913860101-accept-centre-ville",
+            "type": "accept",
+            "sourceId": "913860101",
+            "expectedLabel": "Centre Ville",
+            "label": "Centre Ville",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "mennecy-913860103-accept-mennecy-sud",
+            "type": "accept",
+            "sourceId": "913860103",
+            "expectedLabel": "Mennecy Sud",
+            "label": "Mennecy Sud",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "mennecy-913860104-accept-la-verville-est",
+            "type": "accept",
+            "sourceId": "913860104",
+            "expectedLabel": "La Verville Est",
+            "label": "La Verville Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "mennecy-913860105-accept-la-verville-ouest",
+            "type": "accept",
+            "sourceId": "913860105",
+            "expectedLabel": "La Verville Ouest",
+            "label": "La Verville Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "coulommiers",
+      "name": "Coulommiers",
+      "code": "77131",
+      "population": 16374,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "771310101",
+          "label": "Ville Haute Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771310102",
+          "label": "Ville Haute Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771310201",
+          "label": "Centre Ville Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771310202",
+          "label": "Centre Ville Centre et Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771310301",
+          "label": "Chemin de Fer",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "771310101",
+            "771310102",
+            "771310201",
+            "771310202",
+            "771310301"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14"
+        ],
+        "expectedFeatureCount": 5,
+        "operations": [
+          {
+            "id": "coulommiers-771310101-accept-ville-haute-nord",
+            "type": "accept",
+            "sourceId": "771310101",
+            "expectedLabel": "Ville Haute Nord",
+            "label": "Ville Haute Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "coulommiers-771310102-accept-ville-haute-sud",
+            "type": "accept",
+            "sourceId": "771310102",
+            "expectedLabel": "Ville Haute Sud",
+            "label": "Ville Haute Sud",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "coulommiers-771310201-accept-centre-ville-sud",
+            "type": "accept",
+            "sourceId": "771310201",
+            "expectedLabel": "Centre Ville Sud",
+            "label": "Centre Ville Sud",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "coulommiers-771310202-accept-centre-ville-centre-et-nord",
+            "type": "accept",
+            "sourceId": "771310202",
+            "expectedLabel": "Centre Ville Centre et Nord",
+            "label": "Centre Ville Centre et Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "coulommiers-771310301-accept-chemin-de-fer",
+            "type": "accept",
+            "sourceId": "771310301",
+            "expectedLabel": "Chemin de Fer",
+            "label": "Chemin de Fer",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "landerneau",
+      "name": "Landerneau",
+      "code": "29103",
+      "population": 16363,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "291030101",
+          "label": "Cimetière Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291030102",
+          "label": "La Garenne-Centre Ville Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291030103",
+          "label": "Habitat Épars 1",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291030104",
+          "label": "Keralan-Zone Industrielle du Bois Noir",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291030105",
+          "label": "Habitat Épars 2",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291030106",
+          "label": "Centre Ville Ouest",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "code": "ambiguous_directional_operational_or_technical_label",
+          "severity": "error",
+          "sourceIds": [
+            "291030103",
+            "291030105"
+          ],
+          "resolution": "strict_contained_official_toponym_rename"
+        },
+        {
+          "code": "ambiguous_but_real_official_human_label",
+          "severity": "review",
+          "sourceIds": [
+            "291030101",
+            "291030102",
+            "291030104",
+            "291030106"
+          ],
+          "resolution": "exact_id_accept_human_name"
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-editorial-review-wave-8-2026-07-14",
+          "ign-bdtopo-habitation-toponyms-2026"
+        ],
+        "expectedFeatureCount": 6,
+        "operations": [
+          {
+            "id": "landerneau-291030101-accept-cimetiere-nord",
+            "type": "accept",
+            "sourceId": "291030101",
+            "expectedLabel": "Cimetière Nord",
+            "label": "Cimetière Nord",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "landerneau-291030102-accept-la-garenne-centre-ville-est",
+            "type": "accept",
+            "sourceId": "291030102",
+            "expectedLabel": "La Garenne-Centre Ville Est",
+            "label": "La Garenne-Centre Ville Est",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "landerneau-291030103-rename-penhoat",
+            "type": "rename",
+            "sourceId": "291030103",
+            "expectedLabel": "Habitat Épars 1",
+            "label": "Penhoat",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Penhoat",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000023296494",
+                "coordinates": [
+                  -4.2375542,
+                  48.44283438
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "landerneau-291030104-accept-keralan-zone-industrielle-du-bois-noir",
+            "type": "accept",
+            "sourceId": "291030104",
+            "expectedLabel": "Keralan-Zone Industrielle du Bois Noir",
+            "label": "Keralan-Zone Industrielle du Bois Noir",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          },
+          {
+            "id": "landerneau-291030105-rename-kergreis",
+            "type": "rename",
+            "sourceId": "291030105",
+            "expectedLabel": "Habitat Épars 2",
+            "label": "Kergreis",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Kergreis",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000023296121",
+                "coordinates": [
+                  -4.28169183,
+                  48.44934761
+                ],
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "Official IGN BD TOPO evidence is strictly inside this exact IRIS. The human label is assigned 1:1 with no nearest-point inference and no invented geometry."
+          },
+          {
+            "id": "landerneau-291030106-accept-centre-ville-ouest",
+            "type": "accept",
+            "sourceId": "291030106",
+            "expectedLabel": "Centre Ville Ouest",
+            "label": "Centre Ville Ouest",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "guide-alpha-editorial-review-wave-8-2026-07-14"
+            ],
+            "rationale": "Exact official IGN/INSEE label retained by exact-ID editorial review as a real human local name; no replacement or inferred geometry is introduced.",
+            "review": {
+              "id": "guide-alpha-editorial-review-wave-8-2026-07-14",
+              "decision": "accept_exact_official_human_label",
+              "reviewedAt": "2026-07-14"
+            }
+          }
+        ],
+        "justification": "Every ambiguous, numbered, directional or operational source is resolved by exhaustive exact IDs: human official names are explicitly accepted, renames use strictly contained IGN evidence, and merges require a connected graph plus one semantic family."
+      },
+      "status": "ready"
+    }
+  ]
+}

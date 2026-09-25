@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "catalogPurpose": "Local media used by the La Scene product and investor demo.",
+  "scope": "src/features/shorts and src/features/scene",
+  "checkedOn": "2026-08-08",
+  "externalSourceUrlsIncluded": false,
+  "defaultSource": "internal/generated",
+  "defaultLicenseStatus": "unverified-no-repository-evidence",
+  "defaultUsageStatus": "prototype-only-not-cleared-for-production",
+  "statusNote": "These local files are suitable for the product prototype. No production publication, linear TV broadcast or clip generation is approved until a rights grant and source evidence are recorded through mediaGovernance.",
+  "imageCatalogs": [
+    {
+      "repositoryPath": "public/images/shorts/catalog",
+      "source": "internal/generated",
+      "usageStatus": "prototype-only-not-cleared-for-production"
+    },
+    {
+      "repositoryPath": "public/images/shorts/catalog-v2",
+      "source": "internal/generated",
+      "usageStatus": "prototype-only-not-cleared-for-production"
+    },
+    {
+      "repositoryPath": "public/images/shorts/catalog-v3",
+      "source": "internal/generated",
+      "usageStatus": "prototype-only-not-cleared-for-production"
+    },
+    {
+      "repositoryPath": "public/images/shorts/community",
+      "source": "internal/generated",
+      "usageStatus": "prototype-only-not-cleared-for-production"
+    }
+  ],
+  "items": [
+    {
+      "id": "scene-demo-landscape-dj",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/landscape-dj.mp4",
+      "repositoryPath": "public/media/shorts-demo/landscape-dj.mp4",
+      "bytes": 1065016,
+      "sha256": "ADBD58252779582AF036EAFF3B1046E7E619C22B612A31A0EE0BFE6C6AC71E8C",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-demo-landscape-guitar",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/landscape-guitar.mp4",
+      "repositoryPath": "public/media/shorts-demo/landscape-guitar.mp4",
+      "bytes": 964793,
+      "sha256": "129B35701AA0610B987FE72C6634905156318A64633CF40E5AA03B2DACBB8E34",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-demo-landscape-roundtable",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/landscape-roundtable.mp4",
+      "repositoryPath": "public/media/shorts-demo/landscape-roundtable.mp4",
+      "bytes": 850558,
+      "sha256": "86F4076A50BD13754EC0316E9A6A8708767B85E59AD303F7EADAF5AC8CC4545A",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-demo-portrait-producer",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/portrait-producer.mp4",
+      "repositoryPath": "public/media/shorts-demo/portrait-producer.mp4",
+      "bytes": 1409355,
+      "sha256": "4AA299FBFACDCA9943C200E511A31BE2E9A892CC994689811FD87CD4A70F46B9",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-demo-portrait-studio-rap",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/portrait-studio-rap.mp4",
+      "repositoryPath": "public/media/shorts-demo/portrait-studio-rap.mp4",
+      "bytes": 2628427,
+      "sha256": "85A8AB0A8A02C8AE5CEDCE59D03A70754614714C0AA01B21A7319A88A8F4EC68",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-demo-portrait-vocal-session",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/portrait-vocal-session.mp4",
+      "repositoryPath": "public/media/shorts-demo/portrait-vocal-session.mp4",
+      "bytes": 1508790,
+      "sha256": "30675055E15EC7E481B80A8599203900669EE83E47BD52001F5AA612F9D0C883",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-demo-audio-vocal-session",
+      "mediaType": "audio",
+      "mimeType": "audio/mpeg",
+      "publicPath": "/media/profile-demo/vocal-session-audio.mp3",
+      "repositoryPath": "public/media/profile-demo/vocal-session-audio.mp3",
+      "bytes": 241519,
+      "sha256": "60D5FBCE449E80813C531CF66271045E9BC55F49072A2CA70C1DE4D035D2A86C",
+      "source": "internal/generated",
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    }
+  ]
+}

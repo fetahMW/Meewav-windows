@@ -1,0 +1,103 @@
+// Optional isolated Postgres check. PGLITE_MODULE_PATH can point to a temporary
+// installation of @electric-sql/pglite; no deployed database is accessed.
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { resolve, isAbsolute } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import ts from "typescript";
+
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
+const pglitePath = process.env.PGLITE_MODULE_PATH ?? "@electric-sql/pglite";
+const { PGlite } = await import(isAbsolute(pglitePath) ? pathToFileURL(pglitePath).href : pglitePath);
+const source = await readFile(resolve(root, "src/features/rooms/place/placeConversationTools.domain.ts"), "utf8");
+const js = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 } }).outputText;
+const { createPlaceConversationState, reducePlaceConversation } = await import(`data:text/javascript;base64,${Buffer.from(js).toString("base64")}`);
+const db = new PGlite();
+const hostId = "51000000-0000-4000-8000-000000000001";
+const guestId = "51000000-0000-4000-8000-000000000002";
+const otherId = "51000000-0000-4000-8000-000000000003";
+const outsiderId = "51000000-0000-4000-8000-000000000004";
+const roomId = "61000000-0000-4000-8000-000000000001";
+const privateRoomId = "61000000-0000-4000-8000-000000000002";
+const clashId = "71000000-0000-4000-8000-000000000001";
+const challengeId = "71000000-0000-4000-8000-000000000002";
+const people = [hostId, guestId, otherId];
+let checked = 0;
+
+try {
+  await db.exec(`
+    create role anon; create role authenticated; create role service_role;
+    create schema auth;
+    create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+    grant usage on schema auth to anon,authenticated;
+    create table rooms_v2(id uuid primary key,host_id uuid,status text,visibility text default 'public');
+    create table room_bans_v2(room_id uuid,user_id uuid);
+    create table room_participants_v2(room_id uuid,user_id uuid,left_at timestamptz);
+    alter table rooms_v2 enable row level security;
+    create policy readable_rooms on rooms_v2 for select to anon,authenticated using(visibility = 'public' or host_id = auth.uid());
+    grant select on rooms_v2,room_bans_v2 to anon,authenticated;
+  `);
+  await db.exec(await readFile(resolve(root, "supabase/migrations/20260905150000_rooms_place_conversation_tools_v1.sql"), "utf8"));
+  let state = createPlaceConversationState();
+  const step = async (command, actorId = hostId, now = 1000) => {
+    const next = reducePlaceConversation(state, command, { id: actorId, isHost: actorId === hostId, canEngage: true }, people, now);
+    const { rows } = await db.query("select public.rooms_reduce_place_tools_v1($1::jsonb,$2::jsonb,$3,$4,$5::text[],$6::bigint) as state", [state, command, actorId, actorId === hostId, people, now]);
+    assert.deepEqual(rows[0].state, next, command.type);
+    state = next; checked += 1;
+  };
+  await step({ type: "floor.configure", prompt: "  Votre meilleur souvenir ?  ", seconds: 90 });
+  await step({ type: "floor.join", personId: guestId }, guestId);
+  await step({ type: "floor.join", personId: guestId }, guestId);
+  await step({ type: "floor.join", personId: otherId });
+  await step({ type: "floor.next" });
+  await step({ type: "floor.pause" }, hostId, 30100);
+  await step({ type: "floor.resume" }, hostId, 100000);
+  await step({ type: "floor.next" }, hostId, 130000);
+  await step({ type: "floor.leave", personId: otherId }, otherId);
+  await step({ type: "floor.end" });
+  await step({ type: "floor.open", open: false });
+  await step({ type: "floor.open", open: true });
+  await step({ type: "clash.invite", id: clashId, title: "Talent ou travail ?", left: hostId, right: guestId, seconds: 30, rounds: 3 });
+  await assert.rejects(db.query("select rooms_reduce_place_tools_v1($1::jsonb,$2::jsonb,$3,true,$4::text[],1000)", [state, { type: "clash.start" }, hostId, people]), /consent_required/); checked += 1;
+  await step({ type: "clash.accept" });
+  await step({ type: "clash.accept" });
+  await step({ type: "clash.accept" }, guestId);
+  await step({ type: "clash.start" });
+  await step({ type: "clash.pause" }, hostId, 12345);
+  await step({ type: "clash.resume" }, hostId, 50000);
+  for (let i = 0; i < 6; i += 1) await step({ type: "clash.next" }, hostId, 60000 + i * 30000);
+  await step({ type: "clash.invite", id: clashId, title: "Un autre clash", left: hostId, right: guestId, seconds: 60, rounds: 1 });
+  await step({ type: "clash.decline" }, guestId);
+  await step({ type: "challenge.create", id: challengeId, title: "Une histoire en une minute", target: guestId, seconds: 60 });
+  await step({ type: "challenge.accept", id: challengeId }, guestId);
+  await step({ type: "challenge.accept", id: challengeId }, guestId);
+  await step({ type: "challenge.start", id: challengeId });
+  await step({ type: "challenge.complete", id: challengeId }, guestId);
+  await step({ type: "challenge.complete", id: challengeId }, guestId);
+  await step({ type: "challenge.validate", id: challengeId });
+  await step({ type: "challenge.create", id: clashId, title: "Un défi collectif", target: null, seconds: 30 }, guestId);
+  await step({ type: "challenge.cancel", id: clashId });
+  await assert.rejects(db.query("select rooms_reduce_place_tools_v1($1::jsonb,$2::jsonb,$3,false,$4::text[],1000)", [state, { type: "floor.open", open: false }, guestId, people]), /host_required/); checked += 1;
+
+  await db.query("insert into rooms_v2(id,host_id,status,visibility) values($1,$2,'live','public'),($3,$2,'live','private')", [roomId,hostId,privateRoomId]);
+  await db.query("insert into room_participants_v2(room_id,user_id) values($1,$2),($1,$3)", [roomId,guestId,otherId]);
+  await db.exec("set role authenticated");
+  const asActor = async (id) => { await db.query("select set_config('request.jwt.claim.sub',$1,false)", [id]); };
+  await asActor(hostId);
+  const initial = await db.query("select rooms_get_place_tools_v1($1) as state", [roomId]);
+  assert.equal(initial.rows[0].state.revision, 0);
+  await db.query("select rooms_apply_place_tools_v1($1,0,$2::jsonb)", [roomId,{ type: "floor.join",personId:guestId }]); checked += 1;
+  await assert.rejects(db.query("select rooms_apply_place_tools_v1($1,0,$2::jsonb)", [roomId,{ type: "floor.next" }]), /revision_conflict/); checked += 1;
+  await asActor(guestId);
+  await assert.rejects(db.query("select rooms_apply_place_tools_v1($1,1,$2::jsonb)", [roomId,{ type: "floor.next" }]), /host_required/); checked += 1;
+  await assert.rejects(db.query("update room_place_tools_v1 set state = '{}' where room_id = $1", [roomId]), /permission denied/); checked += 1;
+  await asActor(outsiderId);
+  assert.equal((await db.query("select rooms_get_place_tools_v1($1) as state", [privateRoomId])).rows[0].state, null); checked += 1;
+  await assert.rejects(db.query("select rooms_apply_place_tools_v1($1,1,$2::jsonb)", [roomId,{ type:"floor.join",personId:outsiderId }]), /membership_required/); checked += 1;
+  await db.exec("reset role");
+  await db.query("insert into room_bans_v2(room_id,user_id) values($1,$2)", [roomId,guestId]);
+  await db.exec("set role authenticated"); await asActor(guestId);
+  await assert.rejects(db.query("select rooms_apply_place_tools_v1($1,1,$2::jsonb)", [roomId,{ type:"floor.join",personId:guestId }]), /access_revoked/); checked += 1;
+  assert.equal((await db.query("select rooms_get_place_tools_v1($1) as state", [roomId])).rows[0].state, null); checked += 1;
+  console.log(`${checked} Postgres checks passed: transition parity, personal consent, roles, membership, revisions, private-room visibility and bans.`);
+} finally { await db.close(); }

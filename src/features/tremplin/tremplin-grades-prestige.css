@@ -1,0 +1,130 @@
+/* Proportions and lacquer lighting matched to the supplied prestige reference. */
+:is(#niveaux, #tremplin-grades).tremplin-gateway__levels {
+  container-type: inline-size; padding: 30px 28px 25px; border-radius: 26px;
+  background: radial-gradient(ellipse at 100% 0,#25123150,transparent 50%),linear-gradient(120deg,#0a090c,#030304 48%,#09070e);
+  border: 1px solid #776a855c;
+  box-shadow: inset 0 1px 2px #ffffff47,inset -1px -1px 2px #9a5ae676,0 15px 34px #000a;
+}
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__progression-header { position: relative; display: block; min-height: 22cqw; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading { position: relative; z-index: 2; width: 54%; padding: 0 15px; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-kicker { gap: 10px; font-size: .77cqw; letter-spacing: .28em; font-weight: 600; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-kicker i { width: 24px; height: 24px; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 { margin: 18px 0 15px; font-size: 3.45cqw; line-height: 1.06; font-weight: 720; letter-spacing: -.047em; text-wrap: nowrap; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 > span { background-image: linear-gradient(110deg,#f6cbea,#bd73e6 57%,#9c5fef); }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading > p { max-width: 46cqw; width: 100%; font-size: 1.12cqw; line-height: 1.43; color: #bbb7c2; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-clarification { margin: 7px 0 10px; font-size: .86cqw; line-height: 1.4; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-recognition { font-size: .94cqw !important; min-height: 34px; font-weight: 500; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-art { position: absolute; z-index: 0; top: -29px; right: -26px; width: 55%; min-height: 0; height: 25.3cqw; display: block; perspective: none; background-image: url('/images/tremplin/tremplin-grade-art-reference-v1.png'); background-size: 206.42% auto; background-position: 96% -1.2cqw; background-repeat: no-repeat; mask-image: linear-gradient(90deg,transparent,#000 15%),linear-gradient(0deg,transparent,#000 11%); mask-composite: intersect; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-art::before,
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-art::after { display: none; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track { gap: 1.2cqw; margin-top: 1.45cqw; padding: 0 0 1.8cqw; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) {
+  display: grid; grid-template-columns: minmax(0,1fr); justify-content: stretch; grid-template-rows: 19px 11.1cqw 26px 38px 29px; justify-items: center; align-content: start; align-items: center;
+  height: 21.1cqw; min-height: 0; padding: 15px 9px 10px; border-radius: 20px; border: 1px solid color-mix(in srgb,var(--grade-soft) 37%,#242228);
+  background: radial-gradient(ellipse 80% 50% at -9% -7%,#ffffff33,transparent 70%),radial-gradient(ellipse 100% 42% at 80% 113%,color-mix(in srgb,var(--grade-light) 16%,transparent),transparent 74%),linear-gradient(150deg,#111114,#030304 42%,#09090c);
+  box-shadow: inset 0 1px 1px #ffffffb0,inset 1px 0 2px #ffffff21,inset 0 -1px 1px color-mix(in srgb,var(--grade-soft) 68%,transparent),0 3px 0 #010102,0 4px 0 #9b91a037,0 9px 10px #000a;
+}
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card::before { inset: 5px; border: 1px solid #ffffff20; border-radius: 15px; background: radial-gradient(ellipse 30px 4px at 84% -1px,#fffffffa,transparent 85%),radial-gradient(ellipse 75px 14px at 85% -3px,color-mix(in srgb,var(--grade-soft) 80%,transparent),transparent 75%),linear-gradient(135deg,#ffffff12,transparent 15% 80%,#ffffff05); box-shadow: inset 1px 1px 1px #ffffff17,inset -1px -1px 2px #000; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card::after { left: 7%; right: 7%; bottom: -18px; height: 11px; background: radial-gradient(ellipse at 60% 30%,color-mix(in srgb,var(--grade-soft) 45%,transparent),transparent 66%); filter: blur(5px); opacity: .65; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card.is-active { border-color: var(--grade-soft); transform: translateY(-4px); background: radial-gradient(ellipse at 50% 3%,color-mix(in srgb,var(--grade-light) 10%,transparent),transparent 56%),linear-gradient(160deg,#171219,#070509 63%,#160d17); box-shadow: inset 0 1px 2px #fce5fbd9,inset 0 -2px 3px color-mix(in srgb,var(--grade-light) 72%,transparent),inset 2px 0 3px #ffffff25,0 4px 0 #100a12,0 5px 1px var(--grade-light),0 0 17px color-mix(in srgb,var(--grade-light) 30%,transparent); }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card.is-active::after { bottom: -21px; height: 15px; opacity: 1; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-public-home__level-badge,
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card.is-active .tremplin-public-home__level-badge { --mw-grade-size: 10.1cqw !important; margin: 0; width: 10.1cqw; height: 10.1cqw; filter: saturate(.8) drop-shadow(0 2px 5px #0008); }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card > .tremplin-public-home__level-stage { order: 0; margin: 0; font-size: .94cqw; font-weight: 450; color: #bcb8c6; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card.is-active > .tremplin-public-home__level-stage { color: var(--grade-soft); }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card > strong { margin: 0; font-size: 1.26cqw; line-height: 1.2; font-weight: 650; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-description { max-width: 18ch; min-height: 0; margin: 2px 0 0; color: #aaa4b8; font-size: .92cqw; line-height: 1.4; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { min-height: 27px; margin: 5px 0 0; padding: 5px 3px; font-size: .63cqw; border-color: color-mix(in srgb,var(--grade-soft) 90%,transparent); background: linear-gradient(160deg,color-mix(in srgb,var(--grade-light) 48%,#37132e),#1a0c18 70%); box-shadow: inset 0 1px 1px #fff6,0 0 11px color-mix(in srgb,var(--grade-light) 22%,transparent); }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note { min-height: 62px; margin: 13px 10px 0; width: calc(100% - 20px); grid-template-columns: 38px minmax(0,1fr) auto; padding: 11px 20px; background: linear-gradient(140deg,#121116,#050407); border-color: #78658362; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note > i { width: 36px; height: 36px; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note p { font-size: .91cqw; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note p strong { font-size: 1cqw; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-principles { font-size: .58cqw; }
+@media (max-width: 1100px) {
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading { width: 62%; padding: 0; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 { font-size: 4cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading > p { font-size: 1.5cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-kicker { font-size: 1.1cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-clarification { font-size: 1.1cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-recognition { font-size: 1.3cqw !important; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track { gap: 22px 16px; margin-top: 22px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { height: 290px; grid-template-rows: 19px 145px 26px 38px 29px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-public-home__level-badge,
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card.is-active .tremplin-public-home__level-badge { --mw-grade-size: 138px !important; width: 138px; height: 138px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card > .tremplin-public-home__level-stage { font-size: 12px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card > strong { font-size: 17px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-description { font-size: 12px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { font-size: 9px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note p { font-size: 12px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note p strong { font-size: 13px; }
+}
+@media (max-width: 700px) {
+  :is(#niveaux, #tremplin-grades).tremplin-gateway__levels { padding: 24px 16px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading { width: 100%; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-art { display: none; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-kicker { font-size: 9px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 { font-size: 6.1cqw; text-wrap: wrap; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading > p { font-size: 13px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-clarification { font-size: 11px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-recognition { font-size: 12px !important; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { height: 270px; padding: 13px 5px; grid-template-rows: 19px 123px 25px 39px 26px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-public-home__level-badge,
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card.is-active .tremplin-public-home__level-badge { --mw-grade-size: min(28cqw,120px) !important; width: min(28cqw,120px); height: min(28cqw,120px); }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { font-size: 7px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-note { margin-inline: 0; width: 100%; grid-template-columns: 36px minmax(0,1fr); padding: 12px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-principles { display: none; }
+}
+
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__prestige-bridges { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__prestige-bridges > i { position: absolute; top: 8.6cqw; left: calc(var(--bridge-index) * ((100% + 1.2cqw) / 6) - .6cqw); width: 15px; height: 6px; transform: translateX(-50%); border-radius: 50%; background: #ebd3ff; box-shadow: 0 0 5px 2px #b372ff,0 0 12px #904ada; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card::before { background: radial-gradient(ellipse 24px 4px at 84% -1px,#fff,transparent 85%),radial-gradient(ellipse 65px 12px at 85% -3px,color-mix(in srgb,var(--grade-soft) 90%,transparent),transparent 75%),radial-gradient(ellipse 3px 35px at -1px 18%,#ffffff90,transparent),linear-gradient(135deg,#ffffff08,transparent 15% 80%,#ffffff05); }
+@media (max-width:1100px) { :is(#niveaux, #tremplin-grades) .tremplin-gateway__prestige-bridges { display:none; } :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading > p { max-width:100%; } }
+/* Final light pass: narrow metal rims instead of a uniform grey bevel. */
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 { font-size: 3.8cqw; letter-spacing: -.05em; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card > strong { font-size: 1.4cqw; font-weight: 660; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { grid-template-rows: 19px 11.1cqw 26px 36px 31px; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { min-height: 30px; font-size: .72cqw; margin-top: 3px; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card::before {
+  inset: 4px; padding: 1.5px; border: 0; border-radius: 16px;
+  background: radial-gradient(ellipse 38px 9px at 87% 0,#fff,transparent 85%),radial-gradient(ellipse 5px 54px at 0 15%,#fff,transparent 80%),linear-gradient(138deg,#ffffffbd 0%,#ffffff24 13%,#242329 28%,color-mix(in srgb,var(--grade-soft) 80%,#fff) 47%,#201b27 56%,#ffffff22 83%,var(--grade-soft));
+  mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); mask-composite: exclude;
+  box-shadow: none;
+}
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card.is-active { box-shadow: inset 0 1px 2px #ffeafd,inset 0 -2px 4px color-mix(in srgb,var(--grade-light) 90%,transparent),inset 2px 0 3px #ffffff35,0 4px 0 #130a13,0 5px 2px var(--grade-soft),0 0 18px color-mix(in srgb,var(--grade-light) 44%,transparent); }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card::after { bottom: -22px; height: 18px; filter: blur(6px); opacity: .88; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card.is-active::after { opacity: 1; }
+@media (max-width:1100px) {
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 { font-size:4cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track .tremplin-gateway__grade-card > strong { font-size:18px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { grid-template-rows:19px 145px 26px 36px 31px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { font-size:9px; }
+}
+@media (max-width:700px) {
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__levels-heading h2 { font-size:6.1cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { grid-template-rows:19px 123px 25px 37px 29px; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { font-size:7px; min-height:27px; }
+}
+/* The reference's narrow lacquer rim is decorative; all card content remains native. */
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card:nth-of-type(1) { --prestige-frame-x: 3.75%; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card:nth-of-type(2) { --prestige-frame-x: 22.15%; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card:nth-of-type(3) { --prestige-frame-x: 40.55%; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card:nth-of-type(4) { --prestige-frame-x: 58.75%; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card:nth-of-type(5) { --prestige-frame-x: 77.35%; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card:nth-of-type(6) { --prestige-frame-x: 95.95%; }
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card::before {
+  inset: 0; padding: 10px 8px 9px; border-radius: inherit;
+  background-image: url('/images/tremplin/tremplin-grade-art-reference-v1.png');
+  background-size: 696.67% 281.74%;
+  background-position: var(--prestige-frame-x) 69.3%;
+  background-repeat: no-repeat;
+  mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); mask-composite: exclude;
+}
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { border-color: #82758e4d; box-shadow: inset 0 1px 2px #ffffff65,inset 0 -1px 2px color-mix(in srgb,var(--grade-soft) 50%,transparent),0 3px 0 #010102,0 4px 0 #9b91a037,0 9px 10px #000a; }
+:is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card.is-active { border-color: var(--grade-soft); box-shadow: inset 0 1px 2px #ffeafd,inset 0 -2px 4px color-mix(in srgb,var(--grade-light) 90%,transparent),0 4px 0 #130a13,0 5px 2px var(--grade-soft),0 0 18px color-mix(in srgb,var(--grade-light) 44%,transparent); }
+
+:is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-card { position: relative; cursor: default; text-align: center; color: #f6f4f8; }
+/* Keep every row inside the card when the shared section is narrower than the viewport. */
+@media (min-width: 1101px) {
+  :is(#niveaux, #tremplin-grades) .tremplin-public-home__level-track > .tremplin-gateway__grade-card:nth-of-type(n) { grid-template-rows: 1.5cqw 11.1cqw 2cqw 2.7cqw 2.4cqw; padding: .8cqw .7cqw .5cqw; }
+  :is(#niveaux, #tremplin-grades) .tremplin-gateway__grade-caption { min-height: 0; height: 2.1cqw; margin: 0; padding: .4cqw .2cqw; }
+}

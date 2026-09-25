@@ -1,0 +1,95 @@
+.scene-comments-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: flex;
+  justify-content: end;
+}
+
+.scene-comments-layer__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(2, 2, 6, .46);
+  backdrop-filter: blur(2px);
+}
+
+.scene-comments {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  width: min(470px, 100%);
+  height: 100%;
+  overflow: hidden;
+  border-left: 1px solid rgba(193, 143, 255, .22);
+  background: linear-gradient(160deg, rgba(24, 16, 40, .98), rgba(7, 6, 13, .99) 38%);
+  box-shadow: -28px 0 80px rgba(0, 0, 0, .42);
+  color: rgba(255, 255, 255, .96);
+  animation: scene-comments-enter 240ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes scene-comments-enter { from { opacity: 0; transform: translateX(24px); } }
+
+.scene-comments > header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid rgba(193, 143, 255, .12);
+}
+
+.scene-comments > header > div { min-width: 0; }
+.scene-comments > header span { color: #c991ff; font-size: 9px; font-weight: 850; letter-spacing: .15em; }
+.scene-comments > header h2 { margin: 4px 0 3px; font-size: 24px; letter-spacing: -.035em; }
+.scene-comments > header p { overflow: hidden; margin: 0; color: rgba(234, 224, 245, .58); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.scene-comments > header > button { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(193, 143, 255, .15); border-radius: 12px; background: rgba(255, 255, 255, .03); color: white; }
+.scene-comments > header > button svg { width: 18px; }
+
+.scene-comments > form { display: grid; gap: 9px; padding: 16px 22px; border-bottom: 1px solid rgba(193, 143, 255, .12); }
+.scene-comments > form > div { display: flex; align-items: center; gap: 4px; color: rgba(237, 226, 248, .62); font-size: 10px; }
+.scene-comments > form > div button { margin-left: auto; border: 0; background: transparent; color: #c995ff; font-size: 10px; }
+.scene-comments textarea,
+.scene-comments .mw-emoticon-composer { width: 100%; min-height: 74px; resize: vertical; border: 1px solid rgba(193, 143, 255, .17); border-radius: 13px; outline: 0; background: rgba(4, 3, 8, .48); color: white; font: inherit; font-size: 12px; line-height: 1.5; padding: 12px; }
+.scene-comments textarea:focus,
+.scene-comments .mw-emoticon-composer:focus { border-color: rgba(193, 128, 255, .62); box-shadow: 0 0 0 3px rgba(157, 90, 235, .12); }
+.scene-comments > form > footer { display: flex; align-items: center; justify-content: space-between; }
+.scene-comments > form > footer > div { display: flex; align-items: center; gap: 7px; }
+.scene-comments > form small { color: rgba(232, 221, 244, .42); font-size: 9px; }
+.scene-comments > form footer > div > button { display: inline-flex; min-height: 40px; align-items: center; gap: 7px; padding: 0 14px; border: 0; border-radius: 11px; background: #955cf0; color: white; font-weight: 760; }
+.scene-comments > form footer > div > button:disabled { opacity: .38; }
+.scene-comments > form footer > div > button svg { width: 15px; }
+.scene-comments > form footer .mw-emoticon-picker__trigger { width: 40px; height: 40px; border-radius: 11px; }
+
+.scene-comments__list { overflow-y: auto; padding: 8px 22px 30px; scrollbar-color: rgba(172, 105, 251, .55) transparent; scrollbar-width: thin; }
+.scene-comment { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 11px; padding: 16px 0; border-bottom: 1px solid rgba(193, 143, 255, .09); }
+.scene-comment > img,
+.scene-comment__replies img { overflow: hidden; border-radius: 50%; object-fit: cover; }
+.scene-comment > div { min-width: 0; }
+.scene-comment header { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.scene-comment header strong { font-size: 11px; }
+.scene-comment header span,
+.scene-comment header em { padding: 2px 6px; border-radius: 999px; background: rgba(181, 107, 255, .13); color: #d5adff; font-size: 8px; font-style: normal; font-weight: 750; }
+.scene-comment header time { color: rgba(231, 220, 243, .44); font-size: 9px; }
+.scene-comment header em { display: inline-flex; align-items: center; gap: 3px; background: rgba(241, 197, 101, .1); color: #efd087; }
+.scene-comment header em svg { width: 9px; }
+.scene-comment > div > p { margin: 7px 0 9px; color: rgba(247, 242, 251, .82); font-size: 11px; line-height: 1.55; }
+.scene-comment[data-reported] > div > p { color: rgba(239, 199, 207, .65); font-style: italic; }
+.scene-comment footer { display: flex; flex-wrap: wrap; gap: 11px; }
+.scene-comment footer button { display: inline-flex; min-height: 30px; align-items: center; gap: 4px; padding: 0; border: 0; background: transparent; color: rgba(230, 218, 243, .51); font-size: 9px; }
+.scene-comment footer button[aria-pressed="true"] { color: #d39aff; }
+.scene-comment footer button svg { width: 12px; }
+.scene-comment__replies { display: grid; gap: 8px; margin-top: 12px; padding-left: 3px; }
+.scene-comment__replies > div { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; }
+.scene-comment__replies p { margin: 0; color: rgba(240, 231, 248, .7); font-size: 10px; line-height: 1.45; }
+.scene-comment__replies strong { display: inline-block; margin-right: 5px; color: white; }
+.scene-comment__replies span { display: inline-block; margin-right: 5px; color: #c995ff; font-size: 8px; }
+
+@media (max-width: 560px) {
+  .scene-comments { width: 100%; height: min(86dvh, 760px); margin-top: auto; border-top: 1px solid rgba(193, 143, 255, .22); border-left: 0; border-radius: 22px 22px 0 0; animation-name: scene-comments-enter-mobile; }
+  @keyframes scene-comments-enter-mobile { from { opacity: 0; transform: translateY(28px); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-comments { animation: none; }
+}

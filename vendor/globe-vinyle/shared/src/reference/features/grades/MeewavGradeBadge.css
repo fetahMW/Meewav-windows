@@ -1,0 +1,150 @@
+.mw-grade-badge {
+  --mw-grade-size: 32px;
+  --mw-grade-main: #8b5cf6;
+  --mw-grade-soft: #c4b5fd;
+  --mw-grade-dark: #2e1065;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f8f5ff;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.mw-grade-badge__icon {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--mw-grade-size);
+  height: var(--mw-grade-size);
+  overflow: visible;
+}
+
+.mw-grade-badge__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.mw-grade-badge--pill,
+.mw-grade-badge--compact-pill {
+  gap: 8px;
+  min-height: calc(var(--mw-grade-size) + 8px);
+  padding: 4px 10px 4px 6px;
+  border: 1px solid color-mix(in srgb, var(--mw-grade-main) 42%, rgba(255, 255, 255, 0.15));
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--mw-grade-dark) 62%, rgba(8, 5, 22, 0.92)),
+      rgba(8, 5, 22, 0.72)
+    );
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.mw-grade-badge--compact-pill {
+  padding-right: 8px;
+}
+
+.mw-grade-badge__text {
+  color: #f8f5ff;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1;
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--mw-grade-main) 48%, transparent),
+    0 1px 1px rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+}
+
+.mw-grade-badge--xs .mw-grade-badge__text {
+  font-size: 10px;
+}
+
+.mw-grade-badge--sm .mw-grade-badge__text {
+  font-size: 11.5px;
+}
+
+.mw-grade-badge--md .mw-grade-badge__text {
+  font-size: 13px;
+}
+
+.mw-grade-badge--lg .mw-grade-badge__text {
+  font-size: 15px;
+}
+
+.mw-grade-badge--xl .mw-grade-badge__text {
+  font-size: 17px;
+}
+
+.mw-grade-badge--interactive {
+  cursor: default;
+  transition:
+    filter 140ms ease,
+    transform 140ms ease;
+}
+
+.mw-grade-badge--interactive:hover {
+  transform: translateY(-1px) scale(1.035);
+}
+
+.mw-grade-badge--cyan {
+  --mw-grade-main: #22d3ee;
+  --mw-grade-soft: #7dd3fc;
+  --mw-grade-dark: #082f49;
+}
+
+.mw-grade-badge--blue {
+  --mw-grade-main: #2563ff;
+  --mw-grade-soft: #93c5fd;
+  --mw-grade-dark: #102a6b;
+}
+
+.mw-grade-badge--white {
+  --mw-grade-main: #ffffff;
+  --mw-grade-soft: #f8fafc;
+  --mw-grade-dark: #2a243a;
+}
+
+.mw-grade-badge--green {
+  --mw-grade-main: #34d399;
+  --mw-grade-soft: #86efac;
+  --mw-grade-dark: #064e3b;
+}
+
+.mw-grade-badge--orange {
+  --mw-grade-main: #f59e0b;
+  --mw-grade-soft: #fde68a;
+  --mw-grade-dark: #78350f;
+}
+
+.mw-grade-badge--violet {
+  --mw-grade-main: #9b63ff;
+  --mw-grade-soft: #d8b4fe;
+  --mw-grade-dark: #34106c;
+}
+
+.mw-grade-badge--pink {
+  --mw-grade-main: #ec4899;
+  --mw-grade-soft: #f9a8d4;
+  --mw-grade-dark: #831843;
+}
+
+.mw-grade-badge--gold {
+  --mw-grade-main: #f59e0b;
+  --mw-grade-soft: #fde68a;
+  --mw-grade-dark: #78350f;
+}
+
+.mw-grade-badge--legendary {
+  --mw-grade-main: #6a00ff;
+  --mw-grade-soft: #f0d5ff;
+  --mw-grade-dark: #1b003c;
+}

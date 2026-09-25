@@ -1,0 +1,642 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-11T09:49:00+02:00",
+  "scope": "Windows x64 source reproducibility and offline DSP/plugin evidence for voice-correction candidates",
+  "constraints": {
+    "systemPluginsInstalledByThisRun": true,
+    "systemPluginInstallationAuthorisedByUser": true,
+    "audioDevicesOpened": false,
+    "microphoneOrHeadphonesUsed": false,
+    "acousticQualityValidated": false,
+    "trackedSourceFilesModified": false,
+    "productionApprovalImplied": false,
+    "notes": [
+      "The user supplied and explicitly requested installation of Spoton 1.1.2 and Graillon 3 Free 3.2.0. Their signed installers wrote local system plug-ins; the installers and plug-ins are not tracked or redistributed by MeeWav.",
+      "The detected Auto-Tune Pro 11 installation predated this audit.",
+      "Detached worktrees and out-of-repository build outputs were created, but no tracked candidate source file was edited.",
+      "All audio-device executables were built only; they were not launched.",
+      "A successful compile or synthetic-buffer probe is not evidence that pitch correction sounds acceptable on a human voice.",
+      "Licenses are reported from the checked-out source and still require counsel/commercial review before MeeWav distribution."
+    ]
+  },
+  "environment": {
+    "os": "Microsoft Windows 11 Famille",
+    "osVersion": "10.0.26200",
+    "architecture": "x64",
+    "cmake": "4.1.1-msvc1",
+    "generator": "Visual Studio 18 2026",
+    "msbuild": "18.0.5.56406",
+    "msvc": "19.50.35722.0",
+    "windowsSdk": "10.0.26100.0",
+    "node": "24.12.0",
+    "npm": "11.6.2",
+    "cargo": "1.93.1 (083ac5135 2025-12-15)",
+    "rustc": "1.93.1 (01f6ddf75 2026-02-11)",
+    "sourceRoot": "C:\\Users\\linkw\\AppData\\Local\\Temp\\meewav-audio-candidates-20260811",
+    "buildRoot": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds"
+  },
+  "reproductionScript": {
+    "path": "experiments/voice-correction/build-windows-candidates.ps1",
+    "defaultCandidates": [
+      "QPitch",
+      "OpenVoxTuner",
+      "Silvertune",
+      "MusicAI"
+    ],
+    "safety": [
+      "Uses detached Git worktrees at fixed commits.",
+      "Rejects broad or nested build roots.",
+      "Contains no delete, registry, installer, plugin-copy, microphone, or playback operation.",
+      "Does not accept license prompts or install proprietary software.",
+      "Silvertune companion is never launched."
+    ],
+    "validation": {
+      "powershellParse": "pass",
+      "broadBuildRootGuard": "pass: C:\\Users\\linkw was rejected before any build action",
+      "silvertuneReplay": "pass",
+      "qpitchReplay": "not completed in the command harness timeout; equivalent pinned build and five diagnostics passed in the primary build directory"
+    }
+  },
+  "candidates": [
+    {
+      "id": "spoton-1.1.2",
+      "source": {
+        "kind": "user-supplied proprietary binary",
+        "archive": "Spoton-1.1.2-Windows.zip",
+        "archiveSha256": "79e40da3a5a4766b0afd8bdbeb560c61ed6e858437a73e1ae527d1a002f0a8c5",
+        "installerSha256": "7be924e68fe7ee9d0d834f0b5dc60b458a9201ec0a3d38d40f03cb241307c3ed",
+        "installerSignature": "Valid - Sixth Sample Ky",
+        "license": "proprietary/free-to-use; no MeeWav redistribution right"
+      },
+      "commands": [
+        "Spoton-1.1.2-Installer.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-",
+        "cmake --build apps/meewav-audio-engine/build-vst3-poc --config Release --target meewav-vst3-poc --parallel",
+        "meewav-vst3-poc.exe --target sixthsample.spoton",
+        "cmake --build apps/meewav-audio-engine/build-vst3-poc --config Release --target meewav-vst3-live-poc",
+        "meewav-vst3-live-poc.exe --plugin sixthsample.spoton --probe-only"
+      ],
+      "installation": {
+        "status": "pass",
+        "configuration": "Windows x64 VST3 standard location",
+        "notes": [
+          "The installer and installed VST3 both had valid Authenticode signatures from Sixth Sample Ky.",
+          "MeeWav does not copy, embed or redistribute the proprietary binary."
+        ]
+      },
+      "artifacts": [
+        {
+          "type": "VST3",
+          "path": "C:\\Program Files\\Common Files\\VST3\\Spoton.vst3\\Contents\\x86_64-win\\Spoton.vst3",
+          "bytes": 7150672,
+          "sha256": "aa3d5c381fc77e1388f9f224512f4b5ea65a5f2bc62775fb039e13eae2ff349c",
+          "signatureStatus": "Valid - Sixth Sample Ky"
+        }
+      ],
+      "offlinePluginProbe": {
+        "status": "pass",
+        "candidateId": "sixthsample.spoton",
+        "reportedPluginVersion": "1.1.2",
+        "vendor": "Sixth Sample",
+        "classId": "ABCDEF019182FAEB536978744C737733",
+        "parameterCount": 16,
+        "latencySamples": 0,
+        "latencyMsAt48kHz": 0,
+        "processedBuffer": true,
+        "executionHash": "d8e05a3bb47db633",
+        "executionHashes": ["d8e05a3bb47db633", "d8e05a3bb47db633", "d8e05a3bb47db633", "d8e05a3bb47db633"],
+        "interpretation": "Exact path, vendor, product name and class ID matched; four deterministic synthetic-buffer runs were finite, non-silent and bounded. This is not a listening or microphone test."
+      },
+      "liveMatcherProbe": {
+        "status": "pass",
+        "candidateId": "sixthsample.spoton",
+        "openedAudioDevices": false,
+        "interpretation": "The stricter live-processor path matched and initialized the exact standard bundle, vendor, product name and class ID. Probe-only intentionally opened neither microphone nor output device."
+      },
+      "disposition": "verified-local-plugin-poc-only",
+      "blockers": [
+        "Moonbase/activation behaviour not exercised",
+        "manual wired-headphone voice validation still required",
+        "Room audio plane and WebRTC publication remain unavailable",
+        "redistribution requires written vendor permission"
+      ]
+    },
+    {
+      "id": "graillon-3-free-3.2.0",
+      "source": {
+        "kind": "user-supplied proprietary binary",
+        "archive": "Graillon-FREE-3.2.zip",
+        "archiveSha256": "d9ed254bd6ac89d5c5e670383dec2cb1acf43a72c62ebf2e4401d039ff6bda18",
+        "installerSha256": "661a4b66cdc47e544e5ba3c757f1c8c7db72bfd7a5c980322c00fa4398c42cbb",
+        "installerSignature": "Valid - Guillaume Piolat",
+        "license": "proprietary/freemium; no MeeWav redistribution right"
+      },
+      "commands": [
+        "Graillon-3-FREE-3.2.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-",
+        "cmake --build apps/meewav-audio-engine/build-vst3-poc --config Release --target meewav-vst3-poc --parallel",
+        "meewav-vst3-poc.exe --target auburnsounds.graillon3",
+        "cmake --build apps/meewav-audio-engine/build-vst3-poc --config Release --target meewav-vst3-live-poc",
+        "meewav-vst3-live-poc.exe --plugin auburnsounds.graillon3 --probe-only"
+      ],
+      "installation": {
+        "status": "pass",
+        "configuration": "Windows x64 VST3 standard location",
+        "notes": [
+          "The installer and installed VST3 both had valid Authenticode signatures from Guillaume Piolat.",
+          "The installer also offered CLAP/VST2/AAX, but the MeeWav proof deliberately loads VST3 only.",
+          "MeeWav does not copy, embed or redistribute the proprietary binary."
+        ]
+      },
+      "artifacts": [
+        {
+          "type": "VST3",
+          "path": "C:\\Program Files\\Common Files\\VST3\\Auburn Sounds Graillon 3.vst3\\Contents\\x86_64-win\\Auburn Sounds Graillon 3.vst3",
+          "bytes": 4203600,
+          "sha256": "867103fec0ec6b785e0d92a0eb5fb7c13961e740e469ba037da7e936b1b99509",
+          "signatureStatus": "Valid - Guillaume Piolat"
+        }
+      ],
+      "offlinePluginProbe": {
+        "status": "pass",
+        "candidateId": "auburnsounds.graillon3",
+        "reportedPluginVersion": "3.2.0",
+        "vendor": "Auburn Sounds",
+        "classId": "0B20BA920CE0B1456E62754133317340",
+        "parameterCount": 2147,
+        "reportedUsefulParameterCount": 67,
+        "latencySamples": 1074,
+        "latencyMsAt48kHz": 22.375,
+        "processedBuffer": true,
+        "executionHash": "9bc560090eec634f",
+        "executionHashes": ["9bc560090eec634f", "9bc560090eec634f", "9bc560090eec634f", "9bc560090eec634f"],
+        "interpretation": "Exact path, vendor, product name and class ID matched; four deterministic synthetic-buffer runs were finite, non-silent and bounded. This is not a listening or microphone test."
+      },
+      "liveMatcherProbe": {
+        "status": "pass",
+        "candidateId": "auburnsounds.graillon3",
+        "openedAudioDevices": false,
+        "interpretation": "The stricter live-processor path matched and initialized the exact standard bundle, vendor, product name and class ID. Probe-only intentionally opened neither microphone nor output device."
+      },
+      "disposition": "verified-local-plugin-poc-only",
+      "blockers": [
+        "manual wired-headphone voice validation still required",
+        "canonical key/scale/retune adapter still required",
+        "Room audio plane and WebRTC publication remain unavailable",
+        "redistribution requires written vendor permission"
+      ]
+    },
+    {
+      "id": "qpitch-v1.3.1",
+      "source": {
+        "directory": "qpitch",
+        "ref": "v1.3.1",
+        "commit": "a0a95f103d2715650462344c1be3dfad4e2e9290",
+        "refVerified": true,
+        "license": "GPL-3.0"
+      },
+      "dependencies": [
+        {
+          "name": "JUCE",
+          "ref": "8.0.8",
+          "commit": "d6181bde38d858c283c3b7bf699ce6340c050b5d"
+        },
+        {
+          "name": "clap-juce-extensions",
+          "ref": "pinned resolved commit (upstream default was main)",
+          "commit": "c1a5ad025f95d01e03267857fa8276ebeed16500"
+        }
+      ],
+      "commands": [
+        "cmake -S <qpitch-v1.3.1> -B <build>/repro-qpitch-v1.3.1 -G \"Visual Studio 18 2026\" -A x64 -DQPITCH_JUCE_GIT_TAG=8.0.8 -DQPITCH_CLAP_JUCE_EXTENSIONS_GIT_TAG=c1a5ad025f95d01e03267857fa8276ebeed16500",
+        "cmake --build <build>/repro-qpitch-v1.3.1 --config Release --parallel",
+        "cmake --build <build>/repro-qpitch-v1.3.1 --config Release --target qpitch_ifft_recon qpitch_vocoder_roundtrip qpitch_forward_debug qpitch_fft_test qpitch_shifter_test --parallel",
+        "<build>/repro-qpitch-v1.3.1/Release/qpitch_ifft_recon.exe",
+        "<build>/repro-qpitch-v1.3.1/Release/qpitch_vocoder_roundtrip.exe",
+        "<build>/repro-qpitch-v1.3.1/Release/qpitch_forward_debug.exe",
+        "<build>/repro-qpitch-v1.3.1/Release/qpitch_fft_test.exe",
+        "<build>/repro-qpitch-v1.3.1/Release/qpitch_shifter_test.exe"
+      ],
+      "build": {
+        "status": "pass",
+        "configuration": "Release x64",
+        "notes": [
+          "The upstream CMake project version remains 1.1.0 at tag v1.3.1, so embedded plugin metadata is stale.",
+          "CTest discovers zero tests; the repository provides five diagnostic executables instead."
+        ]
+      },
+      "tests": {
+        "status": "pass-with-limitations",
+        "diagnosticExecutables": {
+          "passed": 5,
+          "failed": 0,
+          "names": [
+            "qpitch_ifft_recon",
+            "qpitch_vocoder_roundtrip",
+            "qpitch_forward_debug",
+            "qpitch_fft_test",
+            "qpitch_shifter_test"
+          ]
+        },
+        "ctestDiscovered": 0,
+        "limitations": "Programs emit diagnostic values and return zero; they contain no perceptual human-voice assertions."
+      },
+      "artifacts": [
+        {
+          "type": "VST3",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-qpitch-v1.3.1\\QPitch_artefacts\\Release\\VST3\\QPitch.vst3\\Contents\\x86_64-win\\QPitch.vst3",
+          "bytes": 4024320,
+          "sha256": "abe772cc1d521fdf69be311dc831fba42afa80e18715fc64e2835eda00ebd8ba"
+        },
+        {
+          "type": "CLAP",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-qpitch-v1.3.1\\QPitch_artefacts\\Release\\CLAP\\QPitch.clap",
+          "bytes": 3977216,
+          "sha256": "a3a0d59a5d44053751f1e103d9a2abc4f70b92798123feb0352375901d1024ff"
+        }
+      ],
+      "offlinePluginProbe": {
+        "status": "pass",
+        "candidateId": "meewav.lab.qpitch-v1.3.1",
+        "reportedPluginVersion": "1.1.0",
+        "latencySamples": 0,
+        "processedBuffer": true,
+        "executionHash": "300c1e46d9472fe7",
+        "executionHashes": ["300c1e46d9472fe7", "300c1e46d9472fe7", "300c1e46d9472fe7"],
+        "interpretation": "The module loads and processes a synthetic buffer; three consecutive runs matched bit for bit, but this is not a listening test."
+      },
+      "disposition": "technical-candidate-only",
+      "blockers": [
+        "GPL-3.0 distribution implications",
+        "stale embedded version metadata",
+        "no automated perceptual or long-duration real-time test",
+        "manual wired-headphone voice validation still required"
+      ]
+    },
+    {
+      "id": "openvoxtuner-v0.1.67",
+      "source": {
+        "directory": "OpenVoxTuner",
+        "ref": "v0.1.67",
+        "commit": "5570e8a6bf8e686c33c7971563c3d757f9c394d6",
+        "refVerified": true,
+        "license": "AGPL-3.0"
+      },
+      "dependencies": [
+        {
+          "name": "JUCE",
+          "ref": "8.0.8",
+          "commit": "d6181bde38d858c283c3b7bf699ce6340c050b5d"
+        }
+      ],
+      "commands": [
+        "cmake -S <openvoxtuner-v0.1.67> -B <build>/repro-openvoxtuner-v0.1.67 -G \"Visual Studio 18 2026\" -A x64 -DJUCE_PATH=<JUCE-8.0.8> -DOVT_VERSION=0.1.67 -DOVT_ENABLE_ARA=OFF -DAUTOTUNE_BUILD_TESTS=ON",
+        "cmake --build <build>/repro-openvoxtuner-v0.1.67 --config Release --parallel",
+        "<build>/repro-openvoxtuner-v0.1.67/OpenVoxTunerTests_artefacts/Release/OpenVoxTunerTests.exe"
+      ],
+      "build": {
+        "status": "pass",
+        "configuration": "Release x64",
+        "notes": [
+          "The build evidence is from the exact v0.1.67 worktree, not the newer main branch checkout.",
+          "ARA was disabled for the standalone Windows proof.",
+          "Two successive exact-source builds passed, but their VST3/Standalone SHA-256 values differed; bit-for-bit build reproducibility is not claimed."
+        ]
+      },
+      "tests": {
+        "status": "pass",
+        "passed": 102,
+        "failed": 0,
+        "exitCode": 0
+      },
+      "artifacts": [
+        {
+          "type": "VST3",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTuner_artefacts\\Release\\VST3\\OpenVoxTuner.vst3\\Contents\\x86_64-win\\OpenVoxTuner.vst3",
+          "bytes": 5311488,
+          "sha256": "83011d254570d05b49958035e25736b1f2ab2e865cf4a6db351ff51f06b18122",
+          "previousBuildSha256": ["1ccc4418a87440c25e5bb0dc450a4765c26971ce2bf797ba0692968561388cae", "bdf635d63ac667fce5775e39a32a566da6e47d9cec33beb2aa2fedd5070c2eba"]
+        },
+        {
+          "type": "Standalone executable (not launched)",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTuner_artefacts\\Release\\Standalone\\OpenVoxTuner.exe",
+          "bytes": 5443072,
+          "sha256": "9882d875ee7e6f156ce30f2647a765749c5c59a3ef68bade6abbd3d31ce3427a",
+          "previousBuildSha256": ["baec4d387a23db8d577d60940d9b8609e525dbbc58f4fa160920a6bccd3a7a7d", "a8f6c4eccb634a7c10d4107df433f328b59306630059fc81031619f2584daa41"]
+        },
+        {
+          "type": "Unit-test executable",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-openvoxtuner-v0.1.67\\OpenVoxTunerTests_artefacts\\Release\\OpenVoxTunerTests.exe",
+          "bytes": 3161088,
+          "sha256": "8d15fd21b840ba033d09611f7d8748b20b17016428deb2da1fa38966c7a85e07"
+        }
+      ],
+      "offlinePluginProbe": {
+        "status": "pass",
+        "candidateId": "meewav.lab.openvoxtuner-v0.1.67",
+        "reportedPluginVersion": "0.1.67",
+        "latencySamples": 576,
+        "latencyMsAt48kHz": 12,
+        "processedBuffer": true,
+        "executionHash": "afa5e9c73d4a1633",
+        "executionHashes": ["afa5e9c73d4a1633", "8f21f9524919bb9f", "7d244617640acdc3", "7ecec86a112a0033"],
+        "interpretation": "The module loads and processes a synthetic buffer from the reproducible exact-tag source build; four finite runs were not bit-identical and audio quality remains untested."
+      },
+      "disposition": "technical-candidate-only",
+      "blockers": [
+        "AGPL-3.0/SaaS distribution implications",
+        "stale embedded version metadata",
+        "manual wired-headphone voice validation still required"
+      ]
+    },
+    {
+      "id": "silvertune-companion-v0.4.0",
+      "source": {
+        "directory": "silvertune-web",
+        "ref": "companion-v0.4.0",
+        "commit": "7b9be1fb65e71eff2f274ddafbd12868c27bc171",
+        "refVerified": true,
+        "license": "no repository license file found; treat as all-rights-reserved until clarified"
+      },
+      "dependencies": [
+        {
+          "name": "miniaudio",
+          "ref": "0.11.21",
+          "commit": "4a5b74bef029b3592c54b6048650ee5f972c1a48"
+        }
+      ],
+      "commands": [
+        "cmake -S <silvertune-companion-v0.4.0>/companion -B <build>/silvertune-companion-v0.4.0 -G \"Visual Studio 18 2026\" -A x64",
+        "cmake -S <silvertune-companion-v0.4.0>/companion -B <build>/silvertune-companion-v0.4.0 -G \"Visual Studio 18 2026\" -A x64 -DCOMPANION_VERSION=companion-v0.4.0",
+        "cmake --build <build>/silvertune-companion-v0.4.0 --config Release --parallel",
+        "node --check <silvertune-companion-v0.4.0>/worklet.js"
+      ],
+      "build": {
+        "status": "pass-after-required-version-define",
+        "initialFailure": "The upstream v0.4.0 build does not define COMPANION_VERSION and compilation fails until the documented CMake cache value is supplied.",
+        "sourcePatched": false,
+        "configuration": "Release x64"
+      },
+      "tests": {
+        "nativeUnitTestsPresent": false,
+        "ctestDiscovered": 0,
+        "webWorkletSyntax": "pass",
+        "localStaticReferencesMissing": 0,
+        "companionLaunched": false
+      },
+      "components": {
+        "companion": {
+          "kind": "native-loopback-companion",
+          "sourceRef": "companion-v0.4.0",
+          "sourceCommit": "7b9be1fb65e71eff2f274ddafbd12868c27bc171",
+          "built": true,
+          "launched": false,
+          "audioProcessed": false
+        },
+        "web": {
+          "kind": "browser-audioworklet-client",
+          "sourceRef": "companion-v0.4.0 repository snapshot",
+          "sourceCommit": "7b9be1fb65e71eff2f274ddafbd12868c27bc171",
+          "syntaxChecked": true,
+          "localStaticReferencesMissing": 0,
+          "audioProcessed": false
+        }
+      },
+      "artifacts": [
+        {
+          "type": "Companion executable (primary build, not launched)",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\silvertune-companion-v0.4.0\\Release\\silvertune-companion.exe",
+          "bytes": 532992,
+          "sha256": "17604c5237262b70f8fdd16f510263861940df1da285aeb04b3ad8a40e9a6a78"
+        },
+        {
+          "type": "Companion executable (script replay, not launched)",
+          "path": "C:\\Users\\linkw\\Desktop\\Meewav-Audio-Candidate-Builds\\repro-silvertune-companion-v0.4.0\\Release\\silvertune-companion.exe",
+          "bytes": 532992,
+          "sha256": "ef5aec8d475c883663cb43049f3f80d0c5dc56945dea3c9f407e2125b43c75ca"
+        }
+      ],
+      "reproducibilityNote": "Both binaries came from the same source/dependency pins but differ byte-for-byte, consistent with non-reproducible MSVC build metadata; functional equivalence was not established by launching the audio companion.",
+      "securityNote": "The companion uses a loopback WebSocket protocol; it has not been accepted as the authenticated MeeWav Audio Bridge.",
+      "disposition": "research-only",
+      "blockers": [
+        "no explicit source license",
+        "no native automated tests",
+        "no authenticated MeeWav session protocol evidence",
+        "no audio-device or listening validation"
+      ]
+    },
+    {
+      "id": "musicai-92c0c53",
+      "source": {
+        "directory": "musicai",
+        "ref": "92c0c53f2ca81d82a3e392f8781cc521f25b2c21",
+        "commit": "92c0c53f2ca81d82a3e392f8781cc521f25b2c21",
+        "refVerified": true,
+        "packageVersion": "1.0.0",
+        "license": "MIT"
+      },
+      "commands": [
+        "cargo build --locked --release",
+        "cargo test --locked --all-targets"
+      ],
+      "build": {
+        "status": "pass-with-warnings",
+        "configuration": "release"
+      },
+      "tests": {
+        "status": "fail",
+        "exitCode": 101,
+        "failure": "src/dsp.rs:160: cannot find value PI in this scope"
+      },
+      "artifacts": [
+        {
+          "type": "Rust dynamic library",
+          "path": "C:\\Users\\linkw\\AppData\\Local\\Temp\\meewav-audio-candidates-20260811\\musicai\\target\\release\\musicai.dll",
+          "bytes": 1017344,
+          "sha256": "72ce7a6ae28fce7c875c2f31ee6c91aa887769e64383e7395388113e63e043cb"
+        }
+      ],
+      "implementationAudit": "src/autotune.rs labels pitch shifting as simple resampling and a placeholder.",
+      "disposition": "reject-as-current-voice-correction-engine",
+      "blockers": [
+        "test target does not compile",
+        "pitch shifting is explicitly a placeholder",
+        "no plugin/bridge integration proof"
+      ]
+    },
+    {
+      "id": "autotone-fd4005a",
+      "source": {
+        "directory": "autotone",
+        "ref": "fd4005adb659aa687cb2bb95c9663252098591f9",
+        "commit": "fd4005adb659aa687cb2bb95c9663252098591f9",
+        "refVerified": true,
+        "license": "MIT"
+      },
+      "commands": [
+        "npm ci --ignore-scripts (in react/)",
+        "npm run build (in react/)"
+      ],
+      "dependencyInstall": {
+        "status": "pass",
+        "packages": 295,
+        "npmAuditVulnerabilities": {
+          "low": 8,
+          "moderate": 7,
+          "high": 10,
+          "critical": 4
+        }
+      },
+      "build": {
+        "commandExitCode": 0,
+        "semanticStatus": "fail",
+        "errors": [
+          "Cannot resolve ./wasm/tunerWasm.js",
+          "Missing tunerWasm.wasm"
+        ],
+        "note": "The upstream wrapper returns zero despite webpack errors. Emscripten/make were not available and no prebuilt WASM was committed."
+      },
+      "disposition": "not-reproducible-in-current-windows-environment",
+      "blockers": [
+        "missing generated WASM artifacts",
+        "legacy Node 14/npm 6 toolchain documented upstream",
+        "29 npm audit findings including 4 critical"
+      ]
+    },
+    {
+      "id": "loukai-v0.12.0",
+      "source": {
+        "directory": "loukai",
+        "ref": "v0.12.0",
+        "commit": "34c0a4b500225453e31cf128cd129a8cc74c3cfe",
+        "refVerified": true,
+        "license": "AGPL-3.0"
+      },
+      "commands": [
+        "npm ci --ignore-scripts",
+        "npm run test:run",
+        "npm run test:run -- src/shared/services/libraryService.test.js"
+      ],
+      "dependencyInstall": {
+        "status": "pass",
+        "packages": 911,
+        "npmAuditVulnerabilities": {
+          "low": 1,
+          "moderate": 1,
+          "high": 4
+        }
+      },
+      "tests": {
+        "fullSuite": "fail: one 5000 ms timeout in libraryService incremental sync during a loaded parallel-build run",
+        "isolatedRerun": "pass: 40/40 tests in libraryService.test.js",
+        "interpretation": "The isolated pass indicates a flaky or load-sensitive unrelated library test; it does not validate the autotune worklet."
+      },
+      "implementationAudit": "At v0.12.0, microphoneEngine.js loads and connects micPitchDetectorWorklet followed by phaseVocoderWorklet, then gain and compressor; it updates the phase-vocoder pitchSemitones from detected and target pitch. A separate legacy autoTuneWorklet.js contains a robot-effect fallback, but it is not the active microphone correction chain audited here.",
+      "disposition": "requires-isolated-audio-probe",
+      "blockers": [
+        "the active mic detector plus phase-vocoder chain has not processed the common corpus or MeeWav audio graph",
+        "AGPL-3.0 implications",
+        "full suite was not stable under concurrent load"
+      ]
+    },
+    {
+      "id": "mxtune-v1.2.0",
+      "source": {
+        "directory": "mxtune-v1.2.0 detached worktree",
+        "ref": "v1.2.0",
+        "commit": "b7f77b78208297ba0a5a4c25ac1759a44e87fb00",
+        "refVerified": true,
+        "license": "GPL-3.0 with additional copied-component notices"
+      },
+      "commands": [
+        "cmake -S <mxtune-v1.2.0> -B <build>/mxtune-v1.2.0 -G \"Visual Studio 18 2026\" -A x64",
+        "cmake -S <mxtune-v1.2.0> -B <build>/mxtune-v1.2.0-policy35 -G \"Visual Studio 18 2026\" -A x64 -DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "cmake --build <build>/mxtune-v1.2.0-policy35 --config Release --parallel"
+      ],
+      "build": {
+        "status": "fail",
+        "configurationAttempted": "Release x64 from exact v1.2.0 / b7f77b78208297ba0a5a4c25ac1759a44e87fb00",
+        "defaultConfigureExitCode": 1,
+        "defaultConfigureFailure": "CMake 4.1 rejects the project's cmake_minimum_required(VERSION 3.0) compatibility level.",
+        "policy35ConfigureExitCode": 1,
+        "policy35ConfigureFailure": "Generation fails because JUCE/JuceLibraryCode/include_juce_audio_plugin_client_Unity.cpp is absent, leaving target mx_tune with no sources.",
+        "buildExitCode": -1,
+        "buildFailure": "The build re-runs generation and fails on the same absent generated JUCE source before any compilation.",
+        "installed": false,
+        "artifacts": []
+      },
+      "reproducibilityAudit": "The Windows instructions require manually modified JUCE 5.4.7, VST2/VST3 SDK copies, MSYS2, aubio, SoundTouch, Rubber Band, and FFTW rather than a locked build graph.",
+      "disposition": "not-reproducible",
+      "blockers": [
+        "missing generated/vendor files",
+        "obsolete manual toolchain",
+        "unlocked external dependencies"
+      ]
+    },
+    {
+      "id": "bert-apc-demo-0b5a5d3",
+      "source": {
+        "directory": "BERT-APC-Demo",
+        "ref": "0b5a5d3f813c92eea08aad930c63403540bd074f",
+        "commit": "0b5a5d3f813c92eea08aad930c63403540bd074f",
+        "refVerified": true,
+        "license": "MIT"
+      },
+      "audit": {
+        "status": "static-demo-only",
+        "contains": [
+          "HTML",
+          "images",
+          "audio examples"
+        ],
+        "missing": [
+          "model weights",
+          "inference implementation",
+          "build manifest",
+          "real-time engine"
+        ]
+      },
+      "disposition": "not-a-runtime-candidate"
+    },
+    {
+      "id": "libsonare-v1.6.0",
+      "source": {
+        "directory": "libsonare",
+        "ref": "v1.6.0",
+        "commit": "9e23b374299107bfcc04d1716d4ece5de2aaab19",
+        "refVerified": true,
+        "license": "Apache-2.0"
+      },
+      "commands": [
+        "cmake -S <libsonare-v1.6.0> -B <build>/libsonare-v1.6.0 -G \"Visual Studio 18 2026\" -A x64"
+      ],
+      "build": {
+        "status": "unsupported-platform",
+        "exitCode": 1,
+        "message": "Windows is not a supported platform. Supported: Linux, macOS, WebAssembly. On Windows, build under WSL2."
+      },
+      "environmentNote": "No usable WSL2 distribution was available in this run.",
+      "disposition": "not-a-native-windows-candidate"
+    }
+  ],
+  "summary": {
+    "nativeWindowsBuildsPassed": [
+      "QPitch v1.3.1",
+      "OpenVoxTuner v0.1.67",
+      "Silvertune companion v0.4.0",
+      "MusicAI library (build only; tests fail)"
+    ],
+    "offlinePluginProbesPassed": [
+      "QPitch v1.3.1",
+      "OpenVoxTuner v0.1.67"
+    ],
+    "notValidated": [
+      "human voice correction quality",
+      "wired-headphone monitoring latency",
+      "microphone to WebRTC remote-listener path",
+      "15-minute dropout stability",
+      "production licensing",
+      "installer/signing/notarization"
+    ],
+    "recommendation": "Use QPitch and OpenVoxTuner only as lab candidates behind the existing disabled feature flag. Do not ship any candidate until license clearance, authenticated bridge integration, real microphone/headphone listening tests, latency measurement, and dry-track fallback tests pass."
+  }
+}

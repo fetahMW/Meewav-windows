@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "acceptBrowserSuppliedPaths": false,
+    "scanRoots": "os_standard_vst3_locations_only",
+    "unknownPluginsVisible": false
+  },
+  "plugins": [
+    {
+      "pluginId": "antares.autotune",
+      "marketingName": "Antares Auto-Tune",
+      "enabled": false,
+      "verifiedVendor": null,
+      "verifiedClassIds": [],
+      "reason": "Enable only after a real VST3 metadata scan and license-path validation."
+    },
+    {
+      "pluginId": "resonantcavity.voloco-producer",
+      "marketingName": "Voloco Producer",
+      "enabled": false,
+      "verifiedVendor": null,
+      "verifiedClassIds": [],
+      "reason": "Plugin is not present on the current development machine and no metadata has been verified."
+    },
+    {
+      "pluginId": "sixthsample.spoton",
+      "marketingName": "Spoton",
+      "enabled": false,
+      "verifiedVendor": "Sixth Sample",
+      "verifiedClassIds": ["ABCDEF019182FAEB536978744C737733"],
+      "reason": "Windows x64 VST3 identity, instantiation and deterministic offline processing were verified locally. Keep disabled until a canonical parameter adapter and a real Room audio plane are connected."
+    },
+    {
+      "pluginId": "auburnsounds.graillon3",
+      "marketingName": "Graillon 3",
+      "enabled": false,
+      "verifiedVendor": "Auburn Sounds",
+      "verifiedClassIds": ["0B20BA920CE0B1456E62754133317340"],
+      "reason": "Windows x64 VST3 identity, instantiation and deterministic offline processing were verified locally. Keep disabled until a canonical parameter adapter and a real Room audio plane are connected."
+    },
+    {
+      "pluginId": "meewav.compressor",
+      "marketingName": "MeeWav Compressor",
+      "enabled": false,
+      "verifiedVendor": "MeeWav",
+      "verifiedClassIds": ["internal:meewav.compressor.v1"],
+      "reason": "Native processor implementation is not part of the dependency-free scaffold yet."
+    },
+    {
+      "pluginId": "meewav.reverb",
+      "marketingName": "MeeWav Reverb",
+      "enabled": false,
+      "verifiedVendor": "MeeWav",
+      "verifiedClassIds": ["internal:meewav.reverb.v1"],
+      "reason": "Native processor implementation is not part of the dependency-free scaffold yet."
+    }
+  ]
+}

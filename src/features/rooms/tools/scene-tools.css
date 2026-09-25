@@ -1,0 +1,105 @@
+/* La Scène: black lacquer faces, machined edges, restrained signal lights. */
+.room-tools-shell.is-scene {
+  --room-tool-accent: #f0f0f2;
+  --room-tool-accent-rgb: 240, 240, 242;
+  --scene-surface: linear-gradient(180deg, #151617 0, #070808 22px, #020202 100%);
+  --scene-key: linear-gradient(180deg, #252627 0, #101112 44%, #050505 100%);
+  --scene-border: rgba(224, 227, 232, .18);
+  background: #020202;
+  color: #f0f0f2;
+  color-scheme: dark;
+}
+.room-tools-shell.is-scene .room-tools-shell__panel { background: #020202; }
+.room-tools-shell.is-scene .room-tool-panel {
+  gap: 14px;
+  padding: 16px 14px;
+  border: 1px solid var(--scene-border);
+  border-radius: 12px;
+  background: var(--scene-surface);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .14), inset 0 -1px #000, 0 3px 12px #0009;
+  scrollbar-color: #454545 #060606;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.room-tools-shell.is-scene .room-tool-panel__header {
+  min-height: 62px;
+  padding: 0 0 13px;
+  border-color: #ffffff12;
+}
+.room-tools-shell.is-scene .room-tool-panel__header.has-glyph { grid-template-columns: 38px minmax(0, 1fr) auto; gap: 10px; }
+.room-tools-shell.is-scene .room-tool-panel__glyph {
+  width: 38px;
+  height: 42px;
+  border: 1px solid #707075;
+  border-radius: 10px;
+  background: var(--scene-key);
+  box-shadow: inset 0 1px #ffffff25, 0 3px 6px #000c;
+  color: #e3e4e7;
+}
+.room-tools-shell.is-scene .room-tool-panel__header small { font-size: 8px; letter-spacing: .14em; color: #b8bac1; }
+.room-tools-shell.is-scene .room-tool-panel__header strong { font-size: 19px; font-weight: 750; letter-spacing: -.04em; }
+.room-tools-shell.is-scene .room-tool-panel__header em { font-size: 10px; white-space: normal; line-height: 1.45; color: #a4a4ac; }
+.room-tools-shell.is-scene .room-tool-panel__header > b {
+  min-width: 0;
+  padding: 5px 6px;
+  border: 1px solid #ffffff10;
+  border-radius: 5px;
+  background: #020202;
+  font-size: 7px;
+  color: #c4c6cb;
+}
+.room-tools-shell.is-scene .room-tool-section { padding: 12px; gap: 12px; border-color: var(--scene-border); background: linear-gradient(180deg, #0e0e0f, #040404 42px); box-shadow: inset 0 1px #ffffff07; }
+.room-tools-shell.is-scene .room-tool-section > header > strong { font-size: 12px; color: #e4e4e7; }
+.room-tools-shell.is-scene .room-tool-panel button {
+  min-height: 36px;
+  padding: 7px 10px;
+  gap: 6px;
+  border: 1px solid #46464b;
+  border-radius: 8px;
+  background: var(--scene-key);
+  color: #d8d8df;
+  box-shadow: inset 0 1px #ffffff18, inset 0 -1px #000, 0 2px 4px #0008;
+  font-size: 11px;
+  font-weight: 650;
+}
+.room-tools-shell.is-scene .room-tool-panel button:hover:not(:disabled) { transform: none; border-color: #929099; background: linear-gradient(180deg, #303033, #0a0a0b); color: #fff; }
+.room-tools-shell.is-scene .room-tool-panel button:focus-visible,
+.room-tools-shell.is-scene .room-tool-panel summary:focus-visible { outline: 2px solid #f0f0f2; outline-offset: 3px; }
+.room-tools-shell.is-scene .room-tool-panel button.is-primary {
+  border-color: #b3b5bd;
+  background: linear-gradient(180deg, #2b2c2e, #111112 50%, #050505);
+  color: #ffffff;
+  box-shadow: inset 0 1px #ffffff40, inset 0 -2px #ffffff24, 0 2px 6px #000;
+}
+.room-tools-shell.is-scene .room-tool-panel button.is-primary > svg { color: #ffffff; }
+.room-tools-shell.is-scene .room-tool-panel button.is-danger { border-color: #785259; background: var(--scene-key); color: #f1a4ac; }
+.room-tools-shell.is-scene .room-tool-panel button.is-success { border-color: #4a796b; background: var(--scene-key); color: #98e0c5; }
+.room-tools-shell.is-scene .room-tool-panel button:disabled { opacity: .4; box-shadow: inset 0 1px #ffffff09; }
+.room-tools-shell.is-scene .room-tool-field { font-size: 11px; gap: 6px; font-weight: 550; color: #bcbcc3; }
+.room-tools-shell.is-scene .room-tool-panel :is(input:not([type="checkbox"]):not([type="range"]), select, textarea) {
+  min-width: 0;
+  border: 1px solid #343438;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #020202, #090909);
+  box-shadow: inset 0 2px 5px #000;
+  color: #ededf0;
+  font-size: 12px;
+}
+.room-tools-shell.is-scene .room-tool-field input,
+.room-tools-shell.is-scene .room-tool-panel select { height: 38px; padding-inline: 10px; }
+.room-tools-shell.is-scene .room-tool-field textarea { padding: 10px; line-height: 1.6; }
+.room-tools-shell.is-scene .room-tool-panel :is(input, select, textarea):focus-visible { outline: 2px solid #bfc3cc; outline-offset: 1px; border-color: #bfc3cc; }
+.room-tools-shell.is-scene .room-tool-panel input:is([type="range"], [type="checkbox"]) { accent-color: #bfc3cc; }
+.room-tools-shell.is-scene .room-tool-form-grid { gap: 12px; }
+.room-tools-shell.is-scene .room-tool-notice { min-height: 0; padding: 9px 11px; background: #090909; border-color: #ffffff16; color: #a9a9b1; font-size: 10px; }
+.room-tools-shell.is-scene .room-tool-empty { min-height: 95px; gap: 6px; color: #9d9da5; }
+.room-tools-shell.is-scene .room-tool-empty strong { font-size: 13px; }
+.room-tools-shell.is-scene .room-tool-empty span { font-size: 11px; }
+.room-tools-shell.is-scene .room-tool-panel__footer { font-size: 10px; color: #9898a2; border-color: #ffffff16; }
+.room-tools-shell.is-scene .room-tool-status { font-size: 9px; padding: 3px 6px; }
+.room-tools-shell.is-scene .room-tool-person strong { font-family: inherit; font-size: 12px; }
+.room-tools-shell.is-scene .room-tool-person small { font-size: 10px; color: #9999a2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .room-tools-shell.is-scene :is(button, input, select, textarea) { transition: none; }
+}

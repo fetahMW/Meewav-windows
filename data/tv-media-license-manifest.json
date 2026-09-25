@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "catalogPurpose": "Physical local media reused by the generated 14-day MeeWav TV investor-demo guide.",
+  "scope": "src/features/scene/tv/sceneTvGuide.fixtures.ts",
+  "checkedOn": "2026-08-07",
+  "externalSourceUrlsIncluded": false,
+  "defaultSource": "internal/generated",
+  "defaultLicenseStatus": "unverified-no-repository-evidence",
+  "defaultUsageStatus": "prototype-only-not-cleared-for-production",
+  "statusNote": "Repository history proves that these files were added internally, but the repository contains no license grant or generation-provider terms for them. No item in this manifest is approved for production until rights clearance is recorded.",
+  "scheduleReference": "Programme IDs are generated as meewav-main-YYYY-MM-DD-NN; each physical asset can back multiple published-video sources and scheduled programmes.",
+  "sourceEvidence": {
+    "kind": "repository-commit",
+    "commit": "1a8c8fc090cdb98f95045445f93540ad27f2b050",
+    "summary": "feat: build Shorts discovery walls"
+  },
+  "items": [
+    {
+      "id": "scene-tv-video-landscape-dj",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/landscape-dj.mp4",
+      "repositoryPath": "public/media/shorts-demo/landscape-dj.mp4",
+      "bytes": 1065016,
+      "sha256": "ADBD58252779582AF036EAFF3B1046E7E619C22B612A31A0EE0BFE6C6AC71E8C",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-03"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-video-landscape-guitar",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/landscape-guitar.mp4",
+      "repositoryPath": "public/media/shorts-demo/landscape-guitar.mp4",
+      "bytes": 964793,
+      "sha256": "129B35701AA0610B987FE72C6634905156318A64633CF40E5AA03B2DACBB8E34",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-01",
+        "tv-04"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-video-landscape-roundtable",
+      "mediaType": "video",
+      "mimeType": "video/mp4",
+      "publicPath": "/media/shorts-demo/landscape-roundtable.mp4",
+      "repositoryPath": "public/media/shorts-demo/landscape-roundtable.mp4",
+      "bytes": 850558,
+      "sha256": "86F4076A50BD13754EC0316E9A6A8708767B85E59AD303F7EADAF5AC8CC4545A",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-02",
+        "replays-01"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-poster-backstage-documentary",
+      "mediaType": "image",
+      "mimeType": "image/webp",
+      "publicPath": "/images/shorts/catalog-v3/tv-01-backstage-documentary.webp",
+      "repositoryPath": "public/images/shorts/catalog-v3/tv-01-backstage-documentary.webp",
+      "bytes": 44192,
+      "sha256": "12B9D1BCA85604209B082C5B58C0DA773BCB7DFFE34253A5D77F119100F13785",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-01"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-poster-composer-interview",
+      "mediaType": "image",
+      "mimeType": "image/webp",
+      "publicPath": "/images/shorts/catalog-v3/tv-02-composer-interview.webp",
+      "repositoryPath": "public/images/shorts/catalog-v3/tv-02-composer-interview.webp",
+      "bytes": 46548,
+      "sha256": "E2C16B0CA83C51745B4A77D5965B58604A7F55B3492975FA3B07FD00CE40E2C6",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-02"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-poster-production-masterclass",
+      "mediaType": "image",
+      "mimeType": "image/webp",
+      "publicPath": "/images/shorts/catalog-v3/tv-03-production-masterclass.webp",
+      "repositoryPath": "public/images/shorts/catalog-v3/tv-03-production-masterclass.webp",
+      "bytes": 117096,
+      "sha256": "86224659FAD8CF3B601F4E81634E8D66102B1AAA3BDDAB4056BE0C1E60985FB7",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-03"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-poster-multicam-performance",
+      "mediaType": "image",
+      "mimeType": "image/webp",
+      "publicPath": "/images/shorts/catalog-v3/tv-04-multicam-performance.webp",
+      "repositoryPath": "public/images/shorts/catalog-v3/tv-04-multicam-performance.webp",
+      "bytes": 55276,
+      "sha256": "F195FFE4EF22297D0D6D8C6ADC19345816C8C54AD63EA2E4087A3F9404600646",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "tv-04"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    },
+    {
+      "id": "scene-tv-poster-published-room-replay",
+      "mediaType": "image",
+      "mimeType": "image/webp",
+      "publicPath": "/images/shorts/catalog-v2/tv-room-replay.webp",
+      "repositoryPath": "public/images/shorts/catalog-v2/tv-room-replay.webp",
+      "bytes": 125128,
+      "sha256": "7254781BB1E27B37E0D49E8E9E33A84BE0FD2F661BBF96466853368E34E38D7B",
+      "scheduledBy": [
+        "sceneTvGuide.fixtures:generated"
+      ],
+      "publishedVideoIds": [
+        "replays-01"
+      ],
+      "source": "internal/generated",
+      "licenseName": null,
+      "licenseStatus": "unverified-no-repository-evidence",
+      "usageStatus": "prototype-only-not-cleared-for-production",
+      "productionApproved": false
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+/* Final cascade layer for the compact home. Kept separate so legacy styles cannot win. */
+.tremplin-public-home__section {
+  scroll-margin-top: calc(var(--tremplin-primary-band-height, 72px) + 24px);
+}
+
+.tremplin-public-home__explore-heading .tremplin-public-home__discover-all {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #c7aeff;
+  box-shadow: none;
+}
+
+.tremplin-public-home__explore-filters[role="tablist"] { gap: 8px; margin: 18px 0; padding: 2px; scroll-snap-type: x proximity; }
+.tremplin-public-home__explore-filters[role="tablist"] button { min-height: 44px; padding: 0 16px; }
+.tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature { min-height: 404px; max-height: 448px; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); }
+.tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-visual { min-height: 404px; }
+.tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy { gap: 10px; padding: 28px clamp(24px, 3vw, 40px); }
+.tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy > div { display: grid; grid-template-columns: minmax(160px, 1fr) 44px; gap: 9px; }
+.tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy .tremplin-public-home__play { width: 100%; min-width: 0; }
+.tremplin-public-home__compact-follow { width: 44px; min-width: 44px; min-height: 44px; padding: 0; border-radius: 13px; }
+.tremplin-public-home__discovery-card-copy > .tremplin-public-home__compact-follow { width: 44px; min-width: 44px; }
+.tremplin-public-home__discovery-card-play { min-height: 44px !important; }
+.tremplin-public-home__discovery-card-media > span { max-width: calc(100% - 20px); overflow: visible; text-overflow: clip; white-space: normal; }
+.tremplin-public-home__explore-rail-shell .tremplin-public-home__explore-rail { grid-auto-columns: calc((100% - 64px) / 5); gap: 16px; margin-top: 13px; padding: 0 0 6px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.tremplin-public-home__explore-rail-shell .tremplin-public-home__explore-rail::-webkit-scrollbar { display: none; }
+.tremplin-public-home__weekly.tremplin-public-home__section { min-height: 0; grid-template-columns: minmax(320px, .78fr) minmax(0, 1.22fr); gap: clamp(30px, 4vw, 58px); padding: 24px; }
+.tremplin-public-home__weekly .tremplin-public-home__weekly-visual { min-height: 408px; }
+.tremplin-public-home__weekly .tremplin-public-home__weekly-copy { padding: 24px 36px 24px 0; }
+.tremplin-public-home__weekly .tremplin-public-home__weekly-actions { display: flex; align-items: center; flex-direction: row; flex-wrap: wrap; gap: 9px; }
+.tremplin-public-home__search .is-clear,
+.tremplin-public-home__search .is-submit { min-height: 44px !important; }
+.tremplin-public-home__rail-arrow:disabled { opacity: .32; cursor: default; pointer-events: none; }
+
+.tremplin-public-home__level-track button:focus-visible,
+.tremplin-public-home__level-track button.is-active:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--tph-active-grade-main) 74%, white 26%);
+  outline-offset: 2px;
+}
+
+/* The artwork remains untouched; only its proportional display changes. */
+.tremplin-public-home__level-track .tremplin-public-home__level-badge {
+  --mw-grade-size: clamp(88px, 6.5vw, 98px) !important;
+}
+
+.tremplin-public-home__level-track button.is-active .tremplin-public-home__level-badge {
+  --mw-grade-size: clamp(108px, 7.8vw, 120px) !important;
+}
+
+.tremplin-public-home__explore-feature-visual:focus-visible,
+.tremplin-public-home__weekly-media-link:focus-visible,
+.tremplin-public-home__discovery-card-media > button:first-child:focus-visible {
+  outline-offset: -4px;
+}
+
+@media (max-width: 1180px) {
+  .tremplin-public-home__explore-rail-shell .tremplin-public-home__explore-rail { grid-auto-columns: calc((100% - 48px) / 4); }
+}
+
+@media (max-width: 900px) {
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature { grid-template-columns: minmax(0, 1.05fr) minmax(270px, .95fr); }
+  .tremplin-public-home__explore-rail-shell .tremplin-public-home__explore-rail { grid-auto-columns: calc((100% - 32px) / 3); }
+  .tremplin-public-home__weekly.tremplin-public-home__section { grid-template-columns: minmax(270px, .85fr) minmax(0, 1.15fr); }
+  .tremplin-public-home__weekly .tremplin-public-home__weekly-visual { min-height: 380px; }
+}
+
+@media (max-width: 700px) {
+  .tremplin-public-home__explore.tremplin-public-home__hero { margin-top: 20px; padding: 8px 0 4px; }
+  .tremplin-public-home__explore-heading .tremplin-public-home__discover-all { align-self: flex-start; }
+  .tremplin-public-home__explore-filters[role="tablist"] { width: calc(100% + 24px); margin: 18px -12px; padding: 2px 12px; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature { min-height: 0; max-height: none; grid-template-columns: 1fr; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-visual { min-height: 300px; height: 300px; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy { padding: 22px 18px 20px; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature { position: relative; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy > div { display: grid; grid-template-columns: 44px; align-items: center; justify-content: end; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy .tremplin-public-home__play { position: absolute; top: 150px; left: 50%; width: min(210px, calc(100% - 48px)); transform: translate(-50%, -50%); }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy .tremplin-public-home__play:hover { transform: translate(-50%, -50%) scale(1.02); }
+  .tremplin-public-home__explore-rail-shell .tremplin-public-home__explore-rail { width: calc(100% + 12px); grid-auto-columns: minmax(244px, 78vw); gap: 12px; padding-right: 12px; }
+  .tremplin-public-home__weekly.tremplin-public-home__section { grid-template-columns: 1fr; gap: 20px; padding: 14px; }
+  .tremplin-public-home__weekly .tremplin-public-home__weekly-visual { min-height: 300px; height: 300px; }
+  .tremplin-public-home__weekly .tremplin-public-home__weekly-copy { padding: 6px 8px 14px; }
+  .tremplin-public-home__weekly .tremplin-public-home__weekly-actions { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: center; }
+  .tremplin-public-home__search input { font-size: 16px; }
+  .tremplin-public-home__level-track { grid-auto-columns: minmax(214px, 78vw); }
+  .tremplin-public-home__level-track button > .tremplin-public-home__level-stage,
+  .tremplin-public-home__level-track button.is-active > .tremplin-public-home__level-stage { font-size: 14px; }
+  .tremplin-public-home__level-track small { font-size: 13px; }
+  .tremplin-public-home__level-track .tremplin-public-home__level-badge { --mw-grade-size: 98px !important; }
+  .tremplin-public-home__level-track button.is-active .tremplin-public-home__level-badge { --mw-grade-size: 116px !important; }
+}
+
+@media (max-width: 390px) {
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-visual { min-height: 268px; height: 268px; }
+  .tremplin-public-home__explore-rail-shell .tremplin-public-home__explore-rail { grid-auto-columns: minmax(232px, 83vw); }
+  .tremplin-public-home__weekly .tremplin-public-home__weekly-visual { min-height: 272px; height: 272px; }
+  .tremplin-public-home__editorial-grid .tremplin-public-home__explore-feature-copy .tremplin-public-home__play { top: 134px; }
+}

@@ -1,0 +1,5159 @@
+{
+  "schemaVersion": 1,
+  "kind": "guide_alpha_auto_curation",
+  "wave": 9,
+  "batch": "strict-safe-only",
+  "generatedAt": "2026-07-14T18:44:20.168Z",
+  "provenance": {
+    "inputPath": "geo/work/france-wave-9-plan.json",
+    "inputSha256": "d3e5e4e9ff029a20063312c590d69dafe3117005e568c3db8020de71525b3628",
+    "inputSchemaVersion": 1,
+    "inputWave": 9,
+    "inputGeneratedAt": "2026-07-14T18:34:44.159Z",
+    "inputCollectionKey": "cities",
+    "inputCityCount": 500
+  },
+  "auditPolicy": {
+    "version": 1,
+    "decision": "accept-only; never rename, merge, group, drop or invent",
+    "exactInventory": "Every ready city keeps every exact source IRIS ID, official label and type unchanged.",
+    "labels": "Ready labels must be non-empty, human, unique after French normalization, unnumbered, non-technical, non-direction-only, non-operational and non-generic.",
+    "exceptions": "Every ambiguity is quarantined for manual exact-ID Guide Alpha curation."
+  },
+  "source": {
+    "provider": "IGN / INSEE - Contours IRIS WFS Géoplateforme",
+    "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+    "wfsUrl": "https://data.geopf.fr/wfs/ows",
+    "typeName": "STATISTICALUNITS.IRIS:contours_iris",
+    "vintage": "2026",
+    "license": "Licence Ouverte / Open Licence 2.0"
+  },
+  "summary": {
+    "cities": 135,
+    "inputCities": 500,
+    "inspectedCities": 500,
+    "ready": 135,
+    "resolutionRequired": 0,
+    "manualCurationRequired": 365,
+    "deferredByLimit": 0,
+    "sourceFeatures": 617,
+    "visiblePlates": 617,
+    "operations": {
+      "accept": 0,
+      "rename": 0,
+      "merge": 0
+    }
+  },
+  "cities": [
+    {
+      "id": "verneuil_sur_seine",
+      "name": "Verneuil-sur-Seine",
+      "code": "78642",
+      "population": 16280,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "786420101",
+          "label": "Les Hauts de Verneuil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786420102",
+          "label": "Le Vieux Verneuil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786420103",
+          "label": "Richelieu",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786420104",
+          "label": "Cité SNCF",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786420105",
+          "label": "Clairières",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "gaillac",
+      "name": "Gaillac",
+      "code": "81099",
+      "population": 16162,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "810990101",
+          "label": "Vieux Gaillac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "810990102",
+          "label": "Gare-La Clavelle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "810990103",
+          "label": "Saint-Roch-Charles de Gaulle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "810990104",
+          "label": "Quartier Périphérique Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "810990105",
+          "label": "Quartier Périphérique Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_leu_la_foret",
+      "name": "Saint-Leu-la-Forêt",
+      "code": "95563",
+      "population": 16138,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "955630101",
+          "label": "La Forêt",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "955630102",
+          "label": "La Châtaigneraie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955630103",
+          "label": "Marcel Pagnol",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955630104",
+          "label": "Le Rosaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955630105",
+          "label": "Les Lutins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955630106",
+          "label": "Les Diablots",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "955630107",
+          "label": "Les Cancelles",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montbrison",
+      "name": "Montbrison",
+      "code": "42147",
+      "population": 16123,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "421470101",
+          "label": "Estiallet-Le Bouchet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421470102",
+          "label": "Intra-Muros",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421470201",
+          "label": "Moingt",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421470202",
+          "label": "Les Purelles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421470301",
+          "label": "Maupas Survaure",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "421470302",
+          "label": "Beauregard",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "domont",
+      "name": "Domont",
+      "code": "95199",
+      "population": 16065,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "951990101",
+          "label": "Le Lycée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "951990102",
+          "label": "Le Marché",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "951990103",
+          "label": "Vieux Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "951990104",
+          "label": "Les Coquelicots",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "951990105",
+          "label": "Bas Domont",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "951990106",
+          "label": "Haut Domont-Plaine des Cercelets",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "951990107",
+          "label": "Quartier d'Ombreval",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "noisiel",
+      "name": "Noisiel",
+      "code": "77337",
+      "population": 16053,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "773370101",
+          "label": "Ville Ancienne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773370201",
+          "label": "Ville Nouvelle Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773370202",
+          "label": "Ville Nouvelle Centre-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773370203",
+          "label": "Ville Nouvelle Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773370204",
+          "label": "Ville Nouvelle Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773370205",
+          "label": "Ville Nouvelle Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773370206",
+          "label": "Ville Nouvelle Centre-Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_just_saint_rambert",
+      "name": "Saint-Just-Saint-Rambert",
+      "code": "42279",
+      "population": 15764,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "422790101",
+          "label": "Le Bourg Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "422790102",
+          "label": "Petite Couronne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "422790103",
+          "label": "Grande Couronne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "422790201",
+          "label": "Collonges-Avernay-Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "422790202",
+          "label": "Centre Loire",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montrevault_sur_evre",
+      "name": "Montrevault-sur-Èvre",
+      "code": "49218",
+      "population": 15726,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "492180101",
+          "label": "Le Fief-Sauvin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492180102",
+          "label": "Le Fuilet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492180103",
+          "label": "Saint-Pierre-Montlimart",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "492180104",
+          "label": "Chaudron-en-Mauges",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_fargeau_ponthierry",
+      "name": "Saint-Fargeau-Ponthierry",
+      "code": "77407",
+      "population": 15724,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "774070101",
+          "label": "Guiche-Villers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "774070102",
+          "label": "Fargeau-Tilly-Wimpey",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "774070103",
+          "label": "Cités Leroy",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "774070104",
+          "label": "Moulin Clair-Moulin de la Seine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "774070105",
+          "label": "Florelites-Constant Gallon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "774070106",
+          "label": "Moulignon-Auxonnettes-Jonville",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "beaucaire",
+      "name": "Beaucaire",
+      "code": "30032",
+      "population": 15692,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "300320101",
+          "label": "La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "300320102",
+          "label": "Le Plateau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "300320103",
+          "label": "Les Cariatides",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "300320104",
+          "label": "Les Fontêtes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "300320105",
+          "label": "Le Sizen",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fontainebleau",
+      "name": "Fontainebleau",
+      "code": "77186",
+      "population": 15583,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "771860101",
+          "label": "Ville Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860102",
+          "label": "Ville Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860103",
+          "label": "Centre Ville Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860104",
+          "label": "Centre Ville Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860105",
+          "label": "Centre Ville Nord-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860106",
+          "label": "Ville Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860107",
+          "label": "Centre Ville Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "771860108",
+          "label": "Forêt de Fontainebleau",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "elbeuf",
+      "name": "Elbeuf",
+      "code": "76231",
+      "population": 15474,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "762310101",
+          "label": "Hôtel de Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310102",
+          "label": "Cerisaie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310103",
+          "label": "Puchot Grandin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310104",
+          "label": "Parc Saint-Cyr",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310105",
+          "label": "Blin Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310106",
+          "label": "Mesliers Mont Duve",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310107",
+          "label": "Buquet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762310108",
+          "label": "Puchot Saint-Jean",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ramonville_saint_agne",
+      "name": "Ramonville-Saint-Agne",
+      "code": "31446",
+      "population": 15158,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "314460101",
+          "label": "Marnac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314460102",
+          "label": "La Peyrade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314460103",
+          "label": "Cité Rose",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314460104",
+          "label": "Parc Technologique",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "314460105",
+          "label": "Port Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314460106",
+          "label": "Les Coteaux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montmagny",
+      "name": "Montmagny",
+      "code": "95427",
+      "population": 15105,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "954270101",
+          "label": "Les Sablons",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "954270102",
+          "label": "La Plante des Champs-Tas de Cailloux",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "954270103",
+          "label": "Lévriers-Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "954270104",
+          "label": "Centre Ville Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "954270105",
+          "label": "Centre Ville Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "954270106",
+          "label": "Carrières Faucilles-Butte Pinson",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "954270107",
+          "label": "Barrage",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_avertin",
+      "name": "Saint-Avertin",
+      "code": "37208",
+      "population": 14999,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "372080101",
+          "label": "Centre-Le Lac-Grand Cour",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372080102",
+          "label": "Hôpital-La Mauberdière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372080103",
+          "label": "Les Cigognes-Les Grands Champs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372080104",
+          "label": "La Camusière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372080105",
+          "label": "Cangé-Aubinière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372080106",
+          "label": "Les Onze Arpents-Les Champs de l'Ormeau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "372080107",
+          "label": "Sud-Nouveau Bois Bellerie",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "woippy",
+      "name": "Woippy",
+      "code": "57751",
+      "population": 14967,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "577510101",
+          "label": "Saint-Rémy Route de Thionville",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "577510103",
+          "label": "Quartier du Roi",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "577510104",
+          "label": "Quatre Bornes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "577510105",
+          "label": "Pré-Génie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "577510106",
+          "label": "Saint-Éloy Mairie Annexe",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "577510107",
+          "label": "Saint-Éloy Chapelle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "577510110",
+          "label": "Route de Norroy Château Le Village",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "carrieres_sur_seine",
+      "name": "Carrières-sur-Seine",
+      "code": "78124",
+      "population": 14791,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "781240101",
+          "label": "Les Alouettes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781240102",
+          "label": "Champignon Vignes Blanches La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781240103",
+          "label": "Victor Hugo Bezons",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781240104",
+          "label": "Village Doumer",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "781240105",
+          "label": "Berteaux Fermettes",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "villers_les_nancy",
+      "name": "Villers-lès-Nancy",
+      "code": "54578",
+      "population": 14718,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "545780101",
+          "label": "Forêt Domaniale de Haye",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "545780102",
+          "label": "Clairlieu-Valonnière Bois de l'Hospice",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545780103",
+          "label": "Clairlieu-Champelle Essarts Sance",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545780104",
+          "label": "Technopole Nancy-Brabois",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "545780105",
+          "label": "Hardeval Cottages Chanoine Piéron",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545780106",
+          "label": "Rémicourt Parc de Brabois",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545780107",
+          "label": "Gec Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545780108",
+          "label": "Placieux Coteaux République",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545780109",
+          "label": "Baudricourt",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_brevin_les_pins",
+      "name": "Saint-Brevin-les-Pins",
+      "code": "44154",
+      "population": 14541,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "441540101",
+          "label": "Mindin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441540102",
+          "label": "Les Pins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441540103",
+          "label": "L'Océan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441540104",
+          "label": "Les Villages",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bois_guillaume",
+      "name": "Bois-Guillaume",
+      "code": "76108",
+      "population": 14539,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "761080101",
+          "label": "Le Mont Fortin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761080102",
+          "label": "L'Église",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761080103",
+          "label": "Cité de l'Agriculture",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761080104",
+          "label": "La Bretèque",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761080105",
+          "label": "Rue Herbeuse",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_paul_les_dax",
+      "name": "Saint-Paul-lès-Dax",
+      "code": "40279",
+      "population": 14481,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "402790101",
+          "label": "Mairie-Albine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "402790102",
+          "label": "Bourg Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "402790103",
+          "label": "Lac-La Pince",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "402790104",
+          "label": "Écarts Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "402790105",
+          "label": "Bourg Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "flers",
+      "name": "Flers",
+      "code": "61169",
+      "population": 14432,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "611690101",
+          "label": "La Planchette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "611690102",
+          "label": "Le Pont Féron",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "611690201",
+          "label": "Paulette Duhalde",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "611690202",
+          "label": "Bénardière-Saint-Michel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "611690203",
+          "label": "La Blanchardière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "611690301",
+          "label": "Saint-Sauveur",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "611690302",
+          "label": "La Géroudière",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "billere",
+      "name": "Billère",
+      "code": "64129",
+      "population": 14384,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "641290101",
+          "label": "Laffite",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641290102",
+          "label": "Lacaou",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641290103",
+          "label": "Asptt",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641290104",
+          "label": "La Poste",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641290105",
+          "label": "Marnières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641290106",
+          "label": "La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641290107",
+          "label": "La Linière",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "morangis",
+      "name": "Morangis",
+      "code": "91432",
+      "population": 14129,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "914320101",
+          "label": "Croix Boisselière-Blés d'Or",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914320102",
+          "label": "L'Avenir",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914320103",
+          "label": "Ormeteau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "914320104",
+          "label": "Poirier-Marlé",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sainte_maxime",
+      "name": "Sainte-Maxime",
+      "code": "83115",
+      "population": 14118,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "831150101",
+          "label": "Basse Suane-Les Virgiles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831150102",
+          "label": "Les Bouteillers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831150103",
+          "label": "Le Capet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831150104",
+          "label": "Ville-Les Saquèdes-Le Bouillonnet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831150105",
+          "label": "Nartelle-Noyer-Bellevue-Boulevard des Sardinaux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fontenay_le_comte",
+      "name": "Fontenay-le-Comte",
+      "code": "85092",
+      "population": 14059,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "850920101",
+          "label": "Grissais-Gros Noyer",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850920102",
+          "label": "Rabelais-Le Porteau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850920103",
+          "label": "Commerce-Marchoux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850920104",
+          "label": "Centre-Loges-Pommeraie-Sablière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850920105",
+          "label": "Les Moulins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850920106",
+          "label": "Charzais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850920107",
+          "label": "Saint-Médard",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fleury_merogis",
+      "name": "Fleury-Mérogis",
+      "code": "91235",
+      "population": 13721,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "912350101",
+          "label": "Pavillonnaire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912350102",
+          "label": "H.L.M.",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912350103",
+          "label": "Prison et Reste",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fontenay_le_fleury",
+      "name": "Fontenay-le-Fleury",
+      "code": "78242",
+      "population": 13680,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "782420101",
+          "label": "Parc Saint-Cyr Haut de Fontenay",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782420102",
+          "label": "Vendôme-César Franck",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782420103",
+          "label": "Marché Schweitzer",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782420104",
+          "label": "Hôtel de Ville Beaumarchais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782420105",
+          "label": "Vieux Village Missionnaires",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "782420106",
+          "label": "Parc Montaigne Église",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "gien",
+      "name": "Gien",
+      "code": "45155",
+      "population": 13459,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "451550101",
+          "label": "Faïencerie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "451550102",
+          "label": "Loire et Beaujeu",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "451550201",
+          "label": "Gien le Vieux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "451550202",
+          "label": "Montfort",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "451550301",
+          "label": "Chantemerle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "451550302",
+          "label": "Arrabloy la Bosserie",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "plougastel_daoulas",
+      "name": "Plougastel-Daoulas",
+      "code": "29189",
+      "population": 13434,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "291890103",
+          "label": "Élorn-Tinduff",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291890104",
+          "label": "Armorique",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291890105",
+          "label": "Keraliou-Passage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291890106",
+          "label": "Bourg Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291890107",
+          "label": "Bourg Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "lourdes",
+      "name": "Lourdes",
+      "code": "65286",
+      "population": 13266,
+      "sourceFeatureCount": 10,
+      "officialLabels": [
+        {
+          "sourceId": "652860101",
+          "label": "Centre-Mairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "652860102",
+          "label": "Centre-Soum",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "652860103",
+          "label": "Ophite-Chantecler",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "652860104",
+          "label": "Centre-Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "652860105",
+          "label": "Sarsan-Anclades",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "652860106",
+          "label": "Pic du Ger",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "652860107",
+          "label": "Bois de Mourles-Forêt de Béout",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "652860108",
+          "label": "Secteur Hôtelier-Sanctuaire",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "652860109",
+          "label": "La Bastide-Lannedarre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "652860110",
+          "label": "Monge-Saux",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "canet_en_roussillon",
+      "name": "Canet-en-Roussillon",
+      "code": "66037",
+      "population": 13227,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "660370101",
+          "label": "Village Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "660370102",
+          "label": "Village Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "660370103",
+          "label": "Plage Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "660370104",
+          "label": "Plage Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "villeneuve_les_avignon",
+      "name": "Villeneuve-lès-Avignon",
+      "code": "30351",
+      "population": 13148,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "303510101",
+          "label": "Abbaye-La Motte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "303510102",
+          "label": "Bellecroix-Pont d'Avignon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "303510103",
+          "label": "Montagne des Chèvres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "303510104",
+          "label": "Charbonnières Montagné",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fonsorbes",
+      "name": "Fonsorbes",
+      "code": "31187",
+      "population": 12954,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "311870104",
+          "label": "Trépadé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "311870105",
+          "label": "Béouzo",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "311870106",
+          "label": "Cantelauze",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "nemours",
+      "name": "Nemours",
+      "code": "77333",
+      "population": 12889,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "773330101",
+          "label": "Mairie Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773330102",
+          "label": "Mairie Centre-Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773330103",
+          "label": "Mairie Centre-Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773330104",
+          "label": "Mairie Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773330201",
+          "label": "Rive du Loing",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "moret_loing_et_orvanne",
+      "name": "Moret-Loing-et-Orvanne",
+      "code": "77316",
+      "population": 12810,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "773160101",
+          "label": "Moret-sur-Loing",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773160102",
+          "label": "Écuelles-Épisy-Montarlot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "773160103",
+          "label": "Veneux-les-Sablons",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_andre_les_vergers",
+      "name": "Saint-André-les-Vergers",
+      "code": "10333",
+      "population": 12806,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "103330101",
+          "label": "Croix Blanche Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103330102",
+          "label": "Croix Blanche Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103330103",
+          "label": "Croix Blanche Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103330201",
+          "label": "Bas Clos Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "103330202",
+          "label": "Bas Clos Sud-Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "pornichet",
+      "name": "Pornichet",
+      "code": "44132",
+      "population": 12800,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "441320101",
+          "label": "Gambetta",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441320102",
+          "label": "Bonne Source-Saint-Sébastien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441320103",
+          "label": "Sainte-Marguerite",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441320104",
+          "label": "Ermur-Les Forges",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "chambray_les_tours",
+      "name": "Chambray-lès-Tours",
+      "code": "37050",
+      "population": 12720,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "370500101",
+          "label": "Fontaine Blanche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "370500102",
+          "label": "Branchoire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "370500103",
+          "label": "Centre Ville-Pommiers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "370500104",
+          "label": "Hippodrome",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bayeux",
+      "name": "Bayeux",
+      "code": "14047",
+      "population": 12659,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "140470101",
+          "label": "Cœur Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "140470102",
+          "label": "Partie Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "140470103",
+          "label": "Sud Périphérique",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "140470201",
+          "label": "Quartier Saint-Patrice et au Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "140470203",
+          "label": "Saint-Laurent-Saint-Jean",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "140470301",
+          "label": "Route de Vaux et Argouges",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "140470302",
+          "label": "Route de Port",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "140470303",
+          "label": "Route Saint-Patrice-Quartier Saint-Julien",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "la_chapelle_saint_luc",
+      "name": "La Chapelle-Saint-Luc",
+      "code": "10081",
+      "population": 12648,
+      "sourceFeatureCount": 7,
+      "officialLabels": [
+        {
+          "sourceId": "100810101",
+          "label": "Vieille Ville Sud-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "100810102",
+          "label": "Vieille Ville Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "100810103",
+          "label": "Vieille Ville Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "100810201",
+          "label": "Chantereigne-Montvilliers Nord-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "100810202",
+          "label": "Chantereigne-Montvilliers Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "100810203",
+          "label": "Chantereigne-Montvilliers Sud-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "100810205",
+          "label": "Chantereigne-Montvilliers Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "granville",
+      "name": "Granville",
+      "code": "50218",
+      "population": 12510,
+      "sourceFeatureCount": 8,
+      "officialLabels": [
+        {
+          "sourceId": "502180101",
+          "label": "Quartier Haute Ville et Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "502180102",
+          "label": "Quartier du Lude et du Rocher",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "502180103",
+          "label": "Quartier Saint-Paul",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "502180104",
+          "label": "Quartier des Ports",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "502180201",
+          "label": "Quartier Hacqueville et du Stade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "502180202",
+          "label": "Quartier du Couvent",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "502180203",
+          "label": "Quartier de l'Agora",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "502180204",
+          "label": "Quartier du Prétot et du Saussey",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "l_isle_adam",
+      "name": "L'Isle-Adam",
+      "code": "95313",
+      "population": 12493,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "953130101",
+          "label": "Rives de l'Oise",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953130102",
+          "label": "La Faisanderie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953130103",
+          "label": "Nogent-Cassan",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953130104",
+          "label": "La Garenne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953130105",
+          "label": "Le Haut de l'Isle-Adam",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_ave",
+      "name": "Saint-Avé",
+      "code": "56206",
+      "population": 12470,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "562060101",
+          "label": "Centre Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "562060102",
+          "label": "Péri Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "562060103",
+          "label": "Berval Lesvellec",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "quimperle",
+      "name": "Quimperlé",
+      "code": "29233",
+      "population": 12469,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "292330101",
+          "label": "La Haute Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292330102",
+          "label": "Kerjouanneau-Kerbertrand",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292330103",
+          "label": "Lézardeau-Kerneuzec",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292330104",
+          "label": "Basse Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "292330105",
+          "label": "Les Villages-La Forêt",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "pont_du_chateau",
+      "name": "Pont-du-Château",
+      "code": "63284",
+      "population": 12412,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "632840101",
+          "label": "Vieux Pont-du-Château",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "632840102",
+          "label": "Les Sablons",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "632840103",
+          "label": "H.L.M.",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "632840104",
+          "label": "La Pradelle",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "gisors",
+      "name": "Gisors",
+      "code": "27284",
+      "population": 12410,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "272840101",
+          "label": "Quartier Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "272840102",
+          "label": "Quartier Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "272840103",
+          "label": "Quartier Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "272840104",
+          "label": "Quartier Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "272840105",
+          "label": "Quartier Ouest",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "pont_sainte_maxence",
+      "name": "Pont-Sainte-Maxence",
+      "code": "60509",
+      "population": 12361,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "605090101",
+          "label": "Sarron",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "605090201",
+          "label": "Pasteur",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "605090301",
+          "label": "Boilet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "605090401",
+          "label": "Terriers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "605090501",
+          "label": "Montignette",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_gaudens",
+      "name": "Saint-Gaudens",
+      "code": "31483",
+      "population": 12139,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "314830101",
+          "label": "Cœur de Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314830102",
+          "label": "Quartier Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314830103",
+          "label": "Quartier Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314830104",
+          "label": "Quartier Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314830105",
+          "label": "Saint-Gaudens-Garonne",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "314830107",
+          "label": "Saint-Gaudens-Coteaux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mios",
+      "name": "Mios",
+      "code": "33284",
+      "population": 12043,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "332840101",
+          "label": "Lacanau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332840102",
+          "label": "Matalin-Surgenne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332840103",
+          "label": "Terres Vives",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332840104",
+          "label": "Centre-Eyre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332840105",
+          "label": "Cassadotte-Masquet",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "roquebrune_cap_martin",
+      "name": "Roquebrune-Cap-Martin",
+      "code": "06104",
+      "population": 12037,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "061040101",
+          "label": "Carnoles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061040102",
+          "label": "Cap Martin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061040103",
+          "label": "Cabbe-Saint-Roman",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061040104",
+          "label": "Village-Cros de Caste-Coupière-Mont Gros",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "061040105",
+          "label": "Val de Gorbio",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "somain",
+      "name": "Somain",
+      "code": "59574",
+      "population": 11766,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "595740101",
+          "label": "Quartier de Sessevalle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595740102",
+          "label": "Quartier du Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595740103",
+          "label": "Quartier de Villers-Campeau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "595740104",
+          "label": "Quartier des Cheminots-Chauffour",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bauge_en_anjou",
+      "name": "Baugé-en-Anjou",
+      "code": "49018",
+      "population": 11712,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "490180101",
+          "label": "Baugé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490180102",
+          "label": "Vieil Baugé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490180103",
+          "label": "Bocé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490180201",
+          "label": "Clefs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490180202",
+          "label": "Cheviré le Rouge",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_cyr_sur_mer",
+      "name": "Saint-Cyr-sur-Mer",
+      "code": "83112",
+      "population": 11658,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "831120101",
+          "label": "Village-Cagueloup-Gueissard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831120102",
+          "label": "Plan de la Mer-Frégate-Rampale-Alon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "831120103",
+          "label": "Les Lecques-Banette-Bourrasque-Pradeaux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sassenage",
+      "name": "Sassenage",
+      "code": "38474",
+      "population": 11646,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "384740101",
+          "label": "La Falaise",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384740102",
+          "label": "La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384740103",
+          "label": "Le Bourg-Les Côtes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "384740104",
+          "label": "Engenières-Rolandière",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "la_hague",
+      "name": "La Hague",
+      "code": "50041",
+      "population": 11484,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "500410101",
+          "label": "Urville-Nacqueville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500410102",
+          "label": "Sainte-Croix-Hague",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500410103",
+          "label": "Jobourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500410104",
+          "label": "Beaumont-Hague",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500410105",
+          "label": "Vasteville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500410106",
+          "label": "Flottemanville-Hague",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "enghien_les_bains",
+      "name": "Enghien-les-Bains",
+      "code": "95210",
+      "population": 11432,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "952100101",
+          "label": "Quartier Nord Résidentiel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952100201",
+          "label": "Centre Ville-Commerce",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952100301",
+          "label": "Residentiel-Place Verdun",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952100401",
+          "label": "Residentiel-Barre d'Ormesson",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "952100501",
+          "label": "Centre Ville-Tour du Lac",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "le_haillan",
+      "name": "Le Haillan",
+      "code": "33200",
+      "population": 11392,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "332000101",
+          "label": "Baraillot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332000102",
+          "label": "Béchade",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332000103",
+          "label": "Miotte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "332000104",
+          "label": "Gasquet",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "montlouis_sur_loire",
+      "name": "Montlouis-sur-Loire",
+      "code": "37156",
+      "population": 11335,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "371560101",
+          "label": "Coteaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371560102",
+          "label": "Centre-Baillet-Bodet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371560103",
+          "label": "Brossereaux-H.L.M. Croix Blanche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371560104",
+          "label": "Montlouis Sud et Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371560105",
+          "label": "Cormier-Miltière-Husseau",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "villefranche_de_rouergue",
+      "name": "Villefranche-de-Rouergue",
+      "code": "12300",
+      "population": 11271,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "123000101",
+          "label": "La Bastide",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "123000102",
+          "label": "Radel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "123000103",
+          "label": "Tricot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "123000104",
+          "label": "Quartier Nord-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "123000105",
+          "label": "Ségala Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "123000106",
+          "label": "Quartier Ouest",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "arcachon",
+      "name": "Arcachon",
+      "code": "33009",
+      "population": 11092,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "330090101",
+          "label": "Le Moulleau-Les Abatilles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330090102",
+          "label": "Pereire-Ville d'Hiver",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330090103",
+          "label": "Ville d'Été",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330090104",
+          "label": "Saint-Ferdinand",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "330090105",
+          "label": "Aiguillon",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mouans_sartoux",
+      "name": "Mouans-Sartoux",
+      "code": "06084",
+      "population": 11015,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "060840101",
+          "label": "Les Aspres-Plan Sarrain",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "060840102",
+          "label": "Grand-Pièce-Les Plaines",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "060840103",
+          "label": "Les Indes-les Groulles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "060840104",
+          "label": "Les Plantiers-Le Plan",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "stiring_wendel",
+      "name": "Stiring-Wendel",
+      "code": "57660",
+      "population": 10956,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "576600101",
+          "label": "Verrerie Sophie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "576600102",
+          "label": "Vieux Stiring",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "576600103",
+          "label": "Centre-Coulée Verte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "576600104",
+          "label": "Habsterdick Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "576600105",
+          "label": "Habsterdick Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "le_pradet",
+      "name": "Le Pradet",
+      "code": "83098",
+      "population": 10933,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "830980101",
+          "label": "Pradet Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830980102",
+          "label": "Pradet Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830980103",
+          "label": "Pradet Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "830980104",
+          "label": "Pradet Centre",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "orthez",
+      "name": "Orthez",
+      "code": "64430",
+      "population": 10881,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "644300101",
+          "label": "Sainte-Suzanne-Magret-Marmonts",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644300102",
+          "label": "Virginie-Castétarbe-Batiplex-Moutète",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644300103",
+          "label": "Mounicq-Taranelle-Trinité-Soarns",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644300104",
+          "label": "Goundet-Moncade-Lapeyrère",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644300105",
+          "label": "Mairie-Stade-Bergérau-Départ",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "brissac_loire_aubance",
+      "name": "Brissac Loire Aubance",
+      "code": "49050",
+      "population": 10878,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "490500101",
+          "label": "Brissac-Quincé",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490500102",
+          "label": "Les Alleuds",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490500103",
+          "label": "Chemellier",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490500104",
+          "label": "Saint-Rémy-la-Varenne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490500105",
+          "label": "Saint-Saturnin-sur-Loire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "490500106",
+          "label": "Vauchrétien",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "passy",
+      "name": "Passy",
+      "code": "74208",
+      "population": 10856,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "742080101",
+          "label": "Ouest et Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742080102",
+          "label": "Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742080103",
+          "label": "Marlioz",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "742080104",
+          "label": "Chedde-Les Plagnes",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "tinqueux",
+      "name": "Tinqueux",
+      "code": "51573",
+      "population": 10771,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "515730101",
+          "label": "Muire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "515730102",
+          "label": "Haubette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "515730201",
+          "label": "Champ Paveau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "515730202",
+          "label": "Croix Cordier",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "allonnes",
+      "name": "Allonnes",
+      "code": "72003",
+      "population": 10739,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "720030101",
+          "label": "Les Ruisseaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "720030102",
+          "label": "Le Chaoué",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "720030103",
+          "label": "La Tour aux Fées",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "720030104",
+          "label": "Les Perrières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "720030105",
+          "label": "Campagne-Hautes Métairies",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "beaumont",
+      "name": "Beaumont",
+      "code": "63032",
+      "population": 10728,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "630320101",
+          "label": "Quartier Stade-Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630320102",
+          "label": "Quartier Artière-Molière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630320103",
+          "label": "Quartier Mairie-Masage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630320104",
+          "label": "Quartier Mont-Dore-Saint-Guillaume",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "630320105",
+          "label": "Quartier Châtaigneraie-Vallières",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "epinay_sur_orge",
+      "name": "Épinay-sur-Orge",
+      "code": "91216",
+      "population": 10722,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "912160101",
+          "label": "Le Breuil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912160102",
+          "label": "La Terrasse",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912160103",
+          "label": "Le Mauregard",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912160104",
+          "label": "Centre Ville Les Graviers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "912160105",
+          "label": "Les Gares",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "etaples",
+      "name": "Étaples",
+      "code": "62318",
+      "population": 10710,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "623180101",
+          "label": "Ville Ancienne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "623180102",
+          "label": "Blanc Pavé-Sirènes-Bergeries",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "623180103",
+          "label": "Mont Levin-Les Pins-Puits d'Amour",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "oloron_sainte_marie",
+      "name": "Oloron-Sainte-Marie",
+      "code": "64422",
+      "population": 10684,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "644220101",
+          "label": "Notre-Dame",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644220102",
+          "label": "Sainte-Croix",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644220103",
+          "label": "Sainte-Marie Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644220104",
+          "label": "Sainte-Marie Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "644220105",
+          "label": "Sainte-Marie Nord Gare Légugnon",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "urrugne",
+      "name": "Urrugne",
+      "code": "64545",
+      "population": 10661,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "645450101",
+          "label": "Mendi Choko Karrikatxar Olhette",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "645450102",
+          "label": "Béhobie Socoa",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "645450103",
+          "label": "Bourg Kechiloa",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "voisins_le_bretonneux",
+      "name": "Voisins-le-Bretonneux",
+      "code": "78688",
+      "population": 10624,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "786880101",
+          "label": "Bretonnière Grande Île B",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786880102",
+          "label": "Le Lac - Grande Île A",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786880103",
+          "label": "La Gravière Centre Village",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786880104",
+          "label": "Plan de l'Église",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "786880105",
+          "label": "Chamfleury Port Royal",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "chantilly",
+      "name": "Chantilly",
+      "code": "60141",
+      "population": 10591,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "601410101",
+          "label": "Centre-Hôtel de Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "601410201",
+          "label": "Centre-Gare",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "601410301",
+          "label": "La Canardière-Le Castel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "601410401",
+          "label": "Saint-Denis",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "601410501",
+          "label": "Les Lycées-La Forêt-Le Château",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "longuenesse",
+      "name": "Longuenesse",
+      "code": "62525",
+      "population": 10548,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "625250101",
+          "label": "Aviateurs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "625250102",
+          "label": "Maillebois-Peintres",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "625250103",
+          "label": "Verte Écuelle-Écrivains",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "625250104",
+          "label": "Centre Ville-Bruyères",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "625250105",
+          "label": "Saint-Quentin-Sainte-Aldegonde",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "biot",
+      "name": "Biot",
+      "code": "06018",
+      "population": 10511,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "060180101",
+          "label": "Village-Saint-Julien-Saint-Pierre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "060180102",
+          "label": "Vallée Verte-Issarts-Vignasses",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "060180103",
+          "label": "Bois Fleuri-Chèvre d'Or-Saint-Philippe",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "pernes_les_fontaines",
+      "name": "Pernes-les-Fontaines",
+      "code": "84088",
+      "population": 10504,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "840880101",
+          "label": "Secteur Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840880102",
+          "label": "Secteur Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840880103",
+          "label": "Secteur Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840880104",
+          "label": "Secteur Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "valentigney",
+      "name": "Valentigney",
+      "code": "25580",
+      "population": 10501,
+      "sourceFeatureCount": 9,
+      "officialLabels": [
+        {
+          "sourceId": "255800101",
+          "label": "Centre Graviers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "255800102",
+          "label": "Rives du Doubs",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "255800103",
+          "label": "Les Bruyères",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "255800104",
+          "label": "Pezole les Longines",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "255800105",
+          "label": "Les Tales sous Roches",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "255800106",
+          "label": "Les Buis Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "255800107",
+          "label": "Les Buis Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "255800108",
+          "label": "Belchamp",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "255800109",
+          "label": "Combottes",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "villers_cotterets",
+      "name": "Villers-Cotterêts",
+      "code": "02810",
+      "population": 10489,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "028100102",
+          "label": "Avenue de Compiegne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "028100202",
+          "label": "Château",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "028100302",
+          "label": "Pisseleux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "028100401",
+          "label": "Vivières",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "la_riche",
+      "name": "La Riche",
+      "code": "37195",
+      "population": 10487,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "371950101",
+          "label": "Sainte-Anne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371950102",
+          "label": "Ronsard Pagnol",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371950103",
+          "label": "Louis XI",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "371950104",
+          "label": "Les Varennes",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "caudebec_les_elbeuf",
+      "name": "Caudebec-lès-Elbeuf",
+      "code": "76165",
+      "population": 10476,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "761650101",
+          "label": "Industries",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "761650102",
+          "label": "Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761650103",
+          "label": "Cavées Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "761650104",
+          "label": "Équipements Publics",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "fouesnant",
+      "name": "Fouesnant",
+      "code": "29058",
+      "population": 10436,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "290580101",
+          "label": "Mousterlin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290580102",
+          "label": "Beg-Meil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "290580103",
+          "label": "Centre Cap Coz",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "andrezieux_boutheon",
+      "name": "Andrézieux-Bouthéon",
+      "code": "42005",
+      "population": 10425,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "420050101",
+          "label": "La Chapelle",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420050104",
+          "label": "Nord Bouthéon Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420050105",
+          "label": "Bourg d'Andrézieux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "420050106",
+          "label": "Agglomération Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "aizenay",
+      "name": "Aizenay",
+      "code": "85003",
+      "population": 10365,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "850030101",
+          "label": "Partie Est Campagne-Agglomération",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "850030102",
+          "label": "Partie Ouest Campagne-Agglomération",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "oignies",
+      "name": "Oignies",
+      "code": "62637",
+      "population": 10323,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "626370101",
+          "label": "Declercq-Bonniers-Verger",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "626370102",
+          "label": "Turelle-Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "626370103",
+          "label": "Perdsemence",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "626370104",
+          "label": "Justice",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "626370105",
+          "label": "Quartier Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "carentan_les_marais",
+      "name": "Carentan-les-Marais",
+      "code": "50099",
+      "population": 10218,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "500990101",
+          "label": "Centre Ancien",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500990102",
+          "label": "Le Bocage Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500990103",
+          "label": "Le Marais Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500990202",
+          "label": "Brévands-Brucheville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500990401",
+          "label": "Saint-Hilaire-Petitville-Montmartin",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ploermel",
+      "name": "Ploërmel",
+      "code": "56165",
+      "population": 10163,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "561650101",
+          "label": "Urbain et Villages Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "561650102",
+          "label": "Urbain Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "561650103",
+          "label": "Villages Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "561650201",
+          "label": "Monterrein",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "avranches",
+      "name": "Avranches",
+      "code": "50025",
+      "population": 10143,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "500250101",
+          "label": "Quartier Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500250102",
+          "label": "Quartier Périphérique Nord-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500250103",
+          "label": "Quartier H.L.M.",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "500250201",
+          "label": "Saint-Martin-des-Champs",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "parthenay",
+      "name": "Parthenay",
+      "code": "79202",
+      "population": 10140,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "792020101",
+          "label": "Le Jardin Public",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "792020102",
+          "label": "La Mairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "792020103",
+          "label": "Les Grippeaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "792020104",
+          "label": "La Mara",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "792020105",
+          "label": "Les Loges",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "villerupt",
+      "name": "Villerupt",
+      "code": "54580",
+      "population": 10102,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "545800101",
+          "label": "Micheville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545800102",
+          "label": "Verdun",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545800103",
+          "label": "Michelet Chatrian",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545800104",
+          "label": "Cantebonne",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_pierre_du_mont",
+      "name": "Saint-Pierre-du-Mont",
+      "code": "40281",
+      "population": 10092,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "402810101",
+          "label": "Ouest-Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "402810102",
+          "label": "Lamoustey",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "402810103",
+          "label": "Biarnes",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_loubes",
+      "name": "Saint-Loubès",
+      "code": "33433",
+      "population": 10027,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "334330101",
+          "label": "La Terrasse",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "334330102",
+          "label": "La Plaine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "334330103",
+          "label": "Le Plateau",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mery_sur_oise",
+      "name": "Méry-sur-Oise",
+      "code": "95394",
+      "population": 9983,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "953940101",
+          "label": "Méry Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953940106",
+          "label": "Hameau de la Bonneville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953940109",
+          "label": "Hameau des Soignolles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "953940110",
+          "label": "Hameau de Vaux",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "leguevin",
+      "name": "Léguevin",
+      "code": "31291",
+      "population": 9945,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "312910101",
+          "label": "La Bastide",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "312910102",
+          "label": "Castelnouvel",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "312910103",
+          "label": "Bayonne",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "voreppe",
+      "name": "Voreppe",
+      "code": "38565",
+      "population": 9922,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "385650101",
+          "label": "Le Bourg-La Jacquinière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "385650102",
+          "label": "L'Hoirie-Brandegaudière-Centr'Alp",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "385650103",
+          "label": "Bouvardière",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "385650104",
+          "label": "Sud Sud-Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_lys",
+      "name": "Saint-Lys",
+      "code": "31499",
+      "population": 9892,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "314990101",
+          "label": "Mescurt",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "314990102",
+          "label": "Gazailla",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "frouzins",
+      "name": "Frouzins",
+      "code": "31203",
+      "population": 9805,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "312030101",
+          "label": "Roussimort",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "312030102",
+          "label": "Canal Saint-Martory",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "grand_couronne",
+      "name": "Grand-Couronne",
+      "code": "76319",
+      "population": 9768,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "763190101",
+          "label": "Les Essarts",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763190201",
+          "label": "Les Bouttières",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763190301",
+          "label": "Le Carabachet",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763190401",
+          "label": "La Cavée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763190501",
+          "label": "Diderot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "763190601",
+          "label": "Forêt du Rouvray",
+          "irisType": "D"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "aucamville",
+      "name": "Aucamville",
+      "code": "31022",
+      "population": 9623,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "310220101",
+          "label": "L'Hers",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "310220102",
+          "label": "Les Violettes",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_jean_d_illac",
+      "name": "Saint-Jean-d'Illac",
+      "code": "33422",
+      "population": 9616,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "334220101",
+          "label": "Boulac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "334220102",
+          "label": "Le Las",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "darnetal",
+      "name": "Darnétal",
+      "code": "76212",
+      "population": 9566,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "762120101",
+          "label": "Centre Rénovation",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762120102",
+          "label": "Table de Pierre-Préaux-Val Saint-Martin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762120103",
+          "label": "Carville-Longpaon",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "762120104",
+          "label": "Secteur Branly",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sene",
+      "name": "Séné",
+      "code": "56243",
+      "population": 9554,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "562430101",
+          "label": "Centre Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "562430102",
+          "label": "Poulfranc et Marais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "562430103",
+          "label": "Presqu'île et Villages",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bures_sur_yvette",
+      "name": "Bures-sur-Yvette",
+      "code": "91122",
+      "population": 9548,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "911220101",
+          "label": "Guyonnerie Vieux Parc",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911220102",
+          "label": "Montjoy-Quatre Coins",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911220103",
+          "label": "Centre Tilleuls Fauvettes",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "911220104",
+          "label": "Hacquinière Paris Chevreuse",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "redon",
+      "name": "Redon",
+      "code": "35236",
+      "population": 9542,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "352360101",
+          "label": "Centre-Le Port",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "352360102",
+          "label": "Beaumont-Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "352360103",
+          "label": "Bellevue",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "352360104",
+          "label": "La Houssaye-Lanrua Nord",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "l_isle_jourdain",
+      "name": "L'Isle-Jourdain",
+      "code": "32160",
+      "population": 9537,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "321600101",
+          "label": "Hesteil",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "321600102",
+          "label": "Casse Martin",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "tonneins",
+      "name": "Tonneins",
+      "code": "47310",
+      "population": 9459,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "473100101",
+          "label": "Mairie-Centre Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "473100102",
+          "label": "La Queille-Grand Jean",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "473100103",
+          "label": "Germillac-Bel-Air",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "473100104",
+          "label": "Ayet-Unet",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "arques",
+      "name": "Arques",
+      "code": "62040",
+      "population": 9431,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "620400101",
+          "label": "Rive Gauche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "620400102",
+          "label": "Rive Droite",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "landivisiau",
+      "name": "Landivisiau",
+      "code": "29105",
+      "population": 9426,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "291050101",
+          "label": "Église-Lannouchen-Cité Marine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291050102",
+          "label": "Mairie-Kerzourat-Kerven",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291050103",
+          "label": "Tiez Nevez-Épis d'Or-La Montagne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "291050104",
+          "label": "Canick-La Vache Blanche-Le Drennec",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "dombasle_sur_meurthe",
+      "name": "Dombasle-sur-Meurthe",
+      "code": "54159",
+      "population": 9424,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "541590101",
+          "label": "Dombasle Nord Centre-Mairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "541590102",
+          "label": "Embanie à la Corée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "541590103",
+          "label": "Crabouilleux Paul Bert",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "541590104",
+          "label": "Entre Les Deux Routes Champs Fleuris",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sallaumines",
+      "name": "Sallaumines",
+      "code": "62771",
+      "population": 9414,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "627710101",
+          "label": "Quartier Nord-Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "627710102",
+          "label": "Quartier Sud-Sud-Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "627710103",
+          "label": "Quartier Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "627710104",
+          "label": "Quartier Est",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "guichen",
+      "name": "Guichen",
+      "code": "35126",
+      "population": 9412,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "351260101",
+          "label": "Guichen Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "351260102",
+          "label": "Pont Réan-Le Boël",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "351260103",
+          "label": "Habitat Épars",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "saint_philbert_de_grand_lieu",
+      "name": "Saint-Philbert-de-Grand-Lieu",
+      "code": "44188",
+      "population": 9400,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "441880101",
+          "label": "Nord Boulogne-Nord Bourg",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441880102",
+          "label": "Sud Boulogne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "441880103",
+          "label": "Sud Bourg",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "rombas",
+      "name": "Rombas",
+      "code": "57591",
+      "population": 9371,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "575910101",
+          "label": "Centre Ville Mairie Ville Basse",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "575910102",
+          "label": "Ville Haute",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "575910103",
+          "label": "Chantereine Petit Moulin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "575910104",
+          "label": "Rond Bois-Champs Robert",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mont_saint_martin",
+      "name": "Mont-Saint-Martin",
+      "code": "54382",
+      "population": 9361,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "543820101",
+          "label": "Val Saint-Martin Réole Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543820102",
+          "label": "Val Saint-Martin Europe Foch",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543820103",
+          "label": "Gare Gambetta Piedmont",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "543820104",
+          "label": "Le Plateau",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "jarville_la_malgrange",
+      "name": "Jarville-la-Malgrange",
+      "code": "54274",
+      "population": 9356,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "542740101",
+          "label": "La Californie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "542740102",
+          "label": "République",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "542740103",
+          "label": "Jarville Est Montaigu",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "542740104",
+          "label": "Jarville Ouest Gallieni",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "liffre",
+      "name": "Liffré",
+      "code": "35152",
+      "population": 9339,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "351520101",
+          "label": "Endroit Joli",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "351520102",
+          "label": "Étangs",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "351520103",
+          "label": "Forêt",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "le_passage",
+      "name": "Le Passage",
+      "code": "47201",
+      "population": 9326,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "472010101",
+          "label": "Turquet-Monges",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "472010102",
+          "label": "Ganet-Galau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "472010103",
+          "label": "Pégaux",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "472010104",
+          "label": "Bénasie-Dolmeyrac",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "nogent_le_rotrou",
+      "name": "Nogent-le-Rotrou",
+      "code": "28280",
+      "population": 9292,
+      "sourceFeatureCount": 5,
+      "officialLabels": [
+        {
+          "sourceId": "282800101",
+          "label": "Centre Ville Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "282800102",
+          "label": "Plateau et Écarts Est",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "282800103",
+          "label": "Centre Ville Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "282800104",
+          "label": "Gauchetières Sud et Écarts Ouest et Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "282800105",
+          "label": "Gauchetières Nord et Écarts Nord",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "paray_le_monial",
+      "name": "Paray-le-Monial",
+      "code": "71342",
+      "population": 9291,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "713420101",
+          "label": "Quartier du Pape",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713420102",
+          "label": "Quartier du Futur",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713420103",
+          "label": "Quartier Vert",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "713420104",
+          "label": "Quartier du Soleil",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "evian_les_bains",
+      "name": "Évian-les-Bains",
+      "code": "74119",
+      "population": 9267,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "741190101",
+          "label": "Bord du Lac",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "741190102",
+          "label": "Ville Haute",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "sarzeau",
+      "name": "Sarzeau",
+      "code": "56240",
+      "population": 9212,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "562400101",
+          "label": "Golfe Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "562400102",
+          "label": "Campagne-Atlantique",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "capbreton",
+      "name": "Capbreton",
+      "code": "40065",
+      "population": 9184,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "400650101",
+          "label": "Bouheben",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "400650102",
+          "label": "La Plage",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "400650103",
+          "label": "Les Sables",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bougival",
+      "name": "Bougival",
+      "code": "78092",
+      "population": 9134,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "780920101",
+          "label": "Les Quais",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780920102",
+          "label": "Bord de Seine",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780920103",
+          "label": "Centre Ville Jonchère",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "780920104",
+          "label": "Les Hauts de Bougival",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "tomblaine",
+      "name": "Tomblaine",
+      "code": "54526",
+      "population": 9117,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "545260101",
+          "label": "Centre Ville Picot",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545260102",
+          "label": "Paix Jartom",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "545260103",
+          "label": "Ensanges Orée du Bois Sainte-Marguerite",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "morieres_les_avignon",
+      "name": "Morières-lès-Avignon",
+      "code": "84081",
+      "population": 9019,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "840810101",
+          "label": "Hôtel de Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840810102",
+          "label": "Campveire",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "840810103",
+          "label": "Hameaux du Vallon",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "joigny",
+      "name": "Joigny",
+      "code": "89206",
+      "population": 9016,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "892060101",
+          "label": "Vieille Ville",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "892060102",
+          "label": "Rive Gauche",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "892060103",
+          "label": "Le Paradis",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "892060104",
+          "label": "Madeleine",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "queven",
+      "name": "Quéven",
+      "code": "56185",
+      "population": 8991,
+      "sourceFeatureCount": 6,
+      "officialLabels": [
+        {
+          "sourceId": "561850101",
+          "label": "B.A.N. Lann Bihoué",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "561850102",
+          "label": "Sud RN",
+          "irisType": "D"
+        },
+        {
+          "sourceId": "561850103",
+          "label": "Le Ronquédo",
+          "irisType": "A"
+        },
+        {
+          "sourceId": "561850104",
+          "label": "Golf",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "561850105",
+          "label": "Secteur Croizamus",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "561850106",
+          "label": "Secteur Kerzec Kerdual",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "veauche",
+      "name": "Veauche",
+      "code": "42323",
+      "population": 8975,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "423230101",
+          "label": "Cité Saint-Laurent",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "423230102",
+          "label": "Bourg Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "423230103",
+          "label": "Bourg Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "boucau",
+      "name": "Boucau",
+      "code": "64140",
+      "population": 8968,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "641400101",
+          "label": "Couronne Boisée",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641400102",
+          "label": "Haut Boucau",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "641400103",
+          "label": "Bas Boucau",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "meulan_en_yvelines",
+      "name": "Meulan-en-Yvelines",
+      "code": "78401",
+      "population": 8950,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "784010101",
+          "label": "Coteau Vexin",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784010102",
+          "label": "Annonciades",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784010103",
+          "label": "Coulée Verte",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "784010104",
+          "label": "Bords de Seine",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bellerive_sur_allier",
+      "name": "Bellerive-sur-Allier",
+      "code": "03023",
+      "population": 8943,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "030230101",
+          "label": "Centre Ville Haut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "030230102",
+          "label": "Centre Ville Bas",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "030230103",
+          "label": "Extérieur Haut",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "030230104",
+          "label": "Extérieur Bas",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "perigny",
+      "name": "Périgny",
+      "code": "17274",
+      "population": 8877,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "172740101",
+          "label": "Rompsay",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "172740102",
+          "label": "Périgny Mairie",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "172740103",
+          "label": "Périgny Bourg",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "bessancourt",
+      "name": "Bessancourt",
+      "code": "95060",
+      "population": 8869,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "950600101",
+          "label": "Église",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950600102",
+          "label": "Base Aérienne",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "950600103",
+          "label": "Brosses et Malais",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [],
+      "guideAlphaRule": {
+        "type": "none",
+        "justification": "Strict automatic Guide Alpha gate: every exact official label is non-empty, human, unique after normalization, unnumbered, non-technical, non-direction-only and non-operational."
+      },
+      "status": "ready"
+    }
+  ]
+}

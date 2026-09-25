@@ -1,0 +1,766 @@
+/* La Wave est la source de vérité visuelle des outils de La Place et de
+ * La Loge : noir profond, reflet très contenu, stroke métal et accent ponctuel. */
+.place-room-shell .is-wave-tool-skin {
+  --wave-tool-accent: #a970ff;
+  --wave-tool-accent-rgb: 169, 112, 255;
+  --wave-tool-black-surface:
+    linear-gradient(180deg, rgba(255, 255, 255, .022) 0%, transparent 23%) padding-box,
+    radial-gradient(86% 66% at 11% -25%, rgba(255, 255, 255, .03), transparent 45%) padding-box,
+    linear-gradient(145deg, #08090a 0%, #020203 60%, #000 100%) padding-box,
+    linear-gradient(110deg, rgba(229, 234, 240, .32), rgba(166, 172, 181, .1) 24%, rgba(54, 57, 63, .035) 62%, rgba(164, 169, 176, .09)) border-box;
+  --wave-tool-control-surface:
+    linear-gradient(116deg, rgba(255, 255, 255, .065) 0%, rgba(255, 255, 255, .014) 36%, transparent 51%) padding-box,
+    linear-gradient(180deg, #1a1c1f 0%, #090a0b 53%, #020203 100%) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .44), rgba(139, 145, 154, .18) 44%, rgba(62, 65, 71, .07) 70%, rgba(183, 187, 194, .22)) border-box;
+  --wave-tool-control-shadow:
+    0 0 0 1px rgba(0, 0, 0, .92),
+    inset 0 1px 0 rgba(255, 255, 255, .28),
+    inset 0 -2px 2px rgba(0, 0, 0, .96),
+    inset 0 0 7px rgba(0, 0, 0, .24),
+    0 4px 8px rgba(0, 0, 0, .52);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="poll"] {
+  --wave-tool-accent: #b990ff;
+  --wave-tool-accent-rgb: 185, 144, 255;
+  --place-tool-accent: var(--wave-tool-accent);
+  --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] {
+  --wave-tool-accent: #a970ff;
+  --wave-tool-accent-rgb: 169, 112, 255;
+  --place-tool-accent: var(--wave-tool-accent);
+  --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin {
+  --wave-tool-accent: #e8bd63;
+  --wave-tool-accent-rgb: 232, 189, 99;
+  --place-tool-accent: var(--wave-tool-accent);
+  --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
+}
+
+.place-room-shell .room-tools-shell.is-classe.is-wave-tool-skin { --wave-tool-accent: #7191ff; --wave-tool-accent-rgb: 113, 145, 255; }
+.place-room-shell .room-tools-shell.is-cage.is-wave-tool-skin { --wave-tool-accent: #ff7189; --wave-tool-accent-rgb: 255, 113, 137; }
+.place-room-shell .room-tools-shell.is-scene.is-wave-tool-skin { --wave-tool-accent: #bd7aff; --wave-tool-accent-rgb: 189, 122, 255; }
+.place-room-shell .room-tools-shell.is-wave.is-wave-tool-skin { --wave-tool-accent: #45cfdf; --wave-tool-accent-rgb: 69, 207, 223; }
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin:is(
+  [data-active-tool="loge-audience-choice"],
+  [data-active-tool="loge-questions"]
+) > .room-tools-shell__panel {
+  background: #010102;
+}
+
+/* Sondage et message épinglé : la carte reprend exactement le matériau
+ * des lignes de boucle premium, sans grand aplat coloré. */
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-card {
+  isolation: isolate;
+  margin: 7px;
+  padding: 13px 12px 11px;
+  overflow-x: hidden;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--wave-tool-black-surface);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, .97),
+    inset 0 1px 0 rgba(230, 234, 240, .15),
+    inset 0 -1px 0 #000,
+    inset 0 0 18px rgba(0, 0, 0, .34),
+    0 5px 12px rgba(0, 0, 0, .44);
+  scrollbar-color: #37383c transparent;
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-card::after {
+  position: absolute;
+  z-index: 0;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(108deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .009) 54%, transparent 76%);
+  clip-path: polygon(0 0, 34% 0, 20% 100%, 0 100%);
+  content: "";
+  opacity: .28;
+  pointer-events: none;
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(.place-tool-card__glyph, .place-tool-card__status, .place-tool-poll__duration-summary) {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-card__glyph {
+  color: var(--wave-tool-accent);
+  filter: drop-shadow(0 0 5px rgba(var(--wave-tool-accent-rgb), .18));
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-card__header > span:nth-child(2) > small {
+  color: color-mix(in srgb, var(--wave-tool-accent) 76%, #d9dce2);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(.place-tool-card input:not([type="checkbox"]), .place-tool-card textarea, .place-tool-card select) {
+  border: 1px solid rgba(219, 224, 232, .15);
+  background: linear-gradient(180deg, #08090a, #020203);
+  color: #f0f1f3;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(.place-tool-card input:not([type="checkbox"]), .place-tool-card textarea, .place-tool-card select):focus {
+  border-color: rgba(var(--wave-tool-accent-rgb), .54);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .04), 0 0 0 2px rgba(var(--wave-tool-accent-rgb), .08), 0 0 12px rgba(var(--wave-tool-accent-rgb), .08);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(
+  .place-tool-card__choice button,
+  .place-tool-card__audience button,
+  .place-tool-card__durations button,
+  .place-tool-card__message-picker button,
+  .place-tool-action
+) {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  color: rgba(222, 221, 228, .78);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(
+  .place-tool-card__choice button,
+  .place-tool-card__audience button,
+  .place-tool-card__durations button
+).is-active {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 112%, rgba(var(--wave-tool-accent-rgb), .11), transparent 63%) padding-box,
+    linear-gradient(180deg, #1c1e21 0%, #090a0b 58%, #020203 100%) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .5), rgba(var(--wave-tool-accent-rgb), .5) 48%, rgba(83, 75, 96, .13)) border-box;
+  color: #f4f1f8;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 10px rgba(var(--wave-tool-accent-rgb), .11);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(
+  .place-tool-card__choice button,
+  .place-tool-card__audience button,
+  .place-tool-card__durations button,
+  .place-tool-card__message-picker button,
+  .place-tool-action
+):is(:hover, :focus-visible):not(:disabled) {
+  border-color: transparent;
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .02) 38%, transparent 52%) padding-box,
+    radial-gradient(ellipse at 50% 112%, rgba(var(--wave-tool-accent-rgb), .09), transparent 62%) padding-box,
+    linear-gradient(180deg, #24262a 0%, #101113 55%, #030304 100%) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .57), rgba(var(--wave-tool-accent-rgb), .36) 48%, rgba(84, 78, 92, .12)) border-box;
+  color: #f5f5f6;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .36), inset 0 -1px rgba(0, 0, 0, .95), 0 0 10px rgba(var(--wave-tool-accent-rgb), .09), 0 3px 7px rgba(0, 0, 0, .44);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(.place-tool-card__choice button, .place-tool-card__audience button, .place-tool-card__durations button).is-active::after {
+  width: 4px;
+  height: 4px;
+  background: var(--wave-tool-accent);
+  box-shadow: 0 0 7px rgba(var(--wave-tool-accent-rgb), .55);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(.place-tool-card__primary, .place-tool-action.is-primary) {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .14), transparent 62%) padding-box,
+    linear-gradient(180deg, #202125, #0b0c0e 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(247, 248, 250, .52), rgba(var(--wave-tool-accent-rgb), .62) 49%, rgba(76, 70, 84, .16)) border-box;
+  color: #f9f7fb;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 13px rgba(var(--wave-tool-accent-rgb), .1);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-action.is-danger {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .035), transparent 25%) padding-box,
+    linear-gradient(180deg, #181416, #070405 62%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .32), rgba(255, 103, 126, .3) 52%, rgba(70, 59, 63, .1)) border-box;
+  color: #ff929f;
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) :is(.place-tool-poll-live, .place-tool-highlight-live, .place-tool-card__availability) {
+  padding: 11px;
+  border: 1px solid rgba(225, 230, 238, .13);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #08090a, #020203 68%, #000);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .045), inset 0 -1px #000;
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-highlight-live > strong {
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .22);
+  border-left: 2px solid var(--wave-tool-accent);
+  background: linear-gradient(90deg, rgba(var(--wave-tool-accent-rgb), .06), transparent 64%);
+}
+
+.place-room-shell :is(
+  .is-wave-tool-skin[data-active-tool="poll"],
+  .is-wave-tool-skin[data-active-tool="highlight"],
+  .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-audience-choice"]
+) .place-tool-card__footer {
+  border-top-color: rgba(229, 234, 240, .09);
+}
+
+/* Questions du public : même profondeur que le SAS, avec la couleur Loge
+ * réservée aux informations actives et au stroke de sélection. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] > .room-tools-shell__panel {
+  background: #010102;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions {
+  padding: 9px;
+  background:
+    radial-gradient(70% 36% at 8% -12%, rgba(255, 255, 255, .035), transparent 62%),
+    linear-gradient(180deg, #030304, #000 74%);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
+  .room-loge-questions__hero-icon,
+  .room-loge-questions__hero-count,
+  .room-loge-questions__live-toggle,
+  .room-loge-questions__filters
+) {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-icon {
+  color: var(--wave-tool-accent);
+  filter: drop-shadow(0 0 5px rgba(var(--wave-tool-accent-rgb), .14));
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__hero-count b,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__open-state.is-open {
+  color: var(--wave-tool-accent);
+  text-shadow: 0 0 8px rgba(var(--wave-tool-accent-rgb), .18);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > b {
+  border-color: rgba(var(--wave-tool-accent-rgb), .42);
+  background: rgba(var(--wave-tool-accent-rgb), .12);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > b > i {
+  background: #e7e7ea;
+  box-shadow: 0 0 7px rgba(255, 255, 255, .18);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle[aria-checked="false"] > b {
+  border-color: rgba(218, 223, 230, .16);
+  background: #08090a;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters {
+  padding: 3px;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(205, 206, 212, .56);
+  box-shadow: none;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button:is(:hover, :focus-visible):not(:disabled) {
+  border-color: rgba(232, 236, 242, .16);
+  background: rgba(255, 255, 255, .025);
+  color: #f4f5f7;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__filters button.is-active {
+  border-color: rgba(var(--wave-tool-accent-rgb), .32);
+  background: radial-gradient(ellipse at 50% 120%, rgba(var(--wave-tool-accent-rgb), .1), transparent 66%), linear-gradient(180deg, #18191c, #050506);
+  color: #f8f8fa;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 0 10px rgba(var(--wave-tool-accent-rgb), .07);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__board {
+  border: 1px solid rgba(229, 234, 240, .13);
+  background: linear-gradient(145deg, #050607, #010102 70%, #000);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list.is-pinned {
+  border-bottom-color: rgba(var(--wave-tool-accent-rgb), .14);
+  background: linear-gradient(180deg, rgba(var(--wave-tool-accent-rgb), .035), transparent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list {
+  scrollbar-color: #37383c transparent;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list::-webkit-scrollbar-thumb {
+  background: #37383c;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article {
+  position: relative;
+  border: 1px solid transparent;
+  background: var(--wave-tool-black-surface);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .96), inset 0 1px rgba(230, 234, 240, .13), inset 0 -1px #000, 0 4px 10px rgba(0, 0, 0, .38);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article:is(:hover, .is-selected) {
+  border-color: transparent;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .027), transparent 24%) padding-box,
+    linear-gradient(145deg, #0a0b0c, #020203 66%, #000) padding-box,
+    linear-gradient(112deg, rgba(232, 236, 242, .34), rgba(var(--wave-tool-accent-rgb), .4) 50%, rgba(176, 181, 188, .1)) border-box;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .96), inset 0 1px rgba(230, 234, 240, .16), 0 0 12px rgba(var(--wave-tool-accent-rgb), .08), 0 4px 10px rgba(0, 0, 0, .4);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-selected::before {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--wave-tool-accent) 88%, #fff), color-mix(in srgb, var(--wave-tool-accent) 50%, transparent));
+  box-shadow: 0 0 9px rgba(var(--wave-tool-accent-rgb), .36);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article.is-answered {
+  border-color: transparent;
+  background: var(--wave-tool-black-surface);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__avatar {
+  border-color: rgba(225, 230, 238, .24);
+  background: #070809;
+  box-shadow: 0 0 0 2px #030304;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__on-air {
+  border-color: rgba(var(--wave-tool-accent-rgb), .28);
+  background: rgba(var(--wave-tool-accent-rgb), .055);
+  color: var(--wave-tool-accent);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__on-air i,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__live-toggle > span > i {
+  background: var(--wave-tool-accent);
+  box-shadow: 0 0 7px rgba(var(--wave-tool-accent-rgb), .6);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list blockquote {
+  background: transparent;
+  color: rgba(242, 243, 246, .9);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  color: rgba(222, 221, 228, .76);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button:is(:hover, :focus-visible):not(:disabled) {
+  border-color: transparent;
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .02) 38%, transparent 52%) padding-box,
+    linear-gradient(180deg, #24262a, #101113 55%, #030304) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .57), rgba(var(--wave-tool-accent-rgb), .34) 48%, rgba(82, 78, 88, .12)) border-box;
+  color: #f5f5f6;
+}
+
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__list article > footer button.is-primary {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .12), transparent 62%) padding-box,
+    linear-gradient(180deg, #202125, #0b0c0e 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(247, 248, 250, .5), rgba(var(--wave-tool-accent-rgb), .58) 49%, rgba(76, 70, 84, .15)) border-box;
+  color: #faf8f4;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 11px rgba(var(--wave-tool-accent-rgb), .08);
+}
+
+/* Cadeau est un outil commun : la même finition s'applique dans La Place,
+ * La Loge, La Classe et La Cage, sans effacer les teintes propres aux objets. */
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] > .room-tools-shell__panel {
+  background: #010102;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--wave-tool-black-surface);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, .97),
+    inset 0 1px rgba(230, 234, 240, .15),
+    inset 0 -1px #000,
+    inset 0 0 20px rgba(0, 0, 0, .36),
+    0 6px 13px rgba(0, 0, 0, .46);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__header {
+  border-bottom-color: rgba(229, 234, 240, .09);
+  background:
+    linear-gradient(108deg, rgba(255, 255, 255, .035), transparent 35%),
+    radial-gradient(ellipse at 8% 48%, rgba(var(--wave-tool-accent-rgb), .055), transparent 34%),
+    linear-gradient(180deg, #070809, #020203);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__glyph {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  color: color-mix(in srgb, var(--wave-tool-accent) 68%, #f1f2f4);
+  box-shadow: var(--wave-tool-control-shadow), 0 0 10px rgba(var(--wave-tool-accent-rgb), .07);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__glyph svg {
+  filter: drop-shadow(0 0 4px rgba(var(--wave-tool-accent-rgb), .2));
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__header small,
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool legend :is(svg, b) {
+  color: color-mix(in srgb, var(--wave-tool-accent) 70%, #d7d9de);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__mode,
+  .place-gift-tool__steps,
+  .place-gift-tool__footer
+) {
+  border-color: rgba(229, 234, 240, .075);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .012), transparent);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__mode button,
+  .place-gift-tool__footer button,
+  .place-gift-tool__success button,
+  .place-gift-draw-state__actions button
+) {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  color: rgba(222, 221, 228, .76);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__mode button,
+  .place-gift-tool__footer button,
+  .place-gift-tool__success button,
+  .place-gift-draw-state__actions button
+):is(:hover, :focus-visible):not(:disabled) {
+  border-color: transparent;
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .02) 38%, transparent 52%) padding-box,
+    radial-gradient(ellipse at 50% 112%, rgba(var(--wave-tool-accent-rgb), .075), transparent 62%) padding-box,
+    linear-gradient(180deg, #24262a, #101113 55%, #030304) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .57), rgba(var(--wave-tool-accent-rgb), .32) 48%, rgba(82, 78, 88, .12)) border-box;
+  color: #f5f5f6;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__mode button.is-active {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .1), transparent 64%) padding-box,
+    linear-gradient(180deg, #1d1f22, #08090a 58%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .5), rgba(var(--wave-tool-accent-rgb), .5) 49%, rgba(76, 70, 84, .14)) border-box;
+  color: #f5f2f8;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 10px rgba(var(--wave-tool-accent-rgb), .08);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__steps::before {
+  background: rgba(210, 215, 222, .14);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__steps li > span {
+  border-color: rgba(220, 225, 232, .15);
+  background: linear-gradient(180deg, #111214, #030304);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .05);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__steps li.is-current > span {
+  border-color: color-mix(in srgb, var(--wave-tool-accent) 58%, #c9ccd2);
+  background: radial-gradient(circle, color-mix(in srgb, var(--wave-tool-accent) 34%, #17181a) 0 28%, #08090a 72%);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(var(--wave-tool-accent-rgb), .24), inset 0 1px rgba(255, 255, 255, .12);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__steps li.is-current:first-child::after {
+  background: linear-gradient(90deg, var(--wave-tool-accent), rgba(var(--wave-tool-accent-rgb), .12));
+  box-shadow: 0 0 5px rgba(var(--wave-tool-accent-rgb), .2);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__steps li.is-complete {
+  color: color-mix(in srgb, var(--wave-tool-accent) 54%, #bfc2c8);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__steps li.is-complete > span {
+  border-color: rgba(var(--wave-tool-accent-rgb), .28);
+  background: rgba(var(--wave-tool-accent-rgb), .055);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__body {
+  scrollbar-color: #37383c transparent;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__catalog button {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .018), transparent 24%) padding-box,
+    radial-gradient(ellipse at 50% 39%, color-mix(in srgb, var(--gift-tone) 5%, transparent), transparent 48%) padding-box,
+    linear-gradient(145deg, #08090a, #020203 65%, #000) padding-box,
+    linear-gradient(110deg, rgba(229, 234, 240, .29), color-mix(in srgb, var(--gift-tone) 14%, rgba(166, 172, 181, .08)) 45%, rgba(60, 63, 68, .04)) border-box;
+  box-shadow: inset 0 1px rgba(230, 234, 240, .12), inset 0 -1px #000, 0 4px 10px rgba(0, 0, 0, .38);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__catalog button:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .027), transparent 24%) padding-box,
+    radial-gradient(ellipse at 50% 39%, color-mix(in srgb, var(--gift-tone) 8%, transparent), transparent 52%) padding-box,
+    linear-gradient(145deg, #0b0c0d, #030304 65%, #010102) padding-box,
+    linear-gradient(110deg, rgba(229, 234, 240, .36), color-mix(in srgb, var(--gift-tone) 28%, rgba(166, 172, 181, .08)) 48%, rgba(70, 72, 78, .05)) border-box;
+  box-shadow: inset 0 1px rgba(230, 234, 240, .15), 0 0 12px color-mix(in srgb, var(--gift-tone) 7%, transparent), 0 5px 11px rgba(0, 0, 0, .42);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__catalog button.is-selected {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--gift-tone) 8%, transparent), transparent 54%) padding-box,
+    linear-gradient(145deg, #090a0b, #020203 68%, #000) padding-box,
+    linear-gradient(112deg, rgba(238, 241, 246, .43), color-mix(in srgb, var(--gift-tone) 62%, rgba(180, 184, 191, .14)) 52%, rgba(87, 89, 94, .07)) border-box;
+  box-shadow: inset 0 1px rgba(230, 234, 240, .15), 0 0 12px color-mix(in srgb, var(--gift-tone) 11%, transparent), 0 5px 11px rgba(0, 0, 0, .42);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__discovery {
+  border: 1px solid transparent;
+  background:
+    radial-gradient(ellipse at 20% 0, color-mix(in srgb, var(--gift-tone) 8%, transparent), transparent 58%) padding-box,
+    linear-gradient(145deg, #0a0b0c, #020203 72%) padding-box,
+    linear-gradient(112deg, rgba(232, 236, 242, .34), color-mix(in srgb, var(--gift-tone) 44%, rgba(176, 181, 188, .1))) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 5px 12px rgba(0, 0, 0, .48);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__recipient-group,
+  .place-gift-tool__recap,
+  .place-gift-draw-pool-summary,
+  .place-gift-draw-privacy,
+  .place-gift-draw-state__winner,
+  .place-gift-tool__surprise-config,
+  .place-gift-tool__success-visual
+) {
+  border: 1px solid rgba(224, 229, 236, .13);
+  background: linear-gradient(145deg, #08090a, #020203 70%, #000);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__recipient-group button,
+  .place-gift-tool__actions button,
+  .place-gift-draw-pools > button,
+  .place-gift-draw-delivery > button,
+  .place-gift-draw-duration button
+) {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  color: rgba(222, 221, 228, .72);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__recipient-group button,
+  .place-gift-tool__actions button,
+  .place-gift-draw-pools > button,
+  .place-gift-draw-delivery > button,
+  .place-gift-draw-duration button
+):is(:hover, :focus-visible):not(:disabled) {
+  border-color: transparent;
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .018) 38%, transparent 52%) padding-box,
+    linear-gradient(180deg, #232529, #0e0f11 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .54), rgba(var(--wave-tool-accent-rgb), .28) 48%, rgba(82, 78, 88, .1)) border-box;
+  color: #f5f5f6;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__recipient-group button,
+  .place-gift-tool__actions button,
+  .place-gift-draw-pools > button,
+  .place-gift-draw-delivery > button,
+  .place-gift-draw-duration button
+).is-selected {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .09), transparent 64%) padding-box,
+    linear-gradient(180deg, #1d1f22, #08090a 58%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .47), rgba(var(--wave-tool-accent-rgb), .48) 49%, rgba(76, 70, 84, .13)) border-box;
+  color: color-mix(in srgb, var(--wave-tool-accent) 58%, #f5f5f6);
+  box-shadow: var(--wave-tool-control-shadow), 0 0 9px rgba(var(--wave-tool-accent-rgb), .075);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool input:not([type="file"]),
+  .place-gift-tool select,
+  .place-gift-tool textarea
+) {
+  border: 1px solid rgba(219, 224, 232, .15);
+  background: linear-gradient(180deg, #08090a, #020203);
+  color: #f0f1f3;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), inset 0 -1px #000;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool input:not([type="file"]),
+  .place-gift-tool select,
+  .place-gift-tool textarea
+):focus {
+  border-color: rgba(var(--wave-tool-accent-rgb), .48);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035), 0 0 0 2px rgba(var(--wave-tool-accent-rgb), .075);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__footer-selection {
+  border: 1px solid transparent;
+  background: var(--wave-tool-control-surface);
+  box-shadow: var(--wave-tool-control-shadow);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__inventory-glyph {
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .28);
+  background: linear-gradient(180deg, #151619, #050506);
+  color: var(--wave-tool-accent);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .08), 0 0 9px rgba(var(--wave-tool-accent-rgb), .07);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__footer-selection:is(:hover, :focus-visible) {
+  border-color: transparent;
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .018) 38%, transparent 52%) padding-box,
+    linear-gradient(180deg, #232529, #0e0f11 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .54), rgba(var(--wave-tool-accent-rgb), .28) 48%, rgba(82, 78, 88, .1)) border-box;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__footer button.is-primary,
+  .place-gift-draw-state__actions button.is-primary
+) {
+  border-color: transparent;
+  background:
+    radial-gradient(ellipse at 50% 116%, rgba(var(--wave-tool-accent-rgb), .12), transparent 62%) padding-box,
+    linear-gradient(180deg, #202125, #0b0c0e 57%, #020203) padding-box,
+    linear-gradient(118deg, rgba(247, 248, 250, .5), rgba(var(--wave-tool-accent-rgb), .58) 49%, rgba(76, 70, 84, .15)) border-box;
+  color: #faf8fb;
+  box-shadow: var(--wave-tool-control-shadow), 0 0 11px rgba(var(--wave-tool-accent-rgb), .08);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-draw-state__actions button.is-danger {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .03), transparent 25%) padding-box,
+    linear-gradient(180deg, #181416, #070405 62%, #020203) padding-box,
+    linear-gradient(118deg, rgba(248, 249, 251, .3), rgba(255, 103, 126, .3) 52%, rgba(70, 59, 63, .1)) border-box;
+  color: #ff929f;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__recipient-avatar,
+  .place-gift-tool__recipient-group > header b,
+  .place-gift-draw-pools > button b
+) {
+  border-color: rgba(var(--wave-tool-accent-rgb), .26);
+  background: rgba(var(--wave-tool-accent-rgb), .055);
+  color: color-mix(in srgb, var(--wave-tool-accent) 64%, #d9dce1);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] :is(
+  .place-gift-tool__recap small,
+  .place-gift-draw-pool-summary > svg,
+  .place-gift-draw-privacy > svg,
+  .place-gift-draw-state > small,
+  .place-gift-draw-state__winner small,
+  .place-gift-tool__recipient-mode
+) {
+  color: color-mix(in srgb, var(--wave-tool-accent) 66%, #d4d6dc);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-draw-state__visual {
+  border-color: rgba(var(--wave-tool-accent-rgb), .34);
+  background: radial-gradient(circle, rgba(var(--wave-tool-accent-rgb), .11), #050506 72%);
+  color: color-mix(in srgb, var(--wave-tool-accent) 70%, #e5e7eb);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), 0 0 15px rgba(var(--wave-tool-accent-rgb), .09);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__surprise-config {
+  border-color: rgba(var(--wave-tool-accent-rgb), .24);
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__surprise-photo {
+  border-color: rgba(var(--wave-tool-accent-rgb), .32);
+  background: #050506;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__surprise-photo > svg {
+  color: var(--wave-tool-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .is-wave-tool-skin :is(button, input, select, textarea) { transition: none; }
+}

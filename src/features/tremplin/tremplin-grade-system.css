@@ -1,0 +1,354 @@
+.tremplin-grade-system {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+  padding: clamp(20px, 2.8vw, 34px);
+  border: 1px solid rgba(188, 163, 247, 0.14);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(139, 92, 246, 0.11), transparent 34%),
+    linear-gradient(145deg, rgba(18, 15, 34, 0.92), rgba(8, 8, 17, 0.96));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+.tremplin-grade-system__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.tremplin-grade-system__header h2 {
+  margin: 6px 0 0;
+  color: #fff;
+  font-size: clamp(24px, 2.2vw, 36px);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.tremplin-grade-system__header p {
+  max-width: 720px;
+  margin: 8px 0 0;
+  color: rgba(232, 224, 244, 0.74);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.tremplin-grade-system__current {
+  display: flex;
+  min-width: 220px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border: 1px solid rgba(210, 193, 249, 0.13);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.tremplin-grade-system__current > span {
+  display: grid;
+  gap: 2px;
+}
+
+.tremplin-grade-system__current small,
+.tremplin-grade-system__overview small,
+.tremplin-grade-system__progress small {
+  color: rgba(209, 197, 230, 0.46);
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.tremplin-grade-system__current strong {
+  color: #fff;
+  font-size: 18px;
+}
+
+.tremplin-grade-system__overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.tremplin-grade-system__overview article {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid rgba(199, 181, 239, 0.09);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.tremplin-grade-system__overview article > span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.12);
+  color: rgba(193, 164, 255, 0.9);
+}
+
+.tremplin-grade-system__overview svg {
+  width: 16px;
+}
+
+.tremplin-grade-system__overview article > div {
+  display: grid;
+  gap: 4px;
+}
+
+.tremplin-grade-system__overview strong {
+  color: rgba(248, 245, 253, 0.86);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.42;
+}
+
+.tremplin-grade-system__progress {
+  display: grid;
+  gap: 9px;
+  padding: 14px 16px;
+  border: 1px solid rgba(199, 181, 239, 0.1);
+  border-radius: 15px;
+  background: rgba(7, 7, 16, 0.52);
+}
+
+.tremplin-grade-system__progress > div {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tremplin-grade-system__progress > div > span {
+  display: grid;
+  gap: 2px;
+}
+
+.tremplin-grade-system__progress strong {
+  color: #fff;
+  font-size: 13px;
+}
+
+.tremplin-grade-system__progress b {
+  color: rgba(220, 204, 255, 0.94);
+  font-size: 15px;
+}
+
+.tremplin-grade-system__progress > i {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.tremplin-grade-system__progress > i > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7261d2, #ad7cff 72%, #82ddb3);
+  box-shadow: 0 0 18px rgba(160, 118, 255, 0.3);
+}
+
+.tremplin-grade-system__criteria {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.3fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.tremplin-grade-system__criteria h3 {
+  margin: 6px 0 0;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: -0.025em;
+}
+
+.tremplin-grade-system__criteria ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tremplin-grade-system__criteria li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 8px 12px 8px 8px;
+  border: 1px solid rgba(199, 181, 239, 0.08);
+  border-radius: 11px;
+  color: rgba(220, 211, 237, 0.48);
+}
+
+.tremplin-grade-system__criteria li > span {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.tremplin-grade-system__criteria li svg {
+  width: 13px;
+}
+
+.tremplin-grade-system__criteria li strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.tremplin-grade-system__criteria li small {
+  color: rgba(218, 207, 236, 0.58);
+  font-size: 11px;
+}
+
+.tremplin-grade-system__criteria li.is-validated {
+  border-color: rgba(92, 209, 153, 0.14);
+  color: rgba(231, 244, 238, 0.78);
+}
+
+.tremplin-grade-system__criteria li.is-validated > span {
+  background: rgba(65, 201, 138, 0.1);
+  color: #69d6a3;
+}
+
+.tremplin-grade-system__levels {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.tremplin-grade-system__levels > span {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  justify-content: start;
+  gap: 2px 7px;
+  min-height: 92px;
+  padding: 12px;
+  border: 1px solid rgba(199, 181, 239, 0.07);
+  border-radius: 12px;
+  color: rgba(214, 204, 232, 0.38);
+}
+
+.tremplin-grade-system__levels > span > .mw-grade-badge {
+  grid-row: 1 / 3;
+}
+
+.tremplin-grade-system__levels small {
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.tremplin-grade-system__levels strong {
+  font-size: 14px;
+  line-height: 1.15;
+}
+
+.tremplin-grade-system__levels .is-passed {
+  color: rgba(222, 212, 239, 0.65);
+}
+
+.tremplin-grade-system__levels .is-current {
+  border-color: rgba(183, 145, 255, 0.38);
+  background: rgba(139, 92, 246, 0.11);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.tremplin-grade-system__eligibility {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  border: 1px solid rgba(110, 214, 165, 0.16);
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(48, 144, 103, 0.1), rgba(139, 92, 246, 0.06));
+  color: rgba(239, 248, 243, 0.88);
+}
+
+.tremplin-grade-system__eligibility > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.tremplin-grade-system__eligibility svg {
+  width: 18px;
+  color: #6dd9a7;
+}
+
+.tremplin-grade-system__eligibility span {
+  display: grid;
+  gap: 3px;
+}
+
+.tremplin-grade-system__eligibility strong {
+  font-size: 14px;
+}
+
+.tremplin-grade-system__eligibility small {
+  color: rgba(222, 235, 227, 0.72);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .tremplin-grade-system__overview,
+  .tremplin-grade-system__levels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tremplin-grade-system__criteria {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .tremplin-grade-system {
+    padding: 16px 13px;
+    border-radius: 19px;
+  }
+
+  .tremplin-grade-system__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tremplin-grade-system__current {
+    width: 100%;
+  }
+
+  .tremplin-grade-system__overview,
+  .tremplin-grade-system__criteria ul {
+    grid-template-columns: 1fr;
+  }
+
+  .tremplin-grade-system__levels {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(152px, 1fr);
+    grid-template-columns: none;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .tremplin-grade-system__levels > span {
+    scroll-snap-align: start;
+  }
+}

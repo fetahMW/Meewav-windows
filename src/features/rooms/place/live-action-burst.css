@@ -1,0 +1,51 @@
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst {
+  position: absolute !important;
+  z-index: 8 !important;
+  left: 50%; bottom: 50%; width: 1px; height: 1px;
+  pointer-events: none; isolation: isolate;
+}
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__halo {
+  position: absolute; inset: -30px; border: 1px solid #ffe5a2a6; border-radius: 50%;
+  background: radial-gradient(circle, #ffe7a11c, transparent 68%);
+  animation: live-burst-halo .65s ease-out both;
+}
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle {
+  position: absolute; left: -9px; top: -9px; display: grid; place-items: center;
+  width: 18px; height: 18px; border: 1px solid #ffe79c; border-radius: 50%;
+  color: #61400d; background: radial-gradient(circle at 30% 20%, #fff5bc, #eec456 70%, #9c681a);
+  box-shadow: inset 0 1px #fff9d8, 0 0 9px #efbd5140;
+  font: 650 11px/1 system-ui, sans-serif;
+  animation: live-burst-flight 1s cubic-bezier(.16,.74,.25,1) both;
+}
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle--0 { --flight-x: -45px; --flight-y: -68px; --flight-turn: -35deg; }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle--1 { --flight-x: -23px; --flight-y: -104px; --flight-turn: 32deg; animation-delay: .035s; }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle--2 { --flight-x: 0px; --flight-y: -122px; --flight-turn: -12deg; animation-delay: .06s; }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle--3 { --flight-x: 24px; --flight-y: -102px; --flight-turn: 40deg; animation-delay: .025s; }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle--4 { --flight-x: 47px; --flight-y: -66px; --flight-turn: -28deg; animation-delay: .075s; }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst--golden .live-action-burst__particle { width: 16px; height: 16px; border: 0; background: none; color: #ffe49a; box-shadow: none; }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__particle svg { width: 100% !important; height: 100% !important; stroke-width: 1.4; filter: drop-shadow(0 0 5px #ffd36270); }
+:is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__label {
+  position: absolute; left: 0; bottom: 28px; transform: translateX(-50%); padding: 5px 9px;
+  border: 1px solid #e6c48150; border-radius: 9px; background: #090805ee; color: #ffe6aa;
+  font: 550 11px/1.2 Inter, system-ui, sans-serif; white-space: nowrap;
+  animation: live-burst-caption 1.15s ease-out both;
+}
+.rooms-page .place-viewer-room-actions .is-golden { position: relative; overflow: visible; }
+.rooms-page .place-viewer-room-actions .live-action-burst { transform: rotate(180deg); }
+.rooms-page .place-viewer-room-actions .live-action-burst__label { transform: translateX(-50%) rotate(180deg); }
+.rooms-page .place-stage .place-stage__hat-action .live-support-remaining {
+  position: absolute; z-index: 3; right: -1px; bottom: -1px; display: grid; place-items: center;
+  min-width: 16px; height: 16px; padding: 0 3px; border: 1px solid #dfbb72a8; border-radius: 999px;
+  background: #131008; color: #ffe8af; box-shadow: 0 2px 4px #0009; font: 600 10px/1 system-ui, sans-serif;
+}
+@keyframes live-burst-halo { from { opacity: .9; transform: scale(.65); } to { opacity: 0; transform: scale(1.8); } }
+@keyframes live-burst-flight { 0% { opacity: 0; transform: translate(0, 0) scale(.45); } 14% { opacity: 1; } 65% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--flight-x), var(--flight-y)) rotate(var(--flight-turn)) scale(.65); } }
+@keyframes live-burst-caption { 0% { opacity: 0; margin-bottom: -4px; } 20%, 70% { opacity: 1; } 100% { opacity: 0; margin-bottom: 16px; } }
+@media (prefers-reduced-motion: reduce) {
+  :is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst :is(.live-action-burst__particle, .live-action-burst__halo) { display: none; }
+  :is(.rooms-page :is(.live-action-bar, .place-stage__controls, .place-viewer-room-actions, .place-chat-social-actions), .scene-page .shorts-reactions) .live-action-burst__label { animation: none; }
+}
+
+.rooms-page .place-stage__hat-action { position: relative; overflow: visible; }
+
+.scene-page .shorts-reaction--golden { position: relative; overflow: visible; }

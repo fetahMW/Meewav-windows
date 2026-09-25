@@ -1,0 +1,90 @@
+/* The supplied illustration is used only for the header artwork and card images.
+   All headings, copy and navigation remain live HTML. Dimensions follow the
+   reference proportions, independent of the zoom of the supplied screenshots. */
+#tremplin-discovery {
+  --guide-art: url('/images/tremplin/tremplin-discovery-guide-reference.png');
+  container-type: inline-size;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 3.2% 3.2% 2%;
+  border: 1px solid #ab8fd17d;
+  border-radius: 22px;
+  background: radial-gradient(ellipse at 100% 0,#52228240,transparent 48%),linear-gradient(130deg,#0b0911,#030305 55%,#08070e);
+  box-shadow: inset 0 1px 1px #eee0ff47,inset -1px -1px 2px #a456e58a,0 15px 35px #0007;
+}
+#tremplin-discovery::after {
+  content: ''; position: absolute; pointer-events: none; inset: 0; border-radius: inherit;
+  background: radial-gradient(ellipse 40px 2px at 20% 0,#f5deff,transparent),radial-gradient(ellipse 60px 3px at 97% 0,#c17af4,transparent),radial-gradient(ellipse 2px 60px at 100% 80%,#caa2ff66,transparent);
+}
+#tremplin-discovery .tremplin-how__section-heading {
+  position: relative; z-index: 1; grid-template-columns: 5cqw minmax(0,1fr); gap: 1.4cqw;
+  max-width: none; width: 62%; min-height: 12.7cqw; margin: .5cqw 0 0;
+}
+#tremplin-discovery .tremplin-how__section-heading > span {
+  width: 5cqw; height: 5cqw; border-radius: 1.3cqw; font-size: 2cqw; font-weight: 620;
+  border-color: #b999eb7d; background: radial-gradient(ellipse at 10% 0,#8260b331,transparent 70%),linear-gradient(150deg,#13101b,#030305);
+  box-shadow: inset 0 1px 2px #e1d0fd77,inset 0 -1px 2px #9478c345; color:#bb94ed;
+}
+#tremplin-discovery .tremplin-how__section-heading small { display:block; font-size: .95cqw; line-height:1.25; font-weight: 650; letter-spacing: .3em; color:#c29bee; }
+#tremplin-discovery .tremplin-how__section-heading h2 { margin: 1.05cqw 0 0; font-size: 3.7cqw; line-height:1.08; font-weight:690; letter-spacing:-.035em; white-space:nowrap; }
+#tremplin-discovery .tremplin-how__section-heading h2 em { font-style:normal; color:#ae76ed; background:linear-gradient(100deg,#a15ee9,#b58af5); background-clip:text; -webkit-text-fill-color:transparent; }
+#tremplin-discovery .tremplin-how__section-heading p { margin: .8cqw 0 0; max-width: 49cqw; font-size:1.25cqw; line-height:1.55; color:#bdb8c7; }
+#tremplin-discovery .tremplin-how__discovery-art { position:absolute; z-index:-1; top:0; right:0; width:42%; aspect-ratio: 688 / 290; background-image:var(--guide-art); background-size:257.85% auto; background-position:96.1% 6.2%; mask-image:linear-gradient(90deg,transparent,#000 14%),linear-gradient(0deg,transparent,#000 12%); mask-composite:intersect; }
+#tremplin-discovery .tremplin-how__channels { position:relative; z-index:1; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.35cqw; margin-top:1.7cqw; }
+#tremplin-discovery .tremplin-how__channels article {
+  position:relative; isolation:isolate; display:grid; grid-template-rows:13cqw auto 1fr 4.15cqw;
+  min-width:0; min-height:26.5cqw; margin:0; padding:0 1.9cqw 1.7cqw; overflow:hidden;
+  border:1px solid #9b83b799; border-radius:1.6cqw;
+  background:linear-gradient(155deg,#17111f,#08070c 58%,#040406);
+  box-shadow:inset 0 1px 1px #e8d4ff47,inset 0 -1px 2px #ad8ce13b,0 7px 17px #0007;
+  transition:border-color 180ms ease,box-shadow 180ms ease;
+}
+#tremplin-discovery .tremplin-how__channels article::after { content:''; position:absolute; pointer-events:none; inset:0; border-radius:inherit; background:radial-gradient(ellipse 50px 3px at 9% 0,#f6e5ffbb,transparent),radial-gradient(ellipse 3px 25px at 100% 95%,#d5b5ff88,transparent); }
+#tremplin-discovery .tremplin-how__channels article:hover { border-color:#c9a7ef; box-shadow:inset 0 1px 2px #ead2ff8c,inset 0 -1px 3px #b785e970,0 0 17px #9757d328; }
+#tremplin-discovery .tremplin-how__channels article.is-rooms { border-color:#ba9edbb8; box-shadow:inset 0 1px 2px #ead2ff8c,inset 0 -1px 3px #b785e970,0 0 12px #9757d319; }
+#tremplin-discovery .tremplin-how__channel-art { margin:0 -1.9cqw; background-image:var(--guide-art); background-size:339.85% auto; background-position:7.43% 48.4%; mask-image:linear-gradient(#000 92%,transparent); }
+#tremplin-discovery .is-scene .tremplin-how__channel-art { background-size:349.2% auto; background-position:50.55% 48.4%; }
+#tremplin-discovery .is-globe .tremplin-how__channel-art { background-size:347.8% auto; background-position:92.8% 48.4%; }
+#tremplin-discovery .tremplin-how__channels h3 { margin: .55cqw 0 .35cqw; color:#faf9fc; font-size:1.95cqw; line-height:1.15; font-weight:690; letter-spacing:-.025em; }
+#tremplin-discovery .tremplin-how__channels p { margin:0 0 1cqw; color:#bbb6c6; font-size:1.23cqw; line-height:1.5; }
+#tremplin-discovery .tremplin-how__channels article > button {
+  position:relative; width:100%; height:4.15cqw; min-height:0; margin:0; padding:0 1cqw; gap:.8cqw;
+  border:1px solid #bea4e88f; border-radius:1.5cqw; color:#fff; font-size:1.05cqw; font-weight:630;
+  background:radial-gradient(ellipse 17% 50% at 2% -8%,#dbc2ff9c,transparent 80%),radial-gradient(ellipse 7% 20% at 94% 0,#fff9,transparent 90%),linear-gradient(174deg,#18131f,#07050c 24%,#030304 78%,#181021);
+  box-shadow:inset 0 1px 1px #ffefff9c,inset 0 -1px 1px #d1abff9c,0 0 0 1px #2e203c55,0 4px 8px #0007;
+  transition:box-shadow 160ms ease,border-color 160ms ease;
+}
+#tremplin-discovery .tremplin-how__channels article.is-rooms > button { border-color:#bd84f3; box-shadow:inset 0 1px 2px #dab3fca6,inset 0 -1px 2px #b276ecad,0 0 8px #a960e833; }
+#tremplin-discovery .tremplin-how__channels article.is-rooms > button::after { background:radial-gradient(ellipse 20px 4px at 4% 0,#fff,transparent),radial-gradient(ellipse 85px 3px at 29% 0,#c28bff,transparent),radial-gradient(ellipse 50px 3px at 84% 100%,#e5baff,transparent); }
+#tremplin-discovery .tremplin-how__channels article > button::after { content:''; position:absolute; pointer-events:none; inset:0; border-radius:inherit; background:radial-gradient(ellipse 25px 3px at 5% 0,#fff,transparent),radial-gradient(ellipse 40px 2px at 82% 100%,#efccff,transparent); }
+#tremplin-discovery .tremplin-how__channels article > button:hover { border-color:#ecd6ff; box-shadow:inset 0 1px 2px #fff,inset 0 -2px 3px #c49aedcc,0 0 14px #b27ae840; }
+#tremplin-discovery .tremplin-how__channels article > button:focus-visible { outline:2px solid #d0a6f7; outline-offset:4px; }
+#tremplin-discovery .tremplin-how__channels article > button svg { width:1.1cqw; height:1.1cqw; }
+#tremplin-discovery .tremplin-how__discovery-signature { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-top:1.35cqw; padding:.95cqw .6cqw 0; border-top:1px solid #a48bbf24; font-size:.58cqw; line-height:1.8; letter-spacing:.35em; text-transform:uppercase; color:#b897dc; }
+#tremplin-discovery .tremplin-how__discovery-signature > span:last-child { color:#877792; }
+#tremplin-discovery .tremplin-how__discovery-signature > span:first-child { position:relative; padding-left:4.5cqw; }
+#tremplin-discovery .tremplin-how__discovery-signature > span:first-child::before { content:''; position:absolute; left:0; top:.2cqw; width:2.9cqw; aspect-ratio:46 / 24; background-image:var(--guide-art); background-size:3856.5% auto; background-position:5.96% 91.42%; }
+@media (max-width:760px) {
+  #tremplin-discovery { padding:24px 18px 20px; }
+  #tremplin-discovery .tremplin-how__section-heading { width:100%; grid-template-columns:40px minmax(0,1fr); gap:12px; min-height:0; }
+  #tremplin-discovery .tremplin-how__section-heading > span { width:40px; height:40px; font-size:20px; border-radius:12px; }
+  #tremplin-discovery .tremplin-how__section-heading small { font-size:10px; letter-spacing:.18em; }
+  #tremplin-discovery .tremplin-how__section-heading h2 { font-size:26px; white-space:normal; margin-top:9px; }
+  #tremplin-discovery .tremplin-how__section-heading p { font-size:13px; max-width:none; margin-top:13px; }
+  #tremplin-discovery .tremplin-how__discovery-art { opacity:.25; width:70%; }
+  #tremplin-discovery .tremplin-how__channels { grid-template-columns:1fr; gap:18px; margin-top:24px; }
+  #tremplin-discovery .tremplin-how__channels article { grid-template-rows:40cqw auto 1fr 46px; min-height:0; padding:0 18px 18px; border-radius:19px; }
+  #tremplin-discovery .tremplin-how__channel-art { margin:0 -18px; }
+  #tremplin-discovery .tremplin-how__channels h3 { font-size:23px; margin:9px 0 7px; }
+  #tremplin-discovery .tremplin-how__channels p { font-size:14px; margin-bottom:17px; }
+  #tremplin-discovery .tremplin-how__channels article > button { height:46px; font-size:12px; border-radius:16px; gap:9px; }
+  #tremplin-discovery .tremplin-how__channels article > button svg { width:16px; height:16px; }
+  #tremplin-discovery .tremplin-how__discovery-signature { margin-top:18px; padding-top:12px; font-size:8px; letter-spacing:.2em; }
+  #tremplin-discovery .tremplin-how__discovery-signature > span:last-child { display:none; }
+  #tremplin-discovery .tremplin-how__discovery-signature > span:first-child { padding-left:40px; }
+  #tremplin-discovery .tremplin-how__discovery-signature > span:first-child::before { top:5px; width:28px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #tremplin-discovery .tremplin-how__channels article,
+  #tremplin-discovery .tremplin-how__channels article > button { transition:none; }
+}

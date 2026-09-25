@@ -1,0 +1,141 @@
+/* Onglets sociaux : même matière Hi-Fi que Mixeur, sans modifier le gabarit
+ * partagé, le sous-menu, les contenus ni le cadre PVC de la console. */
+.place-room-shell .place-studio-panel.is-host-panel.is-tools:not(.is-collapsed) .place-studio-panel__tabs > button.is-active {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, .028) 28%, transparent 43%) padding-box,
+    radial-gradient(ellipse at 50% 112%, rgba(218, 222, 230, .16), rgba(155, 162, 176, .042) 49%, transparent 72%) padding-box,
+    linear-gradient(180deg, #141517 0%, #08090a 55%, #020203 100%) padding-box,
+    linear-gradient(100deg, rgba(177, 183, 193, .72), rgba(240, 242, 247, .92) 49%, rgba(126, 135, 150, .64)) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    inset 0 -11px 21px rgba(154, 162, 177, .10),
+    inset 0 0 16px rgba(0, 0, 0, .22),
+    0 1px 0 rgba(0, 0, 0, .9),
+    0 6px 15px rgba(0, 0, 0, .48),
+    0 8px 22px rgba(193, 202, 219, .14);
+  color: #fafbfc;
+  text-shadow: 0 0 8px rgba(236, 240, 247, .14);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-chat:not(.is-collapsed) .place-studio-panel__tabs > button.is-active {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, .028) 28%, transparent 43%) padding-box,
+    radial-gradient(ellipse at 50% 112%, rgba(76, 143, 238, .22), rgba(34, 82, 161, .052) 49%, transparent 72%) padding-box,
+    linear-gradient(180deg, #0d1420 0%, #060a12 55%, #010203 100%) padding-box,
+    linear-gradient(100deg, rgba(76, 135, 218, .92), rgba(157, 204, 255, .98) 49%, rgba(45, 88, 167, .82)) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .24),
+    inset 0 -11px 21px rgba(37, 90, 179, .16),
+    inset 0 0 16px rgba(0, 0, 0, .22),
+    0 1px 0 rgba(0, 0, 0, .9),
+    0 6px 15px rgba(0, 0, 0, .48),
+    0 8px 22px rgba(54, 116, 216, .24);
+  color: #f6faff;
+  text-shadow: 0 0 8px rgba(149, 196, 255, .25);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-tools:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::before,
+.place-room-shell .place-studio-panel.is-host-panel.is-chat:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::before {
+  background: linear-gradient(112deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, .05) 31%, rgba(255, 255, 255, .008) 43%, transparent 55%);
+  filter: none;
+  opacity: .54;
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-tools:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::after,
+.place-room-shell .place-studio-panel.is-host-panel.is-chat:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::after {
+  position: absolute;
+  right: 8%;
+  bottom: -1px;
+  left: 8%;
+  display: block !important;
+  height: 2px;
+  border: 0;
+  border-radius: 999px;
+  content: "";
+  opacity: 1;
+  transform: none;
+  pointer-events: none;
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-tools:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::after {
+  background: linear-gradient(90deg, transparent, #aeb7c6 14%, #eef1f7 50%, #aeb7c6 86%, transparent);
+  box-shadow: 0 -3px 10px rgba(210, 221, 240, .32);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-chat:not(.is-collapsed) .place-studio-panel__tabs > button.is-active::after {
+  background: linear-gradient(90deg, transparent, #3d82dc 14%, #a9d2ff 50%, #3d82dc 86%, transparent);
+  box-shadow: 0 -3px 10px rgba(78, 147, 240, .52);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-tools:not(.is-collapsed) .place-studio-panel__tabs > button.is-active > svg {
+  color: #e9edf4;
+  filter: drop-shadow(0 0 4px rgba(218, 227, 242, .20));
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-chat:not(.is-collapsed) .place-studio-panel__tabs > button.is-active > svg {
+  color: #86bdff;
+  filter: drop-shadow(0 0 4px rgba(91, 158, 244, .32));
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-tools:not(.is-collapsed) .place-studio-panel__tabs > button.is-active:focus-visible {
+  outline: 1px solid rgba(231, 237, 247, .64);
+  outline-offset: -3px;
+}
+
+.place-room-shell .place-studio-panel.is-host-panel.is-chat:not(.is-collapsed) .place-studio-panel__tabs > button.is-active:focus-visible {
+  outline: 1px solid rgba(134, 189, 255, .72);
+  outline-offset: -3px;
+}
+
+/* La couleur appartient au bouton, même quand une autre surface est ouverte. */
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="tools"] {
+  --studio-tab-icon: #e9edf4;
+  --studio-tab-hover-rgb: 218, 227, 242;
+  --studio-tab-icon-glow: rgba(218, 227, 242, .20);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"] {
+  --studio-tab-icon: #c584ff;
+  --studio-tab-hover-rgb: 168, 84, 247;
+  --studio-tab-icon-glow: rgba(168, 84, 247, .32);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="guests"] {
+  --studio-tab-icon: #8fabff;
+  --studio-tab-hover-rgb: 75, 111, 255;
+  --studio-tab-icon-glow: rgba(75, 111, 255, .28);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="chat"] {
+  --studio-tab-icon: #86bdff;
+  --studio-tab-hover-rgb: 91, 158, 244;
+  --studio-tab-icon-glow: rgba(91, 158, 244, .32);
+}
+
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface]:not(:disabled):is(:hover, :focus-visible, .is-active) > svg {
+  color: var(--studio-tab-icon);
+  filter: drop-shadow(0 0 4px var(--studio-tab-icon-glow));
+}
+
+/* Hover is a quieter preview of this tab's own accent, never the open tab's. */
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface]:not(.is-active):not(:disabled):is(:hover, :focus-visible) {
+  border-color: rgba(var(--studio-tab-hover-rgb), .36);
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, .055), transparent 42%),
+    radial-gradient(ellipse at 50% 110%, rgba(var(--studio-tab-hover-rgb), .17), transparent 74%),
+    linear-gradient(180deg, #141518, #07080a);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .09), inset 0 -6px 16px rgba(var(--studio-tab-hover-rgb), .06), 0 4px 16px rgba(var(--studio-tab-hover-rgb), .08);
+  color: #f4f4f7;
+  text-shadow: none;
+}
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface]:not(.is-active):not(:disabled):is(:hover, :focus-visible)::before {
+  background: linear-gradient(112deg, rgba(255, 255, 255, .18), transparent 48%);
+  filter: none;
+  opacity: .25;
+}
+.place-room-shell .place-studio-panel.is-host-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface]:not(.is-active):focus-visible {
+  outline: 1px solid rgba(var(--studio-tab-hover-rgb), .7);
+  outline-offset: -3px;
+}

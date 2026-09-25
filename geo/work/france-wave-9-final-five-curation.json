@@ -1,0 +1,817 @@
+{
+  "schemaVersion": 1,
+  "kind": "guide_alpha_high_confidence_semantic_curation",
+  "wave": 9,
+  "batch": "final five quarantines",
+  "generatedAt": "2026-07-14T19:12:49.620Z",
+  "provenance": {
+    "inputPaths": [
+      {
+        "path": "geo/work/france-wave-9-risk-plan.json",
+        "sha256": "d2ef4df6cf0f20c2adb0803743ce31c7d47c95bb5fd0289bd84f751ffeb7fbc4",
+        "generatedAt": "2026-06-14T09:12:07.922Z"
+      },
+      {
+        "path": "geo/work/france-wave-9-clean-plan.json",
+        "sha256": "2d96736f1a1e770ecf427b1993f2c9989948e8fada3e4b5bd335e81488525179",
+        "generatedAt": "2026-06-14T09:12:07.922Z"
+      }
+    ],
+    "quarantinePaths": [
+      {
+        "path": "geo/work/france-wave-9-risk-semantic-unresolved.json",
+        "sha256": "bbd35bfc186dd4e98e15be375fa4776044de6d3bf9fd8d6a5b788d3162b4f169"
+      },
+      {
+        "path": "geo/work/france-wave-9-national-clean-semantic-unresolved.json",
+        "sha256": "2345870e6fe2b7250f3045f306c0920ed7f31c3815fd7cfa9a29df593e6d4ead"
+      }
+    ],
+    "inspectedCityCount": 5,
+    "exactTargets": [
+      {
+        "id": "cappelle_la_grande",
+        "communeCode": "59131",
+        "sourceId": "591310102"
+      },
+      {
+        "id": "courcelles_les_lens",
+        "communeCode": "62249",
+        "sourceId": "622490101"
+      },
+      {
+        "id": "amplepuis",
+        "communeCode": "69006",
+        "sourceId": "690060101"
+      },
+      {
+        "id": "mandeure",
+        "communeCode": "25367",
+        "sourceId": "253670103"
+      },
+      {
+        "id": "la_talaudiere",
+        "communeCode": "42305",
+        "sourceId": "423050103"
+      }
+    ]
+  },
+  "auditPolicy": {
+    "version": 2,
+    "noInvention": true,
+    "decision": "Resolve only deterministic 1:1 strict-contained official evidence; otherwise retain an explicit unresolved quarantine.",
+    "habitationPriority": "Validated non-fictive Quartier urbain, then other quartier/inhabited-place evidence; importance then area.",
+    "roadFallback": "An official named road is eligible only when at least 80% and 40 m of sampled geometry lie strictly inside the exact IRIS. A legacy integer-score tie is resolved only by a unique full-precision inside-length winner.",
+    "activityFallback": "Only a named, non-fictive, in-service IGN BD TOPO activity with a strict-contained representative point and an explicit external public source; used only for Mandeure 253670103.",
+    "collisionRule": "A visible normalized label and an evidence feature may each resolve at most one source IRIS per commune.",
+    "mergeRule": "No merge is used in this final-five audit."
+  },
+  "source": {
+    "provider": "IGN / INSEE - Contours IRIS WFS Géoplateforme",
+    "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+    "wfsUrl": "https://data.geopf.fr/wfs/ows",
+    "typeName": "STATISTICALUNITS.IRIS:contours_iris",
+    "vintage": "2026",
+    "license": "Licence Ouverte / Open Licence 2.0"
+  },
+  "evidenceSources": [
+    {
+      "id": "ign-insee-contours-iris-2026",
+      "provider": "IGN / INSEE - Contours IRIS WFS Géoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/contoursiris",
+      "wfsUrl": "https://data.geopf.fr/wfs/ows",
+      "layers": [
+        "STATISTICALUNITS.IRIS:contours_iris"
+      ],
+      "role": "Exact official IRIS IDs, labels and geometries",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "ign-bdtopo-habitation-toponyms-2026",
+      "provider": "IGN - BD TOPO WFS Géoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/bdtopo",
+      "wfsUrl": "https://data.geopf.fr/wfs/ows",
+      "layers": [
+        "BDTOPO_V3:zone_d_habitation"
+      ],
+      "role": "Validated non-fictive habitation toponyms with exact strict-contained evidence points",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "ign-bdtopo-named-roads-2026",
+      "provider": "IGN - BD TOPO WFS Géoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/bdtopo",
+      "wfsUrl": "https://data.geopf.fr/wfs/ows",
+      "layers": [
+        "BDTOPO_V3:voie_nommee"
+      ],
+      "role": "Official named roads predominantly contained in one exact IRIS; final-five rounded ties are checked at full precision",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "ign-bdtopo-activity-toponyms-2026",
+      "provider": "IGN - BD TOPO WFS Géoplateforme",
+      "datasetUrl": "https://geoservices.ign.fr/bdtopo",
+      "wfsUrl": "https://data.geopf.fr/wfs/ows",
+      "layers": [
+        "BDTOPO_V3:zone_d_activite_ou_d_interet"
+      ],
+      "role": "Named non-fictive in-service activity toponym with strict-contained representative point and explicit external public source",
+      "vintage": "2026",
+      "license": "Licence Ouverte / Open Licence 2.0"
+    },
+    {
+      "id": "guide-alpha-semantic-resolver-v1",
+      "provider": "Meewav deterministic Guide Alpha resolver",
+      "datasetUrl": "scripts/resolve-france-city-semantic-exceptions.mjs",
+      "role": "Initial high-confidence 1:1 evidence resolver and partial-operation provenance",
+      "vintage": "2026-07-14"
+    },
+    {
+      "id": "guide-alpha-final-five-manual-audit-v1",
+      "provider": "Meewav deterministic Guide Alpha final-five audit",
+      "datasetUrl": "geo/work/france-wave-9-final-five-curation.json",
+      "role": "Full-precision road tie-break and strict activity-toponym containment audit for the five exact quarantine IDs",
+      "vintage": "2026-07-14"
+    }
+  ],
+  "summary": {
+    "inputCities": 5,
+    "readyCities": 5,
+    "unresolvedCities": 0,
+    "sourceFeatures": 15,
+    "expectedOutputFeatures": 15,
+    "operations": {
+      "accept": 0,
+      "rename": 9,
+      "merge": 0
+    }
+  },
+  "cities": [
+    {
+      "id": "cappelle_la_grande",
+      "name": "Cappelle-la-Grande",
+      "code": "59131",
+      "population": 7839,
+      "sourceFeatureCount": 4,
+      "officialLabels": [
+        {
+          "sourceId": "591310101",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "591310102",
+          "label": "Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "591310103",
+          "label": "Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "591310104",
+          "label": "Cité des Cheminots-Cural",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "591310101"
+          ],
+          "labels": [
+            "Centre"
+          ],
+          "riskCodes": [
+            "direction_only_label",
+            "generic_territorial_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "cappelle_la_grande-591310101-rename-rue-guilleminot"
+          ]
+        },
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "591310102"
+          ],
+          "labels": [
+            "Sud"
+          ],
+          "riskCodes": [
+            "direction_only_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "cappelle_la_grande-591310102-rename-rue-laterale"
+          ]
+        },
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "591310103"
+          ],
+          "labels": [
+            "Ouest"
+          ],
+          "riskCodes": [
+            "direction_only_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "cappelle_la_grande-591310103-rename-rue-du-pappe-veld"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-semantic-resolver-v1",
+          "guide-alpha-final-five-manual-audit-v1",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 4,
+        "operations": [
+          {
+            "id": "cappelle_la_grande-591310101-rename-rue-guilleminot",
+            "type": "rename",
+            "sourceId": "591310101",
+            "expectedLabel": "Centre",
+            "label": "Rue Guilleminot",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-semantic-resolver-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue Guilleminot",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002339373689",
+                "coordinates": [
+                  2.36856385,
+                  50.99859727
+                ],
+                "insideLengthMeters": 620,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+          },
+          {
+            "id": "cappelle_la_grande-591310102-rename-rue-laterale",
+            "type": "rename",
+            "sourceId": "591310102",
+            "expectedLabel": "Sud",
+            "label": "Rue Latérale",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-final-five-manual-audit-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue Latérale",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002339391890",
+                "coordinates": [
+                  2.3890637,
+                  50.99602276
+                ],
+                "insideLengthMeters": 872,
+                "insideLengthMetersExact": 872.008625,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "selectionProof": {
+              "method": "full_precision_inside_length_after_legacy_integer_score_tie",
+              "winningInsideLengthMetersExact": 872.008625,
+              "runnerUpInsideLengthMetersExact": 871.675114,
+              "uniqueWinner": true
+            },
+            "rationale": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell."
+          },
+          {
+            "id": "cappelle_la_grande-591310103-rename-rue-du-pappe-veld",
+            "type": "rename",
+            "sourceId": "591310103",
+            "expectedLabel": "Ouest",
+            "label": "Rue du Pappe Veld",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-semantic-resolver-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue du Pappe Veld",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002339373850",
+                "coordinates": [
+                  2.35432162,
+                  50.99723892
+                ],
+                "insideLengthMeters": 1865.9,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+          }
+        ],
+        "justification": "Every semantic exception is resolved by distinct strict-contained official IGN evidence. No source cell is invented, assigned by proximity, split, dropped or targeted twice."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "courcelles_les_lens",
+      "name": "Courcelles-lès-Lens",
+      "code": "62249",
+      "population": 7830,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "622490101",
+          "label": "Sud",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "622490102",
+          "label": "Centre Ouest",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "622490103",
+          "label": "Nord",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "622490101"
+          ],
+          "labels": [
+            "Sud"
+          ],
+          "riskCodes": [
+            "direction_only_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "courcelles_les_lens-622490101-rename-rue-du-marechal-leclerc"
+          ]
+        },
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "622490103"
+          ],
+          "labels": [
+            "Nord"
+          ],
+          "riskCodes": [
+            "direction_only_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "courcelles_les_lens-622490103-rename-chemin-de-la-gare-d-eau"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-semantic-resolver-v1",
+          "guide-alpha-final-five-manual-audit-v1",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 3,
+        "operations": [
+          {
+            "id": "courcelles_les_lens-622490101-rename-rue-du-marechal-leclerc",
+            "type": "rename",
+            "sourceId": "622490101",
+            "expectedLabel": "Sud",
+            "label": "Rue du Maréchal Leclerc",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-final-five-manual-audit-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue du Maréchal Leclerc",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002338456153",
+                "coordinates": [
+                  3.00586996,
+                  50.41295484
+                ],
+                "insideLengthMeters": 1066.3,
+                "insideLengthMetersExact": 1066.336309,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "selectionProof": {
+              "method": "full_precision_inside_length_after_legacy_integer_score_tie",
+              "winningInsideLengthMetersExact": 1066.336309,
+              "runnerUpInsideLengthMetersExact": 1065.547305,
+              "uniqueWinner": true
+            },
+            "rationale": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell."
+          },
+          {
+            "id": "courcelles_les_lens-622490103-rename-chemin-de-la-gare-d-eau",
+            "type": "rename",
+            "sourceId": "622490103",
+            "expectedLabel": "Nord",
+            "label": "Chemin de la Gare d'Eau",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-semantic-resolver-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Chemin de la Gare d'Eau",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002338443491",
+                "coordinates": [
+                  3.02808446,
+                  50.4261165
+                ],
+                "insideLengthMeters": 1558.1,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "The exact official IGN BD TOPO named road has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+          }
+        ],
+        "justification": "Every semantic exception is resolved by distinct strict-contained official IGN evidence. No source cell is invented, assigned by proximity, split, dropped or targeted twice."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "amplepuis",
+      "name": "Amplepuis",
+      "code": "69006",
+      "population": 4876,
+      "sourceFeatureCount": 2,
+      "officialLabels": [
+        {
+          "sourceId": "690060101",
+          "label": "Centre",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "690060102",
+          "label": "Contour",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "690060101"
+          ],
+          "labels": [
+            "Centre"
+          ],
+          "riskCodes": [
+            "direction_only_label",
+            "generic_territorial_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "amplepuis-690060101-rename-avenue-de-la-gare"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-semantic-resolver-v1",
+          "guide-alpha-final-five-manual-audit-v1",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 2,
+        "operations": [
+          {
+            "id": "amplepuis-690060101-rename-avenue-de-la-gare",
+            "type": "rename",
+            "sourceId": "690060101",
+            "expectedLabel": "Centre",
+            "label": "avenue de la gare",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-final-five-manual-audit-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "avenue de la gare",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002338582087",
+                "coordinates": [
+                  4.33048828,
+                  45.96884221
+                ],
+                "insideLengthMeters": 799.1,
+                "insideLengthMetersExact": 799.131187,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "selectionProof": {
+              "method": "full_precision_inside_length_after_legacy_integer_score_tie",
+              "winningInsideLengthMetersExact": 799.131187,
+              "runnerUpInsideLengthMetersExact": 798.71037,
+              "uniqueWinner": true
+            },
+            "rationale": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell."
+          }
+        ],
+        "justification": "Every semantic exception is resolved by distinct strict-contained official IGN evidence. No source cell is invented, assigned by proximity, split, dropped or targeted twice."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "mandeure",
+      "name": "Mandeure",
+      "code": "25367",
+      "population": 4612,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "253670101",
+          "label": "Courcelles",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253670102",
+          "label": "Beaulieu",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "253670103",
+          "label": "Zone d'Activités",
+          "irisType": "A"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "253670103"
+          ],
+          "labels": [
+            "Zone d'Activités"
+          ],
+          "riskCodes": [
+            "operational_label"
+          ],
+          "detail": "The exact official IGN BD TOPO non-fictive, in-service named activity has a deterministic representative point strictly inside this exact IRIS and cites MSS 2024 as its external public source. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "mandeure-253670103-rename-salle-majestic"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-semantic-resolver-v1",
+          "guide-alpha-final-five-manual-audit-v1",
+          "ign-bdtopo-activity-toponyms-2026"
+        ],
+        "expectedFeatureCount": 3,
+        "operations": [
+          {
+            "id": "mandeure-253670103-rename-salle-majestic",
+            "type": "rename",
+            "sourceId": "253670103",
+            "expectedLabel": "Zone d'Activités",
+            "label": "Salle Majestic",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-activity-toponyms-2026",
+              "guide-alpha-final-five-manual-audit-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Salle Majestic",
+                "layer": "BDTOPO_V3:zone_d_activite_ou_d_interet",
+                "sourceFeatureId": "SURFACTI0000002498424997",
+                "coordinates": [
+                  6.83256604,
+                  47.44711742
+                ],
+                "category": "Culture et loisirs",
+                "nature": "Salle de spectacle ou conférence",
+                "detailedNature": "Salle polyvalente",
+                "toponymStatus": "Collecté",
+                "externalSource": "MSS 2024",
+                "fictive": false,
+                "inService": true,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "selectionProof": {
+              "method": "named_non_fictive_in_service_activity_toponym_with_official_external_source",
+              "strictRepresentativePointContainment": true,
+              "uniqueVisibleLabel": true
+            },
+            "rationale": "The exact official IGN BD TOPO non-fictive, in-service named activity has a deterministic representative point strictly inside this exact IRIS and cites MSS 2024 as its external public source. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+          }
+        ],
+        "justification": "Every semantic exception is resolved by distinct strict-contained official IGN evidence. No source cell is invented, assigned by proximity, split, dropped or targeted twice."
+      },
+      "status": "ready"
+    },
+    {
+      "id": "la_talaudiere",
+      "name": "La Talaudière",
+      "code": "42305",
+      "population": 7133,
+      "sourceFeatureCount": 3,
+      "officialLabels": [
+        {
+          "sourceId": "423050101",
+          "label": "Le Roule-La Grande Vaure",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "423050102",
+          "label": "La Talaudière Nord",
+          "irisType": "H"
+        },
+        {
+          "sourceId": "423050103",
+          "label": "La Talaudière Sud",
+          "irisType": "H"
+        }
+      ],
+      "anomalies": [
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "423050102"
+          ],
+          "labels": [
+            "La Talaudière Nord"
+          ],
+          "riskCodes": [
+            "technical_directional_label"
+          ],
+          "detail": "The exact official IGN BD TOPO habitation toponym has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "la_talaudiere-423050102-rename-la-buissonniere"
+          ]
+        },
+        {
+          "type": "semantic_exception",
+          "severity": "error",
+          "sourceIds": [
+            "423050103"
+          ],
+          "labels": [
+            "La Talaudière Sud"
+          ],
+          "riskCodes": [
+            "technical_directional_label"
+          ],
+          "detail": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell.",
+          "resolved": true,
+          "resolutionOperationIds": [
+            "la_talaudiere-423050103-rename-rue-des-fraisses"
+          ]
+        }
+      ],
+      "guideAlphaRule": {
+        "type": "curation",
+        "revision": 1,
+        "sourceRefs": [
+          "ign-insee-contours-iris-2026",
+          "guide-alpha-semantic-resolver-v1",
+          "guide-alpha-final-five-manual-audit-v1",
+          "ign-bdtopo-habitation-toponyms-2026",
+          "ign-bdtopo-named-roads-2026"
+        ],
+        "expectedFeatureCount": 3,
+        "operations": [
+          {
+            "id": "la_talaudiere-423050102-rename-la-buissonniere",
+            "type": "rename",
+            "sourceId": "423050102",
+            "expectedLabel": "La Talaudière Nord",
+            "label": "la Buissonnière",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-habitation-toponyms-2026",
+              "guide-alpha-semantic-resolver-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "la Buissonnière",
+                "layer": "BDTOPO_V3:zone_d_habitation",
+                "sourceFeatureId": "PAIHABIT0000000012042451",
+                "coordinates": [
+                  4.41649242,
+                  45.48448639
+                ],
+                "nature": "Lieu-dit habité",
+                "detailedNature": null,
+                "importance": "3",
+                "fictive": false,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "rationale": "The exact official IGN BD TOPO habitation toponym has a deterministic evidence point strictly inside this exact IRIS. The 1:1 label is emitted without nearest assignment, invented geometry, split or dropped source cell."
+          },
+          {
+            "id": "la_talaudiere-423050103-rename-rue-des-fraisses",
+            "type": "rename",
+            "sourceId": "423050103",
+            "expectedLabel": "La Talaudière Sud",
+            "label": "Rue des Fraisses",
+            "evidenceRefs": [
+              "ign-insee-contours-iris-2026",
+              "ign-bdtopo-named-roads-2026",
+              "guide-alpha-final-five-manual-audit-v1"
+            ],
+            "containedEvidence": [
+              {
+                "name": "Rue des Fraisses",
+                "layer": "BDTOPO_V3:voie_nommee",
+                "sourceFeatureId": "VOIE_NOM0000002338204931",
+                "coordinates": [
+                  4.42791319,
+                  45.47288725
+                ],
+                "insideLengthMeters": 891.1,
+                "insideLengthMetersExact": 891.073979,
+                "insideRatio": 1,
+                "strictContainmentVerified": true
+              }
+            ],
+            "containmentRule": "strict_point_in_exact_source_polygon",
+            "selectionProof": {
+              "method": "full_precision_inside_length_after_legacy_integer_score_tie",
+              "winningInsideLengthMetersExact": 891.073979,
+              "runnerUpInsideLengthMetersExact": 891.04499,
+              "uniqueWinner": true
+            },
+            "rationale": "The exact official IGN BD TOPO named road clears the 80% / 40 m containment gate and has a deterministic evidence point strictly inside this exact IRIS. Full-precision inside length resolves the legacy rounded-score tie without nearest assignment, invented geometry, split or dropped source cell."
+          }
+        ],
+        "justification": "Every semantic exception is resolved by distinct strict-contained official IGN evidence. No source cell is invented, assigned by proximity, split, dropped or targeted twice."
+      },
+      "status": "ready"
+    }
+  ]
+}

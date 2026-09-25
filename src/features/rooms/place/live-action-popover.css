@@ -1,0 +1,4 @@
+.rooms-page .live-action-popover { position: absolute; z-index: 120; visibility: hidden; }
+.rooms-page .place-room-shell .live-action-popover > .room-support-panel {
+  position: relative; inset: auto; width: 100%; max-height: var(--popover-height); margin: 0; overflow-y: auto;
+}

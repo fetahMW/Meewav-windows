@@ -1,0 +1,2092 @@
+{
+  "schemaVersion": 2,
+  "wave": 7,
+  "batch": "a",
+  "scope": {
+    "rankFrom": 1,
+    "rankTo": 34,
+    "cityCount": 34
+  },
+  "generatedAt": "2026-07-14T16:28:03.696Z",
+  "auditMode": {
+    "browserUsed": false,
+    "networkUsed": false,
+    "readOnlyExceptReport": true,
+    "visualClaim": false,
+    "productMode": "legacy"
+  },
+  "inputSnapshot": {
+    "stableDuringAudit": true,
+    "files": {
+      "plan": {
+        "path": "geo/work/france-wave-7-plan.json",
+        "sha256Before": "80f8399ee4b2e42e7369498e6fc74d1d06bb5db8d7f3393c373627d27c7110e0",
+        "sha256After": "80f8399ee4b2e42e7369498e6fc74d1d06bb5db8d7f3393c373627d27c7110e0",
+        "stable": true
+      },
+      "curation": {
+        "path": "geo/work/france-wave-7-curation-a.json",
+        "sha256Before": "95b791eb4acd9a5eae34b56285edcb775da67cd43472c7a75f3503a0a9f3f631",
+        "sha256After": "95b791eb4acd9a5eae34b56285edcb775da67cd43472c7a75f3503a0a9f3f631",
+        "stable": true
+      },
+      "catalog": {
+        "path": "geo/catalog/france-city-iris.json",
+        "sha256Before": "9451439fb19baa0a0d0a30440b1760f3e52a9b71e46d51d66bff17df8015a154",
+        "sha256After": "9451439fb19baa0a0d0a30440b1760f3e52a9b71e46d51d66bff17df8015a154",
+        "stable": true
+      },
+      "datasets": {
+        "path": "geo/catalog/existing-datasets.json",
+        "sha256Before": "1f3884104be3149e9697354324292f6df4202d459f07616642e66ce84e271401",
+        "sha256After": "1f3884104be3149e9697354324292f6df4202d459f07616642e66ce84e271401",
+        "stable": true
+      },
+      "runtimeManifest": {
+        "path": "src/features/globe/geography/franceGuideAlphaCities.generated.ts",
+        "sha256Before": "2226acd0cca50276ca994e235df6a058d9e9b1b328db686c69baca4156e0dfb9",
+        "sha256After": "2226acd0cca50276ca994e235df6a058d9e9b1b328db686c69baca4156e0dfb9",
+        "stable": true
+      },
+      "canonical": {
+        "path": "geo/output/all.canonical.json",
+        "sha256Before": "9e03ae871f9b8cd84c8d4d4603b131633d9f8c52983338fe8ed1dd2ce8d7f82a",
+        "sha256After": "9e03ae871f9b8cd84c8d4d4603b131633d9f8c52983338fe8ed1dd2ce8d7f82a",
+        "stable": true
+      },
+      "canonicalReport": {
+        "path": "docs/geospatial/migrations/all.md",
+        "sha256Before": "807b1900af1f69b01e9f76d1b1fdd62214f6d86ee59d96fb7358e1b2575f94b9",
+        "sha256After": "807b1900af1f69b01e9f76d1b1fdd62214f6d86ee59d96fb7358e1b2575f94b9",
+        "stable": true
+      },
+      "cityConfig": {
+        "path": "src/features/globe/selectedExtrusion/citySubdivisionConfig.ts",
+        "sha256Before": "1a94c15b4961abdf2036b0be22387d9a95a57e464a5dca7114a1c14118d4e908",
+        "sha256After": "1a94c15b4961abdf2036b0be22387d9a95a57e464a5dca7114a1c14118d4e908",
+        "stable": true
+      },
+      "globeEntry": {
+        "path": "src/features/globe/components/GlobeMapV2.tsx",
+        "sha256Before": "d91c165746e1511d5c9873f869eee7737dc6f2c72a6b647f36969b89f960faea",
+        "sha256After": "d91c165746e1511d5c9873f869eee7737dc6f2c72a6b647f36969b89f960faea",
+        "stable": true
+      },
+      "controller": {
+        "path": "src/features/globe/selectedExtrusion/selectedZoneExtrusionController.ts",
+        "sha256Before": "b8f6c4dca84c6c3fadd8526f96e1bb1174592cccc33f1d12342dcbc458700de9",
+        "sha256After": "b8f6c4dca84c6c3fadd8526f96e1bb1174592cccc33f1d12342dcbc458700de9",
+        "stable": true
+      },
+      "layers": {
+        "path": "src/features/globe/selectedExtrusion/selectedZoneExtrusionLayers.ts",
+        "sha256Before": "a68187c91016a717d9c04e40786eb98b2b3f9fe3af38f4663b2e6ca33cc6d254",
+        "sha256After": "a68187c91016a717d9c04e40786eb98b2b3f9fe3af38f4663b2e6ca33cc6d254",
+        "stable": true
+      },
+      "types": {
+        "path": "src/features/globe/selectedExtrusion/selectedZoneExtrusionTypes.ts",
+        "sha256Before": "a12efad14bbc001023c2280b7a18b50f66ea7641ca4ea2b6fd946a2797bfea15",
+        "sha256After": "a12efad14bbc001023c2280b7a18b50f66ea7641ca4ea2b6fd946a2797bfea15",
+        "stable": true
+      },
+      "geoMode": {
+        "path": "src/features/globe/geography/geoPipelineMode.ts",
+        "sha256Before": "f73d923f15b22e99678b3d19c89729e242d48b640471db9a2245d944a6a7bd30",
+        "sha256After": "f73d923f15b22e99678b3d19c89729e242d48b640471db9a2245d944a6a7bd30",
+        "stable": true
+      },
+      "nationalRuntime": {
+        "path": "src/features/globe/geography/nationalGeoPipeline.ts",
+        "sha256Before": "af5885c84c871b7bcfc568662a13ff6b6db69eef122901eb7da4f45573909385",
+        "sha256After": "af5885c84c871b7bcfc568662a13ff6b6db69eef122901eb7da4f45573909385",
+        "stable": true
+      },
+      "niceCommunes": {
+        "path": "public/map/nice-metropole-communes.geojson",
+        "sha256Before": "b8fdf547eb11f38dab1340da71a30abe98fe5c866abd47f443b062e00d46655c",
+        "sha256After": "b8fdf547eb11f38dab1340da71a30abe98fe5c866abd47f443b062e00d46655c",
+        "stable": true
+      },
+      "niceSubzones": {
+        "path": "public/map/nice-metropole-subzones.geojson",
+        "sha256Before": "f8b1324c85cc0ea3531055dc3ff76f9db41d79c0999b763dd30006ed9b3f049d",
+        "sha256After": "f8b1324c85cc0ea3531055dc3ff76f9db41d79c0999b763dd30006ed9b3f049d",
+        "stable": true
+      },
+      "runtimeContractTest": {
+        "path": "tests/geospatial/runtime-contract.test.mjs",
+        "sha256Before": "cc7f802b499da962d022873df369e75cff23d9214176fe499e42cd04b0626acb",
+        "sha256After": "cc7f802b499da962d022873df369e75cff23d9214176fe499e42cd04b0626acb",
+        "stable": true
+      },
+      "orleansGeo": {
+        "path": "public/map/orleans-quartiers.geojson",
+        "sha256Before": "6359bfaa5525694ab1721f429531245796d870affb51fe89a22fbc3d6817c245",
+        "sha256After": "6359bfaa5525694ab1721f429531245796d870affb51fe89a22fbc3d6817c245",
+        "stable": true
+      },
+      "olivetGeo": {
+        "path": "public/map/olivet-quartiers.geojson",
+        "sha256Before": "932ec0079e0b7d0dec12643d87086f875d5da8f971eb5a26a313177138bacf61",
+        "sha256After": "932ec0079e0b7d0dec12643d87086f875d5da8f971eb5a26a313177138bacf61",
+        "stable": true
+      }
+    }
+  },
+  "regeneratedArtifacts": {
+    "runtimeCityCount": 304,
+    "ownershipCount": 738,
+    "canonicalAdministrativeZoneCount": 8930,
+    "canonicalMusicZoneCount": 8930,
+    "canonicalTotalZonePairs": 8930,
+    "checks": {
+      "runtimeCityCount304": true,
+      "ownershipCount738": true,
+      "canonicalCounts8930": true
+    }
+  },
+  "firstClickAndFly": {
+    "status": "PASS",
+    "checks": {
+      "defaultProductModeIsLegacy": true,
+      "generatedIdsResolve": true,
+      "generatedConfigsInstalled": true,
+      "searchMapsGeneratedId": true,
+      "preloadDuringFly": true,
+      "sameFirstActionSchedulesLoad": true,
+      "loadedCollectionAppliedWithoutClick": true,
+      "contextSelectionUsesActiveBbox": true,
+      "generatedCandidateBboxesInstalled": true,
+      "contextParentsUseBoundedConcurrency": true,
+      "neighborCarriesDirectCityTarget": true,
+      "parallelClickActivationAndFly": true,
+      "oneClickTargetGuard": true
+    }
+  },
+  "navigationColorContract": {
+    "status": "PASS",
+    "productMode": "legacy",
+    "activeColor": "#1B1234",
+    "paletteOwnedBy": "navigation state, never city size",
+    "standaloneContextPair": {
+      "sharedBoundaryVerticesAt7Decimals": 97,
+      "communes": [
+        {
+          "id": "orleans",
+          "communeCode": "45234",
+          "bbox": [
+            1.875747,
+            47.813298,
+            1.948643,
+            47.933537
+          ],
+          "center": [
+            1.910074,
+            47.900662
+          ],
+          "zoom": 13,
+          "subdivisionCount": 45,
+          "neighborColor": "#9C7AE9"
+        },
+        {
+          "id": "olivet",
+          "communeCode": "45232",
+          "bbox": [
+            1.849754,
+            47.831814,
+            1.93279,
+            47.880015
+          ],
+          "center": [
+            1.899588,
+            47.860656
+          ],
+          "zoom": 13.6,
+          "subdivisionCount": 8,
+          "neighborColor": "#B18EFF"
+        }
+      ],
+      "contextFromOrleans": [
+        {
+          "id": "fleury_les_aubrais",
+          "distanceKm": 0
+        },
+        {
+          "id": "olivet",
+          "distanceKm": 0
+        },
+        {
+          "id": "saint_jean_de_braye",
+          "distanceKm": 0
+        }
+      ],
+      "contextFromOlivet": [
+        {
+          "id": "orleans",
+          "distanceKm": 0
+        },
+        {
+          "id": "saint_jean_de_braye",
+          "distanceKm": 4.934976723307673
+        }
+      ]
+    },
+    "scenarioTargetOrleans": {
+      "target": {
+        "id": "orleans",
+        "communeCode": "45234",
+        "role": "active",
+        "surface": "parent",
+        "resolvedColor": "#1B1234"
+      },
+      "parallelClickedNeighbor": {
+        "id": "olivet",
+        "communeCode": "45232",
+        "role": "neighbor",
+        "surface": "parent",
+        "resolvedColor": "#B18EFF",
+        "distanceKm": 0
+      }
+    },
+    "scenarioTargetOlivet": {
+      "target": {
+        "id": "olivet",
+        "communeCode": "45232",
+        "role": "active",
+        "surface": "parent",
+        "resolvedColor": "#1B1234"
+      },
+      "parallelClickedNeighbor": {
+        "id": "orleans",
+        "communeCode": "45234",
+        "role": "neighbor",
+        "surface": "parent",
+        "resolvedColor": "#9C7AE9",
+        "distanceKm": 0
+      }
+    },
+    "checks": {
+      "defaultLegacyProductPath": true,
+      "bothStandaloneCitiesConfigured": true,
+      "geometricallyContiguous": true,
+      "bboxContextMutual": true,
+      "bboxAdjacencyRanksCounterpartFirst": true,
+      "activeRoleUsesParisCenterDark": true,
+      "neighborRoleUsesLightPalette": true,
+      "normalRoleKeepsOwnColor": true,
+      "selectionInvertsRolesAndColors": true,
+      "neighborClickActivatesAndFliesInParallel": true,
+      "selectionIndependentOfPopulation": true
+    }
+  },
+  "validationCommands": [
+    {
+      "command": "node scripts/validate-france-city-wave-audits.mjs --wave=7",
+      "status": "PASS",
+      "result": "100 cities / 950 official IRIS / 926 visible plates"
+    },
+    {
+      "command": "node --test tests/geospatial/runtime-contract.test.mjs tests/geospatial/classify-commune-iris.test.mjs tests/geospatial/generate-city-runtime-manifest.test.mjs",
+      "status": "PASS",
+      "result": "29/29 tests on final Controller/Types snapshot"
+    }
+  ],
+  "summary": {
+    "status": "PASS",
+    "citiesAudited": 34,
+    "citiesPassed": 34,
+    "citiesFailed": 0,
+    "officialIris": 339,
+    "visiblePlates": 334,
+    "strictRawLabelPoints": 334,
+    "strictCanonicalLabelPoints": 334,
+    "allRuntimeModesMatchPlan": true,
+    "allFirstClickPathsPass": true,
+    "allOwnershipUnique": true,
+    "allCanonicalParityPass": true,
+    "hashesStable": true,
+    "colorContractPass": true,
+    "failures": []
+  },
+  "cities": [
+    {
+      "rank": 1,
+      "id": "cenon",
+      "name": "Cenon",
+      "communeCode": "33119",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 9,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.518683,
+          44.851957
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.531186,
+          44.846438,
+          -0.506179,
+          44.857477
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 2,
+      "id": "bretigny_sur_orge",
+      "name": "Brétigny-sur-Orge",
+      "communeCode": "91103",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 7,
+        "visiblePlates": 7,
+        "canonicalAdministrativeZones": 7,
+        "canonicalMusicZones": 7
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.30677,
+          48.606728
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.293388,
+          48.595842,
+          2.320152,
+          48.617614
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 3,
+      "id": "lunel",
+      "name": "Lunel",
+      "communeCode": "34145",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 8,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          4.129184,
+          43.676959
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          4.119707,
+          43.667745,
+          4.13866,
+          43.686173
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 4,
+      "id": "la_garde",
+      "name": "La Garde",
+      "communeCode": "83062",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 10,
+        "canonicalAdministrativeZones": 10,
+        "canonicalMusicZones": 10
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          6.010156,
+          43.122933
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          5.993523,
+          43.114629,
+          6.026789,
+          43.131237
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 5,
+      "id": "elancourt",
+      "name": "Élancourt",
+      "communeCode": "78208",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 8,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          1.957634,
+          48.772264
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          1.94649,
+          48.760453,
+          1.968778,
+          48.784075
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 6,
+      "id": "saumur",
+      "name": "Saumur",
+      "communeCode": "49328",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 11,
+        "visiblePlates": 11,
+        "canonicalAdministrativeZones": 11,
+        "canonicalMusicZones": 11
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.075377,
+          47.258697
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.095648,
+          47.239495,
+          -0.055106,
+          47.277899
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 7,
+      "id": "aurillac",
+      "name": "Aurillac",
+      "communeCode": "15014",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 13,
+        "visiblePlates": 13,
+        "canonicalAdministrativeZones": 13,
+        "canonicalMusicZones": 13
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.439801,
+          44.920771
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.426971,
+          44.905304,
+          2.45263,
+          44.936238
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 8,
+      "id": "eaubonne",
+      "name": "Eaubonne",
+      "communeCode": "95203",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 10,
+        "canonicalAdministrativeZones": 10,
+        "canonicalMusicZones": 10
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.277719,
+          48.990536
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.270352,
+          48.981682,
+          2.285085,
+          48.999389
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 9,
+      "id": "biarritz",
+      "name": "Biarritz",
+      "communeCode": "64122",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 12,
+        "visiblePlates": 12,
+        "canonicalAdministrativeZones": 12,
+        "canonicalMusicZones": 12
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -1.551555,
+          43.476829
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -1.561408,
+          43.466174,
+          -1.541702,
+          43.487483
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 10,
+      "id": "muret",
+      "name": "Muret",
+      "communeCode": "31395",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 10,
+        "canonicalAdministrativeZones": 10,
+        "canonicalMusicZones": 10
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          1.327472,
+          43.463578
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          1.300736,
+          43.446336,
+          1.354208,
+          43.480821
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 11,
+      "id": "castelnau_le_lez",
+      "name": "Castelnau-le-Lez",
+      "communeCode": "34057",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 7,
+        "visiblePlates": 7,
+        "canonicalAdministrativeZones": 7,
+        "canonicalMusicZones": 7
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          3.913292,
+          43.637256
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          3.901903,
+          43.627952,
+          3.924681,
+          43.646559
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 12,
+      "id": "les_ulis",
+      "name": "Les Ulis",
+      "communeCode": "91692",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 8,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.169087,
+          48.681788
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.160845,
+          48.678065,
+          2.178054,
+          48.685511
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 13,
+      "id": "sevremoine",
+      "name": "Sèvremoine",
+      "communeCode": "49301",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 9,
+        "visiblePlates": 9,
+        "canonicalAdministrativeZones": 9,
+        "canonicalMusicZones": 9
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -1.062385,
+          47.112438
+        ],
+        "zoom": 12.75,
+        "cameraExtent": [
+          -1.134403,
+          47.071426,
+          -0.990367,
+          47.15345
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 14,
+      "id": "le_grand_quevilly",
+      "name": "Le Grand-Quevilly",
+      "communeCode": "76322",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 11,
+        "visiblePlates": 11,
+        "canonicalAdministrativeZones": 11,
+        "canonicalMusicZones": 11
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          1.048386,
+          49.408907
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          1.037697,
+          49.401391,
+          1.059075,
+          49.416423
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 15,
+      "id": "lormont",
+      "name": "Lormont",
+      "communeCode": "33249",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.521588,
+          44.875702
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.533144,
+          44.868129,
+          -0.510031,
+          44.883274
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [
+        {
+          "label": "Cité Carriet 1",
+          "operationId": "lormont-332490101-accept-cite-carriet-1"
+        }
+      ],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 16,
+      "id": "henin_beaumont",
+      "name": "Hénin-Beaumont",
+      "communeCode": "62427",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 11,
+        "visiblePlates": 11,
+        "canonicalAdministrativeZones": 11,
+        "canonicalMusicZones": 11
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.949009,
+          50.41574
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.934416,
+          50.404286,
+          2.963602,
+          50.427194
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 17,
+      "id": "brunoy",
+      "name": "Brunoy",
+      "communeCode": "91114",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 5,
+        "visiblePlates": 5,
+        "canonicalAdministrativeZones": 5,
+        "canonicalMusicZones": 5
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.504782,
+          48.700823
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.495134,
+          48.691772,
+          2.51443,
+          48.709874
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 18,
+      "id": "cavaillon",
+      "name": "Cavaillon",
+      "communeCode": "84035",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 11,
+        "visiblePlates": 11,
+        "canonicalAdministrativeZones": 11,
+        "canonicalMusicZones": 11
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          5.041184,
+          43.840428
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          5.026251,
+          43.829915,
+          5.056117,
+          43.850942
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 19,
+      "id": "saint_ouen_l_aumone",
+      "name": "Saint-Ouen-l'Aumône",
+      "communeCode": "95572",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 11,
+        "visiblePlates": 11,
+        "canonicalAdministrativeZones": 11,
+        "canonicalMusicZones": 11
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.121472,
+          49.044458
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.105424,
+          49.035593,
+          2.13752,
+          49.053324
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 20,
+      "id": "alencon",
+      "name": "Alençon",
+      "communeCode": "61001",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 14,
+        "visiblePlates": 14,
+        "canonicalAdministrativeZones": 14,
+        "canonicalMusicZones": 14
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          0.093227,
+          48.430128
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          0.078329,
+          48.418532,
+          0.108126,
+          48.441723
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 21,
+      "id": "saintes",
+      "name": "Saintes",
+      "communeCode": "17415",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 12,
+        "visiblePlates": 12,
+        "canonicalAdministrativeZones": 12,
+        "canonicalMusicZones": 12
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.640451,
+          45.740811
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.666162,
+          45.72268,
+          -0.61474,
+          45.758941
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 22,
+      "id": "vernon",
+      "name": "Vernon",
+      "communeCode": "27681",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 10,
+        "canonicalAdministrativeZones": 10,
+        "canonicalMusicZones": 10
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          1.481904,
+          49.085326
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          1.467637,
+          49.073233,
+          1.496171,
+          49.097418
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 23,
+      "id": "bethune",
+      "name": "Béthune",
+      "communeCode": "62119",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 8,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.638203,
+          50.524121
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.625534,
+          50.514498,
+          2.650872,
+          50.533745
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 24,
+      "id": "vichy",
+      "name": "Vichy",
+      "communeCode": "03310",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 10,
+        "canonicalAdministrativeZones": 10,
+        "canonicalMusicZones": 10
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          3.425238,
+          46.129337
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          3.417542,
+          46.118577,
+          3.432935,
+          46.140098
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 25,
+      "id": "le_bouscat",
+      "name": "Le Bouscat",
+      "communeCode": "33069",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 9,
+        "visiblePlates": 9,
+        "canonicalAdministrativeZones": 9,
+        "canonicalMusicZones": 9
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.598632,
+          44.865981
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.611404,
+          44.860261,
+          -0.585859,
+          44.871702
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 26,
+      "id": "vierzon",
+      "name": "Vierzon",
+      "communeCode": "18279",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 13,
+        "visiblePlates": 11,
+        "canonicalAdministrativeZones": 11,
+        "canonicalMusicZones": 11
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.073887,
+          47.225816
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.05473,
+          47.209943,
+          2.093043,
+          47.241689
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 27,
+      "id": "libourne",
+      "name": "Libourne",
+      "communeCode": "33243",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 9,
+        "visiblePlates": 9,
+        "canonicalAdministrativeZones": 9,
+        "canonicalMusicZones": 9
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.236582,
+          44.915226
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.249065,
+          44.900457,
+          -0.224098,
+          44.929995
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 28,
+      "id": "eysines",
+      "name": "Eysines",
+      "communeCode": "33162",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 7,
+        "visiblePlates": 7,
+        "canonicalAdministrativeZones": 7,
+        "canonicalMusicZones": 7
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.636949,
+          44.876634
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          -0.647482,
+          44.865332,
+          -0.626416,
+          44.887937
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 29,
+      "id": "montbeliard",
+      "name": "Montbéliard",
+      "communeCode": "25388",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 15,
+        "visiblePlates": 15,
+        "canonicalAdministrativeZones": 15,
+        "canonicalMusicZones": 15
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          6.797351,
+          47.507234
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          6.783769,
+          47.496125,
+          6.810934,
+          47.518343
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 30,
+      "id": "laon",
+      "name": "Laon",
+      "communeCode": "02408",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 12,
+        "visiblePlates": 12,
+        "canonicalAdministrativeZones": 12,
+        "canonicalMusicZones": 12
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          3.626186,
+          49.564634
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          3.610274,
+          49.549252,
+          3.642098,
+          49.580017
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 31,
+      "id": "frontignan",
+      "name": "Frontignan",
+      "communeCode": "34108",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 8,
+        "visiblePlates": 8,
+        "canonicalAdministrativeZones": 8,
+        "canonicalMusicZones": 8
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          3.748547,
+          43.445842
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          3.72935,
+          43.431459,
+          3.767743,
+          43.460226
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 32,
+      "id": "montgeron",
+      "name": "Montgeron",
+      "communeCode": "91421",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 10,
+        "visiblePlates": 10,
+        "canonicalAdministrativeZones": 10,
+        "canonicalMusicZones": 10
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.455777,
+          48.702461
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.443218,
+          48.695459,
+          2.468336,
+          48.709464
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 33,
+      "id": "beaupreau_en_mauges",
+      "name": "Beaupréau-en-Mauges",
+      "communeCode": "49023",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 9,
+        "visiblePlates": 9,
+        "canonicalAdministrativeZones": 9,
+        "canonicalMusicZones": 9
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          -0.988896,
+          47.195792
+        ],
+        "zoom": 12.4,
+        "cameraExtent": [
+          -1.080826,
+          47.165679,
+          -0.896966,
+          47.225904
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 34,
+      "id": "rodez",
+      "name": "Rodez",
+      "communeCode": "12202",
+      "status": "PASS",
+      "counts": {
+        "officialIris": 12,
+        "visiblePlates": 12,
+        "canonicalAdministrativeZones": 12,
+        "canonicalMusicZones": 12
+      },
+      "runtimeMode": {
+        "plan": "standalone_split",
+        "catalog": "standalone_split"
+      },
+      "fly": {
+        "center": [
+          2.571138,
+          44.353006
+        ],
+        "zoom": 13.6,
+        "cameraExtent": [
+          2.556579,
+          44.344653,
+          2.585697,
+          44.36136
+        ],
+        "pitch": 60,
+        "bearing": 0,
+        "speed": 0.85,
+        "curve": 1.4
+      },
+      "reviewedNumericLabels": [
+        {
+          "label": "15 Arbres",
+          "operationId": "rodez-122020401-accept-15-arbres"
+        }
+      ],
+      "checks": {
+        "planCurationIdentity": true,
+        "officialInventory": true,
+        "catalogAndRuntimeMode": true,
+        "rawFeatureCount": true,
+        "zoneIdsAndCoverage": true,
+        "geometryAndBbox": true,
+        "strictLabelPoint": true,
+        "humanLabels": true,
+        "publishedDataset": true,
+        "runtimeConfig": true,
+        "cameraFly": true,
+        "uniqueOwnership": true,
+        "firstClickFly": true,
+        "canonicalRegenerated": true
+      },
+      "errors": []
+    }
+  ]
+}

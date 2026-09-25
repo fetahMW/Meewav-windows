@@ -1,0 +1,48 @@
+import CageBroadcast from "./CageBroadcast";
+import { MeewavGradeBadge } from "../../../grades/MeewavGradeBadge";
+import WaveProfileButton from "../panels/WaveProfileButton";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Trophy, Play, Pause, RotateCcw, X, ChevronRight, Vote, Users, Radio, Network, Crown, SquareCheck } from "lucide-react";
+import { advanceCageViewerSimulation, startCageViewerSimulation, simulationCommand, CAGE_DEMO_BREAK_MS } from "../cageViewerSimulation";
+import type { RoomToolsState } from "../roomTools.types";
+import "./cage-viewer-showcase.css";
+const rounds = ["Huitièmes", "Quarts", "Demi-finales", "Finale"];
+export default function CageViewerShowcase({children, enabled}:{children:ReactNode; enabled:boolean}) {
+ const [state,setState]=useState<RoomToolsState|null>(null);
+ const stateRef=useRef(state);
+ useEffect(()=>{window.dispatchEvent(new CustomEvent("cage-viewer-preview-state",{detail:state?.cage ?? null}));return()=>{window.dispatchEvent(new CustomEvent("cage-viewer-preview-state",{detail:null}));};},[state]);
+ stateRef.current=state;
+ const [paused,setPaused]=useState(false);
+ const [tab,setTab]=useState("live");
+ const [bracketRound,setBracketRound]=useState(1);
+ const [remaining,setRemaining]=useState(0);
+ const [error,setError]=useState("");
+ const runtime=state?.cage?.runtime;
+ const match=runtime?.matches.find(m=>m.id===runtime.activeMatchId);
+ const completed=runtime?.status === "COMPLETED";
+ const resolved=match?.status === "RESOLVED" || match?.status === "CLOSED";
+ const voting=match?.status === "VOTING";
+ const restart=()=>{try {setState(startCageViewerSimulation());setPaused(false);setTab("live");setBracketRound(1);setError("");}catch(e){setError(e instanceof Error?e.message:"Simulation indisponible");}};
+ useEffect(()=>{if(!enabled)return;window.addEventListener("cage-viewer-simulation-ready",restart);return()=>window.removeEventListener("cage-viewer-simulation-ready",restart);},[enabled]);
+ const next=()=>{if(!stateRef.current)return;try{const copy=structuredClone(stateRef.current);advanceCageViewerSimulation(copy);setState(copy);}catch(e){setError(e instanceof Error?e.message:"Simulation interrompue");setPaused(true);}};
+ useEffect(()=>{
+  if(!state || paused || completed)return;
+  const duration=resolved?CAGE_DEMO_BREAK_MS:voting?6000:4000;
+  const deadline=Date.now()+duration;
+  setRemaining(Math.ceil(duration/1000));
+  const tick=window.setInterval(()=>setRemaining(Math.max(0,Math.ceil((deadline-Date.now())/1000))),250);
+  const timer=window.setTimeout(next,duration);
+  return()=>{clearInterval(tick);clearTimeout(timer);};
+ },[match?.id,match?.status,paused,completed]);
+ if(!state || !runtime || !match) return <>{error && <p role="alert">{error}</p>}{children}</>;
+ const person=(id:string|null)=>runtime.participants.find(p=>p.id===id)?.person;
+ const pair=[person(match.participantAId),person(match.participantBId)];
+ const winner=person(match.winnerId);
+ const played=runtime.matches.filter(m=>m.winnerId).length;
+ const nextMatch=runtime.matches.find(m=>!m.winnerId && m.id!==match.id && m.participantAId && m.participantBId);
+ const ballot=match.vote?.ballots["preview-viewer"];
+ const choose=(choice:"A"|"B")=>{try{const copy=structuredClone(state);simulationCommand(copy,"vote.cast",{choice},"preview-viewer");setState(copy);}catch(e){setError(e instanceof Error?e.message:"Vote impossible");}};
+ const ballots=Object.values(match.vote?.ballots ?? {});
+ const scores=[ballots.filter(v=>v==="A").length,ballots.filter(v=>v==="B").length];
+ return <CageBroadcast error={error} state={state} paused={paused} remaining={remaining} onPause={()=>setPaused(!paused)} onRestart={restart} onNext={next} onClose={()=>setState(null)} onVote={choose}/>;
+}

@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "kind": "castle_hill_contour", "level": 1 },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[7.27635, 43.69655], [7.2779, 43.69695], [7.28005, 43.69715], [7.28245, 43.6969], [7.28465, 43.69625]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "kind": "castle_hill_contour", "level": 2 },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[7.27675, 43.69575], [7.27835, 43.69625], [7.2807, 43.69645], [7.2832, 43.69605], [7.28525, 43.6953]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "kind": "castle_hill_contour", "level": 3 },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[7.27695, 43.69485], [7.2787, 43.69535], [7.2811, 43.69555], [7.2837, 43.69515], [7.28565, 43.6944]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "kind": "castle_hill_contour", "level": 4 },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[7.27765, 43.69405], [7.2794, 43.69445], [7.2816, 43.69465], [7.2838, 43.69425]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "kind": "castle_hill_ridge", "level": 1 },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[7.27925, 43.69345], [7.2801, 43.69425], [7.28085, 43.6952], [7.28135, 43.6962], [7.2816, 43.69735], [7.28125, 43.69835]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "kind": "castle_hill_ridge", "level": 2 },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[7.2836, 43.69345], [7.28305, 43.69425], [7.2827, 43.69515], [7.28245, 43.6962], [7.28255, 43.69755]]
+      }
+    }
+  ]
+}
