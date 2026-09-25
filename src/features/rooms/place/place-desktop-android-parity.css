@@ -272,8 +272,8 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   right: 4px;
   top: 4px;
   bottom: auto;
-  width: 48px;
-  height: 48px;
+  width: 29px;
+  height: 29px;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .9));
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-hit > .mw-grade-badge .mw-grade-badge__svg {
@@ -634,6 +634,32 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   box-shadow: none;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="place"] .place-studio-panel.is-tools .wave-tools-body .place-conversation__floor-deck::before { content: none; display: none; }
+
+/* Wave uses the same open tool rail as La Place, without a framed backplate. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav .place-tools-console__switch {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav :is(.room-tools-shell, .place-tools-console__switch)::before,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav :is(.room-tools-shell, .place-tools-console__switch)::after {
+  content: none;
+  display: none;
+}
+
+/* Match validation feedback on cards and on the selected loop's action bar. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .room-tools-shell.is-wave .wave-sas button:is(.wave-sas-card__quick-accept, .is-validate):is(:hover, :focus-visible):not(:disabled) {
+  border-color: #45e58a;
+  background: rgba(25, 155, 85, .18);
+  color: #60ee9d;
+  box-shadow: 0 0 15px rgba(43, 211, 118, .2), inset 0 0 10px rgba(43, 211, 118, .08);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .room-tools-shell.is-wave .wave-sas button:is(.wave-sas-card__quick-accept, .is-validate):is(:hover, :focus-visible):not(:disabled) svg {
+  border-color: #45e58a;
+  color: #60ee9d;
+  box-shadow: none;
+}
 
 /* The Mixer Volumes label is the type reference for every Desktop Room submenu. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch, .place-chat-workspace__nav, .place-guests__segments) > button {
