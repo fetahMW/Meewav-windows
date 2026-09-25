@@ -10,18 +10,6 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 .room-tools-shell.is-wave .room-tool-panel.is-wave-gate.wave-sas.wave-sas--premium { display: flex; flex-direction: column; }
 .room-tools-shell.is-wave .room-tool-panel.is-wave-gate.wave-sas.wave-sas--premium > .wave-sas__queue { flex: 1 1 auto; min-height: 0; }
 .room-tools-shell.is-wave .room-tool-panel.is-wave-gate.wave-sas.wave-sas--premium > :is(.wave-sas__header, .wave-bottom-bar, .wave-quarantine__toolbar, .wave-quarantine__hint) { flex-shrink: 0; }
-.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) { grid-template-columns: 40px minmax(0, 1fr) 70px 146px 48px; }
-.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions { display: grid; grid-template-columns: 32px 72px 32px; gap: 5px; }
-.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions > .wave-sas-card__replace { width: 72px; padding: 0 5px; font-size: 10px; font-weight: 650; }
+.room-tools-shell.is-wave .wave-sas--premium .wave-loop-card .wave-loop-card__quick-actions > .wave-sas-card__replace { width: 72px; padding: 0 5px; font-size: 10px; font-weight: 650; }
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions > .wave-sas-card__remove:hover:not(:disabled) { border-color: #f07b8e; color: #ff9aab; }
-@container wave-tools (max-width: 560px) {
-  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) { grid-template-columns: 40px minmax(0, 1fr) 60px 136px 38px; }
-  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions { grid-template-columns: 30px 66px 30px; gap: 5px; }
-  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions > .wave-sas-card__replace { width: 66px; }
-}
-@container wave-tools (max-width: 420px) {
-  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) { grid-template-columns: 40px minmax(0, 1fr) 32px; grid-template-rows: 28px 30px 30px; height: 108px; }
-  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions { grid-column: 2 / 4; grid-row: 3; justify-self: end; grid-template-columns: 28px 66px 28px; gap: 5px; }
-  .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card:has(.wave-sas-card__replace) .wave-loop-card__quick-actions > .wave-sas-card__replace { width: 66px; }
-}
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.has-before-category-action { grid-template-columns: 36px minmax(0, 1fr) 26px 60px 70px 38px; gap: 6px; }
