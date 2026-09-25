@@ -68,6 +68,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: #62527f #101114;
+  scrollbar-gutter: stable both-edges;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__rows > .place-guests__empty {
   grid-column: 1 / -1;
@@ -261,7 +262,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 
 /* Material and transport geometry from Android WaveMixerMaterials and WaveMixerDeckPanel. */
 .place-mixer-deck__advanced.is-web { display: contents; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] :is(.place-guests__desktop-dock, .place-studio-panel .place-mixer-audio__surface) { background:linear-gradient(90deg,#0003,transparent 14%,transparent 86%,#0003),linear-gradient(180deg,#1a1b1e 0%,#17181b 12%,#111214 32%,#090a0c 65%,#050608 91%,#030405);border:1px solid #ffffff16;border-top-color:#ffffff29;border-bottom-color:#000a;box-shadow:inset 0 1px #ffffff0e,0 2px 3px #0008; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio__surface { background:linear-gradient(90deg,#0003,transparent 14%,transparent 86%,#0003),linear-gradient(180deg,#1a1b1e 0%,#17181b 12%,#111214 32%,#090a0c 65%,#050608 91%,#030405);border:1px solid #ffffff16;border-top-color:#ffffff29;border-bottom-color:#000a;box-shadow:inset 0 1px #ffffff0e,0 2px 3px #0008; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-guests__desktop-dock-heading > button { justify-self:start;padding:0;border:0;background:none;color:#d4d0da;font:inherit;cursor:pointer; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-guest-camera-dock { display:contents; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-guests__desktop-dock-actions .place-guest-camera-dock > button { display:grid;flex:1 0 46px;justify-items:center;align-content:center;gap:4px;width:auto;height:48px;padding:4px 2px;border:0;border-radius:9px;background:transparent;color:#a98ef0;font-size:9px; }

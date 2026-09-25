@@ -13199,15 +13199,6 @@
   background: #090b19;
 }
 
-.place-room-shell .place-mixer.has-audio-player .place-volume-row__source-icon.is-music img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 7px;
-  clip-path: inset(0 round 7px);
-  object-fit: cover;
-}
-
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__mute,
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__transport,
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__camera {
@@ -17212,8 +17203,7 @@
     0 0 8px rgba(151, 71, 232, .15);
 }
 
-.place-room-shell .place-studio-panel.is-mixer .place-volume-row__portrait .place-volume-row__avatar,
-.place-room-shell .place-studio-panel.is-mixer .place-volume-row__source-icon.is-music img {
+.place-room-shell .place-studio-panel.is-mixer .place-volume-row__portrait .place-volume-row__avatar {
   filter: saturate(.94) contrast(1.04);
 }
 

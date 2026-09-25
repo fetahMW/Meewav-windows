@@ -1522,7 +1522,6 @@ function PlaceGuests({
       <section id="place-guests-backstage" className="place-guests__list is-backstage" role="tabpanel" hidden={section !== "backstage"}>
         <div className="place-guests__section-head is-capacity-only">
           <span className="place-guests__section-tools">{renderFilterButton("backstage")}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
-          <span className={`place-guests__capacity${stageFull ? " is-full" : ""}`}><strong>{stageFull ? "Scène complète" : `${3 - onStage.length} place${3 - onStage.length > 1 ? "s" : ""} libre${3 - onStage.length > 1 ? "s" : ""}`}</strong></span>
         </div>
         {mediaControls.isHost && juryOnly ? <div className="room-jury-voting">
           <label>Vote du live<select aria-label="Qui vote dans cet espace live ?" value={juryPolicy.mode} disabled={juryBusy || Boolean(juryLoadError)} onChange={event => void saveJury([...juryPolicy.jurorIds], event.target.value as RoomVoteMode)}>
@@ -1583,7 +1582,7 @@ function PlaceGuests({
         }) : <p className="place-guests__empty"><strong>{queue.length ? "Aucun profil avec ces filtres" : "Aucune demande"}</strong><span>{queue.length ? "Modifie les filtres pour retrouver les demandes." : "Les nouvelles demandes apparaîtront ici."}</span></p>}
         </div>
       </section>
-      {desktopGuests && !momentVipPicker ? <div className="place-guests__desktop-dock" role="toolbar" aria-label="Actions des invités sélectionnés">
+      {desktopGuests && !momentVipPicker ? <div className="place-guests__desktop-dock" data-has-selection={selectedParticipants.length > 0} role="toolbar" aria-label="Actions des invités sélectionnés">
         <div className="place-guests__desktop-dock-heading"><button type="button" onClick={clearGuestSelection} disabled={!selectedParticipants.length} title="Annuler la sélection">{selectedParticipants.length ? `${selectedParticipants.length} sélectionné${selectedParticipants.length > 1 ? "s" : ""}` : "Sélectionne un invité"}</button><small>{section === "backstage" ? "Glisse une carte sur la vidéo pour monter sur scène" : section === "stage" ? "Glisse une vidéo ici pour redescendre en coulisses" : "Choisis les profils à inviter"}</small></div>
         <div className="place-guests__desktop-dock-actions">
           {desktopAction("Aperçu", <UserRound aria-hidden="true" />, (trigger) => { if (singleSelected) setDockPreview({ participant: singleSelected, trigger }); }, !singleSelected)}

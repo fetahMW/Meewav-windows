@@ -18,6 +18,7 @@ import {
   ListMusic,
   Mic,
   MicOff,
+  Music2,
   Pause,
   Play,
   Radio,
@@ -54,7 +55,6 @@ import PlaceMixerAudioPlayer, { type PlaceMixerProgramAudioTransport } from "./P
 import PlaceTime from "./PlaceTime";
 import PlacePluginManager from "./PlacePluginManager";
 import { isNativePitchProvider } from "./placeAudioRouting";
-import { PLACE_MIXER_FALLBACK_COVERS } from "./placeMixerCoverCatalog";
 import { useStudioToolsLayout } from "./StudioToolsLayoutProvider";
 
 type PlaceMixerProps = {
@@ -286,21 +286,13 @@ function channelStatus(channel: PlaceMixerChannel) {
   return "";
 }
 
-function randomMixerCover(previous?: string) {
-  const covers = previous
-    ? PLACE_MIXER_FALLBACK_COVERS.filter((cover) => cover !== previous)
-    : PLACE_MIXER_FALLBACK_COVERS;
-  return covers[Math.floor(Math.random() * covers.length)] ?? PLACE_MIXER_FALLBACK_COVERS[0];
-}
-
-function SourceVisual({ channel, participant, room, musicCover }: {
+function SourceVisual({ channel, participant, room }: {
   channel: PlaceMixerChannel;
   participant?: PlaceParticipant;
   room: PlaceRoomState;
-  musicCover?: string;
 }) {
   if (channel.kind === "audio") {
-    return <span className="place-volume-row__source-icon is-music" aria-hidden="true"><img src={musicCover ?? PLACE_MIXER_FALLBACK_COVERS[0]} alt="" /></span>;
+    return <span className="place-volume-row__source-icon is-music" aria-hidden="true"><Music2 /></span>;
   }
   if (channel.kind === "master") {
     return <span className="place-volume-row__source-icon is-master" aria-hidden="true"><Radio /></span>;
@@ -366,7 +358,6 @@ function VolumeRow({
   isPlaying,
   onTogglePlayback,
   onOpenPlaylist,
-  musicCover,
   onConfigure,
   configureLabel,
   sourceStateLabel,
@@ -386,7 +377,6 @@ function VolumeRow({
   isPlaying?: boolean;
   onTogglePlayback?: () => void;
   onOpenPlaylist?: () => void;
-  musicCover?: string;
   onConfigure?: () => void;
   configureLabel?: string;
   sourceStateLabel?: string;
@@ -421,7 +411,7 @@ function VolumeRow({
 
   return (
     <article className={`place-volume-row${isMaster ? " is-master" : ""}${channel.kind === "audio" ? " is-music-channel" : channel.kind === "master" ? " is-master-channel" : " is-voice-channel"} is-${signalState}${level >= 0.82 && signalState !== "clipping" ? " is-near-peak" : ""}${channel.isMuted ? " is-muted" : ""}`} style={style}>
-      <SourceVisual channel={channel} participant={participant} room={room} musicCover={musicCover} />
+      <SourceVisual channel={channel} participant={participant} room={room} />
       <div className="place-volume-row__identity">
         <strong title={channel.detail}>{channel.label}</strong>
         {channel.id.startsWith("viewer-") ? <small>{sourceStateLabel ?? (channel.id === "viewer-live-return" ? "Écoute locale" : channel.signalState === "disconnected" ? "Source indisponible" : channel.signalState === "connecting" ? "Reconnexion…" : channel.isMuted ? "Muet" : channel.id === "viewer-master" ? "Mix personnel" : "Dans le Master")}</small> : null}
@@ -858,8 +848,6 @@ export default function PlaceMixer({
   const [autotuneStartError, setAutotuneStartError] = useState<string | null>(null);
   const [autotunePending, setAutotunePending] = useState(false);
   const [providerSelectionPending, setProviderSelectionPending] = useState(false);
-  const [musicCover, setMusicCover] = useState(() => randomMixerCover());
-  const musicCoverScopeRef = useRef(`${room.id}|${programAudio?.musicGeneration ?? ""}`);
   const autotunePendingRef = useRef(false);
   const autotuneRequestRef = useRef(0);
   const providerSelectionPendingRef = useRef(false);
@@ -932,13 +920,6 @@ export default function PlaceMixer({
     setProviderSelectionPending(false);
     setAutotuneStartError(null);
   }, [room.id]);
-
-  useEffect(() => {
-    const nextScope = `${room.id}|${programAudio?.musicGeneration ?? ""}`;
-    if (musicCoverScopeRef.current === nextScope) return;
-    musicCoverScopeRef.current = nextScope;
-    setMusicCover((current) => randomMixerCover(current));
-  }, [programAudio?.musicGeneration, room.id]);
 
   useEffect(() => () => {
     autotuneRequestRef.current += 1;
@@ -1158,7 +1139,7 @@ export default function PlaceMixer({
                     ? "host"
                     : "none";
               const stateLabel = personalMode && channel.id === "viewer-music" && previewMusicLevel > 0 ? "Préécoute locale" : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "permission-denied" ? "Autorisation refusée" : personalMix!.systemState === "reconnecting" ? "Sélection de source…" : personalMix!.engine.inputState("system") === "disconnected" || personalMix!.systemState === "disconnected" ? "Déconnecté" : undefined : personalMode && channel.id === "viewer-voice" && personalMix!.voiceStatus === "requesting_permission" ? "Autorisation micro…" : undefined;
-              return <VolumeRow key={channel.id} sourceStateLabel={stateLabel} onConfigure={personalMode && channel.id === "viewer-voice" ? () => void personalMix!.prepareVoice().catch(() => undefined) : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "active" ? personalMix!.stopSystem : () => void personalMix!.configureSystem() : undefined} configureLabel={channel.id === "viewer-system" && personalMix?.systemState === "active" ? "Arrêter la capture du son du PC" : `Configurer ${channel.label}`} channel={channel} room={room} onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={permissions.canEditGain} canEditMute={permissions.canEditMute} hostMuteControl={mode === "host" && channel.kind === "guest"} meterSuppressed={master?.isMuted === true} meterStream={mode === "host" && channel.kind === "microphone" ? hostVoiceMeterStream : null} cameraControl={cameraControl} musicCover={channel.kind === "audio" && channel.id !== "viewer-system" ? musicCover : undefined} onOpenPlaylist={channel.kind === "audio" && channel.id !== "viewer-system" ? () => window.dispatchEvent(new CustomEvent("meewav:mixer-playlist-open", { detail: { roomId: room.id } })) : undefined} />;
+              return <VolumeRow key={channel.id} sourceStateLabel={stateLabel} onConfigure={personalMode && channel.id === "viewer-voice" ? () => void personalMix!.prepareVoice().catch(() => undefined) : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "active" ? personalMix!.stopSystem : () => void personalMix!.configureSystem() : undefined} configureLabel={channel.id === "viewer-system" && personalMix?.systemState === "active" ? "Arrêter la capture du son du PC" : `Configurer ${channel.label}`} channel={channel} room={room} onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={permissions.canEditGain} canEditMute={permissions.canEditMute} hostMuteControl={mode === "host" && channel.kind === "guest"} meterSuppressed={master?.isMuted === true} meterStream={mode === "host" && channel.kind === "microphone" ? hostVoiceMeterStream : null} cameraControl={cameraControl} onOpenPlaylist={channel.kind === "audio" && channel.id !== "viewer-system" ? () => window.dispatchEvent(new CustomEvent("meewav:mixer-playlist-open", { detail: { roomId: room.id } })) : undefined} />;
             })}
           </div>
           {master ? <div className="place-master-dock" data-sending={personalMix ? ["En scène", "Avec le host"].includes(personalMix.publication) && !personalMix.levels.master.muted : undefined}><span className="place-master-dock__label">{ownMix ? "ENVOI VERS LE HOST" : "SORTIE PUBLIQUE"} <em><i aria-hidden="true" />{ownMix ? personalMix?.publication ?? "Préparation locale" : "ACTIVE"}</em></span>{personalMix && personalMix.meters.master >= 1 ? <p className="viewer-mix-error" role="status">Master trop fort</p> : null}<VolumeRow channel={master} room={room} isMaster onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={ownMix || room.source === "demo"} canEditMute cameraControl="none" /></div> : null}
