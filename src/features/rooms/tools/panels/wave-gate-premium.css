@@ -382,40 +382,6 @@
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine.has-before-category-action .wave-loop-card__meta { grid-column: 4 !important; }
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine.has-before-category-action .wave-loop-card__quick-actions { grid-column: 5 !important; }
 .room-tools-shell.is-wave .wave-sas--premium .wave-loop-card.is-quarantine.has-before-category-action .wave-loop-card__play { grid-column: 6 !important; }
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar {
-  display: grid !important;
-  grid-template-columns: minmax(0, 42%) minmax(0, 1fr) !important;
-  grid-template-rows: minmax(0, 1fr) !important;
-  align-items: center;
-  gap: 8px !important;
-  height: 82px !important;
-  min-height: 82px !important;
-  max-height: 82px !important;
-  padding: 8px 10px !important;
-}
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__identity {
-  grid-column: 1; grid-row: 1; grid-template-columns: 36px minmax(0, 1fr) !important;
-  align-items: center; gap: 8px; padding: 0 8px 0 0 !important;
-  border-right: 1px solid #2a2b2d !important; border-bottom: 0 !important;
-}
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__avatar { width: 36px !important; height: 36px !important; }
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__name strong { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls {
-  grid-column: 2; grid-row: 1;
-  display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  grid-template-rows: minmax(0, 1fr) !important; align-items: stretch; gap: 4px !important;
-  min-width: 0;
-}
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls > button {
-  grid-column: auto !important; grid-row: 1 !important;
-  min-width: 0; min-height: 0 !important; height: 64px !important;
-  gap: 3px; padding: 2px !important;
-  font-size: 9px !important; line-height: 1.1;
-}
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls > button svg {
-  box-sizing: content-box; width: 16px !important; height: 16px !important; padding: 6px !important;
-}
-.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls > button span { display: block; max-width: 100%; text-align: center; white-space: normal; overflow-wrap: normal; }
 .room-tools-shell.is-wave .wave-sas.wave-sas--premium.wave-vote-queue > .wave-bottom-bar {
   overflow: visible !important;
   z-index: 30;

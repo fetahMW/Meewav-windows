@@ -514,3 +514,23 @@
   .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-webkit-slider-thumb,
   .wave-tools-body .room-tools-shell.is-wave .wave-beat-queue .wave-vote-queue__volume[type="range"]::-moz-range-thumb { transition: none; }
 }
+
+/* Same action rail footprint as Boucle: 180px of controls. */
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls {
+  grid-template-columns: 34px 66px 64px; gap: 8px;
+}
+@container wave-tools (max-width: 420px) {
+  .wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls {
+    grid-template-columns: 34px 62px 64px; gap: 4px;
+  }
+}
+.wave-tools-body .room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-bottom-bar .wave-bottom-bar__controls > :is(.wave-quarantine-dock__replace, .wave-quarantine-dock__vote) {
+  height: 30px; min-height: 30px; padding: 0 4px; white-space: nowrap; font-size: 9px;
+  border: 1px solid transparent; border-radius: 8px;
+  background: var(--sas-control-surface); box-shadow: var(--sas-control-shadow);
+}
+.room-tools-shell.is-wave .wave-sas--premium button:is(.wave-sas-card__quick-reject, .is-danger):is(:hover, :focus-visible):not(:disabled) {
+  color: #ff8298 !important; border-color: #ee5975 !important;
+  background: linear-gradient(#47232c, #200c12) !important;
+  box-shadow: inset 0 1px #ffffff18, 0 0 10px #ef46652b !important;
+}

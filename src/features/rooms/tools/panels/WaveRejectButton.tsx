@@ -68,12 +68,11 @@ export default function WaveRejectButton({ title, className, disabled, onReject 
   return <>
     <button ref={trigger} type="button" className={className} aria-label={`Refuser ${title}`} disabled={disabled || pending}
       aria-haspopup="menu" aria-expanded={open} aria-controls={open ? id : undefined}
-      onMouseEnter={() => show(false)} onMouseLeave={leave}
       onClick={event => { event.stopPropagation(); show(true); }}
       onKeyDown={event => { if (event.key === "ArrowDown") { event.preventDefault(); show(true); } }}
       onBlur={event => { if (!menu.current?.contains(event.relatedTarget)) leave(); }}>Refuser</button>
     {open ? createPortal(<div ref={menu} id={id} className="wave-reject-menu" role="menu" aria-label={`Motif du refus de ${title}`} aria-busy={pending}
-      style={position} onMouseEnter={cancelClose} onMouseLeave={leave} onFocus={cancelClose}
+      style={position} onFocus={cancelClose}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget) && event.relatedTarget !== trigger.current) close(); }}
       onClick={event => event.stopPropagation()} onKeyDown={event => {
         if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;

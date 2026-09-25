@@ -76,7 +76,7 @@ describe("Wave · une seule instance persistante", () => {
     fireEvent.click(screen.getByRole("button", { name: "Changer de surface" }));
     fireEvent.click(await screen.findByRole("tab", { name: "Sas des boucles" }));
     const row = await screen.findByRole("article", { name: "Sélectionner Afro · Basse A de Eliott Waves" });
-    fireEvent.mouseEnter(within(row).getByRole("button", { name: "Refuser Afro · Basse A" }));
+    fireEvent.click(within(row).getByRole("button", { name: "Refuser Afro · Basse A" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(row).toBeInTheDocument();
     await act(async () => fireEvent.click(screen.getByRole("menuitem", { name: "Catégorie déjà complète" })));

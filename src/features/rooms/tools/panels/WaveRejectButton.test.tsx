@@ -13,6 +13,8 @@ describe("Refus rapide des boucles", () => {
   ])("refuse en un clic avec le motif %s", async (label, reason) => {
     const { button, onReject } = setup();
     fireEvent.mouseEnter(button);
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    fireEvent.click(button);
     expect(screen.getAllByRole("menuitem")).toHaveLength(3);
     expect(onReject).not.toHaveBeenCalled();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -31,17 +33,19 @@ describe("Refus rapide des boucles", () => {
     expect(button).toHaveFocus();
     expect(onReject).not.toHaveBeenCalled();
   });
-  it("laisse traverser l’espace entre le bouton et le menu", () => {
+  it("garde le menu ouvert après le clic quand la souris quitte le bouton", () => {
     vi.useFakeTimers();
     try {
       const { button, onReject } = setup();
-      fireEvent.mouseEnter(button); fireEvent.mouseLeave(button);
+      fireEvent.click(button); fireEvent.mouseLeave(button);
       act(() => vi.advanceTimersByTime(100));
       fireEvent.mouseEnter(screen.getByRole("menu"));
       act(() => vi.advanceTimersByTime(300));
       expect(screen.getByRole("menu")).toBeInTheDocument();
       fireEvent.mouseLeave(screen.getByRole("menu"));
       act(() => vi.advanceTimersByTime(250));
+      expect(screen.getByRole("menu")).toBeInTheDocument();
+      fireEvent.pointerDown(document.body);
       expect(screen.queryByRole("menu")).not.toBeInTheDocument();
       expect(onReject).not.toHaveBeenCalled();
     } finally { vi.useRealTimers(); }
