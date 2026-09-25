@@ -138,6 +138,26 @@ describe("Desktop guest gestures", () => {
     expect(cards[1]).toHaveAttribute("aria-pressed", "true");
   });
 
+  it("shows backstage latency above the cards and no camera control for requests", () => {
+    renderDesktopGuests();
+    const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
+    const louna = within(backstage).getByRole("button", { name: "Sélectionner Louna Saphir" });
+    const latency = louna.querySelector<HTMLElement>(".place-guest-row__compact-state.is-latency");
+    expect(latency).toHaveTextContent("112 ms");
+    expect(latency).toHaveClass("is-unstable");
+    expect(louna.querySelector(".lucide-camera, .lucide-camera-off")).toBeNull();
+    const hint = backstage.querySelector<HTMLElement>(".place-guests__rail-hint")!;
+    expect(hint).toHaveTextContent("Glisse une carte sur la vidéo pour monter sur scène");
+    expect(hint.nextElementSibling).toHaveClass("place-guests__rows");
+    expect(screen.getByRole("toolbar", { name: "Actions des invités sélectionnés" })).not.toHaveTextContent("Glisse une carte");
+
+    fireEvent.click(screen.getByRole("tab", { name: /File d’attente,/ }));
+    const queue = document.querySelector<HTMLElement>("#place-guests-queue")!;
+    const queueCard = within(queue).getByRole("button", { name: "Sélectionner Kenza Loba" });
+    expect(queueCard.querySelector(".place-guest-row__compact-state")).toBeNull();
+    expect(within(screen.getByRole("toolbar", { name: "Actions des invités sélectionnés" })).queryByRole("button", { name: "Caméra" })).toBeNull();
+  });
+
   it("lets the Host drag a stage guest back to the Room's backstage, but rejects another Room", async () => {
     const { room, onMoveGuest } = renderDesktopGuests();
     fireEvent.click(screen.getByRole("tab", { name: /Sur scène,/ }));

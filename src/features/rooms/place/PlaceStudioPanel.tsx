@@ -44,6 +44,7 @@ import {
   Send,
   Smile,
   Scale,
+  Signal,
   Square,
   SquareCheck,
   SlidersHorizontal,
@@ -536,6 +537,8 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
   const visibleStatus = variant === "backstage" || isGreenHouse ? "Prêt" : variant === "onstage" ? "En scène" : "En attente";
   const queueWaitingTime = variant === "queue" ? waitingTime(participant.joinedAt, timeNow) : null;
   const allMediaReady = participant.isMicrophoneEnabled && participant.isCameraEnabled;
+  const latencyMeasured = Number.isFinite(participant.latencyMs) && participant.latencyMs > 0;
+  const latencyUnstable = latencyMeasured && participant.latencyMs > 80;
   if (desktopCards) return <>
     <article className={`place-guest-row is-portrait-card is-desktop-compact is-${variant}${selected ? " is-selected" : ""}${isJuror ? " is-juror" : ""}`}>
       <button ref={portraitRef} type="button" className="place-guest-row__compact-hit"
@@ -554,7 +557,9 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
         }}>
         <img className="place-guest-row__compact-image" src={participant.profile.avatarUrl} alt="" draggable={false} />
         <span className="place-guest-row__compact-shade" />
-        <span className={`place-guest-row__compact-state${selected || selectionMode ? " is-checkbox" : ""}`}>{selected ? <SquareCheck aria-hidden="true" /> : selectionMode ? <Square aria-hidden="true" /> : variant === "onstage" ? <RadioTower aria-hidden="true" /> : participant.isCameraEnabled ? <Camera aria-hidden="true" /> : <CameraOff aria-hidden="true" />}</span>
+        {selected || selectionMode ? <span className="place-guest-row__compact-state is-checkbox">{selected ? <SquareCheck aria-hidden="true" /> : <Square aria-hidden="true" />}</span>
+          : variant === "backstage" ? <span className={`place-guest-row__compact-state is-latency${latencyUnstable ? " is-unstable" : latencyMeasured ? " is-stable" : " is-unmeasured"}`} title={latencyMeasured ? `Latence : ${Math.round(participant.latencyMs)} ms${latencyUnstable ? " · latence élevée" : ""}` : "Latence non mesurée"}><Signal aria-hidden="true" /><span>{latencyMeasured ? `${Math.round(participant.latencyMs)} ms` : "—"}</span></span>
+            : variant === "onstage" ? <span className="place-guest-row__compact-state"><RadioTower aria-hidden="true" /></span> : null}
         <span className="place-guest-row__compact-copy"><strong>{participant.profile.displayName}</strong><small>{participant.profile.role}</small></span>
         <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="sm" variant="icon" />
       </button>
@@ -1550,6 +1555,7 @@ function PlaceGuests({
         </div> : null}
         {juryError || juryLoadError ? <p className="room-jury-error" role="alert">{juryError || juryLoadError}</p> : null}
         {!desktopGuests && visibleBackstageSelectedCount ? <div className="place-guests__bulk-bar is-summary-only" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleBackstageSelectedCount}</strong> artiste{visibleBackstageSelectedCount > 1 ? "s" : ""} sélectionné{visibleBackstageSelectedCount > 1 ? "s" : ""}</span></div> : null}
+        {desktopGuests ? <p className="place-guests__rail-hint">Glisse une carte sur la vidéo pour monter sur scène</p> : null}
         <div className="place-guests__rows">
           {filteredBackstage.length > 0 ? filteredBackstage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="backstage" isJuror={juryPolicy.jurorIds.includes(participant.profile.id)} stageControls={<PlaceBackstageControls participant={participant} room={room} {...mediaControls} />} actions={[
             { direction: "down", tone: "cyan", label: "Renvoyer vers la File d’attente", text: "File d’attente", onAction: () => void leaveBackstage(participant, () => onMoveGuest(participant, "accepted")), disabled: juryBusy },
@@ -1592,7 +1598,7 @@ function PlaceGuests({
         </div>
       </section>
       {desktopGuests && !momentVipPicker ? <div className="place-guests__desktop-dock" data-has-selection={selectedParticipants.length > 0} role="toolbar" aria-label="Actions des invités sélectionnés">
-        <div className="place-guests__desktop-dock-heading"><button type="button" onClick={clearGuestSelection} disabled={!selectedParticipants.length} title="Annuler la sélection">{selectedParticipants.length ? `${selectedParticipants.length} sélectionné${selectedParticipants.length > 1 ? "s" : ""}` : "Sélectionne un invité"}</button><small>{section === "backstage" ? "Glisse une carte sur la vidéo pour monter sur scène" : section === "stage" ? "Glisse une vidéo ici pour redescendre en coulisses" : "Choisis les profils à inviter"}</small></div>
+        <div className="place-guests__desktop-dock-heading"><button type="button" onClick={clearGuestSelection} disabled={!selectedParticipants.length} title="Annuler la sélection">{selectedParticipants.length ? `${selectedParticipants.length} sélectionné${selectedParticipants.length > 1 ? "s" : ""}` : "Sélectionne un invité"}</button>{section === "backstage" ? null : <small>{section === "stage" ? "Glisse une vidéo ici pour redescendre en coulisses" : "Choisis les profils à inviter"}</small>}</div>
         <div className="place-guests__desktop-dock-actions">
           {desktopAction("Aperçu", <UserRound aria-hidden="true" />, (trigger) => { if (singleSelected) setDockPreview({ participant: singleSelected, trigger }); }, !singleSelected)}
           {desktopAction("Message", <MessageCircle aria-hidden="true" />, () => { if (singleSelected) onMessageProfile(singleSelected.profile.id); }, !singleSelected)}
@@ -1603,7 +1609,7 @@ function PlaceGuests({
             {desktopAction(singleSelected && juryPolicy.jurorIds.includes(singleSelected.profile.id) ? "Ôter jury" : "Jury", <Scale aria-hidden="true" />, () => { if (singleSelected) toggleJuror(singleSelected.profile.id); }, !singleSelected || juryBusy || Boolean(juryLoadError) || (singleSelected && !juryPolicy.jurorIds.includes(singleSelected.profile.id) && juryPolicy.jurorIds.length >= 4))}
           </> : null}
           {section === "stage" ? desktopAction("Coulisses", <ArrowDownToLine aria-hidden="true" />, () => { void runGuestAction((person) => onMoveGuest(person, "backstage")); }, !selectedParticipants.length) : null}
-          {singleSelected && (singleSelected.status === "backstage" || singleSelected.status === "onstage") ? <PlaceBackstageControls dock participant={singleSelected} room={room} {...mediaControls} /> : desktopAction("Caméra", <Camera aria-hidden="true" />, () => undefined, true)}
+          {section === "queue" ? null : singleSelected && (singleSelected.status === "backstage" || singleSelected.status === "onstage") ? <PlaceBackstageControls dock participant={singleSelected} room={room} {...mediaControls} /> : desktopAction("Caméra", <Camera aria-hidden="true" />, () => undefined, true)}
           {desktopAction(section === "queue" ? "Refuser" : "Retirer", <X aria-hidden="true" />, () => { void runGuestAction(onRemoveGuest); }, !selectedParticipants.length)}
         </div>
         {guestActionError ? <p role="alert" className="place-guests__desktop-dock-error">{guestActionError}</p> : null}
