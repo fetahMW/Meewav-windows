@@ -4,16 +4,15 @@
  * Geometry, signal colours and interaction logic stay untouched. */
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) {
-  /* Diamond-cut aluminium rim: bright top chamfer, dark flanks, lit lower lip. */
+  /* Satin graphite rim: a soft top catch-light, never a white stroke. */
   --hifi-lacquer-edge:
-    linear-gradient(180deg, #eef0f3 0%, #8b8f96 9%, #2a2c30 30%, #101113 52%, #1c1d20 76%, #5d6067 92%, #b4b8be 100%) border-box;
-  /* Glossy black mirrors its room: ceiling softbox, a sharp horizon at mid
-   * height, two window stripes, a floor bounce, and a dither grain so the
-   * blacks never band. The base stays near #000 below the horizon. */
+    linear-gradient(180deg, #4d5056 0%, #2c2e32 14%, #141517 42%, #0b0c0e 62%, #17181b 86%, #303236 100%) border-box;
+  /* Glossy black mirrors its room: ceiling softbox, a soft horizon at mid
+   * height, a floor bounce, and a dither grain so the blacks never band.
+   * The base stays near #000 below the horizon. */
   --hifi-lacquer-face:
-    radial-gradient(150% 24px at 50% -2px, rgba(255, 255, 255, .19), rgba(236, 242, 252, .065) 52%, transparent 76%) padding-box,
-    linear-gradient(113deg, transparent 57%, rgba(236, 242, 252, .07) 57.15%, rgba(236, 242, 252, .028) 63%, transparent 63.15%, transparent 66.2%, rgba(236, 242, 252, .045) 66.35%, rgba(236, 242, 252, .018) 67.6%, transparent 67.75%) padding-box,
-    linear-gradient(180deg, rgba(168, 180, 202, .15) 0, rgba(128, 140, 164, .085) 30%, rgba(96, 108, 132, .05) 49.6%, transparent 50%) padding-box,
+    radial-gradient(150% 24px at 50% -2px, rgba(255, 255, 255, .14), rgba(236, 242, 252, .05) 52%, transparent 76%) padding-box,
+    linear-gradient(180deg, rgba(168, 180, 202, .13) 0, rgba(128, 140, 164, .075) 30%, rgba(96, 108, 132, .04) 48%, transparent 54%) padding-box,
     linear-gradient(0deg, rgba(178, 194, 220, .11), rgba(178, 194, 220, .025) 7px, transparent 16px) padding-box,
     radial-gradient(90% 70% at 50% 118%, rgba(52, 66, 94, .2), transparent 68%) padding-box,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") padding-box,
@@ -21,12 +20,12 @@
     var(--hifi-lacquer-edge);
   /* Clear-coat thickness: the edge rolls light in on all four sides. */
   --hifi-lacquer-shadow:
-    inset 0 1px rgba(255, 255, 255, .46),
-    inset 0 2px 1px rgba(255, 255, 255, .09),
+    inset 0 1px rgba(255, 255, 255, .13),
+    inset 0 2px 1px rgba(255, 255, 255, .025),
     inset 0 4px 3px -1px rgba(0, 0, 0, .55),
-    inset 1px 0 rgba(255, 255, 255, .1),
-    inset -1px 0 rgba(255, 255, 255, .055),
-    inset 0 -1px rgba(214, 226, 246, .17),
+    inset 1px 0 rgba(255, 255, 255, .035),
+    inset -1px 0 rgba(255, 255, 255, .02),
+    inset 0 -1px rgba(214, 226, 246, .06),
     inset 0 -4px 5px -2px rgba(0, 0, 0, .75),
     0 1px 0 rgba(0, 0, 0, .95),
     0 2px 0 rgba(214, 226, 246, .035),
@@ -34,9 +33,9 @@
     0 16px 28px rgba(0, 0, 0, .6);
   /* Domed lacquer keys: crisp reflected window on the upper half, horizon cut. */
   --hifi-lacquer-key:
-    radial-gradient(120% 62% at 50% -4%, rgba(255, 255, 255, .24), rgba(236, 242, 252, .075) 58%, transparent 61%) padding-box,
-    linear-gradient(180deg, #202227 0, #0d0e11 49%, #020203 51%, #000 80%, #0b0c0f 100%) padding-box,
-    linear-gradient(180deg, #f1f3f6, #7b7f86 24%, #1a1b1e 54%, #34363b 82%, #a2a6ad) border-box;
+    radial-gradient(120% 62% at 50% -4%, rgba(255, 255, 255, .13), rgba(236, 242, 252, .04) 58%, transparent 64%) padding-box,
+    linear-gradient(180deg, #1c1e22 0, #0c0d10 46%, #030304 56%, #000 80%, #08090b 100%) padding-box,
+    linear-gradient(180deg, #5b5e64, #303236 26%, #141518 56%, #1d1f22 84%, #37393e) border-box;
   --studio-black-key: var(--hifi-lacquer-key);
   --hifi-vfd: #a8e4ff;
   --hifi-vfd-glow: 0 0 3px rgba(120, 206, 255, .55), 0 0 9px rgba(80, 170, 255, .22);
@@ -52,7 +51,7 @@
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > .place-volume-row:is(:hover, :focus-within) {
-  box-shadow: inset 0 1px rgba(255, 255, 255, .6), var(--hifi-lacquer-shadow);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .2), var(--hifi-lacquer-shadow);
 }
 
 /* dB readouts as a vacuum-fluorescent display. */
@@ -91,7 +90,7 @@
     inset 0 1px 1px rgba(0, 0, 0, .95),
     inset 0 -1px rgba(255, 255, 255, .04),
     0 -1px 0 rgba(0, 0, 0, .9),
-    0 1px 0 rgba(214, 226, 246, .13);
+    0 1px 0 rgba(214, 226, 246, .06);
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-webkit-slider-thumb {
@@ -129,14 +128,23 @@
     0 0 9px rgba(210, 226, 255, .2);
 }
 
+/* While dragging, the cap stays bright and a faint violet light wakes up behind it. */
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:not(:disabled):active::-webkit-slider-thumb {
-  transform: scale(.94);
-  filter: brightness(.96);
+  transform: none;
+  filter: brightness(1.08);
   box-shadow:
-    inset 0 1px rgba(255, 255, 255, .8),
-    inset 0 -1px rgba(0, 0, 0, .35),
-    0 1px 1px rgba(0, 0, 0, .95),
-    0 1px 2px rgba(0, 0, 0, .8);
+    inset 0 1px #fff,
+    inset 0 -1px rgba(0, 0, 0, .3),
+    inset 1px 0 rgba(255, 255, 255, .5),
+    inset -1px 0 rgba(0, 0, 0, .15),
+    0 0 0 1px rgba(178, 116, 255, .3),
+    0 1px 1px rgba(0, 0, 0, .9),
+    0 0 8px rgba(160, 90, 250, .5),
+    0 0 18px rgba(140, 70, 240, .22);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:not(:disabled):active::-moz-range-thumb {
+  filter: brightness(1.08);
+  box-shadow: inset 0 1px #fff, 0 0 0 1px rgba(178, 116, 255, .3), 0 0 8px rgba(160, 90, 250, .5), 0 0 18px rgba(140, 70, 240, .22);
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:focus-visible {
@@ -163,7 +171,7 @@
   height: 4px;
   border-radius: 2px;
   background: linear-gradient(180deg, #000, #060708 60%, #000);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .95), 0 1px 0 rgba(214, 226, 246, .13);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .95), 0 1px 0 rgba(214, 226, 246, .06);
 }
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-moz-range-progress {
   height: 4px;
@@ -194,7 +202,7 @@
     inset 0 2px 7px rgba(0, 0, 0, .95),
     inset 0 -1px rgba(170, 196, 236, .06),
     0 -1px 0 rgba(0, 0, 0, .9),
-    0 1px 0 rgba(214, 226, 246, .1);
+    0 1px 0 rgba(214, 226, 246, .05);
 }
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer .place-mixer-audio .place-mixer-audio__waveform::after {
   content: "";
@@ -203,9 +211,7 @@
   inset: 0;
   border-radius: inherit;
   background:
-    linear-gradient(174deg, rgba(232, 240, 252, .1), rgba(232, 240, 252, .03) 38%, transparent 38.3%),
-    linear-gradient(113deg, transparent 62%, rgba(232, 240, 252, .045) 62.2%, rgba(232, 240, 252, .015) 68%, transparent 68.2%),
-    linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 2px);
+    linear-gradient(180deg, rgba(232, 240, 252, .05), rgba(232, 240, 252, .012) 45%, transparent 60%);
   pointer-events: none;
 }
 
@@ -216,14 +222,14 @@
   background:
     radial-gradient(130% 50% at 50% 0, rgba(240, 245, 255, .1), transparent 70%) padding-box,
     linear-gradient(180deg, #0b0c0e, #000) padding-box,
-    linear-gradient(180deg, #c3c7cd, #5a5d63 30%, #1a1b1e 60%, #7b7f86) border-box;
+    linear-gradient(180deg, #5e6167, #2e3034 30%, #121315 60%, #34363b) border-box;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, .9), 0 0 0 1px #000, 0 2px 4px rgba(0, 0, 0, .85);
 }
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__source-icon.is-music {
-  background: linear-gradient(180deg, #c3c7cd, #5a5d63 30%, #1a1b1e 60%, #7b7f86) border-box;
+  background: linear-gradient(180deg, #5e6167, #2e3034 30%, #121315 60%, #34363b) border-box;
 }
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__portrait {
-  box-shadow: 0 0 0 1px #000, 0 0 0 2px rgba(196, 202, 212, .38), 0 0 0 3px #000, 0 3px 5px rgba(0, 0, 0, .85);
+  box-shadow: 0 0 0 1px #000, 0 0 0 2px rgba(150, 156, 166, .18), 0 0 0 3px #000, 0 3px 5px rgba(0, 0, 0, .85);
 }
 
 /* Lacquer keys: crisp top reflection, aluminium chamfer, real press travel. */
@@ -326,6 +332,57 @@
 /* ---- Windows desktop deck (.is-android-deck) ----
  * The deck draws its own surface and keys with !important. Same lacquer here,
  * without changing the key sizes set for the Windows window. */
+/* ---- Windows studio chassis ----
+ * The enclosure reads as brushed black aluminium, the modules inside as
+ * lacquer. The rim becomes a soft machined bezel with a recessed groove
+ * instead of a bright glass stroke. Same geometry on every surface. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed) {
+  background:
+    radial-gradient(130% 34% at 50% 0%, rgba(214, 224, 242, .07), transparent 72%),
+    radial-gradient(120% 30% at 50% 100%, rgba(150, 166, 196, .045), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035 .95' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .075 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #131417 0%, #0b0c0e 22%, #070809 64%, #0d0e11 100%);
+  box-shadow:
+    0 0 0 1px #000,
+    0 2px 0 1px rgba(0, 0, 0, .6),
+    0 10px 22px rgba(0, 0, 0, .7),
+    0 28px 56px rgba(0, 0, 0, .55),
+    inset 0 0 18px rgba(0, 0, 0, .6);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed)::before {
+  padding: 3px;
+  background:
+    linear-gradient(180deg, #4b4e54 0%, #2a2c30 7%, #17181b 26%, #0e0f11 58%, #161719 88%, #303237 100%);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .12),
+    inset 0 -1px rgba(214, 226, 246, .05),
+    inset 1px 0 rgba(255, 255, 255, .04),
+    inset -1px 0 rgba(255, 255, 255, .03),
+    inset 0 0 0 2px rgba(0, 0, 0, .35);
+}
+/* Recessed groove just inside the bezel: dark channel with a faint lower lip. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests):not(.is-collapsed)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 19;
+  inset: 3px;
+  border: 1px solid rgba(0, 0, 0, .92);
+  border-radius: 19px;
+  background: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .025), inset 0 1px rgba(255, 255, 255, .045), inset 0 -1px rgba(214, 226, 246, .03);
+  pointer-events: none;
+}
+
+/* The desktop rows carried a lavender stroke and a diagonal sheen: the
+ * lacquer rim replaces both. The left violet signal bar (::before) stays. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player :is(.place-volume-list > .place-volume-row, .place-master-dock .place-volume-row) {
+  border-color: transparent;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player :is(.place-volume-list > .place-volume-row, .place-master-dock .place-volume-row)::after {
+  background: none;
+}
+
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:has(.is-android-deck) {
   background: none;
   box-shadow: none;
@@ -344,7 +401,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   background: var(--studio-black-key) !important;
   box-shadow:
     0 0 0 1px #000,
-    inset 0 1px rgba(250, 252, 255, .3),
+    inset 0 1px rgba(250, 252, 255, .13),
     inset 0 -1px rgba(0, 0, 0, .9),
     0 1px 0 1px rgba(214, 226, 246, .05),
     0 3px 6px rgba(0, 0, 0, .8) !important;
