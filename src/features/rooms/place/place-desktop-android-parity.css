@@ -36,6 +36,20 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   color: #a98ef0;
   filter: none;
 }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments {
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr) minmax(0, .82fr);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-queue {
+  gap: 4px;
+  padding-inline: 2px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-queue .place-guests__segment-copy,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-queue .place-guests__segment-copy > small {
+  width: max-content;
+  min-width: max-content;
+  overflow: visible;
+  text-overflow: clip;
+}
 
 /* Portrait rail: three square cards, vertical scrolling, no controls on cards. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests {
@@ -133,6 +147,36 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   color: #a98ef0;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-state svg { width: 14px; height: 14px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-state.is-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #d9c4ff;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-state.is-checkbox svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 2.4;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .95));
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__list.is-backstage .place-guests__section-head:has(.studio-guest-selection-chips) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  height: auto;
+  padding-bottom: 4px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__list.is-backstage .studio-guest-selection-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 9px;
+  min-width: 0;
+  padding: 0;
+}
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-copy {
   position: absolute;
   right: 8px;
@@ -155,8 +199,8 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   right: 6px;
   top: 6px;
   bottom: auto;
-  width: 23px;
-  height: 23px;
+  width: 34px;
+  height: 34px;
 }
 
 /* Android-inspired action dock: single home for all guest commands. */

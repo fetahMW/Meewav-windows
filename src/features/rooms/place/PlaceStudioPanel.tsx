@@ -44,6 +44,8 @@ import {
   Send,
   Smile,
   Scale,
+  Square,
+  SquareCheck,
   SlidersHorizontal,
   Sparkles,
   Trash2,
@@ -497,7 +499,7 @@ function GuestRowMenu({ participant, variant, onOpenProfile, onMessageProfile, o
   </>;
 }
 
-export function ParticipantRow({ participant, variant, profileSource = "live", actions, statusText, timeNow, isJuror = false, selected = false, onSelectedChange, onSelectExclusive, repeatOpensProfile = true, onRemove, onOpenProfile, onMessageProfile, onCollaborateProfile, stageControls, roomId }: {
+export function ParticipantRow({ participant, variant, profileSource = "live", actions, statusText, timeNow, isJuror = false, selected = false, selectionMode = false, onSelectedChange, onSelectExclusive, repeatOpensProfile = true, onRemove, onOpenProfile, onMessageProfile, onCollaborateProfile, stageControls, roomId }: {
   participant: PlaceParticipant;
   profileSource?: "demo" | "live";
   variant: "queue" | "backstage" | "onstage";
@@ -508,6 +510,7 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
   timeNow?: number;
   isJuror?: boolean;
   selected?: boolean;
+  selectionMode?: boolean;
   onSelectedChange?: (selected: boolean) => void;
   onSelectExclusive?: () => void;
   repeatOpensProfile?: boolean;
@@ -551,9 +554,9 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
         }}>
         <img className="place-guest-row__compact-image" src={participant.profile.avatarUrl} alt="" draggable={false} />
         <span className="place-guest-row__compact-shade" />
-        <span className="place-guest-row__compact-state">{selected ? <CircleCheck aria-hidden="true" /> : variant === "onstage" ? <RadioTower aria-hidden="true" /> : participant.isCameraEnabled ? <Camera aria-hidden="true" /> : <CameraOff aria-hidden="true" />}</span>
+        <span className={`place-guest-row__compact-state${selected || selectionMode ? " is-checkbox" : ""}`}>{selected ? <SquareCheck aria-hidden="true" /> : selectionMode ? <Square aria-hidden="true" /> : variant === "onstage" ? <RadioTower aria-hidden="true" /> : participant.isCameraEnabled ? <Camera aria-hidden="true" /> : <CameraOff aria-hidden="true" />}</span>
         <span className="place-guest-row__compact-copy"><strong>{participant.profile.displayName}</strong><small>{participant.profile.role}</small></span>
-        <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="xs" variant="icon" />
+        <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="sm" variant="icon" />
       </button>
     </article>
     {profileTrigger ? <Suspense fallback={null}><GuestPreProfile
@@ -1336,6 +1339,7 @@ function PlaceGuests({
   const [selectedQueueIds, setSelectedQueueIds] = useState<string[]>([]);
   const [selectedBackstageIds, setSelectedBackstageIds] = useState<string[]>([]);
   const [selectedStageIds, setSelectedStageIds] = useState<string[]>([]);
+  const [bulkSelectionMode, setBulkSelectionMode] = useState<"queue" | "backstage" | null>(null);
   const [guestActionError, setGuestActionError] = useState("");
   const [dockPreview, setDockPreview] = useState<{ participant: PlaceParticipant; trigger: HTMLElement } | null>(null);
   const [guestActionBusy, setGuestActionBusy] = useState(false);
@@ -1346,7 +1350,7 @@ function PlaceGuests({
   const [juryBusy, setJuryBusy] = useState(false);
   const jurySaving = useRef(false);
   const [juryError, setJuryError] = useState("");
-  useEffect(() => { setJuryOnly(false); setJuryError(""); setGuestActionError(""); setDockPreview(null); setSelectedQueueIds([]); setSelectedBackstageIds([]); setSelectedStageIds([]); }, [room.id]);
+  useEffect(() => { setJuryOnly(false); setJuryError(""); setGuestActionError(""); setDockPreview(null); setSelectedQueueIds([]); setSelectedBackstageIds([]); setSelectedStageIds([]); setBulkSelectionMode(null); }, [room.id]);
   useEffect(() => {
     const timer = window.setInterval(() => setTimeNow(Date.now()), 30_000);
     return () => window.clearInterval(timer);
@@ -1421,7 +1425,7 @@ function PlaceGuests({
     setFilterState("open");
   };
   const closeFilters = useCallback(() => setFilterState("closed"), []);
-  useEffect(() => { if (momentVipPicker) { setSection("queue"); closeFilters(); } }, [momentVipPicker, closeFilters]);
+  useEffect(() => { if (momentVipPicker) { setSection("queue"); setBulkSelectionMode(null); closeFilters(); } }, [momentVipPicker, closeFilters]);
   const renderFilterButton = (owner: "stage" | "backstage" | "queue") => <GuestFilterButton panelId="studio-guests-filter-panel" activeCount={activeFilterCount} open={filterState === "open" && section === owner} buttonRef={section === owner ? (node) => { filterTriggerRef.current = node; } : undefined} onOpen={openFilters} />;
   const toggleQueueSelection = (participantId: string, selected: boolean) => setSelectedQueueIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
   const toggleBackstageSelection = (participantId: string, selected: boolean) => setSelectedBackstageIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
@@ -1430,8 +1434,20 @@ function PlaceGuests({
     const visibleIds = new Set(participants.map((participant) => participant.id));
     const setter = target === "queue" ? setSelectedQueueIds : setSelectedBackstageIds;
     setter((current) => allSelected ? current.filter((id) => !visibleIds.has(id)) : [...new Set([...current, ...visibleIds])]);
+    if (desktopGuests) setBulkSelectionMode(allSelected ? null : target);
   };
   const renderBulkSelectButton = (participants: PlaceParticipant[], allSelected: boolean, count: number, target: "queue" | "backstage") => <button type="button" className={`place-guests__bulk-select${allSelected ? " is-active" : ""}`} onClick={() => toggleAllVisible(participants, allSelected, target)} aria-label={allSelected ? "Tout désélectionner" : "Tout sélectionner"} aria-pressed={allSelected} disabled={!participants.length}><CircleCheck aria-hidden="true" /><span>{allSelected ? "Tout désélectionner" : "Tout sélectionner"}</span>{count ? <b>{count}</b> : null}</button>;
+  const renderQuickSelection = (target: "queue" | "backstage", participants: PlaceParticipant[], selectedIds: string[]) => <div className="studio-guest-selection-chips" role="group" aria-label={target === "queue" ? "Sélection rapide dans la file d’attente" : "Sélection rapide en coulisses"}>
+    <span className="studio-guest-selection-chips__label">Les premiers</span>
+    <div className="studio-guest-selection-chips__options">
+      {[16, 8, 4].map((count) => {
+        const firstIds = participants.slice(0, count).map((participant) => participant.id);
+        const available = firstIds.length === count;
+        const active = available && selectedIds.length === count && firstIds.every((id) => selectedIds.includes(id));
+        return <button type="button" key={count} className={active ? "is-active" : ""} aria-label={`Les ${count} premiers`} aria-pressed={active} disabled={!available || bulkBusy} title={available ? `Sélectionner les ${count} premiers invités disponibles dans la liste affichée` : `${count} invités disponibles nécessaires (${participants.length} actuellement)`} onClick={() => { (target === "queue" ? setSelectedQueueIds : setSelectedBackstageIds)(active ? [] : firstIds); if (desktopGuests) setBulkSelectionMode(active ? null : target); }}>{count}</button>;
+      })}
+    </div>
+  </div>;
   const acceptSelectedQueue = async () => {
     if (!visibleSelectedCount || bulkBusy) return;
     setBulkBusy(true);
@@ -1465,6 +1481,7 @@ function PlaceGuests({
     if (section === "stage") setSelectedStageIds([]);
     else if (section === "backstage") setSelectedBackstageIds([]);
     else setSelectedQueueIds([]);
+    setBulkSelectionMode(null);
   };
   const switchGuestSection = (next: "stage" | "backstage" | "queue") => {
     setSection(next);
@@ -1474,6 +1491,7 @@ function PlaceGuests({
       setSelectedQueueIds([]);
       setSelectedBackstageIds([]);
       setSelectedStageIds([]);
+      setBulkSelectionMode(null);
       setGuestActionError("");
     }
   };
@@ -1522,6 +1540,7 @@ function PlaceGuests({
       <section id="place-guests-backstage" className="place-guests__list is-backstage" role="tabpanel" hidden={section !== "backstage"}>
         <div className="place-guests__section-head is-capacity-only">
           <span className="place-guests__section-tools">{renderFilterButton("backstage")}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
+          {desktopGuests ? renderQuickSelection("backstage", selectableBackstage, selectedBackstageIds) : null}
         </div>
         {mediaControls.isHost && juryOnly ? <div className="room-jury-voting">
           <label>Vote du live<select aria-label="Qui vote dans cet espace live ?" value={juryPolicy.mode} disabled={juryBusy || Boolean(juryLoadError)} onChange={event => void saveJury([...juryPolicy.jurorIds], event.target.value as RoomVoteMode)}>
@@ -1530,29 +1549,19 @@ function PlaceGuests({
           {juryPolicy.mode === "mixed" ? <small>50 % public · 50 % jury</small> : null}
         </div> : null}
         {juryError || juryLoadError ? <p className="room-jury-error" role="alert">{juryError || juryLoadError}</p> : null}
-        {visibleBackstageSelectedCount ? <div className="place-guests__bulk-bar is-summary-only" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleBackstageSelectedCount}</strong> artiste{visibleBackstageSelectedCount > 1 ? "s" : ""} sélectionné{visibleBackstageSelectedCount > 1 ? "s" : ""}</span></div> : null}
+        {!desktopGuests && visibleBackstageSelectedCount ? <div className="place-guests__bulk-bar is-summary-only" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleBackstageSelectedCount}</strong> artiste{visibleBackstageSelectedCount > 1 ? "s" : ""} sélectionné{visibleBackstageSelectedCount > 1 ? "s" : ""}</span></div> : null}
         <div className="place-guests__rows">
           {filteredBackstage.length > 0 ? filteredBackstage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="backstage" isJuror={juryPolicy.jurorIds.includes(participant.profile.id)} stageControls={<PlaceBackstageControls participant={participant} room={room} {...mediaControls} />} actions={[
             { direction: "down", tone: "cyan", label: "Renvoyer vers la File d’attente", text: "File d’attente", onAction: () => void leaveBackstage(participant, () => onMoveGuest(participant, "accepted")), disabled: juryBusy },
             ...(mediaControls.isHost ? [{ direction: juryPolicy.jurorIds.includes(participant.profile.id) ? "down" as const : "up" as const, tone: "jury" as const, label: juryPolicy.jurorIds.includes(participant.profile.id) ? "Retirer du jury" : "Ajouter au jury", text: juryPolicy.jurorIds.includes(participant.profile.id) ? "Retirer du jury" : "Jury", onAction: () => toggleJuror(participant.profile.id), disabled: juryBusy || Boolean(juryLoadError) || (!juryPolicy.jurorIds.includes(participant.profile.id) && juryPolicy.jurorIds.length >= 4) }] : []),
             { direction: "up", tone: "violet", label: "Passer sur Scène", text: "Sur scène", onAction: () => void leaveBackstage(participant, () => onMoveGuest(participant, "onstage")), disabled: stageFull || juryBusy },
-          ]} statusText={participant.latencyMs > 80 ? "Prêt · connexion instable" : "Prêt"} selected={selectedBackstageIds.includes(participant.id)} onSelectedChange={(selected) => toggleBackstageSelection(participant.id, selected)} onSelectExclusive={desktopGuests ? () => setSelectedBackstageIds([participant.id]) : undefined} onRemove={() => void leaveBackstage(participant, () => onRemoveGuest(participant))} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{juryOnly ? "Aucun membre dans le jury" : backstage.length ? "Aucun profil avec ces filtres" : "Coulisses libres"}</strong><span>{juryOnly ? "Reviens aux coulisses avec le chip Jury, puis ajoute jusqu’à quatre invités." : backstage.length ? "Modifie les filtres pour retrouver les artistes prêts." : "Les invités apparaissent ici après leurs vérifications privées."}</span></p>}
+          ]} statusText={participant.latencyMs > 80 ? "Prêt · connexion instable" : "Prêt"} selected={selectedBackstageIds.includes(participant.id)} selectionMode={bulkSelectionMode === "backstage"} onSelectedChange={(selected) => toggleBackstageSelection(participant.id, selected)} onSelectExclusive={desktopGuests && bulkSelectionMode !== "backstage" ? () => setSelectedBackstageIds([participant.id]) : undefined} repeatOpensProfile={bulkSelectionMode !== "backstage"} onRemove={() => void leaveBackstage(participant, () => onRemoveGuest(participant))} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{juryOnly ? "Aucun membre dans le jury" : backstage.length ? "Aucun profil avec ces filtres" : "Coulisses libres"}</strong><span>{juryOnly ? "Reviens aux coulisses avec le chip Jury, puis ajoute jusqu’à quatre invités." : backstage.length ? "Modifie les filtres pour retrouver les artistes prêts." : "Les invités apparaissent ici après leurs vérifications privées."}</span></p>}
         </div>
       </section>
       <section id="place-guests-queue" className="place-guests__list is-queue" role="tabpanel" hidden={section !== "queue"}>
         <div className="place-guests__section-head is-capacity-only is-queue-tools">
           <span className="place-guests__section-tools studio-guest-tools">{renderFilterButton("queue")}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
-        <div className="studio-guest-selection-chips" role="group" aria-label="Sélection rapide dans la file d’attente">
-          <span className="studio-guest-selection-chips__label">Les premiers</span>
-          <div className="studio-guest-selection-chips__options">
-          {[16, 8, 4].map((count) => {
-            const firstIds = selectableQueue.slice(0, count).map((participant) => participant.id);
-            const available = firstIds.length === count;
-            const active = available && selectedQueueIds.length === count && firstIds.every((id) => selectedQueueIds.includes(id));
-            return <button type="button" key={count} className={active ? "is-active" : ""} aria-label={`Les ${count} premiers`} aria-pressed={active} disabled={!available || bulkBusy} title={available ? `Sélectionner les ${count} premiers invités disponibles dans la liste affichée` : `${count} invités disponibles nécessaires (${selectableQueue.length} actuellement)`} onClick={() => setSelectedQueueIds(active ? [] : firstIds)}>{count}</button>;
-          })}
-          </div>
-        </div>
+        {renderQuickSelection("queue", selectableQueue, selectedQueueIds)}
           <button type="button" className={`place-guests__queue-state${room.queueOpen ? " is-open" : ""}`} onClick={() => void onSetQueueOpen(!room.queueOpen)} aria-label={room.queueOpen ? "Fermer la file d’attente" : "Ouvrir la file d’attente"} aria-pressed={room.queueOpen}><i />{room.queueOpen ? "Ouverte" : "Fermée"}<span className="place-guests__queue-toggle" aria-hidden="true" /></button>
         </div>
 
@@ -1565,7 +1574,7 @@ function PlaceGuests({
               Confirmer {momentVipSelectedProfileIds.length ? `(${momentVipSelectedProfileIds.length})` : ""}
             </button>
           </span>
-        </div> : visibleSelectedCount ? <div className="place-guests__bulk-bar" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleSelectedCount}</strong> profil{visibleSelectedCount > 1 ? "s" : ""} sélectionné{visibleSelectedCount > 1 ? "s" : ""}</span><button type="button" onClick={() => void acceptSelectedQueue()} disabled={bulkBusy}>{bulkBusy ? "Invitation…" : `Inviter la sélection (${visibleSelectedCount})`}</button></div> : null}
+        </div> : !desktopGuests && visibleSelectedCount ? <div className="place-guests__bulk-bar" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleSelectedCount}</strong> profil{visibleSelectedCount > 1 ? "s" : ""} sélectionné{visibleSelectedCount > 1 ? "s" : ""}</span><button type="button" onClick={() => void acceptSelectedQueue()} disabled={bulkBusy}>{bulkBusy ? "Invitation…" : `Inviter la sélection (${visibleSelectedCount})`}</button></div> : null}
         <div className="place-guests__rows">
         {filteredQueue.length > 0 ? filteredQueue.map((participant) => {
           const isRawRequest = Boolean(participant.queueEntryId) && !participant.invitationId;
@@ -1578,7 +1587,7 @@ function PlaceGuests({
           const actions: GuestRowAction[] = momentVipPicker && onToggleMomentVipGuest
             ? [{ direction: "select", tone: "amber", label: isMomentVipGuest ? "Retirer du Moment VIP" : "Ajouter au Moment VIP", text: isMomentVipGuest ? "Retirer" : "Ajouter au VIP", onAction: () => onToggleMomentVipGuest(participant), disabled: !isMomentVipGuest && momentVipSelectedProfileIds.length >= ROOM_LIVE_CALL_MAX_CONTACTS }]
             : [{ direction: "up", tone: "amber", label: actionText, text: actionText, onAction: () => void onMoveGuest(participant, canSimulate ? "ready" : "accepted"), disabled: !isRawRequest && !canSimulate }];
-          return <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="queue" actions={actions} statusText={statusText} timeNow={timeNow} selected={momentVipPicker ? isMomentVipGuest : selectedQueueIds.includes(participant.id)} onSelectedChange={momentVipPicker ? desktopGuests ? (selected) => { if (selected !== isMomentVipGuest) onToggleMomentVipGuest?.(participant); } : undefined : desktopGuests || isRawRequest ? (selected) => toggleQueueSelection(participant.id, selected) : undefined} onSelectExclusive={desktopGuests && !momentVipPicker ? () => setSelectedQueueIds([participant.id]) : undefined} repeatOpensProfile={!momentVipPicker} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />;
+          return <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="queue" actions={actions} statusText={statusText} timeNow={timeNow} selected={momentVipPicker ? isMomentVipGuest : selectedQueueIds.includes(participant.id)} selectionMode={bulkSelectionMode === "queue"} onSelectedChange={momentVipPicker ? desktopGuests ? (selected) => { if (selected !== isMomentVipGuest) onToggleMomentVipGuest?.(participant); } : undefined : desktopGuests || isRawRequest ? (selected) => toggleQueueSelection(participant.id, selected) : undefined} onSelectExclusive={desktopGuests && !momentVipPicker && bulkSelectionMode !== "queue" ? () => setSelectedQueueIds([participant.id]) : undefined} repeatOpensProfile={!momentVipPicker && !(desktopGuests && bulkSelectionMode === "queue")} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />;
         }) : <p className="place-guests__empty"><strong>{queue.length ? "Aucun profil avec ces filtres" : "Aucune demande"}</strong><span>{queue.length ? "Modifie les filtres pour retrouver les demandes." : "Les nouvelles demandes apparaîtront ici."}</span></p>}
         </div>
       </section>

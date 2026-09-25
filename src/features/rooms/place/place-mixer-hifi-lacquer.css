@@ -409,13 +409,13 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   color: #696575;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row.is-desktop-compact.is-selected .place-guest-row__compact-state {
-  border-color: #a98ef0;
-  background: linear-gradient(145deg, #594087, #302248);
-  color: #f5ebff;
-  box-shadow: 0 0 0 1px rgba(169, 142, 240, .36), 0 0 12px rgba(166, 88, 255, .8), 0 0 24px rgba(151, 75, 247, .45), inset 0 1px rgba(255, 255, 255, .2);
+  border: 0;
+  background: transparent;
+  color: #d4b5ff;
+  box-shadow: none;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row.is-desktop-compact.is-selected .place-guest-row__compact-state svg {
-  filter: drop-shadow(0 0 4px rgba(218, 181, 255, .9));
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .95)) drop-shadow(0 0 5px rgba(176, 99, 255, .85));
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:is(.is-chat, .is-tools, .is-mixer, .is-guests) .place-studio-panel__collapse {
   border-color: transparent;

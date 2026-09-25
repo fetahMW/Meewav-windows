@@ -90,6 +90,54 @@ describe("Desktop guest gestures", () => {
     expect(second).toHaveAttribute("aria-pressed", "true");
   });
 
+  it("keeps bulk selection editable card by card without shifting the portrait rail", () => {
+    renderDesktopGuests();
+    const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
+    fireEvent.click(within(backstage).getByRole("button", { name: "Tout sélectionner" }));
+    const backstageCards = within(backstage).getAllByRole("button", { name: /Sélectionné :/ });
+    expect(backstageCards.length).toBeGreaterThan(1);
+    expect(backstageCards[0].querySelector(".lucide-square-check")).not.toBeNull();
+    fireEvent.click(backstageCards[0]);
+    expect(backstageCards[0]).toHaveAttribute("aria-pressed", "false");
+    expect(backstageCards[0].querySelector(".lucide-square")).not.toBeNull();
+    expect(backstageCards[1]).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(backstageCards[0]);
+    expect(backstageCards[0]).toHaveAttribute("aria-pressed", "true");
+    expect(backstageCards[1]).toHaveAttribute("aria-pressed", "true");
+    expect(backstage.querySelector(".place-guests__bulk-bar")).toBeNull();
+
+    fireEvent.click(screen.getByRole("tab", { name: /File d’attente,/ }));
+    const queue = document.querySelector<HTMLElement>("#place-guests-queue")!;
+    fireEvent.click(within(queue).getByRole("button", { name: "Tout sélectionner" }));
+    const queueCards = within(queue).getAllByRole("button", { name: /Sélectionné :/ });
+    expect(queueCards.length).toBeGreaterThan(1);
+    fireEvent.click(queueCards[0]);
+    expect(queueCards[0]).toHaveAttribute("aria-pressed", "false");
+    expect(queueCards[1]).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(queueCards[0]);
+    expect(queueCards[0]).toHaveAttribute("aria-pressed", "true");
+    expect(queueCards[1]).toHaveAttribute("aria-pressed", "true");
+    expect(queue.querySelector(".place-guests__bulk-bar")).toBeNull();
+    expect(within(screen.getByRole("toolbar", { name: "Actions des invités sélectionnés" })).getByRole("button", { name: "Inviter" })).toBeInTheDocument();
+  });
+
+  it("offers the 4, 8 and 16 first guest shortcuts in backstage", () => {
+    renderDesktopGuests();
+    const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
+    const shortcuts = within(backstage).getByRole("group", { name: "Sélection rapide en coulisses" });
+    expect(within(shortcuts).getByRole("button", { name: "Les 16 premiers" })).toBeInTheDocument();
+    expect(within(shortcuts).getByRole("button", { name: "Les 8 premiers" })).toBeInTheDocument();
+    const firstFour = within(shortcuts).getByRole("button", { name: "Les 4 premiers" });
+    expect(firstFour).toBeEnabled();
+    fireEvent.click(firstFour);
+    expect(firstFour).toHaveAttribute("aria-pressed", "true");
+    const cards = within(backstage).getAllByRole("button", { name: /Sélectionné :/ });
+    expect(cards).toHaveLength(4);
+    fireEvent.click(cards[0]);
+    expect(cards[0]).toHaveAttribute("aria-pressed", "false");
+    expect(cards[1]).toHaveAttribute("aria-pressed", "true");
+  });
+
   it("lets the Host drag a stage guest back to the Room's backstage, but rejects another Room", async () => {
     const { room, onMoveGuest } = renderDesktopGuests();
     fireEvent.click(screen.getByRole("tab", { name: /Sur scène,/ }));
