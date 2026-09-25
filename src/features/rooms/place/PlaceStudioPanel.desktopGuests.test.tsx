@@ -1,10 +1,21 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import type { ComponentProps } from "react";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { AuthContext, type AuthContextValue } from "../../auth/AuthContext";
 import { createPlaceDemoState } from "./place.fixtures";
 import PlaceStudioPanel from "./PlaceStudioPanel";
 import PlaceStage from "./PlaceStage";
-import { PLACE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPresentation";
+import {
+  CAGE_ROOM_PRESENTATION,
+  CLASSE_ROOM_PRESENTATION,
+  LOGE_ROOM_PRESENTATION,
+  PLACE_ROOM_PRESENTATION,
+  SCENE_ROOM_PRESENTATION,
+  WAVE_ROOM_PRESENTATION,
+  RoomPresentationProvider,
+  type RoomPresentation,
+} from "../roomPresentation";
 import { readPlaceGuestDrag, writePlaceGuestDrag } from "./placeGuestDrag";
 
 vi.mock("../../../runtime/RuntimeProvider", async (importOriginal) => {
@@ -18,6 +29,12 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
+const anonymousAuth: AuthContextValue = {
+  session: null, user: null, status: "anonymous", needsOnboarding: false,
+  onboardingStatus: "complete", error: null,
+  refreshSession: async () => null, signOut: async () => {}, markOnboardingComplete: () => {},
+};
+
 function dragTransfer(): DataTransfer {
   const data = new Map<string, string>();
   const types: string[] = [];
@@ -30,7 +47,7 @@ function dragTransfer(): DataTransfer {
   } as unknown as DataTransfer;
 }
 
-function renderDesktopGuests({ readyGuest = false }: { readyGuest?: boolean } = {}) {
+function renderDesktopGuests({ readyGuest = false, presentation = PLACE_ROOM_PRESENTATION }: { readyGuest?: boolean; presentation?: RoomPresentation } = {}) {
   const room = createPlaceDemoState();
   room.participants = room.participants.map((participant) => participant.id === "guest-b"
     ? { ...participant, status: "onstage" as const }
@@ -55,11 +72,28 @@ function renderDesktopGuests({ readyGuest = false }: { readyGuest?: boolean } = 
     onRemoveGuest: asyncNoop, onSetQueueOpen: asyncNoop, onOpenProfile: noop,
     onMessageProfile: noop, onCollaborateProfile: noop,
   };
-  render(<PlaceStudioPanel {...props} />);
+  render(<MemoryRouter><AuthContext.Provider value={anonymousAuth}><RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider></AuthContext.Provider></MemoryRouter>);
   return { room, onMoveGuest };
 }
 
 describe("Desktop guest gestures", () => {
+  it.each([
+    PLACE_ROOM_PRESENTATION,
+    LOGE_ROOM_PRESENTATION,
+    WAVE_ROOM_PRESENTATION,
+    CAGE_ROOM_PRESENTATION,
+    CLASSE_ROOM_PRESENTATION,
+    SCENE_ROOM_PRESENTATION,
+  ])("shows the shared desktop guest badges in $label", (presentation) => {
+    renderDesktopGuests({ presentation });
+    const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
+    const louna = within(backstage).getByRole("button", { name: "Sélectionner Louna Saphir" });
+    expect(louna.querySelector(".mw-grade-badge--md .mw-grade-badge__svg")).not.toBeNull();
+    expect(louna.querySelector(".place-guest-row__status-chip.is-unstable .lucide-wifi-low")).not.toBeNull();
+    const solis = within(backstage).getByRole("button", { name: "Sélectionner Solis Miro" });
+    expect(solis.querySelector(".place-guest-row__status-chip.is-micro-off .lucide-mic-off")).not.toBeNull();
+  });
+
   it("keeps cards free of inline actions and moves the selected guest through the Room command", async () => {
     const { onMoveGuest } = renderDesktopGuests();
     const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
