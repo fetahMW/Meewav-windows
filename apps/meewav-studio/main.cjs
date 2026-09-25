@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, session, ipcMain, desktopCapturer } = require('electron');
 const { isAbsolute, join } = require('node:path');
+const { appendFileSync } = require('node:fs');
 
 const studioUrl = `http://127.0.0.1:${process.env.MEEWAV_DESKTOP_DEV_PORT || '5197'}/`;
 const trustedOrigin = new URL(studioUrl).origin;
@@ -13,6 +14,13 @@ const qaUserData = process.env.MEEWAV_DESKTOP_QA_USER_DATA;
 if (qaUserData && !isAbsolute(qaUserData)) throw new Error('QA userData must be an absolute path');
 app.setPath('userData', qaUserData || join(app.getPath('appData'), 'Meewav Studio Dev'));
 app.setAppUserModelId('com.meewav.studio');
+
+function logLifecycle(event, details = {}) {
+  try {
+    appendFileSync(join(app.getPath('userData'), 'desktop-lifecycle.log'),
+      `${JSON.stringify({ time: new Date().toISOString(), event, ...details })}\n`);
+  } catch (error) { console.error('Desktop diagnostic log unavailable:', error.message); }
+}
 
 function isTrusted(url) {
   try { return new URL(url).origin === trustedOrigin; }
@@ -47,14 +55,34 @@ function createWindow() {
     window.setMenuBarVisibility(false);
   }
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  // The frameless Windows shell has no application menu to supply Ctrl+R.
+  window.webContents.on('before-input-event', (event, input) => {
+    if (input.type === 'keyDown' && ((input.control && input.key.toLowerCase() === 'r') || input.key === 'F5')) {
+      event.preventDefault();
+      window.webContents.reload();
+    }
+  });
+  let recoveredRenderer = false;
+  window.webContents.on('render-process-gone', (_event, details) => {
+    logLifecycle('render-process-gone', details);
+    if (details.reason === 'clean-exit' || recoveredRenderer || window.isDestroyed()) return;
+    recoveredRenderer = true;
+    // Recover once only: a repeat crash must not create an endless reload loop.
+    window.webContents.reload();
+  });
+  window.webContents.on('did-finish-load', () => logLifecycle('did-finish-load'));
+  window.webContents.on('did-fail-load', (_event, errorCode, errorDescription, _url, isMainFrame) => {
+    if (isMainFrame) logLifecycle('did-fail-load', { errorCode, errorDescription });
+  });
   window.webContents.on('will-navigate', (event, url) => {
     if (!isTrusted(url)) event.preventDefault();
   });
   window.once('ready-to-show', () => window.show());
-  void window.loadURL(studioUrl);
+  void window.loadURL(studioUrl).catch(error => logLifecycle('load-error', { message: error.message }));
 }
 
 app.whenReady().then(() => {
+  logLifecycle('app-ready', { electron: process.versions.electron });
   // Remove the default Electron menu after initialization and on each window.
   if (process.platform === 'win32') Menu.setApplicationMenu(null);
   const assertTrusted = (event) => {
