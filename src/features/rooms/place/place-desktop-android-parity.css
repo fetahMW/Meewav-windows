@@ -632,7 +632,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-audio__controls .place-mixer-deck__route {
   width: auto !important;
   min-width: 40px !important;
-  max-width: none;
+  max-width: none !important;
   padding-inline: 6px !important;
   justify-content: center;
   align-content: center;
