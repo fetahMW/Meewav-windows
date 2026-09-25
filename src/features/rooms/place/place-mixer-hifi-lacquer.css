@@ -4,27 +4,40 @@
  * Geometry, signal colours and interaction logic stay untouched. */
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) {
+  /* Diamond-cut aluminium rim: bright top chamfer, dark flanks, lit lower lip. */
   --hifi-lacquer-edge:
-    linear-gradient(180deg, #a4a8b0 0%, #4a4d53 16%, #141518 44%, #0b0c0e 62%, #26282c 86%, #6c7078 100%) border-box;
+    linear-gradient(180deg, #eef0f3 0%, #8b8f96 9%, #2a2c30 30%, #101113 52%, #1c1d20 76%, #5d6067 92%, #b4b8be 100%) border-box;
+  /* Glossy black mirrors its room: ceiling softbox, a sharp horizon at mid
+   * height, two window stripes, a floor bounce, and a dither grain so the
+   * blacks never band. The base stays near #000 below the horizon. */
   --hifi-lacquer-face:
-    radial-gradient(118% 13px at 50% 2px, rgba(236, 242, 252, .085), rgba(236, 242, 252, .03) 66%, transparent 70%) padding-box,
-    linear-gradient(101deg, transparent 61%, rgba(226, 234, 246, .026) 61.3%, rgba(226, 234, 246, .01) 70%, transparent 70.3%) padding-box,
-    linear-gradient(0deg, rgba(150, 168, 196, .075), transparent 5px) padding-box,
-    linear-gradient(180deg, #0c0d10 0, #030304 13px, #000 44%, #000 82%, #040405 100%) padding-box,
+    radial-gradient(150% 24px at 50% -2px, rgba(255, 255, 255, .19), rgba(236, 242, 252, .065) 52%, transparent 76%) padding-box,
+    linear-gradient(113deg, transparent 57%, rgba(236, 242, 252, .07) 57.15%, rgba(236, 242, 252, .028) 63%, transparent 63.15%, transparent 66.2%, rgba(236, 242, 252, .045) 66.35%, rgba(236, 242, 252, .018) 67.6%, transparent 67.75%) padding-box,
+    linear-gradient(180deg, rgba(168, 180, 202, .15) 0, rgba(128, 140, 164, .085) 30%, rgba(96, 108, 132, .05) 49.6%, transparent 50%) padding-box,
+    linear-gradient(0deg, rgba(178, 194, 220, .11), rgba(178, 194, 220, .025) 7px, transparent 16px) padding-box,
+    radial-gradient(90% 70% at 50% 118%, rgba(52, 66, 94, .2), transparent 68%) padding-box,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") padding-box,
+    linear-gradient(180deg, #0e0f12 0, #050507 48%, #010102 52%, #000 84%, #030305 100%) padding-box,
     var(--hifi-lacquer-edge);
+  /* Clear-coat thickness: the edge rolls light in on all four sides. */
   --hifi-lacquer-shadow:
-    inset 0 1px rgba(246, 249, 255, .26),
-    inset 0 2px rgba(0, 0, 0, .92),
-    inset 1px 0 rgba(210, 222, 240, .05),
-    inset -1px 0 rgba(0, 0, 0, .9),
-    inset 0 -1px rgba(190, 204, 226, .06),
+    inset 0 1px rgba(255, 255, 255, .46),
+    inset 0 2px 1px rgba(255, 255, 255, .09),
+    inset 0 4px 3px -1px rgba(0, 0, 0, .55),
+    inset 1px 0 rgba(255, 255, 255, .1),
+    inset -1px 0 rgba(255, 255, 255, .055),
+    inset 0 -1px rgba(214, 226, 246, .17),
+    inset 0 -4px 5px -2px rgba(0, 0, 0, .75),
     0 1px 0 rgba(0, 0, 0, .95),
-    0 3px 5px rgba(0, 0, 0, .85),
-    0 10px 20px rgba(0, 0, 0, .55);
-  --studio-black-key:
-    radial-gradient(130% 48% at 50% 0, rgba(240, 245, 255, .12), rgba(240, 245, 255, .04) 66%, transparent 69%) padding-box,
-    linear-gradient(180deg, #0d0e10, #030304 52%, #000) padding-box,
-    linear-gradient(180deg, #9da1a9, #3a3c41 28%, #0e0f11 58%, #2a2c30 84%, #55585e) border-box;
+    0 2px 0 rgba(214, 226, 246, .035),
+    0 5px 8px rgba(0, 0, 0, .8),
+    0 16px 28px rgba(0, 0, 0, .6);
+  /* Domed lacquer keys: crisp reflected window on the upper half, horizon cut. */
+  --hifi-lacquer-key:
+    radial-gradient(120% 62% at 50% -4%, rgba(255, 255, 255, .24), rgba(236, 242, 252, .075) 58%, transparent 61%) padding-box,
+    linear-gradient(180deg, #202227 0, #0d0e11 49%, #020203 51%, #000 80%, #0b0c0f 100%) padding-box,
+    linear-gradient(180deg, #f1f3f6, #7b7f86 24%, #1a1b1e 54%, #34363b 82%, #a2a6ad) border-box;
+  --studio-black-key: var(--hifi-lacquer-key);
   --hifi-vfd: #a8e4ff;
   --hifi-vfd-glow: 0 0 3px rgba(120, 206, 255, .55), 0 0 9px rgba(80, 170, 255, .22);
 }
@@ -35,14 +48,11 @@
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-mixer-audio, .place-mixer-audio:hover) {
   --studio-convex-face: var(--hifi-lacquer-face);
   --studio-convex-shadow: var(--hifi-lacquer-shadow);
-  --studio-black-key:
-    radial-gradient(130% 48% at 50% 0, rgba(240, 245, 255, .12), rgba(240, 245, 255, .04) 66%, transparent 69%) padding-box,
-    linear-gradient(180deg, #0d0e10, #030304 52%, #000) padding-box,
-    linear-gradient(180deg, #9da1a9, #3a3c41 28%, #0e0f11 58%, #2a2c30 84%, #55585e) border-box;
+  --studio-black-key: var(--hifi-lacquer-key);
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > .place-volume-row:is(:hover, :focus-within) {
-  box-shadow: inset 0 1px rgba(250, 252, 255, .34), var(--hifi-lacquer-shadow);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .6), var(--hifi-lacquer-shadow);
 }
 
 /* dB readouts as a vacuum-fluorescent display. */
@@ -193,8 +203,9 @@
   inset: 0;
   border-radius: inherit;
   background:
-    linear-gradient(172deg, rgba(232, 240, 252, .065), rgba(232, 240, 252, .02) 34%, transparent 34.4%),
-    linear-gradient(180deg, rgba(255, 255, 255, .05), transparent 2px);
+    linear-gradient(174deg, rgba(232, 240, 252, .1), rgba(232, 240, 252, .03) 38%, transparent 38.3%),
+    linear-gradient(113deg, transparent 62%, rgba(232, 240, 252, .045) 62.2%, rgba(232, 240, 252, .015) 68%, transparent 68.2%),
+    linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 2px);
   pointer-events: none;
 }
 
