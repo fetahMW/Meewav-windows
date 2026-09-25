@@ -74,8 +74,10 @@ function renderPlayer(initialMusicGain = 1, initialMasterGain = 1, programAudio?
     onRouteChange: vi.fn(async () => true), onPlaybackStateChange: vi.fn(async () => true) };
   const player = (musicGain: number, masterGain: number) => <WaveTransportProvider toolsVisible={false}>
     <CaptureTransport />
-    <PlaceMixerAudioPlayer roomId="wave-import-test" ownerId={null} queueParticipants={[]}
-      musicGain={musicGain} masterGain={masterGain} publicMusicMuted={false} programAudio={programAudio} {...callbacks} />
+    <div className="place-studio-panel"><div className="place-mixer">
+      <PlaceMixerAudioPlayer roomId="wave-import-test" ownerId={null} queueParticipants={[]}
+        musicGain={musicGain} masterGain={masterGain} publicMusicMuted={false} programAudio={programAudio} {...callbacks} />
+    </div></div>
     {extra}
   </WaveTransportProvider>;
   const view = render(player(initialMusicGain, initialMasterGain));
@@ -202,14 +204,16 @@ describe("Wave · import et contrôle du Beat dans le lecteur", () => {
     fireEvent.click(screen.getByRole("button", { name: "Importer un son" }));
     const container = screen.getByRole("dialog", { name: "Importer dans la Wave" });
     const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
-    expect(player).toContainElement(container);
+    const consolePanel = document.querySelector<HTMLElement>(".place-studio-panel")!;
+    expect(consolePanel).toContainElement(container);
+    expect(player).not.toContainElement(container);
     fireEvent.click(within(container).getByRole("button", { name: new RegExp(choice) }));
     expect(screen.getByRole("menu", { name: "Choisir la source" })).toBe(container);
-    expect(player).toContainElement(container);
+    expect(consolePanel).toContainElement(container);
     expect(within(container).getByRole("menuitem", { name: "Depuis mon appareil" })).toBeVisible();
     fireEvent.click(within(container).getByRole("menuitem", { name: "Changer de destination" }));
     expect(screen.getByRole("dialog", { name: "Importer dans la Wave" })).toBe(container);
-    expect(player).toContainElement(container);
+    expect(consolePanel).toContainElement(container);
   });
 
   it("conserve deux bases, isole les prods et réactive une base sans doublon", async () => {

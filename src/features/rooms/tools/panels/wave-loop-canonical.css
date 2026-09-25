@@ -391,6 +391,7 @@
 .room-tools-shell.is-wave .wave-loop-card__quick-actions button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--wave-loop-accent) 55%, #787087); color: #fff; }
 .room-tools-shell.is-wave .wave-loop-card__quick-actions button.is-active { border-color: var(--wave-loop-accent); background: color-mix(in srgb, var(--wave-loop-accent) 15%, #080918); color: var(--wave-loop-accent); box-shadow: 0 0 12px color-mix(in srgb, var(--wave-loop-accent) 18%, transparent); }
 .room-tools-shell.is-wave .wave-sas .wave-loop-card .wave-loop-card__before-category > button.wave-sas-card__quick-accept:hover:not(:disabled) { border-color: #2ee879; background: rgba(24,168,91,.2); color: #51f597; box-shadow: 0 0 15px rgba(34,229,91,.28), inset 0 0 10px rgba(34,229,91,.08); }
+.room-tools-shell.is-wave .wave-sas .wave-loop-card .wave-loop-card__before-category > button.wave-sas-card__quick-quarantine:hover:not(:disabled) { border-color: #bf9aff; background: rgba(123,72,181,.2); color: #d5b8ff; box-shadow: 0 0 14px rgba(155,100,220,.22); }
 .room-tools-shell.is-wave .wave-sas .wave-loop-card .wave-loop-card__quick-actions > button.wave-sas-card__quick-reject:hover:not(:disabled) { border-color: #ff5571; background: rgba(207,43,72,.2); color: #ff7188; box-shadow: 0 0 15px rgba(255,70,101,.28), inset 0 0 10px rgba(255,70,101,.08); }
 .room-tools-shell.is-wave .wave-loop-card__quick-actions button:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
 .room-tools-shell.is-wave .wave-loop-card__quick-actions button:disabled { opacity: .38; }
@@ -405,6 +406,8 @@
 .room-tools-shell.is-wave .wave-collective .wave-loop-card__name strong { overflow: visible; font-size: 13px; text-overflow: clip; white-space: nowrap; }
 .room-tools-shell.is-wave .wave-collective .wave-collective__grade { --mw-grade-size: 56px !important; width: 56px; height: 56px; flex: 0 0 56px; margin-left: -16px; }
 .room-tools-shell.is-wave .wave-sas .wave-loop-card.has-quick-actions.has-before-category-action { grid-template-columns: 35px minmax(145px,1fr) 29px 70px 29px 16px 36px; }
+.room-tools-shell.is-wave .wave-sas .wave-loop-card.has-quick-actions.has-before-category-action:has(.wave-sas-card__quick-quarantine) { grid-template-columns: 35px minmax(105px,1fr) 67px 70px 29px 16px 36px; }
+.room-tools-shell.is-wave .wave-sas .wave-loop-card__before-category:has(.wave-sas-card__quick-quarantine) { grid-template-columns: repeat(2,29px); gap: 9px; }
 .room-tools-shell.is-wave .wave-sas .wave-loop-card.has-quick-actions.has-before-category-action .wave-loop-card__play { grid-column: 7; }
 .room-tools-shell.is-wave .wave-sas .wave-loop-card__quick-actions { grid-template-columns: 29px; gap: 0; }
 .room-tools-shell.is-wave .wave-sas .wave-loop-card__name { gap: 8px; }

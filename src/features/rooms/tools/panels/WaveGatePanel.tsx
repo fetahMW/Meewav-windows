@@ -135,6 +135,10 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
     await execute({ type: "wave.submissions.quarantine", submissionIds: items.map(item => item.id) });
     setCheckedIds([]); setSelectionMode(false);
   });
+  const removeFromQuarantine = (item: WaveSubmission) => runWork(async () => {
+    pausePreview();
+    await execute({ type: "wave.submission.status", submissionId: item.id, status: "rejected", reason: "other", feedback: "Cette version a été retirée de la sélection." });
+  });
   const downloadSelection = (items: WaveSubmission[]) => runWork(async () => {
     for (const item of items) await downloadWaveSubmission(item);
   });
@@ -444,18 +448,15 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
           onSelect={() => setSelectedId(submission.id)}
           onPlay={() => startPreview(submission, "solo")}
           selectOnPlay={false}
-          beforeCategoryAction={selectionMode ? <button type="button" role="checkbox" aria-checked={checkedIds.includes(submission.id)} aria-label={`Sélection multiple : ${submission.title}`} disabled={disabled || working} onClick={() => setCheckedIds(ids => ids.includes(submission.id) ? ids.filter(id => id !== submission.id) : [...ids, submission.id])}>{checkedIds.includes(submission.id) ? <SquareCheck /> : <Square />}</button> : undefined}
+          beforeCategoryAction={selectionMode ? <button type="button" role="checkbox" aria-checked={checkedIds.includes(submission.id)} aria-label={`Sélection multiple : ${submission.title}`} disabled={disabled || working} onClick={() => setCheckedIds(ids => ids.includes(submission.id) ? ids.filter(id => id !== submission.id) : [...ids, submission.id])}>{checkedIds.includes(submission.id) ? <SquareCheck /> : <Square />}</button> : quarantine ? undefined : <>
+            <button type="button" className="wave-sas-card__quick-accept" aria-label={`Valider ${submission.title}`} disabled={disabled || tab === "ready" || tab === "rejected" || !submission.rightsConfirmed} onClick={() => void markReady(submission)}><Check /></button>
+            <button type="button" className="wave-sas-card__quick-quarantine" aria-label={`Mettre ${submission.title} en quarantaine`} disabled={disabled || working} onClick={() => void moveToQuarantine([submission])}><Archive /></button>
+          </>}
           quickActions={quarantine ? <>
             <button type="button" aria-label={`Télécharger ${submission.title}`} disabled={disabled || working || !canPreview} onClick={() => requestDownload(submission)}><Download /></button>
-            <button type="button" aria-label={`Remplacer ${submission.title}`} disabled={disabled || working} onClick={() => { setSelectedId(submission.id); setVersionFile(null); setVersionError(""); setVersionOpen(true); }}><Upload /></button>
+            <button type="button" className="wave-sas-card__replace" aria-label={`Remplacer ${submission.title}`} disabled={disabled || working} onClick={() => { setSelectedId(submission.id); setVersionFile(null); setVersionError(""); setVersionOpen(true); }}>Remplacer</button>
+            <button type="button" className="wave-sas-card__remove" aria-label={`Retirer ${submission.title} de la quarantaine`} disabled={disabled || working} onClick={() => void removeFromQuarantine(submission)}><X /></button>
           </> : <>
-            <button
-              type="button"
-              className="wave-sas-card__quick-accept"
-              aria-label={`Valider ${submission.title}`}
-              disabled={disabled || tab === "ready" || tab === "rejected" || !submission.rightsConfirmed}
-              onClick={() => void markReady(submission)}
-            ><Check /></button>
             <WaveRejectButton className="wave-sas-card__quick-reject" title={submission.title}
               disabled={disabled || tab === "rejected"} onReject={(reason, feedback) => rejectSubmission(submission, reason, feedback)} />
           </>}
@@ -473,7 +474,6 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
       <button type="button" aria-label={`Envoyer un message à ${selected.contributor.name}`} onClick={() => messageContributor(selected)}><MessageCircleMore /></button>
       <button type="button" className="is-validate" aria-label={`Valider ${selected.title}`} disabled={disabled || tab === "ready" || tab === "rejected" || !selected.rightsConfirmed} onClick={() => void markReady(selected)}><Check /></button>
       <WaveRejectButton key={selected.id} className="is-danger" title={selected.title} disabled={disabled || tab === "rejected"} onReject={(reason, feedback) => rejectSubmission(selected, reason, feedback)} />
-      <button type="button" aria-label={`Mettre ${selected.title} en quarantaine`} disabled={disabled || working} onClick={() => void moveToQuarantine([selected])}><Archive /></button>
       </>}
     </WaveBottomBar>; })() : null}
 

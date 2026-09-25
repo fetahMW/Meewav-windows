@@ -36,7 +36,7 @@ function PlayerShortcutBridge({ play, pause, mode = "base" }: { play: () => Prom
 }
 
 describe("WaveGatePanel", () => {
-  it("rétablit les trois raccourcis par ligne et délègue Play au lecteur unique", async () => {
+  it("rétablit les actions par ligne et délègue Play au lecteur unique", async () => {
     const wave = createRoomToolsFixture("wave", "wave-gate-shared-player").wave!;
     const play = vi.fn().mockResolvedValue(undefined);
     const pause = vi.fn();
@@ -47,7 +47,7 @@ describe("WaveGatePanel", () => {
     const row = screen.getByRole("article", { name: "Sélectionner Subway Bass de Eliott Waves" });
     fireEvent.click(row);
     expect(play).not.toHaveBeenCalled();
-    expect(within(row).getAllByRole("button")).toHaveLength(3);
+    expect(within(row).getAllByRole("button")).toHaveLength(4);
     fireEvent.click(within(row).getByRole("button", { name: "Écouter Eliott Waves" }));
     await waitFor(() => expect(play).toHaveBeenCalledTimes(1));
     expect(pause).not.toHaveBeenCalled();
@@ -96,15 +96,15 @@ describe("WaveGatePanel", () => {
     const row = screen.getByRole("article", { name: "Sélectionner Subway Bass de Eliott Waves" });
     fireEvent.click(within(row).getByRole("button", { name: "Écouter Eliott Waves" }));
     fireEvent.click(within(row).getByRole("button", { name: "Refuser Subway Bass" }));
-
+    const menu = screen.getByRole("menu", { name: "Motif du refus de Subway Bass" });
+    expect(pause).not.toHaveBeenCalled();
+    expect(execute).not.toHaveBeenCalled();
+    fireEvent.click(within(menu).getByRole("menuitem", { name: "Catégorie déjà complète" }));
     expect(pause).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText("État du transport de test")).toHaveTextContent("base|false|loop-1");
-    expect(execute).not.toHaveBeenCalled();
-    const dialog = screen.getByRole("dialog", { name: "Refuser cette proposition ?" });
-    fireEvent.click(within(dialog).getByRole("radio", { name: "Catégorie déjà complète" }));
-    fireEvent.click(within(dialog).getByRole("button", { name: "Refuser" }));
+    expect(execute).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(execute).toHaveBeenCalledExactlyOnceWith({
-      type: "wave.submission.status", submissionId: "loop-1", status: "rejected", reason: "duplicate", feedback: undefined,
+      type: "wave.submission.status", submissionId: "loop-1", status: "rejected", reason: "duplicate", feedback: "Catégorie déjà complète",
     }));
   });
 
@@ -141,7 +141,8 @@ describe("WaveGatePanel", () => {
     const rejectButton = within(subwayCard).getByRole("button", { name: "Refuser Subway Bass" });
     expect(rejectButton.textContent).toBe("Refuser");
     expect(rejectButton.querySelector("svg")).not.toBeInTheDocument();
-    expect(within(subwayCard).getAllByRole("button")).toHaveLength(3);
+    expect(within(subwayCard).getByRole("button", { name: "Mettre Subway Bass en quarantaine" })).toBeInTheDocument();
+    expect(within(subwayCard).getAllByRole("button")).toHaveLength(4);
     expect(screen.getByRole("complementary", { name: "Actions pour Eliott Waves" })).toBeInTheDocument();
   });
 
@@ -155,15 +156,13 @@ describe("WaveGatePanel", () => {
 
     fireEvent.click(screen.getByRole("article", { name: "Sélectionner Subway Bass de Eliott Waves" }));
     fireEvent.click(within(screen.getByRole("complementary", { name: "Actions pour Eliott Waves" })).getByRole("button", { name: "Refuser Subway Bass" }));
-    expect(screen.getByRole("dialog", { name: "Refuser cette proposition ?" })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("radio", { name: "Catégorie déjà complète" }));
-    fireEvent.click(screen.getByRole("button", { name: "Refuser" }));
+    fireEvent.click(within(screen.getByRole("menu", { name: "Motif du refus de Subway Bass" })).getByRole("menuitem", { name: "Catégorie déjà complète" }));
     await waitFor(() => expect(execute).toHaveBeenCalledWith({
       type: "wave.submission.status",
       submissionId: "loop-1",
       status: "rejected",
       reason: "duplicate",
-      feedback: undefined,
+      feedback: "Catégorie déjà complète",
     }));
   });
 

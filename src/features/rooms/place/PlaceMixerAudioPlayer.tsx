@@ -1577,7 +1577,7 @@ export default function PlaceMixerAudioPlayer({
           {desktopDeck ? <div className="place-mixer-deck__bottom">{playbackOptions}</div> : null}
         </div>
       </div>
-      {waveTransport && (pickerView === "wave-destination" || pickerView === "sources") ? (
+      {waveTransport && (pickerView === "wave-destination" || pickerView === "sources") && audioRef.current?.closest<HTMLElement>(".place-studio-panel") ? createPortal(
         <div className={`place-mixer-audio__source-menu place-mixer-audio__wave-flow${pickerView === "wave-destination" ? " is-destination" : " is-sources"}`}
           role={pickerView === "wave-destination" ? "dialog" : "menu"}
           aria-label={pickerView === "wave-destination" ? "Importer dans la Wave" : "Choisir la source"}
@@ -1602,7 +1602,7 @@ export default function PlaceMixerAudioPlayer({
             <button type="button" role="menuitem" onClick={openUpload}><ChevronLeft aria-hidden="true" /><span>Changer de destination</span></button>
           </>}
           <button type="button" className="is-close" onClick={() => setPickerView("closed")} aria-label="Fermer"><X aria-hidden="true" /></button>
-        </div>
+        </div>, audioRef.current.closest<HTMLElement>(".place-studio-panel")!
       ) : !waveTransport && pickerView === "sources" ? (
         <div className="place-mixer-audio__source-menu" role="menu" aria-label="Choisir la source">
           <strong className="place-mixer-audio__source-menu-title">Importer un son</strong>

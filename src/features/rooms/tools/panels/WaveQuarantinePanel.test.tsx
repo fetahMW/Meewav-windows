@@ -34,6 +34,16 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe("Atelier de quarantaine", () => {
+  it("affiche trois actions sur la carte et retire une boucle de la quarantaine", async () => {
+    render(<Harness />);
+    const queue = screen.getByRole("region", { name: "Boucles en quarantaine" });
+    const card = within(queue).getByRole("article");
+    expect(within(card).getByRole("button", { name: "Télécharger Subway Bass" })).toBeInTheDocument();
+    expect(within(card).getByRole("button", { name: "Remplacer Subway Bass" })).toHaveTextContent("Remplacer");
+    await act(async () => fireEvent.click(within(card).getByRole("button", { name: "Retirer Subway Bass de la quarantaine" })));
+    expect(commands).toHaveBeenCalledWith(expect.objectContaining({ type: "wave.submission.status", submissionId: "loop-1", status: "rejected", reason: "other" }), expect.anything());
+    expect(within(queue).queryByRole("article")).not.toBeInTheDocument();
+  });
   it("remplace avec un fichier attribué à l’artiste sans le publier au vote", async () => {
     render(<Harness />);
     const queue = screen.getByRole("region", { name: "Boucles en quarantaine" });

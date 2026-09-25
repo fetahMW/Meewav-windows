@@ -109,7 +109,7 @@ describe("Wave · une seule instance persistante", () => {
     expect(within(row).getByRole("button", { name: "Écouter Koda Sweep" })).toBeInTheDocument();
     expect(within(row).getByRole("button", { name: "Valider Afro · Mélodie B" })).toBeInTheDocument();
     expect(within(row).getByRole("button", { name: "Refuser Afro · Mélodie B" })).toBeInTheDocument();
-    expect(within(row).getAllByRole("button")).toHaveLength(3);
+    expect(within(row).getAllByRole("button")).toHaveLength(4);
     expect(container.querySelectorAll(".wave-tools-body audio")).toHaveLength(0);
     for (const label of ["Vote du public", "Beat collectif", "Sas des boucles"]) {
       fireEvent.click(screen.getByRole("tab", { name: label }));
@@ -129,7 +129,7 @@ describe("Wave · une seule instance persistante", () => {
     await screen.findByRole("article", { name: "Sélectionner Afro · Basse A de Eliott Waves" });
     const player = container.querySelector(".place-mixer-audio");
     const dock = screen.getByRole("complementary", { name: "Actions pour Eliott Waves" });
-    expect(within(dock).getAllByRole("button")).toHaveLength(5);
+    expect(within(dock).getAllByRole("button")).toHaveLength(4);
     await act(async () => fireEvent.click(within(dock).getByRole("button", { name: "Valider Afro · Basse A" })));
     await waitFor(() => expect(screen.queryByRole("article", { name: "Sélectionner Afro · Basse A de Eliott Waves" })).not.toBeInTheDocument());
     expect(screen.getByTestId("candidate").textContent).not.toBe("test-Afro-Bass_A");
