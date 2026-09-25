@@ -397,20 +397,21 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
         <strong>{quarantine ? "Quarantaine" : "Sas des boucles"}</strong>
       </span>
       <div className="wave-sas__header-actions">
+        {quarantine ? <button type="button" aria-pressed={selectionMode} disabled={disabled || working} onClick={() => { setSelectionMode(!selectionMode); setCheckedIds([]); }}>{selectionMode ? "Annuler la sélection" : "Sélection multiple"}</button> : null}
         {!quarantine ? <><button type="button" className="wave-sas__rules-trigger" aria-label="Règles" onClick={openRules}><Ruler /><span>Règles</span></button>
         <WaveGateIntakeControl wave={wave} disabled={disabled} execute={execute} /></> : null}
         <b>{gateSubmissions.length} boucles</b>
       </div>
     </header>
 
-    {quarantine ? <p className="wave-quarantine__hint">Retouche les fichiers dans ton logiciel, puis remplace-les ici. Le crédit de l’artiste est conservé.</p> : null}
-    <div className="wave-quarantine__toolbar">
-      <button type="button" aria-pressed={selectionMode} disabled={disabled || working} onClick={() => { setSelectionMode(!selectionMode); setCheckedIds([]); }}>{selectionMode ? "Annuler la sélection" : "Sélection multiple"}</button>
+    {quarantine ? <p className="wave-quarantine__hint">Retouche les fichiers dans ton logiciel, puis remplace-les ici.</p> : null}
+    {!quarantine || selectionMode ? <div className="wave-quarantine__toolbar">
+      {!quarantine ? <button type="button" aria-pressed={selectionMode} disabled={disabled || working} onClick={() => { setSelectionMode(!selectionMode); setCheckedIds([]); }}>{selectionMode ? "Annuler la sélection" : "Sélection multiple"}</button> : null}
       {selectionMode ? <>
         <button type="button" disabled={disabled || working || !visibleSubmissions.length} onClick={() => setCheckedIds(checked.length === visibleSubmissions.length ? [] : visibleSubmissions.map(item => item.id))}>{checked.length === visibleSubmissions.length && checked.length ? "Tout désélectionner" : "Tout sélectionner"}</button>
         <button type="button" disabled={disabled || working || !checked.length} onClick={() => void (quarantine ? downloadSelection(checked) : moveToQuarantine(checked))}>{quarantine ? <Download /> : <Archive />}{quarantine ? "Télécharger" : "Quarantaine"} ({checked.length})</button>
       </> : null}
-    </div>
+    </div> : null}
     {workError ? <p className="wave-quarantine__error" role="alert">{workError}</p> : null}
     <div
       id="wave-sas-queue"
@@ -433,7 +434,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
           avatarFallback={submission.contributor.name.charAt(0)}
           title={submission.contributor.name}
           selectionLabel={`Sélectionner ${submission.title} de ${submission.contributor.name}`}
-          grade={<MeewavGradeBadge
+          grade={quarantine ? undefined : <MeewavGradeBadge
                   className="wave-sas-card__grade"
                   level={contributorGrade(submission)}
                   size="xl"

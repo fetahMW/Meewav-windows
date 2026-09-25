@@ -386,3 +386,10 @@
   overflow: visible !important;
   z-index: 30;
 }
+
+.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-sas__header {
+  flex-wrap: nowrap; min-height: 38px; gap: 8px;
+}
+.room-tools-shell.is-wave .wave-sas--premium.is-quarantine > .wave-sas__header > span { flex-basis: auto; min-width: 0; }
+.room-tools-shell.is-wave .wave-sas--premium.is-quarantine .wave-sas__header-actions { width: auto; justify-content: flex-end; }
+.room-tools-shell.is-wave .wave-sas--premium.is-quarantine .wave-sas__header-actions > button { min-height: 30px; padding-inline: 8px; font-size: 10px; white-space: nowrap; }
