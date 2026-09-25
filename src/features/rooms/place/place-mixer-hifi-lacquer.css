@@ -1,0 +1,372 @@
+/* Japanese Hi-Fi lacquer (Technics / Pioneer / Nakamichi, 1980s).
+ * Deep black clear-coat fascias with crisp studio reflections, diamond-cut
+ * aluminium edges, brushed fader caps and a spun-aluminium Play ring.
+ * Geometry, signal colours and interaction logic stay untouched. */
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) {
+  --hifi-lacquer-edge:
+    linear-gradient(180deg, #a4a8b0 0%, #4a4d53 16%, #141518 44%, #0b0c0e 62%, #26282c 86%, #6c7078 100%) border-box;
+  --hifi-lacquer-face:
+    radial-gradient(118% 13px at 50% 2px, rgba(236, 242, 252, .085), rgba(236, 242, 252, .03) 66%, transparent 70%) padding-box,
+    linear-gradient(101deg, transparent 61%, rgba(226, 234, 246, .026) 61.3%, rgba(226, 234, 246, .01) 70%, transparent 70.3%) padding-box,
+    linear-gradient(0deg, rgba(150, 168, 196, .075), transparent 5px) padding-box,
+    linear-gradient(180deg, #0c0d10 0, #030304 13px, #000 44%, #000 82%, #040405 100%) padding-box,
+    var(--hifi-lacquer-edge);
+  --hifi-lacquer-shadow:
+    inset 0 1px rgba(246, 249, 255, .26),
+    inset 0 2px rgba(0, 0, 0, .92),
+    inset 1px 0 rgba(210, 222, 240, .05),
+    inset -1px 0 rgba(0, 0, 0, .9),
+    inset 0 -1px rgba(190, 204, 226, .06),
+    0 1px 0 rgba(0, 0, 0, .95),
+    0 3px 5px rgba(0, 0, 0, .85),
+    0 10px 20px rgba(0, 0, 0, .55);
+  --studio-black-key:
+    radial-gradient(130% 48% at 50% 0, rgba(240, 245, 255, .12), rgba(240, 245, 255, .04) 66%, transparent 69%) padding-box,
+    linear-gradient(180deg, #0d0e10, #030304 52%, #000) padding-box,
+    linear-gradient(180deg, #9da1a9, #3a3c41 28%, #0e0f11 58%, #2a2c30 84%, #55585e) border-box;
+  --hifi-vfd: #a8e4ff;
+  --hifi-vfd-glow: 0 0 3px rgba(120, 206, 255, .55), 0 0 9px rgba(80, 170, 255, .22);
+}
+
+/* Fascias: faders rows, master dock and player share one lacquer. The :is()
+ * pairs lift specificity above the hover variants of the depth layer. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > :is(.place-volume-row, .place-volume-row:hover),
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-mixer-audio, .place-mixer-audio:hover) {
+  --studio-convex-face: var(--hifi-lacquer-face);
+  --studio-convex-shadow: var(--hifi-lacquer-shadow);
+  --studio-black-key:
+    radial-gradient(130% 48% at 50% 0, rgba(240, 245, 255, .12), rgba(240, 245, 255, .04) 66%, transparent 69%) padding-box,
+    linear-gradient(180deg, #0d0e10, #030304 52%, #000) padding-box,
+    linear-gradient(180deg, #9da1a9, #3a3c41 28%, #0e0f11 58%, #2a2c30 84%, #55585e) border-box;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) :is(.place-volume-list, .place-master-dock) > .place-volume-row:is(:hover, :focus-within) {
+  box-shadow: inset 0 1px rgba(250, 252, 255, .34), var(--hifi-lacquer-shadow);
+}
+
+/* dB readouts as a vacuum-fluorescent display. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row output,
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio .place-mixer-audio__time {
+  color: var(--hifi-vfd);
+  text-shadow: var(--hifi-vfd-glow);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+
+/* ---- Faders: recessed slot, silkscreen scale, brushed aluminium cap ---- */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader {
+  -webkit-appearance: none;
+  appearance: none;
+  background:
+    linear-gradient(90deg, rgba(214, 222, 236, .42) 0 1px, transparent 1px calc(100% - 1px), rgba(214, 222, 236, .42) calc(100% - 1px)) no-repeat 5.5px 100% / calc(100% - 11px) 3px,
+    repeating-linear-gradient(90deg, rgba(206, 216, 232, .2) 0 1px, transparent 1px calc((100% - 12px) / 10)) no-repeat 5.5px 100% / calc(100% - 11px) 2px;
+  cursor: grab;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:active:not(:disabled) {
+  cursor: grabbing;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:disabled {
+  cursor: not-allowed;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .22), transparent 45%, rgba(0, 0, 0, .35)) 0 0 / var(--gain-pct) 100% no-repeat,
+    var(--hifi-signal) 0 0 / var(--gain-pct) 100% no-repeat,
+    linear-gradient(180deg, #000, #060708 60%, #000);
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, .95),
+    inset 0 -1px rgba(255, 255, 255, .04),
+    0 -1px 0 rgba(0, 0, 0, .9),
+    0 1px 0 rgba(214, 226, 246, .13);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 17px;
+  margin-top: -6.5px;
+  border: 1px solid #050607;
+  border-radius: 3px;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 1px), rgba(12, 14, 17, .85) calc(50% - 1px) 50%, rgba(255, 255, 255, .95) 50% calc(50% + 1px), transparent calc(50% + 1px)) 0 3px / 100% calc(100% - 6px) no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .16) 0 .5px, transparent .5px 1.3px, rgba(0, 0, 0, .07) 1.3px 1.8px, transparent 1.8px 2.4px),
+    linear-gradient(180deg, #fbfcfd 0%, #d7dbe1 14%, #a9afb8 46%, #858c96 54%, #b3b9c1 82%, #e6e9ed 100%);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .95),
+    inset 0 -1px rgba(0, 0, 0, .35),
+    inset 1px 0 rgba(255, 255, 255, .45),
+    inset -1px 0 rgba(0, 0, 0, .18),
+    0 1px 1px rgba(0, 0, 0, .95),
+    0 3px 4px rgba(0, 0, 0, .8),
+    0 6px 10px rgba(0, 0, 0, .45);
+  filter: none;
+  transition: box-shadow 140ms ease, transform 140ms cubic-bezier(.3, 1.6, .5, 1), filter 140ms ease;
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:not(:disabled):hover::-webkit-slider-thumb {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px #fff,
+    inset 0 -1px rgba(0, 0, 0, .35),
+    inset 1px 0 rgba(255, 255, 255, .5),
+    inset -1px 0 rgba(0, 0, 0, .18),
+    0 1px 1px rgba(0, 0, 0, .95),
+    0 3px 5px rgba(0, 0, 0, .8),
+    0 0 9px rgba(210, 226, 255, .2);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:not(:disabled):active::-webkit-slider-thumb {
+  transform: scale(.94);
+  filter: brightness(.96);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .8),
+    inset 0 -1px rgba(0, 0, 0, .35),
+    0 1px 1px rgba(0, 0, 0, .95),
+    0 1px 2px rgba(0, 0, 0, .8);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:focus-visible {
+  outline: none;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    inset 0 1px #fff,
+    inset 0 -1px rgba(0, 0, 0, .35),
+    0 0 0 2px #000,
+    0 0 0 3.5px var(--hifi-vfd),
+    0 0 10px rgba(120, 206, 255, .45);
+}
+
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader:disabled::-webkit-slider-thumb {
+  filter: grayscale(1) brightness(.55);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row.is-muted .place-volume-row__fader::-webkit-slider-runnable-track {
+  filter: saturate(.25) brightness(.7);
+}
+
+/* Firefox parity for the same materials. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #000, #060708 60%, #000);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .95), 0 1px 0 rgba(214, 226, 246, .13);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--hifi-signal);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__fader::-moz-range-thumb {
+  width: 10px;
+  height: 15px;
+  border: 1px solid #050607;
+  border-radius: 3px;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 1px), rgba(12, 14, 17, .85) calc(50% - 1px) 50%, rgba(255, 255, 255, .95) 50% calc(50% + 1px), transparent calc(50% + 1px)) 0 3px / 100% calc(100% - 6px) no-repeat,
+    linear-gradient(180deg, #fbfcfd 0%, #d7dbe1 14%, #a9afb8 46%, #858c96 54%, #b3b9c1 82%, #e6e9ed 100%);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .95), 0 1px 1px rgba(0, 0, 0, .95), 0 3px 4px rgba(0, 0, 0, .8);
+  filter: none;
+}
+
+/* ---- Player ---- */
+
+/* Smoked-glass display window: bezel, depth and one crisp glass reflection. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer .place-mixer-audio .place-mixer-audio__waveform {
+  background:
+    radial-gradient(90% 60% at 50% 50%, rgba(40, 60, 90, .1), transparent 70%),
+    linear-gradient(180deg, #000, #020305 60%, #000);
+  box-shadow:
+    inset 0 0 0 1px #000,
+    inset 0 2px 7px rgba(0, 0, 0, .95),
+    inset 0 -1px rgba(170, 196, 236, .06),
+    0 -1px 0 rgba(0, 0, 0, .9),
+    0 1px 0 rgba(214, 226, 246, .1);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer .place-mixer-audio .place-mixer-audio__waveform::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(172deg, rgba(232, 240, 252, .065), rgba(232, 240, 252, .02) 34%, transparent 34.4%),
+    linear-gradient(180deg, rgba(255, 255, 255, .05), transparent 2px);
+  pointer-events: none;
+}
+
+/* Cover / icon well: aluminium bezel around black lacquer. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer .place-mixer-audio .place-mixer-audio__track-icon,
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__source-icon {
+  border-color: transparent;
+  background:
+    radial-gradient(130% 50% at 50% 0, rgba(240, 245, 255, .1), transparent 70%) padding-box,
+    linear-gradient(180deg, #0b0c0e, #000) padding-box,
+    linear-gradient(180deg, #c3c7cd, #5a5d63 30%, #1a1b1e 60%, #7b7f86) border-box;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .9), 0 0 0 1px #000, 0 2px 4px rgba(0, 0, 0, .85);
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__source-icon.is-music {
+  background: linear-gradient(180deg, #c3c7cd, #5a5d63 30%, #1a1b1e 60%, #7b7f86) border-box;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__portrait {
+  box-shadow: 0 0 0 1px #000, 0 0 0 2px rgba(196, 202, 212, .38), 0 0 0 3px #000, 0 3px 5px rgba(0, 0, 0, .85);
+}
+
+/* Lacquer keys: crisp top reflection, aluminium chamfer, real press travel. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) :is(
+  .place-volume-row__mute,
+  .place-volume-row__camera,
+  .place-volume-row__playlist,
+  .place-volume-row__transport,
+  .place-mixer-audio__import,
+  .place-mixer-audio__routing > button,
+  .place-mixer-audio__transport-buttons > button:not(.place-mixer-audio__play),
+  .place-mixer-audio__utility-actions > button,
+  .place-mixer-audio__regie-button,
+  .place-mixer-audio__cue-return,
+  .place-mixer-audio__playback-menu-button
+):not(.is-active):not(.is-talking):not(:disabled) {
+  transition: transform 110ms ease, box-shadow 110ms ease, color 140ms ease, filter 140ms ease;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) :is(
+  .place-volume-row__mute,
+  .place-volume-row__camera,
+  .place-volume-row__playlist,
+  .place-volume-row__transport,
+  .place-mixer-audio__import,
+  .place-mixer-audio__routing > button,
+  .place-mixer-audio__transport-buttons > button:not(.place-mixer-audio__play),
+  .place-mixer-audio__utility-actions > button,
+  .place-mixer-audio__regie-button,
+  .place-mixer-audio__cue-return,
+  .place-mixer-audio__playback-menu-button
+):not(.is-active):not(.is-talking):not(:disabled):hover {
+  filter: brightness(1.18);
+  color: #fff;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) :is(
+  .place-volume-row__mute,
+  .place-volume-row__camera,
+  .place-volume-row__playlist,
+  .place-volume-row__transport,
+  .place-mixer-audio__import,
+  .place-mixer-audio__routing > button,
+  .place-mixer-audio__transport-buttons > button:not(.place-mixer-audio__play),
+  .place-mixer-audio__utility-actions > button,
+  .place-mixer-audio__regie-button,
+  .place-mixer-audio__cue-return,
+  .place-mixer-audio__playback-menu-button
+):not(.is-active):not(.is-talking):not(:disabled):active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .95), 0 1px 0 rgba(214, 226, 246, .08) !important;
+}
+
+/* Play: spun-aluminium ring around a black lacquer cap. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play {
+  border: 1px solid transparent !important;
+  background:
+    radial-gradient(ellipse 46% 26% at 50% 30%, rgba(255, 255, 255, .15), rgba(255, 255, 255, .03) 62%, transparent 72%) padding-box,
+    radial-gradient(circle closest-side, transparent 0 67%, rgba(0, 0, 0, .95) 68% 71%, rgba(255, 255, 255, .35) 72%, transparent 74%) padding-box,
+    radial-gradient(circle closest-side, #0c0d0f 0, #030304 52%, #000 67.5%, transparent 68%) padding-box,
+    repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .07) 0 .6px, rgba(0, 0, 0, .06) .6px 1.3px) padding-box,
+    conic-gradient(from 8deg, #7d828a, #eef1f5 11%, #8d939b 24%, #5a6068 37%, #c9ced5 50%, #767c84 62%, #f2f4f7 75%, #6a7078 88%, #7d828a) padding-box,
+    linear-gradient(180deg, #2c2e32, #000 50%, #1b1c1f) border-box !important;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .6),
+    inset 0 -1px rgba(0, 0, 0, .55),
+    0 0 0 1px #000,
+    0 1px 0 1px rgba(214, 226, 246, .08),
+    0 4px 7px rgba(0, 0, 0, .85),
+    0 10px 18px rgba(0, 0, 0, .5) !important;
+  color: #e9edf3 !important;
+  transition: filter 160ms ease, transform 120ms ease, box-shadow 160ms ease, color 160ms ease;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:is(:hover, :focus-visible):not(:disabled) {
+  filter: brightness(1.1);
+  color: #fff !important;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .75),
+    inset 0 -1px rgba(0, 0, 0, .55),
+    0 0 0 1px #000,
+    0 1px 0 1px rgba(214, 226, 246, .1),
+    0 4px 7px rgba(0, 0, 0, .85),
+    0 0 14px rgba(214, 228, 255, .14) !important;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:active:not(:disabled) {
+  transform: translateY(1px) scale(.975);
+  filter: brightness(.95);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, .4),
+    inset 0 2px 5px rgba(0, 0, 0, .6),
+    0 0 0 1px #000,
+    0 1px 3px rgba(0, 0, 0, .85) !important;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play:disabled {
+  filter: grayscale(1) brightness(.62);
+  color: #9aa0a8 !important;
+}
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer, .is-tools, .has-wave-transport) .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer-audio .place-mixer-audio__transport-buttons > .place-mixer-audio__play > svg {
+  filter: drop-shadow(0 0 3px rgba(210, 226, 255, .25));
+}
+
+/* ---- Windows desktop deck (.is-android-deck) ----
+ * The deck draws its own surface and keys with !important. Same lacquer here,
+ * without changing the key sizes set for the Windows window. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:has(.is-android-deck) {
+  background: none;
+  box-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:has(.is-android-deck) .place-mixer-audio__surface {
+  border-color: transparent;
+  background: var(--hifi-lacquer-face);
+  box-shadow: var(--hifi-lacquer-shadow);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck > .place-mixer-deck__bottom {
+  border-top-color: rgba(0, 0, 0, .9);
+  box-shadow: 0 -1px 0 rgba(214, 226, 246, .06) inset;
+}
+
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__route, .place-mixer-deck__key) {
+  background: var(--studio-black-key) !important;
+  box-shadow:
+    0 0 0 1px #000,
+    inset 0 1px rgba(250, 252, 255, .3),
+    inset 0 -1px rgba(0, 0, 0, .9),
+    0 1px 0 1px rgba(214, 226, 246, .05),
+    0 3px 6px rgba(0, 0, 0, .8) !important;
+  color: #d7dbe3 !important;
+  transition: transform 110ms ease, box-shadow 110ms ease, color 140ms ease, filter 140ms ease;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__route, .place-mixer-deck__key):not(:disabled):hover {
+  filter: brightness(1.2);
+  color: #fff !important;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__route, .place-mixer-deck__key):focus-visible {
+  outline: 2px solid var(--hifi-vfd);
+  outline-offset: 2px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__route, .place-mixer-deck__key):not(:disabled):active {
+  transform: translateY(1px);
+  box-shadow: 0 0 0 1px #000, inset 0 2px 4px rgba(0, 0, 0, .95), 0 1px 0 rgba(214, 226, 246, .08) !important;
+}
+/* Latched keys: pushed in, with a violet indicator LED under the legend. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__route, .place-mixer-deck__key):is([aria-pressed="true"], [aria-expanded="true"]) {
+  background:
+    radial-gradient(5px 2px at 50% calc(100% - 3px), #d9b8ff, rgba(178, 106, 255, .55) 60%, transparent 100%) padding-box,
+    radial-gradient(60% 40% at 50% 100%, rgba(157, 74, 246, .22), transparent 80%) padding-box,
+    linear-gradient(180deg, #000, #050507 60%, #0a0a0d) padding-box,
+    linear-gradient(180deg, #4a4d53, #151618 50%, #6a6e75) border-box !important;
+  box-shadow: 0 0 0 1px #000, inset 0 2px 3px rgba(0, 0, 0, .95), 0 1px 0 rgba(214, 226, 246, .1), 0 0 8px rgba(157, 74, 246, .2) !important;
+  color: #e4ccff !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__route, .place-mixer-deck__key),
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-volume-row__fader::-webkit-slider-thumb,
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio :is(button, .place-mixer-audio__play) {
+    transition: none;
+  }
+}

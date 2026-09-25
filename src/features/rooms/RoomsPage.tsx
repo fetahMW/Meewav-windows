@@ -268,3 +268,4 @@ import "./place/place-guest-reference.css";
 
 import "./place/place-guest-portraits.css";
 import "./place/place-desktop-android-parity.css";
+import "./place/place-mixer-hifi-lacquer.css";
