@@ -44,7 +44,6 @@ import {
   Send,
   Smile,
   Scale,
-  Signal,
   Square,
   SquareCheck,
   SlidersHorizontal,
@@ -537,8 +536,14 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
   const visibleStatus = variant === "backstage" || isGreenHouse ? "Prêt" : variant === "onstage" ? "En scène" : "En attente";
   const queueWaitingTime = variant === "queue" ? waitingTime(participant.joinedAt, timeNow) : null;
   const allMediaReady = participant.isMicrophoneEnabled && participant.isCameraEnabled;
-  const latencyMeasured = Number.isFinite(participant.latencyMs) && participant.latencyMs > 0;
-  const latencyUnstable = latencyMeasured && participant.latencyMs > 80;
+  const mediaIssue = !participant.isCameraEnabled && !participant.isMicrophoneEnabled
+    ? { label: "A/V coupés", description: "Caméra et micro coupés" }
+    : !participant.isCameraEnabled
+      ? { label: "Cam coupée", description: "Caméra coupée" }
+      : !participant.isMicrophoneEnabled
+        ? { label: "Micro coupé", description: "Micro coupé" }
+        : null;
+  const backstageStatus = [mediaIssue?.description, hasUnstableConnection ? "Connexion instable" : null].filter(Boolean).join(", ") || "Prêt pour la scène";
   if (desktopCards) return <>
     <article className={`place-guest-row is-portrait-card is-desktop-compact is-${variant}${selected ? " is-selected" : ""}${isJuror ? " is-juror" : ""}`}>
       <button ref={portraitRef} type="button" className="place-guest-row__compact-hit"
@@ -548,6 +553,7 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
           writePlaceGuestDrag(event.dataTransfer, { roomId, participantId: participant.id, origin: variant });
         }}
         aria-label={`${selected ? "Sélectionné : " : "Sélectionner "}${participant.profile.displayName}`}
+        aria-description={variant === "backstage" ? backstageStatus : undefined}
         aria-pressed={selected}
         onClick={(event) => {
           if (event.ctrlKey || event.metaKey || event.shiftKey) onSelectedChange?.(!selected);
@@ -558,10 +564,14 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
         <img className="place-guest-row__compact-image" src={participant.profile.avatarUrl} alt="" draggable={false} />
         <span className="place-guest-row__compact-shade" />
         {selected || selectionMode ? <span className="place-guest-row__compact-state is-checkbox">{selected ? <SquareCheck aria-hidden="true" /> : <Square aria-hidden="true" />}</span>
-          : variant === "backstage" ? <span className={`place-guest-row__compact-state is-latency${latencyUnstable ? " is-unstable" : latencyMeasured ? " is-stable" : " is-unmeasured"}`} title={latencyMeasured ? `Latence : ${Math.round(participant.latencyMs)} ms${latencyUnstable ? " · latence élevée" : ""}` : "Latence non mesurée"}><Signal aria-hidden="true" /><span>{latencyMeasured ? `${Math.round(participant.latencyMs)} ms` : "—"}</span></span>
+          : variant === "backstage" ? <span className="place-guest-row__compact-statuses">
+              {mediaIssue ? <span className="place-guest-row__status-chip is-media-off" title={mediaIssue.description}>{mediaIssue.label}</span> : null}
+              {hasUnstableConnection ? <span className="place-guest-row__status-chip is-unstable" title="Connexion instable">Instable</span> : null}
+              {!mediaIssue && !hasUnstableConnection ? <span className="place-guest-row__status-chip is-ready" title="Prêt pour la scène">Prêt</span> : null}
+            </span>
             : variant === "onstage" ? <span className="place-guest-row__compact-state"><RadioTower aria-hidden="true" /></span> : null}
         <span className="place-guest-row__compact-copy"><strong>{participant.profile.displayName}</strong><small>{participant.profile.role}</small></span>
-        <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="sm" variant="icon" />
+        <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="md" variant="icon" />
       </button>
     </article>
     {profileTrigger ? <Suspense fallback={null}><GuestPreProfile

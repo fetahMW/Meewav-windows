@@ -138,14 +138,20 @@ describe("Desktop guest gestures", () => {
     expect(cards[1]).toHaveAttribute("aria-pressed", "true");
   });
 
-  it("shows backstage latency above the cards and no camera control for requests", () => {
+  it("shows compact readiness, media and connection chips with larger grades, without request cameras", () => {
     renderDesktopGuests();
     const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
     const louna = within(backstage).getByRole("button", { name: "Sélectionner Louna Saphir" });
-    const latency = louna.querySelector<HTMLElement>(".place-guest-row__compact-state.is-latency");
-    expect(latency).toHaveTextContent("112 ms");
-    expect(latency).toHaveClass("is-unstable");
+    expect(louna.querySelector(".place-guest-row__compact-statuses")).toHaveTextContent(/Cam coupée\s*Instable/);
+    expect(louna.querySelector(".place-guest-row__status-chip.is-ready")).toBeNull();
+    expect(louna).toHaveAttribute("aria-description", "Caméra coupée, Connexion instable");
+    expect(louna).not.toHaveTextContent("112 ms");
+    expect(louna.querySelector(".mw-grade-badge")).toHaveClass("mw-grade-badge--md");
     expect(louna.querySelector(".lucide-camera, .lucide-camera-off")).toBeNull();
+    const solis = within(backstage).getByRole("button", { name: "Sélectionner Solis Miro" });
+    expect(solis.querySelector(".place-guest-row__compact-statuses")).toHaveTextContent("Micro coupé");
+    const lior = within(backstage).getByRole("button", { name: "Sélectionner Lior Benali" });
+    expect(lior.querySelector(".place-guest-row__compact-statuses")).toHaveTextContent("Prêt");
     const hint = backstage.querySelector<HTMLElement>(".place-guests__rail-hint")!;
     expect(hint).toHaveTextContent("Glisse une carte sur la vidéo pour monter sur scène");
     expect(hint.nextElementSibling).toHaveClass("place-guests__rows");
