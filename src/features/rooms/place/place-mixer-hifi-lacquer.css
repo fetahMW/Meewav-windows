@@ -374,6 +374,56 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   pointer-events: none;
 }
 
+/* ---- Compact Windows deck: the title sits between the two timecodes ----
+ * The title row is removed and the Régie row moves up, so the deck drops from
+ * 198px to 162px. Empty and loaded decks keep the same height. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player:has(.is-android-deck) {
+  grid-template-rows: 38px 162px minmax(180px, 1fr);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:has(.is-android-deck):not(.is-queue-open):not(.is-classroom-collapsed):not(.is-room-collapsed) {
+  height: 162px;
+  min-height: 162px;
+  max-height: 162px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:not(.is-queue-open) .place-mixer-audio__body.is-android-deck {
+  grid-template-areas: "controls" "waveform" "timeline" "options";
+  grid-template-rows: 46px 48px 18px minmax(0, 1fr);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:not(.is-queue-open) .is-android-deck > .place-mixer-audio__track {
+  z-index: 3;
+  grid-area: timeline;
+  align-self: end;
+  justify-self: center;
+  box-sizing: border-box;
+  max-width: calc(100% - 96px);
+  height: 9px;
+  padding: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:not(.is-queue-open) .is-android-deck > .place-mixer-audio__track .place-mixer-audio__meta strong {
+  color: #d3d8e1;
+  font-size: 9.5px;
+  font-weight: 550;
+  line-height: 9px;
+  letter-spacing: .04em;
+  text-align: center;
+  text-shadow: 0 1px 1px #000;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio:not(.is-queue-open) .is-android-deck > .place-mixer-deck__bottom {
+  align-self: start;
+  margin-top: -4px;
+  padding: 0;
+}
+
+/* Clicking a fader focuses its row: keep the lacquer instead of the darker
+ * violet focus face; the drag glow lives on the cap only. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player :is(.place-volume-list > .place-volume-row, .place-master-dock .place-volume-row):is(:focus-within, :hover) {
+  border-color: transparent;
+  background: var(--hifi-lacquer-face);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .2), var(--hifi-lacquer-shadow);
+}
+
 /* The desktop rows carried a lavender stroke and a diagonal sheen: the
  * lacquer rim replaces both. The left violet signal bar (::before) stays. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player :is(.place-volume-list > .place-volume-row, .place-master-dock .place-volume-row) {
