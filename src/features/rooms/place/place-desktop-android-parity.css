@@ -564,7 +564,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   grid-template-areas: "controls" "track" "waveform" "timeline" "options";
   grid-template-rows: 46px 16px 48px 18px minmax(0, 1fr);
   gap: 3px;
-  padding: 6px 9px;
+  padding: 6px 9px 4px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck > .place-mixer-audio__track {
   min-height: 0;
@@ -654,8 +654,8 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 
 /* Régie stays left; cue and its settings form one group at the far right. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck > .place-mixer-deck__bottom {
-  padding: 4px 0 6px;
-  align-self: start;
+  padding: 2px 0;
+  align-self: end;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-audio__transport-buttons {
   transform: none;
@@ -667,8 +667,9 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   min-height: 30px;
   grid-template-columns: auto minmax(0, 1fr) 28px 28px;
   align-items: center;
+  justify-content: stretch;
   justify-items: end;
-  gap: 6px;
+  gap: 4px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom .place-mixer-audio__regie-button {
   justify-self: start;
