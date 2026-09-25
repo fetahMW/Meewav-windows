@@ -50,6 +50,19 @@ function Harness() {
   </WaveTransportProvider></StudioToolsLayoutProvider></MemoryRouter>;
 }
 describe("Wave · une seule instance persistante", () => {
+  it("refuse depuis le menu de la carte sans confirmation et avance dans le sas", async () => {
+    render(<Harness />);
+    fireEvent.click(screen.getByRole("button", { name: "Changer de surface" }));
+    fireEvent.click(await screen.findByRole("tab", { name: "Sas des boucles" }));
+    const row = await screen.findByRole("article", { name: "Sélectionner Afro · Basse A de Eliott Waves" });
+    fireEvent.mouseEnter(within(row).getByRole("button", { name: "Refuser Afro · Basse A" }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(row).toBeInTheDocument();
+    await act(async () => fireEvent.click(screen.getByRole("menuitem", { name: "Catégorie déjà complète" })));
+    await waitFor(() => expect(row).not.toBeInTheDocument());
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(screen.getByTestId("candidate").textContent).not.toBe("test-Afro-Bass_A");
+  });
   it("change de production depuis Simulation et remplace la référence du lecteur", async () => {
     render(<Harness />);
     await waitFor(() => expect(WaveAudioTransport.prototype.setReference).toHaveBeenCalledWith(expect.objectContaining({ url: expect.stringContaining("Afro_Melody_A") })));

@@ -1,10 +1,8 @@
 import {
-  Ban,
   Check,
   Download,
   FileAudio,
   MessageCircleMore,
-  RefreshCcw,
   Ruler,
   Upload,
   X,
@@ -21,22 +19,13 @@ import { EmptyState, ToolNotice } from "./RoomToolPanelPrimitives";
 import { useWaveMediaUrl } from "./WaveFlutterPrimitives";
 import { submissionAsset, useWaveTransport, useWaveTransportState } from "../../wave-transport/WaveTransportProvider";
 import { WaveBottomBar, WaveLoopCard } from "./WaveLoopCard";
+import WaveRejectButton from "./WaveRejectButton";
 import WaveGateIntakeControl from "./WaveGateIntakeControl";
 import { WAVE_LOOP_CATEGORIES as LOOP_CATEGORIES, waveSubmissionCategory as categoryFor } from "../waveLoopCategories";
 import "../../place/place-mixer-play-finish.css";
 
 type SubmissionTab = "received" | "rework" | "ready" | "rejected";
 type ListeningMode = "solo" | "beat";
-type ReviewMode = "rework" | "rejected";
-const REVIEW_REASONS: Array<{ value: WaveReviewReason; label: string }> = [
-  { value: "fit", label: "Ne correspond pas à la direction actuelle" },
-  { value: "duplicate", label: "Catégorie déjà complète" },
-  { value: "timing", label: "Calage, BPM ou durée à corriger" },
-  { value: "quality", label: "Problème technique ou qualité insuffisante" },
-  { value: "format", label: "Proposition non conforme" },
-  { value: "other", label: "Autre" },
-];
-
 const GRADE_BY_CONTRIBUTOR: Record<string, number> = {
   "wave-a": 4,
   "wave-b": 5,
@@ -128,9 +117,6 @@ export default function WaveGatePanel({ wave, role, roomId, source, accountId, d
   const selectedMediaPath = selected?.mediaPath;
   const { url: audioUrl, error: audioError, sourceKey: audioSourceKey } = useWaveMediaUrl(selectedMediaUrl, selectedMediaPath);
   const { url: beatAudioUrl } = useWaveMediaUrl(wave.baseLoop.mediaUrl, wave.baseLoop.mediaPath);
-  const [reviewMode, setReviewMode] = useState<ReviewMode | null>(null);
-  const [reason, setReason] = useState<WaveReviewReason>("fit");
-  const [feedback, setFeedback] = useState("");
   const [versionOpen, setVersionOpen] = useState(false);
   const [versionFile, setVersionFile] = useState<File | null>(null);
   const [versionNote, setVersionNote] = useState("Version recalée par le host");
@@ -305,14 +291,6 @@ export default function WaveGatePanel({ wave, role, roomId, source, accountId, d
     }
   };
 
-  const openReview = (submission: WaveSubmission, mode: ReviewMode) => {
-    pausePreview();
-    setSelectedId(submission.id);
-    setReason(mode === "rejected" ? "fit" : "timing");
-    setFeedback("");
-    setReviewMode(mode);
-  };
-
   const markReady = async (submission: WaveSubmission) => {
     pausePreview();
     await execute({ type: "wave.submission.status", submissionId: submission.id, status: "analysis" });
@@ -332,17 +310,10 @@ export default function WaveGatePanel({ wave, role, roomId, source, accountId, d
     setPendingDownload(submission);
   };
 
-  const submitReview = async () => {
-    if (!selected || !reviewMode) return;
-    await execute({
-      type: "wave.submission.status",
-      submissionId: selected.id,
-      status: reviewMode,
-      reason,
-      feedback: feedback.trim() || undefined,
-    });
-    setReviewMode(null);
-    advanceAfter(selected.id);
+  const rejectSubmission = async (submission: WaveSubmission, reason: WaveReviewReason, feedback: string) => {
+    pausePreview();
+    await execute({ type: "wave.submission.status", submissionId: submission.id, status: "rejected", reason, feedback });
+    advanceAfter(submission.id);
   };
 
   const chooseVersion = (file: File | undefined) => {
@@ -459,13 +430,8 @@ export default function WaveGatePanel({ wave, role, roomId, source, accountId, d
               disabled={disabled || tab === "ready" || tab === "rejected" || !submission.rightsConfirmed}
               onClick={() => void markReady(submission)}
             ><Check /></button>
-            <button
-              type="button"
-              className="wave-sas-card__quick-reject"
-              aria-label={`Refuser ${submission.title}`}
-              disabled={disabled || tab === "rejected"}
-              onClick={() => openReview(submission, "rejected")}
-            >Refuser</button>
+            <WaveRejectButton className="wave-sas-card__quick-reject" title={submission.title}
+              disabled={disabled || tab === "rejected"} onReject={(reason, feedback) => rejectSubmission(submission, reason, feedback)} />
           </>}
         />;
       })}
@@ -476,7 +442,7 @@ export default function WaveGatePanel({ wave, role, roomId, source, accountId, d
       <button type="button" aria-label={`Télécharger ${selected.title}`} disabled={disabled || !canPreview} onClick={() => requestDownload(selected)}><Download /></button>
       <button type="button" aria-label={`Envoyer un message à ${selected.contributor.name}`} onClick={() => messageContributor(selected)}><MessageCircleMore /></button>
       <button type="button" className="is-validate" aria-label={`Valider ${selected.title}`} disabled={disabled || tab === "ready" || tab === "rejected" || !selected.rightsConfirmed} onClick={() => void markReady(selected)}><Check /></button>
-      <button type="button" className="is-danger" aria-label={`Refuser ${selected.title}`} disabled={disabled || tab === "rejected"} onClick={() => openReview(selected, "rejected")}>Refuser</button>
+      <WaveRejectButton key={selected.id} className="is-danger" title={selected.title} disabled={disabled || tab === "rejected"} onReject={(reason, feedback) => rejectSubmission(selected, reason, feedback)} />
     </WaveBottomBar>; })() : null}
 
     {!transport ? <><audio
@@ -506,28 +472,6 @@ export default function WaveGatePanel({ wave, role, roomId, source, accountId, d
         <footer>
           <button type="button" onClick={() => setRulesOpen(false)}>Annuler</button>
           <button type="button" className="is-primary" disabled={disabled} onClick={() => void saveRules()}>Enregistrer les règles</button>
-        </footer>
-      </section>
-    </div> : null}
-
-    {reviewMode && selected ? <div className="wave-sas-modal" role="presentation">
-      <section role="dialog" aria-modal="true" aria-labelledby="wave-sas-review-title">
-        <header>
-          <span>{reviewMode === "rejected" ? <Ban /> : <RefreshCcw />}<strong id="wave-sas-review-title">{reviewMode === "rejected" ? "Refuser cette proposition ?" : "Demander une correction"}</strong></span>
-          <button type="button" aria-label="Fermer" onClick={() => setReviewMode(null)}><X /></button>
-        </header>
-        <p>{selected.title} · {selected.contributor.name}</p>
-        <fieldset>
-          <legend>Motif</legend>
-          {REVIEW_REASONS.map((item) => <label key={item.value}>
-            <input type="radio" name="wave-review-reason" value={item.value} checked={reason === item.value} onChange={() => setReason(item.value)} />
-            <span>{item.label}</span>
-          </label>)}
-        </fieldset>
-        {reason === "other" ? <label className="wave-sas-modal__feedback">Précisez<textarea rows={2} maxLength={180} value={feedback} onChange={(event) => setFeedback(event.currentTarget.value)} /></label> : null}
-        <footer>
-          <button type="button" onClick={() => setReviewMode(null)}>Annuler</button>
-          <button type="button" className={reviewMode === "rejected" ? "is-danger" : "is-primary"} disabled={disabled || (reason === "other" && !feedback.trim())} onClick={() => void submitReview()}>{reviewMode === "rejected" ? "Refuser" : "Envoyer"}</button>
         </footer>
       </section>
     </div> : null}
