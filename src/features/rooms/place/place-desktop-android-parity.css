@@ -629,8 +629,8 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   text-align: center;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-audio__controls :is(.place-mixer-deck__key, .place-mixer-audio__transport-buttons > button) svg { width: 16px; height: 16px; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-audio__controls .place-mixer-deck__route {
-  width: auto !important;
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-audio__controls button.place-mixer-deck__route.place-mixer-deck__route {
+  width: max-content !important;
   min-width: 40px !important;
   max-width: none !important;
   padding-inline: 6px !important;

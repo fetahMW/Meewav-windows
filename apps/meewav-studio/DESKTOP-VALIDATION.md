@@ -1,4 +1,14 @@
-# Meewav Desktop — tranche du 24 septembre 2026
+# Meewav Desktop — validation Windows
+
+## Nouveau dépôt Windows — 25 septembre 2026
+
+- Installation propre réussie à la racine, dans `apps/meewav-studio` et dans `vendor/globe-vinyle`.
+- `npm run build` réussi ; le build signale encore les avertissements de taille des modules partagés et l'usage d'`eval` dans la dépendance Superpowered.
+- Test ciblé `PlaceMixerPlaybackMenu.test.tsx` : 6 tests réussis.
+- `npm run typecheck` échoue sur 62 diagnostics des sources React partagées reprises depuis le travail Web : 20 en production, 42 dans les tests. Les causes dominantes sont une cible TypeScript ES2020 pour des API plus récentes, des types Node absents dans les tests, des options Testing Library invalides et des types/fixtures désynchronisés. Ce contrôle n'est pas validé.
+- L'application Electron du dépôt Windows s'ouvre sur le port 5197. Dans la Room Place DEMO host, onglet Mixeur sélectionné, mesure du rendu à 1440 × 902 px CSS : « Privé » 40 × 30 px avec libellé complet, pistes précédente/suivante 20 × 20 px, retour au curseur et options de lecture 28 × 28 px sur la même ligne. Aucun débordement ni texte coupé observé. Dans cette Room sans piste chargée, les commandes de transport, destination et retour au curseur sont désactivées ; les états actifs avec une piste restent à vérifier.
+
+## Tranche historique du 24 septembre 2026
 
 ## Exécuté / non exécuté
 
