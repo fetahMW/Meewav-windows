@@ -276,7 +276,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   height: 29px;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .9));
 }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-hit > .mw-grade-badge .mw-grade-badge__svg {
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-hit > .mw-grade-badge :is(.mw-grade-badge__icon, .mw-grade-badge__svg) {
   width: 100%;
   height: 100%;
 }
