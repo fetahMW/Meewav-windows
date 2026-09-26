@@ -393,9 +393,9 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
 
   return <div className={`room-tool-panel is-wave-gate wave-sas wave-sas--premium${quarantine ? " is-quarantine" : ""}`}>
     <header className="wave-sas__header">
-      <span>
-        <strong>{quarantine ? "Quarantaine" : "Sas des boucles"}</strong>
-      </span>
+      {quarantine ? <span><strong>Quarantaine</strong></span> : <div className="wave-sas__header-actions">
+        <button type="button" aria-pressed={selectionMode} disabled={disabled || working} onClick={() => { setSelectionMode(!selectionMode); setCheckedIds([]); }}>{selectionMode ? "Annuler la sélection" : "Sélection multiple"}</button>
+      </div>}
       <div className="wave-sas__header-actions">
         {quarantine ? <button type="button" aria-pressed={selectionMode} disabled={disabled || working} onClick={() => { setSelectionMode(!selectionMode); setCheckedIds([]); }}>{selectionMode ? "Annuler la sélection" : "Sélection multiple"}</button> : null}
         {!quarantine ? <><button type="button" className="wave-sas__rules-trigger" aria-label="Règles" onClick={openRules}><Ruler /><span>Règles</span></button>
@@ -405,8 +405,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
     </header>
 
     {quarantine ? <p className="wave-quarantine__hint">Retouche les fichiers dans ton logiciel, puis remplace-les ici.</p> : null}
-    {!quarantine || selectionMode ? <div className="wave-quarantine__toolbar">
-      {!quarantine ? <button type="button" aria-pressed={selectionMode} disabled={disabled || working} onClick={() => { setSelectionMode(!selectionMode); setCheckedIds([]); }}>{selectionMode ? "Annuler la sélection" : "Sélection multiple"}</button> : null}
+    {selectionMode ? <div className="wave-quarantine__toolbar">
       {selectionMode ? <>
         <button type="button" disabled={disabled || working || !visibleSubmissions.length} onClick={() => setCheckedIds(checked.length === visibleSubmissions.length ? [] : visibleSubmissions.map(item => item.id))}>{checked.length === visibleSubmissions.length && checked.length ? "Tout désélectionner" : "Tout sélectionner"}</button>
         <button type="button" disabled={disabled || working || !checked.length} onClick={() => void (quarantine ? downloadSelection(checked) : moveToQuarantine(checked))}>{quarantine ? <Download /> : <Archive />}{quarantine ? "Télécharger" : "Quarantaine"} ({checked.length})</button>
