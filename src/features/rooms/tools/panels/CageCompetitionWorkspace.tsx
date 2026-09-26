@@ -64,11 +64,14 @@ function Readiness({ participant }: { participant?: TournamentParticipant }) {
 
 function FighterCard({ participant, side, active, winner, showChecks }: { participant?: TournamentParticipant; side: "A" | "B"; active: boolean; winner: boolean; showChecks: boolean }) {
   const prepared = ready(participant);
-  return <article className={`cage-fighter-card${active ? " is-on-air" : ""}${winner ? " is-winner" : ""}`}>
-    {participant?.person.avatarUrl ? <img className="cage-fighter-card__atmosphere" src={participant.person.avatarUrl} alt="" aria-hidden="true" /> : null}
-    <header><span>ARTISTE {side}</span>{winner ? <span className="is-gold"><Crown />Vainqueur</span> : active ? <span className="is-live"><i />À l’antenne</span> : null}</header>
-    <div className="cage-fighter-card__identity"><span className="cage-fighter-card__portrait">{participant?.person.avatarUrl ? <img src={participant.person.avatarUrl} alt="" /> : <Users />}</span><span><strong>{participant?.person.name ?? "À déterminer"}</strong><small>{participant?.person.role ?? "Prochain talent"}</small>{participant?.person.gradeLevel ? <MeewavGradeBadge level={participant.person.gradeLevel} size="xs" variant="icon" /> : null}</span></div>
-    <footer><span>{participant ? PHASE[participant.status] : "En attente"}</span>{showChecks ? <details><summary className={prepared ? "is-ready" : ""}>{prepared ? <CircleCheck /> : <Settings2 />}{prepared ? "Prêt" : "Préparation"}<ChevronRight /></summary><Readiness participant={participant} /></details> : null}</footer>
+  return <article className={`cage-fighter-card is-guest-tile${active ? " is-on-air" : ""}${winner ? " is-winner" : ""}`} aria-label={`Artiste ${side} · ${participant?.person.name ?? "À déterminer"}`}>
+    <div className="cage-fighter-card__tile">
+      {participant?.person.avatarUrl ? <img src={participant.person.avatarUrl} alt="" /> : <Users className="cage-fighter-card__placeholder" aria-hidden="true" />}
+      {participant?.person.gradeLevel ? <span className="cage-fighter-card__grade"><MeewavGradeBadge level={participant.person.gradeLevel} size="xs" variant="icon" /></span> : null}
+      {winner ? <span className="cage-fighter-card__signal is-gold"><Crown aria-hidden="true" />Vainqueur</span> : active ? <span className="cage-fighter-card__signal is-live">À l’antenne</span> : null}
+      <div className="cage-fighter-card__caption"><strong>{participant?.person.name ?? "À déterminer"}</strong><small>{participant?.person.role ?? "Prochain talent"}</small></div>
+    </div>
+    <footer><span>{participant ? PHASE[participant.status] : "En attente"}</span>{showChecks ? <details><summary className={prepared ? "is-ready" : ""}>{prepared ? <CircleCheck /> : <Settings2 />}{prepared ? "Prêt" : "À préparer"}<ChevronRight /></summary><Readiness participant={participant} /></details> : null}</footer>
   </article>;
 }
 
@@ -134,29 +137,27 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
 function Regie(props: WorkspaceProps) {
   const { runtime, disabled, isControl, send, onOpenGuests } = props;
   const battle = runtime.config.format === "open-mic-battle";
-  const current = runtime.matches.find((match) => match.id === runtime.activeMatchId);
+  const current = runtime.matches.find(match => match.id === runtime.activeMatchId);
   const upcoming = nextMatches(runtime);
-  const prepared = runtime.matches.find((match) => match.id === runtime.preparedMatchId) ?? upcoming[0];
-  const following = upcoming.find((match) => match.id !== prepared?.id);
+  const prepared = runtime.matches.find(match => match.id === runtime.preparedMatchId) ?? upcoming[0];
+  const focus = current && !finished(current) ? current : prepared ?? current;
+  const following = upcoming.find(match => match.id !== focus?.id);
   if (!isControl) {
-    const own = runtime.participants.find((person) => person.id === props.accountId);
+    const own = runtime.participants.find(person => person.id === props.accountId);
     return <section className="cage-workspace__section"><h3>Ma préparation</h3>{own ? <><Person participant={own} /><Readiness participant={own} /><p>{["GREENHOUSE", "CALLED", "READY"].includes(own.status) ? "Prépare ta caméra, ton micro et ton monitoring dans les Invités, puis confirme que tu es prêt." : "La régie t’appellera quand ton prochain passage sera à préparer."}</p>{onOpenGuests ? <button onClick={onOpenGuests}><Users />Ouvrir ma préparation</button> : null}</> : <p>La préparation des participants est pilotée par le host. Tu peux suivre les rencontres dans le Bracket.</p>}</section>;
   }
+  const prepareButton = (match: CageCompetitionMatch) => <button disabled={disabled || !runtime.lockedAt || ["GREENHOUSE", "READY"].includes(match.status)} onClick={() => void send("regie.prepare", { matchId: match.id })}><ArrowRight />{battle ? "Préparer ce duel" : "Préparer cette paire"}</button>;
   return <>
-    <div className="cage-workspace__summary"><span><strong>Préparer la suite</strong><small>{runtime.config.format === "open-mic-battle" ? "Le gagnant reste sur scène ; seul le challenger change." : "Le Bracket détermine l’ordre des rencontres."}</small></span><Settings2 /></div>
-    {isControl ? <label className="cage-workspace__toggle"><span><strong>Auto-régie</strong><small>Prépare les suivants. Tu gardes la main sur le démarrage.</small></span><input type="checkbox" role="switch" checked={runtime.autoRegie} disabled={disabled || !runtime.lockedAt} onChange={(event) => void send("regie.auto", { enabled: event.target.checked })} /></label> : null}
-    {[[battle ? "DUEL EN COURS" : "MATCH EN COURS", current], [battle ? current ? "PROCHAIN CHALLENGER" : "PREMIER DUEL" : "PROCHAIN MATCH", prepared], ["MATCH SUIVANT", following]].filter(([, item]) => !battle || Boolean(item)).map(([label, item]) => {
-      const match = item as CageCompetitionMatch | undefined;
-      return <section className="cage-workspace__section" key={label as string}><h3>{label as string}<small>{match ? PHASE[match.status] : "En attente"}</small></h3>
-        {match ? <><div className="cage-fighter-deck">{pair(runtime, match).map((person, index) => <FighterCard key={person?.id ?? index} participant={person} side={index === 0 ? "A" : "B"} active={match.id === runtime.activeMatchId && match.status === "IN_PROGRESS" && (match.steps[match.stepIndex]?.side === "BOTH" || match.steps[match.stepIndex]?.side === (index === 0 ? "A" : "B"))} winner={Boolean(person && match.winnerId === person.id)} showChecks />)}</div>
-          {isControl && match.id !== current?.id && playable(match) ? <div className="cage-workspace__actions"><button disabled={disabled || !runtime.lockedAt || ["GREENHOUSE", "READY"].includes(match.status)} onClick={() => void send("regie.prepare", { matchId: match.id })}><ArrowRight />{battle ? "Préparer ce duel" : "Préparer cette paire"}</button></div> : null}
-        </> : <p>La prochaine paire sera connue après les résultats du Bracket.</p>}
-      </section>;
-    })}
-    {onOpenGuests && !battle ? <button onClick={onOpenGuests}><Users />Ouvrir le module Invités</button> : null}
-    {runtime.matches.some((match) => match.status === "POSTPONED") ? <section className="cage-workspace__section"><h3>Matchs reportés</h3>{runtime.matches.filter((match) => match.status === "POSTPONED").map((match) => <article className="cage-workspace__match-card" key={match.id}><strong>{match.label}</strong><p>{titleFor(runtime, match)}</p><button disabled={disabled || Boolean(runtime.preparedMatchId && runtime.preparedMatchId !== match.id)} onClick={() => void send("regie.prepare", { matchId: match.id })}><ArrowRight />Préparer ce match</button></article>)}</section> : null}
-    {isControl ? <ParticipantOperations {...props} /> : null}
-    {isControl && runtime.journal.length ? <details className="cage-workspace__section"><summary>Journal de la régie</summary><ol className="cage-workspace__journal">{[...runtime.journal].sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 20).map((entry) => <li key={entry.id}><time>{new Date(entry.at).toLocaleTimeString("fr", { hour: "2-digit", minute: "2-digit" })}</time><span>{entry.detail || entry.action}</span></li>)}</ol></details> : null}
+    <div className="cage-regie-toolbar"><label title="Prépare les suivants. Le démarrage reste sous ton contrôle."><input type="checkbox" role="switch" checked={runtime.autoRegie} disabled={disabled || !runtime.lockedAt} onChange={event => void send("regie.auto", { enabled: event.target.checked })} />Auto-régie</label>{onOpenGuests ? <button onClick={onOpenGuests}><Users />Invités</button> : null}</div>
+    {focus ? <section className="cage-workspace__duel-focus" aria-label={focus.id === current?.id ? "Match en cours" : "Prochain match"}>
+      <h3>{focus.label || (battle ? "Duel" : "Match")}<small>{PHASE[focus.status]}</small></h3>
+      <div className="cage-fighter-deck">{pair(runtime, focus).map((person, index) => <FighterCard key={person?.id ?? index} participant={person} side={index === 0 ? "A" : "B"} active={focus.id === runtime.activeMatchId && focus.status === "IN_PROGRESS" && (focus.steps[focus.stepIndex]?.side === "BOTH" || focus.steps[focus.stepIndex]?.side === (index === 0 ? "A" : "B"))} winner={Boolean(person && focus.winnerId === person.id)} showChecks />)}<span className="cage-fighter-deck__versus" aria-hidden="true">VS</span></div>
+      {focus.id !== current?.id && playable(focus) ? <div className="cage-workspace__actions">{prepareButton(focus)}</div> : null}
+    </section> : <p>Choisis les artistes dans les Invités, puis prépare le tableau.</p>}
+    {following ? <div className="cage-regie-next"><span><small>{battle ? "Prochain challenger" : "À suivre"}</small><strong>{titleFor(runtime, following)}</strong></span>{prepareButton(following)}</div> : null}
+    {runtime.matches.some(match => match.status === "POSTPONED") ? <details className="cage-workspace__section"><summary>Matchs reportés</summary>{runtime.matches.filter(match => match.status === "POSTPONED").map(match => <div className="cage-regie-next" key={match.id}><span><small>{match.label}</small><strong>{titleFor(runtime, match)}</strong></span><button disabled={disabled || Boolean(runtime.preparedMatchId && runtime.preparedMatchId !== match.id)} onClick={() => void send("regie.prepare", { matchId: match.id })}>Préparer ce match</button></div>)}</details> : null}
+    <ParticipantOperations {...props} />
+    {runtime.journal.length ? <details className="cage-workspace__section"><summary>Journal de la régie</summary><ol className="cage-workspace__journal">{[...runtime.journal].sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 20).map(entry => <li key={entry.id}><time>{new Date(entry.at).toLocaleTimeString("fr", { hour: "2-digit", minute: "2-digit" })}</time><span>{entry.detail || entry.action}</span></li>)}</ol></details> : null}
   </>;
 }
 
@@ -194,7 +195,7 @@ function Match(props: WorkspaceProps) {
     <div className="cage-fighter-deck" key={match.id}>{pair(runtime, match).map((person, index) => <FighterCard key={person?.id ?? index} participant={person} side={index === 0 ? "A" : "B"} active={match.status === "IN_PROGRESS" && (step?.side === "BOTH" || step?.side === (index === 0 ? "A" : "B"))} winner={Boolean(person && match.winnerId === person.id)} showChecks={isControl || person?.id === props.accountId} />)}<span className="cage-fighter-deck__versus" aria-hidden="true">VS</span></div>
     {finished(match) && props.onResults ? <button type="button" onClick={() => props.onResults?.(match.id)}><Trophy />Voir les résultats du match</button> : null}
     <div className="cage-workspace__timer"><small>{step?.label ?? "Performances terminées"}</small>{step && step.durationSeconds > 0 ? <time>{formatTime(step.durationSeconds - elapsed)}</time> : null}<span>{Math.min(match.stepIndex + 1, match.steps.length)} / {match.steps.length} passage(s)</span></div>
-    <ol className="cage-workspace__steps">{match.steps.map((item, index) => <li key={item.id} className={index === match.stepIndex ? "is-current" : index < match.stepIndex ? "is-done" : ""}>{index < match.stepIndex ? <Check /> : <span>{index + 1}</span>}<strong>{item.label}</strong></li>)}</ol>
+    <details className="cage-workspace__passage-plan"><summary>Ordre des passages <span>{match.steps.length} passages</span></summary><ol className="cage-workspace__steps">{match.steps.map((item, index) => <li key={item.id} className={index === match.stepIndex ? "is-current" : index < match.stepIndex ? "is-done" : ""}>{index < match.stepIndex ? <Check /> : <span>{index + 1}</span>}<strong>{item.label}</strong></li>)}</ol></details>
     {match.status === "TIE_BREAK" ? <p className="cage-workspace__notice">Égalité : une manche décisive précède un nouveau vote. Aucun gagnant n’a été choisi manuellement.</p> : null}
     {match.incident ? <div className="cage-workspace__notice"><strong>Incident technique — reconnexion</strong>{isControl || match.incident.participantId === props.accountId ? <><p>{match.incident.reason}</p><small>Délai restant : {formatTime((Date.parse(match.incident.graceEndsAt) - now) / 1000)}</small></> : <p>Le match est suspendu le temps de rétablir la connexion.</p>}</div> : null}
     {isControl ? <><div className="cage-workspace__actions">{match.status === "IN_PROGRESS" ? <button disabled={disabled} onClick={() => void send("match.pause")}><Pause />Pause</button> : null}{match.status === "PAUSED" ? <><button disabled={disabled} onClick={() => void send("match.resume")}><Play />Reprendre</button>{match.incident ? <button disabled={disabled} onClick={() => void send("match.restart")}><RefreshCw />Recommencer le passage</button> : null}</> : null}</div>
@@ -223,7 +224,7 @@ function Vote({ runtime, isControl, accountId, disabled, send }: WorkspaceProps)
 }
 
 export default function CageCompetitionWorkspace(props: WorkspaceProps) {
-  return <div className="cage-workspace" data-cage-view={props.view}>{props.runtime.config.format === "open-mic" ? <CageOpenMicWorkspace {...props} /> : props.view === "bracket" ? <Bracket {...props} /> : props.view === "regie" ? <Regie {...props} /> : props.view === "match" ? <Match {...props} /> : <Vote {...props} />}</div>;
+  return <div className={`cage-workspace${props.isControl ? " is-host-control" : ""}`} data-cage-view={props.view}>{props.runtime.config.format === "open-mic" ? <CageOpenMicWorkspace {...props} /> : props.view === "bracket" ? <Bracket {...props} /> : props.view === "regie" ? <Regie {...props} /> : props.view === "match" ? <Match {...props} /> : <Vote {...props} />}</div>;
 }
 
 export function CageCommandBar({ runtime, disabled, isControl, send, onView, onOpenGuests, onResults }: WorkspaceProps) {

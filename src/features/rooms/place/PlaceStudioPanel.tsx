@@ -1264,7 +1264,7 @@ function PlaceChatWorkspace({
       {previewPoll ? <div className="wave-chat-poll-preview"><header><small>SONDAGE · SIMULATION</small><button type="button" aria-label="Fermer le sondage simulé" onClick={() => setPreviewPoll(null)}><X aria-hidden="true" /></button></header><ChatAudiencePoll room={{...room,poll:previewPoll}} canEngage={true} onVotePoll={votePreviewPoll} /><small>Réponses du public simulées · aucun vote réel envoyé</small></div> : null}
       <div className="place-chat-workspace__body">
         {compactViewerActions ? <header className="place-chat-workspace__engagement">
-          <h3>Discussion</h3>
+          <h3 className="place-chat-workspace__host-support"><span>Soutenir le host</span><small>Likes, Golden Likes et dons pour {room.host.displayName}</small></h3>
           {chatSocialActions}
         </header> : null}
         <section className="place-chat-workspace__panel" aria-label="Messages du chat">

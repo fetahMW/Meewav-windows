@@ -199,3 +199,46 @@ details.cage-workspace__section[open] > :not(summary) + * { margin-top: 10px; }
 .cage-workspace .cage-workspace__field-size { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 0; color: #a8a3b1; font-size: 11px; }
 .cage-workspace__field-size select { width: auto; min-height: 30px; max-width: 130px; padding: 3px 8px; border: 1px solid #ffffff1a; border-radius: 8px; color: #e9e2f4; background: #18151e; font: inherit; }
 .cage-workspace__field-size small { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* Match cards use the same square portrait scale as the three-column guest rail. */
+.cage-workspace .cage-fighter-deck { display:grid; box-sizing:border-box; grid-template-columns:repeat(3,minmax(0,1fr)); justify-content:center; align-items:start; gap:8px; width:100%; max-width:440px; margin:0 auto; padding:6px 8px 4px; overflow-y:auto; scrollbar-width:thin; scrollbar-gutter:stable both-edges; }
+.cage-workspace .cage-fighter-deck > .cage-fighter-card:first-child { grid-column:1; grid-row:1; }
+.cage-workspace .cage-fighter-deck > .cage-fighter-card:nth-child(2) { grid-column:3; grid-row:1; }
+.cage-workspace .cage-fighter-deck__versus { position:static; display:grid; place-items:center; grid-column:2; grid-row:1; align-self:start; margin:0; transform:none; width:100%; height:auto; aspect-ratio:1; border:0; background:none; box-shadow:none; color:#cbb6e8; font-size:12px; letter-spacing:.03em; }
+.cage-workspace .cage-fighter-card.is-guest-tile { min-height:0; width:100%; padding:0; border:0; border-radius:0; overflow:visible; background:none; box-shadow:none; }
+.cage-fighter-card__tile { position:relative; width:100%; aspect-ratio:1; overflow:hidden; box-sizing:border-box; border:1px solid #a98ef03d; border-radius:12px; background:#101114; box-shadow:inset 0 1px #ffffff14; }
+.cage-fighter-card__tile > img { width:100%; height:100%; object-fit:cover; }
+.cage-fighter-card__tile::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,#0006,transparent 38%,#000e); pointer-events:none; }
+.cage-fighter-card__placeholder { position:absolute; inset:30%; width:40% !important; height:40% !important; color:#8e809f; }
+.cage-fighter-card__caption { position:absolute; z-index:1; inset:auto 8px 8px; display:grid; gap:2px; }
+.cage-fighter-card__caption strong { color:#fff; font-size:12px; line-height:1.2; overflow-wrap:anywhere; }
+.cage-fighter-card__caption small { font-size:10px; line-height:1.2; color:#c9a7ef; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cage-fighter-card__grade { position:absolute; z-index:2; right:5px; top:5px; }
+.cage-fighter-card__grade .mw-grade-badge { width:23px; height:23px; min-width:23px; }
+.cage-fighter-card__grade :is(.mw-grade-badge__icon,.mw-grade-badge__svg) { width:100%; height:100%; }
+.cage-fighter-card__signal { position:absolute; z-index:2; left:5px; top:5px; display:inline-flex; align-items:center; gap:3px; padding:3px 5px; border-radius:6px; font-size:8px; color:#e2cafd; background:#160b21cc; }
+.cage-fighter-card__signal svg { width:10px; height:10px; }
+.cage-workspace .cage-fighter-card.is-guest-tile > footer { margin:5px 0 0; padding:0; border:0; min-height:20px; gap:3px; font-size:9px; }
+.cage-workspace .cage-fighter-card.is-guest-tile summary { padding:3px 4px; font-size:9px; }
+.cage-fighter-card.is-guest-tile.is-on-air .cage-fighter-card__tile { border-color:#ba82fa; box-shadow:0 0 0 1px #c095ff40,0 0 12px #a55ef025; }
+.cage-fighter-card.is-guest-tile.is-winner .cage-fighter-card__tile { border-color:#d9bb79; }
+.cage-workspace.is-host-control { gap:9px; padding:8px 12px 12px; }
+.cage-workspace.is-host-control .cage-workspace__summary { padding-bottom:2px; }
+.cage-workspace.is-host-control .cage-workspace__summary strong { font-size:14px; }
+.cage-workspace.is-host-control .cage-workspace__timer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; padding:8px 10px; min-height:0; }
+.cage-workspace.is-host-control .cage-workspace__timer time { font-size:22px; }
+.cage-workspace.is-host-control .cage-workspace__section { padding:8px 10px; }
+.cage-workspace__passage-plan { border-top:1px solid #ffffff10; padding-top:7px; }
+.cage-workspace__passage-plan > summary { cursor:pointer; color:#b9afc8; font-size:11px; }
+.cage-workspace__passage-plan > summary > span { color:#877b97; margin-left:8px; }
+.cage-workspace__duel-focus { display:grid; gap:9px; }
+.cage-workspace__duel-focus > h3 { display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:500; }
+.cage-workspace__duel-focus > h3 small { font-size:10px; }
+.cage-regie-toolbar { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.cage-regie-toolbar > label { display:flex; flex-direction:row; align-items:center; gap:6px; font-size:11px; }
+.cage-workspace .cage-regie-toolbar > button { min-height:28px; padding:4px 8px; font-size:10px; }
+.cage-regie-next { display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid #ffffff12; }
+.cage-regie-next > span { display:grid; flex:1; gap:3px; min-width:0; }
+.cage-regie-next small { font-size:9px; }
+.cage-regie-next strong { font-size:11px; overflow-wrap:anywhere; }
+.cage-workspace .cage-regie-next > button { flex-shrink:0; min-height:30px; padding:5px 8px; font-size:10px; }

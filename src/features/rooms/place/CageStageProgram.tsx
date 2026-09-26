@@ -11,7 +11,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { cageBattleWinCount } from "../tools/cageCompetition";
 import { resolveRoomActorRole } from "../tools/roomTools.config";
 import {
@@ -46,6 +46,7 @@ export { cageStageRemaining } from "./cageStageClock";
 
 export type CageStageProgramProps = {
   canEngage?: boolean;
+  hostActions?: ReactNode;
   composition?: "ensemble" | "focus" | "solo";
   focusedParticipantId?: string;
   feedSelectionDisabled?: boolean;
@@ -341,7 +342,7 @@ export function CageStageProgramView(props: CageStageProgramViewProps) {
     : <DuelProgram {...props} cage={cage} />}</>;
 }
 
-export default function CageStageProgram({ room, isHost, isGuest, canEngage = false, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume = 1, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }: CageStageProgramProps) {
+export default function CageStageProgram({ room, isHost, isGuest, canEngage = false, hostActions, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume = 1, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }: CageStageProgramProps) {
   const role = resolveRoomActorRole("cage", isHost, isGuest, room.currentUserProfile?.role);
   const accountId = room.currentUserProfile?.id ?? `anonymous-cage-${room.id}`;
   const { state, error, busy, execute, canVote } = useRoomTools({ roomType: "cage", roomId: room.id, role, accountId, source: room.source });
@@ -355,7 +356,7 @@ export default function CageStageProgram({ room, isHost, isGuest, canEngage = fa
   const viewProps = useMemo(() => ({ room, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }), [liveKitVideoTracks, onOpenProfile, onStage, programMuted, playbackVolume, room, useRtcVideo, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed]);
   if (error && !state?.cage) return <EmptyProgram title="Régie vidéo indisponible" detail="La Cage n’a pas pu synchroniser la rencontre active. Réessaie dans quelques instants." />;
   if (!isHost && role !== "regisseur" && state?.cage) return <>
-    <CageViewerStage {...viewProps} cage={preview ?? state.cage} />
+    <CageViewerStage {...viewProps} canEngage={canEngage && !preview} hostActions={hostActions} cage={preview ?? state.cage} />
     <CageViewerVote state={state} accountId={accountId} canVote={canEngage && canVote && !preview && room.status === "live"} busy={busy} execute={execute} />
   </>;
   return <CageStageProgramView {...viewProps} isHost={isHost} cage={preview ?? state?.cage ?? null} />;

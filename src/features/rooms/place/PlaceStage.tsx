@@ -1,7 +1,7 @@
 import CageStageProgram from "./CageStageProgram";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import type { SyntheticEvent, PointerEvent } from "react";
+import type { SyntheticEvent, PointerEvent, ReactNode } from "react";
 import {
   ArrowDownToLine,
   BarChart3,
@@ -65,6 +65,7 @@ type PlaceStageProps = {
   isHost: boolean;
   isGuest: boolean;
   canEngage: boolean;
+  cageHostActions?: ReactNode;
   currentUserId?: string | null;
   hostCameraEnabled: boolean;
   hostMicrophoneEnabled: boolean;
@@ -182,6 +183,7 @@ export default function PlaceStage({
   isHost,
   isGuest,
   canEngage,
+  cageHostActions,
   currentUserId,
   hostCameraEnabled,
   hostMicrophoneEnabled,
@@ -1285,7 +1287,7 @@ export default function PlaceStage({
           ? <ScreenShareMedia stream={screenShareStream} />
           : screenShareOnAir && liveKitScreenShareForPlayback
             ? <LiveKitScreenShareMedia item={liveKitScreenShareForPlayback} />
-            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} canEngage={canEngage} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
+            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} canEngage={canEngage} hostActions={cageHostActions} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
             : orderedParticipants.map((participant, index) => (
           <PlaceStageLayoutTile
             participant={participant}

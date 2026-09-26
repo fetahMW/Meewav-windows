@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createRoomToolsFixture } from "../tools/roomTools.fixtures";
 import { migrateCageDemoCompetition } from "../tools/cageCompetition";
@@ -14,6 +14,20 @@ beforeEach(() => { vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValu
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe("Cage iOS viewer stage on Windows", () => {
+  it("shows host support only on the solo host and one Golden Like per artist during a duel", () => {
+    const props = setup();
+    const { rerender, container } = render(<CageViewerStage {...props} cage={{ ...props.cage, currentMatchId: "" }} hostActions={<button>Soutenir le host</button>} />);
+    expect(screen.getByRole("button", { name: "Soutenir le host" })).toBeVisible();
+    rerender(<CageViewerStage {...props} hostActions={<button>Soutenir le host</button>} />);
+    expect(screen.queryByRole("button", { name: "Soutenir le host" })).not.toBeInTheDocument();
+    const fighters = container.querySelectorAll<HTMLElement>(".cage-viewer-stage__fighters .cage-viewer-camera");
+    expect(fighters).toHaveLength(2);
+    for (const fighter of fighters) {
+      expect(within(fighter).getByRole("group", { name: /Golden Like pour/ })).toBeVisible();
+      expect(fighter.querySelectorAll(".shorts-reaction--golden")).toHaveLength(1);
+      expect(fighter.querySelector(".shorts-reaction--like")).toBeNull();
+    }
+  });
   it("keeps the host alone before a duel without a fictitious tournament poster", () => {
     const props = setup();
     props.cage.currentMatchId = "";

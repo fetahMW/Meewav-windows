@@ -31,6 +31,7 @@ import PlaceStage from "./PlaceStage";
 import { CageMixerTimer } from "./CageStageProgram";
 import PlaceStudioPanel from "./PlaceStudioPanel";
 import PlaceChatSocialActions from "./PlaceChatSocialActions";
+import { CageGoldenLikeProvider } from "./CageGoldenLikeContext";
 import { WaveViewerListeningProvider, useWaveViewerListening } from "../wave-viewer/WaveViewerListening";
 import type { PlaceDemoRole, PlaceMixerView, PlaceNativePitchProvider, PlacePitchProvider, PlaceProfile, PlaceRoomState, PlaceStudioSurface, PlaceVocalState } from "./place.types";
 import type { PlacePitchCorrectionAdapter } from "./placeLocalAudioEngine";
@@ -1314,12 +1315,15 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
   }, [nativePitchSelected, nativePluginAudioReady, personalInputGain, room.personalVocal, showNotice, updateNativeVst3]);
 
   const shellbarVisible = !place.isLoading && (room.status === "live" || room.status === "ended");
-
-
-
+  const hostSocialActions = !place.isHost ? <PlaceChatSocialActions room={room}
+    canEngage={place.canEngage} goldenUnavailable={place.goldenLikeUnavailable}
+    onLike={place.toggleLike} onGoldenLike={place.giveGoldenLike}
+    onOpenDonation={openDonation} supportAction={support.action}
+    onSupportThrow={() => { void support.launch(); }} /> : undefined;
   return (
     <ViewerMixerContext.Provider value={place.isHost ? null : { ...viewerMix, prepareVoice: prepareViewerVoice, voiceStatus: localAudio.status, publication: roomMedia.voiceAudible ? "En scène" : contactMixAudible ? "Avec le host" : roomMedia.status === "reconnecting" ? "Reconnexion…" : "Préparation locale" }}>
     <RoomPresentationProvider presentation={roomPresentation}>
+    <CageGoldenLikeProvider key={`${room.source}:${room.id}:${place.activeUserId}`} room={room} viewerId={place.activeUserId} canEngage={place.canEngage} enabled={roomPresentation.id === "cage" && !place.isHost}>
       <SwitchRoomInvitation controller={switching} hostName={room.host.displayName}/>
       {shellbarVisible ? (
         <PlaceRoomShellHeader
@@ -1356,6 +1360,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           {roomPresentation.id === "cage" && place.isHost ? <CageMixerTimer /> : null}
           <PlaceStage
             room={room}
+            cageHostActions={hostSocialActions}
             isHost={place.isHost}
             isGuest={place.isGuest}
             canEngage={place.canEngage}
@@ -1434,16 +1439,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           programAudio={room.source === "live" && place.isHost ? programAudio : undefined}
           hostVoiceMeterStream={desktopHost && desktopOnAir ? localAudio.outputStream : null}
           onSendMessage={place.sendMessage}
-          chatSocialActions={!place.isHost ? <PlaceChatSocialActions
-            room={room}
-            canEngage={place.canEngage}
-            goldenUnavailable={place.goldenLikeUnavailable}
-            onLike={place.toggleLike}
-            onGoldenLike={place.giveGoldenLike}
-            onOpenDonation={openDonation}
-            supportAction={support.action}
-            onSupportThrow={() => { void support.launch(); }}
-          /> : undefined}
+          chatSocialActions={hostSocialActions}
           onJoinQueue={place.joinQueue}
           onLeaveQueue={place.leaveCurrentQueue}
           onAcceptInvitation={place.acceptCurrentInvitation}
@@ -1536,6 +1532,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           </div>
         </div>, document.body,
       ) : null}
+    </CageGoldenLikeProvider>
     </RoomPresentationProvider>
     </ViewerMixerContext.Provider>
   );

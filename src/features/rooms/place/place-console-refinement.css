@@ -9,7 +9,14 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
     box-shadow: var(--console-nav-shadow);
     border-radius: 15px;
   }
-  &.is-guests .place-guests__desktop-dock { margin: 6px 5px; padding: 9px; }
+  &.is-guests .place-guests:has(.place-guests__desktop-dock) { position: relative; --guest-dock-clearance: 96px; }
+  &.is-guests .place-guests:has(.place-guests__desktop-dock-error) { --guest-dock-clearance: 136px; }
+  &.is-guests .place-guests:has(.place-guests__desktop-dock) .place-guests__rows { padding-bottom: var(--guest-dock-clearance); scroll-padding-bottom: var(--guest-dock-clearance); }
+  &.is-guests .place-guests__desktop-dock { position: absolute; z-index: 6; inset: auto 5px 6px; margin: 0; padding: 8px 10px; gap: 5px; }
+  &.is-guests .place-guests__desktop-dock-heading { display: flex; align-items: baseline; gap: 7px; min-width: 0; white-space: nowrap; }
+  &.is-guests .place-guests__desktop-dock-heading > button { flex: 0 0 auto; padding: 0; line-height: 16px; font-size: 11px; }
+  &.is-guests .place-guests__desktop-dock-heading > small { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 10px; line-height: 16px; }
+  &.is-guests .place-guests__desktop-dock-heading > small::before { content: "·"; margin-right: 7px; color: #8c8195; }
   &.is-guests .place-guests__desktop-dock-actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0,1fr); gap: 3px; overflow: visible; }
   &.is-guests .place-guests__desktop-dock-actions :is(button,.place-guest-camera-dock) { min-width: 0; }
   &.is-guests .place-guests__desktop-dock-actions > button,
@@ -21,6 +28,11 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   &.is-guests .place-guests__section-tools { gap: 6px; }
   &.is-guests .place-guests__bulk-select { white-space: nowrap; }
   &.is-guests .studio-guest-selection-chips { max-width: 100%; flex-wrap: wrap; overflow: visible; }
+  &.is-chat .place-chat__messages { scrollbar-width: thin; scrollbar-color: #c7a0c7 transparent; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar { width: 5px; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar-track { background: transparent; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar-thumb { border-radius: 10px; background: #c7a0c7; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar-thumb:hover { background: #e1b7dc; }
 }
 
 /* The same first row places the persistent player at the same vertical origin. */
