@@ -6,7 +6,7 @@ export const SPECIALIZED_ROOM_TOOL_CONFIGS: Record<SpecializedRoomId, readonly R
   scene: [
     { id: "scene-program", label: "Programme", shortLabel: "Programme", eyebrow: "DÉROULÉ DU LIVE", description: "Organise les passages de la Scène", icon: "list", controlRoles: CONTROL },
     { id: "scene-prompter", label: "Prompteur", shortLabel: "Prompteur", eyebrow: "REPÈRES PRIVÉS", description: "Garde tes repères pendant ta prestation", icon: "text", controlRoles: [...CONTROL, "artist"] },
-    { id: "scene-evaluation", label: "Évaluation", shortLabel: "Évaluation", eyebrow: "RETOUR DU PUBLIC", description: "Recueille l’avis du public après ta prestation", icon: "evaluation", controlRoles: CONTROL },
+    { id: "scene-evaluation", label: "Évaluation", shortLabel: "Avis", eyebrow: "RETOUR DU PUBLIC", description: "Recueille l’avis du public après ta prestation", icon: "evaluation", controlRoles: CONTROL },
     { id: "scene-fundraiser", label: "Cagnotte", shortLabel: "Cagnotte", eyebrow: "OBJECTIF COLLECTIF", description: "Mobilise le public autour d’un objectif", icon: "fundraiser", controlRoles: CONTROL },
   ],
   classe: [

@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { useRef, useState, type ReactNode } from 'react';
 import { clamp, constrainFrame, sceneFrames, type VideoScene, type VideoFrame } from '../../../runtime/videoScene';
 
@@ -60,13 +61,13 @@ export function VideoSceneControls({ scene, onChange, sources }: Props & { sourc
     <p>Choisis le contenu de chaque zone parmi les caméras et les captures ajoutées dans Sources.</p>
     <div className="room-production__zone-grid">{frames.map((frame, index) => <div className="room-production__zone" key={index}>
       <label className="room-production__field"><span>Zone {String.fromCharCode(65 + index)}{scene.layout === 'pip' ? index === 0 ? ' · fond' : ' · miniature' : ''}</span>
-        <select aria-label={`Source de la zone ${String.fromCharCode(65 + index)}`} value={scene.sourceIds[index] || ''} onChange={(event) => {
+        <MeewavSelect aria-label={`Source de la zone ${String.fromCharCode(65 + index)}`} value={scene.sourceIds[index] || ''} onChange={(event) => {
           const sourceIds = [...scene.sourceIds]; while (sourceIds.length <= index) sourceIds.push(''); sourceIds[index] = event.target.value; onChange({ ...scene, sourceIds });
-        }}><option value="">Choisir une source…</option>{sources.map((source) => <option key={source.id} value={source.id}>{source.name}</option>)}</select>
+        }}><option value="">Choisir une source…</option>{sources.map((source) => <option key={source.id} value={source.id}>{source.name}</option>)}</MeewavSelect>
       </label>
-      <label className="room-production__field"><span>Cadrage</span><select aria-label={`Cadrage de la zone ${String.fromCharCode(65 + index)}`} value={scene.fits?.[index] ?? 'contain'} onChange={(event) => {
+      <label className="room-production__field"><span>Cadrage</span><MeewavSelect aria-label={`Cadrage de la zone ${String.fromCharCode(65 + index)}`} value={scene.fits?.[index] ?? 'contain'} onChange={(event) => {
         const fits = [...(scene.fits ?? [])]; fits[index] = event.target.value as 'contain' | 'cover'; onChange({ ...scene, fits });
-      }}><option value="contain">Image entière</option><option value="cover">Remplir la zone</option></select></label>
+      }}><option value="contain">Image entière</option><option value="cover">Remplir la zone</option></MeewavSelect></label>
       {scene.layout === 'free' ? <>
         <div className="room-production__coordinates">{(['x', 'y', 'width', 'height'] as const).map((key) => <label key={key}>{({ x: 'X', y: 'Y', width: 'Largeur', height: 'Hauteur' })[key]}<input aria-label={`${key} zone ${String.fromCharCode(65 + index)}`} type="number" min={key === 'x' || key === 'y' ? 0 : 10} max={100} value={Math.round(frame[key] * 100)} onChange={(event) => onChange(changeFrame(scene, index, { ...frame, [key]: Number(event.target.value) / 100 }))} /></label>)}</div>
         <button type="button" disabled={index === frames.length - 1} onClick={() => {

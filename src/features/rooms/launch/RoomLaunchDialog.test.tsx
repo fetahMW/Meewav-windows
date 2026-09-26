@@ -36,7 +36,7 @@ it('opens Studio inside the Desktop launch sequence after configuration and carr
   fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Place QA' } });
   expect(await screen.findByLabelText('Sujet de la rencontre')).toBeVisible();
   expect(screen.queryByRole('region', { name: 'Studio Meewav · préparation de la Room' })).not.toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Préparer OBS MiWave' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer Studio Meewav' }));
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
   fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
@@ -70,22 +70,22 @@ it.each([
   });
   render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
   fireEvent.click(screen.getByRole('button', { name: new RegExp(`^${name}`) }));
-  await screen.findByText('OBS MiWave');
+  await screen.findByText('Studio Meewav');
   fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Configuration QA' } });
   expect(screen.getByLabelText(field)).toBeVisible();
   if (name === 'La Wave') {
-    expect(screen.getByRole('button', { name: 'Préparer OBS MiWave' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Préparer Studio Meewav' })).toBeDisabled();
     fireEvent.click(screen.getByRole('button', { name: 'Son long' }));
     fireEvent.change(screen.getByLabelText('Fichier de la boucle de base'), { target: { files: [new File(['audio'], 'base.wav', { type: 'audio/wav' })] } });
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Préparer OBS MiWave' })).toBeEnabled());
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Préparer Studio Meewav' })).toBeEnabled());
   }
-  fireEvent.click(screen.getByRole('button', { name: 'Préparer OBS MiWave' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer Studio Meewav' }));
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'Retour' }));
   expect(screen.getByLabelText(field)).toBeVisible();
   if (name === 'La Wave') {
     expect(screen.getByText('base.wav')).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Préparer OBS MiWave' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Préparer Studio Meewav' })).toBeEnabled();
   }
 });
 
@@ -109,7 +109,8 @@ it.each([/^Accès direct host/, /^Provisoire/])("opens each demo host via %s wit
 it("requires verified audio and preserves a long base with an independent 4-bar contribution limit", async () => {
   settings();
   expect(screen.getByRole("button", { name: "Continuer" })).toBeDisabled();
-  fireEvent.change(screen.getByLabelText("Longueur maximale des instruments (mesures)"), { target: { value: "4" } });
+  fireEvent.click(screen.getByRole("combobox", { name: "Longueur maximale des instruments (mesures)" }));
+  fireEvent.click(screen.getByRole("option", { name: "4" }));
   fireEvent.click(screen.getByRole("button", { name: "Son long" }));
   fireEvent.change(screen.getByLabelText("Fichier de la boucle de base"), { target: { files: [new File(["audio"], "piano.wav", { type: "audio/wav" })] } });
   await waitFor(() => expect(screen.getByRole("button", { name: "Continuer" })).toBeEnabled());

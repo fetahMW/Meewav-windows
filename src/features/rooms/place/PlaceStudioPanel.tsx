@@ -1375,7 +1375,7 @@ function PlaceGuests({
   const [selectedQueueIds, setSelectedQueueIds] = useState<string[]>([]);
   const [selectedBackstageIds, setSelectedBackstageIds] = useState<string[]>([]);
   const [selectedStageIds, setSelectedStageIds] = useState<string[]>([]);
-  const [bulkSelectionMode, setBulkSelectionMode] = useState<"queue" | "backstage" | null>(null);
+  const [bulkSelectionMode, setBulkSelectionMode] = useState<"stage" | "queue" | "backstage" | null>(null);
   const [guestActionError, setGuestActionError] = useState("");
   const [dockPreview, setDockPreview] = useState<{ participant: PlaceParticipant; trigger: HTMLElement } | null>(null);
   const [guestActionBusy, setGuestActionBusy] = useState(false);
@@ -1463,6 +1463,18 @@ function PlaceGuests({
   const closeFilters = useCallback(() => setFilterState("closed"), []);
   useEffect(() => { if (momentVipPicker) { setSection("queue"); setBulkSelectionMode(null); closeFilters(); } }, [momentVipPicker, closeFilters]);
   const renderFilterButton = (owner: "stage" | "backstage" | "queue") => <GuestFilterButton panelId="studio-guests-filter-panel" activeCount={activeFilterCount} open={filterState === "open" && section === owner} buttonRef={section === owner ? (node) => { filterTriggerRef.current = node; } : undefined} onOpen={openFilters} />;
+  const renderSelectionToggle = (target: "stage" | "backstage" | "queue", count: number) => desktopGuests && !momentVipPicker ? <button
+    type="button" className="place-guests__selection-toggle" aria-pressed={bulkSelectionMode === target}
+    aria-label={bulkSelectionMode === target ? "Annuler la sélection" : "Activer la sélection multiple"}
+    title={bulkSelectionMode === target ? "Annuler la sélection" : "Sélection multiple"}
+    aria-controls={`place-guests-${target}`} disabled={(bulkSelectionMode !== target && !count) || bulkBusy || guestActionBusy}
+    onClick={() => {
+      if (bulkSelectionMode === target) {
+        (target === "stage" ? setSelectedStageIds : target === "backstage" ? setSelectedBackstageIds : setSelectedQueueIds)([]);
+        setBulkSelectionMode(null);
+      } else setBulkSelectionMode(target);
+    }}
+  >{bulkSelectionMode === target ? <X aria-hidden="true" /> : <SquareCheck aria-hidden="true" />}</button> : null;
   const toggleQueueSelection = (participantId: string, selected: boolean) => setSelectedQueueIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
   const toggleBackstageSelection = (participantId: string, selected: boolean) => setSelectedBackstageIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
   const toggleStageSelection = (participantId: string, selected: boolean) => setSelectedStageIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
@@ -1566,16 +1578,16 @@ function PlaceGuests({
       </header>
       <section id="place-guests-stage" className="place-guests__list is-onstage" role="tabpanel" hidden={section !== "stage"}>
         <div className="place-guests__section-head is-capacity-only">
-          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("stage")}</span>
+          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("stage")}{renderSelectionToggle("stage", filteredStage.length)}</span>
           <span className={`place-guests__capacity${stageFull ? " is-full" : ""}`}><strong>{onStage.length} / 3 sur scène</strong></span>
         </div>
         <div className="place-guests__rows">
-          {filteredStage.length > 0 ? filteredStage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="onstage" selected={desktopGuests && selectedStageIds.includes(participant.id)} onSelectedChange={desktopGuests ? (selected) => toggleStageSelection(participant.id, selected) : undefined} onSelectExclusive={desktopGuests ? () => setSelectedStageIds([participant.id]) : undefined} stageControls={<PlaceGuestMediaControls participant={participant} room={room} {...mediaControls} />} actions={[{ direction: "down", tone: "amber", label: "Envoyer en Coulisses", text: "Vers les coulisses", onAction: () => void onMoveGuest(participant, "backstage") }]} statusText={`En scène depuis ${waitingTime(participant.joinedAt, timeNow)}`} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{onStage.length ? "Aucun profil avec ces filtres" : "Scène libre"}</strong><span>{onStage.length ? "Modifie les filtres pour retrouver les artistes en scène." : "Monte jusqu’à trois invités."}</span></p>}
+          {filteredStage.length > 0 ? filteredStage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="onstage" selected={desktopGuests && selectedStageIds.includes(participant.id)} onSelectedChange={desktopGuests ? (selected) => toggleStageSelection(participant.id, selected) : undefined} selectionMode={bulkSelectionMode === "stage"} repeatOpensProfile={bulkSelectionMode !== "stage"} onSelectExclusive={desktopGuests && bulkSelectionMode !== "stage" ? () => setSelectedStageIds([participant.id]) : undefined} stageControls={<PlaceGuestMediaControls participant={participant} room={room} {...mediaControls} />} actions={[{ direction: "down", tone: "amber", label: "Envoyer en Coulisses", text: "Vers les coulisses", onAction: () => void onMoveGuest(participant, "backstage") }]} statusText={`En scène depuis ${waitingTime(participant.joinedAt, timeNow)}`} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{onStage.length ? "Aucun profil avec ces filtres" : "Scène libre"}</strong><span>{onStage.length ? "Modifie les filtres pour retrouver les artistes en scène." : "Monte jusqu’à trois invités."}</span></p>}
         </div>
       </section>
       <section id="place-guests-backstage" className="place-guests__list is-backstage" role="tabpanel" hidden={section !== "backstage"}>
         <div className="place-guests__section-head is-capacity-only">
-          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("backstage")}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
+          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("backstage")}{renderSelectionToggle("backstage", selectableBackstage.length)}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
           {desktopGuests ? renderQuickSelection("backstage", selectableBackstage, selectedBackstageIds) : null}
         </div>
         {mediaControls.isHost && juryOnly ? <div className="room-jury-voting">
@@ -1597,7 +1609,7 @@ function PlaceGuests({
       </section>
       <section id="place-guests-queue" className="place-guests__list is-queue" role="tabpanel" hidden={section !== "queue"}>
         <div className="place-guests__section-head is-capacity-only is-queue-tools">
-          <span className="place-guests__section-tools studio-guest-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("queue")}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
+          <span className="place-guests__section-tools studio-guest-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("queue")}{renderSelectionToggle("queue", selectableQueue.length)}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
         {renderQuickSelection("queue", selectableQueue, selectedQueueIds)}
           <button type="button" className={`place-guests__queue-state${room.queueOpen ? " is-open" : ""}`} onClick={() => void onSetQueueOpen(!room.queueOpen)} aria-label={room.queueOpen ? "Fermer la file d’attente" : "Ouvrir la file d’attente"} aria-pressed={room.queueOpen}><i />{room.queueOpen ? "Ouverte" : "Fermée"}<span className="place-guests__queue-toggle" aria-hidden="true" /></button>
         </div>

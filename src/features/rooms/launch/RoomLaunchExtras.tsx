@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { useEffect, useState } from "react";
 import { Check, Search, UsersRound } from "lucide-react";
 import { messagingRepository } from "../../messaging/messaging.service";
@@ -32,10 +33,10 @@ export default function RoomLaunchExtras({ config, scope, onChange }: { config: 
   if (config.roomType === "scene") {
     const setlists = readLaunchSetlists(scope);
     return <section className="launch-special" aria-label="Setlist de la Scène"><header><strong>Ta setlist</strong><span>Retrouve les listes enregistrées sur ton profil.</span></header>
-      <label>Importer une setlist<select value={config.setlist?.id ?? ""} onChange={event => {
+      <label>Importer une setlist<MeewavSelect value={config.setlist?.id ?? ""} onChange={event => {
         const setlist = setlists.find(item => item.id === event.target.value);
         onChange({ ...config, setlist, values: { ...config.values, ...(setlist ? { program: setlist.tracks.map(track => track.title).join("\n") } : {}) } });
-      }}><option value="">Programme libre</option>{setlists.map(list => <option value={list.id} key={list.id}>{list.title} · {list.tracks.length} titres</option>)}</select></label>
+      }}><option value="">Programme libre</option>{setlists.map(list => <option value={list.id} key={list.id}>{list.title} · {list.tracks.length} titres</option>)}</MeewavSelect></label>
       {!setlists.length ? <p>Pas encore de setlist enregistrée. Compose ton programme ci-dessous.</p> : null}
     </section>;
   }
@@ -44,9 +45,9 @@ export default function RoomLaunchExtras({ config, scope, onChange }: { config: 
   return <section className="launch-special" aria-label={`Les ${capacity} places élèves`}>
     <header><strong><UsersRound aria-hidden="true" />{capacity} places élèves</strong><span>Réserve des places à tes contacts ou accueille les membres Premium.</span></header>
     <div className="launch-fields">
-      <label>Tarif du cours<select value={classroom.pricing} onChange={event => patch({ pricing: event.target.value as "free" | "paid" })}><option value="free">Classe gratuite</option><option value="paid">Classe payante</option></select></label>
+      <label>Tarif du cours<MeewavSelect value={classroom.pricing} onChange={event => patch({ pricing: event.target.value as "free" | "paid" })}><option value="free">Classe gratuite</option><option value="paid">Classe payante</option></MeewavSelect></label>
       {classroom.pricing === "paid" ? <label>Prix par place (€)<input type="number" min="0.01" max="1000" step="0.01" value={classroom.priceCents / 100} onChange={event => patch({ priceCents: Math.round(Number(event.target.value) * 100) })} /></label> : null}
-      <label>Attribution des places<select value={classroom.allocation} onChange={event => patch({ allocation: event.target.value as typeof classroom.allocation })}><option value="premium">{capacity} places libres · membres Premium</option><option value="contacts">Réserver à mes contacts</option><option value="mixed">Mes contacts + places Premium libres</option></select></label>
+      <label>Attribution des places<MeewavSelect value={classroom.allocation} onChange={event => patch({ allocation: event.target.value as typeof classroom.allocation })}><option value="premium">{capacity} places libres · membres Premium</option><option value="contacts">Réserver à mes contacts</option><option value="mixed">Mes contacts + places Premium libres</option></MeewavSelect></label>
     </div>
     {chooseStudents ? <>
       <div className="launch-student-count"><strong>{classroom.students.length} / {capacity} réservées</strong><span>{capacity - classroom.students.length} {classroom.allocation === "mixed" ? "places Premium libres" : "places non attribuées"}</span></div>

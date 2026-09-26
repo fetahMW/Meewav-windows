@@ -72,7 +72,7 @@
   transform: translateY(-2px);
 }
 
-.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player {
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player {
   --hifi-signal: linear-gradient(90deg, #8054d9 0%, #7955dd 35%, #6b60e5 65%, #568cf5 100%);
 }
 
@@ -95,10 +95,10 @@
     linear-gradient(180deg, #24262b, #17191d 42%, #0a0b0e) padding-box,
     var(--studio-black-edge);
 }
-.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__routing > button {
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio__routing > button {
   background: var(--studio-black-key) !important;
 }
-.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__transport-buttons > .place-mixer-audio__play {
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio__transport-buttons > .place-mixer-audio__play {
   background: radial-gradient(ellipse at 50% 1%, #ffffff22, transparent 30%) padding-box,
     radial-gradient(circle at 50% 32%, #25272c, #101115 72%) padding-box,
     var(--studio-black-edge) !important;

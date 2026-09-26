@@ -1,5 +1,5 @@
 /* Android WaveMixerTheme + WaveMixerMaterials. No change to the Room backdrop. */
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer {
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis {
   background: linear-gradient(180deg, #1f2126, #181a1f 32%, #101216 70%, #08090c);
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-mixer {

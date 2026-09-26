@@ -27,12 +27,40 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   &.is-guests .place-guests__section-tools { min-width: 0; overflow: visible; flex-wrap: wrap; scrollbar-width: none; }
   &.is-guests .place-guests__section-tools { gap: 6px; }
   &.is-guests .place-guests__bulk-select { white-space: nowrap; }
+  &.is-guests .place-guests__selection-toggle { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; min-height: 30px; padding: 5px; border: 1px solid #b197cc35; border-radius: 8px; background: #ffffff06; color: #c9b8da; cursor: pointer; }
+  &.is-guests .place-guests__selection-toggle > svg { width: 16px; height: 16px; }
+  &.is-guests .place-guests__selection-toggle[aria-pressed="true"] { border-color: #ca9cf373; background: #884aba28; color: #e5caff; }
+  &.is-guests .place-guests__selection-toggle:focus-visible { outline: 2px solid #c39be9; outline-offset: 2px; }
+  &.is-guests .place-guests__selection-toggle:disabled { opacity: .4; cursor: default; }
   &.is-guests .studio-guest-selection-chips { max-width: 100%; flex-wrap: wrap; overflow: visible; }
   &.is-chat .place-chat__messages { scrollbar-width: thin; scrollbar-color: #c7a0c7 transparent; }
   &.is-chat .place-chat__messages::-webkit-scrollbar { width: 5px; }
   &.is-chat .place-chat__messages::-webkit-scrollbar-track { background: transparent; }
   &.is-chat .place-chat__messages::-webkit-scrollbar-thumb { border-radius: 10px; background: #c7a0c7; }
   &.is-chat .place-chat__messages::-webkit-scrollbar-thumb:hover { background: #e1b7dc; }
+}
+
+/* Room tools occupy the same transparent deck as the mixer navigation. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  & .wave-tools-nav,
+  & .wave-tools-nav > .room-tools-shell,
+  & .wave-tools-body,
+  & .wave-tools-body > .room-tools-shell,
+  & .room-tools-shell__panel,
+  & .place-guests,
+  & .place-guests__list,
+  & .place-guests__rows { min-width: 0; border: 0; background: transparent; box-shadow: none; }
+  & .wave-tools-nav > .room-tools-shell { display: block; width: 100%; height: 100%; padding: 0; overflow: visible; }
+  & .wave-tools-nav { overflow: visible; }
+  & .wave-tools-nav .place-tools-console__switch { width: 100%; max-width: 100%; grid-template-columns: repeat(var(--studio-nav-columns, 4), minmax(0,1fr)); border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  & .wave-tools-nav .place-tools-console__switch::before { content: none; }
+  & .wave-tools-nav .place-tools-console__switch > button { min-width: 0; color: #bfb6c8; }
+  & .wave-tools-nav .place-tools-console__switch > button.is-active { color: #f5e9ff; }
+  & .wave-tools-nav .place-tools-console__switch > button > span { font-size: 11px; }
+}
+@container (max-width: 480px) {
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch > button { gap: 0; padding-inline: 3px; }
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch > button > svg { display: none; }
 }
 
 /* The same first row places the persistent player at the same vertical origin. */

@@ -144,7 +144,7 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
   const [resultTarget, setResultTarget] = useState<{matchId?:string}|null>(null);
   useEffect(() => { setResultTarget(null); }, [room.id, roomType]);
   const [activeTool, setActiveTool] = useState<RoomToolId>(() => configs[0].id);
-  const [momentVipPersonId, setMomentVipPersonId] = useState<string | null>(null);
+  const [momentVipPersonIds, setMomentVipPersonIds] = useState<string[]>([]);
   const logeWaitingGuests = useMemo<RoomPerson[]>(() => [...new Map([...room.queue, ...room.participants].filter(person => person.profile.id !== room.host.id).map(person => [person.profile.id, person])).values()].map((participant) => ({
     id: participant.profile.id,
     name: participant.profile.displayName,
@@ -234,10 +234,10 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
       /> : <div className="room-tools-shell__loading">La configuration de cette compétition n’est pas encore disponible.</div>;
       case "loge-preview": return state.loge ? <LogePreviewPanel roomId={room.id} source={room.source} loge={state.loge} disabled={controlDisabled} execute={execute} /> : null;
       case "loge-face-to-face": return state.loge ? <LogeFaceToFacePanel loge={state.loge} disabled={controlDisabled} execute={execute} /> : null;
-      case "loge-dedication": return state.loge ? <LogeDedicationPanel loge={state.loge} disabled={controlDisabled} execute={execute} waitingGuests={logeWaitingGuests} initialFanId={controlledMomentVipPersonIds?.[0] ?? momentVipPersonId} onFanChange={id => { setMomentVipPersonId(id); onMomentVipPersonIdsChange?.([id]); }} roomId={room.id} source={room.source} /> : null;
+      case "loge-dedication": return state.loge ? <LogeDedicationPanel key={room.id} loge={state.loge} disabled={controlDisabled} execute={execute} waitingGuests={logeWaitingGuests} initialFanIds={controlledMomentVipPersonIds ?? momentVipPersonIds} onFanIdsChange={ids => { setMomentVipPersonIds(ids); onMomentVipPersonIdsChange?.(ids); }} roomId={room.id} source={room.source} /> : null;
       case "loge-audience-choice": return onLaunchPoll && onStopPoll && onOpenChat ? <PlacePollToolPanel room={room} disabled={controlDisabled} onLaunchPoll={onLaunchPoll} onStopPoll={onStopPoll} onOpenChat={onOpenChat} /> : null;
       case "gift": return logeGiftPanel;
-      case "loge-questions": return state.loge ? <LogeQuestionsPanel loge={state.loge} role={role} accountId={accountId} disabled={controlDisabled} execute={execute} source={room.source} authenticated={Boolean(room.currentUserProfile)} onDisplayQuestion={onPinHighlight ? (question) => onPinHighlight(`Question de ${question.author.name} — ${question.text}`, 30) : undefined} onClearQuestion={onClearHighlight ? (question) => room.highlightText === `Question de ${question.author.name} — ${question.text}` ? onClearHighlight() : Promise.resolve() : undefined} onOpenMomentVip={(personId) => { setMomentVipPersonId(personId); onMomentVipPersonIdsChange?.([personId]); setActiveTool("loge-dedication"); }} /> : null;
+      case "loge-questions": return state.loge ? <LogeQuestionsPanel loge={state.loge} role={role} accountId={accountId} disabled={controlDisabled} execute={execute} source={room.source} authenticated={Boolean(room.currentUserProfile)} onDisplayQuestion={onPinHighlight ? (question) => onPinHighlight(`Question de ${question.author.name} — ${question.text}`, 30) : undefined} onClearQuestion={onClearHighlight ? (question) => room.highlightText === `Question de ${question.author.name} — ${question.text}` ? onClearHighlight() : Promise.resolve() : undefined} onOpenMomentVip={(personId) => { setMomentVipPersonIds([personId]); onMomentVipPersonIdsChange?.([personId]); setActiveTool("loge-dedication"); }} /> : null;
     }
   })();
 

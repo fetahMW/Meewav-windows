@@ -1732,20 +1732,22 @@
   }
 }
 
-/* Member console: only the cards scroll; search and actions stay in place. */
+/* The member list continues behind the floating dedication actions. */
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment.is-member-console {
+  --vip-accent-rgb: 191, 140, 235;
   overflow: hidden;
   scrollbar-gutter: auto;
-  padding: 10px;
-  background: #000;
+  padding: 8px 6px 0;
+  background: transparent;
 
   & > .vip-moment__layout {
+    position: relative;
     flex: 1 1 0;
     min-height: 0;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr);
     align-items: stretch;
-    gap: 10px;
+    gap: 0;
   }
 
   & > .vip-moment__layout.has-action {
@@ -1761,7 +1763,16 @@
     gap: 12px;
     padding: 0;
     overflow: hidden;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
+
+  & .vip-moment__selection-head { display: flex; align-items: stretch; gap: 8px; min-width: 0; }
+  & .vip-moment__selection-head > .vip-moment__search { flex: 1; min-width: 0; }
+  & .vip-moment__select-all { display: flex; align-items: center; gap: 5px; padding: 0 10px; border: 1px solid #b698d137; border-radius: 10px; background: #ffffff05; color: #d2bfde; font-size: 11px; cursor: pointer; }
+  & .vip-moment__select-all > svg { width: 14px; height: 14px; }
+  & .vip-moment__select-all[aria-pressed="true"] { background: #a374c529; border-color: #c697e77d; }
 
   & .vip-moment__search {
     min-height: 42px;
@@ -1777,12 +1788,15 @@
     min-height: 0;
     max-height: none;
     gap: 8px;
-    padding: 2px 4px 6px 1px;
+    padding: 2px 4px 124px 1px;
     overscroll-behavior-y: contain;
-    scroll-padding-block: 6px;
-    scrollbar-width: none;
+    scroll-padding-block: 6px 124px;
+    background: transparent;
+    scrollbar-width: thin;
+    scrollbar-color: #b197bd transparent;
   }
-  & .vip-moment__fan-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  & .vip-moment__fan-list::-webkit-scrollbar { width: 4px; height: 0; }
+  & .vip-moment__fan-list::-webkit-scrollbar-thumb { background: #b197bd; border-radius: 9px; }
 
   & .vip-moment__fan {
     min-height: 66px;
@@ -1812,72 +1826,76 @@
   & .vip-moment__portrait { display: block; width: 42px; height: 42px; overflow: hidden; border-radius: 50%; }
   & .vip-moment__fan img { width: 42px; height: 42px; border: 0; border-radius: 0; box-shadow: none; }
   & .vip-moment__fan img[src^="/images/tremplin/artists/generated/"] { transform: scale(1.7); transform-origin: 50% 28%; }
-  & .vip-moment__fan em.is-selected { color: #d8e1ee; }
+  & .vip-moment__fan em.is-selected { color: #dfb5ff; }
+  & .vip-moment__fan em svg { width: 17px; height: 17px; }
+  & .vip-moment__fan:disabled { opacity: .45; cursor: default; }
   & .vip-moment__fan strong { font-size: 12px; }
   & .vip-moment__fan small { font-size: 9px; }
   & .vip-moment__fan em { font-size: 8px; }
 
   & .vip-member-actions {
-    position: relative;
+    position: absolute;
+    z-index: 6;
+    inset: auto 4px 6px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     min-width: 0;
-    padding: 5px 12px;
+    padding: 8px 12px;
     border: 1px solid transparent;
-    border-radius: 999px;
-    /* Same floating action bar as the Wave Sas. */
-    background:
-      linear-gradient(115deg, #ffffff07, transparent 46%) padding-box,
-      linear-gradient(180deg, #1c1d246e, #090a106b) padding-box,
-      linear-gradient(110deg, #dce2ee26, #818a9e0b 50%, #c0c6d118) border-box;
+    border-radius: 15px;
+    background: var(--console-nav-face, linear-gradient(#202024,#060609));
     backdrop-filter: blur(20px) saturate(110%);
     -webkit-backdrop-filter: blur(20px) saturate(110%);
-    box-shadow: inset 0 1px #ffffff0e, inset 0 -1px #0006, 0 5px 16px #0006;
+    box-shadow: var(--console-nav-shadow, inset 0 1px #ffffff20, 0 5px 16px #0006);
   }
 
   & .vip-member-actions__recipient {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 6px;
     min-width: 0;
     margin: 0;
-    padding-right: 8px;
-    border-right: 1px solid #ffffff12;
+    padding-right: 0;
+    border-right: 0;
     color: #92908a;
     font-size: 10px;
   }
   & .vip-member-actions__recipient > svg { width: 12px; height: 12px; color: #bd9a58; }
   & .vip-member-actions__recipient > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  & .vip-member-actions__recipient strong { display: block; overflow: hidden; text-overflow: ellipsis; color: #e4e2e8; font-weight: 650; }
-  & .vip-member-actions__recipient small { display: block; overflow: hidden; text-overflow: ellipsis; color: #a69b83; font-size: 8px; }
+  & .vip-member-actions__recipient strong { display: inline; overflow: hidden; text-overflow: ellipsis; color: #e4e2e8; font-size: 11px; font-weight: 550; }
+  & .vip-member-actions__recipient small { display: inline; margin-left: 8px; color: #aaa0b4; font-size: 10px; }
+  & .vip-member-actions__clear { display: grid; place-items: center; flex: 0 0 25px; width: 25px; height: 25px; padding: 4px; border: 0; border-radius: 7px; background: transparent; color: #c8b5d5; cursor: pointer; }
+  & .vip-member-actions__clear > svg { width: 14px; height: 14px; }
+  & .vip-member-actions__clear:hover { background: #ffffff0c; }
   & .vip-member-actions__avatar { width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%; }
   & .vip-member-actions__avatar img { width: 28px; height: 28px; object-fit: cover; }
   & .vip-member-actions__avatar img[src^="/images/tremplin/artists/generated/"] { transform: scale(1.7); transform-origin: 50% 28%; }
 
   & .vip-member-actions__buttons {
     display: grid;
-    grid-template-columns: repeat(3, 34px);
-    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 6px;
   }
 
   & .vip-member-actions__button {
     --moment-tone: 233, 189, 104;
     display: flex;
     min-width: 0;
-    min-height: 34px;
-    flex-direction: row;
+    min-height: 54px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 2px;
+    padding: 6px 3px;
     border: 0;
     border-radius: 6px;
     background: transparent;
     color: #e4e2de;
     box-shadow: none;
-    font-size: 9px;
+    font-size: 10.5px;
     line-height: 1.3;
     font-weight: 600;
     text-align: center;
@@ -1885,9 +1903,9 @@
   }
   & .vip-member-actions__button.is-video { --moment-tone: 91,205,167; }
   & .vip-member-actions__button.is-live { --moment-tone: 145,177,230; }
-  & .vip-member-actions__button > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  & .vip-member-actions__button > svg { box-sizing: content-box; width: 16px; height: 16px; flex: 0 0 16px; padding: 6px; border: 1px solid transparent; border-radius: 8px; background: var(--wave-tool-control-surface); box-shadow: var(--wave-tool-control-shadow); color: #b7b8c2; }
-  & .vip-member-actions__button:hover:not(:disabled) { background: rgba(230,239,255,.065); color: #fff; }
+  & .vip-member-actions__button > span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap; }
+  & .vip-member-actions__button > svg { box-sizing: border-box; width: 20px; height: 20px; flex: 0 0 20px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: #d9b5f3; }
+  & .vip-member-actions__button:hover:not(:disabled) { background: #a578d122; color: #f5e6ff; }
   & .vip-member-actions__button:disabled { opacity: .4; cursor: not-allowed; }
 }
 

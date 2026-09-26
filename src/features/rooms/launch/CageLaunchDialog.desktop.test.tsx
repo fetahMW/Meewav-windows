@@ -21,18 +21,22 @@ beforeEach(() => {
 afterEach(() => { cleanup(); localStorage.clear(); sessionStorage.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 async function prepare() {
   render(<RuntimeProvider><CageLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
-  await screen.findByText('OBS MiWave');
+  await screen.findByText('Studio Meewav');
 }
 const next = () => fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+function choose(label: string, option: string) {
+  fireEvent.click(screen.getByRole('combobox', { name: label }));
+  fireEvent.click(screen.getByRole('option', { name: option }));
+}
 
 it('shows format and rules immediately, preserves them on return, and launches the configured championship', async () => {
   await prepare();
   expect(screen.getByLabelText('Durée d’un passage')).toBeVisible();
-  fireEvent.change(screen.getByLabelText('Format'), { target: { value: 'championship' } });
-  fireEvent.change(screen.getByLabelText('Participants'), { target: { value: '8' } });
+  choose('Format', 'Championnat · classement');
+  choose('Participants', '8 participants');
   fireEvent.change(screen.getByLabelText('Nombre de jours'), { target: { value: '3' } });
-  fireEvent.change(screen.getByLabelText('Qui vote ?'), { target: { value: 'mixed' } });
-  fireEvent.change(screen.getByLabelText('Régie'), { target: { value: 'regisseur' } });
+  choose('Qui vote ?', 'Public et jury · 50 / 50');
+  choose('Régie', 'Avec un régisseur');
   next();
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Retour' }));
@@ -50,11 +54,11 @@ it('shows format and rules immediately, preserves them on return, and launches t
 });
 it.each(['tournament', 'open-mic-battle', 'open-mic'])('prepares %s without a 16-person requirement', async format => {
   await prepare();
-  fireEvent.change(screen.getByLabelText('Format'), { target: { value: format } });
-  fireEvent.change(screen.getByLabelText('Participants'), { target: { value: format === 'open-mic' ? '1' : '4' } });
+  choose('Format', { tournament: 'Tournoi à élimination', 'open-mic-battle': 'Open Mic Battle · le gagnant reste', 'open-mic': 'Open Mic libre · passages individuels' }[format]!);
+  choose('Participants', format === 'open-mic' ? '1 participant' : '4 participants');
   if (format === 'open-mic') {
     next(); expect(screen.getByRole('alert')).toHaveTextContent('retour du public');
-    fireEvent.change(screen.getByLabelText('Après chaque passage'), { target: { value: 'none' } });
+    choose('Après chaque passage', 'Sans vote ni classement');
   }
   next(); expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
 });
@@ -68,7 +72,7 @@ it('checks sources for LIVE, then submits the full configuration', async () => {
   expect(mocks.navigate).toHaveBeenCalledWith('/rooms/cage?room=live-cage');
 });
 it('keeps private preparations retrievable as templates without publishing', async () => {
-  await prepare(); fireEvent.change(screen.getByLabelText('Ouverture'), { target: { value: 'private' } }); next();
+  await prepare(); choose('Ouverture', 'Conserver ma préparation en privé'); next();
   fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' })); next();
   fireEvent.click(screen.getByRole('button', { name: 'Valider mon Studio' }));
   expect(await screen.findByRole('heading', { name: 'Ton Studio est prêt' })).toBeVisible();
@@ -77,7 +81,7 @@ it('keeps private preparations retrievable as templates without publishing', asy
   expect(mocks.live).not.toHaveBeenCalled(); expect(mocks.navigate).not.toHaveBeenCalled();
 });
 it('keeps private settings open when storage fails', async () => {
-  await prepare(); fireEvent.change(screen.getByLabelText('Ouverture'), { target: { value: 'private' } }); next(); next();
+  await prepare(); choose('Ouverture', 'Conserver ma préparation en privé'); next(); next();
   vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new DOMException('quota', 'QuotaExceededError'); });
   fireEvent.click(screen.getByRole('button', { name: 'Valider mon Studio' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('n’a pas pu être enregistrée');

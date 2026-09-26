@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RoomPerson, RoomToolsCommand } from "../roomTools.types";
+import { createRoomToolsFixture } from "../roomTools.fixtures";
 import LogeDedicationPanel from "./LogeDedicationPanel";
 
 const mocks = vi.hoisted(() => ({
@@ -77,10 +78,11 @@ function renderPanel(
   onOpenGuestQueue = vi.fn(),
   runtime: { roomId?: string; source?: "demo" | "live" } = {},
 ) {
-  return { execute, onOpenGuestQueue, ...render(<LogeDedicationPanel waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanIds={initialFanIds} onOpenGuestQueue={onOpenGuestQueue} roomId={runtime.roomId ?? DEMO_ROOM_ID} source={runtime.source ?? "live"} />) };
+  const loge = { ...createRoomToolsFixture("loge", DEMO_ROOM_ID).loge!, moments: [], questions: [] };
+  return { execute, onOpenGuestQueue, ...render(<LogeDedicationPanel loge={loge} waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanIds={initialFanIds} roomId={runtime.roomId ?? DEMO_ROOM_ID} source={runtime.source ?? "live"} />) };
 }
 
-const ACTION_NAMES = [/Dédicace audio pour/i, /Dédicace vidéo pour/i, /Monter avec moi pour/i] as const;
+const ACTION_NAMES = [/Dédicace audio pour/i, /Dédicace vidéo pour/i, /Moment en direct pour/i] as const;
 
 function chooseAction(index: number) {
   fireEvent.click(screen.getByRole("button", { name: ACTION_NAMES[index] }));
@@ -119,29 +121,49 @@ afterEach(() => {
 });
 
 describe("Moment VIP functional flows", () => {
-  it("opens the real guest queue instead of rendering a duplicated directory", () => {
-    const onOpenGuestQueue = vi.fn();
-    renderPanel(WAITING_GUESTS, createExecute(), [], onOpenGuestQueue);
-
-    expect(screen.queryByPlaceholderText(/Rechercher une personne/i)).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: ACTION_NAMES[0] })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: /Ajouter/i }));
-    expect(onOpenGuestQueue).toHaveBeenCalledTimes(1);
+  it("selects several contacts independently and clears the selection without sending", () => {
+    const { execute } = renderPanel(WAITING_GUESTS, createExecute(), []);
+    expect(screen.getByRole("button", { name: "Dédicace audio" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "Sélectionner Lou V." }));
+    fireEvent.click(screen.getByRole("button", { name: "Sélectionner Yanis Flow" }));
+    expect(screen.getByRole("button", { name: "Désélectionner Lou V." })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Dédicace audio pour 2 personnes" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Désélectionner Lou V." }));
+    expect(screen.getByRole("button", { name: "Dédicace audio pour Yanis Flow" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Annuler la sélection" }));
+    expect(screen.getByRole("button", { name: "Dédicace audio" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Sélectionner Yanis Flow" })).toHaveAttribute("aria-pressed", "false");
+    expect(execute).not.toHaveBeenCalled();
+    expect(mocks.sendMessage).not.toHaveBeenCalled();
   });
 
   it("shows a truthful empty state without inventing a fan", () => {
     renderPanel([], createExecute(), []);
 
-    expect(screen.getByText("La file d’attente est vide.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Ajouter/i })).toBeDisabled();
+    expect(screen.getByText("Aucune personne trouvée")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sélectionner les membres affichés" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Dédicace audio" })).toBeDisabled();
     expect(screen.queryByText(/Sofia|Maya|Léo/i)).not.toBeInTheDocument();
   });
 
-  it("rejects an initial person who is not in the guest queue", () => {
+  it("ignores an initial person absent from the available members", () => {
     renderPanel(WAITING_GUESTS, createExecute(), ["question-author-outside-queue"]);
 
-    expect(screen.getByRole("button", { name: /Ajouter/i })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: ACTION_NAMES[0] })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Dédicace audio" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "Annuler la sélection" })).not.toBeInTheDocument();
+  });
+
+  it("limits Tout to the filtered members and preserves the rest of the selection", () => {
+    renderPanel(WAITING_GUESTS, createExecute(), [WAITING_GUESTS[0].id]);
+    const search = screen.getByRole("textbox", { name: "Rechercher une personne" });
+    fireEvent.change(search, { target: { value: "Yanis" } });
+    fireEvent.click(screen.getByRole("button", { name: "Sélectionner les membres affichés" }));
+    expect(screen.getByRole("button", { name: "Dédicace audio pour 2 personnes" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Désélectionner les membres affichés" }));
+    expect(screen.getByRole("button", { name: "Dédicace audio pour Lou V." })).toBeEnabled();
+    fireEvent.change(search, { target: { value: "" } });
+    expect(screen.getByRole("button", { name: "Désélectionner Lou V." })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Sélectionner Yanis Flow" })).toHaveAttribute("aria-pressed", "false");
   });
 
   it("records, previews, resets and sends an audio dedication", async () => {
@@ -182,7 +204,7 @@ describe("Moment VIP functional flows", () => {
     const execute = createExecute();
     renderPanel(WAITING_GUESTS, execute, WAITING_GUESTS.map((guest) => guest.id));
 
-    expect(screen.getByRole("region", { name: "2 sélectionnés" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Créer une dédicace ou un moment en direct" })).toHaveTextContent("2 personnes");
     chooseAction(0);
     await recordReady();
     fireEvent.click(screen.getByRole("button", { name: "Envoyer (2)" }));
@@ -225,6 +247,22 @@ describe("Moment VIP functional flows", () => {
 
     expect(mocks.sendMessage).toHaveBeenCalledTimes(1);
     expect(execute).toHaveBeenCalledTimes(2);
+    expect(execute.mock.calls[1][0].moment.id).toBe(execute.mock.calls[0][0].moment.id);
+  });
+
+  it("retries only the unfinished recipient after partial group delivery", async () => {
+    const execute = vi.fn().mockResolvedValueOnce(undefined).mockRejectedValueOnce(new Error("Synchronisation indisponible")).mockResolvedValue(undefined);
+    renderPanel(VIP_UUID_GUESTS, execute, VIP_UUID_GUESTS.map(guest => guest.id));
+    chooseAction(0);
+    await recordReady();
+    fireEvent.click(screen.getByRole("button", { name: "Envoyer (2)" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("Synchronisation indisponible");
+    fireEvent.click(screen.getByRole("button", { name: "Envoyer (2)" }));
+    await screen.findByText("Dédicace audio envoyée à 2 invités");
+    expect(mocks.sendMessage).toHaveBeenCalledTimes(2);
+    expect(execute).toHaveBeenCalledTimes(3);
+    expect(execute.mock.calls.map(([command]) => command.moment.beneficiary.id)).toEqual([VIP_UUID_GUESTS[0].id, VIP_UUID_GUESTS[1].id, VIP_UUID_GUESTS[1].id]);
+    expect(execute.mock.calls[2][0].moment.id).toBe(execute.mock.calls[1][0].moment.id);
   });
 
   it("persists a demo invitation once, then updates that exact moment on cancellation", async () => {
@@ -380,21 +418,21 @@ describe("Moment VIP functional flows", () => {
       callMode: "public", status: "accepted", invitationId: "invitation-1", routeMode: "preview", isOnAir: false,
     };
     liveCall.outgoingInvitations = [invitation];
-    rerender(<LogeDedicationPanel waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanIds={[recipientId]} roomId={DEMO_ROOM_ID} source="live" />);
+    rerender(<LogeDedicationPanel loge={createRoomToolsFixture("loge", DEMO_ROOM_ID).loge!} waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanId={recipientId} roomId={DEMO_ROOM_ID} source="live" />);
     fireEvent.click(await screen.findByRole("button", { name: "Préparer le direct" }));
     await waitFor(() => expect(liveCall.setCallRoute).toHaveBeenCalledWith("invitation-1", "public"));
     expect(execute).toHaveBeenLastCalledWith({ type: "loge.moment.status", momentId, status: "accepted" });
 
     invitation.routeMode = "public";
     liveCall.mediaSessions = [{ invitationId: "invitation-1", peerPresent: true }];
-    rerender(<LogeDedicationPanel waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanIds={[recipientId]} roomId={DEMO_ROOM_ID} source="live" />);
+    rerender(<LogeDedicationPanel loge={createRoomToolsFixture("loge", DEMO_ROOM_ID).loge!} waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanId={recipientId} roomId={DEMO_ROOM_ID} source="live" />);
     fireEvent.click(await screen.findByRole("button", { name: "Lancer dans la Loge" }));
     await waitFor(() => expect(liveCall.confirmCallOnAir).toHaveBeenCalledWith("invitation-1"));
     expect(execute).toHaveBeenLastCalledWith({ type: "loge.moment.status", momentId, status: "live" });
 
     invitation.isOnAir = true;
     liveCall.onAirInvitationIds.add("invitation-1");
-    rerender(<LogeDedicationPanel waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanIds={[recipientId]} roomId={DEMO_ROOM_ID} source="live" />);
+    rerender(<LogeDedicationPanel loge={createRoomToolsFixture("loge", DEMO_ROOM_ID).loge!} waitingGuests={waitingGuests} disabled={false} execute={execute} initialFanId={recipientId} roomId={DEMO_ROOM_ID} source="live" />);
     fireEvent.click(await screen.findByRole("button", { name: "Mettre fin au moment" }));
     await waitFor(() => expect(liveCall.endCall).toHaveBeenCalledWith("invitation-1"));
     expect(execute).toHaveBeenLastCalledWith({ type: "loge.moment.status", momentId, status: "completed" });

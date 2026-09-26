@@ -47,7 +47,7 @@ function dragTransfer(): DataTransfer {
   } as unknown as DataTransfer;
 }
 
-function renderDesktopGuests({ readyGuest = false, presentation = PLACE_ROOM_PRESENTATION }: { readyGuest?: boolean; presentation?: RoomPresentation } = {}) {
+function renderDesktopGuests({ readyGuest = false, presentation = PLACE_ROOM_PRESENTATION, surface = "guests" }: { readyGuest?: boolean; presentation?: RoomPresentation; surface?: ComponentProps<typeof PlaceStudioPanel>["surface"] } = {}) {
   const room = createPlaceDemoState();
   room.participants = room.participants.map((participant) => participant.id === "guest-b"
     ? { ...participant, status: "onstage" as const }
@@ -57,7 +57,7 @@ function renderDesktopGuests({ readyGuest = false, presentation = PLACE_ROOM_PRE
   const asyncNoop = vi.fn().mockResolvedValue(undefined);
   const props: ComponentProps<typeof PlaceStudioPanel> = {
     room, isHost: true, isGuest: false, canEngage: true, collapsed: false,
-    onCollapsedChange: noop, surface: "guests", onSurface: noop,
+    onCollapsedChange: noop, surface, onSurface: noop,
     mixerView: "volumes", onMixerView: noop, onGain: noop, onMute: noop,
     onCamera: noop, onVocal: noop, onTune: noop, pitchProvider: "none",
     pitchCorrection: { available: false, active: false, adapterId: null, reason: null },
@@ -72,11 +72,52 @@ function renderDesktopGuests({ readyGuest = false, presentation = PLACE_ROOM_PRE
     onRemoveGuest: asyncNoop, onSetQueueOpen: asyncNoop, onOpenProfile: noop,
     onMessageProfile: noop, onCollaborateProfile: noop,
   };
-  render(<MemoryRouter><AuthContext.Provider value={anonymousAuth}><RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider></AuthContext.Provider></MemoryRouter>);
-  return { room, onMoveGuest };
+  const panel = (nextSurface: ComponentProps<typeof PlaceStudioPanel>["surface"]) => <MemoryRouter><AuthContext.Provider value={anonymousAuth}><RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} surface={nextSurface} /></RoomPresentationProvider></AuthContext.Provider></MemoryRouter>;
+  const ui = render(panel(surface));
+  return { room, onMoveGuest, switchSurface: (nextSurface: ComponentProps<typeof PlaceStudioPanel>["surface"]) => ui.rerender(panel(nextSurface)) };
 }
 
 describe("Desktop guest gestures", () => {
+  it.each([
+    PLACE_ROOM_PRESENTATION, LOGE_ROOM_PRESENTATION, WAVE_ROOM_PRESENTATION,
+    CAGE_ROOM_PRESENTATION, CLASSE_ROOM_PRESENTATION, SCENE_ROOM_PRESENTATION,
+  ])("toggles editable guest checkboxes and clears the selection in $label", (presentation) => {
+    renderDesktopGuests({ presentation });
+    const backstage = document.querySelector<HTMLElement>("#place-guests-backstage")!;
+    const first = within(backstage).getByRole("button", { name: "Sélectionner Louna Saphir" });
+    const second = within(backstage).getByRole("button", { name: "Sélectionner Solis Miro" });
+    expect(first.querySelector(".lucide-square")).toBeNull();
+    fireEvent.click(within(backstage).getByRole("button", { name: "Activer la sélection multiple" }));
+    expect(first.querySelector(".lucide-square")).not.toBeNull();
+    fireEvent.click(first);
+    fireEvent.click(second);
+    expect(first).toHaveAttribute("aria-pressed", "true");
+    expect(second).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(within(backstage).getByRole("button", { name: "Annuler la sélection" }));
+    expect(first).toHaveAttribute("aria-pressed", "false");
+    expect(second).toHaveAttribute("aria-pressed", "false");
+    expect(first.querySelector(".lucide-square")).toBeNull();
+    expect(within(backstage).getByRole("button", { name: "Activer la sélection multiple" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it.each([
+    PLACE_ROOM_PRESENTATION, LOGE_ROOM_PRESENTATION, WAVE_ROOM_PRESENTATION,
+    CAGE_ROOM_PRESENTATION, CLASSE_ROOM_PRESENTATION, SCENE_ROOM_PRESENTATION,
+  ])("keeps the same player mounted when switching between mixer and tools in $label", (presentation) => {
+    const { switchSurface } = renderDesktopGuests({ presentation, surface: "mixer" });
+    const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
+    const audio = player.querySelector("audio")!;
+    expect(audio).not.toBeNull();
+    audio.currentTime = 17;
+    switchSurface("tools");
+    expect(screen.getByRole("region", { name: "Lecteur audio du Mixeur" })).toBe(player);
+    expect(player.querySelector("audio")).toBe(audio);
+    expect(audio.currentTime).toBe(17);
+    switchSurface("mixer");
+    expect(screen.getByRole("region", { name: "Lecteur audio du Mixeur" })).toBe(player);
+    expect(audio.currentTime).toBe(17);
+  });
+
   it.each([
     PLACE_ROOM_PRESENTATION,
     LOGE_ROOM_PRESENTATION,

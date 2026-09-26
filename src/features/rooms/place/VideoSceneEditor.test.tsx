@@ -12,16 +12,20 @@ function Editor({ initial }: { initial: VideoScene }) {
     <output data-testid="scene">{JSON.stringify(scene)}</output></>;
 }
 const current = () => JSON.parse(screen.getByTestId('scene').textContent!) as VideoScene;
+function choose(label: string, option: string) {
+  fireEvent.click(screen.getByRole('combobox', { name: label }));
+  fireEvent.click(screen.getByRole('option', { name: option }));
+}
 
 it('assigns a captured window to B without shifting it into the empty A slot', () => {
   render(<Editor initial={{ layout: 'split', sourceIds: [] }} />);
-  fireEvent.change(screen.getByLabelText('Source de la zone B'), { target: { value: 'screen' } });
+  choose('Source de la zone B', 'Fenêtre musique');
   expect(current().sourceIds).toEqual(['', 'screen']);
-  fireEvent.change(screen.getByLabelText('Source de la zone A'), { target: { value: 'cam' } });
+  choose('Source de la zone A', 'Caméra USB');
   expect(current().sourceIds).toEqual(['cam', 'screen']);
   fireEvent.change(screen.getByLabelText('Position du séparateur A B'), { target: { value: '65' } });
   expect(current().splitRatio).toBe(.65);
-  fireEvent.change(screen.getByLabelText('Cadrage de la zone B'), { target: { value: 'cover' } });
+  choose('Cadrage de la zone B', 'Remplir la zone');
   expect(current().fits?.[1]).toBe('cover');
 });
 

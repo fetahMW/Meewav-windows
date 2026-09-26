@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type ReactNode } from "react";
+import { useRef, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 
 export type PlaceToolsSwitchItem<ToolId extends string> = {
   id: ToolId;
@@ -54,7 +54,7 @@ export default function PlaceToolsSwitch<ToolId extends string>({
     buttonRefs.current[targetIndex]?.focus();
   };
 
-  return <nav className="place-tools-console__switch" aria-label={ariaLabel} role={usesTabs ? "tablist" : undefined}>
+  return <nav className="place-tools-console__switch" style={{ "--studio-nav-columns": items.length } as CSSProperties} aria-label={ariaLabel} role={usesTabs ? "tablist" : undefined}>
     {items.map((item, index) => {
       const active = activeTool === item.id;
       return <button
