@@ -25,6 +25,7 @@ import type { GradeLevel } from "../../grades/gradeBadges";
 import { useRoomPresentation } from "../roomPresentation";
 import PlaceGiftDrawOverlay from "./PlaceGiftDrawOverlay";
 import LiveActionBar from "./LiveActionBar";
+import "./place-viewer-player.css";
 import PlaceRemoteAudioRenderer from "./PlaceRemoteAudioRenderer";
 import type { PlaceLiveKitVideoTrack, PlaceRemoteAudioTrack } from "./placeLiveKit.service";
 import type { PlaceRoomState } from "./place.types";
@@ -216,11 +217,13 @@ export default function PlaceStage({
   canDirectProgram = true,
   onParticipantQualityIntent,
 }: PlaceStageProps) {
-  const desktopStage = useRuntime().isDesktop && isHost;
+  const isDesktop = useRuntime().isDesktop;
+  const desktopStage = isDesktop && isHost;
+  const desktopViewer = isDesktop && !isHost && !isGuest;
   const [guestDropActive, setGuestDropActive] = useState(false);
   const roomPresentation = useRoomPresentation();
   const isCageStage = roomPresentation.id === "cage";
-  const ControlBar = isGuest ? "div" : LiveActionBar;
+  const ControlBar = isGuest || desktopViewer ? "div" : LiveActionBar;
   const [fallbackPlaybackMuted, setFallbackPlaybackMuted] = useState(true);
   const waveListening = useWaveViewerListening();
   const playbackMuted = !isHost && !isGuest && waveListening ? waveListening.liveMuted : fallbackPlaybackMuted;
@@ -1105,7 +1108,7 @@ export default function PlaceStage({
 
   return (
     <section
-      className={`place-stage place-stage--director${isCageStage ? " is-cage-stage" : ""}${controlsVisible ? " is-controls-visible" : ""}${isHost ? " is-host-stage" : isGuest ? " is-guest-stage" : " is-viewer-stage"}${guestDropActive ? " is-guest-drop-target" : ""}`}
+      className={`place-stage place-stage--director${desktopViewer ? " has-desktop-viewer-footer" : ""}${isCageStage ? " is-cage-stage" : ""}${controlsVisible ? " is-controls-visible" : ""}${isHost ? " is-host-stage" : isGuest ? " is-guest-stage" : " is-viewer-stage"}${guestDropActive ? " is-guest-drop-target" : ""}`}
       ref={stageRef}
       aria-label="Scène en direct"
       onDragStartCapture={(event) => {
@@ -1364,7 +1367,7 @@ export default function PlaceStage({
         </nav>
       ) : null}
 
-      {!isCageStage ? <div className="place-stage__title">
+      {!isCageStage && !desktopViewer ? <div className="place-stage__title">
         <span>HOST · {room.host.displayName}</span>
         <h1>{room.title}</h1>
         <button type="button" className="place-stage__creator" onClick={() => onOpenProfile(room.host.id)} aria-label={`Voir le profil de ${room.host.displayName}`}>
@@ -1380,6 +1383,10 @@ export default function PlaceStage({
       <PlaceGiftDrawOverlay draw={room.giftDraw} />
 
       <ControlBar className={`place-stage__controls${isHost || isGuest ? " place-stage__controls--host" : ""}`} aria-label={isHost ? "Commandes immédiates du Host" : isGuest ? "Mes commandes immédiates" : "Contrôles du lecteur et interactions"}>
+        {desktopViewer ? <div className="place-viewer-player__identity">
+          <h1 title={room.title}>{room.title}</h1>
+          <button type="button" onClick={() => onOpenProfile(room.host.id)} aria-label={`Voir le profil de ${room.host.displayName}`}>{room.host.displayName}</button>
+        </div> : null}
         {isHost || isGuest ? (
           <>
             <button

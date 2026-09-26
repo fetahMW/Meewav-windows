@@ -217,10 +217,6 @@ function chatAuthorColor(id: string) {
   return CHAT_AUTHOR_COLORS[Math.abs(hash) % CHAT_AUTHOR_COLORS.length];
 }
 
-function messageClock(value: string) {
-  return new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" }).format(new Date(value));
-}
-
 function waitingTime(value: string, now = Date.now()) {
   const startedAt = new Date(value).getTime();
   if (!Number.isFinite(startedAt)) return "1 min";
@@ -816,7 +812,6 @@ function PlaceChat({ room, canEngage, isHost, active, onSend, onPinMessage, onDe
                   </span>
                   {compactChat ? <span className="wave-chat-inline-text"> <MeeWavRichText emoticonSize={34}>{message.content}</MeeWavRichText></span> : null}
                   {authorIsHost ? <span className="place-chat__host-badge" aria-label="Host de la Room">HOST</span> : null}
-                  <time dateTime={message.createdAt}>{messageClock(message.createdAt)}</time>
                   {isHost && !message.id.startsWith("demo-chat-") ? <span className="place-chat__moderation"><button type="button" className="place-chat__pin-action" onClick={() => void onPinMessage(message.id)} aria-label={`Épingler le message de ${authorName}`} title="Épingler"><Pin aria-hidden="true" /></button><button type="button" className="place-chat__delete-action" onClick={() => void onDeleteMessage(message.id)} aria-label={`Supprimer le message de ${authorName}`} title="Supprimer"><Trash2 aria-hidden="true" /></button></span> : null}
                 </header>
                 {!compactChat ? <p><MeeWavRichText emoticonSize={34}>{message.content}</MeeWavRichText></p> : null}

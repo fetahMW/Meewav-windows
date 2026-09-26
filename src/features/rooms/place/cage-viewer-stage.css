@@ -18,7 +18,7 @@
 .cage-viewer-stage .cage-viewer-camera { --fighter-accent: #ff365f; position: relative; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: #151519; }
 .cage-viewer-stage .cage-viewer-camera[data-side="B"] { --fighter-accent: #8d5cff; }
 .cage-viewer-stage .cage-viewer-camera.is-active::after { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: var(--fighter-accent); pointer-events: none; }
-.cage-viewer-stage .place-stage-layout__tile { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; border: 0; border-radius: 0; margin: 0; box-shadow: none; }
+.place-room-shell .place-stage.place-stage--director .cage-viewer-stage .place-stage-layout__tile { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; border: 0; border-radius: 0; margin: 0; box-shadow: none; }
 .cage-viewer-stage .place-camera__media-frame { inset: 0; width: 100%; height: 100%; border-radius: 0; }
 .cage-viewer-stage .place-camera__media { object-fit: contain !important; transform: none !important; width: 100%; height: 100%; }
 .cage-viewer-stage .place-camera__label, .cage-viewer-stage .place-stage-layout__format { display: none; }

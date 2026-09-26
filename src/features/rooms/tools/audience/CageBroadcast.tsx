@@ -53,7 +53,7 @@ export default function CageBroadcast({ state, paused, remaining, error, onPause
     <div className="cb-board">
       <header className="cb-brand">
         <h2>LA CAGE</h2>
-        <p>PARIS VS MARSEILLE <b>● LIVE</b></p>
+        <p>{runtime.config.title} <b>● DÉMO</b></p>
       </header>
       <div className="cb-controls">
         <button onClick={onPause} disabled={completed}>{paused ? <Play /> : <Pause />}{paused ? "Reprendre" : "Pause"}</button>

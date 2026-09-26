@@ -66,8 +66,12 @@ export default function CageViewerStage(props: Props) {
   const openMic = cage.runtime?.config.format === "open-mic" || cage.format === "open-mic";
   const showBattle = !openMic && Boolean(match) && cage.battleStatus !== "incident"
     && !["COMPLETED", "CANCELLED"].includes(cage.runtime?.status ?? "");
-  const performer = openMic ? guests[0] : undefined;
   const allFeeds = [...onStage, ...room.participants];
+  const activeEntry = cage.runtime?.openMicEntries?.find(entry => entry.id === cage.runtime?.activeEntryId && ["ON_STAGE", "IN_PROGRESS", "PAUSED"].includes(entry.status));
+  const performer = openMic ? cage.runtime
+    ? cage.runtime.participants.find(person => person.id === activeEntry?.participantId)?.person
+    : guests[0] && personFor(guests[0]) : undefined;
+  const performerAssignment = performer ? resolveCageFeed(performer, "A", allFeeds, room.source === "demo", cage.demoPresentation?.version === 2) : null;
   const hostPerson: RoomPerson = { id: room.host.id, name: room.host.displayName, avatarUrl: room.host.avatarUrl, role: "Host", camera: host?.isCameraEnabled ? "ready" : "off", microphone: host?.isMicrophoneEnabled ? "ready" : "off" };
   const hostAssignment: FeedAssignment | null = host ? { participant: host, sourceParticipantId: host.id, trackIdentity: host.profile.id, exact: true } : null;
   const activeSide = cage.battleStatus === "live-a" ? "A" : cage.battleStatus === "live-b" ? "B" : null;
@@ -86,7 +90,7 @@ export default function CageViewerStage(props: Props) {
         return <ViewerCamera key={side} {...props} person={person} assignment={assignment} side={side} label={`ARTISTE ${side}`} active={activeSide === side} audible={activeSide === side} artist />;
       })}
       <span className="cage-viewer-stage__versus" aria-hidden="true">VS</span>
-    </div> : performer ? <div className="cage-viewer-stage__fighters is-solo"><ViewerCamera {...props} person={personFor(performer)} assignment={{ participant: performer, sourceParticipantId: performer.id, trackIdentity: performer.profile.id, exact: true }} label="SUR SCÈNE" active audible artist /></div> : null}
+    </div> : performer ? <div className="cage-viewer-stage__fighters is-solo"><ViewerCamera {...props} person={performer} assignment={performerAssignment} label="SUR SCÈNE" active audible artist /></div> : null}
     {showBattle || performer ? <div className="cage-viewer-stage__phase" role="status">
       {interruption ? cage.battleStatus === "paused" ? <Pause /> : <TriangleAlert /> : cage.votingOpen ? <Swords /> : <Radio />}
       <span>{interruption ?? (cage.votingOpen ? "Vote ouvert" : activeSide ? `Passage ${activeSide}` : performer ? "Open Mic" : "La Cage · Face-à-face")}</span>

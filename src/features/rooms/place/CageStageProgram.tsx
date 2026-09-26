@@ -348,16 +348,18 @@ export default function CageStageProgram({ room, isHost, isGuest, canEngage = fa
   const { state, error, busy, execute, canVote } = useRoomTools({ roomType: "cage", roomId: room.id, role, accountId, source: room.source });
   const [preview, setPreview] = useState<CageState | null>(null);
   useEffect(() => {
+    setPreview(null);
     if (room.source !== "demo" || isHost) return;
     const receive = (event: Event) => setPreview((event as CustomEvent<CageState | null>).detail);
     window.addEventListener("cage-viewer-preview-state", receive);
     return () => window.removeEventListener("cage-viewer-preview-state", receive);
-  }, [room.source, isHost]);
+  }, [room.source, room.id, isHost]);
+  const activePreview = room.source === "demo" && !isHost ? preview : null;
   const viewProps = useMemo(() => ({ room, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }), [liveKitVideoTracks, onOpenProfile, onStage, programMuted, playbackVolume, room, useRtcVideo, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed]);
   if (error && !state?.cage) return <EmptyProgram title="Régie vidéo indisponible" detail="La Cage n’a pas pu synchroniser la rencontre active. Réessaie dans quelques instants." />;
   if (!isHost && role !== "regisseur" && state?.cage) return <>
-    <CageViewerStage {...viewProps} canEngage={canEngage && !preview} hostActions={hostActions} cage={preview ?? state.cage} />
-    <CageViewerVote state={state} accountId={accountId} canVote={canEngage && canVote && !preview && room.status === "live"} busy={busy} execute={execute} />
+    <CageViewerStage {...viewProps} canEngage={canEngage && !activePreview} hostActions={hostActions} cage={activePreview ?? state.cage} />
+    <CageViewerVote state={state} accountId={accountId} canVote={canEngage && canVote && !activePreview && room.status === "live"} busy={busy} execute={execute} />
   </>;
-  return <CageStageProgramView {...viewProps} isHost={isHost} cage={preview ?? state?.cage ?? null} />;
+  return <CageStageProgramView {...viewProps} isHost={isHost} cage={activePreview ?? state?.cage ?? null} />;
 }

@@ -311,16 +311,17 @@ describe("PlaceStage — composition et taille indépendantes", () => {
     expect(onProgramLayoutChange).not.toHaveBeenCalled();
   });
 
-  it("le plein écran conserve la composition Ensemble", () => {
+  it("le plein écran conserve la composition initiale", () => {
     const { container, onProgramLayoutChange } = renderStage();
     const stage = container.querySelector(".place-stage") as HTMLElement & { requestFullscreen: () => Promise<void> };
     stage.requestFullscreen = vi.fn().mockResolvedValue(undefined);
+    const initialComposition = stage.dataset.composition;
 
     fireEvent.click(container.querySelector(".place-stage-layout__mode-trigger") as HTMLButtonElement);
     fireEvent.click(screen.getByRole("menuitemradio", { name: "Plein écran" }));
 
     expect(stage.requestFullscreen).toHaveBeenCalledOnce();
-    expect(stage.dataset.composition).toBe("ensemble");
+    expect(stage.dataset.composition).toBe(initialComposition);
     expect(onProgramLayoutChange).not.toHaveBeenCalled();
   });
 

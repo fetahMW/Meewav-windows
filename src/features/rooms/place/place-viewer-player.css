@@ -1,0 +1,101 @@
+/* Desktop viewers get a quiet player footer, separate from the Host console. */
+.place-room-shell .place-stage.place-stage--director.has-desktop-viewer-footer > .place-stage-layout__canvas {
+  bottom: 54px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.place-room-shell .place-stage.place-stage--director.has-desktop-viewer-footer > .place-stage__controls {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  inset: auto 0 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 54px;
+  min-height: 54px;
+  padding: 8px 12px;
+  border: 0;
+  border-top: 1px solid #ffffff0d;
+  border-radius: 0;
+  background: #0b0b0f;
+  box-shadow: none;
+  backdrop-filter: none;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  transition: none;
+}
+.place-room-shell .place-stage.place-stage--director.has-desktop-viewer-footer:not(.is-controls-visible):not(:focus-within) > .place-stage__controls {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.place-room-shell .place-stage.place-stage--director.has-desktop-viewer-footer > .place-stage__controls::before,
+.place-room-shell .place-stage.place-stage--director.has-desktop-viewer-footer > .place-stage__controls::after,
+.place-room-shell .has-desktop-viewer-footer .place-stage__controls-spacer {
+  display: none;
+}
+.place-room-shell .place-stage.place-stage--director.has-desktop-viewer-footer > .place-stage__controls > button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  background: #ffffff05;
+  box-shadow: none;
+  color: #d3d0db;
+  cursor: pointer;
+}
+.place-room-shell .has-desktop-viewer-footer > .place-stage__controls > button::before,
+.place-room-shell .has-desktop-viewer-footer > .place-stage__controls > button::after { display: none; }
+.place-room-shell .has-desktop-viewer-footer > .place-stage__controls > button svg { width: 17px; height: 17px; filter: none; }
+.place-room-shell .has-desktop-viewer-footer .place-viewer-player__identity {
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  justify-items: start;
+  gap: 3px;
+}
+.place-room-shell .has-desktop-viewer-footer .place-viewer-player__identity h1 {
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  color: #eeecf3;
+  font: 600 13px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.place-room-shell .has-desktop-viewer-footer .place-viewer-player__identity button {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  box-shadow: none;
+  color: #aaa5b6;
+  font: 500 10px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.place-room-shell .has-desktop-viewer-footer .place-stage__controls button:focus-visible { outline: 2px solid #bda3e5; outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .place-room-shell .has-desktop-viewer-footer > .place-stage__controls > button { transition: transform 150ms ease; }
+  .place-room-shell .has-desktop-viewer-footer > .place-stage__controls > button:hover { transform: scale(1.04); }
+  .place-room-shell .has-desktop-viewer-footer > .place-stage__controls > button:active { transform: scale(.96); }
+}

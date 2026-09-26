@@ -4,6 +4,7 @@ import { createRoomToolsFixture } from "../tools/roomTools.fixtures";
 import { migrateCageDemoCompetition } from "../tools/cageCompetition";
 import { createPlaceDemoState } from "./place.fixtures";
 import CageViewerStage from "./CageViewerStage";
+import { startCageViewerSimulation } from "../tools/cageViewerSimulation";
 
 function setup() {
   const room = { ...createPlaceDemoState(), source: "live" as const };
@@ -14,6 +15,18 @@ beforeEach(() => { vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValu
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe("Cage iOS viewer stage on Windows", () => {
+  it("shows the official Open Mic performer rather than an unrelated guest", () => {
+    const props = setup();
+    const cage = startCageViewerSimulation("open-mic").cage!;
+    const runtime = cage.runtime!;
+    const entry = runtime.openMicEntries!.find(item => item.id === runtime.activeEntryId)!;
+    const artist = runtime.participants.find(item => item.id === entry.participantId)!.person;
+    const { container } = render(<CageViewerStage {...props} room={{ ...props.room, source: "demo" }} cage={cage} />);
+    const solo = container.querySelector<HTMLElement>(".cage-viewer-stage__fighters.is-solo")!;
+    expect(within(solo).getByRole("button", { name: `Voir le profil de ${artist.name}` })).toBeVisible();
+    expect(solo.querySelector("video")).toHaveAttribute("src", expect.stringContaining("/media/shorts-demo/"));
+    expect(solo.querySelector(".shorts-reaction--like")).toBeNull();
+  });
   it("shows host support only on the solo host and one Golden Like per artist during a duel", () => {
     const props = setup();
     const { rerender, container } = render(<CageViewerStage {...props} cage={{ ...props.cage, currentMatchId: "" }} hostActions={<button>Soutenir le host</button>} />);
