@@ -4,12 +4,12 @@ import { CLASSE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPrese
 import { createPlaceDemoState } from "./place.fixtures";
 import PlaceMixer from "./PlaceMixer";
 
-function Mixer({ classroom }: { classroom: boolean }) {
+function Mixer({ classroom, mode = "host" }: { classroom: boolean; mode?: "host" | "viewer" | "guest" }) {
   const room = createPlaceDemoState();
   const mixer = (
     <PlaceMixer
       room={room}
-      mode="host"
+      mode={mode}
       currentUserId={room.host.id}
       view="volumes"
       onView={vi.fn()}
@@ -52,6 +52,12 @@ afterEach(() => {
 });
 
 describe("PlaceMixer — lecteur repliable de La Classe", () => {
+  it.each(["viewer", "guest"] as const)("n’ajoute aucun lecteur dans le mixeur Classe %s", mode => {
+    const { container } = render(<Mixer classroom mode={mode} />);
+    expect(screen.queryByRole("region", { name: "Lecteur audio du Mixeur" })).not.toBeInTheDocument();
+    expect(container.querySelector(".place-mixer")).not.toHaveClass("has-audio-player");
+    expect(screen.getByRole("button", { name: "Volumes" })).toBeVisible();
+  });
   it("replie uniquement la façade et conserve le lecteur audio monté et actif", () => {
     const { container } = render(<Mixer classroom />);
     const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });

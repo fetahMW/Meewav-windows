@@ -842,7 +842,7 @@ export default function PlaceMixer({
   const roomPresentation = useRoomPresentation();
   const toolsLayout = useStudioToolsLayout();
   const showRoomTools = toolsVisible ?? toolsLayout?.toolsVisible ?? false;
-  const classroomPlayerCollapsible = roomPresentation.id === "classe" || roomPresentation.id === "loge";
+  const classroomPlayerCollapsible = (roomPresentation.id === "classe" && mode === "host") || roomPresentation.id === "loge";
   const [classroomPlayerCollapsed, setClassroomPlayerCollapsed] = useState(false);
   const desktopFx = useRuntime().isDesktop;
   const [fxPro, setFxPro] = useState(false);
@@ -994,6 +994,7 @@ export default function PlaceMixer({
   const listening = useWaveViewerListening();
   const personalMix = useViewerMixer();
   const personalMode = !listenerOnly && mode !== "host" && Boolean(personalMix);
+  const showAudioPlayer = (roomPresentation.id !== "classe" || mode === "host") && (mode !== "guest" || personalMode || listenerOnly);
   const returnChannel: PlaceMixerChannel = { id:"viewer-live-return", label:listenerOnly ? "Direct" : "Retour du live", detail:"Règle le volume de la Room dans votre écoute.", kind:"master", gain:listening?.returnVolume ?? 1, level:room.source === "demo" ? (room.channels.find(channel => channel.kind === "master")?.level ?? 0) * (listening?.returnVolume ?? 1) : 0, isMuted:listening?.returnMuted ?? false, isSolo:false, signalState:"silent", accent:"#a9b6c8" };
   const viewerChannels: PlaceMixerChannel[] = ([
     ["voice", "Ma voix", "Règle votre voix dans votre mix envoyé.", "guest"],
@@ -1090,7 +1091,7 @@ export default function PlaceMixer({
   };
 
   return (
-    <div className={`place-mixer${mode !== "guest" || personalMode || listenerOnly ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
+    <div className={`place-mixer${showAudioPlayer ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
       {toolsLayout ? <><div className="wave-tools-nav" ref={toolsLayout.setNav} hidden={!showRoomTools} /><div className="wave-tools-body" ref={toolsLayout.setBody} hidden={!showRoomTools} /></> : null}
       <nav className={`place-mixer__subnav${mode !== "guest" ? " has-twists" : ""}`} aria-label="Sections du mixeur">
         <button type="button" className={activeView === "volumes" ? "is-active" : ""} onClick={() => onView("volumes")}><SlidersHorizontal aria-hidden="true" /> Volumes</button>
@@ -1099,7 +1100,7 @@ export default function PlaceMixer({
         {mode === "host" ? <button type="button" className={activeView === "time" ? "is-active" : ""} onClick={() => onView("time")}><Timer aria-hidden="true" /> Time</button> : null}
       </nav>
 
-      {mode !== "guest" || personalMode || listenerOnly ? (
+      {showAudioPlayer ? (
         <PlaceMixerAudioPlayer
           key={`${room.id}:${listenerOnly ? "listener" : "performer"}`}
           privateOnly={listenerOnly}
