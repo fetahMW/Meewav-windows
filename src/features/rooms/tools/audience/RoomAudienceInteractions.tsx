@@ -8,6 +8,7 @@ import SceneViewerProgram, { SceneConsoleDialog } from "./SceneViewerProgram";
 import ClassroomMessageBubble from "../classroom/ClassroomMessageBubble";
 import { ClassroomRoster } from "../panels/ClassroomPanel";
 import { MessageCircleMore, LogOut, Armchair } from "lucide-react";
+import CageViewerCompanion from "./CageViewerCompanion";
 import CageViewerShowcase from "./CageViewerShowcase";
 import { cageEvent, cageEntrants } from "../cageTools.domain";
 import {
@@ -652,76 +653,6 @@ export function WaveAudience(props: WaveAudienceProps) {
   return <DemoWaveAudience {...props} />;
 }
 
-function battleStatusLabel(status: CageState["battleStatus"]) {
-  if (status === "ready") return "Prochain round";
-  if (status === "countdown") return "Départ imminent";
-  if (status === "live-a") return "Passage A";
-  if (status === "live-b") return "Passage B";
-  if (status === "paused") return "Pause arbitrage";
-  if (status === "incident") return "Incident technique";
-  return "Round terminé";
-}
-
-function CageCompetitor({ person, side, selected, disabled, onVote }: { person: RoomPerson; side: "A" | "B"; selected: boolean; disabled: boolean; onVote: () => void }) {
-  return <button type="button" className={`room-audience-competitor is-${side.toLowerCase()}${selected ? " is-selected" : ""}`} disabled={disabled} onClick={onVote}><span>{side}</span><img src={person.avatarUrl} alt="" /><strong>{person.name}</strong><small>{person.role}</small>{selected ? <Check /> : null}</button>;
-}
-
-function standings(matches: CageMatch[]) {
-  const table = new Map<string, { person: RoomPerson; played: number; wins: number; losses: number; points: number }>();
-  matches.filter((match) => match.status === "done").forEach((match) => {
-    [match.competitorA, match.competitorB].forEach((person) => { if (!table.has(person.id)) table.set(person.id, { person, played: 0, wins: 0, losses: 0, points: 0 }); });
-    const a = table.get(match.competitorA.id)!; const b = table.get(match.competitorB.id)!; a.played += 1; b.played += 1;
-    if (match.winnerId === a.person.id) { a.wins += 1; a.points += 3; b.losses += 1; } else if (match.winnerId === b.person.id) { b.wins += 1; b.points += 3; a.losses += 1; }
-  });
-  return [...table.values()].sort((a, b) => b.points - a.points || b.wins - a.wins);
-}
-
-function CagePosterCountdown() {
-  const [deadline] = useState(() => Date.now() + 5 * 60_000);
-  const [seconds, setSeconds] = useState(300);
-  useEffect(() => {
-    const tick = () => {
-      const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
-      setSeconds(remaining);
-      if (remaining === 0) window.clearInterval(timer);
-    };
-    const timer = window.setInterval(tick, 1000);
-    return () => window.clearInterval(timer);
-  }, [deadline]);
-  return <div className="cage-poster-countdown"><small>AVANT LE TOURNOI · SIMULATION</small><output role="timer" aria-label="Compte à rebours avant le tournoi">{String(Math.floor(seconds / 60)).padStart(2, "0")}<span>:</span>{String(seconds % 60).padStart(2, "0")}</output>{seconds === 0 ? <small>La régie donne le départ</small> : null}</div>;
-}
-
-function CageAudience({ cage, accountId, canEngage, busy, execute, participation }: { cage: CageState; accountId: string; canEngage: boolean; busy: boolean; execute: (command: RoomToolsCommand) => Promise<unknown>; participation?: ReactNode }) {
-  const match = cage.matches.find((candidate) => candidate.id === cage.currentMatchId);
-  const choice = cage.votes[accountId];
-  const ranking = standings(cage.matches);
-  const secondsLeft = useVoteCountdown(cage.votingOpen, cage.votingEndsAt);
-  const voteOpen = cage.votingOpen && secondsLeft !== 0;
-  if (!match) return <section className="cage-tournament-poster" aria-label="Affiche du tournoi">
-    <img className="cage-tournament-poster__art" src="/images/cage/rap-paris-marseille.png" alt="La Cage — RAP Paris versus Marseille. Le tournoi commence bientôt." />
-    <CagePosterCountdown />
-    <div className="cage-poster-participation">{participation}</div>
-    <small>LA CAGE · TOURNOI LIVE</small>
-    <Trophy className="cage-tournament-poster__trophy" aria-hidden="true" />
-    <h2>{cageEvent(cage).title}</h2>
-    <p>{cageEvent(cage).discipline}</p>
-    <div className="cage-tournament-poster__portraits">{cageEntrants(cage).slice(0, 8).map(person => <img key={person.id} src={person.avatarUrl} alt={person.name} title={person.name} />)}</div>
-    <strong>Un ring. Des talents. Un champion.</strong>
-    <footer><span><i /> En attente du lancement</span><p>Les affiches, le chrono et les votes suivent les annonces de la régie.</p></footer>
-  </section>;
-  return <>
-    {participation}
-    <Section eyebrow="BATTLE EN COURS" title={`${match.competitorA.name} vs ${match.competitorB.name}`} action={<span className="room-audience-live"><i />{battleStatusLabel(cage.battleStatus)}</span>}>
-      <div className="room-audience-battle"><CageCompetitor person={match.competitorA} side="A" selected={choice === "A"} disabled={!canEngage || busy || !voteOpen || Boolean(choice)} onVote={() => void execute({ type: "cage.vote.cast", accountId, choice: "A" })} /><span className="room-audience-versus"><Swords />VS</span><CageCompetitor person={match.competitorB} side="B" selected={choice === "B"} disabled={!canEngage || busy || !voteOpen || Boolean(choice)} onVote={() => void execute({ type: "cage.vote.cast", accountId, choice: "B" })} /></div>
-      <div className={`room-audience-vote-state${voteOpen ? " is-open" : ""}`}>{voteOpen ? <><Vote /><span><strong>{choice ? "Vote enregistré." : "Vote ouvert"}</strong><small>{choice ? `Votre choix : ${choice}` : `Une seule voix par compte${secondsLeft === null ? "." : ` · ${secondsLeft}s`}`}</small></span></> : <><Clock3 /><span><strong>Vote fermé</strong><small>Regardez le passage : le vote apparaîtra au signal de la régie.</small></span></>}</div>
-      {!cage.resultsHidden && match.status === "done" ? <div className="room-audience-result"><Trophy /><span><small>RÉSULTAT RÉVÉLÉ</small><strong>{match.winnerId === match.competitorA.id ? match.competitorA.name : match.competitorB.name}</strong></span><b>{match.scoreA} – {match.scoreB}</b></div> : null}
-    </Section>
-    {cage.format === "championship" ? <Section eyebrow="CHAMPIONNAT" title="Classement"><div className="room-audience-ranking"><header><span>#</span><span>Concurrent</span><span>J</span><span>V</span><span>D</span><span>Pts</span></header>{ranking.map((entry, index) => <div key={entry.person.id}><b>{index + 1}</b><Person person={entry.person} /><span>{entry.played}</span><span>{entry.wins}</span><span>{entry.losses}</span><strong>{entry.points}</strong></div>)}</div></Section> : <Section eyebrow="TOURNOI" title="Bracket public"><div className="room-audience-bracket">{[...new Set(cage.matches.map((candidate) => candidate.round))].map((round) => <section key={round}><strong>{round === Math.max(...cage.matches.map((candidate) => candidate.round)) ? "Finale" : `Tour ${round}`}</strong>{cage.matches.filter((candidate) => candidate.round === round).map((candidate) => <article key={candidate.id} className={candidate.id === cage.currentMatchId ? "is-current" : ""}><span className={candidate.winnerId === candidate.competitorA.id ? "is-winner" : ""}>{candidate.competitorA.name}</span><i>vs</i><span className={candidate.winnerId === candidate.competitorB.id ? "is-winner" : ""}>{candidate.competitorB.name}</span></article>)}</section>)}</div></Section>}
-    <p className="room-audience-privacy"><ShieldCheck /> Les cadeaux et les votes sont totalement indépendants : aucun cadeau ne modifie un score ou une qualification.</p>
-  </>;
-}
-
-
 export default function RoomAudienceInteractions({ roomType, room, isHost, isGuest, canEngage, onContributeFundraiser, cageParticipation, sceneParticipation, onOpenChat, onLeaveRoom, active = true }: RoomAudienceInteractionsProps) {
   const liveCall = useOptionalRoomLiveCall();
   const actorRole = resolveRoomActorRole(roomType, isHost, isGuest, room.currentUserProfile?.role);
@@ -747,14 +678,14 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
   if (!state) return <div className="room-audience-interactions is-loading" role="status"><Sparkles /><span><strong>Préparation de l’expérience publique…</strong><small>Les interactions disponibles vont apparaître sans interrompre le live.</small></span></div>;
 
   return <div className={`room-audience-interactions is-${roomType}`} data-audience-role={audienceRole}><RoomVotePolicyLabel roomId={room.id} source={room.source} accountId={accountId}/>
-    {roomType!=="loge"?<header className="room-audience-interactions__header"><span><Headphones /><span><small>{roomType.toUpperCase()} · EN DIRECT</small><strong>Interactions</strong><em>Ce qui se passe maintenant, et ce que vous pouvez faire.</em></span></span><b>{audienceRoleLabel(audienceRole)}</b></header>:null}
+    {roomType!=="loge" && roomType!=="cage"?<header className="room-audience-interactions__header"><span><Headphones /><span><small>{roomType.toUpperCase()} · EN DIRECT</small><strong>Interactions</strong><em>Ce qui se passe maintenant, et ce que vous pouvez faire.</em></span></span><b>{audienceRoleLabel(audienceRole)}</b></header>:null}
     {error ? <p className="room-audience-error" role="alert">Action impossible : {error.replace(/_/g, " ")}</p> : null}
     <div className="room-audience-interactions__body">
       {!canEngage ? <p className="room-audience-auth"><LockKeyhole /><span><strong>Regardez le live sans interruption.</strong><small>{roomType === "wave" ? "Pour voter ou proposer une boucle, utilisez la connexion MeeWav." : "Pour voter, participer ou envoyer un cadeau, utilisez la connexion MeeWav."}</small></span><a href={existingAuthHref()}>Se connecter</a></p> : null}
       {roomType === "scene" && state.scene ? <SceneAudience canVote={canVote} source={room.source} active={active} participation={sceneParticipation} state={state.scene} accountId={accountId} canEngage={canEngage} busy={busy} execute={execute} onContributeFundraiser={onContributeFundraiser} /> : null}
       {roomType === "classe" && state.classe ? <ClasseAudience visible={active} source={room.source} onOpenChat={onOpenChat} onLeaveRoom={onLeaveRoom} classe={state.classe} role={toolsRole} accountId={accountId} roomId={room.id} canEngage={canEngage} busy={busy} execute={execute} onEndIntervention={() => endClasseAudienceIntervention({ source: room.source, roomId: room.id, accountId, liveCall, execute })} /> : null}
       {roomType === "wave" && state.wave ? <WaveAudience wave={state.wave} source={room.source} roomId={room.id} accountId={accountId} viewer={viewer} canEngage={canEngage} busy={busy} execute={execute} /> : null}
-      {roomType === "cage" && state.cage ? state.cage.runtime?.publicResults ? <CageResults runtime={state.cage.runtime} matchId={state.cage.runtime.publicResults.matchId}/> : state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"}><CageAudience cage={state.cage} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute} participation={cageParticipation} /></CageViewerShowcase> : null}
+      {roomType === "cage" && state.cage ? state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"}><CageViewerCompanion cage={state.cage} participation={cageParticipation} onOpenChat={onOpenChat} /></CageViewerShowcase> : null}
       {roomType === "loge" && state.loge ? <LogeViewer loge={state.loge} accountId={accountId} viewer={viewer} hostName={room.host.displayName} eligible={Boolean(state.audience?.eligible)} canEngage={canEngage} busy={busy} execute={execute} onOpenChat={onOpenChat} preview={isLogePreviewAvailable(state.loge.preview)?<LogePreviewPlayer roomId={room.id} source={room.source} preview={state.loge.preview} available/>:<div className="loge-viewer__waiting"><Headphones/><strong>L’artiste prépare une avant-première</strong><p>Continuez à profiter du live. Le contenu apparaîtra ici à son lancement.</p></div>}/> : null}
     </div>
   </div>;

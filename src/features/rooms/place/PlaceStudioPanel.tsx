@@ -880,13 +880,15 @@ export function PlaceAudienceJourney({
   onAcceptInvitation,
   onDeclineInvitation,
   onMarkReady,
-}: Pick<PlaceStudioPanelProps, "room" | "isGuest" | "onJoinQueue" | "onLeaveQueue" | "onAcceptInvitation" | "onDeclineInvitation" | "onMarkReady">) {
+  onOpenMixer,
+}: Pick<PlaceStudioPanelProps, "room" | "isGuest" | "onJoinQueue" | "onLeaveQueue" | "onAcceptInvitation" | "onDeclineInvitation" | "onMarkReady"> & { onOpenMixer?: () => void }) {
   const presentation = useRoomPresentation();
   const personalMix = useViewerMixer();
   const [audioVerified, setAudioVerified] = useState(false);
   const [previewBusy, setPreviewBusy] = useState(false);
   const previewAttempt = useRef(0);
   const [queueBusy, setQueueBusy] = useState(false);
+  const queuePending = useRef(false);
   const [queueError, setQueueError] = useState<string | null>(null);
   const [previewStream, setPreviewStream] = useState<MediaStream | null>(null);
   const [cameraEnabled, setCameraEnabled] = useState(true);
@@ -898,6 +900,15 @@ export function PlaceAudienceJourney({
       ?? room.queue.find((participant) => participant.profile.id === profileId)
     : undefined;
   const profile = room.currentUserProfile;
+  const runCageJourneyAction = async (action: () => Promise<void>) => {
+    if (queuePending.current || !profile) return;
+    queuePending.current = true;
+    setQueueBusy(true);
+    setQueueError(null);
+    try { await action(); }
+    catch { setQueueError("La demande n’a pas abouti. Réessaie dans un instant."); }
+    finally { queuePending.current = false; setQueueBusy(false); }
+  };
   useEffect(() => () => previewStream?.getTracks().forEach((track) => track.stop()), [previewStream]);
   useEffect(() => { ++previewAttempt.current; return () => { ++previewAttempt.current; }; }, [journey?.status]);
   useEffect(() => {
@@ -953,7 +964,8 @@ export function PlaceAudienceJourney({
         <strong>{title}</strong>
         <small>{description}</small>
       </div>
-      {actionLabel && onAction ? <div className="place-audience-journey__actions"><button type="button" onClick={() => void onAction()}>{actionLabel}</button>{secondaryActionLabel && onSecondaryAction ? <button type="button" className="is-secondary" onClick={() => void onSecondaryAction()}>{secondaryActionLabel}</button> : null}</div> : null}
+      {actionLabel && onAction ? <div className="place-audience-journey__actions"><button type="button" disabled={presentation.id === "cage" && queueBusy} onClick={() => void (presentation.id === "cage" ? runCageJourneyAction(onAction) : onAction())}>{actionLabel}</button>{secondaryActionLabel && onSecondaryAction ? <button type="button" className="is-secondary" disabled={presentation.id === "cage" && queueBusy} onClick={() => void (presentation.id === "cage" ? runCageJourneyAction(onSecondaryAction) : onSecondaryAction())}>{secondaryActionLabel}</button> : null}</div> : null}
+      {presentation.id === "cage" && queueError ? <p role="alert">{queueError}</p> : null}
     </div>
   );
 
@@ -964,12 +976,12 @@ export function PlaceAudienceJourney({
     return renderJourney("is-ready", "COULISSES", "Le Host te prépare", "Tu rejoindras la Scène dès que le Host te fera monter.");
   }
   if (journey?.status === "ready" || isGuest) {
-    return renderJourney("is-ready", "GREEN HOUSE PRÊTE", "Tout est prêt", "Le Host peut maintenant t’ouvrir les Coulisses.");
+    return renderJourney("is-ready", "OBS MEEWAV PRÊT", "Tout est prêt", "Le Host peut maintenant t’ouvrir les Coulisses.");
   }
   if (journey?.status === "accepted") {
     return (
-      <section className="place-green-house" aria-label="Green House privée">
-        <header><span><small>GREEN HOUSE</small><strong>Prépare ton entrée</strong></span><em>Privé</em></header>
+      <section className="place-green-house" aria-label="Préparation privée OBS MeeWav">
+        <header><span><small>OBS MEEWAV</small><strong>Prépare ton entrée</strong></span><em>Privé</em></header>
         {previewStream ? <LocalCameraPreview stream={previewStream} format={format} /> : <button type="button" className="place-green-house__start" disabled={previewBusy} onClick={() => void openPreview()}><Camera aria-hidden="true" /> Activer mon aperçu</button>}
         <div className="place-green-house__controls">
           <button type="button" className={!cameraEnabled ? "is-off" : ""} onClick={() => { const next = !cameraEnabled; setCameraEnabled(next); togglePreviewTrack("video", next); }} aria-pressed={cameraEnabled}>{cameraEnabled ? <Camera aria-hidden="true" /> : <CameraOff aria-hidden="true" />}<span>Caméra</span></button>
@@ -977,13 +989,14 @@ export function PlaceAudienceJourney({
           <button type="button" onClick={() => setFormat((current) => current === "landscape" ? "portrait" : "landscape")} aria-label="Changer le format vidéo">{format === "landscape" ? <RectangleHorizontal aria-hidden="true" /> : <RectangleVertical aria-hidden="true" />}<span>{format === "landscape" ? "16:9" : "9:16"}</span></button>
         </div>
         {personalMix ? <ViewerGreenHouseAudioCheck onVerified={setAudioVerified} /> : null}
+        {presentation.id === "cage" && onOpenMixer ? <button type="button" onClick={onOpenMixer}><SlidersHorizontal aria-hidden="true" />Régler mon OBS MeeWav</button> : null}
         {queueError ? <p role="alert">{queueError}</p> : null}
-        <button type="button" className="place-green-house__ready" onClick={() => void onMarkReady()} disabled={!previewStream || previewBusy || (Boolean(personalMix) && !audioVerified)}>Je suis prêt</button>
+        <button type="button" className="place-green-house__ready" onClick={() => void (presentation.id === "cage" ? runCageJourneyAction(onMarkReady) : onMarkReady())} disabled={!previewStream || previewBusy || queueBusy || (Boolean(personalMix) && !audioVerified)}>Je suis prêt</button>
       </section>
     );
   }
   if (journey?.status === "pending" && journey.invitationId) {
-    return renderJourney("is-invited", "INVITATION REÇUE", "Le Host t’invite", "Accepte pour ouvrir ta Green House privée.", "Accepter", onAcceptInvitation, "Refuser", onDeclineInvitation);
+    return renderJourney("is-invited", "INVITATION REÇUE", "Le Host t’invite", "Accepte pour préparer ton son et ta caméra dans OBS MeeWav.", "Accepter", onAcceptInvitation, "Refuser", onDeclineInvitation);
   }
   if (presentation.id === "place") {
     const queued = Boolean(journey?.queueEntryId) || room.queue.some(entry => entry.profile.id === room.currentUserProfile?.id);
@@ -994,12 +1007,12 @@ export function PlaceAudienceJourney({
     return <div className="scene-queue-action"><span><strong>{queued ? "Vous êtes dans la file" : "Envie de monter sur scène ?"}</strong><small>{queued ? "Le host vous avertira lorsqu’une place se libère." : "Demandez votre passage, le host vous invitera."}</small></span><button type="button" disabled={queueBusy || !room.currentUserProfile} onClick={() => {setQueueBusy(true);setQueueError(null);void (queued ? onLeaveQueue() : onJoinQueue()).catch(() => setQueueError("La demande n’a pas abouti. Réessayez.")).finally(() => setQueueBusy(false));}}>{queueBusy ? "En cours…" : queued ? "Quitter la file" : "Rejoindre la file d’attente"}</button>{queueError ? <p role="alert">{queueError}</p> : null}</div>;
   }
   if (journey?.queueEntryId) {
-    if (presentation.id === "cage") return <div className="cage-audience-apply"><span>Candidature en attente</span><button type="button" onClick={() => void onLeaveQueue()}>Retirer ma candidature</button></div>;
+    if (presentation.id === "cage") return <div className="cage-audience-apply"><span>Candidature en attente</span><button type="button" disabled={queueBusy} onClick={() => void runCageJourneyAction(onLeaveQueue)}>Retirer ma candidature</button>{queueError ? <p role="alert">{queueError}</p> : null}</div>;
     return presentation.id === "wave"
       ? renderJourney("is-queued", "INVITATION SUR SCÈNE", "Invitation sur scène : en attente", "Votre boucle suit un parcours indépendant.", "Quitter la file scène", onLeaveQueue)
       : renderJourney("", "FILE D’ATTENTE", "Ta demande est envoyée", "Tu seras averti si le Host t’invite dans la Green House.", "Quitter", onLeaveQueue);
   }
-  if (presentation.id === "cage" && !isGuest) return <div className="cage-audience-apply"><button type="button" onClick={() => void onJoinQueue()}>Participer au battle</button></div>;
+  if (presentation.id === "cage" && !isGuest) return room.queueOpen ? <div className="cage-audience-apply"><button type="button" disabled={queueBusy || !profile} onClick={() => void runCageJourneyAction(onJoinQueue)}>{queueBusy ? "Envoi…" : "Participer au battle"}</button>{queueError ? <p role="alert">{queueError}</p> : null}</div> : null;
   if (!journey && !isGuest) return null;
   return renderJourney("", "PARTICIPER", "Envie de monter sur Scène ?", "Rejoins la file sans interrompre le live.", "Rejoindre", onJoinQueue);
 }
@@ -1662,9 +1675,12 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
     || actorRole === "teacher"
     || (specializedRoomId === "scene" && actorRole === "artist");
   const showsAudienceInteractions = !hasProductionTools;
+  const cageViewer = specializedRoomId === "cage" && showsAudienceInteractions;
+  const cageParticipant = [...room.participants, ...room.queue].find((person) => person.profile.id === room.currentUserProfile?.id);
+  const cageMixerAvailable = !cageViewer || Boolean(cageParticipant && ["accepted", "ready", "backstage", "onstage"].includes(cageParticipant.status));
   const visibleSurface: PlaceStudioSurface = isHost
     ? surface
-    : surface === "mixer"
+    : surface === "mixer" && cageMixerAvailable
       ? "mixer"
       : surface === "tools"
         ? "tools"
@@ -1697,9 +1713,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
   };
   const availableSurfaces = isHost
     ? SURFACES
-    : isGuest
-      ? SURFACES.filter((item) => item.id === "chat" || item.id === "mixer" || item.id === "tools")
-      : SURFACES.filter((item) => item.id === "chat" || item.id === "mixer" || item.id === "tools");
+    : SURFACES.filter((item) => item.id === "chat" || (item.id === "mixer" && cageMixerAvailable) || item.id === "tools");
   const featureSurfaceLabel = roomPresentation.label.replace(/^La\s+/, "");
   const FeatureIcon = { place: UsersRound, loge: DoorOpen, wave: AudioLines, cage: Radio, classe: GraduationCap, scene: Mic2 }[roomPresentation.id];
   const surfaceLabel = (id: PlaceStudioSurface, label: string) => id === "tools" ? featureSurfaceLabel : label;
@@ -1712,6 +1726,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       onAcceptInvitation={props.onAcceptInvitation}
       onDeclineInvitation={props.onDeclineInvitation}
       onMarkReady={props.onMarkReady}
+      onOpenMixer={() => onSurface("mixer")}
     />
   ) : null;
 
@@ -1736,7 +1751,6 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
             ? <RoomAudienceInteractions active={visibleSurface === "tools" && !collapsed} onOpenChat={() => onSurface("chat")} onLeaveRoom={props.onLeaveRoom}
               roomType={specializedRoomId}
               sceneParticipation={specializedRoomId === "scene" ? audienceJourney : undefined}
-              cageParticipation={specializedRoomId === "cage" ? audienceJourney : undefined}
               room={room}
               isHost={isHost}
               isGuest={isGuest}
@@ -1777,7 +1791,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
   return (
     <aside
       data-switch-version={props.experienceVersion || undefined}
-      className={`place-studio-panel is-shared-studio-chassis is-${visibleSurface} ${isHost ? "is-host-panel" : isGuest ? "is-guest-panel" : "is-viewer-panel"}${collapsed ? " is-collapsed" : ""}${isHost ? " has-tools-deck has-wave-transport" : ""}`}
+      className={`place-studio-panel is-shared-studio-chassis is-${visibleSurface} ${isHost ? "is-host-panel" : isGuest ? "is-guest-panel" : "is-viewer-panel"}${collapsed ? " is-collapsed" : ""}${isHost ? " has-tools-deck has-wave-transport" : ""}${cageViewer ? " has-cage-viewer-participation" : ""}`}
       aria-label={isHost ? "Studio de production de la Room" : isGuest ? "Contrôles personnels, interactions et chat de la Room" : "Chat et interactions publiques de la Room"}
     >
       <div className="place-studio-panel__bar">
@@ -1814,6 +1828,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       >
         {availableSurfaces.map(({ id }) => <section key={id} id={`place-studio-surface-${id}`} className="place-studio-panel__surface" role="tabpanel" aria-labelledby={`place-studio-tab-${id === "mixer" && isHost && visibleSurface === "tools" ? "tools" : id}`} hidden={isHost && (id === "mixer" || id === "tools") ? id === "tools" || !["mixer", "tools"].includes(visibleSurface) : visibleSurface !== id}>{id === "tools" ? <RoomExperienceBoundary version={props.experienceVersion} onChat={()=>onSurface("chat")}>{renderSurface(id)}</RoomExperienceBoundary> : renderSurface(id)}</section>)}
       </div>
+      {cageViewer ? <div className="cage-viewer-participation" hidden={collapsed || visibleSurface === "mixer"}>{audienceJourney}</div> : null}
       {!isHost && specializedRoomId === "wave" ? <WaveViewerListeningBar onOpenWave={() => { onSurface("tools"); props.onCollapsedChange(false); }} /> : null}
     </aside>
   );

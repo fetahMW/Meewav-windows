@@ -33,12 +33,16 @@ import PlaceStageLayoutTile from "./placeStageLayoutTile";
 import { formatCageStageTime, useCageStageClock } from "./cageStageClock";
 import { resolveCageDuelMediaLayout } from "./cageDuelMediaLayout";
 import "./cage-portrait-duel.css";
-import { cageDemoMedia } from "./cageDemoMedia";
+import { resolveCageFeed, type FeedAssignment } from "./cageStageFeeds";
+export { resolveCageFeed } from "./cageStageFeeds";
 import { useRuntime } from "../../../runtime/RuntimeProvider";
+import CageViewerStage from "./CageViewerStage";
+import CageViewerVote from "../tools/audience/CageViewerVote";
 
 export { cageStageRemaining } from "./cageStageClock";
 
-type CageStageProgramProps = {
+export type CageStageProgramProps = {
+  canEngage?: boolean;
   composition?: "ensemble" | "focus" | "solo";
   focusedParticipantId?: string;
   feedSelectionDisabled?: boolean;
@@ -58,13 +62,6 @@ type CageStageProgramProps = {
 type CageStageProgramViewProps = Omit<CageStageProgramProps, "isHost" | "isGuest"> & {
   cage: CageState | null;
   isHost?: boolean;
-};
-
-type FeedAssignment = {
-  participant: PlaceStageParticipant;
-  sourceParticipantId: string;
-  trackIdentity: string;
-  exact: boolean;
 };
 
 const compactMetric = new Intl.NumberFormat("fr-FR", {
@@ -91,45 +88,6 @@ const BATTLE_STATUS_LABEL: Record<CageState["battleStatus"], string> = {
   incident: "INCIDENT",
   done: "MANCHES TERMINÉES",
 };
-
-function virtualParticipant(person: RoomPerson, source: PlaceStageParticipant, preservePoster: boolean): PlaceStageParticipant {
-  return {
-    ...source,
-    id: `cage-feed-${person.id}-${source.id}`,
-    imageUrl: preservePoster ? source.imageUrl : undefined,
-    videoSources: preservePoster
-      ? source.videoSources
-      : source.videoSources?.map((videoSource) => ({ ...videoSource, imageUrl: undefined })),
-    profile: {
-      ...source.profile,
-      id: person.id,
-      displayName: person.name,
-      role: person.role,
-      avatarUrl: person.avatarUrl,
-    },
-    isCameraEnabled: source.isCameraEnabled,
-    isMicrophoneEnabled: source.isMicrophoneEnabled,
-  };
-}
-
-export function resolveCageFeed(
-  person: RoomPerson,
-  side: "A" | "B",
-  onStage: PlaceStageParticipant[],
-  demoFallback: boolean,
-  variedDemo = false,
-): FeedAssignment | null {
-  const exact = onStage.find((participant) => participant.profile.id === person.id || participant.id === person.id);
-  if (!demoFallback) return exact ? { participant: virtualParticipant(person, exact, true), sourceParticipantId: exact.id, trackIdentity: exact.profile.id, exact: true } : null;
-  const media = cageDemoMedia(person.id, side, variedDemo);
-  const source: PlaceStageParticipant = exact ?? {
-    id: `cage-guest-${person.id}`, profile: { id: person.id, displayName: person.name, handle: "", role: person.role, city: "", avatarUrl: person.avatarUrl, gradeLevel: person.gradeLevel ?? 1 },
-    joinedAt: "", status: "onstage", isSpeaking: false, latencyMs: 35,
-    isCameraEnabled: person.camera !== "off", isMicrophoneEnabled: person.microphone !== "off",
-  };
-  return { participant: virtualParticipant(person, { ...source, videoUrl: media.videoUrl, videoSources: [media], imageUrl: undefined }, true),
-    sourceParticipantId: source.id, trackIdentity: person.id, exact: Boolean(exact) };
-}
 
 function activeSide(cage: CageState): "A" | "B" | null {
   if (cage.battleStatus === "live-a") return "A";
@@ -371,10 +329,10 @@ export function CageStageProgramView(props: CageStageProgramViewProps) {
     : <DuelProgram {...props} cage={cage} />;
 }
 
-export default function CageStageProgram({ room, isHost, isGuest, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume = 1, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }: CageStageProgramProps) {
+export default function CageStageProgram({ room, isHost, isGuest, canEngage = false, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume = 1, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }: CageStageProgramProps) {
   const role = resolveRoomActorRole("cage", isHost, isGuest, room.currentUserProfile?.role);
   const accountId = room.currentUserProfile?.id ?? `anonymous-cage-${room.id}`;
-  const { state, error } = useRoomTools({ roomType: "cage", roomId: room.id, role, accountId, source: room.source });
+  const { state, error, busy, execute, canVote } = useRoomTools({ roomType: "cage", roomId: room.id, role, accountId, source: room.source });
   const [preview, setPreview] = useState<CageState | null>(null);
   useEffect(() => {
     if (room.source !== "demo" || isHost) return;
@@ -384,5 +342,9 @@ export default function CageStageProgram({ room, isHost, isGuest, onStage, liveK
   }, [room.source, isHost]);
   const viewProps = useMemo(() => ({ room, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }), [liveKitVideoTracks, onOpenProfile, onStage, programMuted, playbackVolume, room, useRtcVideo, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed]);
   if (error && !state?.cage) return <EmptyProgram title="Régie vidéo indisponible" detail="La Cage n’a pas pu synchroniser la rencontre active. Réessaie dans quelques instants." />;
+  if (!isHost && role !== "regisseur" && state?.cage) return <>
+    <CageViewerStage {...viewProps} cage={preview ?? state.cage} />
+    <CageViewerVote state={state} accountId={accountId} canVote={canEngage && canVote && !preview && room.status === "live"} busy={busy} execute={execute} />
+  </>;
   return <CageStageProgramView {...viewProps} isHost={isHost} cage={preview ?? state?.cage ?? null} />;
 }

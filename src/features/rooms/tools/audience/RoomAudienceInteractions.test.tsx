@@ -72,7 +72,8 @@ describe("RoomAudienceInteractions", () => {
     };
     render(<RoomAudienceInteractions roomType={roomType} room={currentRoom} isHost={false} isGuest={false} canEngage />);
 
-    expect(await screen.findByText(roomType === "loge" ? "Un moment à part." : "Interactions")).toBeVisible();
+    if (roomType === "cage") expect(await screen.findByRole("region", { name: "La Cage · participation" })).toBeVisible();
+    else expect(await screen.findByText(roomType === "loge" ? "Un moment à part." : "Interactions")).toBeVisible();
     expect(screen.queryByText("Envoyer un cadeau")).not.toBeInTheDocument();
     expect(screen.queryByText(currentRoom.poll.question)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Premier titre|Deuxième titre/i })).not.toBeInTheDocument();
@@ -311,13 +312,13 @@ describe("RoomAudienceInteractions", () => {
     expect(execute).not.toHaveBeenCalled();
   });
 
-  it("keeps Cage results hidden, records one ballot and states gift independence", async () => {
+  it("keeps Cage focused on the live, with votes handled by the persistent stage", async () => {
     render(<RoomAudienceInteractions roomType="cage" room={room("audience-cage")} isHost={false} isGuest={false} canEngage />);
-    const choices = await screen.findAllByRole("button", { name: /Rook|Zélie/i });
-    fireEvent.click(choices[0]);
-    await screen.findByText(/Votre choix : A/i);
+    expect(await screen.findByRole("region", { name: "La Cage · participation" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: /Rook|Zélie/i })).not.toBeInTheDocument();
     expect(screen.queryByText("RÉSULTAT RÉVÉLÉ")).not.toBeInTheDocument();
-    expect(screen.getByText(/aucun cadeau ne modifie un score/i)).toBeVisible();
+    expect(screen.queryByText("Bracket public")).not.toBeInTheDocument();
+    expect(screen.queryByText(/SIMULATION|Paris versus Marseille/i)).not.toBeInTheDocument();
   });
 
   it("submits a VIP question and never exposes another member's private moment", async () => {

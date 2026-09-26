@@ -1,0 +1,54 @@
+.cage-viewer-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #0e0e10;
+  color: #fafafa;
+  isolation: isolate;
+}
+.cage-viewer-stage.has-artists { grid-template-rows: minmax(0, 1fr) minmax(74px, .32fr); gap: 8px; padding-bottom: 8px; }
+.cage-viewer-stage__host { min-width: 0; min-height: 0; grid-area: 1 / 1; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host { grid-area: 2 / 1; aspect-ratio: 1; justify-self: center; height: 100%; max-width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #ffffff24; }
+.cage-viewer-stage__fighters { grid-area: 1 / 1; position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; min-height: 0; min-width: 0; }
+.cage-viewer-stage__fighters.is-solo { grid-template-columns: minmax(0, 1fr); }
+.cage-viewer-stage .cage-viewer-camera { --fighter-accent: #ff365f; position: relative; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: #151519; }
+.cage-viewer-stage .cage-viewer-camera[data-side="B"] { --fighter-accent: #8d5cff; }
+.cage-viewer-stage .cage-viewer-camera.is-active::after { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: var(--fighter-accent); pointer-events: none; }
+.cage-viewer-stage .place-stage-layout__tile { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; border: 0; border-radius: 0; margin: 0; box-shadow: none; }
+.cage-viewer-stage .place-camera__media-frame { inset: 0; width: 100%; height: 100%; border-radius: 0; }
+.cage-viewer-stage .place-camera__media { object-fit: contain !important; transform: none !important; width: 100%; height: 100%; }
+.cage-viewer-stage .place-camera__label, .cage-viewer-stage .place-stage-layout__format { display: none; }
+.cage-viewer-camera__fallback { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; height: 100%; padding: 16px 12px 54px; background: linear-gradient(#202024, #141416); text-align: center; }
+.cage-viewer-camera__fallback > svg { width: clamp(36px, 6cqw, 74px); height: clamp(36px, 6cqw, 74px); padding: 12px; background: #ffffff0b; border: 1px solid #ffffff18; border-radius: 50%; color: #dad9df; }
+.cage-viewer-camera__fallback strong { font-size: clamp(11px, 1.5cqw, 16px); font-weight: 600; }
+.cage-viewer-camera__fallback small { font-size: 11px; color: #a4a1af; }
+.cage-viewer-camera__identity { position: absolute; inset: auto 0 0; min-height: 52px; display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; padding: 20px 12px 10px; background: linear-gradient(transparent, #000c); }
+.cage-viewer-camera__identity button { display: flex; gap: 9px; align-items: center; min-width: 0; border: 0; padding: 0; color: #fafafa; background: transparent; text-align: left; cursor: pointer; }
+.cage-viewer-camera__identity button:focus-visible { outline: 2px solid #bc9cff; outline-offset: 4px; }
+.cage-viewer-camera__identity button > img, .cage-viewer-camera__identity button > svg { flex: 0 0 30px; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+.cage-viewer-camera__identity button > span { display: grid; min-width: 0; gap: 3px; }
+.cage-viewer-camera__identity small { color: #b7b2bd; font-size: 9px; letter-spacing: .06em; }
+.cage-viewer-camera__identity strong { font-size: clamp(12px, 1.5cqw, 17px); line-height: 1.2; overflow-wrap: anywhere; }
+.cage-viewer-camera__identity > svg { width: 15px; height: 15px; flex-shrink: 0; }
+.cage-viewer-camera__live { display: flex; align-items: center; gap: 5px; font-size: 10px; white-space: nowrap; }
+.cage-viewer-camera__live i { width: 5px; height: 5px; border-radius: 50%; background: var(--fighter-accent); }
+.cage-viewer-stage__versus { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #ffffff40; border-radius: 50%; background: #17131f; box-shadow: 0 3px 12px #0009; font-size: 12px; font-weight: 800; pointer-events: none; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera { height: 100%; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__fallback { padding: 8px 8px 32px; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__fallback > svg { width: 34px; height: 34px; padding: 8px; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__fallback strong,
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__fallback small,
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__identity img { display: none; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__identity { padding: 10px 7px 6px; min-height: 32px; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__identity small { font-size: 8px; }
+.cage-viewer-stage.has-artists .cage-viewer-stage__host .cage-viewer-camera__identity strong { font-size: 11px; }
+.cage-viewer-stage__phase { position: absolute; bottom: 14px; left: 12px; display: flex; gap: 7px; align-items: center; max-width: calc(50% - 84px); font-size: 11px; color: #c3bccd; }
+.cage-viewer-stage__phase svg { width: 15px; height: 15px; flex-shrink: 0; color: #ff5278; }
+@media (max-width: 600px) {
+  .cage-viewer-camera__identity { padding-inline: 7px; }
+  .cage-viewer-camera__live { display: none; }
+  .cage-viewer-stage__phase { font-size: 10px; max-width: calc(50% - 55px); left: 7px; }
+}

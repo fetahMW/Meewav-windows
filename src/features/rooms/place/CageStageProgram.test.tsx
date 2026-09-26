@@ -1,6 +1,7 @@
 import { act, cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createRoomToolsFixture } from "../tools/roomTools.fixtures";
+import { migrateCageDemoCompetition } from "../tools/cageCompetition";
 import { roomToolsRepository } from "../tools/roomTools.service";
 import type { RoomPerson } from "../tools/roomTools.types";
 import { createPlaceDemoState, PLACE_DEMO_PROFILES } from "./place.fixtures";
@@ -46,7 +47,7 @@ afterEach(() => {
 describe("CageStageProgram", () => {
   it("applies the local return volume to the fallback video", async () => {
     const props=setup();
-    props.cage.currentMatchId=null;
+    props.cage.currentMatchId="";
     const {container,rerender}=render(<CageStageProgramView {...props} liveKitVideoTracks={[]} useRtcVideo={false} programMuted={false} playbackVolume={0.25}/>);
     await waitFor(()=>expect(container.querySelector("video")?.volume).toBe(0.25));
     rerender(<CageStageProgramView {...props} liveKitVideoTracks={[]} useRtcVideo={false} programMuted={false} playbackVolume={0}/>);
@@ -113,15 +114,16 @@ describe("CageStageProgram", () => {
       <CageStageProgramView cage={cage} room={room} onStage={onStage} liveKitVideoTracks={[]} useRtcVideo={false} programMuted onOpenProfile={onOpenProfile} />,
     );
 
-    expect(screen.getByText("VAINQUEUR")).toBeVisible();
+    // The Host program is clean; the revealed verdict and winning feed carry the result.
+    expect(screen.queryByText("VAINQUEUR")).not.toBeInTheDocument();
     expect(screen.getByText("VERDICT RÉVÉLÉ")).toBeVisible();
     const winnerFeed = container.querySelector<HTMLElement>(".cage-stage-feed.is-winner")!;
-    expect(within(winnerFeed).getByText(String(current.scoreB))).toBeVisible();
+    expect(winnerFeed).toHaveAttribute("data-side", "B");
   });
 
   it("uses the exact participant identity before considering the demo fallback", () => {
     const { onStage, cage } = setup();
-    const participant = onStage[1];
+    const participant = onStage[0];
     const person: RoomPerson = {
       ...cage.matches[0].competitorA,
       id: participant.profile.id,
@@ -149,15 +151,24 @@ describe("CageStageProgram", () => {
     const onStage = room.participants.filter((participant) => (
       participant.status === "host" || participant.status === "onstage"
     )) as PlaceStageParticipant[];
+    const fixture = createRoomToolsFixture("cage", room.id);
+    const runtime = migrateCageDemoCompetition(fixture.cage!);
+    fixture.cage!.demoPresentation = { version: 2 };
+    const active = runtime.matches.find(match => match.id === runtime.activeMatchId)!;
+    active.status = "IN_PROGRESS";
+    active.stepIndex = 0;
+    active.timer = { startedAt: new Date().toISOString(), elapsedSeconds: 0 };
+    localStorage.setItem(`meewav:cage:competition:v1:${room.id}`, JSON.stringify(fixture));
     const { container } = render(
       <CageStageProgram room={room} isHost isGuest={false} onStage={onStage} liveKitVideoTracks={[]} useRtcVideo={false} programMuted onOpenProfile={vi.fn()} />,
     );
 
-    await waitFor(() => expect(container.querySelector(".cage-stage-program")).toHaveAttribute("data-active-side", "B"));
-    await act(async () => {
-      await roomToolsRepository.execute("cage", room.id, "host", { type: "cage.battle", status: "live-a" }, room.host.id);
-    });
     await waitFor(() => expect(container.querySelector(".cage-stage-program")).toHaveAttribute("data-active-side", "A"));
+    await act(async () => {
+      const next = await roomToolsRepository.execute("cage", room.id, "host", { type: "cage.competition.command", action: "match.end-step", idempotencyKey: "stage-next-step", expectedRevision: fixture.revision, expectedMatchId: active.id, expectedStepIndex: 0 }, room.host.id);
+      await roomToolsRepository.execute("cage", room.id, "host", { type: "cage.competition.command", action: "match.start", idempotencyKey: "stage-start-next", expectedRevision: next.revision, expectedMatchId: active.id, expectedStepIndex: 1 }, room.host.id);
+    });
+    await waitFor(() => expect(container.querySelector(".cage-stage-program")).toHaveAttribute("data-active-side", "B"));
   });
 });
 
@@ -166,7 +177,7 @@ describe("Cage stage current media state", () => {
   it("uses the admitted participant media flags instead of stale roster metadata", () => {
     const { onStage } = setup();
     const source = { ...onStage[0], isCameraEnabled: true, isMicrophoneEnabled: true };
-    const person: RoomPerson = { id: source.profile.id, name: source.profile.displayName, camera: "off", microphone: "off" };
+    const person: RoomPerson = { id: source.profile.id, name: source.profile.displayName, avatarUrl: source.profile.avatarUrl, role: source.profile.role, camera: "off", microphone: "off" };
     const feed = resolveCageFeed(person, "A", [source], false);
     expect(feed?.participant.isCameraEnabled).toBe(true);
     expect(feed?.participant.isMicrophoneEnabled).toBe(true);

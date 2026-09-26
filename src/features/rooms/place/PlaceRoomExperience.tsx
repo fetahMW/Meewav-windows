@@ -1341,7 +1341,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
       {shellbarVisible ? (
         <PlaceRoomShellHeader
           switchSlot={place.isHost ? <SwitchRoomButton room={room} onQueueOpen={place.setQueueOpen} controller={switching} enabled={room.status === "live"}/> : room.source === "demo" && roomPresentation.id === "place" ? <div className="switch-room-anchor"><button type="button" disabled={switching.busy} onClick={()=>void switching.simulate()}>Simuler un switch</button>{switching.error?<span role="alert">{switching.error}</span>:null}</div> : undefined}
-          centerSlot={roomPresentation.id === "cage" ? <CageShellMatchup room={room} onOpenProfile={onOpenProfile} /> : undefined}
+          centerSlot={roomPresentation.id === "cage" && place.isHost ? <CageShellMatchup room={room} onOpenProfile={onOpenProfile} /> : undefined}
           room={room}
           isHost={place.isHost}
           endConfirmationOpen={endConfirmationOpen}

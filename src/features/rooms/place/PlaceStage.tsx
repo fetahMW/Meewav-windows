@@ -1285,7 +1285,7 @@ export default function PlaceStage({
           ? <ScreenShareMedia stream={screenShareStream} />
           : screenShareOnAir && liveKitScreenShareForPlayback
             ? <LiveKitScreenShareMedia item={liveKitScreenShareForPlayback} />
-            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
+            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} canEngage={canEngage} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
             : orderedParticipants.map((participant, index) => (
           <PlaceStageLayoutTile
             participant={participant}

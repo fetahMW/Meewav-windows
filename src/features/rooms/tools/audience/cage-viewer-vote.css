@@ -1,0 +1,30 @@
+.cage-viewer-vote {
+  width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto;
+  box-sizing: border-box; padding: clamp(20px, 4vw, 32px); margin: auto;
+  border: 1px solid #ffffff24; border-radius: 22px; background: #17131f; color: #faf9fc;
+  box-shadow: 0 24px 100px #0009; font-family: inherit;
+}
+.cage-viewer-vote::backdrop { background: rgb(0 0 0 / .72); backdrop-filter: blur(5px); }
+.cage-viewer-vote header { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #bb94ff; font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+.cage-viewer-vote header span { display: flex; align-items: center; gap: 7px; }
+.cage-viewer-vote header svg { width: 16px; height: 16px; }
+.cage-viewer-vote output { color: #ede5fa; font-size: 14px; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.cage-viewer-vote h2 { margin: 20px 0 8px; font-size: clamp(21px, 3vw, 27px); line-height: 1.2; }
+.cage-viewer-vote > p { color: #b4adbf; font-size: 13px; line-height: 1.5; margin: 0 0 22px; }
+.cage-viewer-vote__choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cage-viewer-vote__choices button { --vote-accent: #ff365f; position: relative; display: flex; align-items: center; flex-direction: column; gap: 8px; padding: 22px 12px 18px; min-width: 0; min-height: 150px; border: 1px solid #ffffff21; border-radius: 15px; background: linear-gradient(#ffffff09, #ffffff03); color: #fff; font: inherit; cursor: pointer; }
+.cage-viewer-vote__choices button[data-side="B"] { --vote-accent: #8d5cff; }
+.cage-viewer-vote__choices button:hover:not(:disabled) { border-color: var(--vote-accent); background: color-mix(in srgb, var(--vote-accent) 12%, #17131f); }
+.cage-viewer-vote__choices img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid #ffffff21; }
+.cage-viewer-vote__side { position: absolute; top: 11px; left: 12px; color: var(--vote-accent); font-size: 12px; font-weight: 800; }
+.cage-viewer-vote__choices strong { font-size: 15px; overflow-wrap: anywhere; text-align: center; }
+.cage-viewer-vote__choices small { font-size: 11px; color: #b4adbf; text-align: center; }
+.cage-viewer-vote__abstain { width: 100%; min-height: 44px; margin-top: 14px; border: 1px solid #ffffff21; border-radius: 12px; background: transparent; color: #e4ddeb; font: inherit; font-size: 13px; cursor: pointer; }
+.cage-viewer-vote__abstain:hover:not(:disabled) { background: #ffffff0b; }
+.cage-viewer-vote button:focus-visible { outline: 2px solid #c7a3ff; outline-offset: 3px; }
+.cage-viewer-vote button:disabled { cursor: wait; opacity: .5; }
+.cage-viewer-vote .cage-viewer-vote__error { margin: 14px 0 0; color: #ff8e9d; }
+.cage-viewer-vote footer { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 20px; font-size: 11px; color: #a29aa9; text-align: center; }
+.cage-viewer-vote footer svg { width: 15px; height: 15px; flex-shrink: 0; }
+.cage-viewer-vote-status { position: absolute; z-index: 2; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 6px; padding: 7px 10px; margin: 0; border-radius: 10px; color: #d3c0f2; background: #17131fea; font-size: 11px; }
+.cage-viewer-vote-status svg { width: 14px; height: 14px; }
