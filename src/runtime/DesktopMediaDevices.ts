@@ -15,6 +15,11 @@ export class DesktopMediaDevices {
   captureMicrophone(deviceId: string) {
     return this.media.getUserMedia({ audio: { deviceId: { exact: deviceId } }, video: false });
   }
+  captureMusic(deviceId: string) {
+    return this.media.getUserMedia({ audio: { deviceId: { exact: deviceId },
+      echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: { ideal: 2 },
+    }, video: false });
+  }
   async requestDeviceLabels(kind: 'audio' | 'video' = 'audio') {
     const stream = await this.media.getUserMedia(kind === 'audio' ? { audio: true } : { video: true });
     try { return await this.enumerate(); }

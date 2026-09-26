@@ -6,9 +6,19 @@ import { validateRoomLaunch } from './roomLaunch';
  * Keep a caller-owned UUID across retries: a lost response must not create another Room.
  */
 export async function createLivePlace(config: RoomLaunchConfiguration, requestId: string) {
+  if (config.roomType !== 'place') throw new Error('Choisis La Place.');
+  return createPublicRoom(config, requestId);
+}
+
+/** iOS CreateRoomView opens an empty Cage before inviting fighters in Coulisses. */
+export async function createLiveCage(config: RoomLaunchConfiguration, requestId: string) {
+  if (config.roomType !== 'cage') throw new Error('Choisis La Cage.');
+  return createPublicRoom(config, requestId);
+}
+
+async function createPublicRoom(config: RoomLaunchConfiguration, requestId: string) {
   const invalid = validateRoomLaunch(config);
   if (invalid) throw new Error(invalid);
-  if (config.roomType !== 'place') throw new Error('La création LIVE de cette expérience attend le raccordement de ses réglages.');
   if (config.access !== 'public') throw new Error('Le contrat LIVE actuel ne garantit pas un accès privé. Choisis Public ou conserve la préparation locale.');
   if (String(config.values.topic || '').trim()) throw new Error('Le sujet séparé n’est pas enregistré par le contrat LIVE actuel. Utilise le champ Présentation.');
   const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -16,10 +26,10 @@ export async function createLivePlace(config: RoomLaunchConfiguration, requestId
   const existing = await supabase.from('rooms_v2').select('id,host_id,type,status').eq('id', requestId).maybeSingle();
   if (existing.error) throw existing.error;
   if (existing.data) {
-    if (existing.data.host_id !== user.id || existing.data.type !== 'place' || existing.data.status !== 'live') throw new Error('Cette demande correspond à une Room indisponible.');
+    if (existing.data.host_id !== user.id || existing.data.type !== config.roomType || existing.data.status !== 'live') throw new Error('Cette demande correspond à une Room indisponible.');
   } else {
     const result = await supabase.from('rooms_v2').insert({
-      id: requestId, host_id: user.id, type: 'place', title: config.title.trim(),
+      id: requestId, host_id: user.id, type: config.roomType, title: config.title.trim(),
       description: config.description.trim() || null, status: 'live',
       livekit_room_name: `room-${requestId}`, queue_open: Boolean(config.values.queueOpen), video_format: 'landscape',
     }).select('id').single();

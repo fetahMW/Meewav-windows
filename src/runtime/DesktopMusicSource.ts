@@ -31,7 +31,12 @@ export class DesktopMusicSource {
     }
   }
 
-  async start() { await this.context.resume(); }
+  async start() {
+    if (this.disposed) throw new Error('Source musicale fermée.');
+    await this.context.resume();
+    if (this.disposed) throw new Error('Source musicale fermée.');
+    this.track.enabled = true;
+  }
   setGain(value: number) {
     if (this.disposed) return;
     this.gain.gain.setTargetAtTime(Math.min(1, Math.max(0, value)), this.context.currentTime, 0.01);

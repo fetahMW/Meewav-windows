@@ -1981,8 +1981,13 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
     const fixture = createRoomToolsFixture(roomType, roomId);
     if (fixture.cage) {
       const session = readCageDemoSession(roomId);
+      const roomLaunch = readRoomLaunchSession(roomId);
       const homeRoom = ROOMS_HOME_CATALOG.find((room) => room.id === roomId && room.roomType === "cage");
-      if (session) initializeCageCompetition(fixture.cage, session.configuration, cageDemoGuestCandidates());
+      if (roomLaunch?.configuration.roomType === 'cage') {
+        initializeCageCompetition(fixture.cage, { ...structuredClone(DEFAULT_CAGE_LAUNCH), title: roomLaunch.configuration.title }, []);
+        delete fixture.cage.demoPresentation;
+      }
+      else if (session) initializeCageCompetition(fixture.cage, session.configuration, cageDemoGuestCandidates());
       else if (homeRoom) initializeCageCompetition(fixture.cage, { ...structuredClone(DEFAULT_CAGE_LAUNCH), title: homeRoom.title }, cageDemoGuestCandidates());
       else if (!initializeCageShowcase(fixture)) migrateCageDemoCompetition(fixture.cage);
       this.persistCage(fixture);

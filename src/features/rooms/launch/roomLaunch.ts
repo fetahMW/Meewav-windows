@@ -2,9 +2,10 @@ import type { RoomsHomeRoomType } from "../home/roomsHome.types";
 import type { RoomToolsState, WaveBaseLoop } from "../tools/roomTools.types";
 import { validateWaveAudienceFile } from "../tools/audience/waveAudienceUpload.service";
 import { isRoomLaunchAudio } from "./roomLaunchAudio";
-export type RoomLaunchType = Exclude<RoomsHomeRoomType, "cage">;
+export type RoomLaunchType = RoomsHomeRoomType;
 type Field = { id: string; label: string; kind: "text" | "number" | "boolean" | "select" | "textarea"; initial: string | number | boolean; options?: string[]; min?: number; max?: number };
 export const ROOM_LAUNCH_SPECS: Record<RoomLaunchType, { label: string; description: string; fields: Field[] }> = {
+  cage: { label: "La Cage", description: "Commence avec ton public, puis invite les combattants depuis les Coulisses.", fields: [] },
   place: { label: "La Place", description: "Un espace de rencontre et de collaboration ouvert au public.", fields: [{ id: "topic", label: "Sujet de la rencontre", kind: "textarea", initial: "" }, { id: "queueOpen", label: "Ouvrir la file de participation", kind: "boolean", initial: true }] },
   loge: { label: "La Loge", description: "Un rendez-vous privilégié avec ton public et tes invités.", fields: [{ id: "previewTitle", label: "Titre de l’avant-première", kind: "text", initial: "" }, { id: "previewDescription", label: "Présentation", kind: "textarea", initial: "" }, { id: "questionsOpen", label: "Accepter les questions", kind: "boolean", initial: true }, { id: "liveOnly", label: "Avant-première réservée au direct", kind: "boolean", initial: true }] },
   wave: {
@@ -21,7 +22,7 @@ export const ROOM_LAUNCH_SPECS: Record<RoomLaunchType, { label: string; descript
 };
 export type RoomLaunchConfiguration = { roomType: RoomLaunchType; title: string; description: string; access: "public" | "invitation" | "members"; values: Record<string, string | boolean | number>; baseLoop?: WaveBaseLoop };
 export type RoomLaunchSession = { id: string; createdAt: string; configuration: RoomLaunchConfiguration };
-export function defaultRoomLaunch(roomType: RoomLaunchType): RoomLaunchConfiguration { return { roomType, title: "", description: "", access: "public", values: Object.fromEntries(ROOM_LAUNCH_SPECS[roomType].fields.map((field) => [field.id, field.initial])) }; }
+export function defaultRoomLaunch(roomType: RoomLaunchType): RoomLaunchConfiguration { return { roomType, title: "", description: "", access: "public", values: roomType === "cage" ? { queueOpen: false } : Object.fromEntries(ROOM_LAUNCH_SPECS[roomType].fields.map((field) => [field.id, field.initial])) }; }
 export function validateRoomLaunchIdentity(config: RoomLaunchConfiguration): string | null {
   if (!config || !ROOM_LAUNCH_SPECS[config.roomType]) return "Choisis un type de room.";
   if (typeof config.title !== "string" || !config.title.trim() || config.title.length > 100) return "Indique un titre de 1 à 100 caractères.";

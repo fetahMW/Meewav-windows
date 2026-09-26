@@ -65,7 +65,10 @@ describe('Preview / Program isolation (unit tests, no hardware)', () => {
     vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
     vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => undefined);
     const program = new RoomVideoProgram();
-    const source = { getTracks: () => [{ stop: sourceStop }] } as unknown as MediaStream;
+    vi.spyOn(HTMLMediaElement.prototype, 'readyState', 'get').mockReturnValue(4);
+    vi.spyOn(HTMLVideoElement.prototype, 'videoWidth', 'get').mockReturnValue(1280);
+    vi.spyOn(HTMLVideoElement.prototype, 'videoHeight', 'get').mockReturnValue(720);
+    const source = { getTracks: () => [{ stop: sourceStop }], getVideoTracks: () => [{ readyState: 'live', muted: false }] } as unknown as MediaStream;
     await program.add('A', source); await program.add('B', source);
     const preview = { layout: 'full' as const, sourceIds: ['A'] };
     program.take(preview);

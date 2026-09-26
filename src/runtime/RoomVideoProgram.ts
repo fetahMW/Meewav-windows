@@ -7,7 +7,7 @@ export class RoomVideoProgram {
   private context: CanvasRenderingContext2D;
   private videos = new Map<string, HTMLVideoElement>();
   private scene: VideoScene = { layout: 'full', sourceIds: [] };
-  private transition: { previous: VideoScene; start: number; duration: number } | null = null;
+  private transition: { previous: HTMLCanvasElement; start: number; duration: number } | null = null;
   private timer: ReturnType<typeof setInterval>;
   private output: MediaStream;
   private disposed = false;
@@ -29,8 +29,13 @@ export class RoomVideoProgram {
     const video = document.createElement('video');
     video.muted = true; video.playsInline = true; video.srcObject = stream;
     this.videos.set(id, video);
-    try { await video.play(); }
-    catch (error) { this.remove(id); throw error; }
+    try {
+      await video.play();
+      if (this.disposed || this.videos.get(id) !== video) throw new DOMException('Source annulée.', 'AbortError');
+    } catch (error) {
+      if (this.videos.get(id) === video) this.remove(id);
+      throw error;
+    }
   }
   remove(id: string) {
     const video = this.videos.get(id);
@@ -46,16 +51,33 @@ export class RoomVideoProgram {
   }
   take(scene: VideoScene, duration = 0) {
     if (this.disposed) throw new Error('Production fermée.');
-    const selected = scene.sourceIds.map((id) => this.videos.has(id) ? id : '');
+    const selected = scene.sourceIds.slice(0, 9).map((id) => this.videos.has(id) ? id : '');
     const frames = sceneFrames(scene);
     const count = selected.slice(0, frames.length).filter(Boolean).length;
     if (!count && !this.isPreview) throw new Error('Choisis une source vidéo disponible.');
     if (!this.isPreview && (scene.layout === 'split' || scene.layout === 'pip') && (!selected[0] || !selected[1])) {
       throw new Error('Ajoute et sélectionne deux sources pour cette disposition.');
     }
-    this.transition = duration > 0 ? { previous: this.program, start: performance.now(), duration } : null;
+    if (!this.isPreview && selected.slice(0, frames.length).some((id) => id && !this.hasSignal(id))) {
+      throw new Error('Une source vidéo a perdu son signal. Remplace-la avant la transition.');
+    }
+    // Snapshot the actual output so a second fade starts at the current frame.
+    // This also avoids redrawing a removed source during the fade.
+    if (duration > 0) {
+      const previous = document.createElement('canvas');
+      previous.width = this.canvas.width; previous.height = this.canvas.height;
+      const context = previous.getContext('2d', { alpha: false });
+      if (!context) throw new Error('Transition vidéo indisponible.');
+      context.drawImage(this.canvas, 0, 0);
+      this.transition = { previous, start: performance.now(), duration: Math.min(duration, 5000) };
+    } else this.transition = null;
     this.scene = copyScene({ ...scene, sourceIds: selected });
     this.draw();
+  }
+  hasSignal(id: string) {
+    const video = this.videos.get(id);
+    return Boolean(video && video.readyState >= 2 && video.videoWidth && video.videoHeight
+      && (video.srcObject as MediaStream | null)?.getVideoTracks().some((track) => track.readyState === 'live' && !track.muted));
   }
   private renderScene(scene: VideoScene, opacity: number) {
     const { context: ctx } = this;
@@ -94,7 +116,7 @@ export class RoomVideoProgram {
     ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 1280, 720);
     if (this.transition) {
       const progress = Math.min(1, (performance.now() - this.transition.start) / this.transition.duration);
-      this.renderScene(this.transition.previous, 1);
+      ctx.drawImage(this.transition.previous, 0, 0);
       this.renderScene(this.scene, progress);
       if (progress >= 1) this.transition = null;
     } else this.renderScene(this.scene, 1);

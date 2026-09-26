@@ -4,21 +4,23 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import RoomLaunchDialog from "./RoomLaunchDialog";
 import { RuntimeProvider } from '../../../runtime/RuntimeProvider';
 
-const mocks = vi.hoisted(() => ({ navigate: vi.fn(), measure: vi.fn(), save: vi.fn(), createLive: vi.fn() }));
+const mocks = vi.hoisted(() => ({ navigate: vi.fn(), measure: vi.fn(), save: vi.fn(), createLive: vi.fn(), createCage: vi.fn() }));
 vi.mock("react-router-dom", async (original) => ({ ...await original<typeof import("react-router-dom")>(), useNavigate: () => mocks.navigate }));
 vi.mock("./CageLaunchDialog", () => ({ default: () => null }));
 vi.mock("../place/GreenHouse", () => ({ default: ({ onReady, readyLabel }: { onReady: () => Promise<void>; readyLabel: string }) => <button onClick={onReady}>{readyLabel}</button> }));
 vi.mock("../tools/waveAudioRules", async (original) => ({ ...await original<typeof import("../tools/waveAudioRules")>(), measureWaveAudio: mocks.measure }));
 vi.mock("./roomLaunchAudio", async (original) => ({ ...await original<typeof import("./roomLaunchAudio")>(), saveRoomLaunchAudio: mocks.save }));
-vi.mock("./createLiveRoom", () => ({ createLivePlace: mocks.createLive }));
-vi.mock("../place/RoomProductionPreparation", () => ({ default: ({ stage, onSetupChange }: { stage: string; onSetupChange: (value: unknown) => void }) =>
-  <div role="region" aria-label="Studio Meewav · préparation de la Room"><span>{stage}</span><button onClick={() => onSetupChange({ cameraId: 'camera-qa', microphoneId: 'micro-qa', cameraIds: ['camera-qa'], layout: 'split' })}>Préparer les sources QA</button></div> }));
+vi.mock("./createLiveRoom", () => ({ createLivePlace: mocks.createLive, createLiveCage: mocks.createCage }));
+vi.mock("../place/RoomProductionPreparation", () => ({ default: ({ stage, onSetupChange, onReadinessChange }: { stage: string; onSetupChange: (value: unknown) => void; onReadinessChange?: (value: unknown) => void }) =>
+  <div role="region" aria-label="Studio Meewav · préparation de la Room"><span>{stage}</span><button onClick={() => { onSetupChange({ cameraId: 'camera-qa', microphoneId: 'micro-qa', cameraIds: ['camera-qa'], layout: 'split' }); onReadinessChange?.({ video: true, microphone: true, music: false, pending: false }); }}>Préparer les sources QA</button></div> }));
 
 beforeEach(() => {
+  vi.clearAllMocks();
   mocks.navigate.mockClear();
   mocks.measure.mockResolvedValue(245);
   mocks.save.mockResolvedValue("/__meewav_room_launch_audio__/test-ui");
   mocks.createLive.mockResolvedValue('a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3');
+  mocks.createCage.mockResolvedValue('a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3');
   vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: vi.fn(() => "blob:test-base"), revokeObjectURL: vi.fn() }));
 });
 afterEach(() => { cleanup(); localStorage.clear(); sessionStorage.clear(); vi.unstubAllGlobals(); });
@@ -134,4 +136,47 @@ it("rejects unreadable audio and blocks launch again when the file is removed", 
   await waitFor(() => expect(screen.getByRole("button", { name: "Continuer" })).toBeEnabled());
   fireEvent.click(screen.getByRole("button", { name: "Retirer la boucle de base" }));
   expect(screen.getByRole("button", { name: "Continuer" })).toBeDisabled();
+});
+
+async function openCageStudio(isPublic = true) {
+  vi.stubGlobal('meewavDesktop', { version: 1, getCapabilities: async () => ({ runtime: 'desktop-windows', screenCapture: true, windowCapture: true, systemAudioCapture: false, professionalAudioDriver: false }) });
+  render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
+  fireEvent.click(screen.getByRole('button', { name: /^La Cage/ }));
+  await screen.findByRole('button', { name: 'Ouvrir le Studio' });
+  fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Cage artistes' } });
+  if (!isPublic) fireEvent.click(screen.getByRole('checkbox', { name: /Room publique/ }));
+  fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le Studio' }));
+  expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
+  expect(screen.queryByLabelText('Format')).not.toBeInTheDocument();
+}
+it('uses the iOS Cage sequence, checks real studio readiness and carries setup into the empty Room', async () => {
+  await openCageStudio();
+  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
+  expect(screen.getByRole('button', { name: 'Ouvrir la Cage' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Retour' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Ouvrir la Cage' }));
+  await waitFor(() => expect(mocks.createCage).toHaveBeenCalledOnce());
+  expect(mocks.createCage).toHaveBeenCalledWith(expect.objectContaining({ roomType: 'cage', title: 'Cage artistes', access: 'public', values: { queueOpen: false } }), expect.any(String));
+  await waitFor(() => expect(mocks.navigate).toHaveBeenCalledWith('/rooms/cage?room=a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3'));
+  expect(sessionStorage.getItem('meewav:room-production-setup:v1:a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3')).toContain('micro-qa');
+});
+it('saves a private Cage studio locally without publishing a public Room', async () => {
+  await openCageStudio(false);
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Valider mon Studio' }));
+  expect(await screen.findByRole('heading', { name: 'Ton Studio est prêt' })).toBeVisible();
+  expect(mocks.createCage).not.toHaveBeenCalled(); expect(mocks.navigate).not.toHaveBeenCalled();
+});
+
+it('keeps a private Cage preparation open if local storage is unavailable', async () => {
+  await openCageStudio(false);
+  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
+  const storage = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new DOMException('quota', 'QuotaExceededError'); });
+  fireEvent.click(screen.getByRole('button', { name: 'Valider mon Studio' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('n’a pas pu être enregistrée');
+  expect(screen.queryByRole('heading', { name: 'Ton Studio est prêt' })).not.toBeInTheDocument();
+  expect(mocks.createCage).not.toHaveBeenCalled(); storage.mockRestore();
 });

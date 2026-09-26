@@ -81,3 +81,12 @@ it.each(["cage", "wave", "classe", "scene", "loge", "place"] as const)("fills %s
     expect(rails.every((rail) => rail.items.length === 10 && rail.items.every((room) => room.roomType === type && (format === "all" || room.mediaFormat === format)))).toBe(true);
   }
 });
+
+it('starts a new Cage without demo fighters or an ongoing competition', async () => {
+  const config = defaultRoomLaunch('cage'); config.title = 'Nouvelle Cage';
+  const state = await new DemoRoomToolsRepository().load('cage', createRoomLaunchSession(config).id);
+  expect(state.cage?.runtime?.participants).toHaveLength(0);
+  expect(state.cage?.matches).toHaveLength(0);
+  expect(state.cage?.votingOpen).toBe(false);
+  expect(state.cage?.demoPresentation).toBeUndefined();
+});
