@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { useRef, type CSSProperties, type KeyboardEvent, type ReactNode, type RefObject } from "react";
 
 export type PlaceToolsSwitchItem<ToolId extends string> = {
   id: ToolId;
@@ -7,9 +7,11 @@ export type PlaceToolsSwitchItem<ToolId extends string> = {
   icon: ReactNode;
   controlsId?: string;
   disabled?: boolean;
+  badge?: number;
+  buttonRef?: RefObject<HTMLButtonElement | null>;
 };
 
-type PlaceToolsSwitchProps<ToolId extends string> = {
+export type PlaceToolsSwitchProps<ToolId extends string> = {
   activeTool: ToolId;
   ariaLabel?: string;
   idPrefix?: string;
@@ -58,7 +60,7 @@ export default function PlaceToolsSwitch<ToolId extends string>({
     {items.map((item, index) => {
       const active = activeTool === item.id;
       return <button
-        ref={(node) => { buttonRefs.current[index] = node; }}
+        ref={(node) => { buttonRefs.current[index] = node; if (item.buttonRef) item.buttonRef.current = node; }}
         type="button"
         key={item.id}
         id={usesTabs ? `${idPrefix}-${item.id}` : undefined}
@@ -76,6 +78,7 @@ export default function PlaceToolsSwitch<ToolId extends string>({
       >
         {item.icon}
         <span>{item.shortLabel ?? item.label}</span>
+        {item.badge ? <b className="place-tools-console__badge">{item.badge}</b> : null}
       </button>;
     })}
   </nav>;

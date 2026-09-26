@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import type { ComponentProps } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createPlaceDemoState } from "./place.fixtures";
+import { createPlaceDemoState, PLACE_DEMO_PROFILES } from "./place.fixtures";
 import PlaceStudioPanel from "./PlaceStudioPanel";
 import { profileGiftDateAfter } from "../../profile/gifts/profileGiftCatalog";
 import type { RoomGiftDelivery, RoomGiftDeliveryInput } from "./place.types";
@@ -18,8 +18,16 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
+function giftRoomFixture() {
+  const room = createPlaceDemoState();
+  const recipient = room.participants.find(participant => participant.profile.id === PLACE_DEMO_PROFILES.guestA.id);
+  if (!recipient) throw new Error("gift_recipient_missing");
+  recipient.status = "onstage";
+  return room;
+}
+
 function renderToolsPanel(
-  room = createPlaceDemoState(),
+  room = giftRoomFixture(),
   overrides: Partial<ComponentProps<typeof PlaceStudioPanel>> = {},
 ) {
   const noop = vi.fn();
@@ -158,7 +166,7 @@ describe("PlaceStudioPanel gift integration", () => {
       sentAt: input.action === "send_now" ? new Date().toISOString() : null,
       createdAt: new Date().toISOString(),
     }));
-    renderToolsPanel(createPlaceDemoState(), { onSubmitGift });
+    renderToolsPanel(giftRoomFixture(), { onSubmitGift });
 
     fireEvent.click(screen.getByRole("tab", { name: "Cadeaux" }));
     const tool = screen.getByRole("region", { name: "Envoyer un cadeau" });
@@ -175,7 +183,8 @@ describe("PlaceStudioPanel gift integration", () => {
       fireEvent.change(within(tool).getByLabelText("Heure"), { target: { value: "19:15" } });
     }
     if (expectedRound) {
-      fireEvent.change(within(tool).getByRole("combobox", { name: "Ronde" }), { target: { value: expectedRound } });
+      fireEvent.click(within(tool).getByRole("combobox", { name: "Ronde" }));
+      fireEvent.click(screen.getByRole("option", { name: expectedRound }));
     }
     fireEvent.click(within(tool.querySelector(".place-gift-tool__footer")!)
       .getByRole("button", { name: submitLabel }));

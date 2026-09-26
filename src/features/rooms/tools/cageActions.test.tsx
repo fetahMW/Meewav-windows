@@ -44,7 +44,8 @@ it("drives pause, incident restart, tie-break, audience display, match results a
   fireEvent.click(screen.getByRole("button", { name: "Reprendre le passage" }));
   await waitFor(() => expect(runtime().matches[0].status).toBe("IN_PROGRESS")); refresh();
   fireEvent.click(screen.getByText("Incident technique"));
-  fireEvent.change(screen.getByLabelText("Participant"), { target: { value: people[0].id } });
+  fireEvent.click(screen.getByRole("combobox", { name: "Participant" }));
+  fireEvent.click(screen.getByRole("option", { name: people[0].person.name }));
   fireEvent.change(screen.getByLabelText("Motif"), { target: { value: "Audio coupé" } });
   fireEvent.click(screen.getByRole("button", { name: "Suspendre pour incident" }));
   await waitFor(() => expect(runtime().matches[0].incident?.reason).toBe("Audio coupé")); refresh();

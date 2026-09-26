@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CAGE_ROOM_PRESENTATION, LOGE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPresentation";
+import { CAGE_ROOM_PRESENTATION, LIVE_ROOM_PRESENTATIONS, LOGE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPresentation";
 import { createPlaceDemoState } from "./place.fixtures";
 import PlaceRoomShellHeader from "./PlaceRoomShellHeader";
 import { placeRoomTime } from "./placeRoomTime";
@@ -12,6 +12,15 @@ afterEach(() => {
 });
 
 describe("PlaceRoomShellHeader", () => {
+  it.each(Object.values(LIVE_ROOM_PRESENTATIONS))("keeps Switch Room immediately before the phone in $label", (presentation) => {
+    render(<RoomPresentationProvider presentation={presentation}><PlaceRoomShellHeader room={createPlaceDemoState()} isHost switchSlot={<button>Switch Room</button>} endConfirmationOpen={false} onEndConfirmationOpen={vi.fn()} onEndRoom={vi.fn()} /></RoomPresentationProvider>);
+    const switchButton = screen.getByRole("button", { name: "Switch Room" });
+    const phone = screen.getByRole("button", { name: "Appeler des contacts dans le live" });
+    expect(switchButton.parentElement).toHaveClass("place-room-shellbar__host-side");
+    expect(switchButton.nextElementSibling?.firstElementChild).toBe(phone.closest(".place-live-call"));
+    expect(screen.getAllByRole("button", { name: "Switch Room" })).toHaveLength(1);
+  });
+
   it("places Cage switch room beside the call button and keeps the mixer timer out of the header", () => {
     placeRoomTime.setEnabled(true);
     const { container } = render(<RoomPresentationProvider presentation={CAGE_ROOM_PRESENTATION}><PlaceRoomShellHeader room={createPlaceDemoState()} isHost switchSlot={<button>Switch Room</button>} endConfirmationOpen={false} onEndConfirmationOpen={vi.fn()} onEndRoom={vi.fn()} /></RoomPresentationProvider>);

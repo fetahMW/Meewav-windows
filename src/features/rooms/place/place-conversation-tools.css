@@ -49,6 +49,9 @@
 .place-conversation__portrait > svg { width: 15px; color: #a5afbd; }
 .place-conversation__portrait.is-large { width: 54px; height: 54px; padding: 3px; box-shadow: inset 0 1px 1px #ffffff29, 0 4px 12px #0009, 0 0 0 4px #ffffff03; }
 .place-conversation__portrait.is-large > svg { width: 24px; height: 24px; }
+.place-conversation__portrait.is-square { width: 72px; height: 72px; aspect-ratio: 1; padding: 0; border-radius: 11px; border-color: #ac84ca42; background: #17131d; box-shadow: inset 0 1px #ffffff12, 0 3px 8px #0004; }
+.place-conversation__portrait.is-square img { display: block; object-position: center; }
+.place-conversation__portrait.is-square > svg { width: 24px; height: 24px; }
 .place-conversation__speaker { display: flex; align-items: center; gap: 13px; min-width: 0; }
 .place-conversation__speaker > span:last-child { display: grid; gap: 5px; min-width: 0; }
 .place-conversation__speaker small { color: #818d9e; font-size: 7px; font-weight: 650; letter-spacing: .13em; }

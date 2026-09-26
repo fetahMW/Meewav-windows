@@ -1,3 +1,5 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
+import RoomViewerToolsLayout from "./RoomViewerToolsLayout";
 import RoomJuryControl from "../voting/RoomJuryControl";
 import "./place-console-refinement.css";
 import { useRoomVotingPolicy } from "../voting/useRoomVotingPolicy";
@@ -1077,7 +1079,7 @@ function PlaceChatWorkspace({
   onStartGiftDraw,
   onCancelGiftDraw,
 }: Pick<PlaceStudioPanelProps, "room" | "isHost" | "canEngage" | "onSendMessage" | "onDeleteMessage" | "chatSocialActions" | "onVotePoll" | "onLaunchPoll" | "onStopPoll" | "onPinMessage" | "onPinHighlight" | "onClearHighlight" | "onSubmitGift" | "onCreateGiftDraw" | "onScheduleGiftDraw" | "onStartGiftDraw" | "onCancelGiftDraw"> & { active: boolean; giftOnly?: boolean; initialGiftRecipientId?: string }) {
-  const compactViewerActions = useRoomPresentation().id === "cage" && Boolean(chatSocialActions);
+  const compactViewerActions = Boolean(chatSocialActions);
   const [previewPoll, setPreviewPoll] = useState<PlaceRoomState["poll"]>(null);
   useEffect(() => {
     const show = () => {
@@ -1264,13 +1266,12 @@ function PlaceChatWorkspace({
       {previewPoll ? <div className="wave-chat-poll-preview"><header><small>SONDAGE · SIMULATION</small><button type="button" aria-label="Fermer le sondage simulé" onClick={() => setPreviewPoll(null)}><X aria-hidden="true" /></button></header><ChatAudiencePoll room={{...room,poll:previewPoll}} canEngage={true} onVotePoll={votePreviewPoll} /><small>Réponses du public simulées · aucun vote réel envoyé</small></div> : null}
       <div className="place-chat-workspace__body">
         {compactViewerActions ? <header className="place-chat-workspace__engagement">
-          <h3 className="place-chat-workspace__host-support"><span>Soutenir le host</span><small>Likes, Golden Likes et dons pour {room.host.displayName}</small></h3>
+          <h3 className="place-chat-workspace__host-support"><span>Soutenir le host</span><small>Likes · Golden Likes · dons</small></h3>
           {chatSocialActions}
         </header> : null}
         <section className="place-chat-workspace__panel" aria-label="Messages du chat">
           <PlaceChat room={room} canEngage={canEngage} isHost={false} active={active} onSend={onSendMessage} onPinMessage={onPinMessage} onDeleteMessage={onDeleteMessage} />
         </section>
-        {compactViewerActions ? null : chatSocialActions}
       </div>
     </div>
   );
@@ -1591,9 +1592,9 @@ function PlaceGuests({
           {desktopGuests ? renderQuickSelection("backstage", selectableBackstage, selectedBackstageIds) : null}
         </div>
         {mediaControls.isHost && juryOnly ? <div className="room-jury-voting">
-          <label>Vote du live<select aria-label="Qui vote dans cet espace live ?" value={juryPolicy.mode} disabled={juryBusy || Boolean(juryLoadError)} onChange={event => void saveJury([...juryPolicy.jurorIds], event.target.value as RoomVoteMode)}>
+          <label>Vote du live<MeewavSelect aria-label="Qui vote dans cet espace live ?" value={juryPolicy.mode} disabled={juryBusy || Boolean(juryLoadError)} onChange={event => void saveJury([...juryPolicy.jurorIds], event.target.value as RoomVoteMode)}>
             {(Object.keys(VOTE_MODE_LABELS) as RoomVoteMode[]).map(mode => <option key={mode} value={mode} disabled={mode !== "public" && !juryPolicy.jurorIds.length}>{VOTE_MODE_LABELS[mode]}</option>)}
-          </select></label>
+          </MeewavSelect></label>
           {juryPolicy.mode === "mixed" ? <small>50 % public · 50 % jury</small> : null}
         </div> : null}
         {juryError || juryLoadError ? <p className="room-jury-error" role="alert">{juryError || juryLoadError}</p> : null}
@@ -1770,7 +1771,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       case "tools":
         if (props.experienceWaiting) return props.experienceWaiting;
         if (showsAudienceInteractions) {
-          return <>
+          return <RoomViewerToolsLayout>
             {specializedRoomId && specializedRoomId !== "cage" && specializedRoomId !== "classe" && specializedRoomId !== "scene" ? audienceJourney : null}
             {specializedRoomId === "wave" ? <WaveViewerPanel room={room} canEngage={canEngage} /> : specializedRoomId
             ? <RoomAudienceInteractions active={visibleSurface === "tools" && !collapsed} onOpenChat={() => onSurface("chat")} onOpenMixer={() => onSurface("mixer")} onLeaveRoom={props.onLeaveRoom}
@@ -1782,7 +1783,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
               canEngage={canEngage}
             />
             : <PlaceConversationTools participation={audienceJourney} room={room} isHost={isHost} canEngage={canEngage} visible={visibleSurface === "tools" && !collapsed} />}
-          </>;
+          </RoomViewerToolsLayout>;
         }
         return specializedRoomId
           ? <RoomToolsShell

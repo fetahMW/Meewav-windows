@@ -1,4 +1,5 @@
 import CageStageProgram from "./CageStageProgram";
+import RoomViewerHostSupport from "./RoomViewerHostSupport";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { SyntheticEvent, PointerEvent, ReactNode } from "react";
@@ -65,7 +66,7 @@ type PlaceStageProps = {
   isHost: boolean;
   isGuest: boolean;
   canEngage: boolean;
-  cageHostActions?: ReactNode;
+  hostSocialActions?: ReactNode;
   currentUserId?: string | null;
   hostCameraEnabled: boolean;
   hostMicrophoneEnabled: boolean;
@@ -183,7 +184,7 @@ export default function PlaceStage({
   isHost,
   isGuest,
   canEngage,
-  cageHostActions,
+  hostSocialActions,
   currentUserId,
   hostCameraEnabled,
   hostMicrophoneEnabled,
@@ -1287,10 +1288,11 @@ export default function PlaceStage({
           ? <ScreenShareMedia stream={screenShareStream} />
           : screenShareOnAir && liveKitScreenShareForPlayback
             ? <LiveKitScreenShareMedia item={liveKitScreenShareForPlayback} />
-            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} canEngage={canEngage} hostActions={cageHostActions} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
+            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} canEngage={canEngage} hostActions={hostSocialActions} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
             : orderedParticipants.map((participant, index) => (
           <PlaceStageLayoutTile
             participant={participant}
+            viewerActions={!isHost && participant.profile.id === room.host.id && hostSocialActions ? <RoomViewerHostSupport>{hostSocialActions}</RoomViewerHostSupport> : undefined}
             dragRoomId={desktopStage && participant.status === "onstage" ? room.id : undefined}
             key={participant.id}
             formatIndex={orderedParticipants.slice(0, index + 1).filter((candidate) => (

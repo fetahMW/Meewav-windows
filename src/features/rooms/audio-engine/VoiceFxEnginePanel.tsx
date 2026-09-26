@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Activity,
@@ -447,24 +448,24 @@ export function VoiceFxEnginePanel({ className = "", title = "Effets voix" }: Vo
       <div className="voice-fx-engine__controls" aria-disabled={!controlsReady}>
         <label className="voice-fx-engine__field voice-fx-engine__field--wide">
           <span>Preset MeeWav</span>
-          <select value={draft.preset} disabled={!controlsReady} onChange={(event) => applyPreset(event.currentTarget.value as VoicePreset)}>
+          <MeewavSelect value={draft.preset} disabled={!controlsReady} onChange={(event) => applyPreset(event.currentTarget.value as VoicePreset)}>
             {(Object.keys(PRESETS) as VoicePreset[]).map((preset) => <option key={preset}>{preset}</option>)}
-          </select>
+          </MeewavSelect>
           <small>Configuration MeeWav, indépendante des presets propriétaires.</small>
         </label>
 
         <label className="voice-fx-engine__field">
           <span>Tonalité</span>
-          <select value={draft.key} disabled={!controlsReady} onChange={(event) => { void persist({ ...draft, key: event.currentTarget.value as MusicalKey }); }}>
+          <MeewavSelect value={draft.key} disabled={!controlsReady} onChange={(event) => { void persist({ ...draft, key: event.currentTarget.value as MusicalKey }); }}>
             {MUSICAL_KEYS.map((key) => <option key={key}>{key}</option>)}
-          </select>
+          </MeewavSelect>
         </label>
 
         <label className="voice-fx-engine__field">
           <span>Gamme</span>
-          <select value={draft.scale} disabled={!controlsReady} onChange={(event) => { void persist({ ...draft, scale: event.currentTarget.value as MusicalScale }); }}>
+          <MeewavSelect value={draft.scale} disabled={!controlsReady} onChange={(event) => { void persist({ ...draft, scale: event.currentTarget.value as MusicalScale }); }}>
             {(Object.keys(SCALE_LABELS) as MusicalScale[]).map((scale) => <option key={scale} value={scale}>{SCALE_LABELS[scale]}</option>)}
-          </select>
+          </MeewavSelect>
         </label>
 
         <div className="voice-fx-engine__ranges">

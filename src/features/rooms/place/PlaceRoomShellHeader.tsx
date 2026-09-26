@@ -90,7 +90,7 @@ export default function PlaceRoomShellHeader({
           <strong>{formatLiveDuration(room.startedAt, now)}</strong>
         </output>
         {<span className="place-room-shellbar__audience-group"><output className="wave-viewer-audience is-header-audience" aria-label={`Audience actuelle : ${formatCompactMetric(room.participantsCount)}`} title="Audience actuelle"><Eye aria-hidden="true" />{formatCompactMetric(room.participantsCount)}</output></span>}
-        {!isHost || roomPresentation.id !== "cage" ? switchSlot : null}
+        {!isHost ? switchSlot : null}
       </div>
 
       <div className="place-room-shellbar__broadcast-cluster" data-countdown-active={!centerSlot && countdown.enabled && roomPresentation.id !== "cage" ? "true" : "false"} data-matchup-active={centerSlot ? "true" : "false"}>
@@ -106,7 +106,7 @@ export default function PlaceRoomShellHeader({
       {!isHost ? <RoomViewerHost room={room} onLeaveRoom={onLeaveRoom} /> : null}
       {isHost ? (
         <div className="place-room-shellbar__host-side">
-          {roomPresentation.id === "cage" ? switchSlot : null}
+          {switchSlot}
           <div className="place-room-shellbar__counters is-host" aria-label="Indicateurs de la Room">
             <PlaceLiveCallPicker roomId={room.id} onLiveCallRequest={onLiveCallRequest} />
             <output className="is-support" title="Soutien reçu">

@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import { useWaveTransport, useWaveTransportState } from "../../wave-transport/WaveTransportProvider";
 import {
   CircleCheck,
@@ -145,10 +146,10 @@ export function WaveLaunchSetup({ role, roomId, source, accountId, disabled, exe
       <div className="wave-collective-setup__grid">
         <label>NOM DE LA WAVE<input maxLength={80} value={waveTitle} onChange={(event) => setWaveTitle(event.currentTarget.value)} placeholder="Midnight Metro" /></label>
         <label>NOM DE LA BOUCLE<input maxLength={80} value={baseTitle} onChange={(event) => setBaseTitle(event.currentTarget.value)} placeholder="Base 01" /></label>
-        <label>TYPE<select value={kind} onChange={(event) => setKind(event.currentTarget.value)}><option>Drums</option><option>A cappella</option><option>Mélodie</option><option>Basse</option><option>Ambiance</option><option>Autre</option></select></label>
-        <label>FORMAT<select value={format} onChange={(event) => setFormat(event.currentTarget.value === "long" ? "long" : Number(event.currentTarget.value) as 4 | 8 | 16)}><option value={4}>4 mesures</option><option value={8}>8 mesures</option><option value={16}>16 mesures</option><option value="long">Son long · durée entière</option></select></label>
+        <label>TYPE<MeewavSelect value={kind} onChange={(event) => setKind(event.currentTarget.value)}><option>Drums</option><option>A cappella</option><option>Mélodie</option><option>Basse</option><option>Ambiance</option><option>Autre</option></MeewavSelect></label>
+        <label>FORMAT<MeewavSelect value={format} onChange={(event) => setFormat(event.currentTarget.value === "long" ? "long" : Number(event.currentTarget.value) as 4 | 8 | 16)}><option value={4}>4 mesures</option><option value={8}>8 mesures</option><option value={16}>16 mesures</option><option value="long">Son long · durée entière</option></MeewavSelect></label>
         <label>BPM<input type="number" min={40} max={260} value={bpm} onChange={(event) => setBpm(Number(event.currentTarget.value))} /></label>
-        <label>TONALITÉ / GAMME<select value={key} onChange={(event) => setKey(event.currentTarget.value)}><option>Sans tonalité</option><option>Do majeur</option><option>Do mineur</option><option>Ré majeur</option><option>Ré mineur</option><option>Mi majeur</option><option>Mi mineur</option><option>Fa majeur</option><option>Fa mineur</option><option>F# mineur</option><option>Sol majeur</option><option>Sol mineur</option><option>La majeur</option><option>La mineur</option><option>Si majeur</option><option>Si mineur</option></select></label>
+        <label>TONALITÉ / GAMME<MeewavSelect value={key} onChange={(event) => setKey(event.currentTarget.value)}><option>Sans tonalité</option><option>Do majeur</option><option>Do mineur</option><option>Ré majeur</option><option>Ré mineur</option><option>Mi majeur</option><option>Mi mineur</option><option>Fa majeur</option><option>Fa mineur</option><option>F# mineur</option><option>Sol majeur</option><option>Sol mineur</option><option>La majeur</option><option>La mineur</option><option>Si majeur</option><option>Si mineur</option></MeewavSelect></label>
       </div>
       <p><LockKeyhole /> Cette base, le BPM et la tonalité deviennent la référence verrouillée de toute la Wave.</p>
       {error ? <ToolNotice tone="warning">{error}</ToolNotice> : null}
@@ -432,7 +433,7 @@ export default function WaveOrchestraPanel(props: WaveOrchestraPanelProps) {
       <section role="dialog" aria-modal="true" aria-labelledby="wave-replacement-title">
         <header><span><Swords /><strong id="wave-replacement-title">Duel de remplacement</strong></span><button type="button" aria-label="Fermer" onClick={() => setReplacementLayerId(null)}><X /></button></header>
         <p>Vous êtes sur le point de remettre cette piste en jeu. Choisissez la boucle qui l’affrontera lors du prochain vote public.</p>
-        <label>Boucle candidate<select aria-label="Boucle candidate au remplacement" value={replacementSubmissionId} onChange={(event) => setReplacementSubmissionId(event.currentTarget.value)}>{replacementCandidates.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.contributor.name} · {candidate.instrument} · {candidate.bpm} BPM</option>)}</select></label>
+        <label>Boucle candidate<MeewavSelect aria-label="Boucle candidate au remplacement" value={replacementSubmissionId} onChange={(event) => setReplacementSubmissionId(event.currentTarget.value)}>{replacementCandidates.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.contributor.name} · {candidate.instrument} · {candidate.bpm} BPM</option>)}</MeewavSelect></label>
         <footer><button type="button" onClick={() => setReplacementLayerId(null)}>Annuler</button><button type="button" className="is-primary" disabled={!replacementSubmissionId} onClick={() => void launchReplacement()}><Swords />Soumettre au vote</button></footer>
       </section>
     </div> : null}

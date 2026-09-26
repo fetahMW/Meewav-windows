@@ -56,7 +56,6 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   & .wave-tools-nav .place-tools-console__switch::before { content: none; }
   & .wave-tools-nav .place-tools-console__switch > button { min-width: 0; color: #bfb6c8; }
   & .wave-tools-nav .place-tools-console__switch > button.is-active { color: #f5e9ff; }
-  & .wave-tools-nav .place-tools-console__switch > button > span { font-size: 11px; }
 }
 @container (max-width: 480px) {
   .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch > button { gap: 0; padding-inline: 3px; }
@@ -69,6 +68,6 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   row-gap: 0;
   padding-top: 0;
   & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; height: 42px; min-height: 42px; max-height: 42px; margin: 0; padding: 0 6px; align-content: center; }
-  & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; height: 42px; min-height: 42px; margin: 0; padding: 4px 8px; }
+  & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; height: 42px; min-height: 42px; margin: 0; padding: 0 8px; align-content: center; }
   & > .place-mixer-audio { top: auto; margin-top: 0; }
 }

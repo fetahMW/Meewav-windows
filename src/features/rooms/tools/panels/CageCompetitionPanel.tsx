@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import {
   ArrowDown,
   ArrowRight,
@@ -313,7 +314,7 @@ export default function CageCompetitionPanel({ cage, disabled, execute, onOpenBa
               })}
             </div>
           </fieldset>
-          <label><span>Statut</span><select aria-label="Statut de l'événement" value={eventStatus} disabled={disabled} onChange={(event) => changeEventStatus(event.currentTarget.value as CageEventStatus)}>{EVENT_STATUS_OPTIONS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}</select></label>
+          <label><span>Statut</span><MeewavSelect aria-label="Statut de l'événement" value={eventStatus} disabled={disabled} onChange={(event) => changeEventStatus(event.currentTarget.value as CageEventStatus)}>{EVENT_STATUS_OPTIONS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}</MeewavSelect></label>
         </div>
         <footer>
           <span>Le seeding organise le départ. Les résultats restent souverains.</span>
@@ -376,7 +377,7 @@ export default function CageCompetitionPanel({ cage, disabled, execute, onOpenBa
                 <b>{String(index + 1).padStart(2, "0")}</b><span><ProfileAvatar person={person} /></span><span><strong>{person?.name ?? `Participant ${index + 1}`}</strong><small>{person?.role ?? "Open mic"}</small></span>
               </button>
               <span className="cage-open-mic__slot"><Clock3 aria-hidden="true" /><strong>{entry.slot}</strong>{typeof entry.score === "number" ? <small>{entry.score} pts</small> : null}</span>
-              <select aria-label={`Statut de ${person?.name ?? `participant ${index + 1}`}`} value={entry.status} disabled={disabled} onChange={(event) => void execute({ type: "cage.open-mic.status", entryId: entry.id, status: event.currentTarget.value as CageOpenMicEntryStatus })}>{OPEN_MIC_STATUS_OPTIONS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}</select>
+              <MeewavSelect aria-label={`Statut de ${person?.name ?? `participant ${index + 1}`}`} value={entry.status} disabled={disabled} onChange={(event) => void execute({ type: "cage.open-mic.status", entryId: entry.id, status: event.currentTarget.value as CageOpenMicEntryStatus })}>{OPEN_MIC_STATUS_OPTIONS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}</MeewavSelect>
               <span className="cage-open-mic__actions">
                 <button type="button" aria-label={`Monter ${person?.name ?? `participant ${index + 1}`}`} disabled={disabled || index === 0} onClick={() => void execute({ type: "cage.open-mic.move", entryId: entry.id, direction: -1 })}><ArrowUp aria-hidden="true" /></button>
                 <button type="button" aria-label={`Descendre ${person?.name ?? `participant ${index + 1}`}`} disabled={disabled || index === openMicEntries.length - 1} onClick={() => void execute({ type: "cage.open-mic.move", entryId: entry.id, direction: 1 })}><ArrowDown aria-hidden="true" /></button>

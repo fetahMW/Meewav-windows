@@ -11,6 +11,11 @@ import { AuthContext, type AuthContextValue } from "../../auth/AuthContext";
 
 beforeEach(() => {
   Object.defineProperty(HTMLElement.prototype, "scrollTo", { configurable: true, value: vi.fn() });
+  vi.stubGlobal("ResizeObserver", class { observe() {} unobserve() {} disconnect() {} });
+  Object.defineProperties(HTMLDialogElement.prototype, {
+    showModal: { configurable: true, value(this: HTMLDialogElement) { this.setAttribute("open", ""); } },
+    close: { configurable: true, value(this: HTMLDialogElement) { this.removeAttribute("open"); } },
+  });
 });
 
 const anonymousAuth: AuthContextValue = {
@@ -22,6 +27,7 @@ const anonymousAuth: AuthContextValue = {
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 function chatProps(overrides: Partial<ComponentProps<typeof PlaceStudioPanel>> = {}) {
@@ -83,6 +89,7 @@ function chatProps(overrides: Partial<ComponentProps<typeof PlaceStudioPanel>> =
 describe("Shared Room Chat actions", () => {
   it.each(Object.values(LIVE_ROOM_PRESENTATIONS))("provides the same functional Chat rail in $label", async (presentation) => {
     const props = chatProps();
+    props.room.highlightText = "Message mis en avant pour le test";
     render(<MemoryRouter><AuthContext.Provider value={anonymousAuth}><RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider></AuthContext.Provider></MemoryRouter>);
     const tools = screen.getByRole("tablist", { name: "Actions du Chat" });
     expect(tools.parentElement).toHaveClass("place-chat-workspace");
@@ -92,8 +99,8 @@ describe("Shared Room Chat actions", () => {
     expect(await screen.findByRole("tabpanel", { name: "Sondages" })).toBeVisible();
     fireEvent.click(within(tools).getByRole("tab", { name: "Épinglés" }));
     expect(screen.getByRole("tabpanel", { name: "Épinglés" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Désépingler" })).toBeEnabled();
-    fireEvent.click(screen.getByRole("button", { name: "Désépingler" }));
+    expect(screen.getByRole("button", { name: "Retirer de l’écran" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Retirer de l’écran" }));
     await waitFor(() => expect(props.onClearHighlight).toHaveBeenCalledOnce());
   });
 
@@ -138,29 +145,37 @@ describe("Shared Room Chat actions", () => {
     expect(screen.queryByRole("button", { name: /Tirage/ })).not.toBeInTheDocument();
   });
 
-  it.each([LIVE_ROOM_PRESENTATIONS.place, LIVE_ROOM_PRESENTATIONS.cage])("garde les interactions viewer fonctionnelles dans le Chat de $label", (presentation) => {
+  it.each(Object.values(LIVE_ROOM_PRESENTATIONS))("garde les interactions viewer fonctionnelles dans le Chat de $label", async (presentation) => {
     const room = createPlaceDemoState();
+    room.currentUserHasLiked = false;
+    room.currentUserHasGoldenLiked = false;
     const onLike = vi.fn();
+    const onGoldenLike = vi.fn(async () => true);
     const onOpenDonation = vi.fn();
     const props = chatProps({
       room,
       isHost: false,
       chatSocialActions: <PlaceChatSocialActions room={room} canEngage goldenUnavailable={false}
-        onLike={onLike} onGoldenLike={async () => true} onOpenDonation={onOpenDonation} />,
+        onLike={onLike} onGoldenLike={onGoldenLike} onOpenDonation={onOpenDonation} />,
     });
     render(<RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider>);
-    const social = screen.getByRole("complementary", { name: "Interactions du live" });
+    const social = screen.getByRole("complementary", { name: `Soutenir ${room.host.displayName}, host du live` });
     expect(social.closest(".place-chat-workspace__body")).not.toBeNull();
-    if (presentation.id === "cage") {
-      expect(social.parentElement).toHaveClass("place-chat-workspace__engagement");
-      expect(within(social.parentElement!).getByRole("heading", { name: "Discussion" })).toBeVisible();
-    } else {
-      expect(social.closest(".place-chat-workspace__engagement")).toBeNull();
-    }
+    const engagement = social.parentElement!;
+    expect(engagement).toHaveClass("place-chat-workspace__engagement");
+    const heading = within(engagement).getByRole("heading", { name: /Soutenir le host/ });
+    expect(heading.children).toHaveLength(2);
+    expect(heading.children[0]).toHaveTextContent("Soutenir le host");
+    expect(heading.children[1]).toHaveTextContent("Likes · Golden Likes · dons");
+    expect(engagement.nextElementSibling).toHaveAttribute("aria-label", "Messages du chat");
     fireEvent.click(within(social).getByRole("button", { name: /Aimer la vidéo/ }));
     expect(onLike).toHaveBeenCalledOnce();
     fireEvent.click(within(social).getByRole("button", { name: /Ouvrir la bourse/ }));
     expect(onOpenDonation).toHaveBeenCalledOnce();
     expect(within(social).getByRole("button", { name: /Offrir un Golden Like/ })).toBeEnabled();
+    fireEvent.click(within(social).getByRole("button", { name: /Offrir un Golden Like/ }));
+    const confirmation = screen.getByRole("dialog", { name: `Offrir ton Golden Like à ${room.host.displayName} ?` });
+    fireEvent.click(within(confirmation).getByRole("button", { name: "Offrir mon Golden Like" }));
+    await waitFor(() => expect(onGoldenLike).toHaveBeenCalledOnce());
   });
 });

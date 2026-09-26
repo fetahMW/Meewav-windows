@@ -1360,7 +1360,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           {roomPresentation.id === "cage" && place.isHost ? <CageMixerTimer /> : null}
           <PlaceStage
             room={room}
-            cageHostActions={hostSocialActions}
+            hostSocialActions={hostSocialActions}
             isHost={place.isHost}
             isGuest={place.isGuest}
             canEngage={place.canEngage}

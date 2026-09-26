@@ -2,13 +2,17 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import { StrictMode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createRoomToolsFixture } from "../roomTools.fixtures";
+import { integrateAcceptedWaveSubmission } from "../waveTools.domain";
 import type { RoomToolsCommand } from "../roomTools.types";
 import WaveOrchestraPanel from "./WaveOrchestraPanel";
 
 function waveFixture() {
   const wave = createRoomToolsFixture("wave").wave;
   if (!wave) throw new Error("fixture_wave_missing");
-  return structuredClone(wave);
+  const fixture = structuredClone(wave);
+  fixture.submissions.filter(submission => submission.status === "accepted")
+    .forEach(submission => integrateAcceptedWaveSubmission(fixture, submission));
+  return fixture;
 }
 
 function renderPanel(execute = vi.fn<(command: RoomToolsCommand) => Promise<unknown>>().mockResolvedValue(undefined)) {
@@ -40,15 +44,15 @@ describe("WaveOrchestraPanel — Beat collectif", () => {
     expect(container.querySelector(".wave-collective__waveform")).not.toBeInTheDocument();
     expect(container.querySelector(".wave-collective__waveform-empty")).not.toBeInTheDocument();
 
-    const baseTrack = screen.getByRole("article", { name: "BeatKing" });
-    const guitarTrack = screen.getByRole("article", { name: "Koda Sweep" });
+    const baseTrack = screen.getByRole("article", { name: "Sélectionner BeatKing" });
+    const guitarTrack = screen.getByRole("article", { name: "Sélectionner Koda Sweep" });
     expect(within(guitarTrack).getByText("Koda Sweep")).toBeInTheDocument();
     expect(within(guitarTrack).getByText("GUITARE")).toBeInTheDocument();
     expect(within(baseTrack).getByRole("button", { name: "Muet Metro Base 08" })).toBeInTheDocument();
     expect(within(baseTrack).getByRole("button", { name: "Solo Metro Base 08" })).toBeInTheDocument();
-    expect(within(baseTrack).getByRole("button", { name: "Duel de remplacement pour Metro Base 08" })).toBeDisabled();
-    expect(within(baseTrack).getByRole("slider", { name: "Volume Metro Base 08" })).toBeInTheDocument();
-    expect(within(baseTrack).getAllByRole("button")).toHaveLength(3);
+    expect(screen.getByRole("button", { name: "Duel de remplacement pour Metro Base 08" })).toBeDisabled();
+    expect(screen.getByRole("slider", { name: "Volume Metro Base 08" })).toBeInTheDocument();
+    expect(within(baseTrack).getByRole("button", { name: "Écouter BeatKing" })).toBeInTheDocument();
   });
 
   it("exposes global play/pause semantics and per-layer commands", () => {
@@ -61,19 +65,24 @@ describe("WaveOrchestraPanel — Beat collectif", () => {
     rerender(<WaveOrchestraPanel wave={playingWave} role="host" roomId="demo-wave" source="demo" accountId="host" disabled={false} execute={execute} />);
     expect(screen.getByRole("button", { name: "Mettre toutes les pistes en pause" })).toBeInTheDocument();
 
-    const guitarTrack = screen.getByRole("article", { name: "Koda Sweep" });
+    const guitarTrack = screen.getByRole("article", { name: "Sélectionner Koda Sweep" });
     fireEvent.click(within(guitarTrack).getByRole("button", { name: "Solo Blue Guitar" }));
-    expect(execute).toHaveBeenCalledWith({ type: "wave.sequence.layer", layerId: "layer-5", patch: { solo: true } });
+    expect(execute).toHaveBeenCalledWith({ type: "wave.sequence.layer", layerId: "layer-loop-5", patch: { solo: true } });
     fireEvent.click(within(guitarTrack).getByRole("button", { name: "Muet Blue Guitar" }));
-    expect(execute).toHaveBeenCalledWith({ type: "wave.sequence.layer", layerId: "layer-5", patch: { muted: true } });
+    expect(execute).toHaveBeenCalledWith({ type: "wave.sequence.layer", layerId: "layer-loop-5", patch: { muted: true } });
   });
 
-  it("keeps one volume per track plus progress and master volume in the bottom player", () => {
+  it("edits the selected track volume while preserving the previous track volume", () => {
     renderPanel();
-    expect(screen.getAllByRole("slider")).toHaveLength(waveFixture().layers.length + 2);
+    expect(screen.getAllByRole("slider")).toHaveLength(3);
+    const base = screen.getByRole("slider", { name: "Volume Metro Base 08" });
+    fireEvent.change(base, { target: { value: "44" } });
+    fireEvent.click(screen.getByRole("article", { name: "Sélectionner Koda Sweep" }));
     const guitar = screen.getByRole("slider", { name: "Volume Blue Guitar" });
     fireEvent.change(guitar, { target: { value: "67" } });
     expect(guitar).toHaveValue("67");
+    fireEvent.click(screen.getByRole("article", { name: "Sélectionner BeatKing" }));
+    expect(screen.getByRole("slider", { name: "Volume Metro Base 08" })).toHaveValue("44");
   });
 
   it("starts every audible demo layer immediately from the global Play gesture", () => {
@@ -99,7 +108,7 @@ describe("WaveOrchestraPanel — Beat collectif", () => {
 
   it("identifies the base loop with the actual Room host", () => {
     render(<WaveOrchestraPanel wave={waveFixture()} role="host" roomId="demo-wave" source="demo" accountId="host" disabled={false} execute={vi.fn()} host={{ id: "naya", displayName: "Naya Oris", avatarUrl: "/naya.webp" }} />);
-    const baseTrack = screen.getByRole("article", { name: "Naya Oris" });
+    const baseTrack = screen.getByRole("article", { name: "Sélectionner Naya Oris" });
     expect(within(baseTrack).getByText("BASE")).toBeInTheDocument();
   });
 
@@ -128,22 +137,23 @@ describe("WaveOrchestraPanel — Beat collectif", () => {
     expect(onMixerMusicGain).toHaveBeenLastCalledWith(0.72);
   });
 
-  it("uses the stroke as an audible-state indicator without selectable tracks", () => {
+  it("selects a track for its dock without changing the audible mix", () => {
     const { rerender, execute } = renderPanel();
-    const baseTrack = screen.getByRole("article", { name: "BeatKing" });
-    const guitarTrack = screen.getByRole("article", { name: "Koda Sweep" });
+    const baseTrack = screen.getByRole("article", { name: "Sélectionner BeatKing" });
+    const guitarTrack = screen.getByRole("article", { name: "Sélectionner Koda Sweep" });
     expect(baseTrack).toHaveClass("is-enabled");
     expect(guitarTrack).toHaveClass("is-enabled");
-    expect(guitarTrack).not.toHaveAttribute("tabindex");
+    expect(guitarTrack).toHaveAttribute("tabindex", "0");
     fireEvent.click(guitarTrack);
+    expect(screen.getByRole("slider", { name: "Volume Blue Guitar" })).toBeInTheDocument();
     expect(execute).not.toHaveBeenCalled();
 
     const mutedWave = waveFixture();
-    const guitarLayer = mutedWave.layers.find((layer) => layer.id === "layer-5");
+    const guitarLayer = mutedWave.layers.find((layer) => layer.submissionId === "loop-5");
     if (!guitarLayer) throw new Error("guitar_layer_missing");
     guitarLayer.muted = true;
     rerender(<WaveOrchestraPanel wave={mutedWave} role="host" roomId="demo-wave" source="demo" accountId="host" disabled={false} execute={execute} />);
-    expect(screen.getByRole("article", { name: "Koda Sweep" })).toHaveClass("is-muted");
+    expect(screen.getByRole("article", { name: "Sélectionner Koda Sweep" })).toHaveClass("is-muted");
   });
 
   it("offers upload/replace and download in the global final-production player", () => {
@@ -160,12 +170,14 @@ describe("WaveOrchestraPanel — Beat collectif", () => {
     if (!candidate) throw new Error("replacement_candidate_missing");
     render(<WaveOrchestraPanel wave={wave} role="host" roomId="demo-wave" source="demo" accountId="host" disabled={false} execute={execute} />);
 
+    fireEvent.click(screen.getByRole("article", { name: "Sélectionner Koda Sweep" }));
     fireEvent.click(screen.getByRole("button", { name: "Duel de remplacement pour Blue Guitar" }));
     expect(screen.getByRole("dialog", { name: "Duel de remplacement" })).toBeInTheDocument();
-    fireEvent.change(screen.getByRole("combobox", { name: "Boucle candidate au remplacement" }), { target: { value: candidate.id } });
+    fireEvent.click(screen.getByRole("combobox", { name: "Boucle candidate au remplacement" }));
+    fireEvent.click(screen.getByRole("option", { name: optionName => optionName.startsWith(`${candidate.contributor.name} ·`) }));
     fireEvent.click(screen.getByRole("button", { name: "Soumettre au vote" }));
 
-    expect(execute).toHaveBeenCalledWith({ type: "wave.replacement.open", layerId: "layer-5", submissionId: candidate.id, durationSeconds: 30, listeningMode: "beat" });
+    expect(execute).toHaveBeenCalledWith({ type: "wave.replacement.open", layerId: "layer-loop-5", submissionId: candidate.id, durationSeconds: 30, listeningMode: "beat" });
   });
 
   it("keeps transport and mix controls fail-closed until the live server program is ready", () => {

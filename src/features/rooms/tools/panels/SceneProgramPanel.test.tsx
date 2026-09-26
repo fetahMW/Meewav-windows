@@ -49,7 +49,8 @@ describe("SceneProgramPanel", () => {
     fireEvent.change(within(form).getByLabelText("Titre du passage"), { target: { value: "Final acoustique" } });
     fireEvent.change(within(form).getByLabelText("Durée · min"), { target: { value: "9" } });
     fireEvent.change(within(form).getByLabelText("Horaire prévu · facultatif"), { target: { value: "" } });
-    fireEvent.change(within(form).getByLabelText("Texte du prompteur"), { target: { value: "" } });
+    fireEvent.click(within(form).getByRole("combobox", { name: "Texte du prompteur" }));
+    fireEvent.click(screen.getByRole("option", { name: "Aucun texte" }));
     fireEvent.click(within(form).getByRole("button", { name: "Enregistrer" }));
     await waitFor(() => expect(execute).toHaveBeenCalledWith({ type: "scene.program.patch", entryId: "perf-2", patch: expect.objectContaining({ title: "Final acoustique", durationMinutes: 9, artistName: scene.program[1].artistName, scheduledAt: "", prompterTextId: "" }) }));
     await waitFor(() => expect(screen.queryByRole("form")).not.toBeInTheDocument());
@@ -61,9 +62,11 @@ describe("SceneProgramPanel", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ajouter un passage" }));
     const form = screen.getByRole("form", { name: "Nouveau passage" });
     fireEvent.change(within(form).getByLabelText("Titre du passage"), { target: { value: "Entracte" } });
-    fireEvent.change(within(form).getByLabelText("Intervenant"), { target: { value: "" } });
+    fireEvent.click(within(form).getByRole("combobox", { name: "Intervenant" }));
+    fireEvent.click(screen.getByRole("option", { name: "Autre intervenant / régie" }));
     fireEvent.change(within(form).getByLabelText("Nom au programme"), { target: { value: "Régie" } });
-    fireEvent.change(within(form).getByLabelText("Type"), { target: { value: "Autre" } });
+    fireEvent.click(within(form).getByRole("combobox", { name: "Type" }));
+    fireEvent.click(screen.getByRole("option", { name: "Autre" }));
     fireEvent.click(within(form).getByRole("button", { name: "Ajouter au programme" }));
     await waitFor(() => expect(execute).toHaveBeenCalledWith({ type: "scene.program.add", entry: expect.objectContaining({ title: "Entracte", artistId: "", artistName: "Régie", kind: "Autre", evaluationEnabled: false, status: "upcoming" }) }));
   });

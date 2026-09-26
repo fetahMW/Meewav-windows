@@ -1,0 +1,44 @@
+.room-viewer-tools-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.room-viewer-tools-layout__nav { flex-shrink: 0; }
+.room-viewer-tools-layout__nav:empty { display: none; }
+.room-viewer-tools-layout__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b79bbf transparent;
+}
+.place-tools-console__badge { padding: 1px 4px; border: 1px solid #d9c3e42b; border-radius: 5px; color: #cfb5e5; font: 600 9px/1.2 Inter, sans-serif; }
+.place-room-shell .room-viewer-tools-layout .classe-student-dock .classroom-command-dock__controls {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(72px, 112px);
+  justify-content: center;
+  gap: 12px;
+}
+/* Match the host rail, including its vertical position in the Windows console. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .room-viewer-tools-layout__nav > .place-tools-console__switch {
+  box-sizing: border-box;
+  height: 42px;
+  min-height: 42px;
+  margin: 0;
+  padding: 0 8px;
+  align-content: center;
+}
+@container (max-width: 480px) {
+  .room-viewer-tools-layout__nav .place-tools-console__switch > button { gap: 4px; padding-inline: 3px; }
+  .room-viewer-tools-layout__nav .place-tools-console__switch > button > svg { display: none; }
+}

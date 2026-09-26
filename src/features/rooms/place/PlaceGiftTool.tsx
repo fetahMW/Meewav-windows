@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import {
   ArrowLeft,
   ArrowRight,
@@ -929,7 +930,7 @@ export default function PlaceGiftTool({
                 ) : null}
 
                 {action === "Ajouter à une ronde" ? (
-                  <label className="place-gift-tool__round"><span>Ronde</span><select value={round} onChange={(event) => setRound(event.currentTarget.value)}>{PROFILE_GIFT_ROUND_OPTIONS.map((option) => <option key={option}>{option}</option>)}</select></label>
+                  <label className="place-gift-tool__round"><span>Ronde</span><MeewavSelect value={round} onChange={(event) => setRound(event.currentTarget.value)}>{PROFILE_GIFT_ROUND_OPTIONS.map((option) => <option key={option}>{option}</option>)}</MeewavSelect></label>
                 ) : null}
 
                 <div className="place-gift-tool__recap">

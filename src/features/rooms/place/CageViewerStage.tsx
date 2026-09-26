@@ -6,6 +6,7 @@ import PlaceStageLayoutTile from "./placeStageLayoutTile";
 import { resolveParticipantSource, type PlaceStageParticipant } from "./placeStageLayoutEngine";
 import "./cage-viewer-stage.css";
 import CageArtistGoldenLike from "./CageArtistGoldenLike";
+import RoomViewerHostSupport from "./RoomViewerHostSupport";
 
 type Props = Omit<CageStageProgramProps, "isHost" | "isGuest"> & { cage: CageState };
 const noop = () => undefined;
@@ -70,7 +71,7 @@ export default function CageViewerStage(props: Props) {
   return <section className={`cage-viewer-stage${showBattle || performer ? " has-artists" : ""}${showBattle ? " is-battle" : ""}`} aria-label={showBattle ? "La Cage · duel en direct" : "La Cage · en direct"}>
     <div className="cage-viewer-stage__host">
       <ViewerCamera {...props} person={hostPerson} assignment={hostAssignment} label="HOST · COMMENTAIRE" audible={!showBattle && !performer} />
-      {!showBattle && !performer && props.hostActions ? <div className="cage-viewer-stage__host-support">{props.hostActions}</div> : null}
+      {!showBattle && !performer && props.hostActions ? <RoomViewerHostSupport>{props.hostActions}</RoomViewerHostSupport> : null}
     </div>
     {showBattle ? <div className="cage-viewer-stage__fighters">
       {(["A", "B"] as const).map((side, index) => {

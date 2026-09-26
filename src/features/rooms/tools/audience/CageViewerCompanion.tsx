@@ -6,6 +6,7 @@ import CageResults from "../panels/CageResults";
 import CageResultsDialog from "../panels/CageResultsDialog";
 import type { CageCompetitionRuntime } from "../cageCompetition.types";
 import "./cage-viewer-companion.css";
+import { RoomViewerSubmenu } from "../../place/RoomViewerToolsLayout";
 
 function PublishedResults({runtime, fallbackFocusRef}: {runtime:CageCompetitionRuntime; fallbackFocusRef:RefObject<HTMLButtonElement | null>}) {
   const [expanded,setExpanded]=useState(false);
@@ -25,13 +26,17 @@ export default function CageViewerCompanion({ cage, participation, onOpenChat, p
   const event = cageEvent(cage);
   const match = cage.matches.find((item) => item.id === (cage.runtime ? cage.runtime.activeMatchId : cage.currentMatchId));
   return <section className="cage-viewer-companion" aria-label="La Cage · participation">
+    <RoomViewerSubmenu
+      activeTool={tab}
+      ariaLabel="Programme Cage"
+      idPrefix={id}
+      items={[
+        { id: "competition", label: "Compétition", icon: <Swords aria-hidden="true" />, controlsId: `${id}-panel-competition`, buttonRef: competitionTab },
+        { id: "live", label: "Direct", icon: <Radio aria-hidden="true" />, controlsId: `${id}-panel-live` },
+      ]}
+      onSelect={setTab}
+    />
     <header><span><Swords aria-hidden="true" /><small>LA CAGE</small></span><h2>{event.title}</h2><p>{event.discipline}</p></header>
-    <nav className="cage-viewer-companion__tabs" aria-label="Programme Cage" role="tablist">{([['competition', 'Compétition'], ['live', 'Direct']] as const).map(([key, label]) => <button key={key} ref={key === "competition" ? competitionTab : undefined} type="button" role="tab" id={`${id}-${key}`} aria-controls={`${id}-panel-${key}`} aria-selected={tab === key} tabIndex={tab === key ? 0 : -1} onClick={() => setTab(key)} onKeyDown={event => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === "Home" ? "competition" : event.key === "End" ? "live" : key === "live" ? "competition" : "live";
-      setTab(next); document.getElementById(`${id}-${next}`)?.focus();
-    }}>{label}</button>)}</nav>
     {production}
     <div role="tabpanel" id={`${id}-panel-competition`} aria-labelledby={`${id}-competition`} hidden={tab !== "competition"} className="cage-viewer-companion__tab">
       {participation}

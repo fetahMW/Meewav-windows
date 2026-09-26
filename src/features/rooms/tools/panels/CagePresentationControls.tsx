@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import { useEffect, useState } from "react";
 import { ChevronDown, Mic, Swords, Trophy, X } from "lucide-react";
 import { cageCanConfigure } from "../cageCompetition";
@@ -51,7 +52,7 @@ export default function CagePresentationControls({ runtime, demo, busy, send, on
         <button key={id} type="button" aria-pressed={format === id} onClick={() => { setFormat(id); setCount((current) => Math.max(id === "open-mic" ? 1 : 2, current)); setConfirmation(false); }}><Icon />{label}</button>)}</div>
       <p>{formats.find((item) => item.id === format)?.description}</p>
       <label>{format === "open-mic-battle" ? "Maximum de participants (départ possible dès 2)" : "Nombre de places"}<input type="number" min={format === "open-mic" ? 1 : 2} max={64} step={1} value={count || ""} onChange={(event) => { setCount(Number(event.target.value)); setConfirmation(false); }} /></label>
-      {format === "open-mic" ? <label>Vote du public<select value={feedback} onChange={(event) => { setFeedback(event.target.value as typeof feedback); setConfirmation(false); }}><option value="appreciation">Vote de soutien</option><option value="scored">Notes sur 5</option><option value="none">Sans vote</option></select></label> : null}
+      {format === "open-mic" ? <label>Vote du public<MeewavSelect value={feedback} onChange={(event) => { setFeedback(event.target.value as typeof feedback); setConfirmation(false); }}><option value="appreciation">Vote de soutien</option><option value="scored">Notes sur 5</option><option value="none">Sans vote</option></MeewavSelect></label> : null}
       {!valid ? <p role="status">{format === "tournament" && !runtime.config.rules.allowByes ? "Choisis 2, 4, 8, 16, 32 ou 64 places pour le tournoi." : "Choisis un nombre entier de places, jusqu’à 64."}</p> : null}
       {!canConfigure ? <p role="status">Termine le passage et son vote, puis libère la scène avant de changer de mode.</p> : null}
       {confirmation ? <p role="status">Le programme actuel et ses résultats seront remplacés. Les invités, la sélection et leurs réglages sont conservés dans la limite des places choisies.</p> : <p>Les invités déjà présents restent dans la room.</p>}

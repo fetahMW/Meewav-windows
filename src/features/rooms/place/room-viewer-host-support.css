@@ -1,0 +1,8 @@
+.room-viewer-host-support { position: absolute; right: 12px; bottom: min(76px, 20%); z-index: 4; max-width: calc(100% - 24px); }
+.place-room-shell .room-viewer-host-support .place-chat-social-actions { display: flex; flex-direction: row; align-items: center; gap: 5px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.place-room-shell .room-viewer-host-support .shorts-reactions { flex-direction: row; width: auto; gap: 5px; }
+.place-room-shell .room-viewer-host-support :is(.shorts-reaction, .place-chat-social-actions__support) { display: inline-flex; align-items: center; justify-content: center; flex-direction: row; gap: 5px; width: auto; min-width: 36px; min-height: 36px; margin: 0; padding: 5px 8px; border: 1px solid #ffffff20; border-radius: 12px; background: #100e18b3; backdrop-filter: blur(12px); box-shadow: 0 2px 8px #0003; }
+.room-viewer-host-support .shorts-reaction__retry { width: 10px; height: 10px; color: #c5b8d6; }
+.place-room-shell .room-viewer-host-support .shorts-reaction--golden { color: #e4c375; }
+.place-room-shell .room-viewer-host-support .shorts-reaction--golden:is(:hover:not(:disabled), .is-given) { border-color: #e4c37580; background: #43341fbf; box-shadow: 0 0 12px #e4c37530; }
+.room-viewer-host-support .shorts-reaction__icon svg { width: 18px; height: 18px; }

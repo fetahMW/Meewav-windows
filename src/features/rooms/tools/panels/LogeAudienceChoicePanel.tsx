@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import {
   BarChart3,
   Check,
@@ -189,7 +190,7 @@ export default function LogeAudienceChoicePanel({ room, disabled, onLaunchPoll, 
 
         <details className="loge-public-choice__advanced" open={advancedOpen} onToggle={(event) => setAdvancedOpen(event.currentTarget.open)}><summary><span>Options avancées</span><ChevronDown /></summary><div>
           <label><span><strong>Afficher les résultats en temps réel</strong><small>Les membres voient l’évolution après leur vote.</small></span><input type="checkbox" role="switch" checked={resultsVisible} onChange={(event) => setResultsVisible(event.currentTarget.checked)} /></label>
-          <label className="loge-public-choice__duration"><span><strong>Durée du vote</strong><small>Le Host peut toujours le fermer manuellement.</small></span><select value={duration ?? "open"} onChange={(event) => setDuration(event.currentTarget.value === "open" ? null : Number(event.currentTarget.value) as PlacePollDuration)}><option value="open">Pas de limite</option><option value="30">30 secondes</option><option value="60">1 minute</option><option value="120">2 minutes</option></select></label>
+          <label className="loge-public-choice__duration"><span><strong>Durée du vote</strong><small>Le Host peut toujours le fermer manuellement.</small></span><MeewavSelect value={duration ?? "open"} onChange={(event) => setDuration(event.currentTarget.value === "open" ? null : Number(event.currentTarget.value) as PlacePollDuration)}><option value="open">Pas de limite</option><option value="30">30 secondes</option><option value="60">1 minute</option><option value="120">2 minutes</option></MeewavSelect></label>
         </div></details>
 
         <button type="button" className="loge-public-choice__launch" disabled={disabled || launching || Boolean(poll?.isActive) || !valid} onClick={() => void launch()}>{poll?.isActive ? <><Radio /> Vote en cours</> : launching ? <><Clock3 /> Ouverture du vote…</> : <><Play /> Lancer le vote</>}</button>

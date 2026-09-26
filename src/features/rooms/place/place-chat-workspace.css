@@ -267,7 +267,7 @@
   font: 700 10px/1 Inter, sans-serif;
 }
 
-/* Cage viewer: keep reactions within reach without narrowing the conversation. */
+/* Every viewer Room shares the same host reactions above the conversation. */
 .place-room-shell .place-chat-workspace.is-compact-engagement .place-chat-workspace__body {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr);
@@ -278,7 +278,7 @@
   min-width: 0;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   column-gap: 12px;
   padding: 0 4px 7px;
   border-bottom: 1px solid #ffffff0f;
@@ -289,9 +289,11 @@
   font: 600 12px/1.5 Inter, sans-serif;
 }
 .place-chat-workspace__engagement .place-chat-workspace__host-support { display: grid; flex: 1 1 150px; min-width: 0; gap: 2px; padding: 0; }
+.place-chat-workspace__host-support > :is(span, small) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .place-chat-workspace__host-support > span { color: #d6c4e9; font-size: 11px; }
 .place-chat-workspace__host-support > small { color: #9f95ab; font-size: 10px; font-weight: 400; line-height: 1.35; }
 .place-room-shell .place-chat-workspace__engagement .place-chat-social-actions {
+  flex-shrink: 0;
   flex-direction: row;
   align-items: center;
   gap: 10px;

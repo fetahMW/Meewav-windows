@@ -27,9 +27,12 @@ function setup(onStart = vi.fn(), onStop = vi.fn()) {
   return { onStart, onStop, ...render(<RoomProductionPreparation roomId="qa" liveRoom onAir={false} publicationStatus="disconnected" onStart={onStart} onStop={onStop} />) };
 }
 async function addCamera() {
-  await screen.findByRole('option', { name: 'Caméra QA' });
-  fireEvent.change(screen.getByLabelText('Périphérique vidéo'), { target: { value: 'cam' } });
+  await choose('Périphérique vidéo', 'Caméra QA');
   fireEvent.click(screen.getByRole('button', { name: 'Ajouter cette caméra' }));
+}
+async function choose(label: string, option: string) {
+  fireEvent.click(screen.getByRole('combobox', { name: label }));
+  fireEvent.click(await screen.findByRole('option', { name: option }));
 }
 beforeEach(() => {
   vi.resetAllMocks();
@@ -79,7 +82,7 @@ it('persists the selected microphone before starting and rejects repeated start 
   mocks.camera.mockResolvedValue(capture().stream);
   const start = vi.fn(() => { expect(readRoomDevicePreferences().microphoneId).toBe('mic'); return true; });
   setup(start); await addCamera(); await screen.findByRole('button', { name: 'Retirer Caméra QA' });
-  fireEvent.change(screen.getByLabelText('Micro / interface audio Windows'), { target: { value: 'mic' } });
+  await choose('Micro / interface audio Windows', 'Micro QA');
   fireEvent.click(screen.getByRole('button', { name: 'Appliquer le plan' }));
   const button = screen.getByRole('button', { name: 'Passer en direct' });
   fireEvent.click(button); fireEvent.click(button);
@@ -88,8 +91,7 @@ it('persists the selected microphone before starting and rejects repeated start 
 it('releases microphone when Web Audio creation fails', async () => {
   const source = capture('audio'); mocks.microphone.mockResolvedValue(source.stream);
   vi.stubGlobal('AudioContext', class { constructor() { throw new Error('Audio indisponible'); } });
-  setup(); await screen.findAllByRole('option', { name: 'Micro QA' });
-  fireEvent.change(screen.getByLabelText('Micro / interface audio Windows'), { target: { value: 'mic' } });
+  setup(); await choose('Micro / interface audio Windows', 'Micro QA');
   fireEvent.click(screen.getByRole('button', { name: 'Tester le micro' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('Audio indisponible');
   expect(source.track.stop).toHaveBeenCalled();

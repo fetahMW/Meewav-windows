@@ -49,12 +49,12 @@ describe("Loge viewer experience", () => {
     setup();
     const media = screen.getByTestId("preview");
     fireEvent.click(
-      screen.getByRole("button", { name: "Questions" }),
+      screen.getByRole("tab", { name: "Questions" }),
     );
     expect(screen.getByTestId("preview")).toBe(media);
     expect(media).not.toBeVisible();
-    fireEvent.click(screen.getByRole("button", { name: "Pour moi" }));
-    fireEvent.click(screen.getByRole("button", { name: "Le moment" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Pour moi" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Le moment" }));
     expect(screen.getByTestId("preview")).toBe(media);
     expect(media).toBeVisible();
   });
@@ -66,7 +66,7 @@ describe("Loge viewer experience", () => {
       .mockResolvedValueOnce(undefined);
     const { props, rerender } = setup({ questionsOpen: true }, execute);
     fireEvent.click(
-      screen.getByRole("button", { name: "Questions" }),
+      screen.getByRole("tab", { name: "Questions" }),
     );
     const input = screen.getByLabelText(/Votre question/);
     fireEvent.change(input, {
@@ -134,7 +134,7 @@ describe("Loge viewer experience", () => {
         },
       ],
     });
-    fireEvent.click(screen.getByRole("button", { name: /Pour moi/ }));
+    fireEvent.click(screen.getByRole("tab", { name: /Pour moi/ }));
     expect(
       screen
         .getByRole("link", { name: "Ouvrir ma dédicace" })

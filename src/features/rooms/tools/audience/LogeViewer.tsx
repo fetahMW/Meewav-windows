@@ -20,6 +20,7 @@ import type {
 } from "../roomTools.types";
 import "./loge-viewer.css";
 import { LogeRequestLists } from "./LogeRequests";
+import { RoomViewerSubmenu } from "../../place/RoomViewerToolsLayout";
 type Props = {
   loge: LogeState;
   accountId: string;
@@ -108,6 +109,17 @@ export default function LogeViewer({
   };
   return (
     <div className={`loge-viewer${panel === "requests" ? " is-request-list" : ""}`}>
+      {eligible ? <RoomViewerSubmenu
+        activeTool={panel === "requests" ? "personal" : panel}
+        ariaLabel="Explorer la Loge"
+        idPrefix="loge-viewer-tab"
+        items={[
+          { id: "moment", label: "Le moment", icon: <Headphones aria-hidden="true" /> },
+          { id: "questions", label: "Questions", icon: <MessageCircleQuestion aria-hidden="true" /> },
+          { id: "personal", label: "Pour moi", icon: <Gift aria-hidden="true" />, badge: moments.length },
+        ]}
+        onSelect={setPanel}
+      /> : null}
       <header className="loge-viewer__welcome" hidden={panel === "requests"}>
         <div className="loge-viewer__eyebrow">
           <span className="loge-viewer__live" />
@@ -167,38 +179,12 @@ export default function LogeViewer({
             </section>
           ) : null}
           <button className="loge-viewer__question-cta" onClick={() => setPanel("requests")}><Gift /><span><strong>{panel === "requests" ? "Mes demandes" : "Cadeaux, dédicaces et rencontres"}</strong>{panel !== "requests" ? <small>Demander une attention · Rejoindre une liste</small> : null}</span><ArrowRight /></button>
-          <nav className="loge-viewer__tabs" aria-label="Explorer la Loge">
-            {(
-              [
-                { id: "moment", label: "Le moment", Icon: Headphones },
-                {
-                  id: "questions",
-                  label: "Questions",
-                  Icon: MessageCircleQuestion,
-                },
-                { id: "personal", label: "Pour moi", Icon: Gift },
-              ] as const
-            ).map(({ id, label, Icon }) => (
-              <button
-                type="button"
-                aria-pressed={panel === id}
-                onClick={() => setPanel(id)}
-                key={id}
-              >
-                <Icon />
-                <span>{label}</span>
-                {id === "personal" && moments.length > 0 ? (
-                  <b>{moments.length}</b>
-                ) : null}
-              </button>
-            ))}
-          </nav>
           {error ? (
             <p className="loge-viewer__error" role="alert">
               {error}
             </p>
           ) : null}
-          <div className="loge-viewer__content">
+          <div className="loge-viewer__content" role="tabpanel" aria-labelledby={`loge-viewer-tab-${panel === "requests" ? "personal" : panel}`}>
             <div className="loge-viewer__moment" hidden={panel !== "moment"}>
               <section className="loge-viewer__card loge-viewer__preview">
                 <div className="loge-viewer__section-label">

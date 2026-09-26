@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { getDesktopApplicationMode } from "../../../runtime/applicationMode";
 import { loadLiveRoomsCatalog } from "./roomsHome.live";
 import {
@@ -557,13 +558,13 @@ export function RoomsHome({ collectionSlug = null, roomType }: RoomsHomeProps) {
         <MeewavFilterSection label="Style musical" summary={draftFilters.musicStyle === "all" ? "Tous" : draftFilters.musicStyle}>
           <label className="meewav-filter-field">
             <span>Univers musical</span>
-            <select
+            <MeewavSelect
               value={draftFilters.musicStyle}
               onChange={(event) => setDraftFilters((current) => ({ ...current, musicStyle: event.target.value }))}
             >
               <option value="all">Tous les styles</option>
               {musicStyleOptions.map((style) => <option key={style} value={style}>{style}</option>)}
-            </select>
+            </MeewavSelect>
           </label>
         </MeewavFilterSection>
 

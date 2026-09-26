@@ -6,6 +6,7 @@ import { createPlaceProgramLayout } from "./placeProgramLayout.service";
 import PlaceStage, { resolvePlaceViewerCallHandoff } from "./PlaceStage";
 import { LIVE_ROOM_PRESENTATIONS, PLACE_ROOM_PRESENTATION, RoomPresentationProvider, type RoomPresentation } from "../roomPresentation";
 import { MEEWAV_EMOTICONS } from "../../emoticons/MeewavEmoticons";
+import type { ReactNode } from "react";
 
 function renderStage({
   isHost = true,
@@ -26,6 +27,8 @@ function renderStage({
   musicGain,
   masterGain,
   hostVoiceGain,
+  hostSocialActions,
+  withGuest = false,
 }: {
   isHost?: boolean;
   isGuest?: boolean;
@@ -45,6 +48,8 @@ function renderStage({
   musicGain?: number;
   masterGain?: number;
   hostVoiceGain?: number;
+  hostSocialActions?: ReactNode;
+  withGuest?: boolean;
 } = {}) {
   const room = createPlaceDemoState(isHost ? PLACE_DEMO_PROFILES.host.id : PLACE_DEMO_PROFILES.viewerA.id);
   if (highlightText !== undefined) {
@@ -56,6 +61,10 @@ function renderStage({
       ? { ...participant, status: "backstage" as const }
       : participant
   ));
+  if (withGuest) {
+    const guest = room.participants.find(participant => participant.profile.id === PLACE_DEMO_PROFILES.guestA.id);
+    if (guest) guest.status = "onstage";
+  }
   if (hlsFallback) {
     room.participants = room.participants.map((participant) => participant.status === "host"
       ? {
@@ -100,6 +109,7 @@ function renderStage({
   const result = render(
     <RoomPresentationProvider presentation={presentation}><PlaceStage
       room={room}
+      hostSocialActions={hostSocialActions}
       isHost={isHost}
       isGuest={isGuest}
       canEngage
@@ -474,4 +484,24 @@ describe("PlaceStage — handoff du retour téléphone", () => {
 it.each(Object.values(LIVE_ROOM_PRESENTATIONS))("keeps viewer social actions out of the stage controls in $label", (presentation) => {
   renderStage({ isHost: false, presentation });
   expect(screen.queryByRole("button", { name: /Like|bourse|soutenir/ })).not.toBeInTheDocument();
+});
+
+it.each(Object.values(LIVE_ROOM_PRESENTATIONS).filter(presentation => presentation.id !== "cage"))("attaches viewer support only to the host video in $label", (presentation) => {
+  const onSupport = vi.fn();
+  const { container } = renderStage({ isHost: false, presentation, withGuest: true, hostSocialActions: <button onClick={onSupport}>Soutenir le host</button> });
+  const support = screen.getByRole("button", { name: "Soutenir le host" });
+  expect(support.parentElement).toHaveClass("room-viewer-host-support");
+  expect(support.closest(".place-stage-layout__tile")).toHaveAttribute("aria-label", expect.stringContaining(PLACE_DEMO_PROFILES.host.displayName));
+  const guestTile = container.querySelector<HTMLElement>(`.place-stage-layout__tile[aria-label*="${PLACE_DEMO_PROFILES.guestA.displayName}"]`);
+  expect(guestTile).toBeInTheDocument();
+  expect(guestTile!.querySelector(".room-viewer-host-support")).toBeNull();
+  expect(container.querySelector(".place-stage__controls .room-viewer-host-support")).toBeNull();
+  fireEvent.click(support);
+  expect(onSupport).toHaveBeenCalledOnce();
+});
+
+it("never duplicates host support on a shared screen or its presenter thumbnail", () => {
+  const { container } = renderStage({ isHost: false, screenShareStream: {} as MediaStream, hostSocialActions: <button>Soutenir le host</button> });
+  expect(container.querySelector(".place-screen-share")).toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Soutenir le host" })).not.toBeInTheDocument();
 });

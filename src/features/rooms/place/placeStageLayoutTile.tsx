@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 import { CameraOff, Ellipsis, Radio, WifiOff } from "lucide-react";
 import { meewavMediaSession } from "../../scene/mediaSession/mediaSessionCoordinator";
 import type { PlaceLiveKitVideoTrack } from "./placeLiveKit.service";
@@ -35,6 +35,7 @@ type PlaceStageLayoutTileProps = {
   liveKitVideoTrack?: PlaceLiveKitVideoTrack;
   /** Read-only feed used inside a room-specific broadcast composition. */
   presentationOnly?: boolean;
+  viewerActions?: ReactNode;
   framing?: {
     enabled: boolean;
     locked: boolean;
@@ -376,6 +377,7 @@ export default function PlaceStageLayoutTile({
   cameraEnabledOverride,
   liveKitVideoTrack,
   presentationOnly = false,
+  viewerActions,
   framing,
   onSelect,
   onPutOnAir,
@@ -602,6 +604,7 @@ export default function PlaceStageLayoutTile({
             )) : null}
         </div>
       ) : null}
+      {viewerActions}
     </article>
   );
 }

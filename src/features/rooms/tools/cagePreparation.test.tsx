@@ -156,10 +156,17 @@ it("never offers to silently drop two of six artists through tournament reductio
   const { runtime, choose, refresh } = setup("tournament", 6, 16);
   runtime().config.rules.allowFormatReduction = true;
   refresh();
-  for (const person of runtime().participants.filter(person => person.registered).slice(0, 6)) await choose(person.person.name);
-  expect(screen.getByRole("option", { name: "Réduire le format", hidden: true })).toBeDisabled();
-  // Also cover a previously chosen reduce value after the selection changes.
-  fireEvent.change(screen.getByLabelText(/Avec moins de 16 artistes/), { target: { value: "reduce" } });
+  const people = runtime().participants.filter(person => person.registered).slice(0, 6);
+  for (const person of people.slice(0, 4)) await choose(person.person.name);
+  fireEvent.click(screen.getByText("Options du placement"));
+  fireEvent.click(screen.getByRole("combobox", { name: /Avec moins de 16 artistes/ }));
+  fireEvent.click(screen.getByRole("option", { name: "Réduire le format" }));
+  expect(screen.getByRole("button", { name: "Créer avec ce choix" })).toBeEnabled();
+  // A valid four-person reduction must become unavailable after adding two artists.
+  for (const person of people.slice(4)) await choose(person.person.name);
+  fireEvent.click(screen.getByRole("combobox", { name: /Avec moins de 16 artistes/ }));
+  expect(screen.getByRole("option", { name: "Réduire le format" })).toHaveAttribute("aria-disabled", "true");
+  fireEvent.click(screen.getByRole("option", { name: "Réduire le format" }));
   expect(screen.getByRole("button", { name: "Créer avec ce choix", hidden: true })).toBeDisabled();
   expect(screen.getByRole("button", { name: /Tirer au sort parmi les 6/, hidden: true })).toBeDisabled();
   expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(6);

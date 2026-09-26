@@ -161,7 +161,7 @@ describe("RoomAudienceInteractions", () => {
 
   it("keeps a Classe question draft after failure and confirms the retry", async () => {
     render(<RoomAudienceInteractions roomType="classe" room={room("classe-question-retry")} isHost={false} isGuest canEngage />);
-    fireEvent.click(await screen.findByRole("button", {name:"Questions"}));
+    fireEvent.click(await screen.findByRole("tab", {name:"Questions"}));
     const input = screen.getByLabelText(/Votre question/i);
     fireEvent.change(input, {target:{value:"Comment jouer cet accord ?"}});
     const execute = vi.spyOn(roomToolsRepository, "execute").mockRejectedValueOnce(new Error("network_lost"));
@@ -175,7 +175,7 @@ describe("RoomAudienceInteractions", () => {
   });
   it("lets a Class place submit and support questions without exposing other votes", async () => {
     render(<RoomAudienceInteractions roomType="classe" room={room("audience-classe-questions")} isHost={false} isGuest canEngage />);
-    fireEvent.click(await screen.findByRole("button", {name: "Questions"}));
+    fireEvent.click(await screen.findByRole("tab", {name: "Questions"}));
     const input = await screen.findByLabelText(/Votre question/i);
     fireEvent.change(input, { target: { value: "Peux-tu détailler le deuxième temps ?" } });
     fireEvent.click(screen.getByRole("button", { name: /Envoyer/i }));
@@ -206,7 +206,7 @@ describe("RoomAudienceInteractions", () => {
     };
     await roomToolsRepository.execute("classe", roomId, "teacher", { type: "classe.resource.add", resource });
     render(<RoomAudienceInteractions roomType="classe" room={room(roomId)} isHost={false} isGuest canEngage />);
-    fireEvent.click(await screen.findByRole("button", {name: "Ressources"}));
+    fireEvent.click(await screen.findByRole("tab", {name: "Ressources"}));
     expect(await screen.findByText("À garder après la classe")).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Télécharger fiche-rythmique.png" }));
     await waitFor(() => expect(downloadClassroomResource).toHaveBeenCalledWith(expect.objectContaining({ id: resource.id }), roomId));
@@ -323,7 +323,7 @@ describe("RoomAudienceInteractions", () => {
 
   it("submits a VIP question and never exposes another member's private moment", async () => {
     render(<RoomAudienceInteractions roomType="loge" room={room("audience-loge")} isHost={false} isGuest={false} canEngage />);
-    fireEvent.click(await screen.findByRole("button",{name:"Questions"}));
+    fireEvent.click(await screen.findByRole("tab",{name:"Questions"}));
     const input = await screen.findByLabelText(/Votre question/i);
     fireEvent.change(input, { target: { value: "Quel morceau a déclenché cet album ?" } });
     fireEvent.click(screen.getByRole("button", { name: "Envoyer" }));

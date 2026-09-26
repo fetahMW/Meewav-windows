@@ -70,6 +70,23 @@ describe("PlaceStudioPanel specialized tools routing", () => {
     expect(screen.queryByTestId("room-tools-shell")).not.toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: /Prompteur/i })).not.toBeInTheDocument();
   });
+
+  it.each([
+    [LIVE_ROOM_PRESENTATIONS.place, "Outils de La Place"],
+    [LIVE_ROOM_PRESENTATIONS.loge, "Explorer la Loge"],
+    [LIVE_ROOM_PRESENTATIONS.cage, "Programme Cage"],
+    [LIVE_ROOM_PRESENTATIONS.classe, "Explorer la Classe"],
+  ] as const)("keeps the viewer submenu outside the scrolling content in %s", async (presentation, label) => {
+    const room = createPlaceDemoState(PLACE_DEMO_PROFILES.viewerA.id);
+    const { container } = render(<MemoryRouter><RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props({ room })} /></RoomPresentationProvider></MemoryRouter>);
+    const rail = await screen.findByRole("tablist", { name: label });
+    expect(container.querySelector(".room-viewer-tools-layout__nav")).toContainElement(rail);
+    expect(container.querySelector(".room-viewer-tools-layout__body")).not.toContainElement(rail);
+    const tabs = within(rail).getAllByRole("tab");
+    fireEvent.keyDown(tabs[0], { key: "End" });
+    expect(tabs[tabs.length - 1]).toHaveAttribute("aria-selected", "true");
+    expect(tabs[tabs.length - 1]).toHaveFocus();
+  });
 });
 
 it("respects the Place host queue gate in every conversation tab", async () => {

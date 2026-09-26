@@ -1,3 +1,5 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
+import { RoomViewerSubmenu } from "../../place/RoomViewerToolsLayout";
 import RoomVotePolicyLabel from "../../voting/RoomVotePolicyLabel";
 import { canCastRoomVote } from "../../voting/roomVoting";
 import CageResults from "../panels/CageResults";
@@ -404,6 +406,7 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
   const questions = classe.questions ?? [];
   const resources = classe.resources ?? [];
   const canAccessResources = Boolean(seat) || role === "host" || role === "teacher" || role === "regisseur";
+  useEffect(() => { if (panel === "resources" && !canAccessResources) setPanel("class"); }, [panel, canAccessResources]);
   const visibleQuestions = [...questions].sort((left, right) => {
     if (left.id === sentQuestionId) return -1;
     if (right.id === sentQuestionId) return 1;
@@ -441,8 +444,13 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
     }
   };
   return <div ref={classroomRef} className="room-tools-shell is-classe classe-student-workspace" data-room-tools="classe">
+    <RoomViewerSubmenu activeTool={panel} onSelect={setPanel} ariaLabel="Explorer la Classe" idPrefix="classe-viewer-tab" items={[
+      { id: "class", label: "Classe", icon: <Armchair aria-hidden="true" />, controlsId: "classe-viewer-content" },
+      { id: "questions", label: "Questions", icon: <MessageCircleMore aria-hidden="true" />, controlsId: "classe-viewer-content" },
+      ...(canAccessResources ? [{ id: "resources" as const, label: "Ressources", icon: <Download aria-hidden="true" />, controlsId: "classe-viewer-content" }] : []),
+    ]} />
     <header className="classe-student-heading"><strong>{seat && role === "premium_participant" ? `Élève premium · Place ${seat.number}/24` : "Spectateur · La Classe"}</strong><small>{seat?.person?.name}</small></header>
-    <div ref={contentRef} className="classe-student-content">
+    <div ref={contentRef} className="classe-student-content" id="classe-viewer-content" role="tabpanel" aria-labelledby={`classe-viewer-tab-${panel}`}>
     {privateActive ? <div className="room-audience-callout is-private" role="status"><span><Headphones /></span><span><small>CONVERSATION PRIVÉE</small><strong>Le professeur vous parle en privé.</strong><em>Vous continuez d’entendre le cours. Votre retour n’est pas envoyé à la classe.</em></span></div> : null}
     {active ? <div className="room-audience-callout is-speaking" role="status"><span><Mic /></span><span><small>PRISE DE PAROLE</small><strong>Le professeur vous donne la parole.</strong><em>{interventionError ?? "Votre micro est autorisé pour cette intervention."}</em></span><button type="button" disabled={!canEngage || busy || endingIntervention} onClick={() => {
       setEndingIntervention(true);
@@ -491,11 +499,7 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
     </div>
     <div className="is-classroom classe-student-navbar"><nav className="classroom-command-dock classe-student-dock" aria-label="Commandes de l’élève">
       <div className="classroom-command-dock__controls">
-        <button type="button" aria-pressed={panel === "class"} aria-label="Classe" title="Classe" onClick={() => setPanel("class")}><Armchair /><span>Classe</span></button>
         {seat && role === "premium_participant" ? <button type="button" aria-label={handRaised ? "Baisser ma main" : "Lever la main"} title={handRaised ? "Baisser ma main" : "Lever la main"} className={handRaised ? "is-hand-action is-active" : "is-hand-action"} aria-pressed={handRaised} disabled={busy || !canEngage || (!handRaised && !canRaise)} onClick={() => void execute(handRaised ? {type:"classe.hand.lower-own", accountId} : {type:"classe.hand.raise", personId:accountId})}><Hand /><span>{handRaised ? "Baisser ma main" : "Lever la main"}</span></button> : null}
-        <button type="button" aria-label="Questions" aria-pressed={panel === "questions"} className={panel === "questions" ? "is-active" : ""} title="Poser une question" onClick={() => setPanel("questions")}><MessageCircleMore /></button>
-
-        {canAccessResources ? <button type="button" aria-label="Ressources" title="Ressources" aria-pressed={panel === "resources"} onClick={() => setPanel("resources")}><Download /><span>Ressources</span></button> : null}
         <button type="button" aria-label="Quitter la classe" title="Quitter la classe" onClick={onLeaveRoom} disabled={!onLeaveRoom}><LogOut /><span>Quitter la classe</span></button>
       </div>
     </nav></div>
@@ -632,7 +636,7 @@ function DemoWaveAudience({ wave, accountId, viewer, canEngage, busy, execute }:
         {filteredIntake ? <p className="room-audience-notice" role="status">Catégories ouvertes : {acceptedLabels}.</p> : null}
         <button type="button" className="room-audience-dropzone" disabled={!canEngage} onClick={() => fileRef.current?.click()}><FileAudio /><span><strong>{file?.name ?? "Choisir un fichier audio"}</strong><small>WAV, MP3, AAC, FLAC ou M4A · 25 Mo maximum</small></span></button>
         <input ref={fileRef} hidden type="file" accept="audio/wav,audio/mpeg,audio/aac,audio/flac,audio/mp4,audio/x-m4a,.wav,.mp3,.aac,.flac,.m4a" onChange={(event) => { const next = event.currentTarget.files?.[0] ?? null; setSuccess(false); setUploadError(""); if (!next) { setFile(null); return; } try { validateWaveAudienceFile(next); setFile(next); } catch (reason) { setFile(null); const code = reason instanceof Error ? reason.message : "wave_file_type_invalid"; setUploadError(code === "wave_file_size_invalid" ? "Le fichier doit peser au maximum 25 Mo." : "Format non pris en charge. Utilisez WAV, MP3, AAC, FLAC ou M4A."); } }} />
-        <div className="room-audience-form-grid"><label>Titre<input maxLength={80} value={title} onChange={(event) => setTitle(event.currentTarget.value)} /></label><label>Type<select value={selectedInstrument?.label ?? ""} onChange={(event) => setInstrument(event.currentTarget.value)}>{acceptedInstruments.map((item) => <option key={item.label}>{item.label}</option>)}</select></label><label className="is-wide">Message facultatif<textarea rows={2} maxLength={240} value={message} onChange={(event) => setMessage(event.currentTarget.value)} /></label></div>
+        <div className="room-audience-form-grid"><label>Titre<input maxLength={80} value={title} onChange={(event) => setTitle(event.currentTarget.value)} /></label><label>Type<MeewavSelect value={selectedInstrument?.label ?? ""} onChange={(event) => setInstrument(event.currentTarget.value)}>{acceptedInstruments.map((item) => <option key={item.label}>{item.label}</option>)}</MeewavSelect></label><label className="is-wide">Message facultatif<textarea rows={2} maxLength={240} value={message} onChange={(event) => setMessage(event.currentTarget.value)} /></label></div>
         <label className="room-audience-check"><input type="checkbox" checked={rightsConfirmed} onChange={(event) => setRightsConfirmed(event.currentTarget.checked)} /> Je possède les droits nécessaires sur cette boucle et j’autorise son traitement, sa présentation dans cette Wave, ainsi que son téléchargement et son utilisation par les autres utilisateurs.</label>
         {progress ? <progress value={progress} max={100}>{progress}%</progress> : null}
         <button type="submit" className="is-primary" disabled={!canEngage || busy || !file || !title.trim() || !rightsConfirmed}>Envoyer au Sas</button>

@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import {
   Check,
   Archive,
@@ -496,7 +497,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
         <p>Les changements deviennent immédiatement visibles par les viewers et s’appliquent aux prochaines propositions.</p>
         <div className="wave-sas-modal__rules-grid">
           <label>BPM<input type="number" min="40" max="260" inputMode="numeric" value={rulesDraft.bpm} onChange={(event) => { const bpm = event.currentTarget.value; setRulesDraft((draft) => ({ ...draft, bpm })); }} /></label>
-          <label>Mesures<select value={rulesDraft.bars} onChange={(event) => { const bars = event.currentTarget.value; setRulesDraft((draft) => ({ ...draft, bars })); }}><option value="4">4 mesures</option><option value="8">8 mesures</option><option value="16">16 mesures</option></select></label>
+          <label>Mesures<MeewavSelect value={rulesDraft.bars} onChange={(event) => { const bars = event.currentTarget.value; setRulesDraft((draft) => ({ ...draft, bars })); }}><option value="4">4 mesures</option><option value="8">8 mesures</option><option value="16">16 mesures</option></MeewavSelect></label>
           <label>Gamme<input maxLength={40} value={rulesDraft.key} onChange={(event) => { const key = event.currentTarget.value; setRulesDraft((draft) => ({ ...draft, key })); }} /></label>
           <label>Direction recherchée<input maxLength={50} value={rulesDraft.kind} onChange={(event) => { const kind = event.currentTarget.value; setRulesDraft((draft) => ({ ...draft, kind })); }} /></label>
         </div>

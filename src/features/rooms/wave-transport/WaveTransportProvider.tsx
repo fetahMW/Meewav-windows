@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { signedWaveAudienceUrl } from "../tools/audience/waveAudienceUpload.service";
@@ -124,8 +125,8 @@ export function WaveAuditionControls() {
     <legend>Audition privée · Wave</legend>
     <label>BPM<input aria-label="BPM de la Wave" type="number" min={40} max={260} value={state.grid.bpm || ""}
       onChange={(event) => transport.engine.setGrid({ ...state.grid, bpm: Number(event.target.value) })} /></label>
-    <label>Temps / mesure<select value={state.grid.beatsPerBar} onChange={(event) => transport.engine.setGrid({ ...state.grid, beatsPerBar: Number(event.target.value) })}>
-      {[3, 4, 6].map((beats) => <option key={beats} value={beats}>{beats}/4</option>)}</select></label>
+    <label>Temps / mesure<MeewavSelect value={state.grid.beatsPerBar} onChange={(event) => transport.engine.setGrid({ ...state.grid, beatsPerBar: Number(event.target.value) })}>
+      {[3, 4, 6].map((beats) => <option key={beats} value={beats}>{beats}/4</option>)}</MeewavSelect></label>
     <label>Premier temps (s)<input type="number" min={0} step={.01} value={state.grid.origin}
       onChange={(event) => transport.engine.setGrid({ ...state.grid, origin: Number(event.target.value) })} /></label>
     {state.candidate ? <>
