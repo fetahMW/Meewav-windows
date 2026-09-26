@@ -77,7 +77,20 @@ function parseDownloadAccess(value: unknown) {
 }
 
 export function createClassroomResourceMediaService(client: SupabaseClient = supabase) {
+  const resolveUrl = async (resource: ClassResource, roomId: string, source: "demo" | "live") => {
+    if (source === "demo" && resource.mediaUrl) {
+      if (!resource.mediaUrl.startsWith("blob:") && !/^\/(?:media|demo-resources)\/[^?#]+$/u.test(resource.mediaUrl)) throw new Error("class_resource_download_failed");
+      return resource.mediaUrl;
+    }
+    if (!UUID_PATTERN.test(roomId) || !UUID_PATTERN.test(resource.id)) throw new Error("class_resource_download_failed");
+    const { data, error } = await client.functions.invoke("rooms-classe-resource-url", {
+      body: { roomId, resourceId: resource.id },
+    });
+    if (error) throw new Error("class_resource_download_failed");
+    return parseDownloadAccess(data);
+  };
   return {
+    resolveUrl,
     async upload({ roomId, file }: { roomId: string; file: File }) {
       if (!UUID_PATTERN.test(roomId)) throw new Error("class_resource_room_invalid");
       const contract = validateClassroomResourceFile(file);
@@ -99,18 +112,8 @@ export function createClassroomResourceMediaService(client: SupabaseClient = sup
       if (error) throw new Error("class_resource_remove_failed");
     },
 
-    async download(resource: ClassResource, roomId: string) {
-      if (resource.mediaUrl) {
-        if (!resource.mediaUrl.startsWith("blob:")) throw new Error("class_resource_download_failed");
-        triggerDownload(resource.mediaUrl, resource.name);
-        return;
-      }
-      if (!UUID_PATTERN.test(roomId) || !UUID_PATTERN.test(resource.id)) throw new Error("class_resource_download_failed");
-      const { data, error } = await client.functions.invoke("rooms-classe-resource-url", {
-        body: { roomId, resourceId: resource.id },
-      });
-      if (error) throw new Error("class_resource_download_failed");
-      triggerDownload(parseDownloadAccess(data), resource.name);
+    async download(resource: ClassResource, roomId: string, source: "demo" | "live" = "live") {
+      triggerDownload(await resolveUrl(resource, roomId, source), resource.name);
     },
   };
 }
@@ -125,6 +128,10 @@ export function removeClassroomResource(mediaPath: string) {
   return classroomResourceMediaService.remove(mediaPath);
 }
 
-export function downloadClassroomResource(resource: ClassResource, roomId: string) {
-  return classroomResourceMediaService.download(resource, roomId);
+export function downloadClassroomResource(resource: ClassResource, roomId: string, source: "demo" | "live" = "live") {
+  return classroomResourceMediaService.download(resource, roomId, source);
+}
+
+export function resolveClassroomResourceUrl(resource: ClassResource, roomId: string, source: "demo" | "live") {
+  return classroomResourceMediaService.resolveUrl(resource, roomId, source);
 }

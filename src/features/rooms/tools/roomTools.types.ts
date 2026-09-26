@@ -170,15 +170,18 @@ export type ClassQuestion = {
 export type ClassResource = {
   id: string;
   name: string;
-  kind: "image" | "audio";
+  kind: "image" | "audio" | "video" | "link";
   mimeType: string;
   size: number;
   addedAt: string;
+  description?: string;
   /** Demo-only object URL. Live rooms persist only the opaque Storage path. */
   mediaUrl?: string;
   mediaPath?: string;
 };
 export type ClasseState = {
+  /** Demo repository fixture version, never populated by live initialization. */
+  demoResourcesVersion?: number;
   /** Canonical live floor eligibility, independent of a paid seat. */
   floorEligible?: boolean;
   people: RoomPerson[];

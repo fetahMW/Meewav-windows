@@ -1029,7 +1029,9 @@ export default function PlaceMixer({
     return [...ownVoice, ...ownMusic];
   }, [currentUserId, mode, room.channels, room.participants, room.queue, viewerChannels, ownMix, listenerOnly, listenerAudio, previewMusicLevel]);
   const master = listenerOnly ? undefined : ownMix ? viewerChannels.find(channel => channel.kind === "master") : mode !== "guest" ? room.channels.find((channel) => channel.kind === "master") : undefined;
-  const ownVocalSources = orderedSources.filter((channel) => (
+  // A Cage listener can prepare their own effects before being invited. The
+  // public faders and routing remain in listener mode until participation.
+  const ownVocalSources = (listenerOnly ? viewerChannels : orderedSources).filter((channel) => (
     mode === "host"
       ? channel.kind === "microphone"
       : channel.kind === "guest" && channel.participantId === currentUserId
@@ -1037,7 +1039,7 @@ export default function PlaceMixer({
   const selectedChannel = ownVocalSources[0];
   const selectedParticipant = selectedChannel ? participantFor(room, selectedChannel) : undefined;
   const fxEditable = Boolean(selectedChannel);
-  const activeView: PlaceMixerView = listenerOnly || (mode === "guest" && (view === "twists" || view === "time") || mode === "viewer" && view === "time") ? "volumes" : view;
+  const activeView: PlaceMixerView = listenerOnly && view !== "voice_fx" || (mode === "guest" && (view === "twists" || view === "time") || mode === "viewer" && view === "time") ? "volumes" : view;
   const usableNativePlugins = useMemo(() => pluginInventory
     .filter((plugin): plugin is AudioEnginePlugin & { id: PlaceNativePitchProvider } => (
       isNativePitchProvider(plugin.id as PlacePitchProvider) && isDetectedNativePlugin(plugin)
@@ -1092,7 +1094,7 @@ export default function PlaceMixer({
       {toolsLayout ? <><div className="wave-tools-nav" ref={toolsLayout.setNav} hidden={!showRoomTools} /><div className="wave-tools-body" ref={toolsLayout.setBody} hidden={!showRoomTools} /></> : null}
       <nav className={`place-mixer__subnav${mode !== "guest" ? " has-twists" : ""}`} aria-label="Sections du mixeur">
         <button type="button" className={activeView === "volumes" ? "is-active" : ""} onClick={() => onView("volumes")}><SlidersHorizontal aria-hidden="true" /> Volumes</button>
-        <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={listenerOnly || mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> FX voix</button>
+        <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> FX voix</button>
         {mode !== "guest" && !listenerOnly ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> Pads</button> : null}
         {mode === "host" ? <button type="button" className={activeView === "time" ? "is-active" : ""} onClick={() => onView("time")}><Timer aria-hidden="true" /> Time</button> : null}
       </nav>

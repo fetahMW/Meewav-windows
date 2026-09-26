@@ -2,7 +2,7 @@
 .room-tools-shell.is-scene .scene-engagement { --scene-engagement-text:#f3f4f5; --scene-engagement-muted:#9b9fa6; grid-auto-rows:max-content; }
 .room-tools-shell.is-scene .scene-engagement .scene-engagement__selector { gap:7px; font-size:10px; }
 .room-tools-shell.is-scene .scene-engagement .scene-engagement__selector select { height:39px; font-size:11px; }
-.scene-review,.scene-campaign,.scene-engagement__controls,.scene-campaign__form { min-width:0; padding:15px; border:1px solid #34373b; border-radius:13px; background:linear-gradient(162deg,#202225 0,#101112 17%,#070808 57%,#101112 100%); box-shadow:inset 0 1px 0 #ffffff12,0 5px 15px #0005; }
+.scene-review,.scene-campaign,.scene-engagement__controls,.scene-campaign__form { min-width:0; padding:12px; border:1px solid #ffffff18; border-radius:13px; background:linear-gradient(162deg,#ffffff0a,#16171955); box-shadow:inset 0 1px #ffffff10; }
 .scene-engagement__identity,.scene-campaign>header { display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .scene-engagement__identity>span:first-child { display:grid; min-width:0; gap:4px; }
 .scene-engagement__identity small,.scene-campaign__title>span { color:var(--scene-engagement-muted); font-size:11px; }

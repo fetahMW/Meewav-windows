@@ -1,4 +1,14 @@
 /* La Place: smoked glass, machined silver and a lacquered black chassis. */
+/* Clash and challenges share the mixer materials; the speaking queue is unchanged. */
+.place-conversation__panel:has(> [data-tool]) {
+  & .place-conversation__glass { padding:12px; border:1px solid #ffffff20; background:linear-gradient(145deg,#ffffff0b,#16171966); box-shadow:inset 0 1px #ffffff10; }
+  & .place-conversation__glass::before { opacity:.35; }
+  & .place-conversation__portrait.is-square { border-color:#ffffff28; background:#191a1d; }
+  & button:not(.meewav-select__option) { background:var(--studio-black-key,linear-gradient(#303136,#0d0e10)); border-color:#ffffff28; color:#e5e0eb; }
+  & button.is-primary { border-color:#bfa2e45c; color:#edddff; }
+  & :is(button,input,textarea,summary):focus-visible { outline-color:#c2a2e9; }
+  & .place-conversation__clock { margin-block:16px 12px; }
+}
 .place-conversation {
   --pc-ink: #eef1f5;
   --pc-muted: #939ca9;

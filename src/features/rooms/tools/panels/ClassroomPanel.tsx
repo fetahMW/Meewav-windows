@@ -386,7 +386,7 @@ export default function ClassroomPanel({
   const downloadResource = async (resource: ClassResource) => {
     setResourceError(null);
     try {
-      await downloadClassroomResource(resource, roomId);
+      await downloadClassroomResource(resource, roomId, source);
     } catch (error) {
       setResourceError(resourceErrorLabel(error));
     }

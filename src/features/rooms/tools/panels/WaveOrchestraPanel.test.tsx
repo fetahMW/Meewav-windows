@@ -31,6 +31,18 @@ afterEach(() => {
 });
 
 describe("WaveOrchestraPanel — Beat collectif", () => {
+  it("keeps hook order stable when a base loop becomes available or is removed", () => {
+    const wave = waveFixture();
+    const empty = { ...wave, title: "" };
+    const execute = vi.fn().mockResolvedValue(undefined);
+    const panel = (state: typeof wave) => <WaveOrchestraPanel wave={state} role="host" roomId="demo-wave-hook-order" source="demo" accountId="host" disabled={false} execute={execute} />;
+    const ui = render(panel(empty));
+    expect(screen.getByText("Aucune boucle de base")).toBeVisible();
+    ui.rerender(panel(wave));
+    expect(screen.getByText("Pistes validées")).toBeVisible();
+    ui.rerender(panel(empty));
+    expect(screen.getByText("Aucune boucle de base")).toBeVisible();
+  });
   it("uses simple Vote-style tracks and replaces the upper master with one bottom controller", () => {
     const { container } = renderPanel();
 

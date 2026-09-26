@@ -54,7 +54,7 @@ import {
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import type { PlaceRoomState } from "../../place/place.types";
 import { requestLogePreviewMediaUrl } from "../audio/logePreviewMedia.service";
-import { downloadClassroomResource } from "../classroom/classroomResourceMedia.service";
+import ClassroomResources from "./ClassroomResources";
 import { dequantizeWaveformPeaks, type WaveformPeak } from "../audio/previewWaveform";
 import { useOptionalRoomLiveCall } from "../../live-call/RoomLiveCallProvider";
 import { resolveRoomActorRole } from "../roomTools.config";
@@ -394,8 +394,8 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
   const [questionText, setQuestionText] = useState("");
   const [endingIntervention, setEndingIntervention] = useState(false);
   const [interventionError, setInterventionError] = useState<string | null>(null);
-  const [resourceDownloadId, setResourceDownloadId] = useState<string | null>(null);
-  const [resourceError, setResourceError] = useState<string | null>(null);
+
+
   const seat = classe.seats.find((candidate) => candidate.person?.id === accountId);
   const selectedStudent = classe.seats.find(candidate => candidate.person?.id === selectedStudentId)?.person;
   const activeSpeaker = classe.people.find((person) => person.id === classe.activeSpeakerId);
@@ -469,23 +469,7 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
     {seat && classe.people[0] ? <ClassroomMessageBubble roomId={roomId} accountId={accountId} peerId={classe.people[0].id} peerName={classe.people[0].name} source={source} /> : null}
     {ticketSeat !== null ? <div className="classe-ticket" role="dialog" aria-modal="true" aria-label={`Ticket place ${ticketSeat}`}><button type="button" aria-label="Fermer le ticket" onClick={() => setTicketSeat(null)}><X /></button><Armchair /><h3>Votre place dans La Classe</h3><p>Place {ticketSeat} · {((classe.seatPriceCents ?? 499) / 100).toLocaleString("fr-FR", {style:"currency",currency:"EUR"})}</p><p>{source === "demo" ? classe.seatPriceCents === 0 ? "Cette classe est gratuite." : "Maquette : aucun débit réel." : classe.seatPriceCents === 0 ? "L’accès aux places gratuites n’est pas encore disponible en LIVE." : "L’achat sécurisé de places n’est pas encore disponible."}</p>{ticketError ? <p role="alert">{ticketError}</p> : null}<button type="button" disabled={busy || source !== "demo" || !canEngage} onClick={() => { void execute({type:"classe.demo.seat.purchase", seat:ticketSeat, cents:classe.seatPriceCents ?? 499, person:{...viewer, id:accountId, role:"Élève", microphone:"ready"}}).then(() => {setTicketSeat(null); setPanel("class");}).catch(() => setTicketError("Cette place ou son prix a changé. Fermez puis choisissez à nouveau.")); }}>{classe.seatPriceCents === 0 ? "Entrer gratuitement" : "Simuler l’achat et entrer"}</button></div> : null}
     {selectedStudent ? <Suspense fallback={null}><ClassStudentPreProfile returnFocusTo={profileTriggerRef.current} boundsElement={classroomRef.current} person={selectedStudent} source={source} onClose={() => setSelectedStudentId(null)} /></Suspense> : null}
-    {panel === "resources" && canAccessResources && resources.length ? <Section eyebrow="RESSOURCES DU COURS" title="À garder après la classe" action={<span className="room-audience-count">{resources.length}</span>}>
-      <div className="room-audience-class-resources">
-        {resources.map((resource) => <article key={resource.id}>
-          <span className={`is-${resource.kind}`}>{resource.kind === "image" ? <Images /> : <FileAudio />}</span>
-          <span><strong>{resource.name}</strong><small>{resource.kind === "image" ? "IMAGE" : "AUDIO"} · {resource.size >= 1_048_576 ? `${(resource.size / 1_048_576).toFixed(1)} Mo` : `${Math.max(1, Math.round(resource.size / 1024))} Ko`}</small></span>
-          <button type="button" disabled={resourceDownloadId !== null} onClick={() => {
-            setResourceDownloadId(resource.id);
-            setResourceError(null);
-            void downloadClassroomResource(resource, roomId)
-              .catch(() => setResourceError("Le téléchargement sécurisé n’a pas pu démarrer."))
-              .finally(() => setResourceDownloadId(null));
-          }} aria-label={`Télécharger ${resource.name}`}><Download />{resourceDownloadId === resource.id ? "Préparation…" : "Télécharger"}</button>
-        </article>)}
-        {resourceError ? <p role="alert"><CircleHelp />{resourceError}</p> : null}
-      </div>
-    </Section> : null}
-    {panel === "resources" && !resources.length ? <p className="room-audience-notice">Le professeur n’a pas encore partagé de ressource.</p> : null}
+    {panel === "resources" && canAccessResources ? <ClassroomResources resources={resources} roomId={roomId} source={source} /> : null}
     {panel === "questions" ? <section className="classe-questions-panel" aria-label="Questions de la classe">
       <header><span><MessageCircleQuestion /><h2>Questions</h2></span><small>{questions.length} questions</small></header>
       <p className="classe-questions-intro">Posez votre question au professeur ou soutenez celle d’un élève.</p>

@@ -79,6 +79,7 @@ describe("Cage public result preview", () => {
     runtime.publicResults = { matchId: null };
     const ui = render(<CageViewerCompanion cage={cage} />);
     expect(screen.queryByRole("dialog")).toBeNull();
+    fireEvent.click(screen.getByRole("tab", { name: "Affichage" }));
     const expand = screen.getByRole("button", { name: "Voir en grand" });
     expand.focus();
     fireEvent.click(expand);
@@ -88,7 +89,7 @@ describe("Cage public result preview", () => {
     expect(within(dialog).queryByRole("button", { name: "Publier au public" })).toBeNull();
     ui.rerender(<CageViewerCompanion cage={{ ...cage, runtime: { ...runtime, publicResults: null } }} />);
     expect(screen.queryByRole("dialog")).toBeNull();
-    expect(screen.getByRole("tab", { name: "Compétition" })).toHaveFocus();
+    expect(screen.getByRole("tab", { name: "Affichage" })).toHaveFocus();
   });
 
   it("shows exactly the same podium to the public, without host publication controls", () => {

@@ -12,15 +12,15 @@ it("keeps Cage listener audio and live-return controls local without voice or ho
   vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
   const mutateRoom = vi.fn();
   const props: ComponentProps<typeof PlaceMixer> = {
-    room: createPlaceDemoState(), mode: "viewer", listenerOnly: true, view: "voice_fx", onView: vi.fn(),
+    room: createPlaceDemoState(), mode: "viewer", listenerOnly: true, view: "volumes", onView: vi.fn(),
     onGain: mutateRoom, onMute: mutateRoom, onCamera: mutateRoom, onVocal: mutateRoom, onTune: mutateRoom,
     pitchProvider: "none", pitchCorrection: { available: false, active: false, adapterId: null, reason: null },
     localAudioStatus: "idle", localAudioError: null, pluginInventory: [], pluginsRefreshing: false,
     nativePluginStatus: "idle", nativePluginAudioReady: false, nativePluginError: null,
     onPitchProvider: vi.fn(), onRefreshPlugins: vi.fn(), onRemoveNativePlugin: vi.fn(), onToggleMonitoring: mutateRoom,
   };
-  const { container } = render(<WaveViewerListeningProvider><PlaceMixer {...props} /></WaveViewerListeningProvider>);
-  expect(screen.getByRole("button", { name: "FX voix" })).toBeDisabled();
+  const { container, rerender } = render(<WaveViewerListeningProvider><PlaceMixer {...props} /></WaveViewerListeningProvider>);
+  expect(screen.getByRole("button", { name: "FX voix" })).toBeEnabled();
   expect(screen.queryByRole("slider", { name: "Volume de Ma voix" })).not.toBeInTheDocument();
   expect(screen.queryByText("ENVOI VERS LE HOST")).not.toBeInTheDocument();
   const audio = container.querySelector("audio")!;
@@ -31,4 +31,13 @@ it("keeps Cage listener audio and live-return controls local without voice or ho
   expect(audio.volume).toBe(0);
   fireEvent.change(screen.getByRole("slider", { name: "Volume de Direct" }), { target: { value: ".4" } });
   expect(mutateRoom).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole("button", { name: "FX voix" }));
+  expect(props.onView).toHaveBeenCalledWith("voice_fx");
+  rerender(<WaveViewerListeningProvider><PlaceMixer {...props} view="voice_fx" /></WaveViewerListeningProvider>);
+  expect(screen.getByRole("button", { name: "FX voix" })).toHaveClass("is-active");
+  expect(container.querySelector(".place-fx-view")).not.toBeNull();
+  expect(screen.queryByText("ENVOI VERS LE HOST")).not.toBeInTheDocument();
+  expect(mutateRoom).not.toHaveBeenCalled();
+  rerender(<WaveViewerListeningProvider><PlaceMixer {...props} /></WaveViewerListeningProvider>);
+  expect(screen.getByRole("slider", { name: "Volume de Audio" })).toBeVisible();
 });

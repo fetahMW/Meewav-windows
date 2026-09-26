@@ -442,19 +442,14 @@
 /* Cadeau est un outil commun : la même finition s'applique dans La Place,
  * La Loge, La Classe et La Cage, sans effacer les teintes propres aux objets. */
 .place-room-shell .is-wave-tool-skin[data-active-tool="gift"] > .room-tools-shell__panel {
-  background: #010102;
+  background: transparent;
 }
 
 .place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool {
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: var(--wave-tool-black-surface);
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, .97),
-    inset 0 1px rgba(230, 234, 240, .15),
-    inset 0 -1px #000,
-    inset 0 0 20px rgba(0, 0, 0, .36),
-    0 6px 13px rgba(0, 0, 0, .46);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__header {
@@ -764,3 +759,12 @@
 @media (prefers-reduced-motion: reduce) {
   .place-room-shell .is-wave-tool-skin :is(button, input, select, textarea) { transition: none; }
 }
+
+/* Pin controls retain contrast while the console background stays visible. */
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-card {
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+}
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-card::after { display:none; }
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-highlight-live { background:linear-gradient(145deg,#ffffff08,#15161855); }

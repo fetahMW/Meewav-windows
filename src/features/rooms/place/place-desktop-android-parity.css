@@ -775,7 +775,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player:has(.is-android-deck) {
   grid-template-rows: 38px 198px minmax(180px, 1fr);
 }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:has(.is-android-deck):not(.is-queue-open) {
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:has(.is-android-deck):not(.is-queue-open):not(.is-classroom-collapsed):not(.is-room-collapsed) {
   height: 198px;
   min-height: 198px;
   max-height: 198px;

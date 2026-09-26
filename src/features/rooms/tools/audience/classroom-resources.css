@@ -1,0 +1,24 @@
+.classe-resources { display: grid; gap: 10px; padding: 2px; color: #e5e7ec; }
+.classe-resources > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.classe-resources h2 { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -.025em; }
+.classe-resources > header p { margin: 4px 0 0; color: #a4a9b4; font-size: 11px; }
+.classe-resources > header > span { padding: 4px 8px; background: #ffffff09; border-radius: 8px; font-size: 11px; }
+.classe-resources__demo { color: #a9a0b8; font-size: 10px; }
+.classe-resource { min-width: 0; padding: 12px; border: 1px solid #ffffff18; border-radius: 13px; background: linear-gradient(155deg,#242629dd,#121416eb 70%); box-shadow: inset 0 1px #ffffff0b; }
+.classe-resource > header { display: flex; align-items: center; gap: 10px; }
+.classe-resource > header > div { min-width: 0; }
+.classe-resource__icon { flex: 0 0 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; color: #c9acee; background: #ffffff06; border: 1px solid #ffffff12; }
+.classe-resource__icon svg { width: 17px; height: 17px; }
+.classe-resource small { font-size: 9px; color: #a5aab3; }
+.classe-resource h3 { margin: 3px 0 0; color: #eceef2; font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+.classe-resource p { margin: 8px 0; color: #a5abb5; font-size: 11px; line-height: 1.5; }
+.classe-resource__actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.classe-resource__actions button, .classe-resource__preview a { display: inline-flex; gap: 6px; align-items: center; justify-content: center; min-height: 32px; padding: 6px 10px; border: 1px solid #ffffff20; border-radius: 8px; color: #e0e3e9; background: linear-gradient(#ffffff09,#ffffff02); font: 550 11px/1.3 Inter,system-ui,sans-serif; text-decoration: none; cursor: pointer; }
+.classe-resource__actions button:disabled { opacity: .5; cursor: wait; }
+.classe-resource__actions svg, .classe-resource__preview a svg { width: 14px; height: 14px; }
+.classe-resource :is(button,a):focus-visible { outline: 2px solid #bd9ce6; outline-offset: 2px; }
+.classe-resource :is(button,a):hover { border-color: #ffffff40; }
+.classe-resource__preview { margin-top: 12px; }
+.classe-resource__preview :is(video,img) { display: block; max-width: 100%; width: 100%; max-height: 240px; object-fit: contain; background: #0d0e10; border-radius: 8px; }
+.classe-resource__preview audio { display: block; width: 100%; height: 36px; color-scheme: dark; }
+.classe-resource p[role=alert] { color: #edb5be; }

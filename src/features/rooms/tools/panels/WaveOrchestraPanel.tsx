@@ -263,6 +263,12 @@ export default function WaveOrchestraPanel(props: WaveOrchestraPanelProps) {
     return () => window.clearInterval(interval);
   }, [audibleLayerIds, collectivePlaying]);
 
+  const selectedLayer = orderedLayers.find((layer) => layer.id === selectedLayerId) ?? orderedLayers[0];
+  const selectedSubmission = wave.submissions.find((item) => item.id === selectedLayer?.submissionId);
+  const selectedIsBase = !selectedLayer?.submissionId;
+  const selectedMedia = selectedIsBase ? wave.baseLoop : selectedSubmission;
+  const { url: selectedDownloadUrl } = useWaveMediaUrl(selectedMedia?.mediaUrl, selectedMedia?.mediaPath);
+
   if (!configured) return <EmptyState title="Aucune boucle de base">La base sera choisie dans le séquenceur de lancement.</EmptyState>;
 
   const chooseMasterFile = (file?: File) => {
@@ -349,11 +355,6 @@ export default function WaveOrchestraPanel(props: WaveOrchestraPanelProps) {
     return callback;
   };
 
-  const selectedLayer = orderedLayers.find((layer) => layer.id === selectedLayerId) ?? orderedLayers[0];
-  const selectedSubmission = wave.submissions.find((item) => item.id === selectedLayer?.submissionId);
-  const selectedIsBase = !selectedLayer?.submissionId;
-  const selectedMedia = selectedIsBase ? wave.baseLoop : selectedSubmission;
-  const { url: selectedDownloadUrl } = useWaveMediaUrl(selectedMedia?.mediaUrl, selectedMedia?.mediaPath);
   const selectedName = selectedIsBase ? host?.displayName ?? "Host" : selectedSubmission?.contributor.name ?? selectedLayer?.author ?? "";
   const selectedAvatar = selectedIsBase ? host?.avatarUrl : selectedSubmission?.contributor.avatarUrl;
   return <div className="room-tool-panel wave-collective is-conductor wave-sas--premium wave-beat--premium">

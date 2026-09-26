@@ -129,11 +129,11 @@ describe("Cage viewer participation beside Chat", () => {
     expect(screen.queryByRole("button", { name: "Participer au battle" })).not.toBeInTheDocument();
   });
 
-  it("mounts only one OBS MeeWav preparation panel and makes the personal mixer available after acceptance", () => {
+  it("mounts one private preparation panel and makes the personal mixer available after acceptance", () => {
     const room = viewerRoom();
     room.participants.push({ ...room.participants[0], id: "viewer-slot", profile: room.currentUserProfile!, status: "accepted" });
     renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, isHost: false });
-    expect(screen.getAllByRole("region", { name: "Préparation privée OBS MeeWav", hidden: true })).toHaveLength(1);
+    expect(screen.getAllByRole("region", { name: "Préparer votre passage en direct", hidden: true })).toHaveLength(1);
     expect(screen.getByRole("tab", { name: "Mixeur" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Je suis prêt" })).toBeDisabled();
   });

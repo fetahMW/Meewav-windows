@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { getGoldenLikeState, giveGoldenLike } from "../../goldenLikes/goldenLikeApi";
+import { getGoldenLikeState, giveGoldenLike, subscribeGoldenLikeChanges } from "../../goldenLikes/goldenLikeApi";
 import { LIVE_ROOM_PRESENTATIONS, RoomPresentationProvider } from "../roomPresentation";
 import type { RoomPerson } from "../tools/roomTools.types";
 import { createPlaceDemoState } from "./place.fixtures";
@@ -8,7 +8,7 @@ import CageArtistGoldenLike from "./CageArtistGoldenLike";
 import { CageGoldenLikeProvider, useCageGoldenLikes } from "./CageGoldenLikeContext";
 import PlaceChatSocialActions from "./PlaceChatSocialActions";
 
-vi.mock("../../goldenLikes/goldenLikeApi", () => ({ getGoldenLikeState: vi.fn(), giveGoldenLike: vi.fn() }));
+vi.mock("../../goldenLikes/goldenLikeApi", () => ({ getGoldenLikeState: vi.fn(), giveGoldenLike: vi.fn(), subscribeGoldenLikeChanges: vi.fn(() => () => undefined) }));
 const available = (artistId: string) => ({ ok: true, artistId, goldenLikesCount: 4, authenticated: true,
   usedToday: false, availableToday: true, givenToThisArtistToday: false });
 const artists: RoomPerson[] = [
@@ -27,7 +27,7 @@ afterEach(() => { cleanup(); vi.resetAllMocks(); });
 function setup(source: "demo" | "live" = "live", canEngage = true, viewerId = "viewer") {
   const room = { ...createPlaceDemoState(), source, currentUserHasGoldenLiked: false };
   const hostSend = vi.fn(async () => true);
-  const ui = render(<CageGoldenLikeProvider key={source} room={room} viewerId={viewerId} canEngage={canEngage} enabled>
+  const ui = render(<CageGoldenLikeProvider key={source} room={room} viewerId={viewerId} canSupport={canEngage} enabled>
     <RoomPresentationProvider presentation={LIVE_ROOM_PRESENTATIONS.cage}>
       <PlaceChatSocialActions room={room} canEngage={canEngage} goldenUnavailable={false} onLike={vi.fn()} onGoldenLike={hostSend} onOpenDonation={vi.fn()} />
       {artists.map(person => <CageArtistGoldenLike key={person.id} person={person} canEngage={canEngage} viewerId={viewerId} />)}
@@ -41,6 +41,27 @@ async function offer(name: string) {
 }
 
 describe("Cage support recipients", () => {
+  it("refreshes confirmed quota after a remote event and restores availability after cooldown", async () => {
+    let refresh = () => {};
+    vi.mocked(subscribeGoldenLikeChanges).mockImplementation((_viewer, _artists, callback) => { refresh = callback; return () => {}; });
+    setup();
+    await screen.findByRole("button", { name: "Offrir un Golden Like à Artiste A" });
+    vi.mocked(getGoldenLikeState).mockImplementation(async id => ({ ...available(id), usedToday: true, availableToday: false, givenArtistId: "elsewhere" }));
+    act(() => refresh());
+    await waitFor(() => expect(screen.getByRole("button", { name: /indisponible aujourd’hui pour Artiste A/ })).toBeDisabled());
+    vi.mocked(getGoldenLikeState).mockImplementation(async id => available(id));
+    fireEvent(window, new Event("focus"));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Offrir un Golden Like à Artiste A" })).toBeEnabled());
+    expect(giveGoldenLike).not.toHaveBeenCalled();
+  });
+  it("lets an authenticated viewer support an artist without being a stage participant", async () => {
+    const room = { ...createPlaceDemoState(), source: "live" as const, currentUserHasGoldenLiked: false };
+    render(<CageGoldenLikeProvider room={room} viewerId="viewer" canSupport enabled>
+      <CageArtistGoldenLike person={artists[0]} canEngage={false} viewerId="viewer" />
+    </CageGoldenLikeProvider>);
+    await offer(artists[0].name);
+    await waitFor(() => expect(giveGoldenLike).toHaveBeenCalledWith(artists[0].id));
+  });
   it("waits for availability before offering a gift and allows a failed lookup to be retried", async () => {
     let finish!: (value: Awaited<ReturnType<typeof getGoldenLikeState>>) => void;
     vi.mocked(getGoldenLikeState).mockImplementation(id => id === artists[0].id
@@ -107,7 +128,7 @@ describe("Cage support recipients", () => {
     expect(giveGoldenLike).not.toHaveBeenCalled();
   });
 
-  it("does not offer self-support or allow a passive viewer to send", () => {
+  it("does not offer self-support or allow an unauthenticated viewer to send", () => {
     setup("live", false);
     expect(screen.queryByRole("button", { name: /Offrir un Golden Like/ })).not.toBeInTheDocument();
     expect(getGoldenLikeState).not.toHaveBeenCalled();
@@ -122,7 +143,7 @@ describe("Cage support recipients", () => {
     function Probe() { controls = useCageGoldenLikes()!; return null; }
     let finish!: (value: Awaited<ReturnType<typeof giveGoldenLike>>) => void;
     vi.mocked(giveGoldenLike).mockImplementation(() => new Promise(resolve => { finish = resolve; }));
-    render(<CageGoldenLikeProvider room={room} viewerId="viewer" canEngage enabled><Probe /></CageGoldenLikeProvider>);
+    render(<CageGoldenLikeProvider room={room} viewerId="viewer" canSupport enabled><Probe /></CageGoldenLikeProvider>);
     let first!: Promise<boolean>;
     act(() => { first = controls.giveArtist(artists[0].id); });
     await waitFor(() => expect(giveGoldenLike).toHaveBeenCalledOnce());
@@ -135,7 +156,7 @@ describe("Cage support recipients", () => {
     const room = { ...createPlaceDemoState(), source: "live" as const, currentUserHasGoldenLiked: false };
     let controls!: NonNullable<ReturnType<typeof useCageGoldenLikes>>;
     function Probe() { controls = useCageGoldenLikes()!; return null; }
-    const view = (optimistic: boolean) => <CageGoldenLikeProvider room={{ ...room, currentUserHasGoldenLiked: optimistic }} viewerId="viewer" canEngage enabled><Probe /></CageGoldenLikeProvider>;
+    const view = (optimistic: boolean) => <CageGoldenLikeProvider room={{ ...room, currentUserHasGoldenLiked: optimistic }} viewerId="viewer" canSupport enabled><Probe /></CageGoldenLikeProvider>;
     let finish!: (sent: boolean) => void;
     const sendHost = vi.fn(() => new Promise<boolean>(resolve => { finish = resolve; }));
     const ui = render(view(false));

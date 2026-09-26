@@ -1,4 +1,4 @@
-import { CameraOff, Mic, Pause, Radio, Swords, TriangleAlert, UserRound } from "lucide-react";
+import { CameraOff, Grip, Mic, Pause, Radio, Swords, TriangleAlert, UserRound } from "lucide-react";
 import type { CageState, RoomPerson } from "../tools/roomTools.types";
 import type { CageStageProgramProps } from "./CageStageProgram";
 import { resolveCageFeed, type FeedAssignment } from "./cageStageFeeds";
@@ -7,7 +7,8 @@ import { resolveParticipantSource, type PlaceStageParticipant } from "./placeSta
 import "./cage-viewer-stage.css";
 import CageArtistGoldenLike from "./CageArtistGoldenLike";
 import RoomViewerHostSupport from "./RoomViewerHostSupport";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import { useLocalVideoOverlay } from "./useLocalVideoOverlay";
 
 type Props = Omit<CageStageProgramProps, "isHost" | "isGuest"> & { cage: CageState };
 const noop = () => undefined;
@@ -56,7 +57,7 @@ function ViewerCamera({ person, assignment, label, active, side, audible, artist
   </article>;
 }
 
-/** iOS CageLiveStage: host first, two stable artist slots during Battle, host commentary below. */
+/** Stable camera slots: the local host overlay never reduces the artists' video area. */
 export default function CageViewerStage(props: Props) {
   const { cage, room, onStage } = props;
   const match = cage.matches.find((item) => item.id === (cage.runtime ? cage.runtime.activeMatchId : cage.currentMatchId));
@@ -77,11 +78,16 @@ export default function CageViewerStage(props: Props) {
   const activeSide = cage.battleStatus === "live-a" ? "A" : cage.battleStatus === "live-b" ? "B" : null;
   const fighters = match ? [match.competitorA, match.competitorB] : [guests[0] && personFor(guests[0]), guests[1] && personFor(guests[1])];
   const interruption = cage.battleStatus === "paused" ? "Duel en pause" : cage.battleStatus === "incident" ? "Le direct reprend dans un instant" : null;
+  const stageRef = useRef<HTMLElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const floating = showBattle || Boolean(performer);
+  const overlay = useLocalVideoOverlay(stageRef, hostRef, floating, room.currentUserProfile?.id ?? "anonymous");
 
-  return <section className={`cage-viewer-stage${showBattle || performer ? " has-artists" : ""}${showBattle ? " is-battle" : ""}`} aria-label={showBattle ? "La Cage · duel en direct" : "La Cage · en direct"}>
-    <div className="cage-viewer-stage__host">
+  return <section ref={stageRef} className={`cage-viewer-stage${showBattle || performer ? " has-artists" : ""}${showBattle ? " is-battle" : ""}`} aria-label={showBattle ? "La Cage · duel en direct" : "La Cage · en direct"}>
+    <div ref={hostRef} className={`cage-viewer-stage__host${overlay.dragging ? " is-dragging" : ""}`} style={overlay.style}>
       <ViewerCamera {...props} person={hostPerson} assignment={hostAssignment} label="HOST · COMMENTAIRE" audible={!showBattle && !performer}
         viewerActions={!showBattle && !performer && props.hostActions ? <RoomViewerHostSupport>{props.hostActions}</RoomViewerHostSupport> : undefined} />
+      {floating ? <button type="button" className="cage-viewer-stage__drag" aria-label="Déplacer la miniature du host" title="Glissez pour déplacer · flèches au clavier" {...overlay.handleProps}><Grip aria-hidden="true" /></button> : null}
     </div>
     {showBattle ? <div className="cage-viewer-stage__fighters">
       {(["A", "B"] as const).map((side, index) => {

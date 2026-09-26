@@ -1322,7 +1322,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
   return (
     <ViewerMixerContext.Provider value={place.isHost ? null : { ...viewerMix, prepareVoice: prepareViewerVoice, voiceStatus: localAudio.status, publication: roomMedia.voiceAudible ? "En scène" : contactMixAudible ? "Avec le host" : roomMedia.status === "reconnecting" ? "Reconnexion…" : "Préparation locale" }}>
     <RoomPresentationProvider presentation={roomPresentation}>
-    <CageGoldenLikeProvider key={`${room.source}:${room.id}:${place.activeUserId}`} room={room} viewerId={place.activeUserId} canEngage={place.canEngage} enabled={roomPresentation.id === "cage" && !place.isHost}>
+    <CageGoldenLikeProvider key={`${room.source}:${room.id}:${place.activeUserId}`} room={room} viewerId={place.activeUserId} canSupport={room.source === "demo" || Boolean(currentUserId)} enabled={roomPresentation.id === "cage" && !place.isHost}>
       <SwitchRoomInvitation controller={switching} hostName={room.host.displayName}/>
       {shellbarVisible ? (
         <PlaceRoomShellHeader

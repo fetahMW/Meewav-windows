@@ -4,6 +4,7 @@ import type { CageState, RoomPerson } from "../roomTools.types";
 export type AudienceMatch = {
   id: string; round: number; ordinal: number; a?: RoomPerson; b?: RoomPerson;
   completed: boolean; winner?: RoomPerson;
+  solo?: boolean;
 };
 
 /** Public projection, following iOS rooms-goal cd2d40d7. Never show a host's draft roster. */
@@ -13,6 +14,27 @@ export function cageAudienceProgram(cage: CageState, accountId: string | undefin
   const format = runtime?.config.format ?? cage.format;
   const formatTitle = !published ? "Programme" : format === "championship" ? "Championnat" : format === "tournament" ? "Tournoi" : "Duel";
   const person = (id: string | null) => runtime?.participants.find(item => item.id === id)?.person;
+  if (format === "open-mic" && runtime) {
+    const entries = runtime.openMicEntries ?? [];
+    const current = entries.find(entry => entry.id === (runtime.activeEntryId ?? runtime.feedbackEntryId));
+    const projectEntry = (entry: typeof entries[number]): AudienceMatch => ({ id: entry.id, round: 1, ordinal: entry.order, a: person(entry.participantId), completed: ["PERFORMED", "SKIPPED"].includes(entry.status), solo: true });
+    const onAir = current && ["ON_STAGE", "IN_PROGRESS", "PAUSED", "PERFORMED"].includes(current.status);
+    const active = current && onAir ? projectEntry(current) : undefined;
+    const matches = published ? entries.map(projectEntry).sort((a, b) => a.ordinal - b.ordinal) : [];
+    const performing = current?.status === "IN_PROGRESS";
+    const voting = Boolean(active && current?.feedback?.open);
+    const mine = Boolean(accountId && active?.a?.id === accountId);
+    const elapsed = (current?.timer.elapsedSeconds ?? 0) + (performing && current?.timer.startedAt ? Math.max(0, (now - Date.parse(current.timer.startedAt)) / 1000) : 0);
+    const seconds = voting && current?.feedback?.endsAt ? Math.max(0, Math.ceil((Date.parse(current.feedback.endsAt) - now) / 1000)) : current && active && (performing || current.status === "PAUSED") ? Math.max(0, Math.ceil(current.durationSeconds - elapsed)) : null;
+    return { published, formatTitle: "Open Mic", matches, active, performing, voting, mine,
+      title: runtime.status === "CANCELLED" ? "Open Mic interrompu" : runtime.status === "COMPLETED" ? "Open Mic terminé" : voting ? "À vous de réagir" : performing ? mine ? "C’est ton tour de performer" : `${active?.a?.name ?? "L’artiste"} performe` : current?.status === "PAUSED" ? "Passage en pause" : active ? "L’artiste rejoint la scène" : "Les passages se préparent",
+      detail: voting ? "Les réactions du public sont ouvertes sur le live." : "Le host organise les passages depuis la régie.",
+      seconds: seconds !== null && Number.isFinite(seconds) ? seconds : null,
+      passage: active ? String(active.ordinal) : null,
+      currentVote: accountId ? current?.feedback?.responses[accountId] : undefined,
+      artistCount: new Set(matches.map(match => match.a?.id).filter(Boolean)).size,
+    };
+  }
   const project = (match: CageCompetitionMatch): AudienceMatch => ({
     id: match.id, round: match.round, ordinal: match.order, a: person(match.participantAId), b: person(match.participantBId),
     completed: ["RESOLVED", "CLOSED"].includes(match.status),

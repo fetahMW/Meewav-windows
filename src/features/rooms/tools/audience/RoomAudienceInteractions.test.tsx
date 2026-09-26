@@ -16,6 +16,7 @@ vi.mock("../audio/logePreviewMedia.service", () => ({
 
 vi.mock("../classroom/classroomResourceMedia.service", () => ({
   downloadClassroomResource,
+  resolveClassroomResourceUrl: vi.fn(),
 }));
 
 afterEach(() => {
@@ -207,9 +208,9 @@ describe("RoomAudienceInteractions", () => {
     await roomToolsRepository.execute("classe", roomId, "teacher", { type: "classe.resource.add", resource });
     render(<RoomAudienceInteractions roomType="classe" room={room(roomId)} isHost={false} isGuest canEngage />);
     fireEvent.click(await screen.findByRole("tab", {name: "Ressources"}));
-    expect(await screen.findByText("À garder après la classe")).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Ressources du cours" })).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Télécharger fiche-rythmique.png" }));
-    await waitFor(() => expect(downloadClassroomResource).toHaveBeenCalledWith(expect.objectContaining({ id: resource.id }), roomId));
+    await waitFor(() => expect(downloadClassroomResource).toHaveBeenCalledWith(expect.objectContaining({ id: resource.id }), roomId, "demo"));
   });
 
   it("does not expose Class resources to a non-seated public Viewer", async () => {
@@ -318,7 +319,8 @@ describe("RoomAudienceInteractions", () => {
     expect(screen.queryByRole("button", { name: /^Voter /i })).not.toBeInTheDocument();
     expect(screen.queryByText("RÉSULTAT RÉVÉLÉ")).not.toBeInTheDocument();
     expect(screen.queryByText("Bracket public")).not.toBeInTheDocument();
-    expect(screen.queryByText(/SIMULATION|Paris versus Marseille/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Paris versus Marseille/i)).not.toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Format de la simulation" })).toBeVisible();
   });
 
   it("submits a VIP question and never exposes another member's private moment", async () => {

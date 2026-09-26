@@ -10,6 +10,7 @@ import { applyCageCompetitionCommand, cageCommandAlreadyApplied, finalizeExpired
 import { readRoomLaunchSession, applyRoomLaunchTools } from "../launch/roomLaunch";
 import { isRoomLaunchAudio, resolveRoomLaunchAudio } from "../launch/roomLaunchAudio";
 import { createRoomToolsFixture } from "./roomTools.fixtures";
+import { createClassroomDemoResources } from "./classroom/classroomResources.demo";
 import { seedWaveTestProduction } from "./waveTestPacks";
 import { WAVE_LOOP_CATEGORIES, waveAcceptedCategories, waveSubmissionCategory } from "./waveLoopCategories";
 import {
@@ -1980,7 +1981,10 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
         }
       } catch { throw new Error("cage_demo_restore_failed"); }
     }
-    if (existing) return this.refreshCage(existing);
+    if (existing) {
+      this.seedClassroomResources(existing);
+      return this.refreshCage(existing);
+    }
     if (roomType === "cage" && typeof window !== "undefined") {
       try {
         const persisted = JSON.parse(window.localStorage.getItem(`meewav:cage:competition:v1:${roomId}`) ?? "null") as RoomToolsState | null;
@@ -2011,8 +2015,16 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
     }
     const launchSession = readRoomLaunchSession(roomId);
     if (launchSession && launchSession.configuration.roomType === roomType) applyRoomLaunchTools(fixture, launchSession);
+    this.seedClassroomResources(fixture);
     this.states.set(stateKey, fixture);
     return fixture;
+  }
+
+  private seedClassroomResources(state: RoomToolsState) {
+    if (!state.classe || state.classe.demoResourcesVersion || !ROOMS_HOME_CATALOG.some(room => room.id === state.roomId && room.roomType === "classe")) return;
+    if (!state.classe.resources?.length) state.classe.resources = createClassroomDemoResources();
+    state.classe.demoResourcesVersion = 1;
+    if (typeof window !== "undefined") try { window.localStorage.setItem(`meewav:classe:demo:v2:${state.roomId}`, JSON.stringify(state)); } catch { /* Demo remains available in memory. */ }
   }
 
   async load(roomType: SpecializedRoomId, roomId: string) {

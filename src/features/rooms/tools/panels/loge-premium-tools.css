@@ -1922,3 +1922,14 @@
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console :is(.vip-moment__fan,.vip-member-actions) { backdrop-filter:none; -webkit-backdrop-filter:none; }
 .place-room-shell .room-tools-shell.is-loge[data-active-tool="gift"] > .room-tools-shell__panel { height:100%; overflow-y:auto; }
 .place-room-shell .room-tools-shell.is-loge[data-active-tool="gift"] .place-chat-workspace { display:block; height:100%; }
+
+/* The members remain on the console surface; the dock never grows on selection. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] > .room-tools-shell__panel,
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-dedication"] .vip-moment.is-member-console {
+  background: transparent;
+}
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__recipient { height:28px; min-height:28px; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__button { height:54px; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__button > svg { color:#c7a5ee; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__button.is-video > svg { color:#e1b2df; }
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool] .vip-moment.is-member-console .vip-member-actions__button.is-live > svg { color:#bba9ec; }

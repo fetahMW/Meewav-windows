@@ -4,8 +4,10 @@ import type { RoomPerson } from "../tools/roomTools.types";
 import { useCageGoldenLikes } from "./CageGoldenLikeContext";
 import RoomGoldenLikeReactions from "./RoomGoldenLikeReactions";
 
-export default function CageArtistGoldenLike({ person, canEngage, viewerId }: { person: RoomPerson; canEngage: boolean; viewerId?: string }) {
+export default function CageArtistGoldenLike({ person, viewerId }: { person: RoomPerson; canEngage: boolean; viewerId?: string }) {
   const quota = useCageGoldenLikes();
+  // Supporting an artist requires an authenticated viewer, not a slot on stage.
+  const canEngage = quota?.canSupport === true;
   const load = quota?.load;
   const day = quota?.day;
   const [attempt, setAttempt] = useState(0);
