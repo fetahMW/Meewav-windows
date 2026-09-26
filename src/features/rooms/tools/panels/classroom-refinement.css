@@ -14,10 +14,7 @@
   --classroom-dock-control-shadow: inset 0 1px rgba(224, 232, 255, .08), 0 2px 4px rgba(0, 0, 0, .18);
   gap: 8px;
   padding: 5px 8px 8px;
-  background:
-    radial-gradient(ellipse 55% 35% at 100% 5%, rgba(40, 70, 135, .19), transparent 80%),
-    radial-gradient(ellipse 52% 28% at 0% 90%, rgba(38, 76, 124, .13), transparent 80%),
-    #030911;
+  background: transparent;
   color: #edf2fc;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,6 +23,7 @@
 .room-tools-shell.is-classe .is-classroom .classroom-roster { padding: 2px 1px 1px; }
 .room-tools-shell.is-classe .is-classroom .classroom-seats { gap: 5px; }
 .room-tools-shell.is-classe .is-classroom .classroom-seat {
+  --classroom-seat-rim: linear-gradient(145deg, rgba(160, 196, 255, .24), rgba(76, 115, 169, .06) 36%, rgba(17, 41, 70, .08) 65%, rgba(110, 165, 234, .18));
   container-type: size;
   position: relative;
   isolation: isolate;
@@ -35,11 +33,11 @@
     radial-gradient(ellipse 110% 50% at 2% 0%, rgba(144, 179, 239, .08), transparent 68%) padding-box,
     radial-gradient(ellipse 34% 80% at 100% 100%, rgba(93, 145, 222, .09), transparent 75%) padding-box,
     var(--classroom-seat-surface) padding-box,
-    linear-gradient(145deg, rgba(160, 196, 255, .52), rgba(76, 115, 169, .12) 36%, rgba(17, 41, 70, .14) 65%, rgba(110, 165, 234, .44)) border-box;
+    var(--classroom-seat-rim) border-box;
   box-shadow:
     inset 0 1px 1px rgba(205, 226, 255, .07),
     inset 1px 0 1px rgba(122, 170, 236, .04),
-    inset 0 -1px 1px rgba(115, 166, 239, .2),
+    inset 0 -1px 1px rgba(115, 166, 239, .06),
     0 2px 5px rgba(0, 0, 0, .36);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
@@ -58,19 +56,21 @@
   pointer-events: none;
 }
 .room-tools-shell.is-classe .is-classroom .classroom-seat:is(:hover, :focus-within) {
-  border: 1px solid rgba(145, 186, 247, .46);
+  --classroom-seat-rim: linear-gradient(145deg, rgba(160, 196, 255, .34), rgba(76, 115, 169, .09) 40%, rgba(110, 165, 234, .22));
+  border: 1px solid transparent;
   box-shadow:
-    inset 0 1px 2px rgba(204, 228, 255, .22),
-    inset 0 0 13px rgba(104, 159, 241, .12),
+    inset 0 1px 1px rgba(204, 228, 255, .08),
     0 2px 6px rgba(0, 0, 0, .36);
   transform: none;
 }
 .room-tools-shell.is-classe .is-classroom .classroom-seat.is-selected {
-  border: 1px solid rgba(159, 200, 255, .78);
+  --classroom-seat-rim: linear-gradient(145deg, rgba(181, 159, 226, .48), rgba(139, 118, 175, .12) 40%, rgba(170, 145, 222, .3));
+  border: 1px solid transparent;
   background:
-    radial-gradient(ellipse at 70% -12%, rgba(111, 171, 255, .28), transparent 72%),
-    var(--classroom-seat-surface);
-  box-shadow: inset 0 1px 2px rgba(218, 235, 255, .32), inset 0 0 16px rgba(83, 146, 237, .16), 0 0 8px rgba(79, 142, 240, .2);
+    radial-gradient(ellipse at 70% -12%, rgba(165, 140, 214, .12), transparent 72%) padding-box,
+    var(--classroom-seat-surface) padding-box,
+    var(--classroom-seat-rim) border-box;
+  box-shadow: inset 0 1px 1px rgba(218, 215, 235, .1), 0 0 7px rgba(158, 120, 216, .09);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   transform: none;
@@ -93,7 +93,7 @@
 }
 .room-tools-shell.is-classe .is-classroom .classroom-seat__avatar,
 .room-tools-shell.is-classe .is-classroom .classroom-seat__empty > span {
-  --portrait-size: min(40cqi, clamp(20px, calc(100cqh - 26px), 50px));
+  --portrait-size: min(40cqi, clamp(16px, calc(100cqh - 26px), 50px));
   width: var(--portrait-size);
   height: var(--portrait-size);
   flex-basis: var(--portrait-size);
@@ -361,28 +361,37 @@
 .room-tools-shell.is-classe .is-classroom .classroom-resource-list article > button { width: 32px; }
 .room-tools-shell.is-classe .is-classroom .classroom-resource-panel > p { font-size: 10px; line-height: 1.4; }
 
-/* The player state, rather than a height threshold, owns roster scrolling. */
-.place-mixer.has-classroom-player.is-classroom-player-collapsed .room-tools-shell.is-classe .is-classroom .classroom-roster {
+/* All 24 seats share the available canvas, with either player state. */
+.room-tools-shell.is-classe .is-classroom .classroom-roster {
   overflow: hidden;
   scrollbar-gutter: auto;
 }
-.place-mixer.has-classroom-player.is-classroom-player-collapsed .room-tools-shell.is-classe .is-classroom .classroom-seats {
+.room-tools-shell.is-classe .is-classroom .classroom-seats {
   box-sizing: border-box;
   height: 100%;
   min-height: 0;
   padding: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(6, minmax(0, 1fr));
 }
-.place-mixer.has-classroom-player:not(.is-classroom-player-collapsed) .room-tools-shell.is-classe .is-classroom .classroom-roster {
-    overflow-y: auto;
-    scrollbar-color: #40567f transparent;
-    scrollbar-width: thin;
-    scrollbar-gutter: stable;
+@container classroom (min-width: 420px) and (max-height: 410px) {
+  .room-tools-shell.is-classe .is-classroom .classroom-seats {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+  }
 }
-.place-mixer.has-classroom-player:not(.is-classroom-player-collapsed) .room-tools-shell.is-classe .is-classroom .classroom-seats {
+/* Preserve usable targets in exceptionally narrow embedded panels. */
+@container classroom (max-width: 259px) {
+  .room-tools-shell.is-classe .is-classroom .classroom-roster { overflow-y: auto; }
+  .room-tools-shell.is-classe .is-classroom .classroom-seats {
     height: auto;
-    min-height: 409px;
-    grid-template-rows: repeat(6, minmax(64px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: 76px;
+  }
+}
+@container classroom (max-width: 195px) {
+  .room-tools-shell.is-classe .is-classroom .classroom-seats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Questions: quiet lacquer cards; status lives in the badge, never a side stripe. */
@@ -502,8 +511,15 @@
   .room-tools-shell.is-classe .is-classroom .classroom-resource-panel { animation: none; }
 }
 
-.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking { border-color:#53e7a0; box-shadow:inset 0 0 0 1px #53e7a0,0 0 12px #34dd8038; }
-.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking .classroom-seat__portrait { outline:2px solid #53e7a0; outline-offset:2px; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking {
+  --classroom-seat-rim: linear-gradient(145deg, #8ddbc17a, #589d8526 40%, #6bc6a44d);
+  border-color: transparent;
+  box-shadow: inset 0 1px 1px #b0edd50f, 0 0 8px #5ac99d14;
+}
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking .classroom-seat__portrait {
+  outline: none;
+  box-shadow: 0 0 0 1px #6ad6b84d, 0 0 7px #4fc1a317;
+}
 .classroom-seat-price { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:11px; }
 .classroom-seat-price input { width:78px; padding:5px; background:#090a0c; border:1px solid #555; border-radius:8px; }
 

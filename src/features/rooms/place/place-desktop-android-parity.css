@@ -493,7 +493,21 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.wave-tools-nav .place-tools-console__switch,.place-mixer__subnav) > button:hover { background:#a98ef014; color:#ddd0ff; }
 
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis { background:linear-gradient(165deg,#191b1f,#08090b 35%,#000); }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsed:has(.is-android-deck) { height:52px; min-height:52px; max-height:52px; }
+/* Folding only releases space below the player; its upper edge stays fixed.
+ * Override the shared fixed rows as well as the expanded Desktop deck sizing. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-mixer.has-audio-player.has-classroom-player.is-classroom-player-collapsed {
+  grid-template-rows: var(--studio-subnav-height, 42px) 52px minmax(0, 1fr) !important;
+  row-gap: 0;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsed:has(.is-android-deck) {
+  box-sizing: border-box;
+  align-self: start;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  margin-block: 0 4px;
+  overflow: hidden;
+}
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsed:has(.is-android-deck) .place-mixer-audio__surface { display:none; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsible:not(.is-classroom-collapsed) .is-android-deck > .place-mixer-audio__controls { padding-right:44px; }
 

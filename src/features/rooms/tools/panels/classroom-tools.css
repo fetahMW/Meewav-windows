@@ -7,9 +7,7 @@
   --classe-line: rgba(225, 210, 244, .085);
   --classe-muted: rgba(226, 217, 237, .56);
   grid-template-rows: 78px minmax(0, 1fr);
-  background:
-    radial-gradient(circle at 95% 6%, rgba(121, 76, 214, .07), transparent 28%),
-    linear-gradient(180deg, #0a0911 0%, #06060c 100%);
+  background: transparent;
 }
 
 .room-tools-shell.is-classe .room-tools-shell__top { display: none; }
@@ -2314,21 +2312,6 @@
   .room-tools-shell.is-classe .classroom-seat__person strong { font-size: 9.5px; }
 }
 
-/* The expanded audio deck deliberately trades roster space for transport controls.
-   Keep cards readable there; collapsing the deck restores the 24-up, no-scroll view. */
-.place-mixer.has-classroom-player:not(.is-classroom-player-collapsed) .room-tools-shell.is-classe .classroom-roster {
-  overflow-y: auto;
-  scrollbar-color: rgba(113, 145, 255, .42) transparent;
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-}
-
-.place-mixer.has-classroom-player:not(.is-classroom-player-collapsed) .room-tools-shell.is-classe .classroom-seats {
-  height: auto;
-  min-height: 380px;
-  grid-template-rows: repeat(6, minmax(60px, 1fr));
-}
-
 @media (prefers-reduced-motion: reduce) {
   .room-tools-shell.is-classe .classroom-command-dock button,
   .room-tools-shell.is-classe .classroom-command-dock button::after { transition: none; }
@@ -2917,8 +2900,7 @@
   .class-questions__title > i { width: 24px; height: 24px; flex-basis: 24px; }
 }
 
-/* Price, roster and command dock occupy separate rows, even with the deck collapsed. */
-.room-tools-shell.is-classe .room-tool-panel.is-classroom {grid-template-rows:auto minmax(0,1fr) auto;}
-.room-tool-panel.is-classroom > .classroom-seat-price {grid-row:1;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.room-tool-panel.is-classroom > .classroom-roster {grid-row:2;}
-.room-tool-panel.is-classroom > .classroom-command-dock {grid-row:3;}
+/* The roster fills the available height above its compact command dock. */
+.room-tools-shell.is-classe .room-tool-panel.is-classroom { grid-template-rows: minmax(0, 1fr) auto; }
+.room-tool-panel.is-classroom > .classroom-roster { grid-row: 1; }
+.room-tool-panel.is-classroom > .classroom-command-dock { grid-row: 2; }

@@ -1,4 +1,3 @@
-import ClassSeatPrice from "./ClassSeatPrice";
 import ClassroomMessageBubble from "../classroom/ClassroomMessageBubble";
 import { appendClassroomDemoMessage } from "../classroom/classroomDemoMessages";
 import {
@@ -394,7 +393,6 @@ export default function ClassroomPanel({
   };
 
   return <div className="room-tool-panel is-classroom">
-    <ClassSeatPrice cents={classe.seatPriceCents ?? 499} disabled={disabled} execute={execute}/>
     {selectedStudent ? <ClassroomMessageBubble roomId={roomId} accountId={classe.people[0].id} peerId={selectedStudent.id} peerName={selectedStudent.name} source={source} /> : null}
     <ClassroomRoster classe={classe} audioBridge={audioBridge} selectedStudentId={selectedStudentId} onSelectStudent={onSelectStudent} />
 

@@ -58,7 +58,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
     const audio = container.querySelector("audio")!;
     audio.currentTime = 12;
 
-    const collapse = within(player).getByRole("button", { name: "Replier le lecteur audio de La Classe" });
+    const collapse = within(player).getByRole("button", { name: "Replier le lecteur audio · La Classe" });
     const controlledId = collapse.getAttribute("aria-controls")!;
     const controlledSurface = document.getElementById(controlledId)!;
     expect(collapse).toHaveAttribute("aria-expanded", "true");
@@ -69,7 +69,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
     expect(within(player).getByRole("menu", { name: "Choisir la source" })).toBeVisible();
     fireEvent.click(collapse);
 
-    const expand = within(player).getByRole("button", { name: "Déplier le lecteur audio de La Classe" });
+    const expand = within(player).getByRole("button", { name: "Déplier le lecteur audio · La Classe" });
     expect(expand).toHaveAttribute("aria-expanded", "false");
     expect(expand).toHaveAttribute("aria-controls", controlledId);
     expect(player).toHaveClass("is-classroom-collapsed");
@@ -84,7 +84,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
     expect(screen.queryByRole("dialog", { name: "Playlist du Mixeur" })).not.toBeInTheDocument();
 
     fireEvent.click(expand);
-    const collapseAgain = within(player).getByRole("button", { name: "Replier le lecteur audio de La Classe" });
+    const collapseAgain = within(player).getByRole("button", { name: "Replier le lecteur audio · La Classe" });
     expect(collapseAgain).toHaveAttribute("aria-expanded", "true");
     expect(player).not.toHaveClass("is-classroom-collapsed");
     expect(container.querySelector(".place-mixer")).not.toHaveClass("is-classroom-player-collapsed");
@@ -101,7 +101,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
   it("laisse le lecteur de La Place strictement inchangé", () => {
     render(<Mixer classroom={false} />);
     const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
-    expect(within(player).queryByRole("button", { name: /lecteur audio de La Classe/i })).not.toBeInTheDocument();
+    expect(within(player).queryByRole("button", { name: /lecteur audio · La Classe/i })).not.toBeInTheDocument();
     expect(player).not.toHaveClass("is-classroom-collapsible");
   });
 });
