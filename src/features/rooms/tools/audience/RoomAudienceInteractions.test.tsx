@@ -73,7 +73,7 @@ describe("RoomAudienceInteractions", () => {
     render(<RoomAudienceInteractions roomType={roomType} room={currentRoom} isHost={false} isGuest={false} canEngage />);
 
     if (roomType === "cage") expect(await screen.findByRole("region", { name: "La Cage · participation" })).toBeVisible();
-    else expect(await screen.findByText(roomType === "loge" ? "Un moment à part." : "Interactions")).toBeVisible();
+    else expect(await screen.findByText(roomType === "loge" ? "Bienvenue, les fans." : "Interactions")).toBeVisible();
     expect(screen.queryByText("Envoyer un cadeau")).not.toBeInTheDocument();
     expect(screen.queryByText(currentRoom.poll.question)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Premier titre|Deuxième titre/i })).not.toBeInTheDocument();
@@ -345,7 +345,8 @@ describe("RoomAudienceInteractions", () => {
     const now = vi.spyOn(Date, "now").mockReturnValue(new Date("2026-09-19T00:00:00.000Z").getTime());
     try {
       render(<RoomAudienceInteractions roomType="loge" room={room("audience-loge-expired")} isHost={false} isGuest={false} canEngage />);
-      expect(await screen.findByText("L’artiste prépare une avant-première")).toBeVisible();
+      expect(await screen.findByRole("heading", { name: "Bienvenue, les fans." })).toBeVisible();
+      expect(screen.getByText("Les contenus partagés pendant le direct apparaîtront ici.")).toBeVisible();
       expect(screen.queryByText("eclipse-premix-v7.wav")).not.toBeInTheDocument();
       expect(requestLogePreviewMediaUrl).not.toHaveBeenCalled();
     } finally { now.mockRestore(); }

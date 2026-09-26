@@ -137,6 +137,7 @@
   font-weight: 500;
 }
 .loge-viewer__content {
+  container-type: inline-size;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -467,6 +468,91 @@
 }
 .loge-viewer__moment[hidden] {
   display: none;
+}
+
+/* The first tab welcomes fans; live extras follow the participation shortcuts. */
+.loge-viewer__home-welcome {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 13px;
+  padding: 8px 0 6px;
+}
+.loge-viewer__host-portrait {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #ffffff20;
+  border-radius: 13px;
+  background: linear-gradient(155deg, #292b30, #101113);
+  box-shadow: inset 0 1px #ffffff12, 0 3px 8px #0004;
+  color: #c4b1e1;
+}
+.loge-viewer__host-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.loge-viewer__home-welcome > div { min-width: 0; }
+.loge-viewer__home-welcome small { display: block; color: #b8a0d7; font-size: 9px; font-weight: 600; letter-spacing: .075em; overflow-wrap: anywhere; }
+.loge-viewer .loge-viewer__home-welcome h2 { margin: 5px 0 7px; font-size: clamp(19px, 1.6vw, 23px); font-weight: 620; letter-spacing: -.03em; line-height: 1.2; }
+.loge-viewer .loge-viewer__home-welcome p { margin: 0; color: #b0b3bd; font-size: 11px; line-height: 1.5; }
+.loge-viewer button.loge-viewer__join-chat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 11px 14px;
+  border: 1px solid #ccb7f14a;
+  border-radius: 13px;
+  background: linear-gradient(180deg, #5137a1, #4e349f 54%, #3c277b);
+  box-shadow: inset 0 1px #ffffff21, 0 3px 8px #0004;
+  text-align: left;
+  color: #faf8ff;
+}
+.loge-viewer button.loge-viewer__join-chat:hover { border-color: #d8c6f285; background: linear-gradient(180deg, #5b40ad, #49318c); }
+.loge-viewer__join-chat > span { display: grid; min-width: 0; gap: 2px; }
+.loge-viewer__join-chat strong { font-size: 13px; font-weight: 600; }
+.loge-viewer__join-chat small { font-size: 10px; color: #e1daef; }
+.loge-viewer__join-chat > svg:last-child { margin-left: auto; width: 16px; height: 16px; }
+.loge-viewer__home-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.loge-viewer__home-actions > button {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 12px;
+  align-content: start;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 12px;
+  border-color: #c6c9d124;
+  background: linear-gradient(155deg, #202226, #111214 70%);
+  text-align: left;
+}
+.loge-viewer__home-actions > button:hover:not(:disabled) { border-color: #c6c9d14a; background: linear-gradient(155deg, #292b30, #17181b 70%); }
+.loge-viewer__home-actions > button > svg:first-child { color: #bfa5e3; }
+.loge-viewer__home-actions > button > svg:last-child { width: 12px; height: 12px; color: #8f939f; grid-column: 3; grid-row: 1; }
+.loge-viewer__home-actions strong { font-size: 11px; font-weight: 600; line-height: 1.4; }
+.loge-viewer__home-actions small { grid-column: 1 / -1; color: #a6aab5; font-size: 10px; line-height: 1.5; }
+.loge-viewer p.loge-viewer__personal-hint { margin: -3px 2px 2px; font-size: 10px; line-height: 1.6; color: #969ba7; }
+.loge-viewer .loge-viewer__personal-hint > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin: 0;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  box-shadow: none;
+  color: #c6a4ed;
+  font-size: inherit;
+  font-weight: 600;
+}
+.loge-viewer__personal-hint > button > svg { width: 11px; height: 11px; }
+.loge-viewer .loge-viewer__personal-hint > button:hover { background: transparent; color: #e1cbff; text-decoration: underline; text-underline-offset: 3px; }
+.loge-viewer p.loge-viewer__sharing-hint { display: flex; align-items: center; gap: 9px; padding: 13px 1px 0; margin: 0; border-top: 1px solid #ffffff0b; color: #9296a1; font-size: 10px; }
+.loge-viewer__preview .loge-viewer__section-label { letter-spacing: .055em; font-size: 8px; }
+.loge-viewer__card > .loge-viewer__question-cta { width: 100%; margin-bottom: 14px; }
+@container (max-width: 310px) {
+  .loge-viewer__home-actions { grid-template-columns: minmax(0, 1fr); }
 }
 
 .place-studio-panel__surface:has(.loge-viewer) {
