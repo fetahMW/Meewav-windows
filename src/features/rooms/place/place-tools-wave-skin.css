@@ -776,3 +776,15 @@
   --place-tool-accent: var(--wave-tool-accent);
   --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
 }
+
+/* Gifts keep the same violet in every room, including the Chat workspace. */
+.place-room-shell .place-gift-tool {
+  --wave-tool-accent:#a970ff;
+  --wave-tool-accent-rgb:169,112,255;
+  --place-tool-accent:#a970ff;
+  --place-tool-accent-rgb:169,112,255;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__glyph,
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__header small,
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool legend :is(svg,b) { color:#a970ff; }
