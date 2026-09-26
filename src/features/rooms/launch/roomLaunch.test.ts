@@ -90,3 +90,33 @@ it('starts a new Cage without demo fighters or an ongoing competition', async ()
   expect(state.cage?.votingOpen).toBe(false);
   expect(state.cage?.demoPresentation).toBeUndefined();
 });
+
+it('opens 24 free Premium seats without fixture students, calls or permissions', async () => {
+  const config = defaultRoomLaunch('classe'); config.title = 'Mon cours';
+  const state = await new DemoRoomToolsRepository().load('classe', createRoomLaunchSession(config).id);
+  expect(state.classe?.seats).toHaveLength(24);
+  expect(state.classe?.seats.every(seat => seat.status === 'free' && !seat.person && !seat.canSpeak && !seat.canShareScreen)).toBe(true);
+  expect(state.classe).toMatchObject({ seatPriceCents: 0, seatsLocked: false, raisedHands: [], activeSpeakerId: null, publicCallStudentId: null, privateTalkStudentId: null, screenShareOwnerId: null, questions: [] });
+});
+it('reserves selected contacts and leaves the remaining seats available in a mixed class', async () => {
+  const config = defaultRoomLaunch('classe'); config.title = 'Atelier';
+  config.classroom = { pricing: 'paid', priceCents: 1250, allocation: 'mixed', students: [{ id: 'student-1', name: 'Louna', avatarUrl: '/louna.png' }, { id: 'student-2', name: 'Kenza', avatarUrl: '/kenza.png' }] };
+  const session = createRoomLaunchSession(config);
+  const state = await new DemoRoomToolsRepository().load('classe', session.id);
+  expect(state.classe).toMatchObject({ seatPriceCents: 1250, seatsLocked: false });
+  expect(state.classe?.seats.filter(seat => seat.status === 'free')).toHaveLength(22);
+  expect(state.classe?.seats.slice(0, 2).map(seat => [seat.person?.name, seat.status])).toEqual([['Louna', 'reserved'], ['Kenza', 'reserved']]);
+  config.classroom.allocation = 'contacts';
+  expect((await new DemoRoomToolsRepository().load('classe', createRoomLaunchSession(config).id)).classe?.seatsLocked).toBe(true);
+  config.classroom.students.push(config.classroom.students[0]);
+  expect(validateRoomLaunch(config)).toContain('une place par personne');
+  config.classroom.students = []; expect(validateRoomLaunch(config)).toContain('au moins un élève');
+  config.classroom.priceCents = 0; expect(validateRoomLaunch(config)).toContain('tarif');
+});
+it('keeps setlist order, artist credits and durations in the Scene program', async () => {
+  const config = defaultRoomLaunch('scene'); config.title = 'Mon concert';
+  config.values.program = 'Introduction\nSolo';
+  config.setlist = { id: 'list', title: 'Concert', tracks: [{ title: 'Introduction', artist: 'Kenza', durationSeconds: 90 }, { title: 'Solo', artist: 'Louna', durationSeconds: 210 }] };
+  const state = await new DemoRoomToolsRepository().load('scene', createRoomLaunchSession(config).id);
+  expect(state.scene?.program.map(item => [item.title, item.artistName, item.durationMinutes])).toEqual([['Introduction', 'Kenza', 1.5], ['Solo', 'Louna', 3.5]]);
+});

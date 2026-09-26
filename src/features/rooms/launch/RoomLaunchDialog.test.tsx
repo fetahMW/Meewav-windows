@@ -6,7 +6,8 @@ import { RuntimeProvider } from '../../../runtime/RuntimeProvider';
 
 const mocks = vi.hoisted(() => ({ navigate: vi.fn(), measure: vi.fn(), save: vi.fn(), createLive: vi.fn(), createCage: vi.fn() }));
 vi.mock("react-router-dom", async (original) => ({ ...await original<typeof import("react-router-dom")>(), useNavigate: () => mocks.navigate }));
-vi.mock("./CageLaunchDialog", () => ({ default: () => null }));
+vi.mock("../../auth", () => ({ useAuth: () => ({ user: null }) }));
+vi.mock("./CageLaunchDialog", () => ({ default: () => <section aria-label="Préparer La Cage complète" /> }));
 vi.mock("../place/GreenHouse", () => ({ default: ({ onReady, readyLabel }: { onReady: () => Promise<void>; readyLabel: string }) => <button onClick={onReady}>{readyLabel}</button> }));
 vi.mock("../tools/waveAudioRules", async (original) => ({ ...await original<typeof import("../tools/waveAudioRules")>(), measureWaveAudio: mocks.measure }));
 vi.mock("./roomLaunchAudio", async (original) => ({ ...await original<typeof import("./roomLaunchAudio")>(), saveRoomLaunchAudio: mocks.save }));
@@ -33,10 +34,9 @@ it('opens Studio inside the Desktop launch sequence after configuration and carr
   render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
   fireEvent.click(screen.getByRole('button', { name: /^La Place/ }));
   fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Place QA' } });
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
   expect(await screen.findByLabelText('Sujet de la rencontre')).toBeVisible();
   expect(screen.queryByRole('region', { name: 'Studio Meewav · préparation de la Room' })).not.toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer OBS MiWave' }));
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
   fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
@@ -60,7 +60,7 @@ function settings() {
 
 it.each([
   ['La Loge', 'Titre de l’avant-première'],
-  ['La Classe', 'Places élèves'],
+  ['La Classe', 'Tarif du cours'],
   ['La Scène', 'Programme · un titre par ligne'],
   ['La Wave', 'Tempo (BPM)'],
 ])('shows the existing %s configuration before Studio and preserves it on return', async (name, field) => {
@@ -70,23 +70,22 @@ it.each([
   });
   render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
   fireEvent.click(screen.getByRole('button', { name: new RegExp(`^${name}`) }));
-  await screen.findByText('Studio Meewav');
+  await screen.findByText('OBS MiWave');
   fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Configuration QA' } });
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
   expect(screen.getByLabelText(field)).toBeVisible();
   if (name === 'La Wave') {
-    expect(screen.getByRole('button', { name: 'Continuer' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Préparer OBS MiWave' })).toBeDisabled();
     fireEvent.click(screen.getByRole('button', { name: 'Son long' }));
     fireEvent.change(screen.getByLabelText('Fichier de la boucle de base'), { target: { files: [new File(['audio'], 'base.wav', { type: 'audio/wav' })] } });
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Continuer' })).toBeEnabled());
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Préparer OBS MiWave' })).toBeEnabled());
   }
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer OBS MiWave' }));
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'Retour' }));
   expect(screen.getByLabelText(field)).toBeVisible();
   if (name === 'La Wave') {
     expect(screen.getByText('base.wav')).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Continuer' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Préparer OBS MiWave' })).toBeEnabled();
   }
 });
 
@@ -138,45 +137,10 @@ it("rejects unreadable audio and blocks launch again when the file is removed", 
   expect(screen.getByRole("button", { name: "Continuer" })).toBeDisabled();
 });
 
-async function openCageStudio(isPublic = true) {
+it('routes the Cage card to the full competition preparation', async () => {
   vi.stubGlobal('meewavDesktop', { version: 1, getCapabilities: async () => ({ runtime: 'desktop-windows', screenCapture: true, windowCapture: true, systemAudioCapture: false, professionalAudioDriver: false }) });
   render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
   fireEvent.click(screen.getByRole('button', { name: /^La Cage/ }));
-  await screen.findByRole('button', { name: 'Ouvrir le Studio' });
-  fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Cage artistes' } });
-  if (!isPublic) fireEvent.click(screen.getByRole('checkbox', { name: /Room publique/ }));
-  fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le Studio' }));
-  expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
-  expect(screen.queryByLabelText('Format')).not.toBeInTheDocument();
-}
-it('uses the iOS Cage sequence, checks real studio readiness and carries setup into the empty Room', async () => {
-  await openCageStudio();
-  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
-  expect(screen.getByRole('button', { name: 'Ouvrir la Cage' })).toBeDisabled();
-  fireEvent.click(screen.getByRole('button', { name: 'Retour' }));
-  fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
-  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
-  fireEvent.click(screen.getByRole('button', { name: 'Ouvrir la Cage' }));
-  await waitFor(() => expect(mocks.createCage).toHaveBeenCalledOnce());
-  expect(mocks.createCage).toHaveBeenCalledWith(expect.objectContaining({ roomType: 'cage', title: 'Cage artistes', access: 'public', values: { queueOpen: false } }), expect.any(String));
-  await waitFor(() => expect(mocks.navigate).toHaveBeenCalledWith('/rooms/cage?room=a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3'));
-  expect(sessionStorage.getItem('meewav:room-production-setup:v1:a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3')).toContain('micro-qa');
-});
-it('saves a private Cage studio locally without publishing a public Room', async () => {
-  await openCageStudio(false);
-  fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
-  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
-  fireEvent.click(screen.getByRole('button', { name: 'Valider mon Studio' }));
-  expect(await screen.findByRole('heading', { name: 'Ton Studio est prêt' })).toBeVisible();
-  expect(mocks.createCage).not.toHaveBeenCalled(); expect(mocks.navigate).not.toHaveBeenCalled();
-});
-
-it('keeps a private Cage preparation open if local storage is unavailable', async () => {
-  await openCageStudio(false);
-  fireEvent.click(screen.getByRole('button', { name: 'Vérifier le direct' }));
-  const storage = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new DOMException('quota', 'QuotaExceededError'); });
-  fireEvent.click(screen.getByRole('button', { name: 'Valider mon Studio' }));
-  expect(await screen.findByRole('alert')).toHaveTextContent('n’a pas pu être enregistrée');
-  expect(screen.queryByRole('heading', { name: 'Ton Studio est prêt' })).not.toBeInTheDocument();
-  expect(mocks.createCage).not.toHaveBeenCalled(); storage.mockRestore();
+  expect(await screen.findByRole('region', { name: 'Préparer La Cage complète' })).toBeVisible();
+  expect(mocks.createCage).not.toHaveBeenCalled();
 });

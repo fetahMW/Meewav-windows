@@ -327,7 +327,7 @@ function EmptyProgram({ title, detail }: { title: string; detail: string }) {
   return <section className="cage-stage-program is-empty" aria-label="Réalisation vidéo spéciale Cage en attente"><span><Swords aria-hidden="true" /></span><small>CAGE · PROGRAM</small><strong>{title}</strong><p>{detail}</p></section>;
 }
 
-function CageMixerTimer() {
+export function CageMixerTimer() {
   const timer = usePlaceRoomTime();
   if (!timer.enabled) return null;
   return <output className={`cage-mixer-timer is-${timer.status}`} role="timer" aria-live="off" aria-label={`Chronomètre du mixeur ${formatPlaceRoomTime(timer.remainingMs)}`}><Timer aria-hidden="true" /><span>{formatPlaceRoomTime(timer.remainingMs)}</span></output>;
@@ -338,7 +338,7 @@ export function CageStageProgramView(props: CageStageProgramViewProps) {
   if (!cage) return <EmptyProgram title="Synchronisation de la Régie…" detail="Le retour vidéo va se caler sur la rencontre active." />;
   return <>{normalizedCageFormat(cage.format) === "open-mic"
     ? <OpenMicProgram {...props} cage={cage} />
-    : <DuelProgram {...props} cage={cage} />}<CageMixerTimer /></>;
+    : <DuelProgram {...props} cage={cage} />}</>;
 }
 
 export default function CageStageProgram({ room, isHost, isGuest, canEngage = false, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume = 1, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }: CageStageProgramProps) {

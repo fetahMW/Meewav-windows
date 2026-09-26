@@ -1,0 +1,29 @@
+/* Time shares the graphite body and restrained violet accent of the faders. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-mixer .place-time {
+  color: #ebe6f0; border: 1px solid #ffffff1a; border-radius: 16px;
+  background: linear-gradient(155deg,#242529,#101113 58%,#090a0c);
+  box-shadow: inset 0 1px #ffffff16,0 4px 12px #0004;
+  & .place-time__header, & .place-time__icon { background: transparent; border: 0; box-shadow: none; }
+  & .place-time__icon { color: #bc86f4; }
+  & .place-time__header small, & > p { color: #96909e; }
+  & .place-time__display { background: #08090b7a; border: 1px solid #ffffff10; color: #e8dbf5; text-shadow: none; box-shadow: inset 0 2px 8px #0003; font-variant-numeric: tabular-nums; }
+  & .place-time__display.is-running { color: #d5b1fa; }
+  & .place-time__display.is-complete { color: #f0c098; }
+  & .place-time__setup input { border: 1px solid #ffffff25; background: #101114; color: #eee8f5; box-shadow: inset 0 1px #ffffff08; }
+  & .place-time__toggle input { accent-color: #b782f0; }
+  & .place-time__toggle input:checked + i { background: #9e6dcc; box-shadow: none; }
+  & .place-time__controls > button { border: 1px solid #ffffff22; background: linear-gradient(#242429,#101114); color: #d0c6dc; box-shadow: inset 0 1px #ffffff12; }
+  & .place-time__controls > button.is-primary { border-color: #bd8aea60; background: linear-gradient(#33273f,#1b1524); color: #e1c5ff; }
+}
+
+
+.rooms-page .place-room-shellbar .place-room-shellbar__countdown {
+  border-color: #ffffff24;
+  background: linear-gradient(#242529,#111214);
+  box-shadow: inset 0 1px #ffffff14,0 3px 8px #0004;
+  color: #e8dbf5;
+  & > svg { color:#bd8aed; }
+  & small { color:#a79bb4; }
+  &.is-running { border-color:#bb8aea60; box-shadow:inset 0 1px #ffffff14,0 3px 8px #0004; }
+  &.is-complete { color:#f0c098; border-color:#c4977150; }
+}

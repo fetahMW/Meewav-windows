@@ -437,3 +437,17 @@ it("displays the host seat price when a viewer opens a free chair",async()=>{
  fireEvent.click(await screen.findByRole("button",{name:"Acheter la place 20"}));
  expect(await screen.findByRole("dialog",{name:"Ticket place 20"})).toHaveTextContent(/8,50/);
 });
+
+it('lets a viewer enter a newly prepared free class with their own identity', async () => {
+  const { createRoomLaunchSession, defaultRoomLaunch } = await import('../../launch/roomLaunch');
+  const config = defaultRoomLaunch('classe'); config.title = 'Cours gratuit';
+  const session = createRoomLaunchSession(config);
+  window.history.replaceState({}, '', '?classAccess=audience');
+  render(<RoomAudienceInteractions roomType="classe" room={room(session.id)} isHost={false} isGuest={false} canEngage />);
+  fireEvent.click(await screen.findByRole('button', { name: 'Prendre la place 1' }));
+  fireEvent.click(await screen.findByRole('button', { name: 'Entrer gratuitement' }));
+  await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Ticket place 1' })).not.toBeInTheDocument());
+  const state = await roomToolsRepository.load('classe', session.id);
+  expect(state.classe?.seats[0].person).toMatchObject({ id: PLACE_DEMO_PROFILES.viewerA.id, name: PLACE_DEMO_PROFILES.viewerA.displayName, avatarUrl: PLACE_DEMO_PROFILES.viewerA.avatarUrl });
+  expect(state.classe?.seatPriceCents).toBe(0);
+});

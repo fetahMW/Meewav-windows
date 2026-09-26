@@ -1,4 +1,5 @@
 import { Pause, Play, RotateCcw, Timer } from "lucide-react";
+import "./place-time-refinement.css";
 import { formatPlaceRoomTime, placeRoomTime, usePlaceRoomTime } from "./placeRoomTime";
 
 export default function PlaceTime() {

@@ -6,7 +6,7 @@ import { roomToolsRepository } from "../tools/roomTools.service";
 import type { RoomPerson } from "../tools/roomTools.types";
 import { createPlaceDemoState, PLACE_DEMO_PROFILES } from "./place.fixtures";
 import type { PlaceStageParticipant } from "./placeStageLayoutEngine";
-import CageStageProgram, { CageStageProgramView, cageStageRemaining, resolveCageFeed } from "./CageStageProgram";
+import CageStageProgram, { CageMixerTimer, CageStageProgramView, cageStageRemaining, resolveCageFeed } from "./CageStageProgram";
 import { placeRoomTime } from "./placeRoomTime";
 
 function setup(source: "demo" | "live" = "demo") {
@@ -49,6 +49,7 @@ afterEach(() => {
 describe("CageStageProgram", () => {
   it("keeps both artist portraits in their video and shows only the mixer-enabled timer", () => {
     const { container, cage } = renderProgram();
+    render(<CageMixerTimer />);
     const match = cage.matches.find(item => item.id === cage.currentMatchId)!;
     for (const [side, person] of [["a", match.competitorA], ["b", match.competitorB]] as const) {
       const identity = container.querySelector(`.cage-stage-feed.is-${side} .cage-stage-feed__artist`)!;
@@ -59,6 +60,7 @@ describe("CageStageProgram", () => {
     act(() => { placeRoomTime.configure(2, 15); placeRoomTime.setEnabled(true); });
     expect(screen.getByRole("timer", { name: "Chronomètre du mixeur 02:15" })).toHaveTextContent("02:15");
     expect(container.querySelector(".cage-stage-program__duel-axis")).toHaveTextContent("VS");
+    expect(container.querySelector("[role=timer]")).toBeNull();
     act(() => placeRoomTime.setEnabled(false));
     expect(screen.queryByRole("timer")).toBeNull();
   });

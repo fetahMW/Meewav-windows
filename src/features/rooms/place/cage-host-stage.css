@@ -58,16 +58,16 @@
 .cage-mixer-timer {
   position: absolute;
   z-index: 24;
-  /* Before a duel / in solo, leave the video toolbar's bottom lane clear. */
-  bottom: 84px;
+  /* Centred in the breathing space between the room header and video. */
+  top: 2px;
   left: 50%;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 9px;
+  padding: 3px 9px;
   border: 1px solid #d3c6eb25;
   border-radius: 20px;
-  background: #111018dc;
+  background: linear-gradient(#242229, #100f14);
   color: #e3ddec;
   font: 500 12px/1.2 Inter, sans-serif;
   font-variant-numeric: tabular-nums;
@@ -76,7 +76,7 @@
 }
 .cage-mixer-timer svg { width: 12px; height: 12px; }
 .cage-mixer-timer.is-complete { color: #f2ba8e; }
-.cage-stage-program:has(.cage-stage-program__duel-axis):not([data-composition="solo"]) + .cage-mixer-timer { top: calc(50% + 30px); bottom: auto; }
+.place-room-experience[data-room-presentation="cage"] .place-room-live-column:has(> .cage-mixer-timer) { box-sizing: border-box; padding-top: 26px; }
 .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel[data-composition="solo"] .cage-stage-program__duel-axis { display: none; }
 .place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__host-side > .switch-room-anchor { flex: 0 0 auto; align-self: center; margin-left: 0; }
 @media (min-width: 761px) {

@@ -28,6 +28,7 @@ import LiveActionPopover from "./LiveActionPopover";
 import { getRoomSupportWallet } from "./roomSupport";
 import { useRoomSupportThrows } from "./useRoomSupportThrows";
 import PlaceStage from "./PlaceStage";
+import { CageMixerTimer } from "./CageStageProgram";
 import PlaceStudioPanel from "./PlaceStudioPanel";
 import PlaceChatSocialActions from "./PlaceChatSocialActions";
 import { WaveViewerListeningProvider, useWaveViewerListening } from "../wave-viewer/WaveViewerListening";
@@ -1352,6 +1353,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
         </div>
       ) : <div className={`place-room-workspace${panelCollapsed ? " is-panel-collapsed" : ""}${room.status === "ended" ? " is-broadcast-ended" : ""}`}>
         <div className="place-room-live-column">
+          {roomPresentation.id === "cage" && place.isHost ? <CageMixerTimer /> : null}
           <PlaceStage
             room={room}
             isHost={place.isHost}

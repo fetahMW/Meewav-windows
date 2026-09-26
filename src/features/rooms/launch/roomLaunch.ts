@@ -20,7 +20,11 @@ export const ROOM_LAUNCH_SPECS: Record<RoomLaunchType, { label: string; descript
   classe: { label: "La Classe", description: "Un cours participatif, avec des places, des questions et des prises de parole.", fields: [{ id: "topic", label: "Objectif du cours", kind: "textarea", initial: "" }, { id: "seats", label: "Places élèves", kind: "number", initial: 24, min: 4, max: 24 }, { id: "handsOpen", label: "Autoriser les mains levées", kind: "boolean", initial: true }, { id: "questionsOpen", label: "Ouvrir les questions", kind: "boolean", initial: true }] },
   scene: { label: "La Scène", description: "Une performance avec un programme, un prompteur et l’avis du public.", fields: [{ id: "program", label: "Programme · un titre par ligne", kind: "textarea", initial: "Ouverture\nPerformance principale\nFinal" }, { id: "duration", label: "Durée indicative par passage (minutes)", kind: "number", initial: 5, min: 1, max: 120 }, { id: "evaluation", label: "Activer l’évaluation du public", kind: "boolean", initial: true }, { id: "prompter", label: "Texte du prompteur", kind: "textarea", initial: "" }] },
 };
-export type RoomLaunchConfiguration = { roomType: RoomLaunchType; title: string; description: string; access: "public" | "invitation" | "members"; values: Record<string, string | boolean | number>; baseLoop?: WaveBaseLoop };
+export type LaunchStudent = { id: string; name: string; avatarUrl: string };
+export type ClassroomLaunchSetup = { pricing: "free" | "paid"; priceCents: number; allocation: "premium" | "contacts" | "mixed"; students: LaunchStudent[] };
+export type LaunchSetlistTrack = { title: string; artist: string; durationSeconds: number };
+export type RoomLaunchConfiguration = { roomType: RoomLaunchType; title: string; description: string; access: "public" | "invitation" | "members"; values: Record<string, string | boolean | number>; baseLoop?: WaveBaseLoop; classroom?: ClassroomLaunchSetup; setlist?: { id: string; title: string; tracks: LaunchSetlistTrack[] } };
+export const defaultClassroomLaunch = (): ClassroomLaunchSetup => ({ pricing: "free", priceCents: 499, allocation: "premium", students: [] });
 export type RoomLaunchSession = { id: string; createdAt: string; configuration: RoomLaunchConfiguration };
 export function defaultRoomLaunch(roomType: RoomLaunchType): RoomLaunchConfiguration { return { roomType, title: "", description: "", access: "public", values: roomType === "cage" ? { queueOpen: false } : Object.fromEntries(ROOM_LAUNCH_SPECS[roomType].fields.map((field) => [field.id, field.initial])) }; }
 export function validateRoomLaunchIdentity(config: RoomLaunchConfiguration): string | null {
@@ -51,6 +55,17 @@ export function validateRoomLaunch(config: RoomLaunchConfiguration): string | nu
     if (["text", "textarea"].includes(field.kind) && (typeof value !== "string" || value.length > 4000)) return `Vérifie le champ « ${field.label} ».`;
   }
   if (config.roomType === "scene" && !String(config.values.program).trim()) return "Ajoute au moins un passage au programme.";
+  if (config.roomType === "scene" && config.setlist) {
+    const list = config.setlist;
+    if (typeof list.id !== "string" || typeof list.title !== "string" || !Array.isArray(list.tracks) || list.tracks.some(track => !track || typeof track.title !== "string" || typeof track.artist !== "string" || !Number.isFinite(track.durationSeconds) || track.durationSeconds < 0 || track.durationSeconds > 7200)) return "Réimporte une setlist valide ou choisis un programme libre.";
+  }
+  if (config.roomType === "classe" && config.classroom) {
+    const setup = config.classroom;
+    if (!["free", "paid"].includes(setup.pricing) || !["premium", "contacts", "mixed"].includes(setup.allocation)) return "Choisis l’accès aux places élèves.";
+    if (!Number.isInteger(setup.priceCents) || setup.priceCents < (setup.pricing === "paid" ? 1 : 0) || setup.priceCents > 100000) return "Indique un tarif entre 0,01 € et 1 000 €.";
+    if (!Array.isArray(setup.students) || setup.students.length > Number(config.values.seats) || setup.students.some(student => !student || typeof student.id !== "string" || !student.id || typeof student.name !== "string" || !student.name.trim() || typeof student.avatarUrl !== "string") || new Set(setup.students.map(student => student.id)).size !== setup.students.length) return "Vérifie les élèves réservés : une place par personne, 24 au maximum.";
+    if (setup.allocation !== "premium" && !setup.students.length) return "Choisis au moins un élève parmi tes contacts, ou laisse les places ouvertes aux membres Premium.";
+  }
   if (config.roomType === "wave") return validateWaveLaunchBase(config.baseLoop, Number(config.values.bpm));
   return null;
 }
@@ -78,11 +93,28 @@ export function applyRoomLaunchTools(state: RoomToolsState, session: RoomLaunchS
     state.wave.playing = false;
     state.wave.history = [`${state.wave.baseLoop.title} · base importée au lancement`];
   }
-  if (state.classe) { state.classe.handsOpen = Boolean(v.handsOpen); state.classe.questionsOpen = Boolean(v.questionsOpen); state.classe.seats = state.classe.seats.slice(0, Number(v.seats)); }
+  if (state.classe) {
+    const setup = session.configuration.classroom ?? defaultClassroomLaunch();
+    const students = setup.allocation === "premium" ? [] : setup.students;
+    const people = students.map(student => ({ ...student, role: "Élève", camera: "off" as const, microphone: "off" as const }));
+    state.classe.handsOpen = Boolean(v.handsOpen);
+    state.classe.questionsOpen = Boolean(v.questionsOpen);
+    state.classe.seatPriceCents = setup.pricing === "paid" ? setup.priceCents : 0;
+    state.classe.seatsLocked = setup.allocation === "contacts";
+    state.classe.seats = Array.from({ length: Number(v.seats) }, (_, index) => ({ number: index + 1, person: people[index], status: people[index] ? "reserved" as const : "free" as const, canSpeak: false, canShareScreen: false, handRaised: false }));
+    state.classe.people = [...state.classe.people.slice(0, 1), ...people];
+    state.classe.raisedHands = [];
+    state.classe.activeSpeakerId = state.classe.publicCallStudentId = state.classe.screenShareOwnerId = null;
+    state.classe.privateTalkStudentId = null;
+    state.classe.questions = []; state.classe.featuredQuestionId = null;
+  }
   if (state.loge) { state.loge.questionsOpen = Boolean(v.questionsOpen); state.loge.preview.title = String(v.previewTitle || title); state.loge.preview.description = String(v.previewDescription); state.loge.preview.liveOnly = Boolean(v.liveOnly); state.loge.preview.replayIncluded = !v.liveOnly; }
   if (state.scene) {
     state.scene.evaluation.defaultEnabled = Boolean(v.evaluation);
-    state.scene.program = String(v.program).split("\n").map((text) => text.trim()).filter(Boolean).map((text, i) => ({ id: `launch-${i}`, title: text, artistId: state.scene!.people[0]?.id ?? "host", artistName: state.scene!.people[0]?.name ?? "Host", kind: "Morceau", durationMinutes: Number(v.duration), status: "upcoming", evaluationEnabled: Boolean(v.evaluation) }));
+    state.scene.program = String(v.program).split("\n").map((text) => text.trim()).filter(Boolean).map((text, i) => {
+      const track = session.configuration.setlist?.tracks[i];
+      return { id: `launch-${i}`, title: text, artistId: state.scene!.people[0]?.id ?? "host", artistName: track?.title === text && track.artist ? track.artist : state.scene!.people[0]?.name ?? "Host", kind: "Morceau", durationMinutes: track?.title === text && track.durationSeconds > 0 ? track.durationSeconds / 60 : Number(v.duration), status: "upcoming", evaluationEnabled: Boolean(v.evaluation) };
+    });
     if (state.scene.prompter.texts[0]) state.scene.prompter.texts[0].body = String(v.prompter);
   }
 }

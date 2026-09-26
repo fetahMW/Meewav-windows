@@ -164,3 +164,25 @@ it("never offers to silently drop two of six artists through tournament reductio
   expect(screen.getByRole("button", { name: /Tirer au sort parmi les 6/, hidden: true })).toBeDisabled();
   expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(6);
 });
+
+it.each(['jury', 'mixed'] as const)('opens jury configuration before voting in %s mode and restores the vote action once ready', async mode => {
+  const { runtime, choose, send, refresh, onOpenGuests } = setup('tournament', 2, 2);
+  for (const person of runtime().participants.filter(person => person.registered)) await choose(person.person.name);
+  await send('bracket.generate', { mode: 'manual' });
+  await send('bracket.lock');
+  const match = runtime().matches[0];
+  runtime().activeMatchId = match.id;
+  match.status = 'READY_FOR_VOTE';
+  runtime().config.rules.votingMode = mode;
+  refresh(); send.mockClear();
+  fireEvent.click(screen.getByRole('button', { name: 'Configurer le jury' }));
+  expect(onOpenGuests).toHaveBeenCalledOnce();
+  expect(send).not.toHaveBeenCalled();
+  runtime().votingPolicy = { mode: mode === 'jury' ? 'mixed' : 'jury', jurorIds: ['juror'], revision: 1 };
+  refresh();
+  expect(screen.getByRole('button', { name: 'Configurer le jury' })).toBeEnabled();
+  runtime().votingPolicy = { mode, jurorIds: ['juror'], revision: 2 };
+  refresh();
+  expect(screen.queryByRole('button', { name: 'Configurer le jury' })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Ouvrir le vote' })).toBeEnabled();
+});

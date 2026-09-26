@@ -624,7 +624,7 @@ export function ClassroomRoster({ classe, audioBridge, selectedStudentId, onSele
             <span className="classroom-seat__identity">
               <strong title={seat.person.name}>{seat.person.name}</strong>
             </span>
-          </button> : onSelectFreeSeat ? <button type="button" className="classroom-seat__empty" aria-label={`Acheter la place ${seat.number}`} onClick={() => onSelectFreeSeat(seat.number)}><b>{String(seat.number).padStart(2, "0")}</b><span><Armchair /></span><small>{((classe.seatPriceCents ?? 499) / 100).toLocaleString("fr-FR", {style:"currency",currency:"EUR"})}</small></button> : <div className="classroom-seat__empty"><b>{String(seat.number).padStart(2, "0")}</b><span><Armchair /></span><small>Libre</small></div>}
+          </button> : onSelectFreeSeat ? <button type="button" className="classroom-seat__empty" aria-label={`${classe.seatPriceCents === 0 ? "Prendre" : "Acheter"} la place ${seat.number}`} onClick={() => onSelectFreeSeat(seat.number)}><b>{String(seat.number).padStart(2, "0")}</b><span><Armchair /></span><small>{classe.seatPriceCents === 0 ? "Gratuite" : ((classe.seatPriceCents ?? 499) / 100).toLocaleString("fr-FR", {style:"currency",currency:"EUR"})}</small></button> : <div className="classroom-seat__empty"><b>{String(seat.number).padStart(2, "0")}</b><span><Armchair /></span><small>Libre</small></div>}
         </article>;
       })}
       </div>

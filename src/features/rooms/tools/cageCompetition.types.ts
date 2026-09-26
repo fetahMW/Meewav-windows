@@ -10,6 +10,8 @@ export type CageCompetitionConfig = {
   participantCount: number;
   rosterMode: "prepared" | "first-eligible" | "manual" | "random";
   rosterProfileIds: string[];
+  championshipDays?: number;
+  productionTeam?: "solo" | "regisseur";
   templateId?: string;
   rules: {
     performanceMode: "successive" | "alternating" | "simultaneous";

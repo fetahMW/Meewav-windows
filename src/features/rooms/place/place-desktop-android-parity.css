@@ -890,9 +890,3 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shellbar__host-side .
 .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .place-tools-console__switch::after { display: none; }
 body .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav .place-tools-console__switch { min-height: 34px; padding: 2px 8px; outline: 0; }
 body .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav .place-tools-console__switch > button { border: 0; background: transparent; box-shadow: none; }
-
-/* Lift only the Cage player, leaving a clear gap above the Mode chip. */
-.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel.is-host-panel .place-mixer.is-wave-tools > .place-mixer-audio {
-  position: relative;
-  top: -15px;
-}

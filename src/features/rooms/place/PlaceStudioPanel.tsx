@@ -1,4 +1,5 @@
 import RoomJuryControl from "../voting/RoomJuryControl";
+import "./place-console-refinement.css";
 import { useRoomVotingPolicy } from "../voting/useRoomVotingPolicy";
 import { saveVotingPolicy } from "../voting/roomVoting.service";
 import { VOTE_MODE_LABELS, type RoomVoteMode } from "../voting/roomVoting";
@@ -855,8 +856,8 @@ function PlaceChat({ room, canEngage, isHost, active, onSend, onPinMessage, onDe
             disabled={!canEngage}
             onSelect={(emoticon) => setDraft((value) => appendMeeWavEmoticon(value, emoticon.name, 1_000))}
           />
+          <button className="place-chat__send" type="submit" disabled={!canEngage || sending || !draft.trim()} aria-label="Envoyer"><Send aria-hidden="true" /></button>
         </div>
-        <button className="place-chat__send" type="submit" disabled={!canEngage || sending || !draft.trim()} aria-label="Envoyer"><Send aria-hidden="true" /></button>
       </form>
     </div>
   );
@@ -1471,7 +1472,7 @@ function PlaceGuests({
     setter((current) => allSelected ? current.filter((id) => !visibleIds.has(id)) : [...new Set([...current, ...visibleIds])]);
     if (desktopGuests) setBulkSelectionMode(allSelected ? null : target);
   };
-  const renderBulkSelectButton = (participants: PlaceParticipant[], allSelected: boolean, count: number, target: "queue" | "backstage") => <button type="button" className={`place-guests__bulk-select${allSelected ? " is-active" : ""}`} onClick={() => toggleAllVisible(participants, allSelected, target)} aria-label={allSelected ? "Tout désélectionner" : "Tout sélectionner"} aria-pressed={allSelected} disabled={!participants.length}><CircleCheck aria-hidden="true" /><span>{allSelected ? "Tout désélectionner" : "Tout sélectionner"}</span>{count ? <b>{count}</b> : null}</button>;
+  const renderBulkSelectButton = (participants: PlaceParticipant[], allSelected: boolean, count: number, target: "queue" | "backstage") => <button type="button" className={`place-guests__bulk-select${allSelected ? " is-active" : ""}`} onClick={() => toggleAllVisible(participants, allSelected, target)} aria-label={allSelected ? "Tout désélectionner" : "Tout sélectionner"} aria-pressed={allSelected} disabled={!participants.length}><CircleCheck aria-hidden="true" /><span>Tout</span>{count ? <b>{count}</b> : null}</button>;
   const renderQuickSelection = (target: "queue" | "backstage", participants: PlaceParticipant[], selectedIds: string[]) => <div className="studio-guest-selection-chips" role="group" aria-label={target === "queue" ? "Sélection rapide dans la file d’attente" : "Sélection rapide en coulisses"}>
     <span className="studio-guest-selection-chips__label">Les premiers</span>
     <div className="studio-guest-selection-chips__options">

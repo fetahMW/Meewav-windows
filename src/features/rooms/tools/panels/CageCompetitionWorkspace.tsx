@@ -121,7 +121,7 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
       </details> : null}
     </> : null}
     {rounds.length ? <div className="cage-workspace__rounds">{rounds.map((round) => <section className="cage-workspace__section" key={round}>
-      <h3>{battle ? `Duel ${round}` : runtime.config.format === "championship" ? `Journée ${round}` : round === rounds.at(-1) ? "Finale" : round === rounds.at(-2) ? "Demi-finales" : round === rounds.at(-3) ? "Quarts de finale" : `Tour ${round}`}<small>{runtime.matches.filter((match) => match.round === round).length} rencontre(s)</small></h3>
+      <h3>{battle ? `Duel ${round}` : runtime.config.format === "championship" ? `Jour ${Math.floor(rounds.indexOf(round) * (runtime.config.championshipDays ?? 1) / rounds.length) + 1} · série ${round}` : round === rounds.at(-1) ? "Finale" : round === rounds.at(-2) ? "Demi-finales" : round === rounds.at(-3) ? "Quarts de finale" : `Tour ${round}`}<small>{runtime.matches.filter((match) => match.round === round).length} rencontre(s)</small></h3>
       {runtime.matches.filter((match) => match.round === round).map((match) => <article key={match.id} className={`cage-workspace__match-card${runtime.activeMatchId === match.id ? " is-current" : ""}`}>
         <header><small>{match.label || `Match ${match.order}`}</small><span>{PHASE[match.status]}</span></header>
         <div className="cage-bracket-pair">{pair(runtime, match).map((person, index) => <div className={person && match.winnerId === person.id ? "is-winner" : ""} key={index}>{person?.person.avatarUrl ? <img src={person.person.avatarUrl} alt="" /> : <span className="cage-bracket-pair__placeholder"><Users /></span>}<span><strong>{person?.person.name ?? (match[index === 0 ? "sourceA" : "sourceB"] ? "Vainqueur à venir" : "Exemption")}</strong><small>{person?.person.role ?? "Qualification en attente"}</small></span>{person && match.winnerId === person.id ? <Crown aria-label="Vainqueur" /> : null}{match.vote?.closedAt ? <b>{index === 0 ? match.vote.scoreA : match.vote.scoreB}</b> : null}</div>)}</div>
@@ -241,7 +241,7 @@ export function CageCommandBar({ runtime, disabled, isControl, send, onView, onO
   const available = runtime.participants.filter(person => cageRosterCandidate(runtime, person));
   const required = battle ? 2 : runtime.config.participantCount;
   const canAdaptSize = !battle && selected.length >= 2 && selected.length < required && (runtime.config.format === "championship" || runtime.config.rules.allowByes || Number.isInteger(Math.log2(selected.length))) && selected.every(person => cageRosterCandidate(runtime, person));
-  const startWithGuests = !canAdaptSize && !runtime.lockedAt && !runtime.matches.length && available.length < required && selected.length < required && Boolean(onOpenGuests);
+  let startWithGuests = !canAdaptSize && !runtime.lockedAt && !runtime.matches.length && available.length < required && selected.length < required && Boolean(onOpenGuests);
   if (!runtime.lockedAt) {
     if (runtime.matches.length) { label = "Valider le placement"; hint = "Vérifie les rencontres ci-dessus."; action = "bracket.lock"; view = "regie"; }
     else if (canAdaptSize) {
@@ -274,5 +274,14 @@ export function CageCommandBar({ runtime, disabled, isControl, send, onView, onO
     blocked = !pairReady && ["GREENHOUSE", "CALLING", "READY"].includes(prepared.status);
     if (blocked) { label = battle ? "En attente des artistes" : "En attente des deux Ready"; if (battle) hint = "Caméra, micro et accord à confirmer dans la préparation du duel"; }
   } else if (runtime.status === "COMPLETED") { label = "Voir les résultats"; hint = "Compétition terminée"; }
+  const juryMissing = runtime.config.rules.votingMode !== "public"
+    && (runtime.votingPolicy?.mode !== runtime.config.rules.votingMode || !runtime.votingPolicy.jurorIds.length);
+  if (isControl && juryMissing && action && ["regie.promote", "match.start", "vote.open"].includes(action)) {
+    label = "Configurer le jury";
+    hint = `Invités → Coulisses → Jury · ${runtime.config.rules.votingMode === "mixed" ? "Public et jury" : "Jury seul"}`;
+    startWithGuests = Boolean(onOpenGuests);
+    action = undefined;
+    blocked = !onOpenGuests;
+  }
   return <footer className="cage-command-bar"><span>{match ? <small>{match.label || `Match ${match.order}`}</small> : null}<strong>{match ? titleFor(runtime, match) : runtime.config.title}</strong><em>{hint}</em></span><button className="is-primary" disabled={disabled || (isControl && blocked)} onClick={() => { if (runtime.status === "COMPLETED" && onResults) onResults(); else if (startWithGuests && isControl) onOpenGuests?.(); else if (action && isControl) void send(action, payload).then((ok) => { if (ok) onView(view); }); else onView(view); }}>{isControl ? label : `Voir ${view === "bracket" ? runtime.config.format === "open-mic-battle" ? "les Participants" : runtime.config.format === "championship" ? "le Classement" : "le Bracket" : view === "regie" ? "la Régie" : view === "vote" ? "le Vote" : "le Match"}`}<ArrowRight /></button></footer>;
 }

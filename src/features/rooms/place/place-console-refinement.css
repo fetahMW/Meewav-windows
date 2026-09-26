@@ -1,0 +1,34 @@
+/* A shared navigation material, above and below the guest cards. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  --console-nav-face: linear-gradient(112deg,#ffffff14,#ffffff05 24%,transparent 39%) padding-box, radial-gradient(82% 110% at 4% -22%,#ffffff0b,transparent 48%) padding-box, linear-gradient(#191a1d,#070708 48%,#010102) padding-box, linear-gradient(112deg,#e5eaf04d,#8f959e1b 31%,#373a4009 68%,#a9aeb62a) border-box;
+  --console-nav-shadow: inset 0 2px 2px #ffffff20, inset 0 -2px 3px #000, 0 0 0 1px #000, 0 4px 9px #0008;
+  & > .place-studio-panel__bar,
+  &.is-guests .place-guests__desktop-dock {
+    border: 1px solid transparent;
+    background: var(--console-nav-face);
+    box-shadow: var(--console-nav-shadow);
+    border-radius: 15px;
+  }
+  &.is-guests .place-guests__desktop-dock { margin: 6px 5px; padding: 9px; }
+  &.is-guests .place-guests__desktop-dock-actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0,1fr); gap: 3px; overflow: visible; }
+  &.is-guests .place-guests__desktop-dock-actions :is(button,.place-guest-camera-dock) { min-width: 0; }
+  &.is-guests .place-guests__desktop-dock-actions > button,
+  &.is-guests .place-guests__desktop-dock-actions .place-guest-camera-dock > button { width: 100%; height: 44px; min-height: 44px; border: 1px solid transparent; border-radius: 10px; background: transparent; font-size: 9px; }
+  &.is-guests .place-guests__desktop-dock-actions button:hover:not(:disabled),
+  &.is-guests .place-guests__desktop-dock-actions button:focus-visible { border-color: #ad75ed55; background: linear-gradient(#7e44e338,#7e44e338),#101014; color: #e6d5fa; box-shadow: inset 0 1px #ffffff17; }
+  &.is-guests .place-guests__section-head.is-capacity-only,
+  &.is-guests .place-guests__section-tools { min-width: 0; overflow: visible; flex-wrap: wrap; scrollbar-width: none; }
+  &.is-guests .place-guests__section-tools { gap: 6px; }
+  &.is-guests .place-guests__bulk-select { white-space: nowrap; }
+  &.is-guests .studio-guest-selection-chips { max-width: 100%; flex-wrap: wrap; overflow: visible; }
+}
+
+/* The same first row places the persistent player at the same vertical origin. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-mixer.has-audio-player {
+  grid-template-rows: 42px auto minmax(180px,1fr);
+  row-gap: 0;
+  padding-top: 0;
+  & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; height: 42px; min-height: 42px; max-height: 42px; margin: 0; padding: 0 6px; align-content: center; }
+  & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; height: 42px; min-height: 42px; margin: 0; padding: 4px 8px; }
+  & > .place-mixer-audio { top: auto; margin-top: 0; }
+}
