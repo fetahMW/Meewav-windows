@@ -103,6 +103,7 @@ type PlaceMixerAudioPlayerProps = {
   privateOnly?: boolean;
   onPreviewLevel?: (level: number) => void;
   classroomCollapsible?: boolean;
+  classroomInitiallyCollapsed?: boolean;
   roomLabel?: string;
   onClassroomCollapsedChange?: (collapsed: boolean) => void;
 };
@@ -198,6 +199,7 @@ export default function PlaceMixerAudioPlayer({
   onPlaybackStateChange,
   programAudio,
   classroomCollapsible = false,
+  classroomInitiallyCollapsed = false,
   roomLabel = "La Classe",
   onClassroomCollapsedChange,
 }: PlaceMixerAudioPlayerProps) {
@@ -246,7 +248,7 @@ export default function PlaceMixerAudioPlayer({
   const programAudioRef = useRef(programAudio);
   const programGenerationRef = useRef(createPlaceClientId());
   const [pickerView, setPickerView] = useState<PickerView>("closed");
-  const [classroomCollapsed, setClassroomCollapsed] = useState(false);
+  const [classroomCollapsed, setClassroomCollapsed] = useState(classroomCollapsible && classroomInitiallyCollapsed);
   const classroomPlayerContentId = useId();
   const [playbackMode, setPlaybackMode] = useState<PlaybackMode>("ordered");
   const playlistResumeRef = useRef<string | null>(null);
@@ -422,11 +424,10 @@ export default function PlaceMixerAudioPlayer({
   }, [classroomCollapsed, classroomCollapsible, roomId]);
 
   useEffect(() => {
-    if (!classroomCollapsible) {
-      setClassroomCollapsed(false);
-      onClassroomCollapsedChange?.(false);
-    }
-  }, [classroomCollapsible, onClassroomCollapsedChange]);
+    const collapsed = classroomCollapsible && classroomInitiallyCollapsed;
+    setClassroomCollapsed(collapsed);
+    onClassroomCollapsedChange?.(collapsed);
+  }, [roomId, classroomCollapsible, classroomInitiallyCollapsed, onClassroomCollapsedChange]);
 
   useEffect(() => {
     safetyCallbacksRef.current = { onRouteChange, onPlaybackStateChange };

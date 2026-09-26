@@ -63,6 +63,12 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
     const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
     const audio = container.querySelector("audio")!;
     audio.currentTime = 12;
+    const initialExpand = within(player).getByRole("button", { name: "Déplier le lecteur audio · La Classe" });
+    expect(initialExpand).toHaveAttribute("aria-expanded", "false");
+    expect(player).toHaveClass("is-classroom-collapsed");
+    expect(container.querySelector(".place-mixer")).toHaveClass("is-classroom-player-collapsed");
+    expect(within(player).queryByRole("button", { name: "Importer un son" })).not.toBeInTheDocument();
+    fireEvent.click(initialExpand);
 
     const collapse = within(player).getByRole("button", { name: "Replier le lecteur audio · La Classe" });
     const controlledId = collapse.getAttribute("aria-controls")!;

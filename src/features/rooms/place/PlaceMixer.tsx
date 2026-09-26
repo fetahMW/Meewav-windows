@@ -843,7 +843,8 @@ export default function PlaceMixer({
   const toolsLayout = useStudioToolsLayout();
   const showRoomTools = toolsVisible ?? toolsLayout?.toolsVisible ?? false;
   const classroomPlayerCollapsible = (roomPresentation.id === "classe" && mode === "host") || roomPresentation.id === "loge";
-  const [classroomPlayerCollapsed, setClassroomPlayerCollapsed] = useState(false);
+  const [classroomPlayerCollapsed, setClassroomPlayerCollapsed] = useState(roomPresentation.id === "classe" && mode === "host");
+  useEffect(() => { setClassroomPlayerCollapsed(roomPresentation.id === "classe" && mode === "host"); }, [room.id, roomPresentation.id, mode]);
   const desktopFx = useRuntime().isDesktop;
   const [fxPro, setFxPro] = useState(false);
   const [simpleSelector, setSimpleSelector] = useState<AutotuneSelectorId | null>(null);
@@ -1118,6 +1119,7 @@ export default function PlaceMixer({
           personalSend={personalMode}
           onPreviewLevel={personalMode || listenerOnly ? setPreviewMusicLevel : undefined}
           classroomCollapsible={classroomPlayerCollapsible}
+          classroomInitiallyCollapsed={roomPresentation.id === "classe" && mode === "host"}
           roomLabel={roomPresentation.label}
           onClassroomCollapsedChange={setClassroomPlayerCollapsed}
         />
