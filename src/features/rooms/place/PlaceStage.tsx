@@ -251,8 +251,8 @@ export default function PlaceStage({
   const layoutTriggerRef = useRef<HTMLButtonElement | null>(null);
   const layoutMenuRef = useRef<HTMLDivElement | null>(null);
   const programMutationPendingRef = useRef(false);
-  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const autoDirectorTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const controlsTimerRef = useRef<number | null>(null);
+  const autoDirectorTimerRef = useRef<number | null>(null);
   const lastAutoSwitchRef = useRef(Date.now());
 
   const onStage = useMemo<PlaceStageParticipant[]>(() => {

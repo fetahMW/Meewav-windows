@@ -32,7 +32,7 @@ describe("MeeWav pitch AudioWorklet adapter", () => {
     expect(receivedOptions?.processorOptions).toEqual(MEEWAV_PITCH_CORRECTION_PROFILE);
     expect(processor.getHealth?.()).toMatchObject({
       available: true,
-      active: true,
+      active: false,
       estimatedDspLatencyMs: 12,
       maximumDspLatencyMs: 22.666666666666668,
       maximumPitchDecisionIntervalMs: 10.666666666666666,

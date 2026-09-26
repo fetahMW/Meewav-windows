@@ -51,10 +51,10 @@ export function requiredEnvironment(name: string) {
 }
 
 export function allowedOrigins() {
-  return new Set((Deno.env.get("MEEWAV_ALLOWED_WEB_ORIGINS") ?? "")
+  return new Set(["meewav://app", "https://appassets.androidplatform.net", "http://127.0.0.1:5197", "http://localhost:5197", ...(Deno.env.get("MEEWAV_ALLOWED_WEB_ORIGINS") ?? "")
     .split(",")
     .map((origin) => origin.trim())
-    .filter(Boolean));
+    .filter(Boolean)]);
 }
 
 export function readJsonObject(raw: string) {

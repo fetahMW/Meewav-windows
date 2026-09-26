@@ -223,6 +223,13 @@ function sceneState(): SceneState {
           reactionCounts: { energy: 6, presence: 7, originality: 4, mastery: 5 },
           responses: {
             "demo-fan-1": { rating: 5, reactions: ["energy", "presence", "mastery"], submittedAt: new Date(Date.now() - 11 * 60_000).toISOString() },
+            "demo-fan-2": { rating: 5, reactions: ["energy", "presence", "originality", "mastery"], submittedAt: new Date(Date.now() - 10 * 60_000).toISOString() },
+            "demo-fan-3": { rating: 5, reactions: ["energy", "presence", "originality", "mastery"], submittedAt: new Date(Date.now() - 9 * 60_000).toISOString() },
+            "demo-fan-4": { rating: 5, reactions: ["energy", "presence", "originality", "mastery"], submittedAt: new Date(Date.now() - 8 * 60_000).toISOString() },
+            "demo-fan-5": { rating: 5, reactions: ["energy", "presence", "originality", "mastery"], submittedAt: new Date(Date.now() - 7 * 60_000).toISOString() },
+            "demo-fan-6": { rating: 4, reactions: ["energy", "presence"], submittedAt: new Date(Date.now() - 6 * 60_000).toISOString() },
+            "demo-fan-7": { rating: 4, reactions: ["presence"], submittedAt: new Date(Date.now() - 5 * 60_000).toISOString() },
+            "demo-fan-8": { rating: 3, reactions: [], submittedAt: new Date(Date.now() - 4 * 60_000).toISOString() },
           },
         },
       },

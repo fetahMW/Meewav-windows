@@ -14,7 +14,8 @@ import {
   type RemoteTrack,
   type RemoteTrackPublication,
   type TrackPublication,
-} from "livekit-client";
+  type BytePlusAccess,
+} from "../../../lib/byteplusRtc";
 import { supabase } from "../../../lib/supabaseClient";
 import { readRoomDevicePreferences } from "./roomDevicePreferences";
 
@@ -27,7 +28,7 @@ export const PLACE_LIVEKIT_PROGRAM_STREAM_NAME = "meewav.program";
 export const PLACE_LIVEKIT_SCREEN_STREAM_NAME = "meewav.screen";
 
 const ROOM_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
-const SAFE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:@-]{0,255}$/u;
+const SAFE_ID_PATTERN = /^[A-Za-z0-9_@.-]{1,128}$/u;
 const GENERATION_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/u;
 
 export type PlaceLiveKitRole = "host" | "guest" | "viewer";
@@ -41,10 +42,7 @@ export type PlaceLiveKitStatus =
   | "disconnected"
   | "failed";
 
-export type PlaceLiveKitAccess = {
-  url: string;
-  token: string;
-  identity: string;
+export type PlaceLiveKitAccess = BytePlusAccess & {
   role: PlaceLiveKitRole;
   canPublish: boolean;
   /** Server-authoritative identity allowed to own the public Room music. */
@@ -123,21 +121,6 @@ function isSafeIdentity(value: string | null): value is string {
   return Boolean(value && SAFE_ID_PATTERN.test(value));
 }
 
-function parseLiveKitUrl(value: string | null) {
-  if (!value) throw new Error("Adresse du transport Room absente.");
-  let url: URL;
-  try {
-    url = new URL(value);
-  } catch {
-    throw new Error("Adresse du transport Room invalide.");
-  }
-  const isLoopback = url.hostname === "localhost" || url.hostname === "127.0.0.1" || url.hostname === "[::1]";
-  if (url.protocol !== "wss:" && !(url.protocol === "ws:" && isLoopback)) {
-    throw new Error("Le transport Room doit utiliser une connexion sécurisée.");
-  }
-  return url.toString();
-}
-
 export function parsePlaceLiveKitAccess(value: unknown): PlaceLiveKitAccess {
   const record = asRecord(value);
   const token = stringValue(record, ["token", "accessToken"]);
@@ -149,7 +132,12 @@ export function parsePlaceLiveKitAccess(value: unknown): PlaceLiveKitAccess {
   ]);
   const role = record.role;
   const canPublish = record.canPublish;
-  if (!token || token.length < 32 || token.length > 32_768 || token.split(".").length !== 3) {
+  const appId = stringValue(record, ["appId"]);
+  const roomName = stringValue(record, ["roomName", "channelName"]);
+  const roomId = stringValue(record, ["roomId"]);
+  const expiresAt = stringValue(record, ["expiresAt"]);
+  if (!appId || !/^[A-Za-z0-9_-]{1,128}$/.test(appId) || !token || token.length < 32 || token.length > 32_768
+    || !token.startsWith(`001${appId}`) || !/^[A-Za-z0-9+/=]+$/.test(token.slice(3 + appId.length))) {
     throw new Error("Jeton du transport Room invalide.");
   }
   if (!isSafeIdentity(identity) || !isSafeIdentity(programAudioPublisherIdentity)) {
@@ -164,8 +152,21 @@ export function parsePlaceLiveKitAccess(value: unknown): PlaceLiveKitAccess {
   if (role === "viewer" && canPublish) {
     throw new Error("Droit de publication Room incohérent.");
   }
+  if (!roomId || !ROOM_ID_PATTERN.test(roomId) || !roomName || !/^[A-Za-z0-9_@.-]{1,128}$/.test(roomName)
+    || !expiresAt || !Number.isFinite(Date.parse(expiresAt)) || Date.parse(expiresAt) <= Date.now()) {
+    throw new Error("Canal ou expiration BytePlus invalide.");
+  }
+  if (!Array.isArray(record.members)) throw new Error("Politique média BytePlus absente.");
+  const members = record.members.map((value) => {
+    const member = asRecord(value);
+    if (!isSafeIdentity(stringValue(member, ["identity"])) || typeof member.canPublish !== "boolean"
+      || typeof member.canReceive !== "boolean" || typeof member.role !== "string") throw new Error("Participant BytePlus invalide.");
+    return { identity: member.identity as string, role: member.role, canPublish: member.canPublish,
+      canReceive: member.canReceive, audioTrackName: typeof member.audioTrackName === 'string' ? member.audioTrackName : undefined,
+      metadata: asRecord(member.metadata) };
+  });
   return {
-    url: parseLiveKitUrl(stringValue(record, ["url", "serverUrl", "wsUrl", "livekitUrl"])),
+    appId, roomId, roomName, expiresAt, members,
     token,
     identity,
     role,
@@ -186,7 +187,7 @@ export async function requestPlaceLiveKitAccess(
   if (!ROOM_ID_PATTERN.test(roomId)) {
     throw new Error("Connexion média refusée : identifiant de Room invalide.");
   }
-  const { data, error } = await client.functions.invoke("livekit-token", {
+  const { data, error } = await client.functions.invoke("byteplus-token", {
     body: { roomId },
   });
   if (error) {
@@ -197,9 +198,12 @@ export async function requestPlaceLiveKitAccess(
         throw new Error("La vidéo LIVE attend une mise à jour du serveur MeeWav. Ta caméra reste locale ; arrête la diffusion et réessaie après correction.");
       }
     }
-    throw new Error("Le transport temps réel de la Room est indisponible.");
+    const denied = typeof Response !== "undefined" && response instanceof Response && [401, 403, 404, 410].includes(response.status);
+    throw Object.assign(new Error("Le transport BytePlus de la Room est indisponible."), { accessDenied: denied });
   }
-  return parsePlaceLiveKitAccess(data);
+  const access = parsePlaceLiveKitAccess(data);
+  if (access.roomId !== roomId) throw new Error("Le jeton BytePlus reçu concerne une autre room.");
+  return access;
 }
 
 function createDefaultRoom() {
@@ -1030,7 +1034,7 @@ export class PlaceLiveKitService {
       error: null,
     });
     try {
-      await room.connect(access.url, access.token, { autoSubscribe: true });
+      await room.connect(access.appId, access.token, { access, refreshAccess: () => this.requestAccess(roomId) });
       if (!this.isCurrent(room, generation) || request !== this.lifecycleRequest) {
         await room.disconnect(false).catch(() => undefined);
         return false;

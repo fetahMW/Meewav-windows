@@ -6,7 +6,7 @@ import { targetFor } from "./geo.mjs";
 import { EIFFEL } from "./eiffel-landmark.mjs";
 import { GlobeInterface } from "./globe-interface";
 import { GLOBE_OVERVIEW } from "./saturn-ring.mjs";
-import { notifyHost } from './host-bridge';
+import { notifyHost, requestLiveMarkers } from './host-bridge';
 import GlobeLoading from '../../../meewav-vinyl/src/GlobeLoading';
 import { cityArrivalTarget, countryArrivalTarget, quarterArrivalTarget } from "./navigation-presets.mjs";
 
@@ -96,6 +96,8 @@ export default function App() {
       }
       if (op !== operation.current) return;
       const d = data.current;
+      const markers = new URLSearchParams(location.search).get('mode') === 'real' ? await requestLiveMarkers() : null;
+      if (op !== operation.current) return;
       const result = await createThree(
         host.current!,
         d.countries,
@@ -117,6 +119,7 @@ export default function App() {
           }
         },
         d.quarterIndex,
+        markers,
       );
       if (op !== operation.current) {
         result.destroy();
@@ -179,6 +182,21 @@ export default function App() {
       document.removeEventListener('globelab-scene-arrival', sceneArrival);
     };
   }, []);
+  useEffect(() => {
+    if (!ready || new URLSearchParams(location.search).get('mode') !== 'real') return;
+    let cancelled = false, pending = false;
+    const refresh = async () => {
+      if (pending || document.hidden) return;
+      pending = true;
+      try { const markers = await requestLiveMarkers(); if (!cancelled) { engine.current?.setLiveMarkers(markers); setError(''); } }
+      catch { if (!cancelled) { engine.current?.setLiveMarkers([]); setError('Impossible d’actualiser les profils du Globe.'); } }
+      finally { pending = false; }
+    };
+    const visible = () => { if (!document.hidden) void refresh(); };
+    const timer = window.setInterval(() => { void refresh(); }, 60_000);
+    document.addEventListener('visibilitychange', visible);
+    return () => { cancelled = true; clearInterval(timer); document.removeEventListener('visibilitychange', visible); };
+  }, [ready]);
   useEffect(() => {
     const context = (document as any).modelContext;
     if (!context?.registerTool) return;

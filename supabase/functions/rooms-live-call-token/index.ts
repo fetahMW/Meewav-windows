@@ -1,29 +1,18 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import {
   allowedOrigins,
-  encodeJson,
-  hmacSignature,
   jsonResponse,
   readJsonObject,
   requiredEnvironment,
 } from "../_shared/audioPairing.ts";
 
-// LiveKit JWTs cannot be revoked after signing. Keep the reconnect capability
-// brief; the durable worker deletes the room immediately and once more after
-// this TTL plus skew to close the residual recreate-after-delete window.
-const TOKEN_TTL_SECONDS = 30;
+import { generateBytePlusToken } from "../_shared/byteplusToken.ts";
+
+const TOKEN_TTL_SECONDS = 120;
 const CLOCK_SKEW_SECONDS = 5;
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
 const PRIVATE_ROOM_PATTERN = /^mw-call-[0-9a-f]{32}-[0-9a-f]{12}$/u;
 const PARTICIPANT_IDENTITY_PATTERN = /^[0-9a-f-]{36}:call:[0-9a-f-]{36}$/u;
-
-function isLoopbackHostname(hostname: string) {
-  const normalized = hostname.toLowerCase();
-  return normalized === "localhost"
-    || normalized === "127.0.0.1"
-    || normalized === "::1"
-    || normalized === "[::1]";
-}
 
 type MediaAuthority = {
   invitation_id: string;
@@ -52,21 +41,6 @@ function corsForRequest(request: Request) {
         }
       : {} as Record<string, string>,
   };
-}
-
-function liveKitServerUrl() {
-  const value = Deno.env.get("LIVEKIT_URL")?.trim()
-    || Deno.env.get("LIVEKIT_SERVER_URL")?.trim()
-    || "";
-  if (!value) throw new Error("Missing required environment variable: LIVEKIT_URL");
-  const parsed = new URL(value);
-  if (parsed.protocol !== "wss:" && parsed.protocol !== "ws:") {
-    throw new Error("LIVEKIT_URL must use ws:// or wss://");
-  }
-  if (parsed.protocol === "ws:" && !isLoopbackHostname(parsed.hostname)) {
-    throw new Error("LIVEKIT_URL requires WSS outside an explicit loopback development host");
-  }
-  return parsed.toString().replace(/\/$/u, "");
 }
 
 function isMediaAuthority(value: unknown): value is MediaAuthority {
@@ -106,33 +80,13 @@ async function issueAudioOnlyToken({
     throw new Error("live_call_session_expired");
   }
 
-  const header = encodeJson({ alg: "HS256", typ: "JWT" });
-  const payload = encodeJson({
-    iss: apiKey,
-    sub: authority.participant_identity,
-    iat: nowSeconds,
-    nbf: nowSeconds - CLOCK_SKEW_SECONDS,
-    exp: expiresAtSeconds,
-    jti: crypto.randomUUID(),
-    metadata: JSON.stringify({
-      roomId: authority.room_id,
-      liveCallInvitationId: authority.invitation_id,
-      mediaGeneration: authority.media_generation,
-      callMode: authority.call_mode,
-      role: authority.role === "host" ? "phone_host" : "phone_contact",
-    }),
-    video: {
-      room: authority.private_room_name,
-      roomJoin: true,
-      canSubscribe: true,
-      canPublish: true,
-      canPublishData: false,
-      canPublishSources: ["microphone"],
-    },
+  const token = await generateBytePlusToken({
+    appId: apiKey, appKey: apiSecret, roomId: authority.private_room_name,
+    userId: authority.participant_identity.replaceAll(':', '.'),
+    canPublish: true, audioOnly: true, expiresAt: expiresAtSeconds,
   });
-  const unsignedToken = `${header}.${payload}`;
   return {
-    token: `${unsignedToken}.${await hmacSignature(unsignedToken, apiSecret)}`,
+    token,
     expiresAt: new Date(expiresAtSeconds * 1_000).toISOString(),
   };
 }
@@ -163,7 +117,9 @@ Deno.serve(async (request) => {
       return jsonResponse(401, { error: "authentication_required" }, cors.headers);
     }
 
-    const body = readJsonObject(await request.text());
+    let body: Record<string, unknown>;
+    try { body = readJsonObject(await request.text()); }
+    catch { return jsonResponse(400, { error: "invalid_request" }, cors.headers); }
     const invitationId = typeof body.invitationId === "string"
       ? body.invitationId.trim()
       : "";
@@ -174,10 +130,10 @@ Deno.serve(async (request) => {
     const supabaseUrl = requiredEnvironment("SUPABASE_URL");
     const anonKey = requiredEnvironment("SUPABASE_ANON_KEY");
     const serviceRoleKey = requiredEnvironment("SUPABASE_SERVICE_ROLE_KEY");
-    const apiKey = requiredEnvironment("LIVEKIT_API_KEY");
-    const apiSecret = requiredEnvironment("LIVEKIT_API_SECRET");
+    const apiKey = requiredEnvironment("BYTEPLUS_RTC_APP_ID");
+    const apiSecret = requiredEnvironment("BYTEPLUS_RTC_APP_KEY");
     if (apiKey.length > 256 || apiSecret.length < 32) {
-      throw new Error("invalid_livekit_credentials");
+      throw new Error("invalid_byteplus_credentials");
     }
 
     const authClient = createClient(supabaseUrl, anonKey, {
@@ -221,7 +177,8 @@ Deno.serve(async (request) => {
 
     return jsonResponse(200, {
       token,
-      serverUrl: liveKitServerUrl(),
+      appId: apiKey,
+      canPublish: true,
       expiresAt,
       invitationId: data.invitation_id,
       callId: data.invitation_id,
@@ -230,8 +187,8 @@ Deno.serve(async (request) => {
       roomName: data.private_room_name,
       callMode: data.call_mode,
       role: data.role,
-      participantIdentity: data.participant_identity,
-      peerIdentity: data.peer_identity,
+      participantIdentity: data.participant_identity.replaceAll(':', '.'),
+      peerIdentity: data.peer_identity.replaceAll(':', '.'),
       canPublishSources: ["microphone"],
     }, cors.headers);
   } catch (error) {

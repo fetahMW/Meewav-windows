@@ -1,4 +1,5 @@
 import { demoTrackPackAudio } from "./demoTrackPackAudio";
+import { requestDirectCall } from "./MessagingCalls";
 import {
   ArrowDown,
   ArrowUp,
@@ -2898,8 +2899,8 @@ export default function MessageWorkspace({
             {isMessageContent && (
               <span className="mw-chat-header__actions">
                 <button type="button" className="mw-icon-button" data-conversation-drawer-trigger aria-expanded={drawerOpen} aria-controls="mw-conversation-drawer" onClick={() => setDrawerOpen((open) => !open)} aria-label="Rechercher dans la conversation"><Search /></button>
-                <button type="button" className="mw-icon-button" disabled title="Appels directs non connectés au service audio" aria-label="Appel audio"><Phone /></button>
-                <button type="button" className="mw-icon-button" disabled title="Appels directs non connectés au service vidéo" aria-label="Appel vidéo"><Video /></button>
+                <button type="button" className="mw-icon-button" disabled={!liveController || Boolean(selectedConversation.readOnlyReason) || selectedConversation.conversationKind !== "direct"} title="Appeler ce contact" aria-label="Appel audio" onClick={() => requestDirectCall(selectedConversation.id, "audio")}><Phone /></button>
+                <button type="button" className="mw-icon-button" disabled={!liveController || Boolean(selectedConversation.readOnlyReason) || selectedConversation.conversationKind !== "direct"} title="Appeler ce contact en vidéo" aria-label="Appel vidéo" onClick={() => requestDirectCall(selectedConversation.id, "video")}><Video /></button>
                 <button type="button" className="mw-icon-button" data-conversation-drawer-trigger aria-expanded={drawerOpen} aria-controls="mw-conversation-drawer" onClick={() => setDrawerOpen((open) => !open)} aria-label="Options de la conversation"><Info /></button>
               </span>
             )}

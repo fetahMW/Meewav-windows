@@ -11,7 +11,7 @@ vi.mock("./CageLaunchDialog", () => ({ default: () => <section aria-label="Prép
 vi.mock("../place/GreenHouse", () => ({ default: ({ onReady, readyLabel }: { onReady: () => Promise<void>; readyLabel: string }) => <button onClick={onReady}>{readyLabel}</button> }));
 vi.mock("../tools/waveAudioRules", async (original) => ({ ...await original<typeof import("../tools/waveAudioRules")>(), measureWaveAudio: mocks.measure }));
 vi.mock("./roomLaunchAudio", async (original) => ({ ...await original<typeof import("./roomLaunchAudio")>(), saveRoomLaunchAudio: mocks.save }));
-vi.mock("./createLiveRoom", () => ({ createLivePlace: mocks.createLive, createLiveCage: mocks.createCage }));
+vi.mock("./createLiveRoom", () => ({ createLiveRoom: mocks.createLive }));
 vi.mock("../place/RoomProductionPreparation", () => ({ default: ({ stage, onSetupChange, onReadinessChange }: { stage: string; onSetupChange: (value: unknown) => void; onReadinessChange?: (value: unknown) => void }) =>
   <div role="region" aria-label="Studio Meewav · préparation de la Room"><span>{stage}</span><button onClick={() => { onSetupChange({ cameraId: 'camera-qa', microphoneId: 'micro-qa', cameraIds: ['camera-qa'], layout: 'split' }); onReadinessChange?.({ video: true, microphone: true, music: false, pending: false }); }}>Préparer les sources QA</button></div> }));
 

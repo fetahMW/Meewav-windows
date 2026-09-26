@@ -18,7 +18,7 @@ import "./room-launch.css";
 import "./room-launch-picker.css";
 import "./desktop-launch.css";
 import { useRuntime } from '../../../runtime/RuntimeProvider';
-import { createLivePlace } from './createLiveRoom';
+import { createLiveRoom } from './createLiveRoom';
 import RoomProductionPreparation from '../place/RoomProductionPreparation';
 import { saveRoomProductionSetup, type RoomProductionSetup } from '../place/roomProductionSetup';
 
@@ -85,11 +85,18 @@ export default function RoomLaunchDialog({ closeRef, onClose, initialType, fromP
     if (opening) return;
     const invalid = validateRoomLaunch(config);
     if (invalid) { setError(invalid); return; }
-    if (getDesktopApplicationMode() !== 'demo' && runtime.canPrepareHostRoom && config.roomType === 'place') {
+    if (getDesktopApplicationMode() !== 'demo' && runtime.canPrepareHostRoom) {
       setOpening(true);
       liveRequestId.current ??= crypto.randomUUID();
       try {
-        const id = await createLivePlace(config, liveRequestId.current);
+        let ready = config;
+        if (config.roomType === 'wave' && !config.baseLoop?.mediaPath) {
+          if (!baseFile || !config.baseLoop) throw new Error('Importe une boucle de base pour ouvrir la Wave.');
+          const mediaPath = await saveRoomLaunchAudio(baseFile);
+          ready = { ...config, baseLoop: { ...config.baseLoop, mediaPath, mediaUrl: undefined } };
+          if (mounted.current) setConfig(ready);
+        }
+        const id = await createLiveRoom(ready, liveRequestId.current);
         if (mounted.current) { if (studioSetup) saveRoomProductionSetup(id, studioSetup); onClose(); navigate(`/rooms/${config.roomType}?room=${encodeURIComponent(id)}`); }
       } catch (reason) {
         if (mounted.current) { setOpening(false); setError(reason instanceof Error ? reason.message : 'Création LIVE non confirmée. Réessaie pour reprendre la même Room.'); }
@@ -146,7 +153,7 @@ export default function RoomLaunchDialog({ closeRef, onClose, initialType, fromP
         onStart={() => undefined} onStop={() => undefined}
       /></div> : null}
       <div className={`room-launch__body${step === settingsStep ? " is-preparation" : ""}`}>
-        {step === 0 ? <><label>Titre du direct<input autoComplete="off" maxLength={100} value={config.title} onChange={(e) => setConfig({ ...config, title: e.target.value })} placeholder={`Mon rendez-vous dans ${spec.label}`} /></label><label>Présentation<textarea maxLength={500} value={config.description} onChange={(e) => setConfig({ ...config, description: e.target.value })} /></label><label>Accès<MeewavSelect value={config.access} onChange={(e) => setConfig({ ...config, access: e.target.value as RoomLaunchConfiguration["access"] })}><option value="public">Public</option><option value="members">Membres</option><option value="invitation">Sur invitation</option></MeewavSelect></label></> : null}
+        {step === 0 ? <><label>Titre du direct<input autoComplete="off" maxLength={100} value={config.title} onChange={(e) => setConfig({ ...config, title: e.target.value })} placeholder={`Mon rendez-vous dans ${spec.label}`} /></label><label>Présentation<textarea maxLength={500} value={config.description} onChange={(e) => setConfig({ ...config, description: e.target.value })} /></label><label>Accès<MeewavSelect value={config.access} onChange={(e) => setConfig({ ...config, access: e.target.value as RoomLaunchConfiguration["access"] })}><option value="public">Public</option>{getDesktopApplicationMode() === "demo" && <><option value="members">Membres</option><option value="invitation">Sur invitation</option></>}</MeewavSelect></label></> : null}
         {step === settingsStep ? <RoomLaunchExtras config={config} scope={user?.id ?? "demo"} onChange={setConfig} /> : null}
         {step === settingsStep ? spec.fields.filter(field => !(type === "classe" && field.id === "seats")).map((field) => <label key={field.id} className={field.kind === "boolean" ? "is-toggle" : ""}>{field.kind === "boolean" ? <input type="checkbox" checked={Boolean(config.values[field.id])} onChange={(e) => setValue(field.id, e.target.checked)} /> : null}<span>{field.label}</span>{field.kind === "text" || field.kind === "number" ? <input type={field.kind} min={field.min} max={field.max} value={String(config.values[field.id])} onChange={(e) => setValue(field.id, field.kind === "number" ? Number(e.target.value) : e.target.value)} /> : field.kind === "textarea" ? <textarea maxLength={4000} value={String(config.values[field.id])} onChange={(e) => setValue(field.id, e.target.value)} /> : field.kind === "select" ? <MeewavSelect value={String(config.values[field.id])} onChange={(e) => setValue(field.id, e.target.value)}>{field.options?.map((value) => <option key={value}>{value}</option>)}</MeewavSelect> : null}</label>) : null}
         {step === summaryStep ? <><h3>{config.title}</h3><p>{config.description || spec.description}</p><dl><div><dt>Accès</dt><dd>{{ public: "Public", members: "Membres", invitation: "Sur invitation" }[config.access]}</dd></div>{spec.fields.map((field) => <div key={field.id}><dt>{field.label}</dt><dd>{typeof config.values[field.id] === "boolean" ? config.values[field.id] ? "Oui" : "Non" : String(config.values[field.id]) || "À compléter dans la régie"}</dd></div>)}</dl><p className="room-launch__note">{desktopStudio ? 'Studio Meewav préparé. Vérifie la connexion et les autorisations avant de créer la Room.' : 'Vérifie ensuite ton micro, ta caméra et ta connexion dans ta Green Room privée, avant d’ouvrir la régie.'}</p></> : null}
@@ -154,8 +161,8 @@ export default function RoomLaunchDialog({ closeRef, onClose, initialType, fromP
         {step === summaryStep && config.baseLoop ? <div className="wave-launch-base__summary"><Check /><span><strong>{config.baseLoop.fileName}</strong><small>{config.baseLoop.format === "long" ? "Son long" : `${config.baseLoop.bars} mesures`} · {waveLaunchDuration(config.baseLoop.durationSeconds!)} · Base prête</small><small>Instruments : {config.values.maxSubmissionBars} mesures max. · Voix : 16 mesures max.</small></span></div> : null}
         {step === greenStep ? desktopStudio ? <RoomLaunchConfirmation
           title={config.title} pending={opening} onLaunch={launch}
-          buttonLabel={config.roomType === 'place' && getDesktopApplicationMode() !== 'demo' ? 'Créer ma Room LIVE' : 'Ouvrir la préparation DEMO'}
-          description={config.roomType === 'place' && getDesktopApplicationMode() !== 'demo'
+          buttonLabel={getDesktopApplicationMode() !== 'demo' ? 'Créer ma Room LIVE' : 'Ouvrir la préparation DEMO'}
+          description={getDesktopApplicationMode() !== 'demo'
             ? 'Ta Room sera ouverte avec les réglages préparés. Tu gardes la main sur le départ de la diffusion dans la régie.'
             : 'Ouvre une session de démonstration avec ta configuration et tes sources. Ce parcours ne publie pas de direct LIVE.'}
         ><div className="launch-recap" aria-label="Réglages préparés">

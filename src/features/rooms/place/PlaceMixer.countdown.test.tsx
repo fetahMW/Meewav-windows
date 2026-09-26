@@ -66,15 +66,15 @@ describe("Mixer countdown transport", () => {
     fireEvent.click(screen.getByRole("checkbox", { name: "Début du chrono" }));
     fireEvent.click(screen.getByRole("checkbox", { name: "Fin du chrono" }));
     for (const view of ["Time", "Volumes", "FX voix"]) {
-      fireEvent.click(screen.getByRole("button", { name: view, exact: true }));
+      fireEvent.click(screen.getByRole("button", { name: view }));
       expect(screen.queryByRole("region", { name: "Pads" })).not.toBeInTheDocument();
-      fireEvent.click(screen.getByRole("button", { name: "Pads", exact: true }));
+      fireEvent.click(screen.getByRole("button", { name: "Pads" }));
       expect(screen.getByRole("checkbox", { name: "Début du chrono" })).toBeChecked();
       expect(screen.getByRole("checkbox", { name: "Fin du chrono" })).toBeChecked();
     }
-    fireEvent.click(screen.getByRole("button", { name: "Time", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "Time" }));
     fireEvent.click(screen.getByRole("checkbox", { name: "Afficher" }));
-    fireEvent.click(screen.getByRole("button", { name: "Démarrer", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "Démarrer" }));
     expect(pad).toHaveBeenCalledWith("countdown", expect.any(Function), expect.any(Function), expect.any(Function));
     act(() => window.dispatchEvent(new CustomEvent("meewav:mixer-chrono-ended")));
     expect(pad).toHaveBeenCalledWith("dj_horn", expect.any(Function));
@@ -87,13 +87,13 @@ describe("Mixer countdown transport", () => {
     fireEvent.click(screen.getByRole("checkbox", { name: "Début du chrono" }));
     importTrack();
     act(() => placeRoomTime.setEnabled(enabled));
-    fireEvent.click(screen.getByRole("button", { name: "Volumes", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "Volumes" }));
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
     await waitFor(() => expect(pad).toHaveBeenCalledTimes(1));
     expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
     expect(placeRoomTime.getSnapshot().status).toBe("idle");
     // Navigating while the introduction is playing must not stop or reset it.
-    fireEvent.click(screen.getByRole("button", { name: "Time", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "Time" }));
     await act(async () => { release?.(); });
     expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
     expect(placeRoomTime.getSnapshot().status).toBe(enabled ? "running" : "idle");
@@ -149,7 +149,7 @@ describe("Mixer countdown transport", () => {
     await act(async () => { release?.(); });
     const audio = document.querySelector<HTMLAudioElement>(".place-mixer-audio audio")!;
     audio.currentTime = 12;
-    fireEvent.click(screen.getByRole("button", { name: "Mettre en pause", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "Mettre en pause" }));
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
     await waitFor(() => expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2));
     expect(pad).toHaveBeenCalledTimes(1);

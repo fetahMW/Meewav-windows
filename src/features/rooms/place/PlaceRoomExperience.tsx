@@ -1,4 +1,3 @@
-import { superpoweredVoiceAdapter } from "./placeSuperpoweredAdapter";
 import { ViewerMixerContext, useViewerSendMixer } from "./ViewerMixerContext";
 import { useSwitchRoom } from "../switch-room/useSwitchRoom";
 import { SwitchRoomButton, SwitchRoomInvitation, SwitchRoomWaiting } from "../switch-room/SwitchRoom";
@@ -455,7 +454,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
       ? pitchProvider === "opendaw"
         ? OPENDAW_ROOM_ADAPTER
         : pitchProvider === "meewav_test"
-          ? runtime.isDesktop ? superpoweredVoiceAdapter : meewavPitchCorrectionAdapter
+          ? meewavPitchCorrectionAdapter
           : null
       : null,
   });
@@ -1099,7 +1098,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           await audioEngine.useWebAudioFallback("Autotune MeeWav sélectionné.");
         }
         if (!selectionIsCurrent()) return false;
-        await startCaptureWithPitchAdapter(runtime.isDesktop ? superpoweredVoiceAdapter : meewavPitchCorrectionAdapter, selectionIsCurrent);
+        await startCaptureWithPitchAdapter(meewavPitchCorrectionAdapter, selectionIsCurrent);
         if (!selectionIsCurrent()) return false;
         setPitchProvider(provider);
         place.updateVocal({ tuneEnabled: true, enabled: true });

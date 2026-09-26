@@ -166,9 +166,17 @@
     "test:e2e:install": "playwright install chromium",
     "preview": "vite preview",
     "globe:install": "npm ci --prefix vendor/globe-vinyle --ignore-scripts --no-audit --no-fund",
-    "dev:globe-integration": "node scripts/start-development.mjs --rooms-home-workspace-preview --mode audio-lab --host 127.0.0.1 --port 5194 --strictPort"
+    "dev:globe-integration": "node scripts/start-development.mjs --rooms-home-workspace-preview --mode audio-lab --host 127.0.0.1 --port 5194 --strictPort",
+    "backend:check": "node scripts/check-byteplus-backend.mjs",
+    "test:byteplus-sql": "node --test tests/byteplus-policy.sql.test.mjs",
+    "test:messaging-calls-sql": "node --test tests/messaging-calls.sql.test.mjs",
+    "test:desktop-shell": "node --test apps/meewav-studio/auth-links.test.cjs",
+    "desktop:build": "node scripts/build-desktop.mjs",
+    "desktop:package": "npm run desktop:build && node scripts/package-desktop.mjs",
+    "desktop:installer": "npm run desktop:build && node scripts/package-desktop.mjs --installer"
   },
   "dependencies": {
+    "@byteplus/rtc": "4.69.2",
     "@geoql/maplibre-gl-starfield": "^0.1.1",
     "@mapbox/vector-tile": "^3.0.0",
     "@maplibre/geojson-vt": "^6.1.1",
@@ -189,7 +197,6 @@
     "@turf/point-to-line-distance": "^7.3.5",
     "d3-geo": "^3.1.1",
     "hls.js": "^1.6.17",
-    "livekit-client": "^2.21.0",
     "lucide-react": "^1.17.0",
     "maplibre-gl": "5.24.0",
     "pbf": "^5.1.2",
@@ -202,6 +209,7 @@
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -210,11 +218,13 @@
     "@turf/union": "^7.3.5",
     "@types/d3-geo": "^3.1.0",
     "@types/geojson": "^7946.0.16",
+    "@types/node": "^26.6.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/topojson-client": "^3.1.5",
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.10",
+    "electron-builder": "^26.15.3",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",

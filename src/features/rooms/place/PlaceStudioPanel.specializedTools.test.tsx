@@ -95,7 +95,7 @@ it("respects the Place host queue gate in every conversation tab", async () => {
  const join=vi.fn().mockResolvedValue(undefined);
  const view=render(<MemoryRouter><PlaceStudioPanel {...props({room,onJoinQueue:join})}/></MemoryRouter>);
  for(const name of ["Tour de parole","File de parole","Clash","Défis"]){
-  fireEvent.click(await screen.findByRole("tab",{name,exact:true}));
+  fireEvent.click(await screen.findByRole("tab",{name}));
   expect(screen.getByRole("button",{name:"Rejoindre la file d’attente"})).toBeDisabled();
  }
  expect(join).not.toHaveBeenCalled();

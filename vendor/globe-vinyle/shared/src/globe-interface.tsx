@@ -11,6 +11,7 @@ import { targetFor } from "./geo.mjs";
 import { EIFFEL, MONTPARNASSE, NEGRESCO, CITY_LANDMARKS } from "./eiffel-landmark.mjs";
 import { CHARONNE_ID } from "./navigation-presets.mjs";
 import meewavBrandLogo from "../../assets/ui/assets/meewav-logo.svg";
+import { openLiveProfile } from './host-bridge';
 import "./globe-interface.css";
 import "./reference/features/globe/styles/globe-v2.css";
 
@@ -28,6 +29,7 @@ const persist = (key: string, value: any) => { try { localStorage.setItem(key, J
 const names: Record<string, string> = { "/messages": "Messagerie", "/rooms/home": "Rooms", "/scene": "La Scène", "/market": "Marketplace", "/tremplin": "Tremplin", "/profile": "Profil" };
 
 export function GlobeInterface({ ready, data, engine, navigate, selection, zoomLimit }: any) {
+  const realMode = new URLSearchParams(location.search).get('mode') === 'real';
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -215,10 +217,14 @@ export function GlobeInterface({ ready, data, engine, navigate, selection, zoomL
     return () => window.removeEventListener('meewav:ring-portrait-select', selectPortrait);
   }, []);
   useEffect(() => {
-    const selectAvatar = (event: Event) => setGroundAvatar((event as CustomEvent).detail || null);
+    const selectAvatar = (event: Event) => {
+      const avatar = (event as CustomEvent).detail;
+      if (realMode) { setGroundAvatar(null); if (avatar?.live) openLiveProfile(avatar.id); }
+      else setGroundAvatar(avatar || null);
+    };
     window.addEventListener('meewav:ground-avatar-select', selectAvatar);
     return () => window.removeEventListener('meewav:ground-avatar-select', selectAvatar);
-  }, []);
+  }, [realMode]);
   const goPosition = () => {
     if (!ready) return;
     const charonne = data.sectors.features.find((feature: any) => feature.id === CHARONNE_ID);
@@ -241,7 +247,7 @@ export function GlobeInterface({ ready, data, engine, navigate, selection, zoomL
   const toggleGrade = (level: number) => commitFilters({ ...draft, grades: draft.grades.includes(level) ? draft.grades.filter((x: number) => x !== level) : [...draft.grades, level] });
   const applyFilters = () => setFilterOpen(false);
   return <>
-    {ready && mode === 'globe' && <button className="ring-explore-button ring-key-surface" type="button"
+    {ready && !realMode && mode === 'globe' && <button className="ring-explore-button ring-key-surface" type="button"
       aria-label="Explorer les artistes légendaires" onClick={() => engine.current.enterRing()}>
       <Orbit className="ring-explore-icon" size={18} aria-hidden="true" />
       <span>Explorer les artistes<span className="ring-explore-detail"> légendaires</span></span>

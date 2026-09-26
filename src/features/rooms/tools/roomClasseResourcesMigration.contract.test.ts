@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
-import config from "../../../../supabase/config.toml?raw";
+import rawConfig from "../../../../supabase/config.toml?raw";
 import issuer from "../../../../supabase/functions/rooms-classe-resource-url/index.ts?raw";
-import migration from "../../../../supabase/migrations/20260904120000_rooms_classe_resources_v1.sql?raw";
+import rawMigration from "../../../../supabase/migrations/20260904120000_rooms_classe_resources_v1.sql?raw";
+
+const config = rawConfig.replace(/\r\n/g, "\n");
+const migration = rawMigration.replace(/\r\n/g, "\n");
 
 describe("Classroom private resources contract", () => {
   it("keeps the resource bucket private and bounded to images and audio", () => {

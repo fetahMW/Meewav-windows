@@ -89,7 +89,8 @@ describe("SupabaseRoomToolsRepository", () => {
       .mockImplementationOnce(async (_name, parameters) => ({
         data: (parameters as { p_initial_state: ReturnType<typeof createRoomToolsFixture> }).p_initial_state,
         error: null,
-      }));
+      }))
+      .mockResolvedValueOnce({ data: { room: { hands_open: true, media_consent_version: "1" }, floor_requests: [] }, error: null });
     const repository = new SupabaseRoomToolsRepository({ rpc } as unknown as SupabaseClient);
 
     await repository.projectionForRole("classe", roomId, "host", "host");
@@ -107,6 +108,7 @@ describe("SupabaseRoomToolsRepository", () => {
     expect(classe?.privateTalkStudentId).toBeNull();
     expect(classe?.questions).toEqual([]);
     expect(JSON.stringify(classe)).not.toMatch(/class-(?:\d+|question)/);
+    expect(rpc).toHaveBeenLastCalledWith("rooms_classe_host_state_v1", { p_room_id: roomId });
   });
 
   it("sends a Viewer only through the narrow action RPC", async () => {

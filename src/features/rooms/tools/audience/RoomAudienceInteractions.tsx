@@ -361,8 +361,7 @@ export async function endClasseAudienceIntervention({
   liveCall: ClasseAudienceLiveCall | null;
   execute: (command: RoomToolsCommand) => Promise<unknown>;
 }) {
-  if (source === "live") {
-    if (!liveCall) throw new Error("class_live_call_transport_unavailable");
+  if (source === "live" && liveCall) {
     const invitation = [...liveCall.invitations]
       .filter((candidate) => candidate.roomId === roomId
         && candidate.partyRole === "contact"
@@ -400,7 +399,10 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
   const selectedStudent = classe.seats.find(candidate => candidate.person?.id === selectedStudentId)?.person;
   const activeSpeaker = classe.people.find((person) => person.id === classe.activeSpeakerId);
   const handRaised = classe.raisedHands.some((hand) => hand.personId === accountId);
-  const canRaise = canEngage && role === "premium_participant" && Boolean(seat) && classe.handsOpen && !handRaised && classe.activeSpeakerId !== accountId;
+  const canRequestFloor = source === "live"
+    ? classe.floorEligible === true && (role === "viewer" || role === "premium_participant")
+    : role === "premium_participant" && Boolean(seat);
+  const canRaise = canEngage && canRequestFloor && classe.handsOpen && !handRaised && classe.activeSpeakerId !== accountId;
   const active = classe.activeSpeakerId === accountId;
   const privateActive = classe.privateTalkStudentId === accountId;
   const questions = classe.questions ?? [];
@@ -499,7 +501,7 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
     </div>
     <div className="is-classroom classe-student-navbar"><nav className="classroom-command-dock classe-student-dock" aria-label="Commandes de l’élève">
       <div className="classroom-command-dock__controls">
-        {seat && role === "premium_participant" ? <button type="button" aria-label={handRaised ? "Baisser ma main" : "Lever la main"} title={handRaised ? "Baisser ma main" : "Lever la main"} className={handRaised ? "is-hand-action is-active" : "is-hand-action"} aria-pressed={handRaised} disabled={busy || !canEngage || (!handRaised && !canRaise)} onClick={() => void execute(handRaised ? {type:"classe.hand.lower-own", accountId} : {type:"classe.hand.raise", personId:accountId})}><Hand /><span>{handRaised ? "Baisser ma main" : "Lever la main"}</span></button> : null}
+        {canRequestFloor || handRaised ? <button type="button" aria-label={handRaised ? "Baisser ma main" : "Lever la main"} title={handRaised ? "Baisser ma main" : "Lever la main"} className={handRaised ? "is-hand-action is-active" : "is-hand-action"} aria-pressed={handRaised} disabled={busy || !canEngage || (!handRaised && !canRaise)} onClick={() => void execute(handRaised ? {type:"classe.hand.lower-own", accountId} : {type:"classe.hand.raise", personId:accountId}).catch(() => undefined)}><Hand /><span>{handRaised ? "Baisser ma main" : "Lever la main"}</span></button> : null}
         <button type="button" aria-label="Quitter la classe" title="Quitter la classe" onClick={onLeaveRoom} disabled={!onLeaveRoom}><LogOut /><span>Quitter la classe</span></button>
       </div>
     </nav></div>

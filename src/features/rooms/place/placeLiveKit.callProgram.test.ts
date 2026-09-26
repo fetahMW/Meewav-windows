@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { RoomEvent, type Room } from "livekit-client";
+import { RoomEvent, type Room } from "../../../lib/byteplusRtc";
 import {
   PLACE_LIVEKIT_CALL_PROGRAM_TRACK_NAME,
   PlaceLiveKitService,
@@ -11,8 +11,9 @@ const HOST_ID = "f12a0714-3a04-45d0-8c62-c0dd439680b1";
 
 function accessFixture(): PlaceLiveKitAccess {
   return {
-    token: `${"a".repeat(20)}.${"b".repeat(20)}.${"c".repeat(20)}`,
-    url: "wss://rtc.meewav.test/",
+    token: `001testapp${"a".repeat(80)}`,
+    appId: "testapp", roomName: "mw-test", roomId: ROOM_ID,
+    expiresAt: new Date(Date.now()+120_000).toISOString(), members: [],
     identity: HOST_ID,
     role: "host",
     canPublish: true,

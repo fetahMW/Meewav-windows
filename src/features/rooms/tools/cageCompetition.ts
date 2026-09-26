@@ -68,7 +68,7 @@ export function migrateOpenMicRuntime(cage: CageState): boolean {
   const legacyEntries = cage.openMicEntries ?? [];
   runtime.participants.forEach((person) => { if (person.seed !== null) { person.status = "SELECTED"; if (person.guestStatus === "on_stage") person.guestStatus = "backstage"; } });
   initializeOpenMicProgram(runtime);
-  for (const entry of runtime.openMicEntries ?? []) {
+  for (const entry of (runtime as CageCompetitionRuntime).openMicEntries ?? []) {
     const previous = legacyEntries.find((item) => item.personId === entry.participantId);
     if (!previous) continue;
     entry.order = previous.order;

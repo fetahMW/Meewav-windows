@@ -26,8 +26,8 @@ beforeEach(() => {
   Object.defineProperty(URL, "createObjectURL", { configurable: true, value: createUrl });
   Object.defineProperty(URL, "revokeObjectURL", { configurable: true, value: revokeUrl });
   vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
-  vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(function () { this.dispatchEvent(new Event("play")); return Promise.resolve(); });
-  vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(function () { this.dispatchEvent(new Event("pause")); });
+  vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(function (this: HTMLMediaElement) { this.dispatchEvent(new Event("play")); return Promise.resolve(); });
+  vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(function (this: HTMLMediaElement) { this.dispatchEvent(new Event("pause")); });
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 

@@ -179,6 +179,8 @@ export type ClassResource = {
   mediaPath?: string;
 };
 export type ClasseState = {
+  /** Canonical live floor eligibility, independent of a paid seat. */
+  floorEligible?: boolean;
   people: RoomPerson[];
   handsOpen: boolean;
   raisedHands: RaisedHand[];
@@ -327,6 +329,7 @@ export type WaveSubmission = {
 };
 export type WaveLayer = { id: string; submissionId?: string; submissionVersion?: number; title: string; author: string; active: boolean; solo: boolean; muted: boolean; gain?: number };
 export type WaveState = {
+  maxSubmissionBars?: 4 | 8 | 16;
   votingPolicy?: RoomVotingPolicy;
   title: string;
   baseLoop: WaveBaseLoop;

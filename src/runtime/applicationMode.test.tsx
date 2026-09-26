@@ -12,7 +12,7 @@ import { AuthProvider } from "../features/auth/AuthProvider";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 const key = "meewav:desktop:application-mode:v1";
-afterEach(() => { cleanup(); sessionStorage.clear(); vi.unstubAllGlobals(); });
+afterEach(() => { cleanup(); sessionStorage.clear(); history.replaceState(null, "", "/"); vi.unstubAllGlobals(); });
 function desktop(mode?: string) {
   vi.stubGlobal("meewavDesktop", { version: 1 });
   if (mode) sessionStorage.setItem(key, mode);
@@ -48,6 +48,13 @@ describe("Desktop entry and data isolation", () => {
   it("does not change the web runtime from a desktop storage value", () => {
     sessionStorage.setItem(key, "demo");
     expect(getDesktopApplicationMode()).toBeNull();
+  });
+  it("opens a desktop auth return in real mode without losing the one-use code", () => {
+    desktop("demo");
+    history.replaceState(null, "", "/auth/callback?code=test-code");
+    expect(getDesktopApplicationMode()).toBe("live");
+    expect(sessionStorage.getItem(key)).toBe("live");
+    expect(location.search).toBe("?code=test-code");
   });
   it("does not restore a saved real session while entering demo", () => {
     desktop("demo");

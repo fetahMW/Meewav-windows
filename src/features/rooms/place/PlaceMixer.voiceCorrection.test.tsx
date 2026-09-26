@@ -37,7 +37,7 @@ it("Desktop exposes Android's two compact FX cards and keeps the existing contro
   expect(onTune).toHaveBeenCalledWith("D#", room.personalVocal.tuneScale);
   fireEvent.change(screen.getByRole("slider", { name: "Mix réverb" }), { target: { value: "0.4" } });
   expect(onVocal).toHaveBeenCalledWith({ reverbAmount: .4, reverbEnabled: true, enabled: true });
-  fireEvent.click(screen.getByRole("button", { name: "Pro", exact: true }));
+  fireEvent.click(screen.getByRole("button", { name: "Pro" }));
   expect(screen.getByRole("button", { name: "Plugins du PC" })).toBeVisible();
 });
 

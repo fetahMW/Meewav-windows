@@ -26,6 +26,6 @@ export default function ClassHandsPanel({ classe, role, accountId, disabled, exe
       })}</ol>
       {!classe.raisedHands.length ? <EmptyState title="Aucune main levée">La file se remplira dans l’ordre des demandes.</EmptyState> : null}
     </ToolSection>
-    {role === "premium_participant" ? <button type="button" className="is-primary" disabled={!classe.handsOpen || classe.raisedHands.some((hand) => hand.personId === accountId)} onClick={() => void execute({ type: "classe.hand.raise", personId: accountId })}><Hand />Lever la main</button> : role === "viewer" || role === "visitor" ? <p className="room-tool-notice is-warning">La participation est réservée aux 24 places du cours.</p> : null}
+    {(role === "premium_participant" && classe.floorEligible !== false) || (role === "viewer" && classe.floorEligible === true) ? <button type="button" className="is-primary" disabled={disabled || !classe.handsOpen || classe.activeSpeakerId === accountId || classe.raisedHands.some((hand) => hand.personId === accountId)} onClick={() => void execute({ type: "classe.hand.raise", personId: accountId }).catch(() => undefined)}><Hand />Lever la main</button> : role === "viewer" || role === "visitor" ? <p className="room-tool-notice is-warning">{role === "visitor" ? "Connectez-vous pour demander la parole." : "Les demandes de parole ne sont pas disponibles pour votre participation actuelle."}</p> : null}
   </div>;
 }

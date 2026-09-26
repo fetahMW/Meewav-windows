@@ -63,11 +63,48 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 }
 
 /* The same first row places the persistent player at the same vertical origin. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  --studio-subnav-height: 42px;
+  --studio-subnav-row: 30px;
+}
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-mixer.has-audio-player {
-  grid-template-rows: 42px auto minmax(180px,1fr);
+  grid-template-rows: var(--studio-subnav-height) auto minmax(180px,1fr);
   row-gap: 0;
   padding-top: 0;
-  & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; height: 42px; min-height: 42px; max-height: 42px; margin: 0; padding: 0 6px; align-content: center; }
-  & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; height: 42px; min-height: 42px; margin: 0; padding: 0 8px; align-content: center; }
+  & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); max-height: var(--studio-subnav-height); margin: 0; padding: 0 6px; align-content: center; }
+  & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); margin: 0; padding: 0 8px; align-content: center; }
   & > .place-mixer-audio { top: auto; margin-top: 0; }
+}
+
+/* Every module uses the Mixer's navigation band, including inline Chat and
+ * Guests rails. Center the controls themselves, not only their outer wrapper. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  & :is(.place-chat-workspace, .classe-chat-workspace):has(> .place-tools-console__switch) {
+    padding-top: 0;
+  }
+  & :is(
+    .place-mixer__subnav,
+    .wave-tools-nav .place-tools-console__switch,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-guests__segments
+  ) {
+    box-sizing: border-box;
+    height: var(--studio-subnav-height);
+    min-height: var(--studio-subnav-height);
+    max-height: var(--studio-subnav-height);
+    flex-shrink: 0;
+    grid-template-rows: var(--studio-subnav-row);
+    align-content: center;
+    align-items: center;
+    margin-block: 0;
+    padding-block: 0;
+    & > button {
+      box-sizing: border-box;
+      height: var(--studio-subnav-row);
+      min-height: var(--studio-subnav-row);
+      align-self: center;
+      padding-block: 0;
+    }
+  }
 }

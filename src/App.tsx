@@ -39,6 +39,7 @@ import {
   requestAudioEnginePairingTicket,
 } from "./features/rooms/audio-engine";
 import { RoomLiveCallProvider } from "./features/rooms/live-call/RoomLiveCallProvider";
+import MessagingCalls from "./features/messaging/MessagingCalls";
 import {
   getClasseWorkspacePreviewRedirect,
   isClasseWorkspacePreviewEnabled,
@@ -322,6 +323,7 @@ function App() {
         <DesktopTitleBar />
         <DesktopEntryGate><AuthProvider>
         <DesktopAuthenticationBoundary><RoomLiveCallProvider>
+          <MessagingCalls />
           <RoomsHomeWorkspaceBoundary>
             <ClasseWorkspaceBoundary>
               <Routes>

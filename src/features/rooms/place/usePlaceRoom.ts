@@ -1683,7 +1683,7 @@ export function usePlaceRoom({
   }, [effectiveUserId, load, repository, room.queue, room.source, showNotice]);
 
   const cageStagePending = useRef(false);
-  const moveGuest = useCallback(async (participant: PlaceParticipant, destination: "backstage" | "onstage" | "accepted") => {
+  const moveGuest = useCallback(async (participant: PlaceParticipant, destination: "backstage" | "onstage" | "accepted" | "ready") => {
     if (!isHost) {
       showNotice("Cette action est réservée au Host.");
       return;
@@ -1725,6 +1725,10 @@ export function usePlaceRoom({
 
 
 
+    if (destination === "ready") {
+      showNotice("La préparation doit être confirmée par l’invité dans son OBS MeeWav.");
+      return;
+    }
     let effectiveDestination = destination;
     let isQueueInvitation = false;
     let serverMutation: (() => Promise<void>) | null = null;

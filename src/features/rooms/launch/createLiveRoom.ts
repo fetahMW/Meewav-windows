@@ -1,44 +1,23 @@
 import { supabase } from '../../../lib/supabaseClient';
-import type { RoomLaunchConfiguration } from './roomLaunch';
-import { validateRoomLaunch } from './roomLaunch';
+import { validateRoomLaunch, type RoomLaunchConfiguration } from './roomLaunch';
+import { prepareLiveWaveSwitch } from '../switch-room/switchRoom.wave';
 
-/** Same rooms_v2 + host enrollment contract as Android liveRooms.ts.
- * Keep a caller-owned UUID across retries: a lost response must not create another Room.
- */
-export async function createLivePlace(config: RoomLaunchConfiguration, requestId: string) {
-  if (config.roomType !== 'place') throw new Error('Choisis La Place.');
-  return createPublicRoom(config, requestId);
-}
-
-/** iOS CreateRoomView opens an empty Cage before inviting fighters in Coulisses. */
-export async function createLiveCage(config: RoomLaunchConfiguration, requestId: string) {
-  if (config.roomType !== 'cage') throw new Error('Choisis La Cage.');
-  return createPublicRoom(config, requestId);
-}
-
-async function createPublicRoom(config: RoomLaunchConfiguration, requestId: string) {
-  const invalid = validateRoomLaunch(config);
-  if (invalid) throw new Error(invalid);
-  if (config.access !== 'public') throw new Error('Le contrat LIVE actuel ne garantit pas un accès privé. Choisis Public ou conserve la préparation locale.');
-  if (String(config.values.topic || '').trim()) throw new Error('Le sujet séparé n’est pas enregistré par le contrat LIVE actuel. Utilise le champ Présentation.');
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-  if (authError || !user) throw new Error('Connecte-toi pour ouvrir une Room.');
-  const existing = await supabase.from('rooms_v2').select('id,host_id,type,status').eq('id', requestId).maybeSingle();
-  if (existing.error) throw existing.error;
-  if (existing.data) {
-    if (existing.data.host_id !== user.id || existing.data.type !== config.roomType || existing.data.status !== 'live') throw new Error('Cette demande correspond à une Room indisponible.');
-  } else {
-    const result = await supabase.from('rooms_v2').insert({
-      id: requestId, host_id: user.id, type: config.roomType, title: config.title.trim(),
-      description: config.description.trim() || null, status: 'live',
-      livekit_room_name: `room-${requestId}`, queue_open: Boolean(config.values.queueOpen), video_format: 'landscape',
-    }).select('id').single();
-    if (result.error) throw result.error;
-    if (result.data?.id !== requestId) throw new Error('Création non confirmée. Réessaie avec la même demande.');
+/** Atomic, idempotent creation. A Wave remains private until its base is READY. */
+export async function createLiveRoom(config: RoomLaunchConfiguration, requestId: string) {
+  const invalid=validateRoomLaunch(config);
+  if(invalid)throw new Error(invalid);
+  if(config.access!=='public')throw new Error('Choisis un accès public pour cette room.');
+  const {data,error}=await supabase.rpc('rooms_create_desktop_v1',{p_configuration:config,p_request_id:requestId});
+  if(error)throw new Error(error.message.includes('launch_request_conflict') ? 'Cette préparation a changé. Ferme le lancement puis recommence avec les nouveaux réglages.' : 'Création LIVE non confirmée. Réessaie pour reprendre la même room.');
+  if(data?.id!==requestId)throw new Error('Le serveur n’a pas confirmé la room demandée.');
+  if(config.roomType==='wave'&&!data.ready){
+    await prepareLiveWaveSwitch(requestId,{roomId:requestId,current:'place',from:'place',version:data.version,changeId:null,changedAt:null,acceptedVersion:0,available:true},{launch:config},requestId);
+    const completed=await supabase.rpc('rooms_complete_desktop_wave_v1',{p_room_id:requestId,p_request_id:requestId});
+    if(completed.error||completed.data!==requestId)throw new Error('La Wave reste en préparation privée. Réessaie pour confirmer sa mise en direct.');
   }
-  const membership = await supabase.from('room_participants_v2').upsert({
-    room_id: requestId, user_id: user.id, role: 'host', left_at: null,
-  }, { onConflict: 'room_id,user_id' });
-  if (membership.error) throw membership.error;
   return requestId;
+}
+export async function createLivePlace(config:RoomLaunchConfiguration,requestId:string){
+  if(config.roomType!=='place')throw new Error('Choisis La Place.');
+  return createLiveRoom(config,requestId);
 }
