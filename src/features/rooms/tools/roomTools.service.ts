@@ -5,7 +5,7 @@ import { assertDemoExperience, readDemoExperience } from "../switch-room/switchR
 import { readCageDemoSession, DEFAULT_CAGE_LAUNCH } from "../launch/cageLaunch";
 import { ROOMS_HOME_CATALOG } from "../home/roomsHome.fixtures";
 import { cageDemoGuestCandidates } from "./cageCompetition.demo";
-import { controlCageShowcase, initializeCageShowcase, moveCageDemoGuest, prepareCageShowcaseVote } from "./cageShowcase.demo";
+import { controlCageShowcase, initializeCageShowcase, moveCageDemoGuest, prepareCageDemoArtists, prepareCageShowcaseVote } from "./cageShowcase.demo";
 import { applyCageCompetitionCommand, cageCommandAlreadyApplied, finalizeExpiredCageVote, initializeCageCompetition, migrateCageDemoCompetition, migrateOpenMicRuntime, migrateChampionshipRuntime, projectCageCompetition, syncCageLegacyProjection } from "./cageCompetition";
 import { readRoomLaunchSession, applyRoomLaunchTools } from "../launch/roomLaunch";
 import { isRoomLaunchAudio, resolveRoomLaunchAudio } from "../launch/roomLaunchAudio";
@@ -1898,6 +1898,18 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
         state = migrated;
       }
     }
+    const runtime = state.cage?.runtime;
+    const pendingPreparation = runtime?.matches.some(match => match.id === runtime.preparedMatchId && ["GREENHOUSE", "CALLING"].includes(match.status))
+      || runtime?.openMicEntries?.some(entry => entry.id === runtime.preparedEntryId && entry.status === "GREENHOUSE");
+    if (pendingPreparation) {
+      const prepared = cloneState(state);
+      if (prepareCageDemoArtists(prepared)) {
+        prepared.updatedAt = new Date().toISOString();
+        this.persistCage(prepared);
+        this.states.set(key(prepared.roomType, prepared.roomId), prepared);
+        state = prepared;
+      }
+    }
     const current = state.cage?.runtime?.matches.find((match) => match.id === state.cage?.runtime?.activeMatchId);
     const openMicExpired = state.cage?.runtime?.openMicEntries?.some((entry) => entry.feedback?.open && entry.feedback.endsAt && Date.parse(entry.feedback.endsAt) <= Date.now());
     if (!openMicExpired && (!current?.vote?.open || !current.vote.endsAt || Date.parse(current.vote.endsAt) > Date.now())) return state;
@@ -1928,7 +1940,7 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
     let existing = this.states.get(stateKey);
     const savedSwitch = typeof localStorage!=="undefined" ? JSON.parse(localStorage.getItem(switchToolsKey(roomId,roomType))??"null") as RoomToolsState|null : null;
     if(savedSwitch && (!existing || savedSwitch.revision>=existing.revision)){existing=savedSwitch;this.states.set(stateKey,existing);}
-    if(savedSwitch && existing)return existing;
+    if(savedSwitch && existing)return roomType === "cage" ? this.refreshCage(existing) : existing;
 
     if (roomType === "loge" && typeof localStorage !== "undefined") {
       try {
@@ -2060,6 +2072,7 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
       reduceCommand(state, command, accountId ?? role);
       prepareCageShowcaseVote(state);
     }
+    prepareCageDemoArtists(state);
     applyRoomVotingPolicy(state,readDemoVotingPolicy(roomId));
     state.revision += 1;
     state.updatedAt = new Date().toISOString();

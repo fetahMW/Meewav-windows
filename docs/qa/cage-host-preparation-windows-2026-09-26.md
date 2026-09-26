@@ -20,3 +20,11 @@
 - Aucun navigateur ni application de l’utilisateur n’a été piloté. La validation visuelle Electron et une session réelle entre plusieurs appareils n’ont pas été réalisées. Les changements serveur n’ont pas été déployés par cette intervention.
 
 La provenance et les limites du portage viewer sont décrites dans `cage-viewer-ios-windows-2026-09-26.md`.
+
+## Retouches de la même session
+
+- Lecteur Cage remonté de 15 px, position du chip Mode conservée.
+- Sélection rapide : 8 premiers, 16 premiers ou tout, en une commande ; respecte la recherche, les places disponibles et les choix déjà cochés.
+- Switch Room est placé à gauche du téléphone, hors de la grille à quatre cellules des indicateurs pour préserver la bourse, l’étoile et le cœur.
+- Dans le dépôt de simulation uniquement, les artistes appelés terminent automatiquement leurs vérifications. Une préparation enregistrée et bloquée est récupérée à la lecture. La mise sur scène reste une action du host ; le réducteur et le serveur live continuent à exiger les vérifications réelles.
+- 23 tests ciblés passent, dont les sélections groupées, la protection de la capacité, l’ordre des contrôles du bandeau et la reprise d’une ancienne simulation ; build de production réussi.

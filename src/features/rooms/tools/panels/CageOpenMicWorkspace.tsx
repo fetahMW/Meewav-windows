@@ -29,6 +29,7 @@ export default function CageOpenMicWorkspace(props: CageWorkspaceProps) {
     {isControl ? <>
       <CageArtistPicker solo people={runtime.participants.filter(person => available.includes(person) || entries.some(entry => entry.participantId === person.id))}
         selectedIds={entries.map(entry => entry.participantId)} maximum={runtime.config.participantCount} disabled={disabled}
+        onSelectMany={ids => { void send("openmic.schedule", { participantIds: ids }); }}
         lockedIds={entries.filter(entry => entry.status !== "WAITING").map(entry => entry.participantId)}
         statusLabels={Object.fromEntries(entries.filter(entry => entry.status !== "WAITING").map(entry => [entry.participantId, LABEL[entry.status]]))}
         onSelect={(id, chosen) => { const entry = entries.find(item => item.participantId === id); if (chosen) void send("openmic.schedule", { participantIds: [id] }); else if (entry) void send("openmic.remove", { entryId: entry.id }); }}

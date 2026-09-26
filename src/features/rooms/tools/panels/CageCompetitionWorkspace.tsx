@@ -91,6 +91,7 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
     return { participant, played: played.length, wins: played.filter((match) => match.winnerId === participant.id).length };
   }).sort((a, b) => b.wins - a.wins);
   const artistPicker = <CageArtistPicker people={runtime.participants.filter(person => person.seed !== null || available.includes(person))} selectedIds={selected.map(person => person.id)} maximum={count} disabled={disabled} battle={battle} championship={championship}
+        onSelectMany={ids => { void send("roster.select", { participantIds: ids }); }}
         onSelect={(id, chosen) => { void send(chosen ? "roster.select" : "roster.remove", chosen ? { participantIds: [id] } : { participantId: id }); }}
         onMove={(id, direction) => { const person = selected.find(item => item.id === id); if (person?.seed) void send("roster.move", { participantId: id, toSeed: person.seed + direction }); }} />;
   return <>

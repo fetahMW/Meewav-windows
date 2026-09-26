@@ -15,7 +15,13 @@ describe("PlaceRoomShellHeader", () => {
   it("places Cage switch room beside the call button and keeps the mixer timer out of the header", () => {
     placeRoomTime.setEnabled(true);
     const { container } = render(<RoomPresentationProvider presentation={CAGE_ROOM_PRESENTATION}><PlaceRoomShellHeader room={createPlaceDemoState()} isHost switchSlot={<button>Switch Room</button>} endConfirmationOpen={false} onEndConfirmationOpen={vi.fn()} onEndRoom={vi.fn()} /></RoomPresentationProvider>);
-    expect(screen.getByRole("button", { name: "Switch Room" }).previousElementSibling).toHaveClass("place-live-call");
+    const indicators = screen.getByLabelText("Indicateurs de la Room");
+    expect(screen.getByRole("button", { name: "Switch Room" }).nextElementSibling).toBe(indicators);
+    expect(indicators.firstElementChild).toHaveClass("place-live-call");
+    expect(indicators.children).toHaveLength(4);
+    expect(within(indicators).getByTitle("Soutien reçu")).toBeVisible();
+    expect(within(indicators).getByTitle("Golden Likes")).toBeVisible();
+    expect(within(indicators).getByTitle("Likes")).toBeVisible();
     expect(container.querySelector(".place-room-shellbar__broadcast-cluster")).toBeEmptyDOMElement();
     expect(screen.queryByLabelText(/Compte à rebours/)).toBeNull();
   });

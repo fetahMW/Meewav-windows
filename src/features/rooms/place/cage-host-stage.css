@@ -78,7 +78,7 @@
 .cage-mixer-timer.is-complete { color: #f2ba8e; }
 .cage-stage-program:has(.cage-stage-program__duel-axis):not([data-composition="solo"]) + .cage-mixer-timer { top: calc(50% + 30px); bottom: auto; }
 .place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel[data-composition="solo"] .cage-stage-program__duel-axis { display: none; }
-.place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__counters > .switch-room-anchor { flex: 0 0 auto; }
+.place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__host-side > .switch-room-anchor { flex: 0 0 auto; align-self: center; margin-left: 0; }
 @media (min-width: 761px) {
-  .place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__counters .switch-room-popup { left: auto; right: 0; }
+  .place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__host-side .switch-room-popup { left: auto; right: 0; }
 }

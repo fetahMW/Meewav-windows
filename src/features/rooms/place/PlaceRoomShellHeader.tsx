@@ -106,9 +106,9 @@ export default function PlaceRoomShellHeader({
       {!isHost ? <RoomViewerHost room={room} onLeaveRoom={onLeaveRoom} /> : null}
       {isHost ? (
         <div className="place-room-shellbar__host-side">
+          {roomPresentation.id === "cage" ? switchSlot : null}
           <div className="place-room-shellbar__counters is-host" aria-label="Indicateurs de la Room">
             <PlaceLiveCallPicker roomId={room.id} onLiveCallRequest={onLiveCallRequest} />
-            {roomPresentation.id === "cage" ? switchSlot : null}
             <output className="is-support" title="Soutien reçu">
               <SilverMoneyBagIcon />
               <strong>{formatCompactMetric(room.hatTotalAmount)}</strong>

@@ -80,6 +80,26 @@ export function moveCageDemoGuest(state: RoomToolsState, participantId: string, 
   syncCageLegacyProjection(cage);
 }
 
+/** Simulated artists complete their own checks; called only by the demo repository. */
+export function prepareCageDemoArtists(state: RoomToolsState): boolean {
+  const runtime = state.cage?.runtime;
+  if (!runtime || ["COMPLETED", "CANCELLED"].includes(runtime.status)) return false;
+  const match = runtime.matches.find(item => item.id === runtime.preparedMatchId);
+  const entry = runtime.openMicEntries?.find(item => item.id === runtime.preparedEntryId);
+  const preparation = runtime.config.format === "open-mic" ? entry : match;
+  if (!preparation || !["GREENHOUSE", "CALLING", "READY"].includes(preparation.status)) return false;
+  const ids = runtime.config.format === "open-mic" ? [entry?.participantId] : [match?.participantAId, match?.participantBId];
+  let changed = false;
+  for (const id of ids) {
+    const person = runtime.participants.find(item => item.id === id);
+    if (!person?.registered || !person.eligible || !["GREENHOUSE", "CALLED", "READY"].includes(person.status)) continue;
+    if (preparation.status === "READY" && Object.values(person.readiness).every(Boolean)) continue;
+    run(state, "regie.ready", { participantId: person.id, readiness: { camera: true, microphone: true, connection: true, mixer: true, permissions: true } }, person.id);
+    changed = true;
+  }
+  return changed;
+}
+
 /** Fictitious ballots follow Open vote; only the host's Close vote command resolves the demo. */
 export function prepareCageShowcaseVote(state: RoomToolsState) {
   if (state.cage?.demoPresentation?.version !== 2) return;

@@ -8,7 +8,7 @@ import CageCompetitionWorkspace, { CageCommandBar } from "./panels/CageCompetiti
 
 afterEach(cleanup);
 
-function setup(format: CageCompetitionConfig["format"], guests = 4) {
+function setup(format: CageCompetitionConfig["format"], guests = 4, capacity = 4) {
   const state = createRoomToolsFixture("cage", `prepare-${crypto.randomUUID()}`);
   initializeCageShowcase(state);
   state.cage!.runtime!.participants.slice(0, guests).forEach(person => moveCageDemoGuest(state, person.id, "accepted", "host"));
@@ -17,7 +17,7 @@ function setup(format: CageCompetitionConfig["format"], guests = 4) {
       expectedEntryId: payload.entryId, idempotencyKey: crypto.randomUUID() }, "host");
     state.revision++;
   };
-  run("competition.configure", { format, participantCount: 4 });
+  run("competition.configure", { format, participantCount: capacity });
   const send = vi.fn(async (action: CageCompetitionAction, payload?: CageCompetitionPayload) => { run(action, payload); return true; });
   const onOpenGuests = vi.fn();
   const onView = vi.fn();
@@ -34,6 +34,41 @@ function setup(format: CageCompetitionConfig["format"], guests = 4) {
   };
   return { runtime, send, onOpenGuests, onView, refresh, choose };
 }
+
+it.each(["tournament", "open-mic"] as const)("bulk-selects 8, 16 or all artists in %s with one command and allows individual deselection", async format => {
+  const { runtime, send, refresh, choose } = setup(format, 20, 32);
+  const people = runtime().participants.filter(person => person.registered);
+  expect(people.length).toBeGreaterThanOrEqual(16);
+  for (const [label, total] of [["8 premiers", 8], ["16 premiers", 16], ["Tout", people.length]] as const) {
+    const calls = send.mock.calls.length;
+    fireEvent.click(screen.getByRole("button", { name: label }));
+    await waitFor(() => expect(send).toHaveBeenCalledTimes(calls + 1));
+    refresh();
+    expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(total);
+  }
+  await choose(people[3].person.name);
+  expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(people.length - 1);
+  fireEvent.click(screen.getByRole("button", { name: "Tout" }));
+  await waitFor(() => expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(people.length));
+  expect(runtime().participants.some(person => person.guestStatus === "on_stage")).toBe(false);
+});
+
+it("keeps previous choices when selecting filtered artists and never exceeds the room capacity", async () => {
+  const { runtime, send, refresh, choose } = setup("tournament", 20, 8);
+  const people = runtime().participants.filter(person => person.registered);
+  await choose(people[0].person.name);
+  fireEvent.change(screen.getByRole("searchbox"), { target: { value: people[9].person.name } });
+  fireEvent.click(screen.getByRole("button", { name: "Tout" }));
+  await waitFor(() => expect(send).toHaveBeenCalledTimes(2));
+  refresh();
+  expect(runtime().participants.filter(person => person.seed !== null).map(person => person.id)).toEqual([people[0].id, people[9].id]);
+  fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
+  fireEvent.click(screen.getByRole("button", { name: "Tout" }));
+  await waitFor(() => expect(send).toHaveBeenCalledTimes(3));
+  refresh();
+  expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(8);
+  expect(screen.getByRole("button", { name: "Tout" })).toBeDisabled();
+});
 
 it.each(["tournament", "championship"] as const)("chooses and orders only checked artists before creating the %s", async format => {
   const { runtime, choose, refresh, onView } = setup(format);
