@@ -33,3 +33,5 @@ Les journaux et captures QA restent dans `.tmp/rooms-viewer-qa`, exclus de Git.
 ## Correctif de parité Web
 
 Le contrôle croisé a repéré un lecteur encore présent dans l’onglet Mixeur de la Classe viewer, bien qu’absent du panneau Classe. Il est retiré pour les viewers et invités de la Classe sur les deux clients. Le lecteur host et son repli sont conservés. Les quatre tests ciblés (viewer, invité, repli host, autre room) passent sur Windows et sur Web.
+
+L’arrivée en Loge de démonstration ne place plus automatiquement le viewer dans la file d’attente, y compris depuis une carte d’accueil. Les demandes existantes des rooms live et les scénarios de modération host restent conservés.
