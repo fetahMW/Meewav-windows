@@ -8,6 +8,8 @@
 .room-audience-interactions:has(.cb-board)>.room-audience-interactions__header {
   display: none;
 }
+.room-audience-interactions.is-cage:has(.cb-board),
+.room-audience-interactions.is-cage:has(.cb-board) > .room-audience-interactions__body { background: transparent; }
 .cb-board {
   --purple: #a56bff;
   --blue: #6da8ff;
@@ -21,7 +23,7 @@
   padding: 20px 16px max(20px,env(safe-area-inset-bottom));
   color: #f5f6fa;
   font: 14px/1.4 Inter,'Segoe UI',sans-serif;
-  background: radial-gradient(ellipse at 0 0,#8d5cff12,transparent 45%),radial-gradient(ellipse at 100% 30%,#5ea8ff0e,transparent 55%),linear-gradient(#070910,#05060a 50%,#070812);
+  background: transparent;
   container-type: inline-size;
 }
 .cb-board::-webkit-scrollbar {
@@ -693,9 +695,9 @@
   box-shadow: inset 0 1px 1px #ffffff28, inset 0 -2px 3px #000a, 0 2px 4px #0008;
 }
 .cb-board .cb-rounds button[aria-pressed=true] {
-  background: radial-gradient(ellipse at 40% -35%, #b58aff20, transparent 75%), linear-gradient(160deg, #2b2732, #131117 45%, #09090d);
-  border-color: #a56bff99;
-  box-shadow: inset 0 2px 0 #b789ff, inset 0 -2px 3px #000a, 0 0 12px #895bff1a;
+  background: radial-gradient(ellipse at 40% -35%, #ffffff14, transparent 75%), linear-gradient(160deg, #2b2e33, #15171a 45%, #0c0d0f);
+  border-color: #c1c6ce55;
+  box-shadow: inset 0 2px 0 #bda3e5, inset 0 -2px 3px #000a, 0 2px 4px #0005;
 }
 .cb-board button.cb-photo {
   position: relative;
