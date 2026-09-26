@@ -1075,6 +1075,7 @@ function PlaceChatWorkspace({
   onStartGiftDraw,
   onCancelGiftDraw,
 }: Pick<PlaceStudioPanelProps, "room" | "isHost" | "canEngage" | "onSendMessage" | "onDeleteMessage" | "chatSocialActions" | "onVotePoll" | "onLaunchPoll" | "onStopPoll" | "onPinMessage" | "onPinHighlight" | "onClearHighlight" | "onSubmitGift" | "onCreateGiftDraw" | "onScheduleGiftDraw" | "onStartGiftDraw" | "onCancelGiftDraw"> & { active: boolean; giftOnly?: boolean; initialGiftRecipientId?: string }) {
+  const compactViewerActions = useRoomPresentation().id === "cage" && Boolean(chatSocialActions);
   const [previewPoll, setPreviewPoll] = useState<PlaceRoomState["poll"]>(null);
   useEffect(() => {
     const show = () => {
@@ -1256,14 +1257,18 @@ function PlaceChatWorkspace({
   }, [onSubmitGift]);
 
   if (!isHost) return (
-    <div className="place-chat-workspace is-viewer-chat">
+    <div className={`place-chat-workspace is-viewer-chat${compactViewerActions ? " is-compact-engagement" : ""}`}>
       {!previewPoll && room.poll && (room.poll.isActive || room.poll.resultsVisible) ? <div className="rooms-chat-poll-slot"><ChatAudiencePoll room={room} canEngage={canEngage} onVotePoll={onVotePoll} /></div> : null}
       {previewPoll ? <div className="wave-chat-poll-preview"><header><small>SONDAGE · SIMULATION</small><button type="button" aria-label="Fermer le sondage simulé" onClick={() => setPreviewPoll(null)}><X aria-hidden="true" /></button></header><ChatAudiencePoll room={{...room,poll:previewPoll}} canEngage={true} onVotePoll={votePreviewPoll} /><small>Réponses du public simulées · aucun vote réel envoyé</small></div> : null}
       <div className="place-chat-workspace__body">
+        {compactViewerActions ? <header className="place-chat-workspace__engagement">
+          <h3>Discussion</h3>
+          {chatSocialActions}
+        </header> : null}
         <section className="place-chat-workspace__panel" aria-label="Messages du chat">
           <PlaceChat room={room} canEngage={canEngage} isHost={false} active={active} onSend={onSendMessage} onPinMessage={onPinMessage} onDeleteMessage={onDeleteMessage} />
         </section>
-        {chatSocialActions}
+        {compactViewerActions ? null : chatSocialActions}
       </div>
     </div>
   );

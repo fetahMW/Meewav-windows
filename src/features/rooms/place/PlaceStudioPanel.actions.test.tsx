@@ -138,7 +138,7 @@ describe("Shared Room Chat actions", () => {
     expect(screen.queryByRole("button", { name: /Tirage/ })).not.toBeInTheDocument();
   });
 
-  it("garde les interactions viewer dans le Chat et conserve leurs actions réelles", () => {
+  it.each([LIVE_ROOM_PRESENTATIONS.place, LIVE_ROOM_PRESENTATIONS.cage])("garde les interactions viewer fonctionnelles dans le Chat de $label", (presentation) => {
     const room = createPlaceDemoState();
     const onLike = vi.fn();
     const onOpenDonation = vi.fn();
@@ -148,9 +148,15 @@ describe("Shared Room Chat actions", () => {
       chatSocialActions: <PlaceChatSocialActions room={room} canEngage goldenUnavailable={false}
         onLike={onLike} onGoldenLike={async () => true} onOpenDonation={onOpenDonation} />,
     });
-    render(<PlaceStudioPanel {...props} />);
+    render(<RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider>);
     const social = screen.getByRole("complementary", { name: "Interactions du live" });
     expect(social.closest(".place-chat-workspace__body")).not.toBeNull();
+    if (presentation.id === "cage") {
+      expect(social.parentElement).toHaveClass("place-chat-workspace__engagement");
+      expect(within(social.parentElement!).getByRole("heading", { name: "Discussion" })).toBeVisible();
+    } else {
+      expect(social.closest(".place-chat-workspace__engagement")).toBeNull();
+    }
     fireEvent.click(within(social).getByRole("button", { name: /Aimer la vidéo/ }));
     expect(onLike).toHaveBeenCalledOnce();
     fireEvent.click(within(social).getByRole("button", { name: /Ouvrir la bourse/ }));

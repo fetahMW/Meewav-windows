@@ -4,6 +4,7 @@ import { LiveMonetizationIcon } from "./LiveActionBar";
 import { formatSupportAmount } from "./roomSupport";
 import type { PlaceRoomState } from "./place.types";
 import type { LiveSupportAction } from "./useRoomSupportThrows";
+import { useRoomPresentation } from "../roomPresentation";
 
 type Props = {
   room: PlaceRoomState;
@@ -19,12 +20,13 @@ type Props = {
 /** Existing LIVE/DEMO actions, placed beside the messages in the shared chat. */
 export default function PlaceChatSocialActions({ room, canEngage, goldenUnavailable, onLike, onGoldenLike, onOpenDonation, supportAction, onSupportThrow }: Props) {
   const prepared = Boolean(supportAction?.remaining && onSupportThrow);
+  const compactCounts = useRoomPresentation().id === "cage";
   return <aside className="place-chat-social-actions" aria-label="Interactions du live">
     <RoomGoldenLikeReactions
       key={`${room.id}:${room.host.id}`}
       variant="compact"
       artistName={room.host.displayName}
-      exactLikeCount
+      exactLikeCount={!compactCounts}
       likeCount={room.likesCount}
       goldenLikeCount={room.goldenLikesCount}
       liked={room.currentUserHasLiked}
