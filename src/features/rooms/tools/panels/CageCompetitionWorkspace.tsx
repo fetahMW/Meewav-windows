@@ -86,7 +86,10 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
   const championship = runtime.config.format === "championship";
   const sizes = championship || runtime.config.rules.allowByes ? Array.from({ length: 63 }, (_, index) => index + 2) : [2, 4, 8, 16, 32, 64];
   const reductionKeepsSelection = championship || Number.isInteger(Math.log2(selected.length));
-  const canDraw = available.length >= count || (shortage === "byes" && runtime.config.rules.allowByes) || (shortage === "reduce" && runtime.config.rules.allowFormatReduction);
+  const canDraw = available.length >= count || (available.length >= 2 && (
+    (shortage === "byes" && runtime.config.rules.allowByes)
+    || (shortage === "reduce" && runtime.config.rules.allowFormatReduction && (championship || Number.isInteger(Math.log2(available.length))))
+  ));
   const [confirmReset, setConfirmReset] = useState(false);
   const standings = selected.map((participant) => {
     const played = runtime.matches.filter((match) => finished(match) && [match.participantAId, match.participantBId].includes(participant.id));

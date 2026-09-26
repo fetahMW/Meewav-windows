@@ -5,6 +5,7 @@ import { initializeCageShowcase, moveCageDemoGuest } from "./cageShowcase.demo";
 import { createRoomToolsFixture } from "./roomTools.fixtures";
 import type { CageCompetitionAction, CageCompetitionPayload } from "./cageCompetition.types";
 import CageCompetitionWorkspace, { CageCommandBar } from "./panels/CageCompetitionWorkspace";
+import CageResults from "./panels/CageResults";
 
 import { CageStageProgramView } from "../place/CageStageProgram";
 import { createPlaceDemoState } from "../place/place.fixtures";
@@ -54,16 +55,16 @@ it("selects waiting guests directly, preserves media readiness and applies four 
   expect(screen.getByRole("button", { name: "Valider le placement" }).hasAttribute("disabled")).toBe(false);
 });
 
-it.each(["A", "B"] as const)("drives the complete battle with side %s winning and displays the recorded crown count", async (choice) => {
+it.each([2, 4, 8, 16].flatMap(count => (["A", "B"] as const).map(choice => ({ count, choice }))))("drives a $count-artist battle with side $choice winning and displays the recorded crown count", async ({ count, choice }) => {
   const { state, runtime, run } = setup();
-  const ids = runtime().participants.slice(0, 4).map(person => person.id);
+  const ids = runtime().participants.slice(0, count).map(person => person.id);
   for (const id of ids) { moveCageDemoGuest(state, id, "accepted", "host"); moveCageDemoGuest(state, id, "ready", "host"); }
   run("roster.select", { participantIds: ids });
   const openGuests = vi.fn();
   const send = vi.fn(async (action: CageCompetitionAction, payload?: CageCompetitionPayload) => { run(action, payload); return true; });
   const view = () => <CageCommandBar runtime={runtime()} disabled={false} isControl accountId="host" send={send} onView={() => {}} onOpenGuests={openGuests} view="bracket" />;
   const ui = render(view());
-  for (let index = 0; runtime().status !== "COMPLETED" && index < 80; index++) {
+  for (let index = 0; runtime().status !== "COMPLETED" && index < count * 25; index++) {
     const active = runtime().matches.find(match => match.id === runtime().activeMatchId);
     if (active?.vote?.open) run("vote.cast", { choice }, "spectator");
     const button = screen.getByRole("button");
@@ -79,9 +80,9 @@ it.each(["A", "B"] as const)("drives the complete battle with side %s winning an
     ui.rerender(view());
   }
   expect(runtime().status).toBe("COMPLETED");
-  expect(runtime().matches.map(match => match.winnerId)).toEqual(choice === "A" ? [ids[0], ids[0], ids[0]] : ids.slice(1));
-  const winnerId = choice === "A" ? ids[0] : ids[3];
-  const wins = choice === "A" ? 3 : 1;
+  expect(runtime().matches.map(match => match.winnerId)).toEqual(choice === "A" ? Array(count - 1).fill(ids[0]) : ids.slice(1));
+  const winnerId = choice === "A" ? ids[0] : ids[count - 1];
+  const wins = choice === "A" ? count - 1 : 1;
   expect(cageBattleWinCount(runtime(), winnerId)).toBe(wins);
   vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
   vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {});
@@ -92,6 +93,12 @@ it.each(["A", "B"] as const)("drives the complete battle with side %s winning an
   expect(badge?.getAttribute("aria-label")).toContain(wins + " duel");
   expect(stage.container.querySelectorAll(".cage-stage-feed__battle-wins")).toHaveLength(1);
   expect(openGuests).not.toHaveBeenCalled();
+  stage.unmount();
+  ui.unmount();
+  render(<CageResults runtime={runtime()} send={send} />);
+  expect(screen.getByLabelText("Podium")).toBeDefined();
+  fireEvent.click(screen.getByRole("button", { name: "Publier au public" }));
+  await waitFor(() => expect(runtime().publicResults).toEqual({ matchId: null }));
 });
 
 it("keeps an unready artist off stage and requires at least two artists", () => {

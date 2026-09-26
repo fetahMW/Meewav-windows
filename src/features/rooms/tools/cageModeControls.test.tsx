@@ -44,9 +44,9 @@ it("preserves guests and readiness when changing format, asks before replacing a
   expect(() => applyCageCompetitionCommand(state, { type: "cage.competition.command", action: "competition.configure", payload: {format: "championship", confirmReset: true}, expectedRevision: state.revision-1, idempotencyKey: crypto.randomUUID() }, "host")).toThrow("revision_conflict");
 });
 
-it.each(["tournament", "championship", "open-mic"] as const)("drives an entire %s using the shared primary CTA and persists its projection", async (format) => {
-  const { state, run } = setup();
-  run("competition.configure", { format, participantCount: 4, openMicFeedback: "appreciation" });
+it.each((["tournament", "championship", "open-mic"] as const).flatMap(format => [2, 4, 8, 16].map(count => ({ format, count }))))("drives an entire $format with $count artists using the shared primary CTA and persists its projection", async ({ format, count }) => {
+  const { state, run } = setup(count);
+  run("competition.configure", { format, participantCount: count, openMicFeedback: "appreciation" });
   if (format !== "open-mic") run("bracket.generate", { mode: "random" });
   else run("openmic.schedule", { participantIds: state.cage!.runtime!.participants.filter(person => person.registered).map(person => person.id) });
   const send = vi.fn(async (action: CageCompetitionAction, payload?: CageCompetitionPayload) => { run(action, payload); return true; });
@@ -54,7 +54,8 @@ it.each(["tournament", "championship", "open-mic"] as const)("drives an entire %
   const view = () => <CageCommandBar onResults={showResults} runtime={state.cage!.runtime!} disabled={false} isControl view="bracket" accountId="host" send={send} onView={() => {}} onOpenGuests={() => {}} />;
   const rendered = render(view());
   let commands = 0;
-  while (state.cage!.runtime!.status !== "COMPLETED" && commands < 100) {
+  const commandLimit = Math.max(100, count * count * 20);
+  while (state.cage!.runtime!.status !== "COMPLETED" && commands < commandLimit) {
     const runtime = state.cage!.runtime!;
     const active = runtime.matches.find((match) => match.id === runtime.activeMatchId);
     // A real audience ballot, not an invented result or a direct winner patch.
@@ -72,17 +73,18 @@ it.each(["tournament", "championship", "open-mic"] as const)("drives an entire %
   }
   const runtime = state.cage!.runtime!;
   expect(runtime.status).toBe("COMPLETED");
-  expect(commands).toBeLessThan(100);
+  expect(commands).toBeLessThan(commandLimit);
   if (format === "championship") {
-    expect(runtime.matches).toHaveLength(6);
+    expect(runtime.matches).toHaveLength(count * (count - 1) / 2);
     expect(runtime.participants.filter((person) => person.seed !== null).every((person) => person.status === "SELECTED")).toBe(true);
-  } else if (format === "tournament") expect(runtime.matches).toHaveLength(3);
+  } else if (format === "tournament") expect(runtime.matches).toHaveLength(count - 1);
   else expect(runtime.openMicEntries?.every((entry) => entry.status === "PERFORMED" && entry.feedback?.closedAt)).toBe(true);
   fireEvent.click(screen.getByRole("button", {name:"Voir les résultats"}));
   expect(showResults).toHaveBeenCalledOnce();
   const ranking = cageResults(runtime);
-  expect(ranking).toHaveLength(4);
-  if (format === "tournament") expect(ranking.map(row=>row.rank)).toEqual([1,2,3,3]);
+  expect(ranking).toHaveLength(count);
+  if (format === "tournament") expect(ranking.slice(0, 2).map(row=>row.rank)).toEqual([1, 2]);
+  if (format === "tournament" && count === 4) expect(ranking.map(row=>row.rank)).toEqual([1,2,3,3]);
   rendered.unmount();
   render(<CageResults runtime={runtime} send={send}/>);
   fireEvent.click(screen.getByRole("button",{name:"Publier au public"}));
@@ -97,7 +99,7 @@ it.each(["tournament", "championship", "open-mic"] as const)("drives an entire %
   const audience = await new DemoRoomToolsRepository().projectionForRole("cage",state.roomId,"viewer","viewer");
   expect(audience.cage!.runtime!.publicResults).toEqual({matchId:null});
   expect(cageResults(audience.cage!.runtime!).map(row=>[row.person.id,row.rank])).toEqual(ranking.map(row=>[row.person.id,row.rank]));
-});
+}, 60000);
 
 it("keeps a competition change host-only and prevents interruption of the on-air pair", () => {
   const { state, run } = setup();

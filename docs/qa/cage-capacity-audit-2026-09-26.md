@@ -16,3 +16,12 @@ Correction dans la préparation :
 Vérifications initiales : 23 tests réussis dans `cagePreparation.test.tsx`, `cageModeControls.test.tsx`, `cageBattleFlow.test.tsx`, dont adaptation tournoi 16 vers 2/4/8, championnat à 6, conservation intégrale des artistes et création/verrouillage du tableau.
 
 L'audit Luna vérifie les quatre modes avec tests de composants et commandes métier isolés, sans piloter l'application Electron de l'utilisateur. Le contrôle visuel et une session multi-appareils réelle ne sont pas revendiqués.
+
+## Matrice finale de régression
+
+- Tournoi, championnat et open mic : 2, 4, 8 et 16 artistes, boutons de pilotage jusqu'à la fin, résultats, podium, publication et relecture des projections host/viewer sauvegardées. Le championnat à 16 couvre ses 120 rencontres.
+- Battle : 2, 4, 8 et 16 artistes, avec victoire systématique du côté A puis du côté B ; contrôle des passages, du maintien du gagnant sur scène, de la sortie du perdant, de la couronne, du podium et de sa publication.
+- Parcours complémentaire conservé dans `cageActions.test.tsx` : pause, reprise, incident audio, reprise du passage, égalité, manche décisive, affichage public du tableau et publication du podium.
+- Sélection : adaptation 16 vers 2/4/8 et championnat à 6, maintien de l'ordre et des artistes, interdiction de réduction silencieuse 6 vers 4 pour le placement manuel comme pour le tirage aléatoire.
+
+Luna : 15 fichiers, 105 tests réussis, aucun échec. Build de production réussi. Ces résultats couvrent les interactions automatisées en JSDOM et la mécanique locale ; ils ne certifient ni le rendu Electron ni les échanges avec le backend en session live.
