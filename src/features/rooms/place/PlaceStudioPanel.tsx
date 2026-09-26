@@ -19,6 +19,7 @@ import { FormEvent, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffe
 import { createPortal } from "react-dom";
 import {
   ArrowDownToLine,
+  ArrowLeft,
   ArrowUpToLine,
   BarChart3,
   Camera,
@@ -229,7 +230,7 @@ type GuestReadinessFilter = "media-ready" | "stable" | "green-house";
 const PLACE_GUEST_READINESS_FILTERS: Array<{ id: GuestReadinessFilter; label: string; detail: string }> = [
   { id: "media-ready", label: "Prêt à passer", detail: "Micro + caméra" },
   { id: "stable", label: "Connexion stable", detail: "Latence maîtrisée" },
-  { id: "green-house", label: "Green House", detail: "Déjà préparé" },
+  { id: "green-house", label: "OBS prêt", detail: "Déjà préparé" },
 ];
 
 function normalizeGuestFilterText(value: string) {
@@ -1010,7 +1011,7 @@ export function PlaceAudienceJourney({
     if (presentation.id === "cage") return <div className="cage-audience-apply"><span>Candidature en attente</span><button type="button" disabled={queueBusy} onClick={() => void runCageJourneyAction(onLeaveQueue)}>Retirer ma candidature</button>{queueError ? <p role="alert">{queueError}</p> : null}</div>;
     return presentation.id === "wave"
       ? renderJourney("is-queued", "INVITATION SUR SCÈNE", "Invitation sur scène : en attente", "Votre boucle suit un parcours indépendant.", "Quitter la file scène", onLeaveQueue)
-      : renderJourney("", "FILE D’ATTENTE", "Ta demande est envoyée", "Tu seras averti si le Host t’invite dans la Green House.", "Quitter", onLeaveQueue);
+      : renderJourney("", "FILE D’ATTENTE", "Ta demande est envoyée", "Tu seras averti si le host t’invite à préparer ton OBS MeeWav.", "Quitter", onLeaveQueue);
   }
   if (presentation.id === "cage" && !isGuest) return room.queueOpen ? <div className="cage-audience-apply"><button type="button" disabled={queueBusy || !profile} onClick={() => void runCageJourneyAction(onJoinQueue)}>{queueBusy ? "Envoi…" : "Participer au battle"}</button>{queueError ? <p role="alert">{queueError}</p> : null}</div> : null;
   if (!journey && !isGuest) return null;
@@ -1332,7 +1333,7 @@ function PlaceGuests({
   room, onMoveGuest, onInviteProfile, onRemoveGuest, onSetQueueOpen, onOpenProfile,
   onMessageProfile, onCollaborateProfile, mediaControls, momentVipPicker,
   momentVipSelectedProfileIds = [], onToggleMomentVipGuest,
-  onConfirmMomentVipGuests, onCancelMomentVipPicker,
+  onConfirmMomentVipGuests, onCancelMomentVipPicker, onReturnToCage,
 }: {
   room: PlaceRoomState;
   mediaControls: Pick<PlaceStudioPanelProps, "isHost" | "onMute" | "onCamera" | "liveKitVideoTracks">;
@@ -1348,10 +1349,13 @@ function PlaceGuests({
   onToggleMomentVipGuest?: (participant: PlaceParticipant) => void;
   onConfirmMomentVipGuests?: () => void;
   onCancelMomentVipPicker?: () => void;
+  onReturnToCage?: () => void;
 }) {
   const isCage = useRoomPresentation().id === "cage";
   const desktopGuests = useRuntime().isDesktop && mediaControls.isHost;
   const [section, setSection] = useState<"stage" | "backstage" | "queue">("backstage");
+  const cagePicking = Boolean(onReturnToCage);
+  useEffect(() => { if (cagePicking) setSection("queue"); }, [cagePicking]);
   const [timeNow, setTimeNow] = useState(() => Date.now());
   const [filterState, setFilterState] = useState<"closed" | "open">("closed");
 
@@ -1555,7 +1559,7 @@ function PlaceGuests({
       </header>
       <section id="place-guests-stage" className="place-guests__list is-onstage" role="tabpanel" hidden={section !== "stage"}>
         <div className="place-guests__section-head is-capacity-only">
-          <span className="place-guests__section-tools">{renderFilterButton("stage")}</span>
+          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("stage")}</span>
           <span className={`place-guests__capacity${stageFull ? " is-full" : ""}`}><strong>{onStage.length} / 3 sur scène</strong></span>
         </div>
         <div className="place-guests__rows">
@@ -1564,7 +1568,7 @@ function PlaceGuests({
       </section>
       <section id="place-guests-backstage" className="place-guests__list is-backstage" role="tabpanel" hidden={section !== "backstage"}>
         <div className="place-guests__section-head is-capacity-only">
-          <span className="place-guests__section-tools">{renderFilterButton("backstage")}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
+          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("backstage")}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
           {desktopGuests ? renderQuickSelection("backstage", selectableBackstage, selectedBackstageIds) : null}
         </div>
         {mediaControls.isHost && juryOnly ? <div className="room-jury-voting">
@@ -1586,7 +1590,7 @@ function PlaceGuests({
       </section>
       <section id="place-guests-queue" className="place-guests__list is-queue" role="tabpanel" hidden={section !== "queue"}>
         <div className="place-guests__section-head is-capacity-only is-queue-tools">
-          <span className="place-guests__section-tools studio-guest-tools">{renderFilterButton("queue")}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
+          <span className="place-guests__section-tools studio-guest-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("queue")}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
         {renderQuickSelection("queue", selectableQueue, selectedQueueIds)}
           <button type="button" className={`place-guests__queue-state${room.queueOpen ? " is-open" : ""}`} onClick={() => void onSetQueueOpen(!room.queueOpen)} aria-label={room.queueOpen ? "Fermer la file d’attente" : "Ouvrir la file d’attente"} aria-pressed={room.queueOpen}><i />{room.queueOpen ? "Ouverte" : "Fermée"}<span className="place-guests__queue-toggle" aria-hidden="true" /></button>
         </div>
@@ -1685,6 +1689,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       : surface === "tools"
         ? "tools"
         : "chat";
+  const [cageGuestPicking, setCageGuestPicking] = useState(false);
   const [momentVipPersonIds, setMomentVipPersonIds] = useState<string[]>([]);
   const [momentVipDraftPersonIds, setMomentVipDraftPersonIds] = useState<string[]>([]);
   const [momentVipPicker, setMomentVipPicker] = useState(false);
@@ -1768,7 +1773,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
             isHost={isHost}
             isGuest={isGuest}
             onOpenMixer={() => onSurface("mixer")}
-            onOpenGuests={() => onSurface("guests")}
+            onOpenGuests={() => { if (specializedRoomId === "cage") setCageGuestPicking(true); onSurface("guests"); }}
             onOpenGuestQueue={openMomentVipQueue}
             momentVipPersonIds={momentVipPersonIds}
             onMomentVipPersonIdsChange={setMomentVipPersonIds}
@@ -1784,7 +1789,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
           ? <PlaceConversationTools participation={audienceJourney} room={room} isHost={isHost} canEngage={canEngage} visible={visibleSurface === "tools" && !collapsed} />
           : <div className="place-room-tools-coming-soon" role="status"><Wrench aria-hidden="true" /><small>{roomPresentation.uppercaseLabel}</small><strong>Outils en cours de construction</strong><span>Les outils propres à cet espace seront ajoutés pendant son chantier dédié.</span></div>;
       case "guests":
-        return <PlaceGuests room={room} mediaControls={props} onMoveGuest={props.onMoveGuest} onInviteProfile={props.onInviteProfile ?? (async () => undefined)} onRemoveGuest={props.onRemoveGuest} onSetQueueOpen={props.onSetQueueOpen} onOpenProfile={props.onOpenProfile} onMessageProfile={props.onMessageProfile} onCollaborateProfile={props.onCollaborateProfile} momentVipPicker={momentVipPicker} momentVipSelectedProfileIds={momentVipDraftPersonIds} onToggleMomentVipGuest={toggleMomentVipGuest} onConfirmMomentVipGuests={confirmMomentVipGuests} onCancelMomentVipPicker={cancelMomentVipPicker} />;
+        return <PlaceGuests onReturnToCage={cageGuestPicking && specializedRoomId === "cage" ? () => { setCageGuestPicking(false); onSurface("tools"); } : undefined} room={room} mediaControls={props} onMoveGuest={props.onMoveGuest} onInviteProfile={props.onInviteProfile ?? (async () => undefined)} onRemoveGuest={props.onRemoveGuest} onSetQueueOpen={props.onSetQueueOpen} onOpenProfile={props.onOpenProfile} onMessageProfile={props.onMessageProfile} onCollaborateProfile={props.onCollaborateProfile} momentVipPicker={momentVipPicker} momentVipSelectedProfileIds={momentVipDraftPersonIds} onToggleMomentVipGuest={toggleMomentVipGuest} onConfirmMomentVipGuests={confirmMomentVipGuests} onCancelMomentVipPicker={cancelMomentVipPicker} />;
     }
   };
 

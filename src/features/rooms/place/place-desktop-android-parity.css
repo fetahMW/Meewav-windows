@@ -870,3 +870,23 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shellbar__host-side .
   flex-basis: 280px;
   grid-template-columns: repeat(4, 70px);
 }
+
+/* Cage uses the console texture directly, including both portal containers. */
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav :is(.room-tools-shell, .place-tools-console__switch),
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-body,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .room-tools-shell.is-cage,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .cage-tools-body,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .room-tools-shell__panel {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav { padding: 0; outline: 0; }
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav::before,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav::after,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .place-tools-console__switch::before,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .place-tools-console__switch::after { display: none; }
+body .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav .place-tools-console__switch { min-height: 34px; padding: 2px 8px; outline: 0; }
+body .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav .place-tools-console__switch > button { border: 0; background: transparent; box-shadow: none; }

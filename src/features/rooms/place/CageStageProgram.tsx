@@ -7,6 +7,7 @@ import {
   Pause,
   Radio,
   Swords,
+  Timer,
   Trophy,
   Users,
 } from "lucide-react";
@@ -38,6 +39,8 @@ export { resolveCageFeed } from "./cageStageFeeds";
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import CageViewerStage from "./CageViewerStage";
 import CageViewerVote from "../tools/audience/CageViewerVote";
+import { formatPlaceRoomTime, usePlaceRoomTime } from "./placeRoomTime";
+import "./cage-host-stage.css";
 
 export { cageStageRemaining } from "./cageStageClock";
 
@@ -173,7 +176,7 @@ function FeedTile({
       /> : <div className="cage-stage-feed__missing"><img src={person.avatarUrl} alt="" /><CameraOff aria-hidden="true" /><strong>Flux caméra en attente</strong><small>L’adversaire doit être envoyé sur scène.</small></div>}
     </div>
     <div className="cage-stage-feed__shade" aria-hidden="true" />
-    {portraitPresentation ? <>
+    {portraitPresentation && !cleanProgram ? <>
       <button type="button" className="cage-stage-feed__portrait-identity" onClick={() => onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
         <strong>{person.name}</strong>
         <small>{person.role}</small>
@@ -184,6 +187,9 @@ function FeedTile({
         <span><Heart aria-hidden="true" /><b>{formatMetric(supportCount)}</b></span>
       </span>
     </> : null}
+    {cleanProgram ? <button type="button" className="cage-stage-feed__artist" onClick={() => onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
+      <img src={person.avatarUrl} alt="" /><span><strong>{person.name}</strong><small>{person.role}</small></span>
+    </button> : null}
     {cleanProgram ? null : <span className="cage-stage-feed__side"><b>{solo ? <Radio aria-hidden="true" /> : <img src={person.avatarUrl} alt="" />}</b>{live ? <><i />{solo ? "SUR SCÈNE" : "À L’ANTENNE"}</> : solo ? "PASSAGE" : "ADVERSAIRE"}</span>}
     {battleWins > 0 ? <span className="cage-stage-feed__battle-wins" role="status" aria-label={`${person.name} : ${battleWins} duel${battleWins > 1 ? "s" : ""} gagné${battleWins > 1 ? "s" : ""}`} title={`${battleWins} victoire${battleWins > 1 ? "s" : ""} en Open Mic Battle`}><Crown aria-hidden="true" /><b aria-hidden="true">{battleWins}</b></span> : null}
     {winner && !cleanProgram ? <span className="cage-stage-feed__winner"><Crown aria-hidden="true" /> VAINQUEUR</span> : null}
@@ -230,7 +236,7 @@ function DuelProgram({ cage, room, onStage, liveKitVideoTracks, useRtcVideo, pro
       : { ...current, [feedKey]: ratio });
   };
 
-  return <section className={`cage-stage-program is-duel is-${cage.battleStatus} is-${mediaLayout}`} data-composition={composition} data-focused-side={selectedSide} data-match-id={match.id} data-battle-status={cage.battleStatus} data-active-side={currentSide ?? "none"} data-media-layout={mediaLayout} data-feed-a-format={aspectA ?? "unknown"} data-feed-b-format={aspectB ?? "unknown"} aria-label={`Réalisation vidéo spéciale Cage : ${match.competitorA.name} face à ${match.competitorB.name}`}>
+  return <section className={`cage-stage-program is-operator is-duel is-${cage.battleStatus} is-${mediaLayout}`} data-composition={composition} data-focused-side={selectedSide} data-match-id={match.id} data-battle-status={cage.battleStatus} data-active-side={currentSide ?? "none"} data-media-layout={mediaLayout} data-feed-a-format={aspectA ?? "unknown"} data-feed-b-format={aspectB ?? "unknown"} aria-label={`Réalisation vidéo spéciale Cage : ${match.competitorA.name} face à ${match.competitorB.name}`}>
     <CagePortraitSignal portrait={portraitPresentation} onChange={onPortraitDuelChange} />
     <div className="cage-stage-program__duel-grid">
       <FeedTile side="A" person={match.competitorA} assignment={assignmentA} live={currentSide === "A"} winner={winnerId === match.competitorA.id} battleWins={cageBattleWinCount(cage.runtime, match.competitorA.id)} score={revealed ? match.scoreA : null} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={useRtcVideo} muted={programMuted} playbackVolume={playbackVolume} aspectRatio={aspectA} portraitPresentation={portraitPresentation} streamLive={streamsLive} audienceCount={room.participantsCount} supportCount={room.likesCount} cleanProgram onAspectRatio={(ratio) => reportAspect(feedKeyA, ratio)} onOpenProfile={onOpenProfile} />
@@ -272,7 +278,7 @@ function UnmatchedProgram({ room, cage, onStage, liveKitVideoTracks, useRtcVideo
   if (!visible.length) return <EmptyProgram title="La scène est prête" detail={isHost ? "Appelle les artistes depuis les Invités. Le tournoi attend tes choix." : "Les artistes se préparent. Le prochain passage va commencer."} />;
   const aspects = visible.map(inferParticipantAspectRatio);
   const layout = resolveCageDuelMediaLayout(aspects);
-  return <section className={`cage-stage-program is-duel is-${layout}`} data-composition={visible.length === 1 ? "solo" : "ensemble"} data-focused-side="A" data-feed-a-format={aspects[0]} data-feed-b-format={aspects[1]} aria-label="Retours vidéo avant la rencontre">
+  return <section className={`cage-stage-program is-operator is-duel is-${layout}`} data-composition={visible.length === 1 ? "solo" : "ensemble"} data-focused-side="A" data-feed-a-format={aspects[0]} data-feed-b-format={aspects[1]} aria-label="Retours vidéo avant la rencontre">
     <div className="cage-stage-program__duel-grid">{visible.map((participant, index) => {
       const side = index === 0 ? "A" : "B";
       const person: RoomPerson = { id: participant.profile.id, name: participant.profile.displayName, avatarUrl: participant.profile.avatarUrl, role: participant.profile.role,
@@ -321,12 +327,18 @@ function EmptyProgram({ title, detail }: { title: string; detail: string }) {
   return <section className="cage-stage-program is-empty" aria-label="Réalisation vidéo spéciale Cage en attente"><span><Swords aria-hidden="true" /></span><small>CAGE · PROGRAM</small><strong>{title}</strong><p>{detail}</p></section>;
 }
 
+function CageMixerTimer() {
+  const timer = usePlaceRoomTime();
+  if (!timer.enabled) return null;
+  return <output className={`cage-mixer-timer is-${timer.status}`} role="timer" aria-live="off" aria-label={`Chronomètre du mixeur ${formatPlaceRoomTime(timer.remainingMs)}`}><Timer aria-hidden="true" /><span>{formatPlaceRoomTime(timer.remainingMs)}</span></output>;
+}
+
 export function CageStageProgramView(props: CageStageProgramViewProps) {
   const { cage } = props;
   if (!cage) return <EmptyProgram title="Synchronisation de la Régie…" detail="Le retour vidéo va se caler sur la rencontre active." />;
-  return normalizedCageFormat(cage.format) === "open-mic"
+  return <>{normalizedCageFormat(cage.format) === "open-mic"
     ? <OpenMicProgram {...props} cage={cage} />
-    : <DuelProgram {...props} cage={cage} />;
+    : <DuelProgram {...props} cage={cage} />}<CageMixerTimer /></>;
 }
 
 export default function CageStageProgram({ room, isHost, isGuest, canEngage = false, onStage, liveKitVideoTracks, useRtcVideo, programMuted, playbackVolume = 1, onOpenProfile, onPortraitDuelChange, composition, focusedParticipantId, feedSelectionDisabled, onSelectFeed }: CageStageProgramProps) {

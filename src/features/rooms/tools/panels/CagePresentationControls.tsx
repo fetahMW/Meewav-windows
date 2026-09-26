@@ -40,8 +40,8 @@ export default function CagePresentationControls({ runtime, demo, busy, send, on
   };
   return <div className="cage-mode-control">
     <aside className="cage-presentation" aria-label="Mode de la Cage">
-      <span><small>{CAGE_FORMAT_LABELS[runtime.config.format].toUpperCase()}{demo ? " · DÉMO" : ""} · PILOTAGE MANUEL</small>
-        <strong>{runtime.participants.filter((person) => person.seed !== null).length}{runtime.config.format === "open-mic-battle" ? " participants choisis" : `/${runtime.config.participantCount} inscrits`} <span>·</span> {completed} {runtime.config.format === "open-mic" ? "passage(s) terminé(s)" : "rencontre(s) terminée(s)"}</strong></span>
+      <span><small>{CAGE_FORMAT_LABELS[runtime.config.format]}{demo ? " · Démo" : ""}</small>
+        {completed > 0 ? <strong>{completed} {runtime.config.format === "open-mic" ? "passage(s) terminé(s)" : "rencontre(s) terminée(s)"}</strong> : null}</span>
       <button type="button" className="cage-mode-control__trigger" onClick={openSettings} aria-expanded={open} aria-controls="cage-mode-settings" disabled={busy}>
         Mode <ChevronDown aria-hidden="true" /></button>
     </aside>

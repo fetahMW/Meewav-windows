@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowRight, ArrowUp, Camera, Check, ChevronRight, CircleCheck, Clock3, Crown, LockKeyhole, Mic, MonitorUp, Pause, Play, RefreshCw, Settings2, ShieldCheck, Shuffle, Swords, Trophy, Users, Wifi } from "lucide-react";
+import { ArrowRight, Camera, Check, ChevronRight, CircleCheck, Clock3, Crown, LockKeyhole, Mic, MonitorUp, Pause, Play, RefreshCw, Settings2, ShieldCheck, Shuffle, Swords, Trophy, Users, Wifi } from "lucide-react";
 import type { CageCompetitionAction, CageCompetitionMatch, CageCompetitionPayload, CageCompetitionRuntime, TournamentParticipant } from "../cageCompetition.types";
 import type { RoomToolsCommand, RoomToolsState } from "../roomTools.types";
 import "./cage-competition-workspace.css";
 import { cageRosterCandidate } from "../cageCompetition";
 import CageOpenMicWorkspace, { CageOpenMicCommandBar } from "./CageOpenMicWorkspace";
+import CageArtistPicker from "./CageArtistPicker";
 import { MeewavGradeBadge } from "../../../grades/MeewavGradeBadge";
 
 export type CageWorkspaceView = "bracket" | "regie" | "match" | "vote";
@@ -75,7 +76,6 @@ export type CageWorkspaceProps = { runtime: CageCompetitionRuntime; view: CageWo
 type WorkspaceProps = CageWorkspaceProps;
 
 function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: WorkspaceProps) {
-  const [manual, setManual] = useState(runtime.config.rosterMode === "manual");
   const [shortage, setShortage] = useState<"wait" | "byes" | "reduce">("wait");
   const selected = runtime.participants.filter((person) => person.seed !== null).sort((a, b) => (a.seed ?? 0) - (b.seed ?? 0));
   const available = runtime.participants.filter((person) => cageRosterCandidate(runtime, person));
@@ -90,36 +90,32 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
     const played = runtime.matches.filter((match) => finished(match) && [match.participantAId, match.participantBId].includes(participant.id));
     return { participant, played: played.length, wins: played.filter((match) => match.winnerId === participant.id).length };
   }).sort((a, b) => b.wins - a.wins);
+  const artistPicker = <CageArtistPicker people={runtime.participants.filter(person => person.seed !== null || available.includes(person))} selectedIds={selected.map(person => person.id)} maximum={count} disabled={disabled} battle={battle} championship={championship}
+        onSelect={(id, chosen) => { void send(chosen ? "roster.select" : "roster.remove", chosen ? { participantIds: [id] } : { participantId: id }); }}
+        onMove={(id, direction) => { const person = selected.find(item => item.id === id); if (person?.seed) void send("roster.move", { participantId: id, toSeed: person.seed + direction }); }} />;
   return <>
-    <div className="cage-workspace__summary"><span><strong>{runtime.config.title}</strong><small>{battle ? `${selected.length} participants choisis · de 2 à ${count}` : `${count} participants`} · {runtime.config.discipline}</small></span><span className="cage-workspace__status"><LockKeyhole />{battle && runtime.status === "LOCKED" ? "Duel préparé" : championship && runtime.status === "LOCKED" ? "Calendrier validé" : PHASE[runtime.status]}</span></div>
-    <div className="cage-workspace__metrics"><span><b>{selected.length}</b>Sélectionnés</span>{isControl ? <span><b>{available.length}</b>Disponibles</span> : null}<span><b>{runtime.matches.filter(finished).length}/{runtime.matches.length}</b>Matchs joués</span></div>
-    {isControl && (!battle || locked) ? <button className={runtime.publicBracketVisible ? "is-primary" : ""} aria-pressed={runtime.publicBracketVisible === true} disabled={disabled || !runtime.matches.length} onClick={() => void send("broadcast.bracket", { enabled: !runtime.publicBracketVisible })}><MonitorUp />{runtime.publicBracketVisible ? battle ? "Retirer le programme du public" : championship ? "Retirer le classement du public" : "Retirer le bracket du public" : battle ? "Afficher le programme au public" : championship ? "Afficher le classement au public" : "Afficher le bracket au public"}</button> : null}
+    {locked || !isControl ? <div className="cage-workspace__summary"><span><strong>{runtime.config.title}</strong><small>{battle ? `${selected.length} participants choisis · de 2 à ${count}` : `${count} participants`} · {runtime.config.discipline}</small></span><span className="cage-workspace__status"><LockKeyhole />{battle && runtime.status === "LOCKED" ? "Duel préparé" : championship && runtime.status === "LOCKED" ? "Calendrier validé" : PHASE[runtime.status]}</span></div> : null}
+    {locked || !isControl ? <div className="cage-workspace__metrics"><span><b>{selected.length}</b>Sélectionnés</span>{isControl ? <span><b>{available.length}</b>Disponibles</span> : null}<span><b>{runtime.matches.filter(finished).length}/{runtime.matches.length}</b>Matchs joués</span></div> : null}
+    {isControl && locked ? <button className={runtime.publicBracketVisible ? "is-primary" : ""} aria-pressed={runtime.publicBracketVisible === true} disabled={disabled || !runtime.matches.length} onClick={() => void send("broadcast.bracket", { enabled: !runtime.publicBracketVisible })}><MonitorUp />{runtime.publicBracketVisible ? battle ? "Retirer le programme du public" : championship ? "Retirer le classement du public" : "Retirer le bracket du public" : battle ? "Afficher le programme au public" : championship ? "Afficher le classement au public" : "Afficher le bracket au public"}</button> : null}
     {runtime.config.format === "championship" && runtime.matches.length ? <section className="cage-workspace__section"><h3>Progression du championnat</h3><div className="cage-workspace__standings">{standings.map(({ participant, played, wins }) => <div key={participant.id}><Person participant={participant} /><span><b>{wins}</b> victoire{wins > 1 ? "s" : ""}<small>{played} rencontre{played > 1 ? "s" : ""}</small></span></div>)}</div></section> : null}
-    {!locked && isControl ? <section className="cage-workspace__section">
-      <h3>{battle ? "Choisir les participants" : championship ? "Préparer le calendrier" : "Construire le tableau"}</h3>
-      <p>{battle ? "Coche les invités ici et règle leur ordre avec les flèches. Les deux premiers ouvrent le duel ; le gagnant reste et affronte le suivant. Deux participants suffisent." : championship ? "Chaque participant rencontre les autres. Les victoires s’accumulent au fil des journées, sans élimination." : "Appelle les artistes depuis les Invités, puis sélectionne-les ici et organise les rencontres."}</p>
-      {!battle && available.length < count ? <div className="cage-workspace__notice">Il manque {count - available.length} participant{count - available.length > 1 ? "s" : ""} disponible{count - available.length > 1 ? "s" : ""}.
-        <label>Selon le règlement<select value={shortage} onChange={(event) => setShortage(event.target.value as typeof shortage)}><option value="wait">Attendre les participants</option>{runtime.config.rules.allowByes ? <option value="byes">Créer des exemptions (BYE)</option> : null}{runtime.config.rules.allowFormatReduction ? <option value="reduce">Réduire explicitement le format</option> : null}</select></label>
-      </div> : null}
-      {!battle ? <div className="cage-workspace__actions"><button className="is-primary" disabled={disabled || !canDraw} onClick={() => void send("bracket.generate", { mode: "random", shortage })}><Shuffle />{runtime.matches.length ? "Mélanger de nouveau" : "Générer aléatoirement"}</button><button aria-pressed={manual} onClick={() => setManual(!manual)}><Settings2 />Placement manuel</button></div> : null}
-      {manual || battle ? <div className="cage-workspace__roster">
-        {runtime.participants.filter((person) => person.seed !== null || available.includes(person)).sort((a, b) => (a.seed ?? Infinity) - (b.seed ?? Infinity)).map((person) => <div key={person.id} className="cage-workspace__roster-row">
-          <label><input type="checkbox" checked={person.seed !== null} disabled={disabled || (person.seed === null && (!available.includes(person) || selected.length >= count))} onChange={() => void send(person.seed === null ? "roster.select" : "roster.remove", person.seed === null ? { participantIds: [...selected.map((item) => item.id), person.id] } : { participantId: person.id })} /><Person participant={person} /></label>
-          {person.seed !== null ? <span className="cage-workspace__seed"><small>{person.seed}</small><button aria-label={`Monter ${person.person.name} dans l’ordre`} disabled={disabled || person.seed <= 1} onClick={() => void send("roster.move", { participantId: person.id, toSeed: person.seed! - 1 })}><ArrowUp /></button><button aria-label={`Descendre ${person.person.name} dans les seeds`} disabled={disabled || person.seed >= selected.length} onClick={() => void send("roster.move", { participantId: person.id, toSeed: person.seed! + 1 })}><ArrowDown /></button></span> : null}
-        </div>)}
-        {!battle ? <button className="is-primary" disabled={disabled || selected.length < 2 || (!canDraw && shortage === "wait")} onClick={() => void send("bracket.generate", { mode: "manual", shortage })}><Check />Appliquer le placement</button> : null}
-      </div> : null}
-      <div className="cage-workspace__actions">{onOpenGuests && !battle ? <button onClick={onOpenGuests}><Users />Ouvrir les Invités</button> : null}{runtime.matches.length ? <button disabled={disabled} onClick={() => setConfirmReset(!confirmReset)}><RefreshCw />Réinitialiser</button> : null}</div>
-      {confirmReset ? <div className="cage-workspace__notice"><p>Effacer le placement et reconstruire le tableau ? Les inscriptions restent disponibles.</p><div className="cage-workspace__actions"><button disabled={disabled} onClick={() => { void send("bracket.reset").then((ok) => { if (ok) setConfirmReset(false); }); }}>Réinitialiser le tableau</button><button onClick={() => setConfirmReset(false)}>Conserver</button></div></div> : null}
-    </section> : null}
-    {battle && !locked ? <p className="cage-workspace__notice">{selected.length < 2 ? "Sélectionne au moins deux participants pour activer le placement." : runtime.matches.length ? "Placement enregistré. Prépare le premier duel avec le bouton du bas, ou ajuste encore la sélection." : `Premier duel : ${selected.slice(0, 2).map(person => person.person.name).join(" face à ")}. ${Math.max(0, selected.length - 2)} challenger(s) ensuite. Applique le placement avec le bouton du bas.`}</p> : rounds.length ? <div className="cage-workspace__rounds">{rounds.map((round) => <section className="cage-workspace__section" key={round}>
+    {!locked && isControl ? <>
+      {runtime.matches.length ? <details className="cage-workspace__placement-options"><summary>Modifier les artistes et leur ordre</summary>{artistPicker}</details> : artistPicker}
+      {selected.length >= 2 || runtime.matches.length ? <details className="cage-workspace__placement-options"><summary>Options du placement</summary>
+        {!battle && selected.length < count && (runtime.config.rules.allowByes || runtime.config.rules.allowFormatReduction) ? <label>Avec moins de {count} artistes<select value={shortage} onChange={event => setShortage(event.target.value as typeof shortage)}><option value="wait">Attendre les autres artistes</option>{runtime.config.rules.allowByes ? <option value="byes">Prévoir des places exemptées</option> : null}{runtime.config.rules.allowFormatReduction ? <option value="reduce">Réduire le format</option> : null}</select>{shortage !== "wait" ? <button type="button" disabled={disabled || selected.length < 2} onClick={() => void send("bracket.generate", { mode: "manual", shortage })}><Check />Créer avec ce choix</button> : null}</label> : null}
+        {!battle ? <button type="button" disabled={disabled || !canDraw} onClick={() => void send("bracket.generate", { mode: "random", shortage })}><Shuffle />Tirer au sort parmi les {available.length} artistes disponibles</button> : null}
+        {onOpenGuests ? <button type="button" onClick={onOpenGuests}><Users />Ajouter depuis les invités</button> : null}
+        {runtime.matches.length ? <button type="button" disabled={disabled} onClick={() => setConfirmReset(!confirmReset)}><RefreshCw />Recommencer le placement</button> : null}
+        {confirmReset ? <div className="cage-workspace__notice"><p>Effacer ce placement ? Les invitations sont conservées.</p><div className="cage-workspace__actions"><button disabled={disabled} onClick={() => { void send("bracket.reset").then(ok => { if (ok) setConfirmReset(false); }); }}>Effacer le placement</button><button onClick={() => setConfirmReset(false)}>Conserver</button></div></div> : null}
+      </details> : null}
+    </> : null}
+    {rounds.length ? <div className="cage-workspace__rounds">{rounds.map((round) => <section className="cage-workspace__section" key={round}>
       <h3>{battle ? `Duel ${round}` : runtime.config.format === "championship" ? `Journée ${round}` : round === rounds.at(-1) ? "Finale" : round === rounds.at(-2) ? "Demi-finales" : round === rounds.at(-3) ? "Quarts de finale" : `Tour ${round}`}<small>{runtime.matches.filter((match) => match.round === round).length} rencontre(s)</small></h3>
       {runtime.matches.filter((match) => match.round === round).map((match) => <article key={match.id} className={`cage-workspace__match-card${runtime.activeMatchId === match.id ? " is-current" : ""}`}>
         <header><small>{match.label || `Match ${match.order}`}</small><span>{PHASE[match.status]}</span></header>
         <div className="cage-bracket-pair">{pair(runtime, match).map((person, index) => <div className={person && match.winnerId === person.id ? "is-winner" : ""} key={index}>{person?.person.avatarUrl ? <img src={person.person.avatarUrl} alt="" /> : <span className="cage-bracket-pair__placeholder"><Users /></span>}<span><strong>{person?.person.name ?? (match[index === 0 ? "sourceA" : "sourceB"] ? "Vainqueur à venir" : "Exemption")}</strong><small>{person?.person.role ?? "Qualification en attente"}</small></span>{person && match.winnerId === person.id ? <Crown aria-label="Vainqueur" /> : null}{match.vote?.closedAt ? <b>{index === 0 ? match.vote.scoreA : match.vote.scoreB}</b> : null}</div>)}</div>
         {match.id === runtime.activeMatchId ? <button className="cage-workspace__text-action" onClick={() => onView("match")}>Voir le match<ChevronRight /></button> : null}
       </article>)}
-    </section>)}</div> : <div className="cage-workspace__empty"><Trophy /><p>Le règlement est prêt. Le tableau sera créé à partir des participants inscrits.</p></div>}
+    </section>)}</div> : !isControl ? <div className="cage-workspace__empty"><Trophy /><p>Le tableau sera publié par le host.</p></div> : null}
   </>;
 }
 
@@ -230,14 +226,18 @@ export function CageCommandBar({ runtime, disabled, isControl, send, onView, onO
   let payload: CageCompetitionPayload = {};
   let blocked = false;
   let view: CageWorkspaceView = "bracket";
-  const startWithGuests = !battle && !runtime.lockedAt && !runtime.matches.length && !runtime.participants.some((person) => person.registered) && Boolean(onOpenGuests);
-  if (startWithGuests) { label = "Choisir dans les Invités"; hint = runtime.config.format === "championship" ? "Appelle les artistes pour organiser ton championnat" : "Appelle les artistes pour organiser ton tournoi"; }
+  const available = runtime.participants.filter(person => cageRosterCandidate(runtime, person));
+  const required = battle ? 2 : runtime.config.participantCount;
+  const startWithGuests = !runtime.lockedAt && !runtime.matches.length && available.length < required && selected.length < required && Boolean(onOpenGuests);
   if (!runtime.lockedAt) {
-    if (runtime.matches.length) { label = battle ? "Préparer le premier duel" : runtime.config.format === "championship" ? "Valider le calendrier" : "Verrouiller le bracket"; action = "bracket.lock"; if (battle) view = "regie"; }
-    else if (battle) {
-      label = "Appliquer le placement"; action = "bracket.generate"; payload = { mode: "manual" };
-      blocked = selected.length < 2 || selected.some(person => !person.present || !person.registered || !person.eligible);
-      hint = selected.length < 2 ? "Choisis au moins deux participants dans Participants" : blocked ? "Un participant sélectionné est indisponible" : "Les deux premiers ouvrent le duel, les suivants attendent leur tour";
+    if (runtime.matches.length) { label = "Valider le placement"; hint = "Vérifie les rencontres ci-dessus."; action = "bracket.lock"; view = "regie"; }
+    else if (startWithGuests) {
+      label = "Choisir dans les invités"; hint = "Invite les artistes, puis coche-les dans la liste.";
+    } else {
+      label = battle ? "Créer les duels" : runtime.config.format === "championship" ? "Créer le calendrier" : "Créer le tableau";
+      action = "bracket.generate"; payload = { mode: "manual" };
+      blocked = selected.length < required || selected.some(person => !cageRosterCandidate(runtime, person));
+      hint = selected.length < required ? `Coche ${required - selected.length} artiste${required - selected.length > 1 ? "s" : ""} dans la liste.` : blocked ? "Un artiste sélectionné est indisponible." : "Le placement suit l’ordre de ta liste.";
     }
   } else if (match && !finished(match) && match.status !== "POSTPONED") {
     view = "match"; hint = match.steps[match.stepIndex]?.label ?? PHASE[match.status];
@@ -255,5 +255,5 @@ export function CageCommandBar({ runtime, disabled, isControl, send, onView, onO
     blocked = !pairReady && ["GREENHOUSE", "CALLING", "READY"].includes(prepared.status);
     if (blocked) { label = battle ? "En attente des artistes" : "En attente des deux Ready"; if (battle) hint = "Caméra, micro et accord à confirmer dans la préparation du duel"; }
   } else if (runtime.status === "COMPLETED") { label = "Voir les résultats"; hint = "Compétition terminée"; }
-  return <footer className="cage-command-bar"><span><small>{match ? match.label || `Match ${match.order}` : runtime.config.title}</small><strong>{match ? titleFor(runtime, match) : `${runtime.participants.filter((person) => person.seed !== null).length} participants sélectionnés`}</strong><em>{hint}</em></span><button className="is-primary" disabled={disabled || (isControl && blocked)} onClick={() => { if (runtime.status === "COMPLETED" && onResults) onResults(); else if (startWithGuests && isControl) onOpenGuests?.(); else if (action && isControl) void send(action, payload).then((ok) => { if (ok) onView(view); }); else onView(view); }}>{isControl ? label : `Voir ${view === "bracket" ? runtime.config.format === "open-mic-battle" ? "les Participants" : runtime.config.format === "championship" ? "le Classement" : "le Bracket" : view === "regie" ? "la Régie" : view === "vote" ? "le Vote" : "le Match"}`}<ArrowRight /></button></footer>;
+  return <footer className="cage-command-bar"><span>{match ? <small>{match.label || `Match ${match.order}`}</small> : null}<strong>{match ? titleFor(runtime, match) : runtime.config.title}</strong><em>{hint}</em></span><button className="is-primary" disabled={disabled || (isControl && blocked)} onClick={() => { if (runtime.status === "COMPLETED" && onResults) onResults(); else if (startWithGuests && isControl) onOpenGuests?.(); else if (action && isControl) void send(action, payload).then((ok) => { if (ok) onView(view); }); else onView(view); }}>{isControl ? label : `Voir ${view === "bracket" ? runtime.config.format === "open-mic-battle" ? "les Participants" : runtime.config.format === "championship" ? "le Classement" : "le Bracket" : view === "regie" ? "la Régie" : view === "vote" ? "le Vote" : "le Match"}`}<ArrowRight /></button></footer>;
 }

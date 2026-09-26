@@ -35,7 +35,7 @@ it("selects waiting guests directly, preserves media readiness and applies four 
   const ui = render(view());
   expect(screen.queryByText("Placement manuel")).toBeNull();
   expect(screen.queryByText("Voir le programme")).toBeNull();
-  expect(screen.getByRole("button", { name: "Appliquer le placement" }).hasAttribute("disabled")).toBe(true);
+  expect(screen.getByRole("button", { name: "Créer les duels" }).hasAttribute("disabled")).toBe(true);
   for (let index = 0; index < 4; index++) {
     fireEvent.click(screen.getAllByRole("checkbox")[index]);
     await waitFor(() => expect(send).toHaveBeenCalledTimes(index + 1));
@@ -45,13 +45,13 @@ it("selects waiting guests directly, preserves media readiness and applies four 
   const ids = runtime().participants.filter(person => person.seed !== null).map(person => person.id);
   run("roster.move", { participantId: ids[3], toSeed: 1 });
   ui.rerender(view());
-  expect(screen.getByRole("button", { name: "Appliquer le placement" }).hasAttribute("disabled")).toBe(false);
-  fireEvent.click(screen.getByRole("button", { name: "Appliquer le placement" }));
+  expect(screen.getByRole("button", { name: "Créer les duels" }).hasAttribute("disabled")).toBe(false);
+  fireEvent.click(screen.getByRole("button", { name: "Créer les duels" }));
   await waitFor(() => expect(runtime().matches).toHaveLength(3));
   ui.rerender(view());
   expect(runtime().matches[0]).toMatchObject({ participantAId: ids[3], participantBId: ids[0] });
   expect(runtime().config.participantCount).toBe(16);
-  expect(screen.getByRole("button", { name: "Préparer le premier duel" }).hasAttribute("disabled")).toBe(false);
+  expect(screen.getByRole("button", { name: "Valider le placement" }).hasAttribute("disabled")).toBe(false);
 });
 
 it.each(["A", "B"] as const)("drives the complete battle with side %s winning and displays the recorded crown count", async (choice) => {

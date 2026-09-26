@@ -6,12 +6,13 @@ it("requires preparation before backstage and stage, while queue returns preserv
   const state = createRoomToolsFixture("cage");
   initializeCageShowcase(state);
   const person = state.cage!.runtime!.participants[0];
-  expect(() => moveCageDemoGuest(state, person.id, "backstage", "host")).toThrow("Green House");
+  expect(() => moveCageDemoGuest(state, person.id, "backstage", "host")).toThrow("OBS MeeWav");
   expect(() => moveCageDemoGuest(state, person.id, "onstage", "host")).toThrow("coulisses");
   moveCageDemoGuest(state, person.id, "accepted", "host");
   expect(person.status).toBe("GREENHOUSE");
+  expect(person.registered).toBe(true);
   expect(Object.values(person.readiness).every(Boolean)).toBe(false);
-  expect(() => moveCageDemoGuest(state, person.id, "backstage", "host")).toThrow("Green House");
+  expect(() => moveCageDemoGuest(state, person.id, "backstage", "host")).toThrow("OBS MeeWav");
   moveCageDemoGuest(state, person.id, "ready", "host");
   moveCageDemoGuest(state, person.id, "backstage", "host");
   person.seed = 3;

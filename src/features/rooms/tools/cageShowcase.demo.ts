@@ -55,19 +55,20 @@ export function moveCageDemoGuest(state: RoomToolsState, participantId: string, 
     return;
   }
   if (destination === "accepted") {
-    // Guest placement is independent of tournament registration. Returning to
-    // the queue must not remove a seed, redraw matches or unregister an artist.
+    // An active invitation registers the artist, as in the live room projection.
+    // Media readiness stays separate; existing seeds and matches are preserved.
+    person.registered = true;
     person.status = person.status === "READY" || person.guestStatus === "backstage" || person.guestStatus === "on_stage" ? "WAITING" : "GREENHOUSE";
     person.guestStatus = "waiting";
     person.readiness = { camera: false, microphone: false, connection: false, mixer: false, permissions: false };
   } else if (destination === "ready") {
-    if (person.status !== "GREENHOUSE" && person.status !== "CALLED") throw new Error("Invite d’abord cet artiste dans la Green House.");
+    if (person.status !== "GREENHOUSE" && person.status !== "CALLED") throw new Error("Invite d’abord cet artiste à préparer son OBS MeeWav.");
     person.registered = true;
     person.readiness = { camera: true, microphone: true, connection: true, mixer: true, permissions: true };
     person.status = "READY"; person.guestStatus = "backstage";
   } else {
     if (destination === "onstage" && person.guestStatus !== "backstage" && person.status !== "READY") throw new Error("Cet invité doit rejoindre les coulisses avant de monter sur scène.");
-    if (destination === "backstage" && person.status !== "READY" && person.guestStatus !== "on_stage") throw new Error("Cet invité doit valider sa Green House avant les coulisses.");
+    if (destination === "backstage" && person.status !== "READY" && person.guestStatus !== "on_stage") throw new Error("Cet invité doit valider sa préparation OBS MeeWav avant les coulisses.");
     if (["ELIMINATED", "FORFEIT", "DISQUALIFIED"].includes(person.status)) throw new Error("Cet artiste a terminé sa participation au tournoi.");
     if (destination === "onstage" && runtime.participants.filter((item) => item.guestStatus === "on_stage" && item.id !== person.id).length >= 2) throw new Error("La Cage accueille deux artistes sur scène.");
     person.registered = true;

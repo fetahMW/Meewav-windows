@@ -1,0 +1,84 @@
+/* Artist identity belongs to the image; the VS remains at its exact centre. */
+.cage-stage-feed__artist {
+  position: absolute;
+  z-index: 20;
+  inset: auto 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  max-width: calc(100% - 20px);
+  min-width: 0;
+  padding: 7px 11px 7px 7px;
+  border: 1px solid #ffffff1f;
+  border-radius: 13px;
+  background: #090a11b8;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 3px 12px #0003;
+  color: #f3f1f8;
+  text-align: left;
+  cursor: pointer;
+}
+.cage-stage-feed__artist > img { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.cage-stage-feed__artist > span { display: grid; gap: 2px; min-width: 0; }
+.cage-stage-feed__artist strong { font: 600 clamp(11px, 1.25cqw, 16px)/1.25 Inter, sans-serif; overflow-wrap: anywhere; }
+.cage-stage-feed__artist small { color: #cbc5d8; font: 400 10px/1.3 Inter, sans-serif; overflow-wrap: anywhere; }
+.cage-stage-feed__artist:focus-visible { outline: 2px solid #c39aff; outline-offset: 3px; }
+.cage-stage-feed.is-b .cage-stage-feed__artist { left: auto; }
+.cage-stage-program.is-operator .cage-stage-feed > .cage-stage-feed__battle-wins { top: 12px; bottom: auto; }
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis {
+  inset: 50% auto auto 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis::before,
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis::after,
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis > i { display: none; }
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis > b {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border: 1px solid #cec5e630;
+  border-radius: 14px;
+  background: linear-gradient(150deg, #26222ed9, #0a0a10eb);
+  box-shadow: 0 4px 14px #0005, inset 0 1px #ffffff12;
+  color: #eee8f9;
+  font: 700 15px/1 Inter, sans-serif;
+  text-shadow: none;
+  transform: none;
+}
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis > b::before,
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel .cage-stage-program__duel-axis > b::after { display: none; }
+.cage-mixer-timer {
+  position: absolute;
+  z-index: 24;
+  /* Before a duel / in solo, leave the video toolbar's bottom lane clear. */
+  bottom: 84px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid #d3c6eb25;
+  border-radius: 20px;
+  background: #111018dc;
+  color: #e3ddec;
+  font: 500 12px/1.2 Inter, sans-serif;
+  font-variant-numeric: tabular-nums;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.cage-mixer-timer svg { width: 12px; height: 12px; }
+.cage-mixer-timer.is-complete { color: #f2ba8e; }
+.cage-stage-program:has(.cage-stage-program__duel-axis):not([data-composition="solo"]) + .cage-mixer-timer { top: calc(50% + 30px); bottom: auto; }
+.place-room-experience[data-room-presentation="cage"] .cage-stage-program.is-operator.is-duel[data-composition="solo"] .cage-stage-program__duel-axis { display: none; }
+.place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__counters > .switch-room-anchor { flex: 0 0 auto; }
+@media (min-width: 761px) {
+  .place-room-shellbar[data-room-presentation="cage"] .place-room-shellbar__counters .switch-room-popup { left: auto; right: 0; }
+}

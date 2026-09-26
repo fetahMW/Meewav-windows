@@ -3,7 +3,6 @@ import { ViewerMixerContext, useViewerSendMixer } from "./ViewerMixerContext";
 import { useSwitchRoom } from "../switch-room/useSwitchRoom";
 import { SwitchRoomButton, SwitchRoomInvitation, SwitchRoomWaiting } from "../switch-room/SwitchRoom";
 import type { RoomPerson } from "../tools/roomTools.types";
-import CageShellMatchup from "./CageShellMatchup";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
@@ -1314,24 +1313,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
   }, [nativePitchSelected, nativePluginAudioReady, personalInputGain, room.personalVocal, showNotice, updateNativeVst3]);
 
   const shellbarVisible = !place.isLoading && (room.status === "live" || room.status === "ended");
-  useEffect(() => {
-    if (roomPresentation.id !== "cage" || !shellbarVisible) return;
-    const surface = experienceRef.current;
-    const header = surface?.previousElementSibling as HTMLElement | null;
-    const stage = surface?.querySelector<HTMLElement>(".place-stage");
-    if (!header?.classList.contains("place-room-shellbar") || !stage) return;
-    const align = () => {
-      const stageBox = stage.getBoundingClientRect();
-      const headerBox = header.getBoundingClientRect();
-      header.style.setProperty("--cage-stage-center", `${stageBox.left + stageBox.width / 2 - headerBox.left}px`);
-    };
-    const observer = new ResizeObserver(align);
-    observer.observe(stage);
-    observer.observe(header);
-    align();
-    window.addEventListener("resize", align);
-    return () => { observer.disconnect(); window.removeEventListener("resize", align); header.style.removeProperty("--cage-stage-center"); };
-  }, [roomPresentation.id, shellbarVisible]);
+
 
 
   return (
@@ -1341,7 +1323,6 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
       {shellbarVisible ? (
         <PlaceRoomShellHeader
           switchSlot={place.isHost ? <SwitchRoomButton room={room} onQueueOpen={place.setQueueOpen} controller={switching} enabled={room.status === "live"}/> : room.source === "demo" && roomPresentation.id === "place" ? <div className="switch-room-anchor"><button type="button" disabled={switching.busy} onClick={()=>void switching.simulate()}>Simuler un switch</button>{switching.error?<span role="alert">{switching.error}</span>:null}</div> : undefined}
-          centerSlot={roomPresentation.id === "cage" && place.isHost ? <CageShellMatchup room={room} onOpenProfile={onOpenProfile} /> : undefined}
           room={room}
           isHost={place.isHost}
           endConfirmationOpen={endConfirmationOpen}

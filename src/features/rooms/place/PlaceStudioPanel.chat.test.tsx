@@ -8,6 +8,9 @@ import { resolve } from "node:path";
 import { MEEWAV_EMOTICONS } from "../../emoticons/MeewavEmoticons";
 import { CAGE_ROOM_PRESENTATION, CLASSE_ROOM_PRESENTATION, PLACE_ROOM_PRESENTATION, RoomPresentationProvider, type RoomPresentation } from "../roomPresentation";
 
+// Saved creation templates are independent of the guest/placement navigation.
+vi.mock("./CagePreparedCompetitions", () => ({ default: () => null }));
+
 beforeEach(() => {
   Object.defineProperty(HTMLElement.prototype, "scrollTo", {
     configurable: true,
@@ -82,13 +85,24 @@ function renderHostChat(source: "live" | "demo" = "live", presentation: RoomPres
     ...overrides,
   };
 
-  render(<RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider>);
-  return { onSendMessage, props };
+  const ui = render(<RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider>);
+  return { onSendMessage, props, ...ui };
 }
 
 function roomHostId() {
   return createPlaceDemoState().host.id;
 }
+
+it("returns directly from guest invitations to Cage placement", async () => {
+  const room = { ...createPlaceDemoState(), id: `cage-return-${crypto.randomUUID()}` };
+  const { props, rerender } = renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, surface: "tools" });
+  fireEvent.click(await screen.findByRole("button", { name: "Choisir dans les invités" }));
+  expect(props.onSurface).toHaveBeenLastCalledWith("guests");
+  rerender(<RoomPresentationProvider presentation={CAGE_ROOM_PRESENTATION}><PlaceStudioPanel {...props} surface="guests" /></RoomPresentationProvider>);
+  expect(screen.getByRole("tab", { name: /File d’attente/ })).toHaveAttribute("aria-selected", "true");
+  fireEvent.click(screen.getByRole("button", { name: "Retour au placement de la Cage" }));
+  expect(props.onSurface).toHaveBeenLastCalledWith("tools");
+});
 
 describe("Cage viewer participation beside Chat", () => {
   function viewerRoom() {

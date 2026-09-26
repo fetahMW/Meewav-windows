@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowRight, ArrowUp, Camera, Check, Clock3, Heart, Mic, Pause, Play, RefreshCw, Star, Users, Wifi } from "lucide-react";
+import { ArrowRight, Camera, Check, Clock3, Heart, Mic, Pause, Play, RefreshCw, Star, Users, Wifi } from "lucide-react";
 import type { CageOpenMicPassage, TournamentParticipant } from "../cageCompetition.types";
 import type { CageWorkspaceProps } from "./CageCompetitionWorkspace";
+import CageArtistPicker from "./CageArtistPicker";
 
 const LABEL: Record<string, string> = { WAITING: "En attente", GREENHOUSE: "En préparation", READY: "Prêt", ON_STAGE: "Sur scène", IN_PROGRESS: "Passage en cours", PAUSED: "En pause", PERFORMED: "Passage terminé", POSTPONED: "Reporté", SKIPPED: "Passage retiré" };
 const time = (seconds: number) => { const value = Math.ceil(Math.max(0, seconds)); return `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`; };
@@ -17,21 +18,26 @@ export default function CageOpenMicWorkspace(props: CageWorkspaceProps) {
   const current = entries.find((entry) => entry.id === runtime.activeEntryId);
   const prepared = entries.find((entry) => entry.id === runtime.preparedEntryId) ?? entries.find((entry) => entry.status === "WAITING");
   const findArtist = (entry?: CageOpenMicPassage) => runtime.participants.find((person) => person.id === entry?.participantId);
-  const [selected, setSelected] = useState<string[]>([]);
   const [reason, setReason] = useState("");
   const [replacementId, setReplacementId] = useState("");
   const [confirmSkip, setConfirmSkip] = useState(false);
   const [now, setNow] = useState(Date.now);
   useEffect(() => { const timer = window.setInterval(() => setNow(Date.now()), 1000); return () => window.clearInterval(timer); }, []);
-  const available = runtime.participants.filter((person) => person.present && person.registered && person.eligible && !entries.some((entry) => entry.participantId === person.id));
+  const available = runtime.participants.filter((person) => person.present && person.registered && person.eligible && !["NO_SHOW", "FORFEIT", "DISQUALIFIED"].includes(person.status) && !entries.some((entry) => entry.participantId === person.id));
 
   if (view === "bracket") return <>
-    <div className="cage-workspace__summary"><span><strong>{runtime.config.title}</strong><small>Open Mic · passages individuels</small></span><Mic /></div>
-    <p>Chaque artiste dispose de son passage. Le programme suit l’ordre de scène, sans élimination ni adversaire.</p>
-    {isControl ? <><button className={runtime.publicBracketVisible ? "is-primary" : ""} disabled={disabled || !entries.length} aria-pressed={runtime.publicBracketVisible} onClick={() => void send("broadcast.bracket", { enabled: !runtime.publicBracketVisible })}>{runtime.publicBracketVisible ? "Retirer le programme du public" : "Afficher le programme au public"}</button>
-      <details className="cage-workspace__section"><summary>Ajouter des artistes inscrits</summary>{available.length ? <><div className="cage-workspace__roster">{available.map((person) => <div className="cage-workspace__roster-row" key={person.id}><label><input type="checkbox" checked={selected.includes(person.id)} onChange={() => setSelected((ids) => ids.includes(person.id) ? ids.filter((id) => id !== person.id) : [...ids, person.id])} /><Artist person={person} /></label></div>)}</div><button disabled={disabled || !selected.length} onClick={() => void send("openmic.schedule", { participantIds: selected }).then((ok) => { if (ok) setSelected([]); })}><Check />Ajouter au programme</button></> : <p>Les prochains inscrits disponibles apparaîtront ici.</p>}{onOpenGuests ? <button onClick={onOpenGuests}><Users />Ouvrir les Invités</button> : null}</details></> : null}
-    <div className="cage-workspace__rounds">{entries.map((entry, index) => <article className={`cage-workspace__match-card${entry.id === current?.id ? " is-current" : ""}`} key={entry.id}><header><small>Passage {entry.order}</small><span>{LABEL[entry.status]}</span></header><Artist person={findArtist(entry)} status={entry.status} />{isControl && entry.status === "WAITING" ? <div className="cage-workspace__actions"><button aria-label="Avancer ce passage" disabled={disabled || index === 0} onClick={() => void send("openmic.move", { entryId: entry.id, direction: -1 })}><ArrowUp /></button><button aria-label="Reculer ce passage" disabled={disabled || index === entries.length - 1} onClick={() => void send("openmic.move", { entryId: entry.id, direction: 1 })}><ArrowDown /></button><button disabled={disabled} onClick={() => void send("openmic.remove", { entryId: entry.id })}>Retirer du programme</button></div> : null}</article>)}</div>
-    {!entries.length ? <div className="cage-workspace__empty"><Mic /><p>Le programme attend les artistes inscrits. Aucun duel n’est créé.</p></div> : null}
+    {isControl ? <>
+      <CageArtistPicker solo people={runtime.participants.filter(person => available.includes(person) || entries.some(entry => entry.participantId === person.id))}
+        selectedIds={entries.map(entry => entry.participantId)} maximum={runtime.config.participantCount} disabled={disabled}
+        lockedIds={entries.filter(entry => entry.status !== "WAITING").map(entry => entry.participantId)}
+        statusLabels={Object.fromEntries(entries.filter(entry => entry.status !== "WAITING").map(entry => [entry.participantId, LABEL[entry.status]]))}
+        onSelect={(id, chosen) => { const entry = entries.find(item => item.participantId === id); if (chosen) void send("openmic.schedule", { participantIds: [id] }); else if (entry) void send("openmic.remove", { entryId: entry.id }); }}
+        onMove={(id, direction) => { const entry = entries.find(item => item.participantId === id); if (entry) void send("openmic.move", { entryId: entry.id, direction }); }} />
+      {entries.length ? <details className="cage-workspace__placement-options"><summary>Options du programme</summary>
+        {onOpenGuests ? <button type="button" onClick={onOpenGuests}><Users />Ajouter depuis les invités</button> : null}
+        <button type="button" className={runtime.publicBracketVisible ? "is-primary" : ""} disabled={disabled} aria-pressed={runtime.publicBracketVisible} onClick={() => void send("broadcast.bracket", { enabled: !runtime.publicBracketVisible })}>{runtime.publicBracketVisible ? "Retirer le programme du public" : "Afficher le programme au public"}</button>
+      </details> : null}
+    </> : <div className="cage-workspace__rounds">{entries.map(entry => <article className={"cage-workspace__match-card" + (entry.id === current?.id ? " is-current" : "")} key={entry.id}><header><small>Passage {entry.order}</small><span>{LABEL[entry.status]}</span></header><Artist person={findArtist(entry)} status={entry.status} /></article>)}</div>}
   </>;
 
   if (view === "regie") {
@@ -88,9 +94,8 @@ export function CageOpenMicCommandBar({ runtime, disabled, isControl, send, onVi
   const current = entries.find((entry) => entry.id === runtime.activeEntryId);
   const prepared = entries.find((entry) => entry.id === runtime.preparedEntryId) ?? entries.filter((entry) => entry.status === "WAITING").sort((a, b) => a.order - b.order)[0];
   const person = runtime.participants.find((item) => item.id === (current?.status !== "PERFORMED" ? current?.participantId : prepared?.participantId));
-  const available = runtime.participants.filter((artist) => artist.present && artist.registered && artist.eligible && !["NO_SHOW", "FORFEIT", "DISQUALIFIED"].includes(artist.status)).slice(0, runtime.config.participantCount);
   const empty = !entries.length;
-  let label = empty && isControl ? available.length ? "Créer le programme" : "Choisir dans les Invités" : runtime.status === "COMPLETED" ? "Voir les résultats" : "Voir le programme";
+  let label = empty && isControl ? "Choisir dans les invités" : runtime.status === "COMPLETED" ? "Voir les résultats" : "Voir le programme";
   let action: Parameters<CageWorkspaceProps["send"]>[0] | undefined;
   let entry = current;
   let blocked = false;
@@ -111,5 +116,5 @@ export function CageOpenMicCommandBar({ runtime, disabled, isControl, send, onVi
     label = awaitingFeedback.feedback?.open ? "Clore le vote" : "Ouvrir le vote";
     action = awaitingFeedback.feedback?.open ? "openmic.feedback.close" : "openmic.feedback.open";
   }
-  return <footer className="cage-command-bar"><span><small>OPEN MIC · {entry ? `PASSAGE ${entry.order}` : "PROGRAMME"}</small><strong>{runtime.participants.find((item) => item.id === entry?.participantId)?.person.name ?? runtime.config.title}</strong><em>{entry ? LABEL[entry.status] : `${entries.length} passage(s)`}</em></span><button className="is-primary" disabled={disabled || (isControl && blocked)} onClick={() => { if (runtime.status === "COMPLETED" && onResults) onResults(); else if (isControl && empty) { if (available.length) void send("openmic.schedule", { participantIds: available.map((artist) => artist.id) }).then((ok) => { if (ok) onView("bracket"); }); else onOpenGuests?.(); } else if (isControl && action) void send(action, { entryId: entry?.id }).then((ok) => { if (ok) onView(action?.startsWith("openmic.feedback.") ? "vote" : action?.startsWith("openmic.pre") || action === "openmic.promote" ? "regie" : "match"); }); else onView("bracket"); }}>{isControl ? label : "Voir le programme"}{action === "openmic.start" ? <Play /> : action === "openmic.end" ? <Check /> : <ArrowRight />}</button></footer>;
+  return <footer className="cage-command-bar"><span><small>OPEN MIC · {entry ? `PASSAGE ${entry.order}` : "PROGRAMME"}</small><strong>{runtime.participants.find((item) => item.id === entry?.participantId)?.person.name ?? runtime.config.title}</strong><em>{entry ? LABEL[entry.status] : empty ? "Coche les artistes dans leur ordre de passage." : `${entries.length} passage(s)`}</em></span><button className="is-primary" disabled={disabled || (isControl && blocked)} onClick={() => { if (runtime.status === "COMPLETED" && onResults) onResults(); else if (isControl && empty) { if (onOpenGuests) onOpenGuests(); else onView("bracket"); } else if (isControl && action) void send(action, { entryId: entry?.id }).then((ok) => { if (ok) onView(action?.startsWith("openmic.feedback.") ? "vote" : action?.startsWith("openmic.pre") || action === "openmic.promote" ? "regie" : "match"); }); else onView("bracket"); }}>{isControl ? label : "Voir le programme"}{action === "openmic.start" ? <Play /> : action === "openmic.end" ? <Check /> : <ArrowRight />}</button></footer>;
 }

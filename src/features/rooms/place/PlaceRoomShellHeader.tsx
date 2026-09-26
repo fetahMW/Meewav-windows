@@ -90,12 +90,12 @@ export default function PlaceRoomShellHeader({
           <strong>{formatLiveDuration(room.startedAt, now)}</strong>
         </output>
         {<span className="place-room-shellbar__audience-group"><output className="wave-viewer-audience is-header-audience" aria-label={`Audience actuelle : ${formatCompactMetric(room.participantsCount)}`} title="Audience actuelle"><Eye aria-hidden="true" />{formatCompactMetric(room.participantsCount)}</output></span>}
-        {switchSlot}
+        {!isHost || roomPresentation.id !== "cage" ? switchSlot : null}
       </div>
 
-      <div className="place-room-shellbar__broadcast-cluster" data-countdown-active={!centerSlot && countdown.enabled ? "true" : "false"} data-matchup-active={centerSlot ? "true" : "false"}>
+      <div className="place-room-shellbar__broadcast-cluster" data-countdown-active={!centerSlot && countdown.enabled && roomPresentation.id !== "cage" ? "true" : "false"} data-matchup-active={centerSlot ? "true" : "false"}>
         {isHost && roomPresentation.id === "wave" && room.source === "demo" ? <WaveSimulationPicker roomId={room.id} /> : null}
-        {centerSlot ?? (countdown.enabled ? (
+        {centerSlot ?? (countdown.enabled && roomPresentation.id !== "cage" ? (
           <output className={`place-room-shellbar__countdown is-${countdown.status}`} aria-label={`Compte à rebours ${formatPlaceRoomTime(countdown.remainingMs)}`}>
             <Timer aria-hidden="true" />
             <span><strong>{formatPlaceRoomTime(countdown.remainingMs)}</strong></span>
@@ -108,6 +108,7 @@ export default function PlaceRoomShellHeader({
         <div className="place-room-shellbar__host-side">
           <div className="place-room-shellbar__counters is-host" aria-label="Indicateurs de la Room">
             <PlaceLiveCallPicker roomId={room.id} onLiveCallRequest={onLiveCallRequest} />
+            {roomPresentation.id === "cage" ? switchSlot : null}
             <output className="is-support" title="Soutien reçu">
               <SilverMoneyBagIcon />
               <strong>{formatCompactMetric(room.hatTotalAmount)}</strong>

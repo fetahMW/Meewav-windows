@@ -1646,7 +1646,7 @@ export function usePlaceRoom({
     try {
       await repository.acceptInvitation(invitation.invitationId);
       await load();
-      showNotice("Invitation acceptée. Prépare maintenant ta Green House.");
+      showNotice("Invitation acceptée. Prépare ton son et ta caméra dans OBS MeeWav.");
     } catch {
       showNotice("Impossible d’accepter cette invitation pour le moment.");
     }
@@ -1657,7 +1657,7 @@ export function usePlaceRoom({
       ? room.queue.find((participant) => participant.profile.id === effectiveUserId && participant.status === "accepted")
       : undefined;
     if (!invitation) {
-      showNotice("Aucune Green House prête à valider.");
+      showNotice("Aucune préparation OBS MeeWav prête à valider.");
       return;
     }
     if (room.source === "demo") {
@@ -1676,9 +1676,9 @@ export function usePlaceRoom({
     try {
       await repository.markInvitationReady(invitation.invitationId);
       await load();
-      showNotice("Green House validée : le Host peut maintenant t’ouvrir les Coulisses.");
+      showNotice("Préparation OBS MeeWav validée : le host peut maintenant t’ouvrir les coulisses.");
     } catch {
-      showNotice("Impossible de confirmer la Green House pour le moment.");
+      showNotice("Impossible de confirmer la préparation OBS MeeWav pour le moment.");
     }
   }, [effectiveUserId, load, repository, room.queue, room.source, showNotice]);
 
@@ -1716,7 +1716,7 @@ export function usePlaceRoom({
           type: "cage.demo.guest.move", participantId: participant.profile.id, destination: target,
         }, effectiveUserId ?? undefined);
         if (updated.cage?.runtime) setRoom((current) => current.id === room.id ? projectCageDemoGuests(current, updated.cage!.runtime!) : current);
-        showNotice(target === "ready" ? "Simulation : tests de la Green House validés." : `${participant.profile.displayName} rejoint ${target === "onstage" ? "la scène" : target === "backstage" ? "les Coulisses" : ["backstage", "onstage"].includes(participant.status) ? "la file d’attente" : "la Green House"}.`);
+        showNotice(target === "ready" ? "Simulation : préparation OBS MeeWav validée." : `${participant.profile.displayName} rejoint ${target === "onstage" ? "la scène" : target === "backstage" ? "les Coulisses" : ["backstage", "onstage"].includes(participant.status) ? "la file d’attente" : "la préparation OBS MeeWav"}.`);
       } catch (error) {
         showNotice(error instanceof Error ? error.message : "Impossible de déplacer cet invité.");
       }
@@ -1737,7 +1737,7 @@ export function usePlaceRoom({
     if (participant.queueEntryId) {
       if (room.source === "live") {
         if (destination !== "accepted") {
-          showNotice("Cette personne doit d’abord accepter l’invitation et préparer sa Green House.");
+          showNotice("Cette personne doit d’abord accepter l’invitation et préparer son OBS MeeWav.");
           return;
         }
         isQueueInvitation = true;
@@ -1762,7 +1762,7 @@ export function usePlaceRoom({
         } else {
           showNotice(participant.status === "pending"
             ? "Invitation envoyée : en attente de la réponse de l’invité."
-            : "L’invité doit terminer sa Green House avant de rejoindre les Coulisses.");
+            : "L’invité doit terminer sa préparation OBS MeeWav avant de rejoindre les coulisses.");
           return;
         }
       } else if (destination === "backstage") {
@@ -1786,7 +1786,7 @@ export function usePlaceRoom({
         ? "la Scène"
         : effectiveDestination === "backstage"
           ? "les Coulisses"
-          : "la Green House";
+          : "la préparation OBS MeeWav";
     if (effectiveDestination === "onstage" && room.participants.filter((item) => item.status === "onstage" && item.id !== participant.id).length >= 3) {
       showNotice("La Scène accueille au maximum trois invités simultanément.");
       return;
@@ -1884,7 +1884,7 @@ export function usePlaceRoom({
     try {
       await repository.inviteProfile(room.id, profileId);
       await load();
-      showNotice("Invitation envoyée. Le profil peut maintenant préparer sa Green House.");
+      showNotice("Invitation envoyée. L’artiste peut maintenant préparer son OBS MeeWav.");
     } catch (error) {
       showNotice("Cette personne ne peut pas être invitée pour le moment.");
       throw error;
@@ -1955,7 +1955,7 @@ export function usePlaceRoom({
           ...participant, queueEntryId: undefined, invitationId: `classroom-invitation-${profile.id}`,
           status: "accepted", isCameraEnabled: false, isMicrophoneEnabled: false, isSpeaking: false, latencyMs: 0 },
       ] }));
-      showNotice("L’élève rejoint la Green House. Valide ses tests dans Invités avant sa mise à l’écran.");
+      showNotice("L’élève prépare son OBS MeeWav. Valide ses tests dans Invités avant sa mise à l’écran.");
       return;
     }
     if (enabled && participant?.status !== "onstage" && room.participants.filter((item) => item.status === "onstage").length >= 3) {

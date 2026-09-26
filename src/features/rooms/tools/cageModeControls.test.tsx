@@ -48,6 +48,7 @@ it.each(["tournament", "championship", "open-mic"] as const)("drives an entire %
   const { state, run } = setup();
   run("competition.configure", { format, participantCount: 4, openMicFeedback: "appreciation" });
   if (format !== "open-mic") run("bracket.generate", { mode: "random" });
+  else run("openmic.schedule", { participantIds: state.cage!.runtime!.participants.filter(person => person.registered).map(person => person.id) });
   const send = vi.fn(async (action: CageCompetitionAction, payload?: CageCompetitionPayload) => { run(action, payload); return true; });
   const showResults = vi.fn();
   const view = () => <CageCommandBar onResults={showResults} runtime={state.cage!.runtime!} disabled={false} isControl view="bracket" accountId="host" send={send} onView={() => {}} onOpenGuests={() => {}} />;

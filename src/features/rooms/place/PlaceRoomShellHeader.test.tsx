@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { LOGE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPresentation";
+import { CAGE_ROOM_PRESENTATION, LOGE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPresentation";
 import { createPlaceDemoState } from "./place.fixtures";
 import PlaceRoomShellHeader from "./PlaceRoomShellHeader";
 import { placeRoomTime } from "./placeRoomTime";
@@ -12,6 +12,13 @@ afterEach(() => {
 });
 
 describe("PlaceRoomShellHeader", () => {
+  it("places Cage switch room beside the call button and keeps the mixer timer out of the header", () => {
+    placeRoomTime.setEnabled(true);
+    const { container } = render(<RoomPresentationProvider presentation={CAGE_ROOM_PRESENTATION}><PlaceRoomShellHeader room={createPlaceDemoState()} isHost switchSlot={<button>Switch Room</button>} endConfirmationOpen={false} onEndConfirmationOpen={vi.fn()} onEndRoom={vi.fn()} /></RoomPresentationProvider>);
+    expect(screen.getByRole("button", { name: "Switch Room" }).previousElementSibling).toHaveClass("place-live-call");
+    expect(container.querySelector(".place-room-shellbar__broadcast-cluster")).toBeEmptyDOMElement();
+    expect(screen.queryByLabelText(/Compte à rebours/)).toBeNull();
+  });
   it("shows the complete live control line with one Terminer action", () => {
     const room = createPlaceDemoState();
     const onEndConfirmationOpen = vi.fn();
