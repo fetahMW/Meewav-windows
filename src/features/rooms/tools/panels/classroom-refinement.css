@@ -581,9 +581,3 @@
   --classroom-seat-rim:linear-gradient(145deg,#c9b2e746,#b19dce26);
   box-shadow:0 0 9px 2px #71d5aa24, inset 0 0 10px #be9ee51a;
 }
-
-/* Tighten only seats 11–16 in the teacher grid; crop inside the square frame. */
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat:nth-child(n+11):nth-child(-n+16) .classroom-seat__portrait > img {
-  transform:scale(1.18);
-  transform-origin:50% 38%;
-}
