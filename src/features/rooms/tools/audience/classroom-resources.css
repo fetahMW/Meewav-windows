@@ -4,7 +4,7 @@
 .classe-resources > header p { margin:5px 0 0; color:#aaa6b0; font:400 11px/1.4 Inter,system-ui,sans-serif; }
 .classe-resources > header > span { padding:4px 8px; border-radius:7px; background:#ffffff08; color:#c9c5cf; font-size:11px; }
 .classe-resources__demo { color:#aaa3b4; font-size:10px; }
-.classe-resources .classe-resource { display:grid; grid-template-columns:32px minmax(0,1fr) auto; align-items:center; gap:10px; min-width:0; padding:12px; border:1px solid transparent; border-radius:12px; background:var(--studio-convex-face,linear-gradient(180deg,#111113,#020203 55%,#000)); box-shadow:var(--studio-convex-shadow,inset 0 1px #ffffff16); }
+.classe-resources .classe-resource { display:grid; grid-template-columns:32px minmax(0,1fr) auto; align-items:center; gap:10px; min-width:0; padding:12px; border:0; border-radius:14px; background:linear-gradient(122deg,#ffffff08,transparent 48%),linear-gradient(180deg,#19171e59,#08070c33),linear-gradient(180deg,#303034,#1a191e 55%,#121116); box-shadow:inset 0 1px #ffffff0c,inset 0 -1px 1px #0005,0 2px 5px #0005; }
 .classe-resource__icon { display:grid; place-items:center; width:32px; height:36px; border-radius:8px; color:#c9b2e7; background:#ffffff04; border:1px solid #ffffff0e; }
 .classe-resource__icon svg { width:17px; height:17px; stroke-width:1.6; }
 .classe-resource__copy { min-width:0; }

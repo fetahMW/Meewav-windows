@@ -547,37 +547,39 @@
 .classroom-seat-price__display:focus-within {border-color:#b48af0;box-shadow:0 0 0 2px #a77bea20;}
 .classroom-seat-price small {color:#c9c3d3;font-size:11px;}.classroom-seat-price small[role=alert] {color:#ffb4bd;}
 
-/* Teacher layout: generous square photo, a status column and a full-width name. */
-.room-tools-shell.is-classe:not(.classe-student-workspace) .room-tool-panel.is-classroom { --classroom-seat-surface:linear-gradient(155deg,#202023,#121214 64%,#19191c); }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-roster { padding:5px; box-sizing:border-box; }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__person {
+/* Shared teacher/student layout: generous square photo, a status column and a full-width name. */
+.room-tools-shell.is-classe .room-tool-panel.is-classroom { --classroom-seat-surface:linear-gradient(155deg,#202023,#121214 64%,#19191c); }
+.room-tools-shell.is-classe .is-classroom .classroom-roster { padding:5px; box-sizing:border-box; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__person {
   display:grid; grid-template-columns:minmax(0,1fr) 22px; grid-template-rows:minmax(0,1fr) auto;
   --classroom-status-size:clamp(14px,calc((100cqh - 26px) / 2),20px);
   align-content:stretch; align-items:start; gap:2px 4px; padding:4px 4px 2px; box-sizing:border-box;
 }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__avatar {
+.room-tools-shell.is-classe .is-classroom .classroom-seat__avatar {
   --portrait-size:min(calc(100cqi - 32px),calc(100cqh - 23px));
   grid-column:1; grid-row:1; justify-self:start; align-self:start;
   width:var(--portrait-size); height:var(--portrait-size); max-width:100%; max-height:none;
   border-radius:6px; overflow:hidden;
 }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat .classroom-seat__portrait {
+.room-tools-shell.is-classe .is-classroom .classroom-seat .classroom-seat__portrait {
   display:block; width:100%; height:100%; border-radius:inherit; box-shadow:none; outline:none;
 }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__portrait > img { width:100%; height:100%; object-fit:cover; }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__identity { grid-column:1 / -1; grid-row:2; align-self:end; justify-self:stretch; align-items:start; width:100%; min-width:0; margin:0; padding:0; text-align:left; }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__identity strong { display:block; width:100%; text-align:left; margin:0; font-size:clamp(10px,12cqi,12px); line-height:1.2; font-weight:600; letter-spacing:-.015em; }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__number { z-index:2; top:5px; left:5px; width:18px; height:15px; font-size:9px; border-radius:4px; background:#111114a6; color:#f0edf5; }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__signal { width:var(--classroom-status-size); height:var(--classroom-status-size); top:4px; right:4px; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__portrait > img { width:100%; height:100%; object-fit:cover; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__identity { grid-column:1 / -1; grid-row:2; align-self:end; justify-self:stretch; align-items:start; width:100%; min-width:0; margin:0; padding:0; text-align:left; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__identity strong { display:block; width:100%; text-align:left; margin:0; font-size:clamp(10px,12cqi,12px); line-height:1.2; font-weight:600; letter-spacing:-.015em; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__number { z-index:2; top:5px; left:5px; width:18px; height:15px; font-size:9px; border-radius:4px; background:#111114a6; color:#f0edf5; }
+.room-tools-shell.is-classe .is-classroom .classroom-seat__signal { width:var(--classroom-status-size); height:var(--classroom-status-size); top:4px; right:4px; }
 .classroom-seat__question { position:absolute; top:4px; right:4px; display:grid; place-items:center; width:var(--classroom-status-size,20px); height:var(--classroom-status-size,20px); border-radius:6px; color:#83bdff; background:#69aaff18; }
 .classroom-seat__question.has-primary { top:calc(var(--classroom-status-size,20px) + 7px); }
 .classroom-seat__question svg { width:13px; height:13px; stroke-width:1.7; }
 /* No bottom stripe or luminous rim: only a diffuse, evenly spread light. */
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat.is-speaking {
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking {
   --classroom-seat-rim:linear-gradient(145deg,#c8d7cf20,#a7b9b210);
   box-shadow:0 0 9px 2px #71d5aa24, inset 0 0 10px #71d5aa0c;
 }
-.room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat.is-speaking.is-selected {
+.room-tools-shell.is-classe .is-classroom .classroom-seat.is-speaking.is-selected {
   --classroom-seat-rim:linear-gradient(145deg,#c9b2e746,#b19dce26);
   box-shadow:0 0 9px 2px #71d5aa24, inset 0 0 10px #be9ee51a;
 }
+
+.room-tools-shell.is-classe .is-classroom .classroom-seat:is(.is-speaking,.is-selected) .classroom-seat__portrait { box-shadow:none; outline:none; }

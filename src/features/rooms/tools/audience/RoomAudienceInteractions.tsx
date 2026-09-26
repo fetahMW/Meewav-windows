@@ -463,7 +463,7 @@ function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, bu
         .finally(() => setEndingIntervention(false));
     }}>{endingIntervention ? "Fermeture…" : "Terminer mon intervention"}</button></div> : null}
     {panel === "class" ? <div className="room-tool-panel is-classroom">
-      <ClassroomRoster classe={classe} onSelectFreeSeat={!seat && !classe.seatsLocked ? number => { setTicketError(null); setTicketSeat(number); } : undefined} selectedStudentId={selectedStudentId} onSelectStudent={(id) => { profileTriggerRef.current = document.activeElement as HTMLElement; setSelectedStudentId(id); }} audioBridge={{ mode: privateActive ? "private" : active ? "public" : null, studentId: privateActive || active ? accountId : null, phase: privateActive || active ? "active" : "idle" }} />
+      <ClassroomRoster showQuestionIndicators classe={classe} onSelectFreeSeat={!seat && !classe.seatsLocked ? number => { setTicketError(null); setTicketSeat(number); } : undefined} selectedStudentId={selectedStudentId} onSelectStudent={(id) => { profileTriggerRef.current = document.activeElement as HTMLElement; setSelectedStudentId(id); }} audioBridge={{ mode: privateActive ? "private" : active ? "public" : null, studentId: privateActive || active ? accountId : null, phase: privateActive || active ? "active" : "idle" }} />
     </div> : null}
 
     {seat && classe.people[0] ? <ClassroomMessageBubble roomId={roomId} accountId={accountId} peerId={classe.people[0].id} peerName={classe.people[0].name} source={source} /> : null}
