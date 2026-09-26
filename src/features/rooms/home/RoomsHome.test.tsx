@@ -5,6 +5,7 @@ import { MemoryRouter, Route, Routes, useLocation, useParams } from "react-route
 import RoomsHome from "./RoomsHome";
 
 vi.mock("./roomsHome.live", () => ({ loadLiveRoomsCatalog: async () => [] }));
+vi.mock("../../auth", () => ({ useAuth: () => ({ user: null }) }));
 
 class ResizeObserverStub implements ResizeObserver {
   observe() {}
