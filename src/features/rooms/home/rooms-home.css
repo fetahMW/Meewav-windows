@@ -233,6 +233,11 @@
   padding-inline: var(--rooms-home-rail-heading-gutter);
 }
 
+/* Keep cards aligned with their heading, even while the rail scrolls. */
+.rooms-home__rails .rooms-home-rail__viewport-shell {
+  margin-inline-start: var(--rooms-home-rail-heading-gutter);
+}
+
 .rooms-home__discovery {
   display: flex;
   min-width: 0;
