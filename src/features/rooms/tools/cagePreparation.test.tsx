@@ -120,3 +120,34 @@ it("edits the Open Mic running order directly and protects started passages", as
   expect(screen.getByRole("button", { name: "En attente de sa préparation" })).toBeDisabled();
   expect(runtime().participants.some(person => person.guestStatus === "on_stage")).toBe(false);
 });
+
+it.each([2, 4, 8])("adapts a default 16-person tournament to the %i selected artists without losing any", async count => {
+  const { runtime, choose, refresh, send } = setup("tournament", count, 16);
+  const people = runtime().participants.filter(person => person.registered).slice(0, count);
+  for (const person of people) await choose(person.person.name);
+  const ids = people.map(person => person.id);
+  expect(screen.getByRole("combobox", { name: "Nombre d’artistes du programme" })).toHaveValue("16");
+  fireEvent.click(screen.getByRole("button", { name: `Adapter à ${count} artistes` }));
+  await waitFor(() => expect(runtime().config.participantCount).toBe(count));
+  refresh();
+  expect(runtime().participants.filter(person => person.seed !== null).map(person => person.id)).toEqual(ids);
+  expect(send).toHaveBeenLastCalledWith("competition.configure", { format: "tournament", participantCount: count });
+  fireEvent.click(screen.getByRole("button", { name: "Créer le tableau" }));
+  await waitFor(() => expect(runtime().matches).toHaveLength(count - 1));
+  refresh();
+  fireEvent.click(screen.getByRole("button", { name: "Valider le placement" }));
+  await waitFor(() => expect(runtime().lockedAt).toBeTruthy());
+});
+
+it("supports a six-artist championship and prevents sizing below the current selection", async () => {
+  const { runtime, choose, refresh } = setup("championship", 6, 16);
+  const people = runtime().participants.filter(person => person.registered).slice(0, 6);
+  for (const person of people) await choose(person.person.name);
+  expect(screen.getByRole("option", { name: "4 artistes", hidden: true })).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: "Adapter à 6 artistes" }));
+  await waitFor(() => expect(runtime().config.participantCount).toBe(6));
+  refresh();
+  fireEvent.click(screen.getByRole("button", { name: "Créer le calendrier" }));
+  await waitFor(() => expect(runtime().matches).toHaveLength(15));
+  expect(runtime().participants.filter(person => person.seed !== null)).toHaveLength(6);
+});

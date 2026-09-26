@@ -196,3 +196,6 @@ details.cage-workspace__section[open] > :not(summary) + * { margin-top: 10px; }
 .cage-workspace__placement-options > summary:focus-visible { outline: 2px solid #b99ee4; outline-offset: 3px; border-radius: 4px; }
 .cage-workspace__placement-options[open] > :not(summary) { margin-top: 10px; }
 .cage-workspace__placement-options[open] > button { display: flex; }
+.cage-workspace .cage-workspace__field-size { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 0; color: #a8a3b1; font-size: 11px; }
+.cage-workspace__field-size select { width: auto; min-height: 30px; max-width: 130px; padding: 3px 8px; border: 1px solid #ffffff1a; border-radius: 8px; color: #e9e2f4; background: #18151e; font: inherit; }
+.cage-workspace__field-size small { margin-left: auto; font-variant-numeric: tabular-nums; }

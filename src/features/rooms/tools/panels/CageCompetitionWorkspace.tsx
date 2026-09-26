@@ -84,6 +84,8 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
   const count = runtime.config.participantCount;
   const battle = runtime.config.format === "open-mic-battle";
   const championship = runtime.config.format === "championship";
+  const sizes = championship || runtime.config.rules.allowByes ? Array.from({ length: 63 }, (_, index) => index + 2) : [2, 4, 8, 16, 32, 64];
+  const reductionKeepsSelection = championship || Number.isInteger(Math.log2(selected.length));
   const canDraw = available.length >= count || (shortage === "byes" && runtime.config.rules.allowByes) || (shortage === "reduce" && runtime.config.rules.allowFormatReduction);
   const [confirmReset, setConfirmReset] = useState(false);
   const standings = selected.map((participant) => {
@@ -100,9 +102,15 @@ function Bracket({ runtime, disabled, isControl, send, onOpenGuests, onView }: W
     {isControl && locked ? <button className={runtime.publicBracketVisible ? "is-primary" : ""} aria-pressed={runtime.publicBracketVisible === true} disabled={disabled || !runtime.matches.length} onClick={() => void send("broadcast.bracket", { enabled: !runtime.publicBracketVisible })}><MonitorUp />{runtime.publicBracketVisible ? battle ? "Retirer le programme du public" : championship ? "Retirer le classement du public" : "Retirer le bracket du public" : battle ? "Afficher le programme au public" : championship ? "Afficher le classement au public" : "Afficher le bracket au public"}</button> : null}
     {runtime.config.format === "championship" && runtime.matches.length ? <section className="cage-workspace__section"><h3>Progression du championnat</h3><div className="cage-workspace__standings">{standings.map(({ participant, played, wins }) => <div key={participant.id}><Person participant={participant} /><span><b>{wins}</b> victoire{wins > 1 ? "s" : ""}<small>{played} rencontre{played > 1 ? "s" : ""}</small></span></div>)}</div></section> : null}
     {!locked && isControl ? <>
+      {!battle && !runtime.matches.length ? <label className="cage-workspace__field-size">Nombre d’artistes
+        <select aria-label="Nombre d’artistes du programme" value={count} disabled={disabled} onChange={event => void send("competition.configure", { format: runtime.config.format, participantCount: Number(event.target.value) })}>
+          {sizes.map(size => <option key={size} value={size} disabled={size < selected.length}>{size} artistes</option>)}
+        </select>
+        <small>{selected.length}/{count} sélectionnés</small>
+      </label> : null}
       {runtime.matches.length ? <details className="cage-workspace__placement-options"><summary>Modifier les artistes et leur ordre</summary>{artistPicker}</details> : artistPicker}
       {selected.length >= 2 || runtime.matches.length ? <details className="cage-workspace__placement-options"><summary>Options du placement</summary>
-        {!battle && selected.length < count && (runtime.config.rules.allowByes || runtime.config.rules.allowFormatReduction) ? <label>Avec moins de {count} artistes<select value={shortage} onChange={event => setShortage(event.target.value as typeof shortage)}><option value="wait">Attendre les autres artistes</option>{runtime.config.rules.allowByes ? <option value="byes">Prévoir des places exemptées</option> : null}{runtime.config.rules.allowFormatReduction ? <option value="reduce">Réduire le format</option> : null}</select>{shortage !== "wait" ? <button type="button" disabled={disabled || selected.length < 2} onClick={() => void send("bracket.generate", { mode: "manual", shortage })}><Check />Créer avec ce choix</button> : null}</label> : null}
+        {!battle && selected.length < count && (runtime.config.rules.allowByes || runtime.config.rules.allowFormatReduction) ? <label>Avec moins de {count} artistes<select value={shortage} onChange={event => setShortage(event.target.value as typeof shortage)}><option value="wait">Attendre les autres artistes</option>{runtime.config.rules.allowByes ? <option value="byes">Prévoir des places exemptées</option> : null}{runtime.config.rules.allowFormatReduction ? <option value="reduce" disabled={!reductionKeepsSelection}>Réduire le format</option> : null}</select>{shortage !== "wait" ? <button type="button" disabled={disabled || selected.length < 2 || (shortage === "reduce" && !reductionKeepsSelection)} onClick={() => void send("bracket.generate", { mode: "manual", shortage })}><Check />Créer avec ce choix</button> : null}</label> : null}
         {!battle ? <button type="button" disabled={disabled || !canDraw} onClick={() => void send("bracket.generate", { mode: "random", shortage })}><Shuffle />Tirer au sort parmi les {available.length} artistes disponibles</button> : null}
         {onOpenGuests ? <button type="button" onClick={onOpenGuests}><Users />Ajouter depuis les invités</button> : null}
         {runtime.matches.length ? <button type="button" disabled={disabled} onClick={() => setConfirmReset(!confirmReset)}><RefreshCw />Recommencer le placement</button> : null}
@@ -229,9 +237,16 @@ export function CageCommandBar({ runtime, disabled, isControl, send, onView, onO
   let view: CageWorkspaceView = "bracket";
   const available = runtime.participants.filter(person => cageRosterCandidate(runtime, person));
   const required = battle ? 2 : runtime.config.participantCount;
-  const startWithGuests = !runtime.lockedAt && !runtime.matches.length && available.length < required && selected.length < required && Boolean(onOpenGuests);
+  const canAdaptSize = !battle && selected.length >= 2 && selected.length < required && (runtime.config.format === "championship" || runtime.config.rules.allowByes || Number.isInteger(Math.log2(selected.length))) && selected.every(person => cageRosterCandidate(runtime, person));
+  const startWithGuests = !canAdaptSize && !runtime.lockedAt && !runtime.matches.length && available.length < required && selected.length < required && Boolean(onOpenGuests);
   if (!runtime.lockedAt) {
     if (runtime.matches.length) { label = "Valider le placement"; hint = "Vérifie les rencontres ci-dessus."; action = "bracket.lock"; view = "regie"; }
+    else if (canAdaptSize) {
+      label = `Adapter à ${selected.length} artistes`;
+      hint = `Prévu pour ${required} · conserver les ${selected.length} artistes cochés.`;
+      action = "competition.configure";
+      payload = { format: runtime.config.format, participantCount: selected.length };
+    }
     else if (startWithGuests) {
       label = "Choisir dans les invités"; hint = "Invite les artistes, puis coche-les dans la liste.";
     } else {
