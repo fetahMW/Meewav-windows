@@ -100,6 +100,7 @@ type PlaceMixerAudioPlayerProps = {
   onPlaybackStateChange: (state: PlaceAudioPlaybackState, generation: string) => Promise<boolean>;
   programAudio?: PlaceMixerProgramAudioTransport;
   personalSend?: boolean;
+  privateOnly?: boolean;
   onPreviewLevel?: (level: number) => void;
   classroomCollapsible?: boolean;
   roomLabel?: string;
@@ -192,6 +193,7 @@ export default function PlaceMixerAudioPlayer({
   onPreviewMetadata,
   onRouteChange,
   personalSend = false,
+  privateOnly = false,
   onPreviewLevel,
   onPlaybackStateChange,
   programAudio,
@@ -1230,6 +1232,7 @@ export default function PlaceMixerAudioPlayer({
   }, [isPlaying, route, onPreviewLevel]);
 
   const selectRoute = async (nextRoute: PlaceAudioRoute) => {
+    if (privateOnly && nextRoute === "public") return;
     if (!currentTrack || !previewReady || routePendingRef.current || playbackPendingRef.current || nextRoute === route) return;
     routePendingRef.current = true;
     pauseLocal();
@@ -1527,7 +1530,7 @@ export default function PlaceMixerAudioPlayer({
           <div className="place-mixer-audio__controls">
             {desktopDeck ? <>
               <button type="button" className="place-mixer-deck__route" aria-label="Destination du lecteur" aria-pressed={route === "public"}
-                disabled={!currentTrack || !previewReady || routePending} onClick={() => { void selectRoute(route === "public" ? "preview" : "public"); }}>
+                disabled={privateOnly || !currentTrack || !previewReady || routePending} onClick={() => { void selectRoute(route === "public" ? "preview" : "public"); }}>
                 {route === "public" ? personalSend ? "Mon mix" : "Public" : "Privé"}
               </button>
               <button type="button" className="place-mixer-deck__key" onClick={openUpload} aria-label="Importer un son"><Upload aria-hidden="true" /></button>
@@ -1550,7 +1553,7 @@ export default function PlaceMixerAudioPlayer({
                   role="radio"
                   aria-checked={route === "public"}
                   className={route === "public" ? "is-active" : undefined}
-                  disabled={!currentTrack || !previewReady || routePending}
+                  disabled={privateOnly || !currentTrack || !previewReady || routePending}
                   onClick={() => { void selectRoute("public"); }}
                 >
                   <Globe2 aria-hidden="true" /><b>{personalSend ? "Mon mix" : "Public"}</b>

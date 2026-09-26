@@ -112,12 +112,12 @@ describe("Cage viewer participation beside Chat", () => {
     return room;
   }
 
-  it("shows one participation action from Chat and hides the mixer before admission", () => {
+  it("shows one participation action from Chat and offers a private listener mixer before admission", () => {
     const room = viewerRoom();
     const { props } = renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, isHost: false });
     expect(screen.getAllByRole("button", { name: "Participer au battle" })).toHaveLength(1);
     expect(screen.getByRole("textbox", { name: "Écrire un message" })).toBeVisible();
-    expect(screen.queryByRole("tab", { name: "Mixeur" })).not.toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Mixeur" })).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Participer au battle" }));
     expect(props.onJoinQueue).toHaveBeenCalledTimes(1);
   });

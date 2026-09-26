@@ -13,6 +13,7 @@ import { MessageCircleMore, LogOut, Armchair } from "lucide-react";
 import CageViewerCompanion from "./CageViewerCompanion";
 import CageViewerShowcase from "./CageViewerShowcase";
 import CageProductionCard from "./CageProductionCard";
+import { useCageAudienceFundraiser } from "./useCageAudienceFundraiser";
 import { cageEvent, cageEntrants } from "../cageTools.domain";
 import {
   ArrowRight,
@@ -673,6 +674,7 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
     : requestedAccountId, [demoSeedRole, requestedAccountId, room.id, room.source, roomType]);
   const { state, busy, error, execute, role: toolsRole, canVote } = useRoomTools({ roomType, roomId: room.id, role: actorRole, accountId: initialAccountId, source: room.source });
   const accountId = effectiveDemoAccount(roomType, actorRole, initialAccountId, state);
+  const { fundraiser: cageFundraiser, error: cageFundraiserError } = useCageAudienceFundraiser(room.id, accountId, roomType === "cage" && room.source === "live" && active && canEngage);
   const viewer: RoomPerson = {
     id: accountId,
     name: room.currentUserProfile?.displayName ?? "Membre MeeWav",
@@ -694,7 +696,7 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
       {roomType === "scene" && state.scene ? <SceneAudience canVote={canVote} source={room.source} active={active} participation={sceneParticipation} state={state.scene} accountId={accountId} canEngage={canEngage} busy={busy} execute={execute} onContributeFundraiser={onContributeFundraiser} /> : null}
       {roomType === "classe" && state.classe ? <ClasseAudience viewer={viewer} visible={active} source={room.source} onOpenChat={onOpenChat} onLeaveRoom={onLeaveRoom} classe={state.classe} role={toolsRole} accountId={accountId} roomId={room.id} canEngage={canEngage} busy={busy} execute={execute} onEndIntervention={() => endClasseAudienceIntervention({ source: room.source, roomId: room.id, accountId, liveCall, execute })} /> : null}
       {roomType === "wave" && state.wave ? <WaveAudience wave={state.wave} source={room.source} roomId={room.id} accountId={accountId} viewer={viewer} canEngage={canEngage} busy={busy} execute={execute} /> : null}
-      {roomType === "cage" && state.cage ? state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />}><CageViewerCompanion cage={state.cage} participation={cageParticipation} onOpenChat={onOpenChat} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />} /></CageViewerShowcase> : null}
+      {roomType === "cage" && state.cage ? state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />}><CageViewerCompanion cage={state.cage} source={room.source} accountId={accountId} active={active} fundraiser={cageFundraiser} fundraiserError={cageFundraiserError} participation={cageParticipation} onOpenChat={onOpenChat} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />} /></CageViewerShowcase> : null}
       {roomType === "loge" && state.loge ? <LogeViewer loge={state.loge} accountId={accountId} viewer={viewer} hostName={room.host.displayName} eligible={Boolean(state.audience?.eligible)} canEngage={canEngage} busy={busy} execute={execute} onOpenChat={onOpenChat} preview={isLogePreviewAvailable(state.loge.preview)?<LogePreviewPlayer roomId={room.id} source={room.source} preview={state.loge.preview} available/>:<div className="loge-viewer__waiting"><Headphones/><strong>L’artiste prépare une avant-première</strong><p>Continuez à profiter du live. Le contenu apparaîtra ici à son lancement.</p></div>}/> : null}
     </div>
   </div>;

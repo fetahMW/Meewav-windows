@@ -54,9 +54,9 @@ export default function CageProductionCard({ active = true, onOpenMixer }: { act
         <small>{production?.demo ? <span>Démo</span> : null}{production?.bpm ? <span>{production.bpm} BPM</span> : null}{asset ? <span>{clock(asset.durationSeconds)}</span> : null}</small>
       </div>
       <div className="cage-production__actions">
-        <button type="button" disabled={!asset || locked || !active || starting} onClick={() => void toggle()} aria-label={playing ? "Mettre la prod en pause" : "Écouter la prod du battle"}>{starting || loading && !asset ? <LoaderCircle className="is-loading" /> : playing ? <Pause /> : <Play />}</button>
-        <button type="button" disabled={!asset || locked} onClick={() => setRepeat(value => !value)} aria-label="Lecture en boucle de la prod" aria-pressed={repeat} title="Répéter la prod"><Repeat2 /></button>
-        {asset ? <a href={asset.src} download={asset.file.name} aria-label="Télécharger la prod du battle" title="Télécharger la prod"><Download /></a> : <button type="button" disabled aria-label="Télécharger la prod du battle"><Download /></button>}
+        <button type="button" className="cage-production__listen" disabled={!asset || locked || !active || starting} onClick={() => void toggle()} aria-label={playing ? "Mettre la prod en pause" : "Écouter la prod du battle"}>{starting || loading && !asset ? <LoaderCircle className="is-loading" /> : playing ? <Pause /> : <Play />}<span>{playing ? "Pause" : "Écouter"}</span></button>
+        <button type="button" disabled={!asset || locked || !active} onClick={() => setRepeat(value => !value)} aria-label="Lecture en boucle de la prod" aria-pressed={repeat} title="Répéter la prod"><Repeat2 /><span>Boucle</span></button>
+        {asset ? <a href={asset.src} download={asset.file.name} aria-label="Télécharger la prod du battle" title="Télécharger la prod"><Download /><span>Télécharger</span></a> : <button type="button" disabled aria-label="Télécharger la prod du battle"><Download /><span>Télécharger</span></button>}
       </div>
     </div>
     {asset ? <>

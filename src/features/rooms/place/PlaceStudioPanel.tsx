@@ -1702,10 +1702,10 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
   const showsAudienceInteractions = !hasProductionTools;
   const cageViewer = specializedRoomId === "cage" && showsAudienceInteractions;
   const cageParticipant = [...room.participants, ...room.queue].find((person) => person.profile.id === room.currentUserProfile?.id);
-  const cageMixerAvailable = !cageViewer || Boolean(cageParticipant && ["accepted", "ready", "backstage", "onstage"].includes(cageParticipant.status));
+  const cageListenerOnly = cageViewer && !Boolean(cageParticipant && ["accepted", "ready", "backstage", "onstage"].includes(cageParticipant.status));
   const visibleSurface: PlaceStudioSurface = isHost
     ? surface
-    : surface === "mixer" && cageMixerAvailable
+    : surface === "mixer"
       ? "mixer"
       : surface === "tools"
         ? "tools"
@@ -1739,7 +1739,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
   };
   const availableSurfaces = isHost
     ? SURFACES
-    : SURFACES.filter((item) => item.id === "chat" || (item.id === "mixer" && cageMixerAvailable) || item.id === "tools");
+    : SURFACES.filter((item) => item.id === "chat" || item.id === "mixer" || item.id === "tools");
   const featureSurfaceLabel = roomPresentation.label.replace(/^La\s+/, "");
   const FeatureIcon = { place: UsersRound, loge: DoorOpen, wave: AudioLines, cage: Radio, classe: GraduationCap, scene: Mic2 }[roomPresentation.id];
   const surfaceLabel = (id: PlaceStudioSurface, label: string) => id === "tools" ? featureSurfaceLabel : label;
@@ -1767,7 +1767,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       case "chat":
         return <PlaceChatWorkspace room={room} isHost={isHost} canEngage={canEngage} active={visibleSurface === "chat" && !collapsed} onSendMessage={props.onSendMessage} onDeleteMessage={props.onDeleteMessage} chatSocialActions={props.chatSocialActions} onVotePoll={props.onVotePoll} onLaunchPoll={props.onLaunchPoll} onStopPoll={props.onStopPoll} onPinMessage={props.onPinMessage} onPinHighlight={props.onPinHighlight} onClearHighlight={props.onClearHighlight} onSubmitGift={props.onSubmitGift} onCreateGiftDraw={props.onCreateGiftDraw} onScheduleGiftDraw={props.onScheduleGiftDraw} onStartGiftDraw={props.onStartGiftDraw} onCancelGiftDraw={props.onCancelGiftDraw} />;
       case "mixer":
-        return <PlaceMixer room={room} mode={isHost ? "host" : isGuest ? "guest" : "viewer"} currentUserId={room.currentUserProfile?.id} view={props.mixerView} toolsVisible={isHost && visibleSurface === "tools"} onView={props.onMixerView} onGain={props.onGain} onMute={props.onMute} onCamera={props.onCamera} onVocal={props.onVocal} onTune={props.onTune} pitchProvider={props.pitchProvider} pitchCorrection={props.pitchCorrection} localAudioStatus={props.localAudioStatus} localAudioError={props.localAudioError} pluginInventory={props.pluginInventory} pluginsRefreshing={props.pluginsRefreshing} nativePluginStatus={props.nativePluginStatus} nativePluginAudioReady={props.nativePluginAudioReady} nativePluginError={props.nativePluginError} onPitchProvider={props.onPitchProvider} onRefreshPlugins={props.onRefreshPlugins} onRemoveNativePlugin={props.onRemoveNativePlugin} onToggleMonitoring={props.onToggleMonitoring} onAudioPreview={props.onAudioPreview} onAudioPreviewMetadata={props.onAudioPreviewMetadata} onAudioRoute={props.onAudioRoute} onAudioPlaybackState={props.onAudioPlaybackState} programAudio={props.programAudio} hostVoiceMeterStream={props.hostVoiceMeterStream} />;
+        return <PlaceMixer room={room} listenerOnly={cageListenerOnly} mode={isHost ? "host" : isGuest ? "guest" : "viewer"} currentUserId={room.currentUserProfile?.id} view={props.mixerView} toolsVisible={isHost && visibleSurface === "tools"} onView={props.onMixerView} onGain={props.onGain} onMute={props.onMute} onCamera={props.onCamera} onVocal={props.onVocal} onTune={props.onTune} pitchProvider={props.pitchProvider} pitchCorrection={props.pitchCorrection} localAudioStatus={props.localAudioStatus} localAudioError={props.localAudioError} pluginInventory={props.pluginInventory} pluginsRefreshing={props.pluginsRefreshing} nativePluginStatus={props.nativePluginStatus} nativePluginAudioReady={props.nativePluginAudioReady} nativePluginError={props.nativePluginError} onPitchProvider={props.onPitchProvider} onRefreshPlugins={props.onRefreshPlugins} onRemoveNativePlugin={props.onRemoveNativePlugin} onToggleMonitoring={props.onToggleMonitoring} onAudioPreview={props.onAudioPreview} onAudioPreviewMetadata={props.onAudioPreviewMetadata} onAudioRoute={props.onAudioRoute} onAudioPlaybackState={props.onAudioPlaybackState} programAudio={props.programAudio} hostVoiceMeterStream={props.hostVoiceMeterStream} />;
       case "tools":
         if (props.experienceWaiting) return props.experienceWaiting;
         if (showsAudienceInteractions) {

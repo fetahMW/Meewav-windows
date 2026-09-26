@@ -116,6 +116,15 @@ Nouvelles migrations principales Windows :
 - `20260926130000_messaging_calls_cross_client.sql`
 - `20260926131000_rooms_live_catalog.sql`
 
+## Complément Cage viewer Windows — référence iOS du 26 septembre à 06 h 07
+
+- Référence inspectée : dépôt iOS, branche distante `rooms-goal`, commit `cd2d40d75c6521f193be2f3c35c62ceef5233e21`, PR #1 encore ouverte lors du portage. Le checkout iOS local et `origin/main` ne contiennent pas toute cette interface. Aucun fichier iOS n'a été modifié.
+- Windows reprend le programme public Compétition/Direct, les tours et profils d'artistes, le passage en cours et ses états, ainsi que les CTA Écouter/Boucle/Télécharger. Le mixeur est accessible au spectateur, avec écoute privée et retour du live; les artistes admis conservent leur préparation et leur circuit audio existants. Le vote reste dans la surface vidéo persistante.
+- Cagnotte : lecture de `rooms_cage_fundraiser_state_v1(p_room_id)`, uniquement en mode réel; validation de `room_id`, statut `open`/`closed` et objectif positif. Aucun versement, collecte ou solde n'est inventé. Une erreur temporaire est signalée et retentée; l'absence du RPC sur un ancien serveur masque cet onglet sans boucle de requêtes.
+- Contrat à comparer au serveur avant déploiement : migration iOS `supabase/migrations/20260923001000_rooms_cage_read_only_fundraiser_v1.sql` sur cette branche. Elle contient le RPC de lecture et ses règles d'accès. Vérifier les dépendances et l'historique distant, ne pas recopier/appliquer aveuglément les migrations iOS. Le déploiement de ce contrat n'a pas été confirmé tant que Supabase est indisponible.
+- Vérification distante restante : avec deux comptes autorisés, publier une cagnotte en tant que Host; vérifier que le viewer voit le titre/bénéficiaire/objectif et la clôture, jamais le brouillon ni un bouton de paiement. Vérifier en réel les passages et la distribution privée de la prod BytePlus/Storage.
+- Vérification locale de ce complément : 9 fichiers / 84 tests passent (programme, cagnotte, écoute privée, prod, vote, résultats et navigation). Build desktop réussi. La suite plus ancienne `PlaceMixer.audioPlayer.test.tsx` a 10 réussites / 6 échecs, identiques avec les deux composants remplacés en mémoire par ceux du commit `0481cca`; elle n'est pas annoncée verte.
+
 ## Preuves locales et limites
 
 - Android : bundles Rooms, messagerie et globe reconstruits sans réimport du vendor. `assembleDebug` réussi, C++ compilé pour les quatre ABI. Tests JVM réexécutés : **82/82**. Les tests natifs DSP ont été compilés, pas exécutés sur appareil.

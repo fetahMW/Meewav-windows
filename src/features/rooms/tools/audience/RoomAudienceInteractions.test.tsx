@@ -315,7 +315,7 @@ describe("RoomAudienceInteractions", () => {
   it("keeps Cage focused on the live, with votes handled by the persistent stage", async () => {
     render(<RoomAudienceInteractions roomType="cage" room={room("audience-cage")} isHost={false} isGuest={false} canEngage />);
     expect(await screen.findByRole("region", { name: "La Cage · participation" })).toBeVisible();
-    expect(screen.queryByRole("button", { name: /Rook|Zélie/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^Voter /i })).not.toBeInTheDocument();
     expect(screen.queryByText("RÉSULTAT RÉVÉLÉ")).not.toBeInTheDocument();
     expect(screen.queryByText("Bracket public")).not.toBeInTheDocument();
     expect(screen.queryByText(/SIMULATION|Paris versus Marseille/i)).not.toBeInTheDocument();

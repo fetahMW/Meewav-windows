@@ -60,6 +60,8 @@ import { useStudioToolsLayout } from "./StudioToolsLayoutProvider";
 type PlaceMixerProps = {
   room: PlaceRoomState;
   mode: "host" | "guest" | "viewer";
+  /** Cage audience: local listening only, until admitted as a performer. */
+  listenerOnly?: boolean;
   currentUserId?: string | null;
   view: PlaceMixerView;
   onView: (view: PlaceMixerView) => void;
@@ -807,6 +809,7 @@ function CanonicalAutotuneControls({
 export default function PlaceMixer({
   room,
   mode,
+  listenerOnly = false,
   currentUserId,
   view,
   onView,
@@ -987,10 +990,11 @@ export default function PlaceMixer({
     onVocal({ tuneEnabled: true, enabled: true });
   };
   const [previewMusicLevel, setPreviewMusicLevel] = useState(0);
+  const [listenerAudio, setListenerAudio] = useState({ gain: .75, muted: false });
   const listening = useWaveViewerListening();
   const personalMix = useViewerMixer();
-  const personalMode = mode !== "host" && Boolean(personalMix);
-  const returnChannel: PlaceMixerChannel = { id:"viewer-live-return", label:"Retour du live", detail:"Règle le volume de la Room dans votre écoute.", kind:"master", gain:listening?.returnVolume ?? 1, level:room.source === "demo" ? (room.channels.find(channel => channel.kind === "master")?.level ?? 0) * (listening?.returnVolume ?? 1) : 0, isMuted:listening?.returnMuted ?? false, isSolo:false, signalState:"silent", accent:"#a9b6c8" };
+  const personalMode = !listenerOnly && mode !== "host" && Boolean(personalMix);
+  const returnChannel: PlaceMixerChannel = { id:"viewer-live-return", label:listenerOnly ? "Direct" : "Retour du live", detail:"Règle le volume de la Room dans votre écoute.", kind:"master", gain:listening?.returnVolume ?? 1, level:room.source === "demo" ? (room.channels.find(channel => channel.kind === "master")?.level ?? 0) * (listening?.returnVolume ?? 1) : 0, isMuted:listening?.returnMuted ?? false, isSolo:false, signalState:"silent", accent:"#a9b6c8" };
   const viewerChannels: PlaceMixerChannel[] = ([
     ["voice", "Ma voix", "Règle votre voix dans votre mix envoyé.", "guest"],
     ["music", "Musique", "Règle votre source musicale dans votre mix.", "audio"],
@@ -1005,9 +1009,10 @@ export default function PlaceMixer({
       isMuted: settings.muted, isSolo: false, signalState: settings.muted ? "muted" : !available ? "disconnected" : level >= 1 ? "clipping" : level > .001 ? "active" : "silent", accent: "#b48cff" };
   });
   const ownMix = personalMode || mode === "viewer";
-  const changeGain = ownMix ? (id: string, gain: number) => personalMix?.setGain(id.replace("viewer-", "") as ViewerFader, gain) : onGain;
-  const changeMute = ownMix ? (id: string) => personalMix?.toggleMute(id.replace("viewer-", "") as ViewerFader) : onMute;
+  const changeGain = listenerOnly ? (_id: string, gain: number) => setListenerAudio(previous => ({ ...previous, gain })) : ownMix ? (id: string, gain: number) => personalMix?.setGain(id.replace("viewer-", "") as ViewerFader, gain) : onGain;
+  const changeMute = listenerOnly ? (_id: string) => setListenerAudio(previous => ({ ...previous, muted: !previous.muted })) : ownMix ? (id: string) => personalMix?.toggleMute(id.replace("viewer-", "") as ViewerFader) : onMute;
   const orderedSources = useMemo(() => {
+    if (listenerOnly) return [{ ...viewerChannels.find(channel => channel.id === "viewer-music")!, label: "Audio", detail: "Volume du lecteur dans ton écoute privée.", gain: listenerAudio.gain, isMuted: listenerAudio.muted, level: previewMusicLevel }];
     if (ownMix) return viewerChannels.filter(channel => channel.kind !== "master");
     const host = room.channels.filter((channel) => channel.kind === "microphone");
     const availableGuests = [...room.participants, ...room.queue]
@@ -1022,8 +1027,8 @@ export default function PlaceMixer({
     const ownVoice = allGuestChannels.filter((channel) => channel.participantId === currentUserId);
     const ownMusic = music.filter((channel) => channel.participantId === currentUserId);
     return [...ownVoice, ...ownMusic];
-  }, [currentUserId, mode, room.channels, room.participants, room.queue, viewerChannels, ownMix]);
-  const master = ownMix ? viewerChannels.find(channel => channel.kind === "master") : mode !== "guest" ? room.channels.find((channel) => channel.kind === "master") : undefined;
+  }, [currentUserId, mode, room.channels, room.participants, room.queue, viewerChannels, ownMix, listenerOnly, listenerAudio, previewMusicLevel]);
+  const master = listenerOnly ? undefined : ownMix ? viewerChannels.find(channel => channel.kind === "master") : mode !== "guest" ? room.channels.find((channel) => channel.kind === "master") : undefined;
   const ownVocalSources = orderedSources.filter((channel) => (
     mode === "host"
       ? channel.kind === "microphone"
@@ -1032,7 +1037,7 @@ export default function PlaceMixer({
   const selectedChannel = ownVocalSources[0];
   const selectedParticipant = selectedChannel ? participantFor(room, selectedChannel) : undefined;
   const fxEditable = Boolean(selectedChannel);
-  const activeView: PlaceMixerView = (mode === "guest" && (view === "twists" || view === "time") || mode === "viewer" && view === "time") ? "volumes" : view;
+  const activeView: PlaceMixerView = listenerOnly || (mode === "guest" && (view === "twists" || view === "time") || mode === "viewer" && view === "time") ? "volumes" : view;
   const usableNativePlugins = useMemo(() => pluginInventory
     .filter((plugin): plugin is AudioEnginePlugin & { id: PlaceNativePitchProvider } => (
       isNativePitchProvider(plugin.id as PlacePitchProvider) && isDetectedNativePlugin(plugin)
@@ -1083,38 +1088,39 @@ export default function PlaceMixer({
   };
 
   return (
-    <div className={`place-mixer${mode !== "guest" || personalMode ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
+    <div className={`place-mixer${mode !== "guest" || personalMode || listenerOnly ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
       {toolsLayout ? <><div className="wave-tools-nav" ref={toolsLayout.setNav} hidden={!showRoomTools} /><div className="wave-tools-body" ref={toolsLayout.setBody} hidden={!showRoomTools} /></> : null}
       <nav className={`place-mixer__subnav${mode !== "guest" ? " has-twists" : ""}`} aria-label="Sections du mixeur">
         <button type="button" className={activeView === "volumes" ? "is-active" : ""} onClick={() => onView("volumes")}><SlidersHorizontal aria-hidden="true" /> Volumes</button>
-        <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> FX voix</button>
-        {mode !== "guest" ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> Pads</button> : null}
+        <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={listenerOnly || mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> FX voix</button>
+        {mode !== "guest" && !listenerOnly ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> Pads</button> : null}
         {mode === "host" ? <button type="button" className={activeView === "time" ? "is-active" : ""} onClick={() => onView("time")}><Timer aria-hidden="true" /> Time</button> : null}
       </nav>
 
-      {mode !== "guest" || personalMode ? (
+      {mode !== "guest" || personalMode || listenerOnly ? (
         <PlaceMixerAudioPlayer
-          key={room.id}
+          key={`${room.id}:${listenerOnly ? "listener" : "performer"}`}
+          privateOnly={listenerOnly}
           roomId={room.id}
           ownerId={currentUserId ?? room.host.id ?? null}
           queueParticipants={room.queue}
           musicGain={personalMode ? 1 : orderedSources.find((channel) => channel.kind === "audio")?.gain ?? 0.75}
           masterGain={personalMode ? 1 : master?.gain ?? 1}
           publicMusicMuted={!personalMode && ((orderedSources.find((channel) => channel.kind === "audio")?.isMuted ?? false) || (master?.isMuted ?? false))}
-          onPreviewPrepare={personalMode ? async () => true : onAudioPreview}
-          onPreviewMetadata={personalMode ? async () => true : onAudioPreviewMetadata}
-          onRouteChange={personalMode ? async () => true : onAudioRoute}
-          onPlaybackStateChange={personalMode ? async () => true : onAudioPlaybackState}
-          programAudio={personalMode ? personalMix!.musicTransport : programAudio}
+          onPreviewPrepare={personalMode || listenerOnly ? async () => true : onAudioPreview}
+          onPreviewMetadata={personalMode || listenerOnly ? async () => true : onAudioPreviewMetadata}
+          onRouteChange={listenerOnly ? async (route) => route === "preview" : personalMode ? async () => true : onAudioRoute}
+          onPlaybackStateChange={personalMode || listenerOnly ? async () => true : onAudioPlaybackState}
+          programAudio={listenerOnly ? undefined : personalMode ? personalMix!.musicTransport : programAudio}
           personalSend={personalMode}
-          onPreviewLevel={personalMode ? setPreviewMusicLevel : undefined}
+          onPreviewLevel={personalMode || listenerOnly ? setPreviewMusicLevel : undefined}
           classroomCollapsible={classroomPlayerCollapsible}
           roomLabel={roomPresentation.label}
           onClassroomCollapsedChange={setClassroomPlayerCollapsed}
         />
       ) : null}
 
-      {mode !== "guest" ? <PlaceTwists key={`pads-${room.id}`} active={activeView === "twists"} /> : null}
+      {mode !== "guest" && !listenerOnly ? <PlaceTwists key={`pads-${room.id}`} active={activeView === "twists"} /> : null}
 
       {activeView === "volumes" ? (
         <section className="place-volume-view">
@@ -1122,7 +1128,7 @@ export default function PlaceMixer({
             {personalMode ? <small className="viewer-mix-section">ÉCOUTE PERSONNELLE</small> : null}
             {mode !== "host" && listening ? <VolumeRow channel={returnChannel} room={room} onGain={(_id,gain) => listening.setReturnVolume(gain)} onMute={() => listening.setReturnMuted(!listening.returnMuted)} onCamera={onCamera} canEditGain canEditMute cameraControl="none" /> : null}
             {personalMode ? <small className="viewer-mix-section">MES SOURCES</small> : null}
-            {personalMix?.error ? <p className="viewer-mix-error" role="alert">{personalMix.error}</p> : null}
+            {!listenerOnly && personalMix?.error ? <p className="viewer-mix-error" role="alert">{personalMix.error}</p> : null}
             {orderedSources.map((channel) => {
               const permissions = permissionsFor(channel);
               const participant = participantFor(room, channel);
@@ -1138,7 +1144,7 @@ export default function PlaceMixer({
                   : mode === "host"
                     ? "host"
                     : "none";
-              const stateLabel = personalMode && channel.id === "viewer-music" && previewMusicLevel > 0 ? "Préécoute locale" : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "permission-denied" ? "Autorisation refusée" : personalMix!.systemState === "reconnecting" ? "Sélection de source…" : personalMix!.engine.inputState("system") === "disconnected" || personalMix!.systemState === "disconnected" ? "Déconnecté" : undefined : personalMode && channel.id === "viewer-voice" && personalMix!.voiceStatus === "requesting_permission" ? "Autorisation micro…" : undefined;
+              const stateLabel = listenerOnly ? "Écoute privée" : personalMode && channel.id === "viewer-music" && previewMusicLevel > 0 ? "Préécoute locale" : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "permission-denied" ? "Autorisation refusée" : personalMix!.systemState === "reconnecting" ? "Sélection de source…" : personalMix!.engine.inputState("system") === "disconnected" || personalMix!.systemState === "disconnected" ? "Déconnecté" : undefined : personalMode && channel.id === "viewer-voice" && personalMix!.voiceStatus === "requesting_permission" ? "Autorisation micro…" : undefined;
               return <VolumeRow key={channel.id} sourceStateLabel={stateLabel} onConfigure={personalMode && channel.id === "viewer-voice" ? () => void personalMix!.prepareVoice().catch(() => undefined) : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "active" ? personalMix!.stopSystem : () => void personalMix!.configureSystem() : undefined} configureLabel={channel.id === "viewer-system" && personalMix?.systemState === "active" ? "Arrêter la capture du son du PC" : `Configurer ${channel.label}`} channel={channel} room={room} onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={permissions.canEditGain} canEditMute={permissions.canEditMute} hostMuteControl={mode === "host" && channel.kind === "guest"} meterSuppressed={master?.isMuted === true} meterStream={mode === "host" && channel.kind === "microphone" ? hostVoiceMeterStream : null} cameraControl={cameraControl} onOpenPlaylist={channel.kind === "audio" && channel.id !== "viewer-system" ? () => window.dispatchEvent(new CustomEvent("meewav:mixer-playlist-open", { detail: { roomId: room.id } })) : undefined} />;
             })}
           </div>
