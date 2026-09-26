@@ -21,8 +21,8 @@
 }
 
 .place-room-shell .is-wave-tool-skin[data-active-tool="poll"] {
-  --wave-tool-accent: #b990ff;
-  --wave-tool-accent-rgb: 185, 144, 255;
+  --wave-tool-accent: #a970ff;
+  --wave-tool-accent-rgb: 169, 112, 255;
   --place-tool-accent: var(--wave-tool-accent);
   --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
 }
@@ -768,3 +768,11 @@
 }
 .place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-card::after { display:none; }
 .place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-highlight-live { background:linear-gradient(145deg,#ffffff08,#15161855); }
+
+/* The poll keeps the console violet even inside a room-colored chat tool. */
+.place-room-shell .place-tool-card.is-poll {
+  --wave-tool-accent: #a970ff;
+  --wave-tool-accent-rgb: 169, 112, 255;
+  --place-tool-accent: var(--wave-tool-accent);
+  --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
+}
