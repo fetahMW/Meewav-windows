@@ -548,6 +548,7 @@
 .classroom-seat-price small {color:#c9c3d3;font-size:11px;}.classroom-seat-price small[role=alert] {color:#ffb4bd;}
 
 /* Teacher layout: generous square photo, a status column and a full-width name. */
+.room-tools-shell.is-classe:not(.classe-student-workspace) .room-tool-panel.is-classroom { --classroom-seat-surface:linear-gradient(155deg,#202023,#121214 64%,#19191c); }
 .room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-roster { padding:5px; box-sizing:border-box; }
 .room-tools-shell.is-classe:not(.classe-student-workspace) .is-classroom .classroom-seat__person {
   display:grid; grid-template-columns:minmax(0,1fr) 22px; grid-template-rows:minmax(0,1fr) auto;
