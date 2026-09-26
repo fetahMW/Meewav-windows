@@ -1,3 +1,9 @@
+.room-audience-interactions.is-classe {
+  --audience-accent: #bc9ae9;
+  --audience-accent-rgb: 188, 154, 233;
+  background: transparent;
+}
+
 .room-audience-interactions.is-classe .room-audience-callout.is-private {
   border-color: rgba(158, 109, 255, .56);
   background:
