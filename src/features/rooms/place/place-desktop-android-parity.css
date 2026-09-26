@@ -5,6 +5,33 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   --studio-section-light: #a98ef0;
 }
 
+/* Only the press moves: the selected glass must appear on release, without a fade. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface],
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:hover:not(:disabled) {
+  animation: none;
+  filter: none;
+  transform: translateY(0) scale(1);
+  transition: transform 100ms cubic-bezier(.2, .8, .2, 1);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:active:not(:disabled) {
+  transform: translateY(1px) scale(.97);
+  transition-duration: 60ms;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface] > svg {
+  transition: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:focus-visible {
+  outline: 2px solid #c6a1f0;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface],
+  body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:is(:hover, :active):not(:disabled) {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Unselected glass keys keep their rim visible, with no illuminated accent. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active) {
   box-sizing: border-box;
@@ -19,9 +46,9 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   text-shadow: none;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active):hover:not(:disabled) {
-  border-color: #e6ddf22b;
-  box-shadow: inset 0 1px 0 #ffffff14, inset 0 -1px 1px #0005, 0 1px 3px #0006;
-  color: #e4deed;
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 #ffffff0c, inset 0 -1px 1px #0005, 0 1px 2px #0005;
+  color: #d5cedd;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active) > svg {
   color: #a49aac;
@@ -457,8 +484,6 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-volume-list { background:transparent; border:0; box-shadow:none; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-master-dock { background:linear-gradient(165deg,#222428 0%,#0b0c0e 25%,#000 75%); border:1px solid #ffffff1a; border-top-color:#ffffff30; border-radius:12px; box-shadow:inset 0 1px #ffffff18,0 3px 8px #0008; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-volume-list .place-volume-row { background:transparent; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:is(:hover,:focus-visible) { --studio-key-rgb:126,68,227; --studio-key-light:#a98ef0; background:linear-gradient(#7e44e338,#7e44e338),#101014; border-color:#7e44e366; color:#f8f6fa; box-shadow:inset 0 1px #ffffff17; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:is(:hover,:focus-visible) > svg { color:#a98ef0; filter:none; }
 
 /* Room submenus sit directly on the chassis, without underlines. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.wave-tools-nav,.place-mixer__subnav) { background:transparent; border:0; box-shadow:none; }
