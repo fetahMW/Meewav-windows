@@ -1,5 +1,11 @@
 /* The current feed has a command bar and one scroll area. Its explicit
  * layout class keeps the archived three-row question board from sizing it. */
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] {
+  --wave-tool-accent: #bda3e5;
+  --wave-tool-accent-rgb: 189, 163, 229;
+  --room-tool-accent: #bda3e5;
+  --room-tool-accent-rgb: 189, 163, 229;
+}
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] > .room-tools-shell__panel:has(> .is-feed-layout) {
   display: flex;
   flex-direction: column;
@@ -155,11 +161,10 @@
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-selected {
   background:
-    radial-gradient(ellipse at 8% 110%, rgba(var(--wave-tool-accent-rgb), .09), transparent 54%) padding-box,
-    linear-gradient(116deg, rgba(255, 255, 255, .04), transparent 40%) padding-box,
-    linear-gradient(145deg, #121210, #050504 74%) padding-box,
-    linear-gradient(112deg, rgba(var(--wave-tool-accent-rgb), .62), rgba(var(--wave-tool-accent-rgb), .18) 52%, rgba(83, 78, 63, .11)) border-box;
-  box-shadow: inset 2px 0 0 var(--wave-tool-accent), inset 0 1px rgba(255, 255, 255, .09), 0 4px 12px rgba(0, 0, 0, .35);
+    linear-gradient(116deg, rgba(255, 255, 255, .035), transparent 40%) padding-box,
+    linear-gradient(145deg, #191a1e, #0b0b0e 74%) padding-box,
+    linear-gradient(112deg, rgba(218, 218, 227, .3), rgba(159, 159, 174, .17)) border-box;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .07), 0 3px 9px rgba(0, 0, 0, .3);
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article.is-answered {
@@ -268,64 +273,43 @@
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button {
   display: inline-flex;
-  min-width: 0;
-  min-height: 26px;
+  width: 28px;
+  min-width: 28px;
+  max-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  flex: 0 0 28px;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 0 9px;
-  border: 1px solid transparent;
+  padding: 0;
+  border: 1px solid rgba(210, 209, 221, .14);
   border-radius: 7px;
-  background: var(--wave-tool-control-surface);
-  color: rgba(228, 229, 233, .68);
-  box-shadow: var(--wave-tool-control-shadow);
+  background: linear-gradient(145deg, #222127, #131318);
+  color: #b9b7c2;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .04);
   font-size: 6.8px;
   font-weight: 690;
   cursor: pointer;
-  transition:
-    background 150ms ease,
-    border-color 150ms ease,
-    color 150ms ease,
-    box-shadow 150ms ease,
-    transform 90ms ease;
+  transition: transform 150ms ease;
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button svg {
-  width: 9px;
-  height: 9px;
+  width: 13px;
+  height: 13px;
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-primary {
-  border-color: rgba(var(--wave-tool-accent-rgb), .36);
-  color: #f4f4f5;
+  border-color: rgba(var(--wave-tool-accent-rgb), .24);
+  color: var(--wave-tool-accent);
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-ignore {
   color: rgba(202, 204, 210, .48);
 }
 
-.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer:has(> button:nth-child(3)) {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer:has(> button:nth-child(3)) > button {
-  width: 100%;
-  padding-inline: 6px;
-  white-space: nowrap;
-}
-
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:is(:hover, :focus-visible):not(:disabled) {
-  border-color: rgba(232, 234, 239, .3);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, .105), rgba(255, 255, 255, .025)),
-    #09090b;
-  color: #fff;
-  box-shadow:
-    inset 0 1px rgba(255, 255, 255, .14),
-    0 5px 13px rgba(0, 0, 0, .36),
-    0 0 0 1px rgba(var(--wave-tool-accent-rgb), .06);
-  transform: translateY(-1px);
+  transform: scale(1.06);
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:focus-visible {
@@ -334,9 +318,7 @@
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:active:not(:disabled) {
-  background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(0, 0, 0, .18)), #070708;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .65);
-  transform: translateY(0) scale(.985);
+  transform: scale(.96);
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:disabled {
@@ -347,26 +329,6 @@
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-private svg {
   color: rgba(var(--wave-tool-accent-rgb), .72);
-}
-
-.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-display:is(:hover, :focus-visible):not(:disabled) {
-  border-color: rgba(var(--wave-tool-accent-rgb), .62);
-  background:
-    linear-gradient(180deg, rgba(var(--wave-tool-accent-rgb), .2), rgba(var(--wave-tool-accent-rgb), .055)),
-    #090907;
-  box-shadow:
-    inset 0 1px rgba(255, 255, 255, .14),
-    0 5px 14px rgba(0, 0, 0, .38),
-    0 0 12px rgba(var(--wave-tool-accent-rgb), .1);
-}
-
-.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-ignore:is(:hover, :focus-visible):not(:disabled) {
-  border-color: rgba(var(--wave-tool-accent-rgb), .3);
-  color: rgba(244, 242, 235, .92);
-}
-
-.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-ignore:is(:hover, :focus-visible):not(:disabled) svg {
-  color: rgba(var(--wave-tool-accent-rgb), .8);
 }
 
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__intake {
@@ -388,10 +350,10 @@
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__action-error {
   margin: 0 9px;
   padding: 7px 9px;
-  border: 1px solid rgba(229, 190, 75, .28);
+  border: 1px solid rgba(var(--wave-tool-accent-rgb), .28);
   border-radius: 9px;
-  background: rgba(229, 190, 75, .055);
-  color: rgba(248, 234, 193, .86);
+  background: rgba(var(--wave-tool-accent-rgb), .055);
+  color: #d6c9e8;
   font-size: 10px;
   line-height: 1.35;
 }
@@ -407,12 +369,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:is(:hover, :focus-visible, :active):not(:disabled) {
+    transform: none;
+  }
   .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] :is(
     .room-loge-questions__feed article,
     .room-loge-questions__feed article > footer button,
     .room-loge-questions__intake
   ) {
     transition: none;
+    transform: none;
   }
 }
 
