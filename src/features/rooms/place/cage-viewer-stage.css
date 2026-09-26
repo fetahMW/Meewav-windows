@@ -12,12 +12,6 @@
 .cage-viewer-stage.has-artists { grid-template-rows: minmax(0, 1fr) minmax(74px, .32fr); gap: 8px; padding-bottom: 8px; }
 .cage-viewer-stage__host { min-width: 0; min-height: 0; grid-area: 1 / 1; }
 .cage-viewer-stage__host { position: relative; }
-.cage-viewer-camera__artist-support { position: absolute; right: 12px; bottom: 76px; z-index: 4; }
-.place-room-shell .cage-viewer-stage .cage-viewer-camera__artist-support .shorts-reaction { display: inline-flex; align-items: center; justify-content: center; flex-direction: row; gap: 5px; width: auto; min-width: 36px; min-height: 36px; margin: 0; padding: 5px 8px; border: 1px solid #ffffff20; border-radius: 12px; background: #100e18b3; backdrop-filter: blur(12px); box-shadow: 0 2px 8px #0003; }
-.cage-viewer-stage .shorts-reaction__retry { width: 10px; height: 10px; color: #c5b8d6; }
-.place-room-shell .cage-viewer-stage .shorts-reaction--golden { color: #e4c375; }
-.cage-viewer-stage .shorts-reaction--golden:is(:hover:not(:disabled),.is-given) { border-color: #e4c37580; background: #43341fbf; box-shadow: 0 0 12px #e4c37530; }
-.cage-viewer-stage .shorts-reaction__icon svg { width: 18px; height: 18px; }
 .cage-viewer-stage.has-artists .cage-viewer-stage__host { grid-area: 2 / 1; aspect-ratio: 1; justify-self: center; height: 100%; max-width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #ffffff24; }
 .cage-viewer-stage__fighters { grid-area: 1 / 1; position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; min-height: 0; min-width: 0; }
 .cage-viewer-stage__fighters.is-solo { grid-template-columns: minmax(0, 1fr); }

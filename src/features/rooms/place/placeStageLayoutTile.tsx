@@ -3,6 +3,7 @@ import { CameraOff, Ellipsis, Radio, WifiOff } from "lucide-react";
 import { meewavMediaSession } from "../../scene/mediaSession/mediaSessionCoordinator";
 import type { PlaceLiveKitVideoTrack } from "./placeLiveKit.service";
 import { writePlaceGuestDrag } from "./placeGuestDrag";
+import { videoOverlayInsets } from "./placeVideoOverlay";
 import {
   classifyStageAspectRatio,
   isValidSafeVideoRegion,
@@ -150,6 +151,7 @@ function NativeMedia({
   onAspectRatio,
   framing,
   liveKitVideoTrack,
+  viewerActions,
 }: {
   source: PlaceParticipantVideoSource;
   participant: PlaceStageParticipant;
@@ -165,6 +167,7 @@ function NativeMedia({
     safeRegion?: SafeVideoRegion;
   };
   liveKitVideoTrack?: PlaceLiveKitVideoTrack;
+  viewerActions?: ReactNode;
 }) {
   const mediaFrameRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -195,6 +198,11 @@ function NativeMedia({
       })
     : undefined, [currentMediaDimensions, effectiveSafeRegion, failed, frameDimensions, framing?.enabled, framing?.maxZoom, videoUrl]);
   const smartFramingActive = Boolean(smartFrameStyle);
+  const overlayInsets = videoOverlayInsets(frameDimensions, currentMediaDimensions, smartFrameStyle ? {
+    zoom: Number(smartFrameStyle["--place-smart-zoom"]),
+    translateX: parseFloat(smartFrameStyle["--place-smart-translate-x"]),
+    translateY: parseFloat(smartFrameStyle["--place-smart-translate-y"]),
+  } : undefined);
 
   useEffect(() => {
     setFailed(false);
@@ -354,6 +362,7 @@ function NativeMedia({
           }}
         />
       )}
+      {viewerActions ? <div className="place-camera__viewer-overlay" style={overlayInsets}>{viewerActions}</div> : null}
     </div>
   );
 }
@@ -494,6 +503,7 @@ export default function PlaceStageLayoutTile({
           playbackVolume={playbackVolume}
           framing={framing}
           liveKitVideoTrack={liveKitVideoTrack}
+          viewerActions={viewerActions}
           onAspectRatio={(ratio) => onAspectRatio(participant.id, source.id, ratio)}
         />
       ) : (
@@ -604,7 +614,7 @@ export default function PlaceStageLayoutTile({
             )) : null}
         </div>
       ) : null}
-      {viewerActions}
+      {(!cameraEnabled || !source) && viewerActions ? <div className="place-camera__viewer-overlay">{viewerActions}</div> : null}
     </article>
   );
 }

@@ -1,8 +1,87 @@
-.room-viewer-host-support { position: absolute; right: 12px; bottom: min(76px, 20%); z-index: 4; max-width: calc(100% - 24px); }
-.place-room-shell .room-viewer-host-support .place-chat-social-actions { display: flex; flex-direction: row; align-items: center; gap: 5px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-.place-room-shell .room-viewer-host-support .shorts-reactions { flex-direction: row; width: auto; gap: 5px; }
-.place-room-shell .room-viewer-host-support :is(.shorts-reaction, .place-chat-social-actions__support) { display: inline-flex; align-items: center; justify-content: center; flex-direction: row; gap: 5px; width: auto; min-width: 36px; min-height: 36px; margin: 0; padding: 5px 8px; border: 1px solid #ffffff20; border-radius: 12px; background: #100e18b3; backdrop-filter: blur(12px); box-shadow: 0 2px 8px #0003; }
-.room-viewer-host-support .shorts-reaction__retry { width: 10px; height: 10px; color: #c5b8d6; }
-.place-room-shell .room-viewer-host-support .shorts-reaction--golden { color: #e4c375; }
-.place-room-shell .room-viewer-host-support .shorts-reaction--golden:is(:hover:not(:disabled), .is-given) { border-color: #e4c37580; background: #43341fbf; box-shadow: 0 0 12px #e4c37530; }
-.room-viewer-host-support .shorts-reaction__icon svg { width: 18px; height: 18px; }
+/* Anchor reactions to the visible video, not the surrounding black matte. */
+.place-camera__viewer-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  container: room-video / size;
+  pointer-events: none;
+}
+.room-viewer-host-support {
+  position: absolute;
+  right: 10px;
+  bottom: clamp(10px, 15%, 52px);
+  z-index: 4;
+  max-width: calc(100% - 20px);
+  pointer-events: auto;
+}
+.rooms-page .place-room-shell .room-viewer-host-support .place-chat-social-actions,
+.rooms-page .place-room-shell .room-viewer-host-support .shorts-reactions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: auto;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction, .place-chat-social-actions__support) {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 44px;
+  min-width: 44px;
+  height: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: 3px 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #fff;
+  text-shadow: 0 1px 3px #000, 0 0 8px #000c;
+}
+.rooms-page .place-room-shell .room-viewer-host-support .shorts-reaction__icon,
+.rooms-page .place-room-shell .room-viewer-host-support .shorts-reaction__icon > svg {
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
+}
+.rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction__icon > svg, .place-chat-social-actions__support > svg) {
+  filter: drop-shadow(0 1px 1px #000) drop-shadow(0 0 4px #000a);
+}
+.rooms-page .place-room-shell .room-viewer-host-support .shorts-reaction__count {
+  font: 700 11px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction--golden, .place-chat-social-actions__support) { color: #ffda79; }
+.rooms-page .place-room-shell .room-viewer-host-support .shorts-reaction--like.is-active { color: #ff96b8; }
+.rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction, .place-chat-social-actions__support):is(:hover, .is-given, .is-active) {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.rooms-page .place-room-shell .room-viewer-host-support button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.room-viewer-host-support .shorts-reaction__retry { position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; }
+
+/* A portrait thumbnail has room vertically; a landscape feed keeps one row. */
+@container room-video (max-width: 176px) {
+  .room-viewer-host-support { right: 6px; bottom: 6px; }
+  .rooms-page .place-room-shell .room-viewer-host-support :is(.place-chat-social-actions, .shorts-reactions) { flex-direction: column; gap: 4px; }
+  .rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction, .place-chat-social-actions__support) { width: 40px; min-width: 40px; height: 40px; min-height: 40px; padding-block: 0; gap: 2px; }
+}
+@container room-video (max-width: 176px) and (max-height: 140px) {
+  .rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction, .place-chat-social-actions__support) { width: 32px; min-width: 32px; height: 28px; min-height: 28px; gap: 1px; }
+  .rooms-page .place-room-shell .room-viewer-host-support :is(.shorts-reaction__icon, .shorts-reaction__icon > svg, .place-chat-social-actions__support > svg) { flex-basis: 18px; width: 18px; height: 18px; }
+  .rooms-page .place-room-shell .room-viewer-host-support .shorts-reaction__count { font-size: 9px; }
+}

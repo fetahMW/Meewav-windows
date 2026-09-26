@@ -71,9 +71,22 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   grid-template-rows: var(--studio-subnav-height) auto minmax(180px,1fr);
   row-gap: 0;
   padding-top: 0;
-  & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); max-height: var(--studio-subnav-height); margin: 0; padding: 0 6px; align-content: center; }
-  & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); margin: 0; padding: 0 8px; align-content: center; }
+  & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; width: 100%; max-width: 100%; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); max-height: var(--studio-subnav-height); margin: 0; padding: 0; align-content: center; }
+  & > .place-mixer__subnav, & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; width: 100%; max-width: 100%; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); margin: 0; padding: 0 6px; align-content: center; }
   & > .place-mixer-audio { top: auto; margin-top: 0; }
+}
+
+/* The four host sections share the full rail, with one inset only. The longer
+ * Wave label owns enough space instead of borrowing from its neighbours. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-host-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  & :is(.place-mixer__subnav, .wave-tools-nav .place-tools-console__switch) {
+    column-gap: 8px;
+    & > button { padding-inline: 3px; }
+  }
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-host-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch {
+  grid-template-columns: minmax(0, 1fr) minmax(max-content, 1.4fr) repeat(2, minmax(0, 1fr));
+  & > button > span { flex-shrink: 0; max-width: none; overflow: visible; text-overflow: clip; white-space: nowrap; }
 }
 
 /* Every module uses the Mixer's navigation band, including inline Chat and
