@@ -120,6 +120,7 @@ import PlaceBackstageControls from "./PlaceBackstageControls";
 import type { PlaceLiveKitVideoTrack } from "./placeLiveKit.service";
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import { hasPlaceGuestDrag, readPlaceGuestDrag, writePlaceGuestDrag } from "./placeGuestDrag";
+import CageProductionProvider from "../tools/audio/CageProductionProvider";
 
 const GuestPreProfile = lazy(() => import("../tools/panels/ClassStudentPreProfile"));
 
@@ -1660,6 +1661,7 @@ function PlaceGuests({
 
 export default function PlaceStudioPanel(props: PlaceStudioPanelProps) {
   const presentation = useRoomPresentation();
+  if (presentation.id === "cage" && !props.isHost) return <CageProductionProvider key={`${props.room.source}:${props.room.id}:${props.room.currentUserProfile?.id}`} room={props.room}><PlaceStudioPanelContent {...props} /></CageProductionProvider>;
   const content = presentation.id === "wave" && props.isHost
     ? <WaveTransportProvider toolsVisible={props.surface === "tools"}>
       <WaveRoomTransportController room={props.room} />
@@ -1758,7 +1760,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
           return <>
             {specializedRoomId && specializedRoomId !== "cage" && specializedRoomId !== "classe" && specializedRoomId !== "scene" ? audienceJourney : null}
             {specializedRoomId === "wave" ? <WaveViewerPanel room={room} canEngage={canEngage} /> : specializedRoomId
-            ? <RoomAudienceInteractions active={visibleSurface === "tools" && !collapsed} onOpenChat={() => onSurface("chat")} onLeaveRoom={props.onLeaveRoom}
+            ? <RoomAudienceInteractions active={visibleSurface === "tools" && !collapsed} onOpenChat={() => onSurface("chat")} onOpenMixer={() => onSurface("mixer")} onLeaveRoom={props.onLeaveRoom}
               roomType={specializedRoomId}
               sceneParticipation={specializedRoomId === "scene" ? audienceJourney : undefined}
               room={room}

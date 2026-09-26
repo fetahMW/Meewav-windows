@@ -7,7 +7,7 @@ import { advanceCageViewerSimulation, startCageViewerSimulation, simulationComma
 import type { RoomToolsState } from "../roomTools.types";
 import "./cage-viewer-showcase.css";
 const rounds = ["Huitièmes", "Quarts", "Demi-finales", "Finale"];
-export default function CageViewerShowcase({children, enabled}:{children:ReactNode; enabled:boolean}) {
+export default function CageViewerShowcase({children, enabled, production}:{children:ReactNode; enabled:boolean; production?:ReactNode}) {
  const [state,setState]=useState<RoomToolsState|null>(null);
  const stateRef=useRef(state);
  useEffect(()=>{window.dispatchEvent(new CustomEvent("cage-viewer-preview-state",{detail:state?.cage ?? null}));return()=>{window.dispatchEvent(new CustomEvent("cage-viewer-preview-state",{detail:null}));};},[state]);
@@ -44,5 +44,5 @@ export default function CageViewerShowcase({children, enabled}:{children:ReactNo
  const choose=(choice:"A"|"B")=>{try{const copy=structuredClone(state);simulationCommand(copy,"vote.cast",{choice},"preview-viewer");setState(copy);}catch(e){setError(e instanceof Error?e.message:"Vote impossible");}};
  const ballots=Object.values(match.vote?.ballots ?? {});
  const scores=[ballots.filter(v=>v==="A").length,ballots.filter(v=>v==="B").length];
- return <CageBroadcast error={error} state={state} paused={paused} remaining={remaining} onPause={()=>setPaused(!paused)} onRestart={restart} onNext={next} onClose={()=>setState(null)} onVote={choose}/>;
+ return <>{production}<CageBroadcast error={error} state={state} paused={paused} remaining={remaining} onPause={()=>setPaused(!paused)} onRestart={restart} onNext={next} onClose={()=>setState(null)} onVote={choose}/></>;
 }

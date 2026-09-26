@@ -42,6 +42,7 @@ import PlaceMixerPlaybackMenu from "./PlaceMixerPlaybackMenu";
 import { createMixerLoop, mixerLoopPosition, moveMixerLoopEdge, type PlaceMixerLoopRegion } from "./placeMixerLoop";
 import type { PlaceAudioPlaybackState, PlaceAudioPreviewInput, PlaceAudioRoute, PlaceParticipant } from "./place.types";
 import PlaceMixerRegie from "./PlaceMixerRegie";
+import { useCageProduction } from "../tools/audio/CageProductionProvider";
 import { createPlaceClientId } from "./placeClientId";
 import "./place-mixer-play-finish.css";
 import "./place-mixer-classroom-collapse.css";
@@ -63,6 +64,7 @@ type MixerAudioTrack = {
   file?: File;
   waveDestination?: "base" | "player";
   waveCategory?: WaveLoopCategory;
+  cageProductionReference?: string;
 };
 
 type PickerView = "closed" | "wave-destination" | "sources" | "library" | "setlists" | "covers" | "queue" | "playback";
@@ -198,6 +200,8 @@ export default function PlaceMixerAudioPlayer({
   onClassroomCollapsedChange,
 }: PlaceMixerAudioPlayerProps) {
   const desktopDeck = useRuntime().isDesktop;
+  const cageProduction = useCageProduction();
+  const adoptedCageSource = useRef<string | null>(null);
   const waveTransport = useWaveTransport();
   const sharedWaveState = useWaveTransportState();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -822,6 +826,27 @@ export default function PlaceMixerAudioPlayer({
     activateTrack(queue, index);
   };
 
+  const cageDeckActions = useRef({ activateTrack, pauseLocal, route });
+  cageDeckActions.current = { activateTrack, pauseLocal, route };
+  useEffect(() => cageProduction?.registerMixerPreview(() => {
+    if (cageDeckActions.current.route === "preview") cageDeckActions.current.pauseLocal();
+  }), [cageProduction?.registerMixerPreview]);
+  useEffect(() => {
+    const asset = cageProduction?.asset;
+    if (!asset || !cageProduction?.participant || adoptedCageSource.current === asset.src) return;
+    if (cageProduction.onstage && adoptedCageSource.current) return;
+    adoptedCageSource.current = asset.src;
+    const track: MixerAudioTrack = { id: `cage-production:${asset.production.reference}`, title: asset.production.title,
+      artist: "Prod du battle", badge: "Prod du battle", src: asset.src, durationSeconds: asset.durationSeconds,
+      file: asset.file, fileName: asset.file.name, cageProductionReference: asset.production.reference };
+    const nextQueue = [track, ...queue.filter(item => !item.cageProductionReference)];
+    setQueue(nextQueue);
+    cageDeckActions.current.activateTrack(nextQueue, 0);
+  }, [cageProduction?.asset, cageProduction?.participant, cageProduction?.onstage]);
+  useEffect(() => {
+    if (previewReady && currentTrack?.cageProductionReference) cageProduction?.markMixerLoaded(currentTrack.cageProductionReference);
+  }, [previewReady, currentTrack?.cageProductionReference, cageProduction?.markMixerLoaded]);
+
   const queueNeighbour = (index: number, direction: -1 | 1) => {
     for (let next = index + direction; next >= 0 && next < queue.length; next += direction) {
       if (!waveTransport || queue[next].waveDestination === queue[index].waveDestination) return next;
@@ -844,7 +869,7 @@ export default function PlaceMixerAudioPlayer({
 
   const removeQueueTrack = (index: number) => {
     const removedTrack = queue[index];
-    if (!removedTrack || (waveTransport && removedTrack.id === activeBaseTrackId)) return;
+    if (!removedTrack || removedTrack.cageProductionReference || (waveTransport && removedTrack.id === activeBaseTrackId)) return;
     const nextQueue = queue.filter((_, trackIndex) => trackIndex !== index);
     const removedWaveformIdentity = waveformTrackIdentity(removedTrack);
     waveformCacheRef.current.delete(removedWaveformIdentity);
@@ -1279,7 +1304,7 @@ export default function PlaceMixerAudioPlayer({
         <button type="button" onClick={() => moveQueueTrack(index, -1)} disabled={queueNeighbour(index, -1) < 0} aria-label={`Monter ${track.displayTitle ?? track.title}`}><ArrowUp aria-hidden="true" /></button>
         <button type="button" onClick={() => moveQueueTrack(index, 1)} disabled={queueNeighbour(index, 1) < 0} aria-label={`Descendre ${track.displayTitle ?? track.title}`}><ArrowDown aria-hidden="true" /></button>
       </span>
-      <button type="button" className="place-mixer-audio-queue-row__remove" disabled={Boolean(waveTransport && track.id === activeBaseTrackId)} title={waveTransport && track.id === activeBaseTrackId ? "Activez une autre base avant de supprimer celle-ci" : undefined} onClick={() => removeQueueTrack(index)} aria-label={`Supprimer ${track.displayTitle ?? track.title}`}><Trash2 aria-hidden="true" /></button>
+      <button type="button" className="place-mixer-audio-queue-row__remove" disabled={Boolean(track.cageProductionReference || (waveTransport && track.id === activeBaseTrackId))} title={track.cageProductionReference ? "Prod commune publiée par le host" : waveTransport && track.id === activeBaseTrackId ? "Activez une autre base avant de supprimer celle-ci" : undefined} onClick={() => removeQueueTrack(index)} aria-label={`Supprimer ${track.displayTitle ?? track.title}`}><Trash2 aria-hidden="true" /></button>
     </article>
   );
   const queueList = waveTransport ? (["base", "player"] as const).map((destination) => {

@@ -10,6 +10,7 @@ import { ClassroomRoster } from "../panels/ClassroomPanel";
 import { MessageCircleMore, LogOut, Armchair } from "lucide-react";
 import CageViewerCompanion from "./CageViewerCompanion";
 import CageViewerShowcase from "./CageViewerShowcase";
+import CageProductionCard from "./CageProductionCard";
 import { cageEvent, cageEntrants } from "../cageTools.domain";
 import {
   ArrowRight,
@@ -83,6 +84,7 @@ export type RoomAudienceInteractionsProps = {
   cageParticipation?: ReactNode;
   sceneParticipation?: ReactNode;
   onOpenChat?: () => void;
+  onOpenMixer?: () => void;
   onLeaveRoom?: () => void;
   roomType: SpecializedRoomId;
   room: PlaceRoomState;
@@ -653,7 +655,7 @@ export function WaveAudience(props: WaveAudienceProps) {
   return <DemoWaveAudience {...props} />;
 }
 
-export default function RoomAudienceInteractions({ roomType, room, isHost, isGuest, canEngage, onContributeFundraiser, cageParticipation, sceneParticipation, onOpenChat, onLeaveRoom, active = true }: RoomAudienceInteractionsProps) {
+export default function RoomAudienceInteractions({ roomType, room, isHost, isGuest, canEngage, onContributeFundraiser, cageParticipation, sceneParticipation, onOpenChat, onOpenMixer, onLeaveRoom, active = true }: RoomAudienceInteractionsProps) {
   const liveCall = useOptionalRoomLiveCall();
   const actorRole = resolveRoomActorRole(roomType, isHost, isGuest, room.currentUserProfile?.role);
   const requestedAccountId = room.currentUserProfile?.id ?? `anonymous-${roomType}`;
@@ -675,6 +677,7 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
   };
   const audienceRole = resolveRoomAudienceRole({ roomType, actorRole: toolsRole, accountId, state });
 
+  if (!state && roomType === "cage") return <div className="room-audience-interactions is-cage"><div className="room-audience-interactions__body"><CageProductionCard active={active} onOpenMixer={onOpenMixer} />{error ? <p role="alert" className="room-audience-error">Le programme du tournoi est momentanément indisponible.</p> : <p role="status">Chargement du programme…</p>}</div></div>;
   if (!state) return <div className="room-audience-interactions is-loading" role="status"><Sparkles /><span><strong>Préparation de l’expérience publique…</strong><small>Les interactions disponibles vont apparaître sans interrompre le live.</small></span></div>;
 
   return <div className={`room-audience-interactions is-${roomType}`} data-audience-role={audienceRole}><RoomVotePolicyLabel roomId={room.id} source={room.source} accountId={accountId}/>
@@ -685,7 +688,7 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
       {roomType === "scene" && state.scene ? <SceneAudience canVote={canVote} source={room.source} active={active} participation={sceneParticipation} state={state.scene} accountId={accountId} canEngage={canEngage} busy={busy} execute={execute} onContributeFundraiser={onContributeFundraiser} /> : null}
       {roomType === "classe" && state.classe ? <ClasseAudience visible={active} source={room.source} onOpenChat={onOpenChat} onLeaveRoom={onLeaveRoom} classe={state.classe} role={toolsRole} accountId={accountId} roomId={room.id} canEngage={canEngage} busy={busy} execute={execute} onEndIntervention={() => endClasseAudienceIntervention({ source: room.source, roomId: room.id, accountId, liveCall, execute })} /> : null}
       {roomType === "wave" && state.wave ? <WaveAudience wave={state.wave} source={room.source} roomId={room.id} accountId={accountId} viewer={viewer} canEngage={canEngage} busy={busy} execute={execute} /> : null}
-      {roomType === "cage" && state.cage ? state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"}><CageViewerCompanion cage={state.cage} participation={cageParticipation} onOpenChat={onOpenChat} /></CageViewerShowcase> : null}
+      {roomType === "cage" && state.cage ? state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />}><CageViewerCompanion cage={state.cage} participation={cageParticipation} onOpenChat={onOpenChat} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />} /></CageViewerShowcase> : null}
       {roomType === "loge" && state.loge ? <LogeViewer loge={state.loge} accountId={accountId} viewer={viewer} hostName={room.host.displayName} eligible={Boolean(state.audience?.eligible)} canEngage={canEngage} busy={busy} execute={execute} onOpenChat={onOpenChat} preview={isLogePreviewAvailable(state.loge.preview)?<LogePreviewPlayer roomId={room.id} source={room.source} preview={state.loge.preview} available/>:<div className="loge-viewer__waiting"><Headphones/><strong>L’artiste prépare une avant-première</strong><p>Continuez à profiter du live. Le contenu apparaîtra ici à son lancement.</p></div>}/> : null}
     </div>
   </div>;
