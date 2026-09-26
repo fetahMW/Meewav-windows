@@ -308,6 +308,11 @@
   color: rgba(202, 204, 210, .48);
 }
 
+.place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button.is-display {
+  font-size: 9px;
+  font-weight: 650;
+}
+
 .place-room-shell .room-tools-shell.is-loge.is-wave-tool-skin[data-active-tool="loge-questions"] .room-loge-questions__feed article > footer button:is(:hover, :focus-visible):not(:disabled) {
   transform: scale(1.06);
 }

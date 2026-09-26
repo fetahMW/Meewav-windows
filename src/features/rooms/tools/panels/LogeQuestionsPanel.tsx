@@ -1,8 +1,7 @@
 import {
-  Archive,
+  X,
   Check,
   Clock3,
-  Eye,
   Heart,
   MessageCircle,
   MessageCircleQuestion,
@@ -169,7 +168,7 @@ export default function LogeQuestionsPanel({
           }}
         ><MessageCircle aria-hidden="true" /></button>
         {isSelected ? <><button type="button" className="is-secondary is-complete" aria-label="Marquer comme répondue" title="Marquer comme répondue" disabled={disabled || actionPending} onClick={() => void runQuestionAction(question, () => completeQuestion(question))}><Check aria-hidden="true" /></button><button type="button" className="is-primary" aria-label="Moment VIP" title="Moment VIP" disabled={disabled || actionPending || !onOpenMomentVip} onClick={() => onOpenMomentVip?.(question.author.id)}><UserRoundPlus aria-hidden="true" /></button></> : null}
-        {question.status === "pending" ? <><button type="button" className="is-primary is-display" aria-label="Afficher dans le live" title="Afficher dans le live" disabled={disabled || actionPending} onClick={() => void runQuestionAction(question, () => displayQuestion(question))}><Eye aria-hidden="true" /></button><button type="button" className="is-secondary is-ignore" title="Ignorer la question" disabled={disabled || actionPending} aria-label={`Ignorer la question de ${question.author.name}`} onClick={() => void runQuestionAction(question, () => updateQuestion(question, "rejected"))}><Archive aria-hidden="true" /></button></> : null}
+        {question.status === "pending" ? <><button type="button" className="is-primary is-display" aria-label="Afficher dans le live" title="Afficher dans le live" disabled={disabled || actionPending} onClick={() => void runQuestionAction(question, () => displayQuestion(question))}><span>Live</span></button><button type="button" className="is-secondary is-ignore" title="Ignorer la question" disabled={disabled || actionPending} aria-label={`Ignorer la question de ${question.author.name}`} onClick={() => void runQuestionAction(question, () => updateQuestion(question, "rejected"))}><X aria-hidden="true" /></button></> : null}
         {isAnswered ? <button type="button" className="is-secondary is-restore" aria-label="Remettre dans la file" title="Remettre dans la file" disabled={disabled || actionPending} onClick={() => void runQuestionAction(question, () => updateQuestion(question, "pending"))}><RotateCcw aria-hidden="true" /></button> : null}
       </footer> : null}
     </article>;
