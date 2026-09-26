@@ -9,7 +9,7 @@ import { controlCageShowcase, initializeCageShowcase, moveCageDemoGuest, prepare
 import { applyCageCompetitionCommand, cageCommandAlreadyApplied, finalizeExpiredCageVote, initializeCageCompetition, migrateCageDemoCompetition, migrateOpenMicRuntime, migrateChampionshipRuntime, projectCageCompetition, syncCageLegacyProjection } from "./cageCompetition";
 import { readRoomLaunchSession, applyRoomLaunchTools } from "../launch/roomLaunch";
 import { isRoomLaunchAudio, resolveRoomLaunchAudio } from "../launch/roomLaunchAudio";
-import { createRoomToolsFixture } from "./roomTools.fixtures";
+import { createRoomToolsFixture, refreshClassroomDemoPortraits } from "./roomTools.fixtures";
 import { createClassroomDemoResources } from "./classroom/classroomResources.demo";
 import { seedWaveTestProduction } from "./waveTestPacks";
 import { WAVE_LOOP_CATEGORIES, waveAcceptedCategories, waveSubmissionCategory } from "./waveLoopCategories";

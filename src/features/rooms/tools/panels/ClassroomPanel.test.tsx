@@ -1,8 +1,8 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createRoomToolsFixture } from "../roomTools.fixtures";
+import { createRoomToolsFixture, refreshClassroomDemoPortraits } from "../roomTools.fixtures";
 import type { RoomToolsCommand } from "../roomTools.types";
-import ClassroomPanel, { type ClassroomAudioBridge } from "./ClassroomPanel";
+import ClassroomPanel, { ClassroomRoster, type ClassroomAudioBridge } from "./ClassroomPanel";
 
 function audioBridge(patch: Partial<ClassroomAudioBridge> = {}): ClassroomAudioBridge {
   return {
@@ -97,4 +97,38 @@ it("allows a migrated student with an off microphone to receive a speaking invit
  const button=screen.getByRole("button",{name:`Donner la parole à ${seat.person!.name}`});expect(button).toBeEnabled();fireEvent.click(button);
  await waitFor(()=>expect(bridge.startPublic).toHaveBeenCalledWith(seat.person));
  expect(seat.person!.microphone).toBe("off");
+});
+
+
+it("keeps the raised hand beside an outstanding question and clears only the answered indicator", () => {
+  const classe = createRoomToolsFixture("classe", "room-classe-demo").classe!;
+  const question = classe.questions![0];
+  const props = { classe, audioBridge: audioBridge(), selectedStudentId: null, onSelectStudent: vi.fn() };
+  const ui = render(<ClassroomRoster {...props} showQuestionIndicators />);
+  const student = () => screen.getByRole("button", { name: new RegExp(question.author.name) });
+  expect(student().querySelector(".classroom-seat__signal.is-hand-raised")).not.toBeNull();
+  expect(student().querySelector(".classroom-seat__question.has-primary")).not.toBeNull();
+  ui.rerender(<ClassroomRoster {...props} showQuestionIndicators classe={{ ...classe, questions: classe.questions!.map(item => item.id === question.id ? { ...item, status: "answered" } : item) }} />);
+  expect(student().querySelector(".classroom-seat__signal.is-hand-raised")).not.toBeNull();
+  expect(student().querySelector(".classroom-seat__question")).toBeNull();
+  ui.rerender(<ClassroomRoster {...props} />);
+  expect(student().querySelector(".classroom-seat__question")).toBeNull();
+});
+
+
+it("refreshes saved demo portraits without changing student data or custom photos", () => {
+  const classe = createRoomToolsFixture("classe", "room-classe-demo").classe!;
+  const student = classe.people.find(person => person.id === "class-11")!;
+  const expectedPhoto = student.avatarUrl;
+  student.avatarUrl = "/images/preprofile/portraits/profile-21.webp";
+  const saved = structuredClone(classe);
+  const custom = saved.people.find(person => person.id === "class-12")!;
+  custom.avatarUrl = "/my-photo.webp";
+  const questions = saved.questions!.map(question => question.text);
+  refreshClassroomDemoPortraits(saved);
+  expect(saved.people.find(person => person.id === "class-11")!.avatarUrl).toBe(expectedPhoto);
+  expect(saved.seats.find(seat => seat.person?.id === "class-11")!.person!.avatarUrl).toBe(expectedPhoto);
+  expect(custom.avatarUrl).toBe("/my-photo.webp");
+  expect(saved.questions!.map(question => question.text)).toEqual(questions);
+  expect(saved.raisedHands).toEqual(classe.raisedHands);
 });

@@ -394,7 +394,7 @@ export default function ClassroomPanel({
 
   return <div className="room-tool-panel is-classroom">
     {selectedStudent ? <ClassroomMessageBubble roomId={roomId} accountId={classe.people[0].id} peerId={selectedStudent.id} peerName={selectedStudent.name} source={source} /> : null}
-    <ClassroomRoster classe={classe} audioBridge={audioBridge} selectedStudentId={selectedStudentId} onSelectStudent={onSelectStudent} />
+    <ClassroomRoster showQuestionIndicators classe={classe} audioBridge={audioBridge} selectedStudentId={selectedStudentId} onSelectStudent={onSelectStudent} />
 
     <aside
       ref={regieRef}
@@ -592,13 +592,15 @@ export default function ClassroomPanel({
 }
 
 /** The same 24-seat roster is rendered by the teacher and student surfaces. */
-export function ClassroomRoster({ classe, audioBridge, selectedStudentId, onSelectStudent, onSelectFreeSeat }: Pick<ClassroomPanelProps, "classe" | "selectedStudentId" | "onSelectStudent"> & { audioBridge: Pick<ClassroomAudioBridge, "mode" | "phase" | "studentId">; onSelectFreeSeat?: (seat: number) => void }) {
+export function ClassroomRoster({ classe, audioBridge, selectedStudentId, onSelectStudent, onSelectFreeSeat, showQuestionIndicators = false }: Pick<ClassroomPanelProps, "classe" | "selectedStudentId" | "onSelectStudent"> & { audioBridge: Pick<ClassroomAudioBridge, "mode" | "phase" | "studentId">; onSelectFreeSeat?: (seat: number) => void; showQuestionIndicators?: boolean }) {
   const seats = normalizedSeats(classe);
+  const questionAuthors = new Set((classe.questions ?? []).filter(question => question.status !== "answered").map(question => question.author.id));
   const seatStatuses = new Map(seats.map(seat => [seat.number, canonicalStatus(seat, classe, audioBridge)]));
   return (<div className="classroom-roster">
       <div className="classroom-seats" role="list" aria-label="Les 24 élèves de La Classe">
       {seats.map((seat) => {
         const status = seatStatuses.get(seat.number) ?? "free";
+        const hasQuestion = Boolean(showQuestionIndicators && seat.person && questionAuthors.has(seat.person.id));
         const selected = Boolean(seat.person && seat.person.id === selectedStudentId);
         const isSelectedAudio = Boolean(seat.person && seat.person.id === audioBridge.studentId);
         return <article
@@ -610,12 +612,13 @@ export function ClassroomRoster({ classe, audioBridge, selectedStudentId, onSele
             type="button"
             className="classroom-seat__person"
             aria-pressed={selected}
-            aria-label={`${seat.person.name}, place ${seat.number}, ${STATUS_LABEL[status]}`}
+            aria-label={`${seat.person.name}, place ${seat.number}, ${STATUS_LABEL[status]}${hasQuestion ? ", question en attente" : ""}`}
             title={`${seat.person.name} · place ${seat.number} · ${STATUS_LABEL[status]}`}
             onClick={() => onSelectStudent(selected ? null : seat.person!.id)}
           >
             <b className="classroom-seat__number" aria-hidden="true">{String(seat.number).padStart(2, "0")}</b>
             {status !== "listening" ? <i className={`classroom-seat__signal is-${status}`} aria-hidden="true">{statusIcon(status)}</i> : null}
+            {hasQuestion ? <i className={`classroom-seat__question${status !== "listening" ? " has-primary" : ""}`} title="Question en attente" aria-hidden="true"><MessageCircleMore /></i> : null}
             <span className="classroom-seat__avatar">
               <span className="classroom-seat__portrait"><img src={seat.person.avatarUrl} alt="" loading="lazy" /></span>
             </span>

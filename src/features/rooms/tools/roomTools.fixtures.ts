@@ -34,10 +34,22 @@ function person(id: string, name: string, role: string, index: number, patch: Pa
 
 const CLASS_PORTRAIT_IDS = [2, 3, 4, 6, 7, 14, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 31, 28, 35, 38, 37, 32, 36] as const;
 
+const CLASS_SQUARE_GUEST_PORTRAITS = [
+  PLACE_DEMO_PROFILES.guestA.avatarUrl,
+  PLACE_DEMO_PROFILES.guestC.avatarUrl,
+  PLACE_DEMO_PROFILES.guestB.avatarUrl,
+  PLACE_DEMO_PROFILES.host.avatarUrl,
+  "/images/tremplin/artists/generated/sekou-mare-danseur-choregraphe-marseille-v1.webp",
+  PLACE_DEMO_PROFILES.viewerA.avatarUrl,
+  PLACE_DEMO_PROFILES.viewerB.avatarUrl,
+  PLACE_DEMO_PROFILES.backstageC.avatarUrl,
+  PLACE_DEMO_PROFILES.backstageB.avatarUrl,
+] as const;
+
 function classPerson(id: string, name: string, role: string, index: number, patch: Partial<RoomPerson> = {}): RoomPerson {
   const portraitId = CLASS_PORTRAIT_IDS[index % CLASS_PORTRAIT_IDS.length];
   return person(id, name, role, index, {
-    avatarUrl: `/images/preprofile/portraits/profile-${String(portraitId).padStart(2, "0")}.webp`,
+    avatarUrl: CLASS_SQUARE_GUEST_PORTRAITS[index - 10] ?? `/images/preprofile/portraits/profile-${String(portraitId).padStart(2, "0")}.webp`,
     gradeLevel: ((index % 6) + 1) as RoomPerson["gradeLevel"],
     ...patch,
   });
@@ -256,7 +268,7 @@ function sceneState(): SceneState {
 function classeState(): ClasseState {
   const people = [...ROOM_TOOL_PEOPLE.classe];
   const occupied = people.slice(1, 20);
-  const raisedIds = [occupied[3].id, occupied[9].id, occupied[17].id];
+  const raisedIds = [occupied[3].id, occupied[1].id, occupied[17].id];
   const now = Date.now();
   return {
     people,
@@ -546,4 +558,17 @@ export function createRoomToolsFixture(roomType: SpecializedRoomId, roomId = `de
     loge: roomType === "loge" ? logeState() : undefined,
     gifts: giftState(roomId),
   };
+}
+
+/** Refresh only the nine retired demo assets, without resetting a saved class. */
+export function refreshClassroomDemoPortraits(classe: ClasseState) {
+  const refresh = (member: RoomPerson) => {
+    const index = Number(member.id.match(/^class-(\d{2})$/)?.[1]) - 1;
+    const replacement = CLASS_SQUARE_GUEST_PORTRAITS[index - 10];
+    const legacy = `/images/preprofile/portraits/profile-${String(CLASS_PORTRAIT_IDS[index]).padStart(2, "0")}.webp`;
+    if (replacement && member.avatarUrl === legacy) member.avatarUrl = replacement;
+  };
+  classe.people.forEach(refresh);
+  classe.seats.forEach(seat => { if (seat.person) refresh(seat.person); });
+  classe.questions?.forEach(question => refresh(question.author));
 }
