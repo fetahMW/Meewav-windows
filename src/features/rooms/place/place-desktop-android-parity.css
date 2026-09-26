@@ -5,6 +5,29 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   --studio-section-light: #a98ef0;
 }
 
+/* Unselected glass keys keep their rim visible, with no illuminated accent. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active) {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(122deg, #ffffff08, transparent 48%) padding-box,
+    linear-gradient(180deg, #19171e59, #08070c33) padding-box,
+    linear-gradient(140deg, #ddd6e633, #9991a315 35%, #302a3612 64%, #c4bbd02b) border-box;
+  backdrop-filter: blur(8px) saturate(105%);
+  box-shadow: inset 0 1px 0 #ffffff0c, inset 0 -1px 1px #0005, 0 1px 2px #0005;
+  color: #b8b2c1;
+  text-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active):hover:not(:disabled) {
+  border-color: #e6ddf22b;
+  box-shadow: inset 0 1px 0 #ffffff14, inset 0 -1px 1px #0005, 0 1px 3px #0006;
+  color: #e4deed;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active) > svg {
+  color: #a49aac;
+  filter: none;
+}
+
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active {
   --studio-key-rgb: 126, 68, 227;
   --studio-key-light: #a98ef0;
@@ -30,8 +53,8 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   color: #c27aff;
   filter: none;
 }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active::before,
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active::after {
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]::before,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]::after {
   display: none !important;
 }
 
