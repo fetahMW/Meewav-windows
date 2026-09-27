@@ -343,3 +343,16 @@
 @media (min-aspect-ratio: 18/9) {
   .tremplin-home { background-position: center 72%; }
 }
+
+/* Keep playback on the artwork and expose the spinning label during playback. */
+.tremplin-home__record-cover { position:relative; }
+.tremplin-home__record-play,
+.tremplin-home .tremplin-home__talent-play {
+  position:absolute; z-index:4; inset:50% auto auto 50%;
+  translate:-50% -50%; transform:none; width:42px; height:42px;
+  min-width:42px; min-height:42px; padding:0; border-radius:50%;
+}
+.tremplin-home__talent.is-playing .tremplin-home__talent-disc {
+  z-index:2; top:40%; right:0; width:58%; transform:none;
+  pointer-events:none;
+}

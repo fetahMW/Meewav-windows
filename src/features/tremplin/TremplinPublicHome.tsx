@@ -49,6 +49,7 @@ import "./tremplin-public-home-compact.css";
 import "./tremplin-public-home-gateway.css";
 import "./tremplin-grades-prestige.css";
 import "./tremplin-home-editorial.css";
+import "../../components/shared/mixer-play-button.css";
 
 type TremplinPublicHomeProps = {
   playingArtistId: string | null;
@@ -267,6 +268,7 @@ function HeroEditorialVisual({
         <span className="tremplin-home__record-label">
           <i /> Le talent avant le bruit <Sparkles aria-hidden="true" />
         </span>
+        <div className="tremplin-home__record-cover">
         <button
           type="button"
           className="tremplin-home__record-image"
@@ -287,14 +289,10 @@ function HeroEditorialVisual({
             <strong>{entry.artist.name}</strong>
           </span>
         </button>
-        <footer>
-          <span>
-            <strong>003 KING</strong>
-            <small>{getTremplinProfessionLabel(entry.artist)}</small>
-          </span>
           <button
             type="button"
             onClick={onListen}
+            className="tremplin-home__record-play mw-mixer-play"
             aria-pressed={playing}
             aria-label={
               (playing ? "Mettre en pause : " : "Écouter ") + entry.artist.name
@@ -302,6 +300,13 @@ function HeroEditorialVisual({
           >
             {playing ? <Pause /> : <Play />}
           </button>
+        </div>
+        <footer>
+          <span>
+            <strong>003 KING</strong>
+            <small>{getTremplinProfessionLabel(entry.artist)}</small>
+          </span>
+
         </footer>
       </article>
       <span className="tremplin-home__stamp" aria-hidden="true">
@@ -333,7 +338,6 @@ export default function TremplinPublicHome({
   artistActionDetail,
   onArtistAction,
 }: TremplinPublicHomeProps) {
-  const [hoveredArtistId, setHoveredArtistId] = useState<string | null>(null);
   const [reducedMotion, setReducedMotion] = useState(
     () =>
       typeof window.matchMedia === "function" &&
@@ -893,19 +897,13 @@ export default function TremplinPublicHome({
               >
                 <div
                   className="tremplin-home__talent-artwork"
-                  onPointerEnter={(event) =>
-                    setHoveredArtistId(
-                      event.pointerType === "mouse" ? entry.artist.id : null,
-                    )
-                  }
-                  onPointerLeave={() => setHoveredArtistId(null)}
                 >
                   <span
                     className="tremplin-home__talent-disc"
                     aria-hidden="true"
                   >
                     <Vinyl
-                      playing={playing || hoveredArtistId === entry.artist.id}
+                      playing={playing}
                       reducedMotion={reducedMotion}
                       interactive={false}
                     />
@@ -928,7 +926,7 @@ export default function TremplinPublicHome({
                       </span>
                     </button>
                     <button
-                      className="tremplin-home__talent-play"
+                      className="tremplin-home__talent-play mw-mixer-play"
                       type="button"
                       aria-pressed={playing}
                       aria-label={
