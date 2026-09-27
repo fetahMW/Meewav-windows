@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useMemo, useRef, useState } from "rea
 import { Building2, Crosshair, EyeOff, MapPin, Minus, Plus, X, Orbit, ArrowLeft, ArrowRight, Hand, MoveVertical, MousePointer2 } from "lucide-react";
 import GlobeNavigationPole from "./GlobeNavigationPole";
 import NationalTopTen from "./NationalTopTen";
+import RingTopOnePlayer from "./RingTopOnePlayer";
 import { RingPreProfileBoundary } from "./RingPreProfileBoundary";
 import { MeewavSearchFilterBar, MeewavFilterPanel, MeewavIllustratedFilterGrid } from "./reference/components/shared/search-filter/MeewavSearchFilter";
 import { GLOBE_ARTIST_ROLE_OPTIONS } from "./reference/components/shared/avatar/profileIconCatalog";
@@ -254,6 +255,7 @@ export function GlobeInterface({ ready, data, engine, navigate, selection, zoomL
     </button>}
     {mode === 'ring' && <>
       <button className="ring-return-button ring-key-surface" onClick={goGlobe} disabled={ringReturning}><ArrowLeft size={17} aria-hidden="true" />{ringReturning ? 'Retour au globe…' : 'Retour au globe'}</button>
+      {!ringReturning && <RingTopOnePlayer profileOpen={Boolean(ringPortrait)} />}
       {!ringReturning && !ringPortrait && <section className="ring-visit-panel ring-key-surface" aria-label="Se déplacer sur l’anneau">
         <div className="ring-visit-main">
           <div className="ring-visit-gesture" aria-hidden="true"><ArrowLeft size={17} /><Hand size={26} strokeWidth={1.6} /><ArrowRight size={17} /></div>
