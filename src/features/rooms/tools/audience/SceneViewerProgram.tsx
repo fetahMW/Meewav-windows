@@ -5,6 +5,7 @@ import type { SceneState, PerformanceEntry, RoomPerson } from "../roomTools.type
 import { MeewavGradeBadge } from "../../../grades/MeewavGradeBadge";
 const PreProfile = lazy(() => import("../panels/ClassStudentPreProfile"));
 import "./scene-viewer-program.css";
+import "../../place/room-console-material.css";
 
 export function SceneConsoleDialog({title,children,onClose}:{title:string;children:ReactNode;onClose:()=>void}) {
   const ref=useRef<HTMLDivElement>(null);
@@ -23,8 +24,25 @@ export default function SceneViewerProgram({state,participation,source="demo"}:{
   return <div className="scene-viewer-program">
     <header className="scene-program-heading"><span className="scene-program-eyebrow"><Radio /> LA SCÈNE</span><h2>Le programme</h2><p>Des artistes, des rencontres, une scène à partager.</p><div><span><ListMusic />{state.program.length} passages</span><span><Clock3 />{total} min de show</span></div></header>
     {participation ? <div className="scene-program-participation">{participation}</div>:null}
-    <div className="scene-program-list-heading"><h3>À l’affiche</h3><small>Choisissez un passage pour en savoir plus</small></div>
-    {state.program.length?<ol className="scene-program-list">{state.program.map((entry,index)=>{const artist=state.people.find(p=>p.id===entry.artistId&&p.name===entry.artistName);return <li key={entry.id} className={`is-${entry.status}`}><div className="scene-program-card"><button type="button" className="scene-program-portrait" disabled={!artist} aria-label={`Voir le pré-profil de ${entry.artistName}`} onClick={event=>{if(artist)setProfile({person:artist,trigger:event.currentTarget});}}>{artist?.avatarUrl?<img src={artist.avatarUrl} alt=""/>:<Mic2 />}<b>{String(index+1).padStart(2,"0")}</b></button><button type="button" className="scene-program-card-copy" aria-label={`Voir ${entry.title}, ${entry.artistName}`} onClick={()=>setSelectedId(entry.id)}><small className="scene-program-status">{entry.status==="live"?<i/>:null}{statusLabel(entry)}</small><strong>{entry.title}</strong><span>{entry.artistName} {artist?.gradeLevel?<MeewavGradeBadge level={artist.gradeLevel} size="xs"/>:null}</span><em>{entry.kind} · {entry.durationMinutes} min{entry.delayMinutes?` · +${entry.delayMinutes} min`:""}</em></button><ArrowRight aria-hidden="true" /></div></li>;})}</ol>:<p className="scene-program-empty">Le programme sera publié ici par le host.</p>}
+    <div className="scene-program-list-heading"><h3>À l’affiche</h3><small>Les artistes & leurs passages</small></div>
+    {state.program.length ? <ol className="scene-program-list">{state.program.map((entry, index) => {
+      const artist = state.people.find(p => p.id === entry.artistId && p.name === entry.artistName);
+      return <li key={entry.id} className={`is-${entry.status}${entry.participantStatus === "absent" ? " is-absent" : ""}`}>
+        <div className="scene-program-card">
+          <button type="button" className="scene-program-portrait" disabled={!artist} aria-label={`Voir le pré-profil de ${entry.artistName}`} onClick={event => { if (artist) setProfile({ person: artist, trigger: event.currentTarget }); }}>
+            {artist?.avatarUrl ? <img src={artist.avatarUrl} alt="" /> : <Mic2 />}
+            <b>{String(index + 1).padStart(2, "0")}</b>
+          </button>
+          <button type="button" className="scene-program-card-copy" aria-label={`Voir ${entry.title}, ${entry.artistName}`} onClick={() => setSelectedId(entry.id)}>
+            <small className="scene-program-status">{entry.status === "live" && entry.participantStatus !== "absent" ? <i /> : null}{statusLabel(entry)}</small>
+            <strong>{entry.title}</strong>
+            <span className="scene-program-artist">{entry.artistName}{artist?.gradeLevel ? <MeewavGradeBadge level={artist.gradeLevel} size="xs" /> : null}</span>
+            <em><span>{entry.kind}</span><span><Clock3 aria-hidden="true" />{entry.durationMinutes} min{entry.delayMinutes ? ` · +${entry.delayMinutes} min` : ""}</span></em>
+            <ArrowRight className="scene-program-open" aria-hidden="true" />
+          </button>
+        </div>
+      </li>;
+    })}</ol> : <p className="scene-program-empty">Le programme sera publié ici par le host.</p>}
     {next?<p className="room-audience-next scene-program-next"><Clock3 /><span>À suivre · <strong>{next.title}</strong></span></p>:null}
     {selected&&!profile?<SceneConsoleDialog title="Détails du passage" onClose={()=>setSelectedId(null)}><div className="scene-program-detail"><button type="button" className="scene-program-detail-portrait" disabled={!person} aria-label={`Voir le pré-profil de ${selected.artistName}`} onClick={event=>{if(person)setProfile({person,trigger:event.currentTarget});}}>{person?.avatarUrl?<img src={person.avatarUrl} alt={selected.artistName}/>:<Mic2 />}</button><span className="scene-program-status">{statusLabel(selected)}</span><h2>{selected.title}</h2><div className="scene-program-detail-artist"><p>{selected.artistName}</p>{person?.gradeLevel?<MeewavGradeBadge level={person.gradeLevel} size="sm"/>:null}</div><section className="scene-program-description"><h3>Sur scène</h3><p>{selected.description || "L’artiste et le host n’ont pas encore publié la présentation de ce passage."}</p></section><dl><div><dt>Format</dt><dd>{selected.kind}</dd></div><div><dt>Durée prévue</dt><dd>{selected.durationMinutes} minutes</dd></div><div><dt>Ordre de passage</dt><dd>{state.program.findIndex(e=>e.id===selected.id)+1} / {state.program.length}</dd></div>{selected.scheduledAt?<div><dt>Horaire indicatif</dt><dd>{new Date(selected.scheduledAt).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</dd></div>:null}{selected.delayMinutes?<div><dt>Décalage annoncé</dt><dd>+{selected.delayMinutes} minutes</dd></div>:null}</dl><p className="scene-program-detail-note">{selected.status==="live"?"Ce passage est en cours. Retrouvez l’artiste sur le retour vidéo.":selected.status==="done"?"Ce passage est terminé.":"L’ordre et les horaires sont actualisés par le host pendant le show."}</p></div></SceneConsoleDialog>:null}
     {profile?<Suspense fallback={null}><PreProfile person={profile.person} source={source} onClose={()=>setProfile(null)} returnFocusTo={profile.trigger} {...getRoomPreProfileBounds(profile.trigger)} /></Suspense>:null}

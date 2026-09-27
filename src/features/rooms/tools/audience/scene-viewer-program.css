@@ -16,26 +16,35 @@
 .room-audience-interactions.is-scene .scene-queue-action small { font-size:11px; line-height:1.5; color:#aba6b4; }
 .room-audience-interactions.is-scene .scene-viewer-program button,.room-audience-interactions.is-scene .scene-console-dialog button { cursor:pointer; color:#eeeaf4; }
 .room-audience-interactions.is-scene .scene-queue-action button,.room-audience-interactions.is-scene .scene-console-dialog button { min-height:38px; border:1px solid #aca8b164; border-radius:12px; background:radial-gradient(ellipse at 30% 0,#ffffff20,transparent 65%),linear-gradient(#444449,#202023 50%,#111113); box-shadow:inset 0 1px #ffffff30,0 3px 4px #0007; font:600 12px/1.4 Inter,system-ui,sans-serif; padding:9px 12px; }
-.room-audience-interactions.is-scene .scene-program-list-heading { padding:12px 2px 8px; display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
-.room-audience-interactions.is-scene .scene-program-list-heading h3 { margin:0; font-size:14px; }
-.room-audience-interactions.is-scene .scene-program-list-heading small { color:#928c9c; font-size:9px; }
-.room-audience-interactions.is-scene .scene-program-list { display:grid; gap:6px; margin:0; padding:0; list-style:none; }
-.room-audience-interactions.is-scene .scene-program-card { display:flex; width:100%; align-items:center; gap:10px; padding:8px 10px; box-sizing:border-box; text-align:left; border:1px solid #85818d30; border-radius:11px; background:radial-gradient(ellipse at 10% 0,#ffffff0f,transparent 60%),linear-gradient(140deg,#ffffff0c,#11121466 75%); box-shadow:inset 0 1px #ffffff0d; }
-.room-audience-interactions.is-scene .scene-program-card:hover { border-color:#b38ed1; }
-.room-audience-interactions.is-scene .scene-program-card:focus-visible,.room-audience-interactions.is-scene .scene-console-dialog button:focus-visible { outline:2px solid #b88ae8; outline-offset:2px; }
-.room-audience-interactions.is-scene .scene-program-list .is-live .scene-program-card { border-color:#b39bcd88; background:linear-gradient(140deg,#ffffff12,#16171988 75%); }
-.room-audience-interactions.is-scene .scene-program-portrait { position:relative; width:40px; height:40px; flex:0 0 40px; border-radius:8px; background:#27262d; display:grid; place-items:center; }
+/* Opaque graphite cards: the console's key material, with violet live accents. */
+.room-audience-interactions.is-scene .scene-program-list-heading { padding:16px 2px 9px; display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:4px 8px; }
+.room-audience-interactions.is-scene .scene-program-list-heading h3 { margin:0; color:#eee7f7; font-size:14px; letter-spacing:-.02em; }
+.room-audience-interactions.is-scene .scene-program-list-heading small { color:#ab96c4; font-size:10px; }
+.room-audience-interactions.is-scene .scene-program-list { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
+.room-audience-interactions.is-scene .scene-program-card { position:relative; display:flex; width:100%; align-items:center; gap:11px; padding:10px 12px; box-sizing:border-box; text-align:left; border:1px solid #ffffff08; border-radius:13px; background:var(--room-key-face); box-shadow:var(--room-key-shadow); }
+.room-audience-interactions.is-scene .scene-program-card:hover { background:var(--room-key-hover); }
+.room-audience-interactions.is-scene .scene-program-card:focus-within { outline:1px solid #b68afa65; outline-offset:2px; }
+.room-audience-interactions.is-scene .scene-program-card button:focus-visible,.room-audience-interactions.is-scene .scene-console-dialog button:focus-visible { outline:2px solid #b68afa; outline-offset:3px; }
+.room-audience-interactions.is-scene .scene-program-list .is-live:not(.is-absent) .scene-program-card { border-color:#b68afa35; background:radial-gradient(ellipse at 0 50%,#ac76ff15,transparent 70%),var(--room-key-face); }
+.room-audience-interactions.is-scene .scene-program-list .is-live:not(.is-absent) .scene-program-card::before { content:""; position:absolute; left:0; top:18px; bottom:18px; width:2px; border-radius:3px; background:#bb8aff; box-shadow:0 0 9px #b68afa50; }
+.room-audience-interactions.is-scene .scene-program-portrait { position:relative; width:48px; height:48px; flex:0 0 48px; border-radius:9px; background:#27232e; display:grid; place-items:center; }
 .room-audience-interactions.is-scene .scene-program-portrait img { width:100%; height:100%; object-fit:cover; border-radius:inherit; }
-.room-audience-interactions.is-scene .scene-program-portrait b { position:absolute; bottom:-4px; left:-4px; background:#101013; border:1px solid #817889; border-radius:6px; font-size:9px; padding:2px 5px; }
-.room-audience-interactions.is-scene .scene-program-card-copy { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:12px; row-gap:4px; flex:1; min-width:0; }
-.room-audience-interactions.is-scene .scene-program-card-copy strong { grid-column:1; grid-row:1; overflow-wrap:anywhere; font-size:12px; line-height:1.35; color:#f1eef5; }
-.room-audience-interactions.is-scene .scene-program-card-copy > span { grid-column:1; grid-row:2; min-width:0; overflow-wrap:anywhere; color:#beb8c8; font-size:11px; line-height:1.35; }
-.room-audience-interactions.is-scene .scene-program-card-copy em { grid-column:2; grid-row:2; text-align:right; color:#aaa3b2; font-size:10px; line-height:1.35; font-style:normal; }
-.room-audience-interactions.is-scene .scene-program-status { display:flex; align-items:center; gap:5px; color:#b5a7c6; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:.09em; }
-.room-audience-interactions.is-scene .scene-program-status i { width:5px; height:5px; background:#f16b82; border-radius:50%; }
-.room-audience-interactions.is-scene .scene-program-card > svg { width:16px; height:16px; color:#a79caf; flex:none; }
-.room-audience-interactions.is-scene .scene-program-next { display:flex; align-items:center; gap:8px; color:#a6a0ae; padding:14px 0; margin:0; font-size:11px; }
-.room-audience-interactions.is-scene .scene-program-next svg { width:15px; }
+.room-audience-interactions.is-scene .scene-program-portrait b { position:absolute; bottom:-4px; left:-4px; min-width:18px; background:#211a2b; color:#decbf5; border:1px solid #b68afa35; border-radius:5px; font-size:8px; line-height:1; padding:3px; text-align:center; font-variant-numeric:tabular-nums; }
+.room-audience-interactions.is-scene .scene-program-card-copy { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:8px; row-gap:3px; flex:1; min-width:0; }
+.room-audience-interactions.is-scene .scene-program-card-copy strong { grid-column:1; grid-row:1; overflow-wrap:anywhere; font-size:13px; line-height:1.35; color:#f4effa; }
+.room-audience-interactions.is-scene .scene-program-card-copy > .scene-program-artist { grid-column:1; grid-row:2; display:flex; align-items:center; gap:6px; min-width:0; overflow-wrap:anywhere; color:#c9bed7; font-size:11px; line-height:1.35; }
+.room-audience-interactions.is-scene .scene-program-card-copy em { grid-column:1; grid-row:3; display:flex; flex-wrap:wrap; gap:3px 9px; color:#a99bb9; font-size:9px; line-height:1.4; font-style:normal; }
+.room-audience-interactions.is-scene .scene-program-card-copy em > span { display:inline-flex; align-items:center; gap:4px; }
+.room-audience-interactions.is-scene .scene-program-card-copy em svg { width:10px; height:10px; color:#b68afa; }
+.room-audience-interactions.is-scene .scene-program-status { display:inline-flex; align-items:center; gap:5px; color:#c2a1ed; font-size:9px; font-weight:650; text-transform:uppercase; letter-spacing:.04em; }
+.room-audience-interactions.is-scene .scene-program-card-copy > .scene-program-status { grid-column:2; grid-row:1; justify-self:end; font-size:8px; white-space:nowrap; }
+.room-audience-interactions.is-scene .is-live:not(.is-absent) .scene-program-card-copy > .scene-program-status { color:#e0caff; }
+.room-audience-interactions.is-scene .scene-program-status i { width:5px; height:5px; background:#bc86ff; border-radius:50%; box-shadow:0 0 6px #b68afa70; }
+.room-audience-interactions.is-scene :is(.is-done,.is-cancelled,.is-skipped,.is-absent) .scene-program-status { color:#a299af; }
+.room-audience-interactions.is-scene .scene-program-card-copy > .scene-program-open { grid-column:2; grid-row:2 / 4; justify-self:end; width:15px; height:15px; color:#b68afa; }
+.room-audience-interactions.is-scene .scene-program-next { display:flex; align-items:center; gap:8px; color:#b4a7c5; padding:12px 2px; margin:0; font-size:11px; }
+.room-audience-interactions.is-scene .scene-program-next svg { width:14px; color:#b68afa; }
+.room-audience-interactions.is-scene .scene-program-empty { padding:20px 14px; border-radius:12px; background:var(--room-key-face); color:#bfb3ce; font-size:12px; }
 .room-audience-interactions.is-scene .scene-console-overlay { position:absolute; inset:0; z-index:25; padding:14px; display:grid; align-items:center; background:#000a; }
 .room-audience-interactions.is-scene .scene-console-dialog { max-height:100%; overflow:auto; padding:12px; border:1px solid #8b8496; border-radius:20px; background:radial-gradient(ellipse at 0 0,#ffffff14,transparent 60%),linear-gradient(150deg,#242428,#08090b 75%); box-shadow:inset 0 1px #ffffff30,0 12px 40px #000; color:#ece8f1; }
 .room-audience-interactions.is-scene .scene-console-dialog > header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
@@ -55,9 +64,8 @@
 .room-audience-interactions.is-scene .scene-console-dialog .room-audience-evaluation__stars { display:flex; gap:6px; margin:14px 0; }
 .room-audience-interactions.is-scene .scene-console-dialog .room-audience-evaluation__stars svg { width:20px; height:20px; }
 
-.room-audience-interactions.is-scene .scene-program-portrait,.room-audience-interactions.is-scene .scene-program-portrait img { width:40px; height:40px; min-height:40px; max-height:40px; }
 .room-audience-interactions.is-scene { overflow:hidden; }
-.room-audience-interactions.is-scene > .room-audience-interactions__body { height:100%; min-height:0; overflow:auto; box-sizing:border-box; scrollbar-width:thin; scrollbar-color:#706678 transparent; }
+.room-audience-interactions.is-scene > .room-audience-interactions__body { height:100%; min-height:0; overflow:auto; box-sizing:border-box; scrollbar-width:thin; scrollbar-color:#9474ae transparent; }
 .room-audience-interactions.is-scene:has(.scene-console-overlay) > .room-audience-interactions__body { overflow:hidden; }
 .room-audience-interactions.is-scene .scene-program-detail-portrait,.room-audience-interactions.is-scene .scene-program-detail-portrait img { width:56px; height:56px; min-height:56px; max-height:56px; object-fit:cover; }
 
@@ -84,21 +92,20 @@
 
 .room-audience-interactions.is-scene .scene-audience-campaign,.room-audience-interactions.is-scene .scene-console-dialog { font-family:Inter,system-ui,sans-serif; }
 
-.room-audience-interactions.is-scene .scene-program-card > button.scene-program-card-copy { border:0; background:none; box-shadow:none; padding:3px 0; text-align:left; border-radius:6px; cursor:pointer; color:inherit; font-family:inherit; }
+.room-audience-interactions.is-scene .scene-program-card > button.scene-program-card-copy { border:0; background:none; box-shadow:none; padding:0; text-align:left; border-radius:6px; cursor:pointer; color:inherit; font-family:inherit; }
 .room-audience-interactions.is-scene .scene-program-card-copy > span { display:flex; align-items:center; gap:7px; }
 .room-audience-interactions.is-scene button.scene-program-portrait,.room-audience-interactions.is-scene button.scene-program-detail-portrait { padding:0; flex:none; position:relative; cursor:pointer; border:1px solid #ffffff30; box-shadow:none; transition:transform 160ms ease,border-color 160ms ease,box-shadow 160ms ease; }
 .room-audience-interactions.is-scene button.scene-program-portrait img,.room-audience-interactions.is-scene button.scene-program-detail-portrait img { width:100%; height:100%; min-height:0; object-fit:cover; border-radius:inherit; }
-.room-audience-interactions.is-scene button.scene-program-portrait:hover:not(:disabled),.room-audience-interactions.is-scene button.scene-program-detail-portrait:hover:not(:disabled),.room-audience-interactions.is-scene button.scene-program-portrait:focus-visible { transform:scale(1.07); border-color:#b889ff; box-shadow:0 0 0 2px #b889ff,0 0 14px #a367ff44; }
+.room-audience-interactions.is-scene button.scene-program-portrait:hover:not(:disabled),.room-audience-interactions.is-scene button.scene-program-detail-portrait:hover:not(:disabled),.room-audience-interactions.is-scene button.scene-program-portrait:focus-visible { border-color:#b889ff; box-shadow:0 0 0 2px #b889ff33; }
 .room-audience-interactions.is-scene .scene-program-detail-artist { display:flex; align-items:center; gap:12px; }
 .room-audience-interactions.is-scene .scene-program-description { margin-top:10px; padding:10px; border:1px solid #ffffff16; background:#ffffff04; border-radius:14px; }
 .room-audience-interactions.is-scene .scene-program-description h3 { font-size:14px; margin:0 0 8px; }
 .room-audience-interactions.is-scene .scene-program-description p { margin:0; }
 @media(prefers-reduced-motion:reduce){.room-audience-interactions.is-scene button.scene-program-portrait,.room-audience-interactions.is-scene button.scene-program-detail-portrait { transition:none; }}
 
-/* Two readable lines per passage, with status and timing in the spare width. */
-.room-audience-interactions.is-scene .scene-program-card-copy > .scene-program-status { grid-column:2; grid-row:1; justify-content:flex-end; font-size:8px; letter-spacing:.04em; white-space:nowrap; }
 @container (max-width:330px) {
-  .room-audience-interactions.is-scene .scene-program-card-copy { column-gap:8px; }
-  .room-audience-interactions.is-scene .scene-program-card-copy em { grid-column:1 / -1; grid-row:3; text-align:left; }
-  .room-audience-interactions.is-scene .scene-program-list-heading { flex-wrap:wrap; gap:3px; }
+  .room-audience-interactions.is-scene .scene-program-card { gap:9px; padding:10px; }
+  .room-audience-interactions.is-scene .scene-program-card-copy > strong { grid-column:1 / -1; }
+  .room-audience-interactions.is-scene .scene-program-card-copy > .scene-program-status { grid-row:3; }
+  .room-audience-interactions.is-scene .scene-program-card-copy > .scene-program-open { grid-row:2; }
 }

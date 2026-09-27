@@ -9,6 +9,7 @@ import { useStudioToolsLayout } from "./StudioToolsLayoutProvider";
 import { clockRemaining, type PlaceConversationCommand, type PlaceConversationState, type PlaceConversationTool, type PlaceToolClock, type PlaceToolPerson } from "./placeConversationTools.domain";
 import { usePlaceConversationTools } from "./placeConversationTools.store";
 import "./place-conversation-tools.css";
+import "./room-console-material.css";
 
 type SharedProps = {
   state: PlaceConversationState; people: PlaceToolPerson[]; actorId: string; isHost: boolean;
@@ -148,7 +149,7 @@ function ChallengesPanel({ state, people, actorId, isHost, busy, canEngage, visi
   return <div className="place-conversation__panel">
     <header className="place-conversation__heading" data-tool="challenge"><span><small>ON SE LANCE ?</small><h2>Défis</h2></span><button type="button" className="place-conversation__new" aria-expanded={editing} disabled={!canEngage} onClick={() => setEditing(!editing)}>{editing ? <X /> : <Plus />}{editing ? "Fermer" : "Nouveau"}</button></header>
     {editing && canEngage ? <form onSubmit={(event) => void submit(event)} className="place-conversation__glass place-conversation__editor">
-      <div className="place-conversation__challenge-intro"><span className="place-conversation__emblem"><Zap /></span><strong>Une idée.<br />À vous de jouer.</strong></div>
+      <div className="place-conversation__challenge-intro"><span className="place-conversation__emblem"><Zap aria-hidden="true" /></span><span><strong>Une idée. À vous de jouer.</strong><small>Un défi, un public, un temps pour le relever.</small></span></div>
       <label className="place-conversation__field"><span>Ton défi</span><textarea value={title} required maxLength={160} rows={2} placeholder="Raconte une histoire en une minute…" onChange={(event) => setTitle(event.target.value)} /></label>
       <div className="place-conversation__settings-row"><label className="place-conversation__field"><span>Pour qui ?</span><MeewavSelect value={target} onChange={(event) => setTarget(event.target.value)}><option value="">Tout le monde</option>{people.map((person) => <option value={person.id} key={person.id}>{person.name}</option>)}</MeewavSelect></label><DurationSelect value={seconds} onChange={setSeconds} label="Temps imparti" /></div>
       <button type="submit" className="place-conversation__wide is-primary" disabled={busy || !title.trim()}><Zap />Proposer le défi</button>
