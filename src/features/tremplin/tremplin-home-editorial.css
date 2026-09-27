@@ -329,7 +329,7 @@
 @keyframes tremplin-deck-arrive { from { opacity:0; transform:translateY(22px) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
 /* Restore the original six lacquered grade cards and their canonical artwork. */
 .tremplin-home #niveaux { width:100%; margin:0; }
-.tremplin-home #niveaux .tremplin-public-home__levels-heading h2 > span { background-image:linear-gradient(100deg,#ff4db2,#a044ff 62%,#7832ee); }
+.tremplin-home #niveaux .tremplin-public-home__levels-heading h2 > span { background-image:linear-gradient(100deg,#faf9fc 0%,#faf9fc 20%,#a347ff 100%); }
 .tremplin-home #niveaux .tremplin-public-home__level-track .tremplin-public-home__level-badge { filter:drop-shadow(0 3px 6px #0009); }
 .tremplin-home #niveaux .tremplin-gateway__grade-card[role=button] { cursor:pointer; }
 @media (max-width:600px) {
