@@ -482,7 +482,7 @@ export class PlaceLocalAudioEngine {
         },
       });
       if (token !== this.lifecycleToken) throw new Error("Audio capture cancelled");
-      context = new AudioContext({ latencyHint: "interactive" });
+      context = new AudioContext({ latencyHint: "interactive", sampleRate: 48_000 });
       if (context.state === "suspended") await context.resume();
       if (token !== this.lifecycleToken) throw new Error("Audio capture cancelled");
 

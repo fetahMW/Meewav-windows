@@ -36,6 +36,7 @@ import type { PlaceDemoRole, PlaceMixerView, PlaceNativePitchProvider, PlacePitc
 import type { PlacePitchCorrectionAdapter } from "./placeLocalAudioEngine";
 import { isNativePitchProvider, isWebPitchProvider, resolvePlaceMonitoringRoute } from "./placeAudioRouting";
 import { meewavPitchCorrectionAdapter } from "./placeMeeWavPitchAdapter";
+import { androidVoiceAdapter } from "./placeAndroidVoiceAdapter";
 import { usePlaceLocalAudio } from "./usePlaceLocalAudio";
 import { usePlaceNativeVst3Monitor } from "./usePlaceNativeVst3Monitor";
 import { usePlaceProgramLayout } from "./usePlaceProgramLayout";
@@ -458,11 +459,11 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
     inputEnabled: (place.isHost ? personalMicrophoneEnabled : true)
       && ((!nativeRoomAudioReady && rawBrowserAudioAuthorized) || hostPrivateCallNeedsBrowserVoice),
     inputGain: personalInputGain,
-    pitchAdapter: room.personalVocal.tuneEnabled || (runtime.isDesktop && pitchProvider === "meewav_test" && room.personalVocal.reverbEnabled)
+    pitchAdapter: room.personalVocal.tuneEnabled || (runtime.isDesktop && pitchProvider === "meewav_test")
       ? pitchProvider === "opendaw"
         ? OPENDAW_ROOM_ADAPTER
         : pitchProvider === "meewav_test"
-          ? meewavPitchCorrectionAdapter
+          ? runtime.isDesktop ? androidVoiceAdapter : meewavPitchCorrectionAdapter
           : null
       : null,
   });
@@ -1106,7 +1107,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           await audioEngine.useWebAudioFallback("Autotune MeeWav sélectionné.");
         }
         if (!selectionIsCurrent()) return false;
-        await startCaptureWithPitchAdapter(meewavPitchCorrectionAdapter, selectionIsCurrent);
+        await startCaptureWithPitchAdapter(runtime.isDesktop ? androidVoiceAdapter : meewavPitchCorrectionAdapter, selectionIsCurrent);
         if (!selectionIsCurrent()) return false;
         setPitchProvider(provider);
         place.updateVocal({ tuneEnabled: true, enabled: true });

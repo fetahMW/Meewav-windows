@@ -1,7 +1,9 @@
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import "./place-mixer-android-fx.css";
+import "./place-mixer-pro.css";
 import { useViewerMixer } from "./ViewerMixerContext";
 import type { ViewerFader, ViewerInput } from "./viewerSendAudio";
+import PlaceFxFader from './PlaceFxFader';
 import "./viewer-mixer-routing.css";
 import { useWaveViewerListening } from "../wave-viewer/WaveViewerListening";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
@@ -222,6 +224,7 @@ function FxAccordion({
   onToggle,
   headerAction,
   children,
+  tabbed = false,
 }: {
   id: FxAccordionId;
   title: string;
@@ -233,6 +236,7 @@ function FxAccordion({
   onToggle: () => void;
   headerAction?: ReactNode;
   children: ReactNode;
+  tabbed?: boolean;
 }) {
   const panelId = `place-fx-accordion-${id}`;
   const statusId = `place-fx-accordion-${id}-status`;
@@ -254,10 +258,14 @@ function FxAccordion({
     </button>
   );
   return (
-    <section className={`place-fx-accordion${open ? " is-open" : ""}`} data-section={id}>
-      {headerAction ? <div className="place-fx-accordion__header">{trigger}{headerAction}</div> : trigger}
+    <section className={tabbed ? "place-fx-pro-panel" : `place-fx-accordion${open ? " is-open" : ""}`} data-section={id} hidden={tabbed && !open}>
+      {tabbed ? <header className="place-fx-pro-panel__heading">
+        <span aria-hidden="true">{icon}</span>
+        <div><h3>{title}</h3><p>{headerAction && status ? status : description}</p></div>
+        {headerAction ?? <small>{status}</small>}
+      </header> : headerAction ? <div className="place-fx-accordion__header">{trigger}{headerAction}</div> : trigger}
       {status && statusLive ? <span id={statusId} className="sr-only" role="status" aria-live="polite" aria-atomic="true">{status}</span> : null}
-      {open ? <div className="place-fx-accordion__panel" id={panelId}>{children}</div> : null}
+      {open ? <div className={tabbed ? "place-fx-pro-panel__body" : "place-fx-accordion__panel"} id={panelId}>{children}</div> : null}
     </section>
   );
 }
@@ -466,7 +474,7 @@ function VolumeRow({
   );
 }
 
-function EffectCard({ title, enabled, value, visualValue = value, valueLabel, lowLabel, highLabel, sliderLabel, disabled, onToggle, onValue }: {
+function EffectCard({ title, enabled, value, visualValue = value, valueLabel, lowLabel, highLabel, sliderLabel, disabled, onToggle, onValue, vertical = false }: {
   title: string;
   enabled: boolean;
   value: number;
@@ -478,7 +486,10 @@ function EffectCard({ title, enabled, value, visualValue = value, valueLabel, lo
   disabled: boolean;
   onToggle: () => void;
   onValue: (value: number) => void;
+  vertical?: boolean;
 }) {
+  if (vertical) return <PlaceFxFader label={title} sliderLabel={sliderLabel ?? `Intensité ${title}`} value={value} valueLabel={valueLabel}
+    lowLabel={lowLabel} highLabel={highLabel} disabled={disabled} enabled={enabled} onToggle={onToggle} onChange={onValue} />;
   const visualPercentage = Math.round(clampUnit(visualValue) * 10_000) / 100;
   return (
     <article className={`place-fx-card${enabled ? " is-active" : ""}${disabled ? " is-readonly" : ""}`} style={{ "--fx-value": `${visualPercentage}%` } as CSSProperties}>
@@ -707,7 +718,8 @@ function CanonicalAutotuneControls({
   onTune: (key: string, scale: PlaceMusicalScale) => void;
   onVocal: (patch: Partial<PlaceRoomState["personalVocal"]>) => void;
 }) {
-  const androidEngine = useRuntime().isDesktop && pitchProvider === "meewav_test";
+  const desktop = useRuntime().isDesktop;
+  const androidEngine = desktop && pitchProvider === "meewav_test";
   const providerSelected = pitchProvider !== "none";
   const enableSelectedProvider = providerSelected ? { tuneEnabled: true, enabled: true } : {};
   const [openSelector, setOpenSelector] = useState<AutotuneSelectorId | null>(null);
@@ -747,7 +759,14 @@ function CanonicalAutotuneControls({
           onChange={(scale) => onTune(room.personalVocal.tuneKey, scale as PlaceMusicalScale)}
         />
       </div>
-      <div className="place-autotune-controls__ranges">
+      {desktop ? <div className="place-pro-faders is-correction" role="group" aria-label="Vitesse et humanisation">
+        <PlaceFxFader label="Retune speed" sliderLabel="Vitesse de correction" value={room.personalVocal.tuneSpeed}
+          valueLabel={`${Math.round(room.personalVocal.tuneSpeed * 100)} %`} lowLabel="Naturel" highLabel="Rapide" disabled={!editable}
+          onChange={tuneSpeed => onVocal({ tuneSpeed, ...enableSelectedProvider })} />
+        <PlaceFxFader label="Humanisation" value={room.personalVocal.tuneHumanize}
+          valueLabel={`${Math.round(room.personalVocal.tuneHumanize * 100)} %`} lowLabel="Précis" highLabel="Humain" disabled={!editable || !humanizeSupported}
+          onChange={value => onVocal({ tuneSmooth: value, tuneHumanize: value, ...enableSelectedProvider })} />
+      </div> : <div className="place-autotune-controls__ranges">
         <DetailRange
           label="Vitesse de correction"
           value={Math.round(room.personalVocal.tuneSpeed * 100)}
@@ -777,9 +796,8 @@ function CanonicalAutotuneControls({
             onVocal({ tuneSmooth: mapped, tuneHumanize: mapped, ...enableSelectedProvider });
           }}
         />
-      </div>
-      {androidEngine ? <p>Le mode Simple reprend la correction fixe Android. Clé, gamme et réverb restent réglables.</p> : null}
-      {providerSelected && !humanizeSupported ? <p>Humanisation reste visible pour conserver la même interface, mais ce plugin ne publie pas de paramètre compatible.</p> : null}
+      </div>}
+      {providerSelected && !humanizeSupported ? <p>L’humanisation n’est pas disponible avec ce plugin.</p> : null}
       <div className="place-autotune-controls__engine" aria-busy={engineBusy} title={engineError ?? "Vos réglages sont conservés quand vous changez de moteur."}>
         <AutotunePremiumSelect
           id="engine"
@@ -1163,7 +1181,7 @@ export default function PlaceMixer({
             <div className="android-fx-toolbar">
               <div role="group" aria-label="Mode des effets voix">
                 <button type="button" aria-pressed={!fxPro} onClick={() => setFxPro(false)}>Simple</button>
-                <button type="button" aria-pressed={fxPro} onClick={() => setFxPro(true)}>Pro</button>
+                <button type="button" aria-pressed={fxPro} onClick={() => { setFxPro(true); setOpenFxSection((current) => current ?? "autotune"); }}>Pro</button>
               </div>
               <button type="button" className="android-fx-monitor" aria-label="Retour des effets au casque" aria-pressed={room.personalVocal.monitoring} disabled={engineSelectionBusy} onClick={onToggleMonitoring}><Headphones aria-hidden="true" /></button>
             </div>
@@ -1183,8 +1201,14 @@ export default function PlaceMixer({
               </section>
             </div> : null}
           </> : null}
-          <div className="place-fx-accordion-stack" hidden={desktopFx && !fxPro}>
+          <div className={desktopFx ? "place-fx-pro" : "place-fx-accordion-stack"} hidden={desktopFx && !fxPro}>
+            {desktopFx ? <nav className="place-fx-pro__nav" aria-label="Réglages Pro">
+              <button type="button" aria-pressed={openFxSection === "autotune"} onClick={() => setOpenFxSection("autotune")}><AudioWaveform aria-hidden="true" />Correction</button>
+              <button type="button" aria-pressed={openFxSection === "effects"} onClick={() => setOpenFxSection("effects")}><SlidersHorizontal aria-hidden="true" />Effets</button>
+              <button type="button" aria-label="Plugins du PC" aria-pressed={openFxSection === "plugins"} onClick={() => setOpenFxSection("plugins")}><Settings2 aria-hidden="true" />Plugins</button>
+            </nav> : null}
             <FxAccordion
+              tabbed={desktopFx}
               id="effects"
               title="Effets voix"
               description="Réverb, délai, compression et EQ"
@@ -1193,20 +1217,20 @@ export default function PlaceMixer({
               open={openFxSection === "effects"}
               onToggle={() => toggleFxSection("effects")}
             >
-              <div className="place-fx-effect-list" role="group" aria-label="Réglages des effets voix">
-                <EffectCard title="Réverb" enabled={fxEditable && room.personalVocal.reverbEnabled} value={fxEditable ? toVisualPosition(room.personalVocal.reverbAmount, 0.18, 0.25) : 0} valueLabel={fxEditable ? `${Math.round(room.personalVocal.reverbAmount * 100)} %` : "Indisponible"} lowLabel="Sec" highLabel="Ambiant" sliderLabel="Mix réverb" disabled={!fxEditable} onToggle={() => {
+              <div className={desktopFx ? "place-pro-faders" : "place-fx-effect-list"} role="group" aria-label="Réglages des effets voix">
+                <EffectCard vertical={desktopFx} title="Réverb" enabled={fxEditable && room.personalVocal.reverbEnabled} value={fxEditable ? toVisualPosition(room.personalVocal.reverbAmount, 0.18, 0.25) : 0} valueLabel={fxEditable ? `${Math.round(room.personalVocal.reverbAmount * 100)} %` : "Indisponible"} lowLabel="Sec" highLabel="Ambiant" sliderLabel="Mix réverb" disabled={!fxEditable} onToggle={() => {
                   const next = !room.personalVocal.reverbEnabled;
                   onVocal({ reverbEnabled: next, enabled: room.personalVocal.tuneEnabled || next || room.personalVocal.compEnabled || room.personalVocal.delayEnabled || room.personalVocal.eqEnabled });
                 }} onValue={(value) => onVocal({ reverbAmount: fromVisualPosition(value, 0.18, 0.25), reverbEnabled: true, enabled: true })} />
-                <EffectCard title="Délai" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.delayEnabled} value={toVisualPosition(clampUnit((room.personalVocal.delayTimeMs - 100) / 900), 20 / 900, 0.027)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.delayTimeMs)} ms` : "Indisponible"} lowLabel="Court" highLabel="Long" sliderLabel="Durée du délai" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
+                <EffectCard vertical={desktopFx} title="Délai" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.delayEnabled} value={toVisualPosition(clampUnit((room.personalVocal.delayTimeMs - 100) / 900), 20 / 900, 0.027)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.delayTimeMs)} ms` : "Indisponible"} lowLabel="Court" highLabel="Long" sliderLabel="Durée du délai" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
                   const next = !room.personalVocal.delayEnabled;
                   onVocal({ delayEnabled: next, enabled: room.personalVocal.tuneEnabled || room.personalVocal.reverbEnabled || room.personalVocal.compEnabled || next || room.personalVocal.eqEnabled });
                 }} onValue={(value) => onVocal({ delayTimeMs: Math.round(100 + fromVisualPosition(value, 20 / 900, 0.027) * 900), delayEnabled: true, enabled: true })} />
-                <EffectCard title="Compression" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.compEnabled} value={!browserOnlyFxDisabled && fxEditable ? toVisualPosition(room.personalVocal.compAmount, 0.62, 0.567) : 0} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.compAmount * 100)} %` : "Indisponible"} lowLabel="Doux" highLabel="Fort" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
+                <EffectCard vertical={desktopFx} title="Compression" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.compEnabled} value={!browserOnlyFxDisabled && fxEditable ? toVisualPosition(room.personalVocal.compAmount, 0.62, 0.567) : 0} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.compAmount * 100)} %` : "Indisponible"} lowLabel="Doux" highLabel="Fort" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
                   const next = !room.personalVocal.compEnabled;
                   onVocal({ compEnabled: next, enabled: room.personalVocal.tuneEnabled || room.personalVocal.reverbEnabled || room.personalVocal.delayEnabled || room.personalVocal.eqEnabled || next });
                 }} onValue={(value) => onVocal({ compAmount: fromVisualPosition(value, 0.62, 0.567), compEnabled: true, enabled: true })} />
-                <EffectCard title="EQ" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.eqEnabled} value={toVisualPosition(clampUnit((EQ_GAIN_BY_PRESET[room.personalVocal.preset] + 12) / 27), 15 / 27, 0.558)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${EQ_GAIN_BY_PRESET[room.personalVocal.preset] >= 0 ? "+" : ""}${EQ_GAIN_BY_PRESET[room.personalVocal.preset]} dB` : "Indisponible"} lowLabel="Grave" highLabel="Clair" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
+                <EffectCard vertical={desktopFx} title="EQ" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.eqEnabled} value={toVisualPosition(clampUnit((EQ_GAIN_BY_PRESET[room.personalVocal.preset] + 12) / 27), 15 / 27, 0.558)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${EQ_GAIN_BY_PRESET[room.personalVocal.preset] >= 0 ? "+" : ""}${EQ_GAIN_BY_PRESET[room.personalVocal.preset]} dB` : "Indisponible"} lowLabel="Grave" highLabel="Clair" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
                   const next = !room.personalVocal.eqEnabled;
                   onVocal({ eqEnabled: next, enabled: room.personalVocal.tuneEnabled || room.personalVocal.reverbEnabled || room.personalVocal.compEnabled || room.personalVocal.delayEnabled || next });
                 }} onValue={(value) => onVocal({ preset: nearestEqPreset(fromVisualPosition(value, 15 / 27, 0.558)), eqEnabled: true, enabled: true })} />
@@ -1214,9 +1238,10 @@ export default function PlaceMixer({
             </FxAccordion>
 
             <FxAccordion
+              tabbed={desktopFx}
               id="autotune"
               title="Autotune"
-              description="Tonalité, gamme, vitesse et humanisation"
+              description={desktopFx && testPitchSelected ? "Accorde ta voix à ton morceau" : "Tonalité, gamme, vitesse et humanisation"}
               status={openFxSection === "autotune" ? autotuneRuntimeLabel : autotuneEnabled ? "Actif" : "Inactif"}
               statusLive
               icon={<AutotuneSparkleIcon />}
@@ -1225,7 +1250,7 @@ export default function PlaceMixer({
               headerAction={(
                 <button
                   type="button"
-                  className={`place-autotune-toggle${autotuneEnabled ? " is-active" : ""}`}
+                  className={desktopFx ? "place-fx-pro__power" : `place-autotune-toggle${autotuneEnabled ? " is-active" : ""}`}
                   hidden={openFxSection !== "autotune"}
                   tabIndex={openFxSection === "autotune" ? undefined : -1}
                   aria-label="Activer ou bypasser l’Autotune"
@@ -1235,7 +1260,7 @@ export default function PlaceMixer({
                   disabled={openFxSection !== "autotune" || !fxEditable || engineSelectionBusy}
                   onClick={() => void toggleAutotune()}
                 >
-                  {autotuneEnabled ? "ON" : "OFF"}
+                  {desktopFx ? <Power aria-hidden="true" /> : autotuneEnabled ? "ON" : "OFF"}
                 </button>
               )}
             >
@@ -1255,6 +1280,7 @@ export default function PlaceMixer({
 
 
             <FxAccordion
+              tabbed={desktopFx}
               id="plugins"
               title="Plugins du PC"
               description="Connectez vos plugins audio à MeeWav"
@@ -1274,7 +1300,7 @@ export default function PlaceMixer({
               />
             </FxAccordion>
 
-            <header className="place-fx-view__voice is-compact">
+            {!desktopFx ? <header className="place-fx-view__voice is-compact">
               {selectedParticipant ? <img src={selectedParticipant.profile.avatarUrl} alt="" /> : <span><Mic aria-hidden="true" /></span>}
               <div><small>RETOUR CASQUE</small><strong>{selectedParticipant?.profile.displayName || room.currentUserProfile?.displayName || room.host.displayName}</strong></div>
               <MeewavTooltip content="Ta voix reste audible : ce bouton ajoute uniquement les effets.">
@@ -1283,7 +1309,7 @@ export default function PlaceMixer({
                   <span className="place-fx-view__monitor-switch" aria-hidden="true"><b>{room.personalVocal.monitoring ? "ON" : "OFF"}</b><i /></span>
                 </button>
               </MeewavTooltip>
-            </header>
+            </header> : null}
           </div>
         </section>
       )}

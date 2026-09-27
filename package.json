@@ -15,6 +15,8 @@
     "dev:place-audio": "vite --mode audio-lab --host 127.0.0.1 --port 5178 --open /rooms",
     "dev:tremplin": "vite --mode tremplin --host 0.0.0.0 --port 5174 --open /tremplin",
     "opendaw:assets:sync": "node scripts/sync-opendaw-wasm.mjs",
+    "audio:android:build": "node scripts/build-android-voice.mjs",
+    "audio:android:test": "node --test scripts/test-android-voice.mjs",
     "opendaw:assets:verify": "node scripts/verify-opendaw-wasm.mjs",
     "opendaw:assets:verify:dist": "node scripts/verify-opendaw-wasm.mjs --root dist",
     "voice-correction:candidates:validate": "node experiments/voice-correction/validate-candidates.mjs",
