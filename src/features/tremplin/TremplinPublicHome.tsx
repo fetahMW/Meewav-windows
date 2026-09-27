@@ -20,9 +20,11 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent,
 } from "react";
 import { MeewavGradeBadge } from "../grades/MeewavGradeBadge";
+import { getGradeBadgeMeta } from "../grades/gradeBadges";
 import { tremplinArtists, type TremplinArtist } from "./tremplinArtistData";
 import {
   getTremplinTokenLifecycleStage,
@@ -265,9 +267,9 @@ function HeroEditorialVisual({
         Sélection Meewav <span>À découvrir</span>
       </span>
       <div className="tremplin-home__vinyl" aria-hidden="true">
-        <i>
+        <span className="tremplin-home__vinyl-face"><i>
           LE TREMPLIN<span>meewav.</span>
-        </i>
+        </i></span>
       </div>
       {companion && (
         <div className="tremplin-home__sleeve" aria-hidden="true">
@@ -1005,9 +1007,14 @@ export default function TremplinPublicHome({
             return (
               <article
                 key={entry.artist.id}
-                className="tremplin-home__talent"
+                className={`tremplin-home__talent${playing ? " is-playing" : ""}`}
+                style={{ "--release-accent": getGradeBadgeMeta(entry.artist.gradeLevel).mainColor } as CSSProperties}
                 data-token-stage={entry.tokenStage}
               >
+                <div className="tremplin-home__talent-artwork">
+                  <span className="tremplin-home__talent-disc" aria-hidden="true">
+                    <span className="tremplin-home__talent-disc-face"><img src={entry.artist.portrait} alt="" loading="lazy" /></span>
+                  </span>
                 <div className="tremplin-home__talent-image">
                   <button
                     type="button"
@@ -1041,6 +1048,7 @@ export default function TremplinPublicHome({
                     size="sm"
                     variant="icon"
                   />
+                </div>
                 </div>
                 <div className="tremplin-home__talent-copy">
                   <small>En ce moment</small>
