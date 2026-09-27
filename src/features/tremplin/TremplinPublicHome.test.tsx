@@ -163,6 +163,15 @@ describe("accueil passerelle du Tremplin", () => {
   });
 });
 
+describe("lecture du vinyle principal", () => {
+  it("transmet KING au lecteur partagé sans remplacer les autres extraits", () => {
+    const { onToggleArtistAudio } = renderPublicHome();
+    fireEvent.click(screen.getByRole("button", { name: "Écouter Kylian Osei" }));
+    expect(onToggleArtistAudio).toHaveBeenCalledWith("kylian-osei", "/media/vinyl/003-king.mp3");
+    expect(document.querySelector(".tremplin-home__record footer")).toHaveTextContent("003 KING");
+  });
+});
+
 describe("progression MeeWav interactive", () => {
   it("préserve le niveau 4 initial puis déplace l’explication au survol", () => {
     renderPublicHome();

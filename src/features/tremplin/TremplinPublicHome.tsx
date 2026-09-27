@@ -54,7 +54,7 @@ type TremplinPublicHomeProps = {
   playingArtistId: string | null;
   followedArtistIds: ReadonlySet<string>;
   userState: TremplinUserState;
-  onToggleArtistAudio: (artistId: string) => void;
+  onToggleArtistAudio: (artistId: string, source?: string) => void;
   onOpenArtist: (artist: TremplinArtist) => void;
   onOpenArtistSupport: (artist: TremplinArtist) => void;
   onMyArtists: () => void;
@@ -289,7 +289,7 @@ function HeroEditorialVisual({
         </button>
         <footer>
           <span>
-            <strong>{entry.artist.audio.title}</strong>
+            <strong>003 KING</strong>
             <small>{getTremplinProfessionLabel(entry.artist)}</small>
           </span>
           <button
@@ -558,7 +558,7 @@ export default function TremplinPublicHome({
           reducedMotion={reducedMotion}
           onOpen={() => defaultEntry && openPath(defaultEntry, "hero")}
           onListen={() =>
-            defaultEntry && onToggleArtistAudio(defaultEntry.artist.id)
+            defaultEntry && onToggleArtistAudio(defaultEntry.artist.id, "/media/vinyl/003-king.mp3")
           }
         />
       </section>

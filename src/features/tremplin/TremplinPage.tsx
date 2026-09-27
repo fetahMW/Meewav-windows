@@ -1070,6 +1070,7 @@ export default function TremplinPage() {
   const [selectedArtist, setSelectedArtist] = useState<TremplinArtist | null>(() => getArtistFromPath(location.pathname));
   const [flow, setFlow] = useState<{ artist: TremplinArtist; token: TremplinArtistToken; mode: TokenOperationMode } | null>(null);
   const [playingArtistId, setPlayingArtistId] = useState<string | null>(null);
+  const [audioSourceOverride, setAudioSourceOverride] = useState<string | null>(null);
   const [audioProgress, setAudioProgress] = useState({ currentTime: 0, duration: 0 });
   const [toast, setToast] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -1163,7 +1164,7 @@ export default function TremplinPage() {
     if (!playingArtistId) return;
     const artist = tremplinArtists.find((item) => item.id === playingArtistId);
     if (!artist) return;
-    const audio = new Audio(artist.audio.audioSrc);
+    const audio = new Audio(audioSourceOverride ?? artist.audio.audioSrc);
     audio.preload = "metadata";
     audio.volume = .35;
     audio.onloadedmetadata = () => setAudioProgress({ currentTime: audio.currentTime, duration: Number.isFinite(audio.duration) ? audio.duration : 0 });
@@ -1179,7 +1180,7 @@ export default function TremplinPage() {
     audio.play().catch(() => { setPlayingArtistId(null); setToast("La préécoute audio n’est pas disponible sur cet appareil."); });
     audioRef.current = audio;
     return () => { audio.pause(); audio.onerror = null; audio.onended = null; audio.onloadedmetadata = null; audio.ontimeupdate = null; };
-  }, [playingArtistId]);
+  }, [playingArtistId, audioSourceOverride]);
 
   useEffect(() => {
     if (activeView === "home" && !selectedArtist && !flow) trackTremplinEvent("tremplin_home_viewed");
@@ -1363,11 +1364,14 @@ export default function TremplinPage() {
       tremplinSessionSnapshot,
     } });
   };
-  const toggleAudio = (artistId: string) => setPlayingArtistId((current) => {
-    const next = current === artistId ? null : artistId;
-    if (next) trackTremplinEvent("preview_started", { artistId });
-    return next;
-  });
+  const toggleAudio = (artistId: string, source: string | null = null) => {
+    setAudioSourceOverride(source);
+    setPlayingArtistId((current) => {
+      const next = current === artistId && source === audioSourceOverride ? null : artistId;
+      if (next) trackTremplinEvent("preview_started", { artistId });
+      return next;
+    });
+  };
 
   const mainContent = (() => {
     if (selectedArtist) {
