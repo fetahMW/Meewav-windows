@@ -1,11 +1,9 @@
 import {
   ArrowRight,
-  BadgeCheck,
   Heart,
   CirclePlay,
   CircleUserRound,
   Sparkles,
-  Plus,
   Compass,
   MapPin,
   Pause,
@@ -45,7 +43,6 @@ import {
 } from "./tremplinTokenData";
 import MeewavTokenIcon from "./MeewavTokenIcon";
 import TremplinGradeProgression from "./TremplinGradeProgression";
-import TremplinDemoBanner from "./TremplinDemoBanner";
 import "./tremplin-public-home.css";
 import "./tremplin-public-home-compact.css";
 import "./tremplin-public-home-gateway.css";
@@ -84,27 +81,6 @@ const HOME_ENTRIES: readonly HomeEntry[] = tremplinArtists
       ? [{ artist, token, tokenStage: getTremplinTokenLifecycleStage(artist) }]
       : [];
   });
-
-const SUPPORT_STEPS = [
-  {
-    number: "01",
-    title: "Repère le talent.",
-    copy: "Une voix, un geste, une création. Découvre celles et ceux qui ont quelque chose à partager.",
-    icon: Search,
-  },
-  {
-    number: "02",
-    title: "Suis le chemin.",
-    copy: "Entre dans les coulisses. Retrouve ses projets, ses étapes et les repères de son évolution.",
-    icon: BadgeCheck,
-  },
-  {
-    number: "03",
-    title: "Fais grandir l’élan.",
-    copy: "Suis son parcours gratuitement. Et si tu le souhaites, découvre comment soutenir son projet.",
-    icon: MeewavTokenIcon,
-  },
-] as const;
 
 const TOKEN_PROJECT_PURPOSE_LABELS: Readonly<
   Record<TremplinTokenLifecycleStage, string>
@@ -267,9 +243,11 @@ function HeroEditorialVisual({
         Sélection Meewav <span>À découvrir</span>
       </span>
       <div className="tremplin-home__vinyl" aria-hidden="true">
-        <span className="tremplin-home__vinyl-face"><i>
-          LE TREMPLIN<span>meewav.</span>
-        </i></span>
+        <span className="tremplin-home__vinyl-face">
+          <i>
+            LE TREMPLIN<span>meewav.</span>
+          </i>
+        </span>
       </div>
       {companion && (
         <div className="tremplin-home__sleeve" aria-hidden="true">
@@ -288,7 +266,7 @@ function HeroEditorialVisual({
           aria-label={"Découvrir le parcours de " + entry.artist.name}
         >
           <img
-            src={entry.artist.portrait}
+            src={entry.artist.id === "kylian-osei" ? "/images/tremplin/artists/generated/kylian-osei-home-studio-v1.png" : entry.artist.portrait}
             alt={"Portrait de " + entry.artist.name}
             fetchPriority="high"
           />
@@ -329,77 +307,14 @@ function HeroEditorialVisual({
   );
 }
 
-function RecentAccessCard({
-  entry,
-  onOpenArtist,
-  onOpenSupport,
-}: {
-  entry: HomeEntry;
-  onOpenArtist: () => void;
-  onOpenSupport: () => void;
-}) {
-  const status = TREMPLIN_HOME_TOKEN_STATUS_UI[entry.tokenStage];
-  return (
-    <article
-      className="tremplin-gateway__access-card"
-      data-token-stage={entry.tokenStage}
-    >
-      <button
-        type="button"
-        className="tremplin-gateway__access-media"
-        onClick={onOpenArtist}
-        aria-label={`Voir le profil de ${entry.artist.name}`}
-      >
-        <img src={entry.artist.portrait} alt="" loading="lazy" />
-      </button>
-      <div className="tremplin-gateway__access-copy">
-        <header>
-          <div>
-            <h3>{entry.artist.name}</h3>
-            <p>
-              {getTremplinProfessionLabel(entry.artist)} · {entry.artist.city}
-            </p>
-          </div>
-          <MeewavGradeBadge
-            level={entry.artist.gradeLevel}
-            size="sm"
-            variant="icon"
-          />
-        </header>
-        <TokenStatus entry={entry} />
-        <div className="tremplin-gateway__access-actions">
-          <button
-            type="button"
-            className="is-primary"
-            onClick={status.allowSupport ? onOpenSupport : onOpenArtist}
-          >
-            {status.allowSupport ? (
-              <MeewavTokenIcon aria-hidden="true" />
-            ) : null}
-            {status.action}
-          </button>
-          {status.action !== "Voir le parcours" ? (
-            <button type="button" className="is-link" onClick={onOpenArtist}>
-              Voir le parcours <ArrowRight aria-hidden="true" />
-            </button>
-          ) : null}
-        </div>
-      </div>
-    </article>
-  );
-}
-
 export default function TremplinPublicHome({
   playingArtistId,
-  followedArtistIds,
   userState,
   onToggleArtistAudio,
   onOpenArtist,
   onOpenArtistSupport,
-  onMyArtists,
   onUnderstand,
   onUnderstandGrades,
-  onUnderstandToken,
   onOpenRoute,
   onSearch,
   artistActionLabel,
@@ -414,17 +329,7 @@ export default function TremplinPublicHome({
   const searchTrackedRef = useRef(false);
   const gradeViewTrackedRef = useRef(false);
 
-  const editorialEntries = useMemo(
-    () => HOME_ENTRIES.filter(({ artist }) => artist.editorialSelection),
-    [],
-  );
-  const defaultEntry = useMemo(() => {
-    const entries =
-      editorialEntries.length > 0 ? editorialEntries : HOME_ENTRIES;
-    const dayIndex =
-      Math.floor(Date.now() / 86_400_000) % Math.max(entries.length, 1);
-    return entries[dayIndex] ?? HOME_ENTRIES[0];
-  }, [editorialEntries]);
+  const defaultEntry = HOME_ENTRIES.find(({ artist }) => artist.id === "kylian-osei") ?? HOME_ENTRIES[0];
   const selectedEntry = useMemo(
     () =>
       HOME_ENTRIES.find(({ artist }) => artist.id === selectedEntryId) ??
@@ -491,12 +396,6 @@ export default function TremplinPublicHome({
     ].filter(({ entries }) => entries.length > 0);
   }, [query, searchSuggestions]);
 
-  const followedEntries = useMemo(
-    () => HOME_ENTRIES.filter(({ artist }) => followedArtistIds.has(artist.id)),
-    [followedArtistIds],
-  );
-  const showRecentAccess =
-    userState !== "visitor" && followedEntries.length > 0;
   const spotlightEntries = useMemo(() => {
     const entries =
       discoveryFilter === "all"
@@ -513,19 +412,13 @@ export default function TremplinPublicHome({
       )
       .slice(0, 4);
   }, [discoveryFilter]);
-  const featuredProject = defaultEntry
-    ? getTremplinProjectSnapshot(defaultEntry.artist)
-    : null;
   const scrollToTalents = () =>
-    document
-      .getElementById("a-la-une")
-      ?.scrollIntoView({
-        behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")
-          .matches
-          ? "auto"
-          : "smooth",
-        block: "start",
-      });
+    document.getElementById("a-la-une")?.scrollIntoView({
+      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "start",
+    });
   const selectEntry = (entry: HomeEntry) => {
     setSelectedEntryId(entry.artist.id);
     setQuery(entry.artist.name);
@@ -578,14 +471,6 @@ export default function TremplinPublicHome({
 
   return (
     <div className="tremplin-public-home tremplin-home">
-      <div className="tremplin-home__masthead">
-        <span>
-          MEEWAV <i /> LE TREMPLIN
-        </span>
-        <span>
-          La nouvelle scène s’écrit ici <Sparkles aria-hidden="true" />
-        </span>
-      </div>
       <section
         id="tremplin-entry"
         className="tremplin-home__hero"
@@ -641,7 +526,7 @@ export default function TremplinPublicHome({
         <HeroEditorialVisual
           entry={defaultEntry}
           companion={HOME_ENTRIES.find(
-            ({ artist }) => artist.id !== defaultEntry?.artist.id,
+            ({ artist }) => artist.id === "lunae",
           )}
           playing={playingArtistId === defaultEntry?.artist.id}
           onOpen={() => defaultEntry && openPath(defaultEntry, "hero")}
@@ -650,47 +535,9 @@ export default function TremplinPublicHome({
           }
         />
       </section>
-      <div className="tremplin-home__ribbon" aria-label="L’esprit du Tremplin">
-        <span>Le talent avant les chiffres</span>
-        <Sparkles aria-hidden="true" />
-        <span>La rencontre avant le buzz</span>
-        <Sparkles aria-hidden="true" />
-        <span>Toi, dès le début</span>
+      <div className="tremplin-home__grades">
+        <TremplinGradeProgression onUnderstandGrades={onUnderstandGrades} />
       </div>
-      <div className="tremplin-home__demo">
-        <TremplinDemoBanner compact context="fixtures" />
-      </div>
-
-      {showRecentAccess && (
-        <section
-          className="tremplin-home__section"
-          aria-labelledby="tremplin-home-following"
-        >
-          <header className="tremplin-home__section-heading">
-            <div>
-              <span className="tremplin-home__eyebrow">Ton premier rang</span>
-              <h2 id="tremplin-home-following">L’histoire continue.</h2>
-            </div>
-            <button
-              type="button"
-              className="tremplin-home__text-button"
-              onClick={onMyArtists}
-            >
-              Mes artistes <ArrowRight />
-            </button>
-          </header>
-          <div className="tremplin-gateway__access-grid">
-            {followedEntries.slice(0, 3).map((entry) => (
-              <RecentAccessCard
-                key={entry.artist.id}
-                entry={entry}
-                onOpenArtist={() => openPath(entry, "recent")}
-                onOpenSupport={() => openStatusOrSupport(entry, "recent")}
-              />
-            ))}
-          </div>
-        </section>
-      )}
 
       <section
         id="a-la-une"
@@ -699,13 +546,13 @@ export default function TremplinPublicHome({
       >
         <header className="tremplin-home__section-heading">
           <div>
-            <span className="tremplin-home__eyebrow">01 / La rencontre</span>
+            <span className="tremplin-home__eyebrow">La rencontre</span>
             <h2 id="tremplin-home-discover-title">
               Ton prochain <em>coup de cœur.</em>
             </h2>
             <p>
-              Des univers singuliers. Des projets en mouvement. À toi de trouver
-              celui qui te parle.
+              Une voix, un univers, une rencontre. Trouve les artistes qui te
+              parlent et rejoins leur histoire dès les premières notes.
             </p>
           </div>
           <button
@@ -1008,47 +855,60 @@ export default function TremplinPublicHome({
               <article
                 key={entry.artist.id}
                 className={`tremplin-home__talent${playing ? " is-playing" : ""}`}
-                style={{ "--release-accent": getGradeBadgeMeta(entry.artist.gradeLevel).mainColor } as CSSProperties}
+                style={
+                  {
+                    "--release-accent": getGradeBadgeMeta(
+                      entry.artist.gradeLevel,
+                    ).mainColor,
+                  } as CSSProperties
+                }
                 data-token-stage={entry.tokenStage}
               >
                 <div className="tremplin-home__talent-artwork">
-                  <span className="tremplin-home__talent-disc" aria-hidden="true">
-                    <span className="tremplin-home__talent-disc-face"><img src={entry.artist.portrait} alt="" loading="lazy" /></span>
-                  </span>
-                <div className="tremplin-home__talent-image">
-                  <button
-                    type="button"
-                    onClick={() => openPath(entry, "project")}
-                    aria-label={"Voir le projet de " + entry.artist.name}
+                  <span
+                    className="tremplin-home__talent-disc"
+                    aria-hidden="true"
                   >
-                    <img src={entry.artist.portrait} alt="" loading="lazy" />
-                    <span>
-                      <small>{getTremplinProfessionLabel(entry.artist)}</small>
-                      <strong>{entry.artist.name}</strong>
-                      <span>
-                        <MapPin aria-hidden="true" /> {entry.artist.city}
-                      </span>
+                    <span className="tremplin-home__talent-disc-face">
+                      <img src={entry.artist.portrait} alt="" loading="lazy" />
                     </span>
-                  </button>
-                  <button
-                    className="tremplin-home__talent-play"
-                    type="button"
-                    aria-pressed={playing}
-                    aria-label={
-                      (playing
-                        ? "Mettre en pause l’extrait de "
-                        : "Écouter l’extrait de ") + entry.artist.name
-                    }
-                    onClick={() => onToggleArtistAudio(entry.artist.id)}
-                  >
-                    {playing ? <Pause /> : <Play />}
-                  </button>
-                  <MeewavGradeBadge
-                    level={entry.artist.gradeLevel}
-                    size="sm"
-                    variant="icon"
-                  />
-                </div>
+                  </span>
+                  <div className="tremplin-home__talent-image">
+                    <button
+                      type="button"
+                      onClick={() => openPath(entry, "project")}
+                      aria-label={"Voir le projet de " + entry.artist.name}
+                    >
+                      <img src={entry.artist.portrait} alt="" loading="lazy" />
+                      <span>
+                        <small>
+                          {getTremplinProfessionLabel(entry.artist)}
+                        </small>
+                        <strong>{entry.artist.name}</strong>
+                        <span>
+                          <MapPin aria-hidden="true" /> {entry.artist.city}
+                        </span>
+                      </span>
+                    </button>
+                    <button
+                      className="tremplin-home__talent-play"
+                      type="button"
+                      aria-pressed={playing}
+                      aria-label={
+                        (playing
+                          ? "Mettre en pause l’extrait de "
+                          : "Écouter l’extrait de ") + entry.artist.name
+                      }
+                      onClick={() => onToggleArtistAudio(entry.artist.id)}
+                    >
+                      {playing ? <Pause /> : <Play />}
+                    </button>
+                    <MeewavGradeBadge
+                      level={entry.artist.gradeLevel}
+                      size="sm"
+                      variant="icon"
+                    />
+                  </div>
                 </div>
                 <div className="tremplin-home__talent-copy">
                   <small>En ce moment</small>
@@ -1088,227 +948,63 @@ export default function TremplinPublicHome({
         </p>
       </section>
 
-      <section
-        id="comment-ca-marche"
-        className="tremplin-home__section tremplin-home__concept"
-        aria-labelledby="tremplin-home-concept-title"
-      >
-        <header className="tremplin-home__section-heading">
-          <div>
-            <span className="tremplin-home__eyebrow">02 / Le lien</span>
-            <h2 id="tremplin-home-concept-title">
-              Une aventure à laquelle
-              <br />
-              <em>prendre part.</em>
-            </h2>
-          </div>
-          <p>
-            Le talent se construit. Le Tremplin le rend visible.
-            <br />
-            Derrière chaque création, il y a un parcours. Ici, tu peux le suivre
-            de près.
-          </p>
-        </header>
-        <ol className="tremplin-home__steps">
-          {SUPPORT_STEPS.map(({ number, title, copy, icon: Icon }) => (
-            <li key={number}>
-              <div>
-                <span>{number}</span>
-                <Icon aria-hidden="true" />
-              </div>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {defaultEntry && featuredProject && (
+      <div className="tremplin-home__invitation">
         <section
-          className="tremplin-home__section tremplin-home__project"
-          aria-labelledby="tremplin-home-project-title"
+          className="tremplin-home__section tremplin-home__artist-entry"
+          aria-labelledby="tremplin-home-artist-title"
         >
-          <div className="tremplin-home__project-image">
-            <img
-              src={defaultEntry.artist.artwork}
-              alt={"L’univers de " + defaultEntry.artist.name}
-              loading="lazy"
-            />
-            <span>
-              <small>Dans les coulisses avec</small>
-              <strong>{defaultEntry.artist.name}</strong>
-            </span>
-          </div>
-          <div className="tremplin-home__project-copy">
+          <img
+            src="/images/tremplin/tremplin-artist-backstage-v1.png"
+            alt=""
+            loading="lazy"
+          />
+          <div>
             <span className="tremplin-home__eyebrow">
-              03 / Ce qui se construit
+              <CircleUserRound aria-hidden="true" /> Pour ceux qui créent
             </span>
-            <h2 id="tremplin-home-project-title">{featuredProject.headline}</h2>
-            <p>{defaultEntry.artist.biography}</p>
-            <div className="tremplin-home__milestone">
-              <span>
-                <i /> La prochaine étape
-              </span>
-              <strong>{featuredProject.nextMilestone}</strong>
-            </div>
-            <ol className="tremplin-home__journal">
-              {defaultEntry.artist.updates.slice(0, 2).map((update) => (
-                <li key={update.id}>
-                  <small>{update.dateLabel}</small>
-                  <span>{update.title}</span>
-                </li>
-              ))}
-            </ol>
+            <h2 id="tremplin-home-artist-title">
+              Ton talent mérite
+              <br />
+              <em>une suite.</em>
+            </h2>
+            <p>
+              Montre ce que tu crées. Raconte ce que tu construis.
+              <br />
+              Rejoins le Tremplin et donne à ta communauté un parcours à suivre.
+            </p>
             <button
               type="button"
               className="tremplin-home__primary"
-              onClick={() => openPath(defaultEntry, "project")}
-            >
-              Suivre l’histoire <ArrowRight aria-hidden="true" />
-            </button>
-          </div>
-        </section>
-      )}
-
-      <div className="tremplin-home__grades">
-        <TremplinGradeProgression onUnderstandGrades={onUnderstandGrades} />
-      </div>
-
-      <section
-        id="protections"
-        className="tremplin-home__section tremplin-home__faq"
-        aria-labelledby="tremplin-home-faq-title"
-      >
-        <div>
-          <span className="tremplin-home__eyebrow">Tout simplement</span>
-          <h2 id="tremplin-home-faq-title">
-            La curiosité d’abord.
-            <br />
-            <em>Le choix, toujours.</em>
-          </h2>
-          <p>Les bons repères pour profiter du Tremplin, à ton rythme.</p>
-          <button
-            type="button"
-            className="tremplin-home__text-button"
-            onClick={onUnderstand}
-          >
-            Comprendre le Tremplin <ArrowRight aria-hidden="true" />
-          </button>
-        </div>
-        <div className="tremplin-home__questions">
-          <details open>
-            <summary>
-              Est-ce que je peux simplement découvrir ?{" "}
-              <Plus aria-hidden="true" />
-            </summary>
-            <p>
-              Oui. Découvrir les artistes et suivre leurs parcours reste
-              gratuit. Tu peux écouter, explorer les projets et retrouver tes
-              artistes sans acheter de jeton.
-            </p>
-          </details>
-          <details>
-            <summary>
-              Comment donner de la force à un projet ?{" "}
-              <Plus aria-hidden="true" />
-            </summary>
-            <p>
-              Tu peux commencer en suivant l’artiste. Lorsqu’un jeton de talent
-              est actif, son espace dédié présente le prix, les frais, la part
-              destinée à l’artiste et les conditions avant toute confirmation.
-            </p>
-            <p>
-              <strong>Achat payant et facultatif</strong> ·{" "}
-              <strong>Valeur variable, aucun gain garanti</strong>. La revente
-              peut être différée et une perte est possible.
-            </p>
-            <button
-              type="button"
-              className="tremplin-home__text-button"
               onClick={() => {
-                trackTremplinEvent("rules_opened", { source: "home-faq" });
-                onUnderstandToken();
+                trackTremplinEvent("artist_onboarding_opened", { userState });
+                onArtistAction();
               }}
             >
-              Comprendre le jeton de talent <ArrowRight aria-hidden="true" />
+              {artistActionLabel} <ArrowRight aria-hidden="true" />
             </button>
-          </details>
-          <details>
-            <summary>
-              À quoi correspondent les six grades ? <Plus aria-hidden="true" />
-            </summary>
-            <p>
-              Ils donnent des repères sur le parcours documenté de l’artiste :
-              créations, régularité, collaborations et accomplissements. Ils ne
-              garantissent pas le succès futur et ne fixent pas automatiquement
-              le prix d’un jeton.
-            </p>
-            <button
-              type="button"
-              className="tremplin-home__text-button"
-              onClick={onUnderstandGrades}
-            >
-              Comprendre les grades <ArrowRight aria-hidden="true" />
-            </button>
-          </details>
-        </div>
-      </section>
-
-      <section
-        className="tremplin-home__section tremplin-home__artist-entry"
-        aria-labelledby="tremplin-home-artist-title"
-      >
-        <img
-          src="/images/tremplin/tremplin-artist-backstage-v1.png"
-          alt=""
-          loading="lazy"
-        />
-        <div>
+            <small>{artistActionDetail}</small>
+          </div>
+        </section>
+        <footer className="tremplin-home__closing">
           <span className="tremplin-home__eyebrow">
-            <CircleUserRound aria-hidden="true" /> Pour ceux qui créent
+            <Compass aria-hidden="true" /> La suite commence ici
           </span>
-          <h2 id="tremplin-home-artist-title">
-            Ton talent mérite
-            <br />
-            <em>une suite.</em>
+          <h2>
+            Tu pourras dire :<br />
+            <em>« J’étais là au début. »</em>
           </h2>
-          <p>
-            Montre ce que tu crées. Raconte ce que tu construis.
-            <br />
-            Donne à ta communauté un parcours à suivre.
-          </p>
           <button
             type="button"
             className="tremplin-home__primary"
-            onClick={() => {
-              trackTremplinEvent("artist_onboarding_opened", { userState });
-              onArtistAction();
-            }}
+            onClick={() => onOpenRoute("/tremplin/decouvrir")}
           >
-            {artistActionLabel} <ArrowRight aria-hidden="true" />
+            Découvrir les talents <ArrowRight aria-hidden="true" />
           </button>
-          <small>{artistActionDetail}</small>
-        </div>
-      </section>
-      <footer className="tremplin-home__closing">
-        <span className="tremplin-home__eyebrow">
-          <Compass aria-hidden="true" /> La suite commence ici
-        </span>
-        <h2>
-          Tu pourras dire :<br />
-          <em>« J’étais là au début. »</em>
-        </h2>
-        <button
-          type="button"
-          className="tremplin-home__primary"
-          onClick={() => onOpenRoute("/tremplin/decouvrir")}
-        >
-          Découvrir les talents <ArrowRight aria-hidden="true" />
-        </button>
-        <span className="tremplin-home__closing-note">
-          Des talents. Des projets. Une communauté.
-        </span>
-      </footer>
+          <span className="tremplin-home__closing-note">
+            Des talents. Des projets. Une communauté.
+          </span>
+        </footer>
+      </div>
     </div>
   );
 }

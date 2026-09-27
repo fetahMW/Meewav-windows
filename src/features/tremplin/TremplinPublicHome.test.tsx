@@ -8,6 +8,7 @@ afterEach(cleanup);
 type HomeCallbacks = {
   onOpenArtist: Mock<(artist: TremplinArtist) => void>;
   onOpenArtistSupport: Mock<(artist: TremplinArtist) => void>;
+  onArtistAction: Mock<() => void>;
   onMyArtists: Mock<() => void>;
   onUnderstand: Mock<() => void>;
   onUnderstandGrades: Mock<() => void>;
@@ -21,6 +22,7 @@ function renderPublicHome(overrides: Partial<HomeCallbacks> = {}, followedArtist
   const callbacks: HomeCallbacks = {
     onOpenArtist: vi.fn<(artist: TremplinArtist) => void>(),
     onOpenArtistSupport: vi.fn<(artist: TremplinArtist) => void>(),
+    onArtistAction: vi.fn<() => void>(),
     onMyArtists: vi.fn<() => void>(),
     onUnderstand: vi.fn<() => void>(),
     onUnderstandGrades: vi.fn<() => void>(),
@@ -47,7 +49,7 @@ function renderPublicHome(overrides: Partial<HomeCallbacks> = {}, followedArtist
       onSearch={callbacks.onSearch}
       artistActionLabel="Je suis artiste"
       artistActionDetail="Découvrir les conditions"
-      onArtistAction={() => undefined}
+      onArtistAction={callbacks.onArtistAction}
     />,
   );
 
@@ -69,9 +71,10 @@ describe("accueil passerelle du Tremplin", () => {
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Les grands noms ont de petits débuts.");
     expect(screen.getByText(/Repère le talent avant le bruit/)).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Portrait de/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Portrait de Kylian Osei" })).toHaveAttribute("src", "/images/tremplin/artists/generated/kylian-osei-home-studio-v1.png");
+    expect(document.querySelector(".tremplin-home__sleeve")).toHaveTextContent("Lunaé");
     expect(screen.getAllByRole("button", { name: /Découvrir les talents/ })).toHaveLength(2);
-    expect(screen.getAllByRole("button", { name: /Comprendre le Tremplin/ })).toHaveLength(2);
+    expect(screen.getAllByRole("button", { name: /Comprendre le Tremplin/ })).toHaveLength(1);
     expect(screen.getByRole("list", { name: "Ce qui reste sous ton contrôle" })).toHaveTextContent("Donner de la force est facultatif");
   });
 
@@ -192,16 +195,19 @@ describe("progression MeeWav interactive", () => {
   });
 });
 
-describe("protections du jeton de talent", () => {
-  it("ouvre l’explication dédiée et garde les risques lisibles", () => {
-    const { onUnderstandToken } = renderPublicHome();
-
-    fireEvent.click(screen.getByText("Comment donner de la force à un projet ?"));
-
-    expect(screen.getByText("Achat payant et facultatif")).toBeInTheDocument();
-    expect(screen.getByText("Valeur variable, aucun gain garanti")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: /Comprendre le jeton de talent/ }));
-
-    expect(onUnderstandToken).toHaveBeenCalledTimes(1);
+describe("hiérarchie de l’accueil", () => {
+  it("ne conserve que les quatre blocs demandés et le parcours artiste existant", () => {
+    const { onArtistAction } = renderPublicHome();
+    const home = document.querySelector(".tremplin-home")!;
+    expect(Array.from(home.children).map(element => element.className)).toEqual([
+      "tremplin-home__hero",
+      "tremplin-home__grades",
+      "tremplin-home__section tremplin-home__discover",
+      "tremplin-home__invitation",
+    ]);
+    expect(home.querySelectorAll(".tremplin-home__talent")).toHaveLength(4);
+    fireEvent.click(screen.getByRole("button", { name: "Je suis artiste" }));
+    expect(onArtistAction).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("heading", { name: /J’étais là au début/ })).toBeInTheDocument();
   });
 });
