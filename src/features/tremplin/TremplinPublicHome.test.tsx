@@ -206,6 +206,8 @@ describe("hiérarchie de l’accueil", () => {
       "tremplin-home__invitation",
     ]);
     expect(home.querySelectorAll(".tremplin-home__talent")).toHaveLength(4);
+    expect(home.querySelectorAll(".vinyl-rotor")).toHaveLength(5);
+    expect(home.querySelectorAll(".vinyl-specular")).toHaveLength(5);
     fireEvent.click(screen.getByRole("button", { name: "Je suis artiste" }));
     expect(onArtistAction).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("heading", { name: /J’étais là au début/ })).toBeInTheDocument();

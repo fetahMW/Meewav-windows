@@ -10,7 +10,7 @@
   margin: 0;
   padding: 0 0 40px;
   color: var(--home-text);
-  background: radial-gradient(ellipse at 84% 4%, #781bed20, transparent 21%), #08080b;
+  background: #05030a url("/images/auth-acoustic-background-trial.png?v=20260913-125450") center 85% / cover no-repeat fixed;
   font-family: Inter, "Segoe UI", Arial, sans-serif;
   isolation: isolate;
 }
@@ -56,11 +56,6 @@
 .tremplin-home__deck-caption { position: absolute; top: 0; right: 2%; display: grid; gap: 5px; color: #797182; font-size: 8px; text-align: right; letter-spacing: .16em; text-transform: uppercase; }
 .tremplin-home__deck-caption span { color: #a347ff; }
 .tremplin-home__vinyl { position:absolute; width:69%; aspect-ratio:1; top:9%; right:0; border-radius:50%; filter:drop-shadow(12px 20px 15px #0008); transition:transform .75s cubic-bezier(.2,.8,.2,1); }
-.tremplin-home__vinyl-face, .tremplin-home__talent-disc-face { position:relative; display:grid; place-items:center; width:100%; height:100%; border:1px solid #74717d70; border-radius:50%; background:repeating-radial-gradient(circle,#08080a 0 1px,#29282d 1.5px,#111114 3px,#050507 4px); animation:tremplin-record-spin 14s linear infinite paused; }
-.tremplin-home__vinyl-face::before, .tremplin-home__talent-disc-face::before { position:absolute; inset:0; border-radius:inherit; background:conic-gradient(from 35deg,transparent 0%,#ffffff28 12%,transparent 22% 47%,#ffffff1c 57%,transparent 67% 100%); content:""; }
-.tremplin-home__vinyl-face::after, .tremplin-home__talent-disc-face::after { position:absolute; z-index:3; width:5px; height:5px; background:#09070c; border:1px solid #ede2ff60; border-radius:50%; content:""; }
-.tremplin-home__vinyl i { z-index: 1; display: grid; place-content: center; gap: 8px; width: 34%; aspect-ratio: 1; border-radius: 50%; background: #9228ef; color: #ffffff; text-align: center; font-size: 7px; font-style: normal; letter-spacing: .1em; }
-.tremplin-home__vinyl i span { font-size: clamp(12px, 1.8vw, 22px); font-weight: 700; letter-spacing: -.05em; }
 .tremplin-home__sleeve { position: absolute; width: 38%; height: 48%; right: 0; bottom: 12%; padding: 8px; border: 1px solid #ac92d930; border-radius: 10px; background: #111114; transform: rotate(13deg); box-shadow: 0 12px 28px #0005; }
 .tremplin-home__sleeve img { width: 100%; height: 100%; object-fit: cover; filter: none; border-radius: 4px; }
 .tremplin-home__sleeve span { position: absolute; left: 15px; bottom: 16px; color: #fff; font-size: clamp(13px, 2vw, 22px); font-weight: 650; text-shadow: 0 2px 14px #000; }
@@ -301,30 +296,24 @@
 .tremplin-home__vinyl { animation:tremplin-vinyl-reveal 1400ms 120ms cubic-bezier(.16,1,.3,1) backwards; }
 .tremplin-home__record, .tremplin-home__sleeve { transition:transform .75s cubic-bezier(.2,.8,.2,1),box-shadow .75s; }
 .tremplin-home__deck.is-playing .tremplin-home__vinyl { transform:translate(5%,-2%); }
-.tremplin-home__deck.is-playing .tremplin-home__vinyl-face { animation-play-state:running; }
 .tremplin-home__deck.is-playing .tremplin-home__record { transform:translate(-3%,1%) rotate(-12deg); box-shadow:0 24px 50px #000b,0 0 32px #9428ff20; }
 .tremplin-home__deck.is-playing .tremplin-home__record footer button { box-shadow:0 0 0 5px #8b2df219,0 0 22px #9137ed60; }
 .tremplin-home__talent { perspective:900px; }
 .tremplin-home__talent-artwork { position:relative; padding-right:12%; isolation:isolate; }
 .tremplin-home__talent-disc { position:absolute; z-index:0; right:0; top:5%; width:82%; aspect-ratio:1; border-radius:50%; filter:drop-shadow(4px 8px 5px #0009); transform:translateX(-5%); transition:transform .7s cubic-bezier(.2,.8,.2,1); }
-.tremplin-home__talent-disc-face > img { position:relative; z-index:1; width:34%; height:34%; border-radius:50%; object-fit:cover; border:4px solid var(--release-accent,#a347ff); }
 .tremplin-home__talent-image { box-shadow:inset 0 0 0 1px #ffffff15,0 10px 20px #0008; transition:transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .7s; }
 .tremplin-home__talent.is-playing .tremplin-home__talent-disc, .tremplin-home__talent:focus-within .tremplin-home__talent-disc { transform:translateX(7%); }
-.tremplin-home__talent.is-playing .tremplin-home__talent-disc-face { animation-play-state:running; }
 .tremplin-home__talent.is-playing .tremplin-home__talent-image, .tremplin-home__talent:focus-within .tremplin-home__talent-image { transform:translateX(-3%) rotate(-3deg); box-shadow:0 12px 26px #0009,0 0 16px color-mix(in srgb,var(--release-accent) 18%,transparent); }
 .tremplin-home__talent-play { border-color:#ae69ff80; background:linear-gradient(145deg,#a23aff,#6720bd); box-shadow:0 3px 9px #0008,inset 0 1px #ffffff30; backdrop-filter:none; }
 .tremplin-home__talent-image > button > span { padding:14px; }
 .tremplin-home__talent-image strong { font-size:clamp(18px,1.8vw,25px); }
 @media (hover:hover) and (pointer:fine) {
   .tremplin-home__deck:hover .tremplin-home__vinyl { transform:translate(5%,-2%); }
-  .tremplin-home__deck:hover .tremplin-home__vinyl-face { animation-play-state:running; }
   .tremplin-home__deck:hover .tremplin-home__record { transform:translate(-3%,1%) rotate(-12deg); }
   .tremplin-home__deck:hover .tremplin-home__sleeve { transform:translate(3%,3%) rotate(17deg); }
   .tremplin-home__talent:hover .tremplin-home__talent-disc { transform:translateX(7%); }
-  .tremplin-home__talent:hover .tremplin-home__talent-disc-face { animation-play-state:running; }
   .tremplin-home__talent:hover .tremplin-home__talent-image { transform:translateX(-3%) rotate(-3deg); }
 }
-@keyframes tremplin-record-spin { to { transform:rotate(360deg); } }
 @keyframes tremplin-vinyl-reveal { from { opacity:0; transform:translate(-28%,5%) rotate(-25deg); } to { opacity:1; transform:translate(0,0) rotate(0); } }
 @keyframes tremplin-deck-arrive { from { opacity:0; transform:translateY(22px) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
 /* Restore the original six lacquered grade cards and their canonical artwork. */
@@ -345,4 +334,12 @@
 @media (max-width: 600px) {
   .tremplin-home__discover { padding-block: 28px 40px; }
   .tremplin-home__invitation { padding-top: 8px; }
+}
+
+/* Reuse the Globe record without overriding its grooves or fixed reflections. */
+.tremplin-home .vinyl-shell { width: 100%; --accent: #a347ff; }
+.tremplin-home .vinyl svg { width: 100%; height: 100%; }
+.tremplin-home .vinyl { cursor: inherit; }
+@media (min-aspect-ratio: 18/9) {
+  .tremplin-home { background-position: center 72%; }
 }

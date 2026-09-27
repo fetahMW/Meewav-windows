@@ -21,6 +21,7 @@ import {
   type CSSProperties,
   type KeyboardEvent,
 } from "react";
+import Vinyl from "../../../vendor/meewav-vinyl/src/components/Vinyl";
 import { MeewavGradeBadge } from "../grades/MeewavGradeBadge";
 import { getGradeBadgeMeta } from "../grades/gradeBadges";
 import { tremplinArtists, type TremplinArtist } from "./tremplinArtistData";
@@ -218,15 +219,18 @@ function HeroEditorialVisual({
   entry,
   companion,
   playing,
+  reducedMotion,
   onOpen,
   onListen,
 }: {
   entry?: HomeEntry;
   companion?: HomeEntry;
   playing: boolean;
+  reducedMotion: boolean;
   onOpen: () => void;
   onListen: () => void;
 }) {
+  const [hovered, setHovered] = useState(false);
   if (!entry)
     return (
       <figure className="tremplin-home__fallback">
@@ -238,16 +242,20 @@ function HeroEditorialVisual({
       </figure>
     );
   return (
-    <div className={"tremplin-home__deck " + (playing ? "is-playing" : "")}>
+    <div
+      className={"tremplin-home__deck " + (playing ? "is-playing" : "")}
+      onPointerEnter={(event) => setHovered(event.pointerType === "mouse")}
+      onPointerLeave={() => setHovered(false)}
+    >
       <span className="tremplin-home__deck-caption">
         Sélection Meewav <span>À découvrir</span>
       </span>
       <div className="tremplin-home__vinyl" aria-hidden="true">
-        <span className="tremplin-home__vinyl-face">
-          <i>
-            LE TREMPLIN<span>meewav.</span>
-          </i>
-        </span>
+        <Vinyl
+          playing={playing || hovered}
+          reducedMotion={reducedMotion}
+          interactive={false}
+        />
       </div>
       {companion && (
         <div className="tremplin-home__sleeve" aria-hidden="true">
@@ -266,7 +274,11 @@ function HeroEditorialVisual({
           aria-label={"Découvrir le parcours de " + entry.artist.name}
         >
           <img
-            src={entry.artist.id === "kylian-osei" ? "/images/tremplin/artists/generated/kylian-osei-home-studio-v1.png" : entry.artist.portrait}
+            src={
+              entry.artist.id === "kylian-osei"
+                ? "/images/tremplin/artists/generated/kylian-osei-home-studio-v1.png"
+                : entry.artist.portrait
+            }
             alt={"Portrait de " + entry.artist.name}
             fetchPriority="high"
           />
@@ -321,6 +333,20 @@ export default function TremplinPublicHome({
   artistActionDetail,
   onArtistAction,
 }: TremplinPublicHomeProps) {
+  const [hoveredArtistId, setHoveredArtistId] = useState<string | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(
+    () =>
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  useEffect(() => {
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!media) return;
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
   const [query, setQuery] = useState("");
   const [discoveryFilter, setDiscoveryFilter] = useState("all");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -329,7 +355,9 @@ export default function TremplinPublicHome({
   const searchTrackedRef = useRef(false);
   const gradeViewTrackedRef = useRef(false);
 
-  const defaultEntry = HOME_ENTRIES.find(({ artist }) => artist.id === "kylian-osei") ?? HOME_ENTRIES[0];
+  const defaultEntry =
+    HOME_ENTRIES.find(({ artist }) => artist.id === "kylian-osei") ??
+    HOME_ENTRIES[0];
   const selectedEntry = useMemo(
     () =>
       HOME_ENTRIES.find(({ artist }) => artist.id === selectedEntryId) ??
@@ -525,10 +553,9 @@ export default function TremplinPublicHome({
         </div>
         <HeroEditorialVisual
           entry={defaultEntry}
-          companion={HOME_ENTRIES.find(
-            ({ artist }) => artist.id === "lunae",
-          )}
+          companion={HOME_ENTRIES.find(({ artist }) => artist.id === "lunae")}
           playing={playingArtistId === defaultEntry?.artist.id}
+          reducedMotion={reducedMotion}
           onOpen={() => defaultEntry && openPath(defaultEntry, "hero")}
           onListen={() =>
             defaultEntry && onToggleArtistAudio(defaultEntry.artist.id)
@@ -864,14 +891,24 @@ export default function TremplinPublicHome({
                 }
                 data-token-stage={entry.tokenStage}
               >
-                <div className="tremplin-home__talent-artwork">
+                <div
+                  className="tremplin-home__talent-artwork"
+                  onPointerEnter={(event) =>
+                    setHoveredArtistId(
+                      event.pointerType === "mouse" ? entry.artist.id : null,
+                    )
+                  }
+                  onPointerLeave={() => setHoveredArtistId(null)}
+                >
                   <span
                     className="tremplin-home__talent-disc"
                     aria-hidden="true"
                   >
-                    <span className="tremplin-home__talent-disc-face">
-                      <img src={entry.artist.portrait} alt="" loading="lazy" />
-                    </span>
+                    <Vinyl
+                      playing={playing || hoveredArtistId === entry.artist.id}
+                      reducedMotion={reducedMotion}
+                      interactive={false}
+                    />
                   </span>
                   <div className="tremplin-home__talent-image">
                     <button
