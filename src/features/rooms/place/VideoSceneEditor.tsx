@@ -58,9 +58,8 @@ export function VideoPreviewEditor({ scene, onChange, children }: Props & { chil
 export function VideoSceneControls({ scene, onChange, sources }: Props & { sources: Array<{ id: string; name: string }> }) {
   const frames = sceneFrames(scene);
   return <div className="room-production__scene-controls">
-    <p>Choisis le contenu de chaque zone parmi les caméras et les captures ajoutées dans Sources.</p>
     <div className="room-production__zone-grid">{frames.map((frame, index) => <div className="room-production__zone" key={index}>
-      <label className="room-production__field"><span>Zone {String.fromCharCode(65 + index)}{scene.layout === 'pip' ? index === 0 ? ' · fond' : ' · miniature' : ''}</span>
+      <label className="room-production__field"><span>Zone {String.fromCharCode(65 + index)}{scene.layout === 'pip' ? index === 0 ? ' · fond' : ' · miniature' : scene.layout === 'split' ? index === 0 ? ' · gauche' : ' · droite' : ''}</span>
         <MeewavSelect aria-label={`Source de la zone ${String.fromCharCode(65 + index)}`} value={scene.sourceIds[index] || ''} onChange={(event) => {
           const sourceIds = [...scene.sourceIds]; while (sourceIds.length <= index) sourceIds.push(''); sourceIds[index] = event.target.value; onChange({ ...scene, sourceIds });
         }}><option value="">Choisir une source…</option>{sources.map((source) => <option key={source.id} value={source.id}>{source.name}</option>)}</MeewavSelect>

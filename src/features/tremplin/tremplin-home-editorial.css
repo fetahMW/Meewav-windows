@@ -55,7 +55,9 @@
 .tremplin-home__deck::before { position: absolute; inset: 10% -2% 0 0; border: 1px solid #a188c910; border-radius: 50%; content: ""; transform: rotate(-25deg); }
 .tremplin-home__deck-caption { position: absolute; top: 0; right: 2%; display: grid; gap: 5px; color: #797182; font-size: 8px; text-align: right; letter-spacing: .16em; text-transform: uppercase; }
 .tremplin-home__deck-caption span { color: #a347ff; }
-.tremplin-home__vinyl { position:absolute; width:69%; aspect-ratio:1; top:9%; right:0; border-radius:50%; filter:drop-shadow(12px 20px 15px #0008); transition:transform .75s cubic-bezier(.2,.8,.2,1); }
+.tremplin-home__vinyl { position:absolute; width:69%; aspect-ratio:1; top:9%; right:0; border-radius:50%; filter:drop-shadow(0 6px 6px #0003); transform:translateX(-5%); transition:transform 2s cubic-bezier(.22,.61,.36,1); }
+/* Keep the cast shadow on the stationary wrapper, not the rotating surface. */
+.tremplin-home__vinyl .vinyl { box-shadow:none; }
 .tremplin-home__sleeve { position: absolute; width: 38%; height: 48%; right: 0; bottom: 12%; padding: 8px; border: 1px solid #ac92d930; border-radius: 10px; background: #111114; transform: rotate(13deg); box-shadow: 0 12px 28px #0005; }
 .tremplin-home__sleeve img { width: 100%; height: 100%; object-fit: cover; filter: none; border-radius: 4px; }
 .tremplin-home__sleeve span { position: absolute; left: 15px; bottom: 16px; color: #fff; font-size: clamp(13px, 2vw, 22px); font-weight: 650; text-shadow: 0 2px 14px #000; }
@@ -292,11 +294,16 @@
 
 
 /* Physical sleeves reveal the record. Playback state comes from the real audio player. */
-.tremplin-home__deck { perspective:1000px; animation:tremplin-deck-arrive 850ms cubic-bezier(.2,.8,.2,1) both; }
-.tremplin-home__vinyl { animation:tremplin-vinyl-reveal 1400ms 120ms cubic-bezier(.16,1,.3,1) backwards; }
-.tremplin-home__record, .tremplin-home__sleeve { transition:transform .75s cubic-bezier(.2,.8,.2,1),box-shadow .75s; }
-.tremplin-home__deck.is-playing .tremplin-home__vinyl { transform:translate(5%,-2%); }
-.tremplin-home__deck.is-playing .tremplin-home__record { transform:translate(-3%,1%) rotate(-12deg); box-shadow:0 24px 50px #000b,0 0 32px #9428ff20; }
+.tremplin-home__deck { perspective:1000px; }
+.tremplin-home__record, .tremplin-home__sleeve, .tremplin-home__stamp {
+  transition:transform 1800ms cubic-bezier(.22,.61,.36,1),box-shadow 1200ms ease;
+}
+.tremplin-home__record { transform:translate(3%,1%) rotate(-5deg); transform-origin:50% 65%; }
+.tremplin-home__sleeve { transform:translate(-7%,-3%) rotate(5deg); transform-origin:20% 80%; }
+.tremplin-home__deck.is-playing .tremplin-home__vinyl { transform:translateX(7%); }
+.tremplin-home__deck.is-playing .tremplin-home__record { transform:translate(-2%,0) rotate(-10deg); box-shadow:0 18px 28px #0006,0 0 24px #9428ff16; }
+.tremplin-home__deck.is-playing .tremplin-home__sleeve { transform:translate(3%,1%) rotate(12deg); }
+.tremplin-home__deck.is-playing .tremplin-home__stamp { transform:translate(-4%,-5%) rotate(0deg); transition-delay:80ms; }
 .tremplin-home__deck.is-playing .tremplin-home__record footer button { box-shadow:0 0 0 5px #8b2df219,0 0 22px #9137ed60; }
 .tremplin-home__talent { perspective:900px; }
 .tremplin-home__talent-artwork { position:relative; padding-right:12%; isolation:isolate; }
@@ -308,14 +315,9 @@
 .tremplin-home__talent-image > button > span { padding:14px; }
 .tremplin-home__talent-image strong { font-size:clamp(18px,1.8vw,25px); }
 @media (hover:hover) and (pointer:fine) {
-  .tremplin-home__deck:hover .tremplin-home__vinyl { transform:translate(5%,-2%); }
-  .tremplin-home__deck:hover .tremplin-home__record { transform:translate(-3%,1%) rotate(-12deg); }
-  .tremplin-home__deck:hover .tremplin-home__sleeve { transform:translate(3%,3%) rotate(17deg); }
   .tremplin-home__talent:hover .tremplin-home__talent-disc { transform:translateX(7%); }
   .tremplin-home__talent:hover .tremplin-home__talent-image { transform:translateX(-3%) rotate(-3deg); }
 }
-@keyframes tremplin-vinyl-reveal { from { opacity:0; transform:translate(-28%,5%) rotate(-25deg); } to { opacity:1; transform:translate(0,0) rotate(0); } }
-@keyframes tremplin-deck-arrive { from { opacity:0; transform:translateY(22px) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
 /* Restore the original six lacquered grade cards and their canonical artwork. */
 .tremplin-home #niveaux { width:100%; margin:0; }
 .tremplin-home #niveaux .tremplin-public-home__levels-heading h2 > span { background-image:linear-gradient(100deg,#faf9fc 0%,#faf9fc 20%,#a347ff 100%); }
@@ -352,7 +354,61 @@
   translate:-50% -50%; transform:none; width:42px; height:42px;
   min-width:42px; min-height:42px; padding:0; border-radius:50%;
 }
-.tremplin-home__talent.is-playing .tremplin-home__talent-disc {
-  z-index:2; top:40%; right:0; width:58%; transform:none;
-  pointer-events:none;
+.tremplin-home__talents { padding-right:7%; }
+.tremplin-home__talent.is-playing { position:relative; z-index:3; }
+.tremplin-home__talent .tremplin-home__talent-disc {
+  z-index:0; top:5%; left:auto; right:0; width:82%;
+  transform:translateX(-5%); pointer-events:none;
+  transition:transform 1800ms cubic-bezier(.22,.61,.36,1);
+}
+.tremplin-home__talent:not(.is-playing):is(:hover,:focus-within) .tremplin-home__talent-disc { transform:translateX(-5%); }
+.tremplin-home__talent.is-playing .tremplin-home__talent-disc { transform:translateX(35.3659%); }
+.tremplin-home__talent:is(.is-playing,:hover,:focus-within) .tremplin-home__talent-image { transform:none; }
+@media (max-width:900px) {
+  .tremplin-home__talents { padding-right:13%; }
+}
+/* Compact, readable captions share the dark finish of the sleeve. */
+.tremplin-home__talent-copy {
+  width:88%; margin-top:8px; padding:0; border-radius:0;
+  background:none; box-shadow:none;
+}
+.tremplin-home__talent-copy > small { display:block; font-size:9px; line-height:1.4; color:#a9a3b6; }
+.tremplin-home__talent-copy h3 { margin:3px 0 5px; min-height:0; font-size:13px; line-height:1.35; }
+.tremplin-home__talent-copy > .tremplin-home__text-button { min-height:25px; padding:2px 0; font-size:11px; }
+.tremplin-home__talent-status { margin-top:5px; padding-top:7px; min-height:37px; }
+.tremplin-home__talent-status .tremplin-gateway__token-status small { color:#b5adbf; }
+/* Compact mouse controls; retain the shared 44px targets on touch devices. */
+@media (hover:hover) and (pointer:fine) {
+  .tremplin-home .tremplin-home__talent-copy > .tremplin-home__text-button { min-height:28px !important; }
+  .tremplin-home .tremplin-home__talent-copy > .tremplin-home__talent-status { min-height:37px !important; }
+}
+.tremplin-home .tremplin-gateway__search {
+  background:linear-gradient(150deg,#100d16f5,#09080cef); border-color:#9d7be58a;
+  box-shadow:inset 0 1px #ffffff08,0 0 0 1px #07060a;
+}
+.tremplin-home .tremplin-gateway__search:focus-within { border-color:#a78bfa; box-shadow:0 0 0 2px #7c3aed33; }
+.tremplin-home .tremplin-gateway__search input { color:#f5f1ff; }
+.tremplin-home .tremplin-gateway__search input::placeholder { color:#b9b0c9; opacity:1; }
+.tremplin-home .tremplin-home__primary { background:linear-gradient(145deg,#7951e6,#5830b5); border-color:#a78bfa80; }
+.tremplin-home .tremplin-home__primary:hover { background:linear-gradient(145deg,#8963f2,#6840c5); }
+.tremplin-home__stamp { background:radial-gradient(ellipse at 30% 0,#292333,#0a090d 72%); outline-color:#09080c; border-color:#7352ba80; color:#9164f5; }
+.tremplin-home__hero-copy > .tremplin-home__eyebrow {
+  max-width:100%; padding:8px 11px; border-radius:6px;
+  background:linear-gradient(135deg,#1c142966,#0b09124d); color:#e0caff; font-size:10px;
+  text-shadow:0 1px 3px #000;
+}
+.tremplin-home__deck-caption { z-index:4; padding:8px 10px; border-radius:6px; background:linear-gradient(135deg,#1c142966,#0b09124d); color:#e1d8ed; font-size:9px; }
+.tremplin-home__hero-copy > .tremplin-home__eyebrow,
+.tremplin-home__deck-caption {
+  -webkit-backdrop-filter:blur(18px) saturate(125%);
+  backdrop-filter:blur(18px) saturate(125%);
+  border:1px solid #dac4ff24;
+  box-shadow:inset 0 1px #ffffff0d,0 4px 16px #0000001a;
+}
+.tremplin-home__deck-caption span { color:#c7a0ff; font-weight:650; }
+@media (max-width:600px) {
+  .tremplin-home__talent-copy { padding:0; margin-top:7px; }
+  .tremplin-home__talent-copy h3 { font-size:12px; }
+  .tremplin-home__talent-copy > .tremplin-home__text-button { font-size:10px; gap:4px; }
+  .tremplin-home__hero-copy > .tremplin-home__eyebrow { font-size:9px; letter-spacing:.1em; }
 }

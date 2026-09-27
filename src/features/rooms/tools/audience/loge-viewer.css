@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  --audience-accent: #b18be8;
-  --audience-accent-rgb: 177, 139, 232;
+  --audience-accent: var(--room-key-accent);
+  --audience-accent-rgb: 182, 138, 250;
   min-height: 0;
   height: auto;
   overflow: hidden;
@@ -83,7 +83,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #bdb4d0;
+  color: var(--room-key-accent);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -163,7 +163,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #b8b3c3;
+  color: var(--room-key-accent);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -189,7 +189,7 @@
   margin: 0 auto 12px;
   width: 30px;
   height: 30px;
-  color: #ab93ca;
+  color: var(--room-key-accent);
 }
 .loge-viewer__waiting strong {
   font-size: 13px;
@@ -216,7 +216,7 @@
   flex-shrink: 0;
 }
 .loge-viewer__question-cta > svg:first-child {
-  color: #c1a3e6;
+  color: var(--room-key-accent);
   width: 22px;
   height: 22px;
 }
@@ -344,7 +344,7 @@
 .loge-viewer__empty > svg {
   width: 30px;
   height: 30px;
-  color: #ad99c7;
+  color: var(--room-key-accent);
 }
 .loge-viewer__empty p {
   margin: 0;
@@ -413,7 +413,7 @@
   height: 35px;
   background: #ffffff05;
   border-radius: 10px;
-  color: #bda5d8;
+  color: var(--room-key-accent);
 }
 .loge-viewer__moments article > div {
   display: grid;
@@ -490,7 +490,7 @@
   border-radius: 13px;
   background: linear-gradient(155deg, #292b30, #101113);
   box-shadow: inset 0 1px #ffffff12, 0 3px 8px #0004;
-  color: #c4b1e1;
+  color: var(--room-key-accent);
 }
 .loge-viewer__host-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .loge-viewer__home-welcome > div { min-width: 0; }
@@ -518,7 +518,7 @@
 .loge-viewer .loge-viewer__home-actions > button:hover:not(:disabled) { border-color: transparent; background: var(--room-key-hover); }
 .loge-viewer .loge-viewer__home-actions > button:active:not(:disabled) { box-shadow: var(--room-key-pressed); }
 .loge-viewer .loge-viewer__home-actions > button:focus-visible { outline: 2px solid var(--room-key-accent); outline-offset: 3px; }
-.loge-viewer .loge-viewer__home-actions > button > svg:first-child { color: #bfa5e3; }
+.loge-viewer .loge-viewer__home-actions > button > svg:first-child { color: var(--room-key-accent); }
 .loge-viewer .loge-viewer__home-actions > button > svg:last-child { width: 12px; height: 12px; color: #8f939f; grid-column: 3; grid-row: 1; }
 .loge-viewer__home-actions strong { font-size: 11px; font-weight: 600; line-height: 1.4; }
 .loge-viewer__home-actions small { grid-column: 1 / -1; color: #a6aab5; font-size: 10px; line-height: 1.5; }
@@ -533,11 +533,18 @@
   border-radius: 3px;
   background: transparent;
   box-shadow: none;
-  color: #c6a4ed;
+  color: var(--room-key-accent);
   font-size: inherit;
   font-weight: 600;
 }
-.loge-viewer__personal-hint > button > svg { width: 11px; height: 11px; }
+.loge-viewer__personal-hint > button > svg { width: 11px; height: 11px; color: var(--room-key-accent); }
+
+.loge-viewer__eyebrow > svg,
+.loge-viewer__section-label > svg,
+.loge-viewer__moments a > svg {
+  color: var(--room-key-accent);
+}
+
 .loge-viewer .loge-viewer__personal-hint > button:hover { background: transparent; color: #e1cbff; text-decoration: underline; text-underline-offset: 3px; }
 .loge-viewer p.loge-viewer__sharing-hint { display: flex; align-items: center; gap: 9px; padding: 13px 1px 0; margin: 0; border-top: 1px solid #ffffff0b; color: #9296a1; font-size: 10px; }
 .loge-viewer__preview .loge-viewer__section-label { letter-spacing: .055em; font-size: 8px; }

@@ -56,15 +56,6 @@ function renderPublicHome(overrides: Partial<HomeCallbacks> = {}, followedArtist
   return callbacks;
 }
 
-function expectOnlyLevelPressed(level: number) {
-  const group = screen.getByRole("group", { name: "Explorer les six niveaux MeeWav" });
-  const buttons = within(group).getAllByRole("button");
-
-  expect(buttons).toHaveLength(6);
-  expect(buttons.filter((button) => button.getAttribute("aria-pressed") === "true")).toHaveLength(1);
-  expect(screen.getByRole("button", { name: new RegExp(`Niveau ${level},`) })).toHaveAttribute("aria-pressed", "true");
-}
-
 describe("accueil passerelle du Tremplin", () => {
   it("ouvre par la promesse éditoriale et garde des entrées réelles vers les talents", () => {
     renderPublicHome();
@@ -172,35 +163,26 @@ describe("lecture du vinyle principal", () => {
   });
 });
 
-describe("progression MeeWav interactive", () => {
-  it("préserve le niveau 4 initial puis déplace l’explication au survol", () => {
+describe("présentation des six grades", () => {
+  it("conserve les cartes originales sans interaction de clic ou survol", () => {
     renderPublicHome();
-
-    expectOnlyLevelPressed(4);
-    expect(screen.getByRole("status")).toHaveTextContent("Le parcours professionnel est structuré.");
-
-    fireEvent.mouseEnter(screen.getByRole("button", { name: /Niveau 3, Confirmé/ }));
-
-    expectOnlyLevelPressed(3);
+    const group = screen.getByRole("group", { name: "Les six niveaux MeeWav" });
+    expect(within(group).queryAllByRole("button")).toHaveLength(0);
+    expect(group.querySelectorAll(".tremplin-gateway__grade-card")).toHaveLength(6);
+    expect(group.querySelector(".is-active")).toBeNull();
+    const level6 = within(group).getByRole("article", { name: /Niveau 6,/ });
+    fireEvent.click(level6);
+    fireEvent.mouseEnter(level6);
+    expect(group.querySelector(".is-active")).toBeNull();
     expect(screen.getByRole("status")).toHaveTextContent("Les étapes du parcours sont documentées.");
+    expect(document.querySelector(".tremplin-gateway__grade-art")).toBeInTheDocument();
+    expect(screen.queryByText("Niveau exploré")).not.toBeInTheDocument();
   });
 
-  it("reste utilisable au clavier et au toucher", () => {
-    renderPublicHome();
-
-    const level4 = screen.getByRole("button", { name: /Niveau 4, Élite/ });
-    level4.focus();
-    fireEvent.focus(level4);
-    expect(level4).toHaveFocus();
-    expectOnlyLevelPressed(4);
-
-    const level6 = screen.getByRole("button", { name: /Niveau 6, Légendaire/ });
-    fireEvent.pointerDown(level6);
-    fireEvent.pointerUp(level6);
-    fireEvent.click(level6);
-
-    expectOnlyLevelPressed(6);
-    expect(screen.getByRole("status")).toHaveTextContent("L’expérience acquise hors de MeeWav");
+  it("préserve le lien d’explication des grades", () => {
+    const { onUnderstandGrades } = renderPublicHome();
+    fireEvent.click(screen.getByRole("button", { name: /Comment un grade est-il attribué/ }));
+    expect(onUnderstandGrades).toHaveBeenCalledTimes(1);
   });
 });
 

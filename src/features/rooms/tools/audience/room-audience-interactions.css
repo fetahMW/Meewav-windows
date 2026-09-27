@@ -1,6 +1,8 @@
+@import "../../place/room-console-material.css";
+
 .room-audience-interactions {
-  --audience-accent: #9b6cff;
-  --audience-accent-rgb: 155, 108, 255;
+  --audience-accent: var(--room-key-accent);
+  --audience-accent-rgb: 182, 138, 250;
   min-height: 100%;
   color: #f7f5ff;
   background:
@@ -8,13 +10,8 @@
     linear-gradient(180deg, rgba(8, 10, 23, .98), rgba(4, 7, 17, .99));
 }
 
-.room-audience-interactions.is-place { --audience-accent: #42dea6; --audience-accent-rgb: 66, 222, 166; }
-.room-audience-interactions.is-scene { --audience-accent: #c56cff; --audience-accent-rgb: 197, 108, 255; height: 100%; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-color: rgba(var(--audience-accent-rgb), .58) rgba(255,255,255,.035); scrollbar-width: thin; }
+.room-audience-interactions.is-scene { height: 100%; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-color: rgba(var(--audience-accent-rgb), .58) rgba(255,255,255,.035); scrollbar-width: thin; }
 .room-audience-interactions.is-scene .room-audience-interactions__header { position: sticky; z-index: 4; top: 0; background: linear-gradient(180deg, rgba(8,10,23,.99), rgba(8,10,23,.95)); backdrop-filter: blur(12px); }
-.room-audience-interactions.is-classe { --audience-accent: #6b8cff; --audience-accent-rgb: 107, 140, 255; }
-.room-audience-interactions.is-wave { --audience-accent: #30c8df; --audience-accent-rgb: 48, 200, 223; }
-.room-audience-interactions.is-cage { --audience-accent: #ff657c; --audience-accent-rgb: 255, 101, 124; }
-.room-audience-interactions.is-loge { --audience-accent: #e8bc58; --audience-accent-rgb: 232, 188, 88; }
 
 .room-audience-interactions.is-loading {
   display: flex;

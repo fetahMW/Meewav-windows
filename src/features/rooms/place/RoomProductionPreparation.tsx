@@ -12,6 +12,7 @@ import { VideoPreviewEditor, VideoSceneControls } from './VideoSceneEditor';
 import './room-production-preparation.css';
 import StudioAudioStrip from './StudioAudioStrip';
 import StudioSoundcheck from './StudioSoundcheck';
+import StudioCapturePicker from './StudioCapturePicker';
 import { studioAudioSettings, type StudioAudioSettings } from '../../../runtime/studioAudioSettings';
 
 export type StudioRoomAudio = {
@@ -87,6 +88,13 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
   const epoch = useRef(0);
   const [screenSources, setScreenSources] = useState<CaptureSource[]>([]);
   const [screenId, setScreenId] = useState('');
+  const [capturePickerOpen, setCapturePickerOpen] = useState(false);
+  const captureTrigger = useRef<HTMLButtonElement>(null);
+  const closeCapturePicker = () => {
+    setCapturePickerOpen(false);
+    // Wait until the capture operation has re-enabled the opener.
+    requestAnimationFrame(() => { if (mounted.current) captureTrigger.current?.focus({ preventScroll: true }); });
+  };
   const [level, setLevel] = useState(0);
   const microphoneStream = useRef<MediaStream | null>(null);
   const [microphoneActive, setMicrophoneActive] = useState(false);
@@ -304,6 +312,7 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
     }
   };
   const previewScreen = async () => {
+    if (!screenSources.some(source => source.id === screenId)) throw new Error('Choisis un écran ou une fenêtre disponible.');
     const generation = epoch.current;
     const stream = await devices.captureScreen(screenId, false);
     if (!keepCapture(stream, generation)) return;
@@ -318,6 +327,13 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
     if (!keepCapture(stream, generation)) { videoEngines?.preview.remove(id); videoEngines?.program.remove(id); return; }
     setSources((current) => [...current, { id, name: screenSources.find((source) => source.id === screenId)?.name || 'Écran', stream, captureId: screenId }]);
     assignAddedSource(id, `screen:${screenId}`);
+  };
+  const refreshScreens = async () => {
+    const generation = epoch.current;
+    const list = await devices.screenSources();
+    if (!mounted.current || generation !== epoch.current) return;
+    setScreenSources(list);
+    setScreenId(current => list.some(source => source.id === current) ? current : '');
   };
   const removeSource = (id: string) => {
     const source = sources.find((candidate) => candidate.id === id);
@@ -404,8 +420,8 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
   }, [onAir, roomAudio?.voiceStream]);
   const layoutChoices: Array<{ id: VideoLayout; label: string; detail: string }> = [
     { id: 'full', label: 'Plein écran', detail: '1 source' },
-    { id: 'split', label: 'Split A/B', detail: '2 sources' },
-    { id: 'pip', label: 'Incrustation', detail: 'Déplaçable' },
+    { id: 'split', label: 'Écran fractionné', detail: 'Deux vues côte à côte' },
+    { id: 'pip', label: 'Incrustation', detail: 'Une vue dans l’autre' },
     { id: 'grid', label: 'Grille', detail: 'Jusqu’à 9' },
     { id: 'free', label: 'Libre', detail: 'Déplacer / redimensionner' },
   ];
@@ -415,6 +431,10 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
     onReadinessChange?.({ video: missingSources === 0, microphone: microphoneActive, music: musicActive, pending: busy || restoringCameras });
   }, [missingSources, microphoneActive, musicActive, busy, restoringCameras, onReadinessChange]);
   return <section className="room-production" aria-label={stage === 'launch' ? 'Studio Meewav · préparation de la Room' : 'Production de la Room'} data-room-id={roomId}>
+    {capturePickerOpen ? <StudioCapturePicker sources={screenSources} selectedId={screenId}
+      addedIds={sources.flatMap(source => source.captureId ? [source.captureId] : [])} busy={busy} error={error}
+      onSelect={setScreenId} onRefresh={() => void run(refreshScreens)} onClose={closeCapturePicker}
+      onConfirm={() => void run(async () => { await previewScreen(); if (mounted.current) closeCapturePicker(); })} /> : null}
     <header className="room-production__hero">
       <span className="room-production__hero-icon"><Video size={23} aria-hidden="true" /></span>
       <div><small>{stage === 'launch' ? 'PRÉPARATION DU DIRECT' : 'STUDIO MEEWAV'}</small><h3>{stage === 'launch' ? 'Studio Meewav' : 'Régie du direct'}</h3><p>Ton image, ta voix et tes instruments. Prépare ton son avant de passer en direct.</p></div>
@@ -429,12 +449,12 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
           <div className="room-production__group-heading"><Camera size={17} aria-hidden="true" /><strong>Caméras</strong><button type="button" disabled={busy || restoringCameras} onClick={() => void run(async () => { const list = await devices.requestDeviceLabels('video'); if (mounted.current) setInputs(list); })}>Détecter</button></div>
           <label className="room-production__field"><span>Périphérique vidéo</span><MeewavSelect title={inputs.find((input) => input.deviceId === cameraId)?.label || "Choisir une caméra"} value={cameraId} disabled={busy || restoringCameras} onChange={(event) => setCameraId(event.target.value)}><option value="">Choisir une caméra</option>{inputs.filter((input) => input.kind === 'videoinput').map((input, index) => <option key={input.deviceId || index} value={input.deviceId}>{input.label || `Caméra ${index + 1}`}</option>)}</MeewavSelect></label>
           <button type="button" className="room-production__add" disabled={busy || restoringCameras || !cameraId || sources.length >= 9 || sources.some((source) => source.deviceId === cameraId)} onClick={() => void run(previewCamera)}><Plus size={15} aria-hidden="true" />{sources.some((source) => source.deviceId === cameraId) ? "Caméra déjà ajoutée" : "Ajouter cette caméra"}</button>
-          <small>Caméra USB ou carte d’acquisition.</small>
+          <small>{sources.some(source => source.deviceId) ? 'Pour ajouter une deuxième caméra, choisis un autre périphérique ci-dessus.' : 'Webcam, caméra USB ou carte d’acquisition. Tu peux en ajouter plusieurs.'}</small>
         </div>
-        {runtime.canCaptureWindow ? <div className="room-production__rack-group">
-          <div className="room-production__group-heading"><Monitor size={17} aria-hidden="true" /><strong>Écran et fenêtre</strong><button type="button" disabled={busy || restoringCameras} onClick={() => void run(async () => { const list = await devices.screenSources(); if (mounted.current) setScreenSources(list); })}>Parcourir</button></div>
-          <label className="room-production__field"><span>Source de capture</span><MeewavSelect title={screenSources.find((source) => source.id === screenId)?.name || "Choisir un écran ou une fenêtre"} value={screenId} disabled={busy || restoringCameras} onChange={(event) => setScreenId(event.target.value)}><option value="">Choisir un écran ou une fenêtre</option>{screenSources.map((source) => <option key={source.id} value={source.id}>{source.name}</option>)}</MeewavSelect></label>
-          <button type="button" className="room-production__add" disabled={busy || restoringCameras || !screenId || sources.length >= 9 || sources.some((source) => source.captureId === screenId)} onClick={() => void run(previewScreen)}><Plus size={15} aria-hidden="true" />Ajouter à l’aperçu</button><small>Capture vidéo seule. Rechoisis-la après le lancement.</small>
+        {runtime.canCaptureWindow || runtime.canCaptureScreen ? <div className="room-production__rack-group">
+          <div className="room-production__group-heading"><Monitor size={17} aria-hidden="true" /><strong>Écran et fenêtre</strong></div>
+          <button ref={captureTrigger} type="button" className="room-production__add" disabled={busy || restoringCameras || sources.length >= 9} onClick={() => { setCapturePickerOpen(true); void run(refreshScreens); }}><Plus size={15} aria-hidden="true" />Choisir un partage</button>
+          <small>Choisis précisément un écran ou une fenêtre parmi les miniatures. Capture vidéo seule, à confirmer à nouveau après le lancement.</small>
         </div> : null}
         <div className="room-production__rack-group">
           <div className="room-production__group-heading"><Grip size={17} aria-hidden="true" /><strong>Sources vidéo</strong><span>{sources.length}</span></div>
@@ -443,7 +463,7 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
             <div className="room-production__source-actions"><button type="button" aria-label={`Retirer ${source.name}`} disabled={onAir && videoEngines?.program.program.sourceIds.includes(source.id)} onClick={() => removeSource(source.id)}><X size={14} /></button></div>
             <input className="room-production__source-name" aria-label={`Renommer ${source.name}`} value={source.name} onChange={(event) => setSources((current) => current.map((item) => item.id === source.id ? { ...item, name: event.target.value } : item))} />
           </li>)}</ol> : <p className="room-production__empty">Aucune source ajoutée. Choisis une caméra ou une fenêtre ci-dessus.</p>}
-          <small>Affecte les sources dans Disposition et cadrage.</small>
+          <small>Retrouve chaque caméra ou capture dans les zones du plan.</small>
         </div>
       </aside> : null}
 
@@ -451,11 +471,23 @@ export default function RoomProductionPreparation({ roomId, liveRoom, onAir, pub
         <div className="room-production__video-workspace">
         <div className="room-production__section-heading"><small>IMAGE</small><strong>Aperçu → Sortie</strong><span>Prépare le prochain plan à gauche. La sortie ne change que lorsque tu appliques une transition.</span></div>
         {videoEngines ? <>
+          <section className="room-production__layout-panel" aria-label="Disposition et sources du plan">
+            <div className="room-production__layout-heading"><strong>Compose ton image</strong><span>Une caméra, deux angles, ou ton écran avec toi.</span></div>
+            <div className="room-production__layouts">{layoutChoices.map(choice => <button type="button" key={choice.id}
+              className={layout === choice.id ? 'is-active' : ''} aria-pressed={layout === choice.id}
+              onClick={() => updateScene({ ...scene, layout: choice.id, frames: choice.id === 'free' ? sceneFrames(scene) : scene.frames })}>
+              <span className={`room-production__layout-icon is-${choice.id}`} aria-hidden="true"><i /><i /><i /><i /></span>
+              <span>{choice.label}<small>{choice.detail}</small></span>
+            </button>)}</div>
+            <VideoSceneControls scene={scene} onChange={updateScene} sources={sources} />
+            <p className={missingSources ? 'room-production__layout-notice' : undefined} role="status">{missingSources
+              ? `Ajoute tes sources, puis choisis le contenu de ${missingSources > 1 ? 'chaque zone' : 'la zone vide'}.`
+              : 'Ton aperçu est prêt. Applique le plan pour mettre à jour la sortie.'}</p>
+          </section>
           <div className="room-production__monitors">
             <article className="room-production__monitor is-preview"><div className="room-production__monitor-label"><span><i />APERÇU</span><small>Privé · prochain plan</small></div><VideoPreviewEditor scene={scene} onChange={updateScene}><SourcePreview stream={videoEngines.preview.stream} /></VideoPreviewEditor></article>
             <article className="room-production__monitor is-program"><div className="room-production__monitor-label"><span><i />SORTIE</span><small>{onAir ? publicationStatus === 'connected' ? 'Sortie transport connecté' : publicationStatus === 'failed' ? 'Transport indisponible' : 'Connexion au transport…' : 'Hors antenne'}</small></div><div className="room-production__monitor-frame"><SourcePreview stream={videoEngines.program.stream} />{!programReady && !onAir ? <div className="room-production__monitor-empty"><Video aria-hidden="true" /><strong>Prépare ta sortie</strong><span>Choisis une source dans l’aperçu, puis applique le plan.</span></div> : null}</div></article>
           </div>
-          <details className="room-production__layout-panel"><summary>Disposition et cadrage du plan</summary><div className="room-production__layouts">{layoutChoices.map((choice) => <button type="button" key={choice.id} className={layout === choice.id ? 'is-active' : ''} aria-pressed={layout === choice.id} onClick={() => updateScene({ ...scene, layout: choice.id, frames: choice.id === 'free' ? sceneFrames(scene) : scene.frames })}><span className={`room-production__layout-icon is-${choice.id}`} aria-hidden="true"><i /><i /><i /><i /></span><span>{choice.label}<small>{choice.detail}</small></span></button>)}</div><p className={missingSources ? 'room-production__layout-notice' : undefined} role="status">{missingSources ? `Affecte ${missingSources} source${missingSources > 1 ? 's' : ''} supplémentaire${missingSources > 1 ? 's' : ''} pour préparer ce plan. Les zones grisées restent privées.` : `${sceneFrames(scene).filter((_, index) => activeSourceIds[index]).length} source(s) dans le plan · La sortie reste inchangée jusqu’à la transition.`}</p><VideoSceneControls scene={scene} onChange={updateScene} sources={sources} /></details>
           <div className="room-production__transitions"><div><small>SORTIE VIDÉO</small><strong>Appliquer le plan à la sortie</strong></div>{(['TAKE', 'FADE'] as const).map((action) => <button key={action} type="button" disabled={missingSources > 0 || busy || restoringCameras} className={action === 'TAKE' ? 'is-primary' : ''} onClick={() => { try { videoEngines.program.take(scene, action === 'FADE' ? 500 : 0); setProgramReady(true); setError(''); } catch (reason) { setError(reason instanceof Error ? reason.message : 'Transition impossible.'); } }}>{action === 'FADE' ? 'Fondu · 0,5 s' : 'Appliquer le plan'}</button>)}</div>
         </> : <p className="room-production__empty">La composition vidéo n’est pas disponible sur ce système.</p>}
         </div>

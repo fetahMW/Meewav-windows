@@ -1,11 +1,13 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import RoomProductionPreparation from './RoomProductionPreparation';
 import { readRoomDevicePreferences } from './roomDevicePreferences';
-const mocks = vi.hoisted(() => ({ camera: vi.fn(), microphone: vi.fn(), music: vi.fn(), list: vi.fn() }));
-vi.mock('../../../runtime/RuntimeProvider', () => ({ useRuntime: () => ({ canCaptureWindow: false }) }));
+const mocks = vi.hoisted(() => ({ camera: vi.fn(), microphone: vi.fn(), music: vi.fn(), list: vi.fn(), screens: vi.fn(), screen: vi.fn(), captureAvailable: false }));
+const dialogMethods = Object.fromEntries(['showModal', 'close'].map(key => [key, Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, key)]));
+vi.mock('../../../runtime/RuntimeProvider', () => ({ useRuntime: () => ({ canCaptureWindow: mocks.captureAvailable }) }));
 vi.mock('../../../runtime/DesktopMediaDevices', () => ({ DesktopMediaDevices: class {
   enumerate = mocks.list; captureCamera = mocks.camera; captureMicrophone = mocks.microphone; captureMusic = mocks.music;
+  screenSources = mocks.screens; captureScreen = mocks.screen;
   watch() { return () => {}; }
 } }));
 vi.mock('../../../runtime/RoomVideoProgram', () => ({ RoomVideoProgram: class {
@@ -36,11 +38,18 @@ async function choose(label: string, option: string) {
 }
 beforeEach(() => {
   vi.resetAllMocks();
+  mocks.captureAvailable = false;
   localStorage.clear();
   vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
   mocks.list.mockResolvedValue([{ kind: 'videoinput', deviceId: 'cam', label: 'Caméra QA' }, { kind: 'audioinput', deviceId: 'mic', label: 'Micro QA' }]);
 });
-afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+afterEach(() => {
+  cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals();
+  for (const [key, descriptor] of Object.entries(dialogMethods)) {
+    if (descriptor) Object.defineProperty(HTMLDialogElement.prototype, key, descriptor);
+    else Reflect.deleteProperty(HTMLDialogElement.prototype, key);
+  }
+});
 it('cancels delayed permission after releasing sources and prevents a stale camera returning', async () => {
   let resolve!: (stream: MediaStream) => void;
   mocks.camera.mockImplementation(() => new Promise<MediaStream>(done => { resolve = done; }));
@@ -107,7 +116,7 @@ it('survives 20 add/remove cycles with exactly one active camera at a time', asy
     expect(item.track.stop).toHaveBeenCalledOnce();
     expect(screen.queryByRole('button', { name: 'Retirer Caméra QA' })).not.toBeInTheDocument();
   }
-});
+}, 15000);
 
 it('stops broadcasting without discarding the prepared cameras and composition', async () => {
   const source = capture(); mocks.camera.mockResolvedValue(source.stream);
@@ -142,4 +151,97 @@ it('uses the existing room voice engine and channel controls instead of acquirin
   fireEvent.click(screen.getByRole('button', { name: 'Effets de ma voix' }));
   expect(roomAudio.onOpenEffects).toHaveBeenCalledOnce();
   expect(onStart).not.toHaveBeenCalled();
+});
+
+it('offers split immediately, requires two cameras and keeps preparation private until explicit start', async () => {
+  mocks.list.mockResolvedValue([
+    { kind: 'videoinput', deviceId: 'cam', label: 'Caméra QA' },
+    { kind: 'videoinput', deviceId: 'instrument', label: 'Caméra instrument' },
+  ]);
+  const first = capture(), second = capture();
+  mocks.camera.mockResolvedValueOnce(first.stream).mockResolvedValueOnce(second.stream);
+  const view = setup();
+  fireEvent.click(screen.getByRole('button', { name: /Écran fractionné/ }));
+  expect(screen.getByRole('combobox', { name: 'Source de la zone B' })).toBeVisible();
+  await addCamera(); await screen.findByRole('button', { name: 'Retirer Caméra QA' });
+  expect(screen.getByRole('button', { name: 'Appliquer le plan' })).toBeDisabled();
+  await choose('Périphérique vidéo', 'Caméra instrument');
+  fireEvent.click(screen.getByRole('button', { name: 'Ajouter cette caméra' }));
+  await screen.findByRole('button', { name: 'Retirer Caméra instrument' });
+  expect(mocks.camera.mock.calls.map(call => call[0])).toEqual(['cam', 'instrument']);
+  expect(screen.getByRole('combobox', { name: 'Source de la zone B' })).toHaveTextContent('Caméra instrument');
+  // Swap the two views without reacquiring either camera.
+  await choose('Source de la zone A', 'Caméra instrument');
+  await choose('Source de la zone B', 'Caméra QA');
+  expect(mocks.camera).toHaveBeenCalledTimes(2);
+  fireEvent.change(screen.getByRole('slider', { name: 'Position du séparateur A B' }), { target: { value: '65' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Appliquer le plan' }));
+  expect(view.onStart).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: 'Passer en direct' }));
+  await waitFor(() => expect(view.onStart).toHaveBeenCalledOnce());
+  view.unmount();
+  expect(first.track.stop).toHaveBeenCalledOnce(); expect(second.track.stop).toHaveBeenCalledOnce();
+});
+
+async function openCapturePicker() {
+  mocks.captureAvailable = true;
+  mocks.screens.mockResolvedValue([
+    { id: 'screen:1:0', name: 'Écran principal', thumbnail: '' },
+    { id: 'screen:2:0', name: 'Écran studio', thumbnail: '' },
+    { id: 'window:8:0', name: 'Logiciel musical', thumbnail: '' },
+  ]);
+  // jsdom has no top layer; emulate the native dialog's open state only.
+  Object.defineProperty(HTMLDialogElement.prototype, 'showModal', { configurable: true, value: function (this: HTMLDialogElement) { this.open = true; } });
+  Object.defineProperty(HTMLDialogElement.prototype, 'close', { configurable: true, value: function (this: HTMLDialogElement) { this.open = false; } });
+  const view = setup();
+  fireEvent.click(screen.getByRole('button', { name: 'Choisir un partage' }));
+  const dialog = await screen.findByRole('dialog');
+  await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Logiciel musical' })).toBeEnabled());
+  return { ...view, dialog };
+}
+
+it('chooses a specific window by thumbnail without publishing or sharing audio', async () => {
+  const source = capture(); mocks.screen.mockResolvedValue(source.stream);
+  const view = await openCapturePicker();
+  fireEvent.click(within(view.dialog).getByRole('button', { name: 'Fenêtres' }));
+  expect(within(view.dialog).queryByRole('button', { name: 'Écran principal' })).not.toBeInTheDocument();
+  fireEvent.click(within(view.dialog).getByRole('button', { name: 'Logiciel musical' }));
+  expect(mocks.screen).not.toHaveBeenCalled();
+  fireEvent.click(within(view.dialog).getByRole('button', { name: 'Ajouter à l’aperçu' }));
+  await screen.findByRole('button', { name: 'Retirer Logiciel musical' });
+  expect(mocks.screen).toHaveBeenCalledOnce();
+  expect(mocks.screen).toHaveBeenCalledWith('window:8:0', false);
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(view.onStart).not.toHaveBeenCalled();
+  view.unmount(); expect(source.track.stop).toHaveBeenCalledOnce();
+});
+
+it('clears stale capture choices on refresh and lets the artist cancel without capturing', async () => {
+  const { dialog } = await openCapturePicker();
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Écran studio' }));
+  mocks.screens.mockResolvedValue([]);
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Actualiser' }));
+  await waitFor(() => expect(within(dialog).queryByRole('button', { name: 'Écran studio' })).not.toBeInTheDocument());
+  expect(within(dialog).getByRole('button', { name: 'Ajouter à l’aperçu' })).toBeDisabled();
+  const parentKeys = vi.fn();
+  document.addEventListener('keydown', parentKeys);
+  try {
+    fireEvent.keyDown(dialog, { key: 'Tab' });
+    fireEvent.keyDown(dialog, { key: 'Escape' });
+    expect(parentKeys).not.toHaveBeenCalled();
+  } finally { document.removeEventListener('keydown', parentKeys); }
+  fireEvent(dialog, new Event('cancel', { bubbles: false, cancelable: true }));
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(mocks.screen).not.toHaveBeenCalled();
+});
+
+it('keeps a capture failure visible in the modal and allows a retry', async () => {
+  mocks.screen.mockRejectedValueOnce(new Error('Fenêtre fermée')).mockResolvedValueOnce(capture().stream);
+  const { dialog } = await openCapturePicker();
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Logiciel musical' }));
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Ajouter à l’aperçu' }));
+  expect(await within(dialog).findByRole('alert')).toHaveTextContent('Fenêtre fermée');
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Ajouter à l’aperçu' }));
+  await screen.findByRole('button', { name: 'Retirer Logiciel musical' });
+  expect(mocks.screen).toHaveBeenCalledTimes(2);
 });

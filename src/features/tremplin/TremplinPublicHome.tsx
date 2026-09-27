@@ -231,7 +231,6 @@ function HeroEditorialVisual({
   onOpen: () => void;
   onListen: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
   if (!entry)
     return (
       <figure className="tremplin-home__fallback">
@@ -245,15 +244,15 @@ function HeroEditorialVisual({
   return (
     <div
       className={"tremplin-home__deck " + (playing ? "is-playing" : "")}
-      onPointerEnter={(event) => setHovered(event.pointerType === "mouse")}
-      onPointerLeave={() => setHovered(false)}
     >
       <span className="tremplin-home__deck-caption">
         Sélection Meewav <span>À découvrir</span>
       </span>
       <div className="tremplin-home__vinyl" aria-hidden="true">
         <Vinyl
-          playing={playing || hovered}
+          playing={playing}
+          rpm={5}
+          rotateReflections
           reducedMotion={reducedMotion}
           interactive={false}
         />
@@ -567,7 +566,7 @@ export default function TremplinPublicHome({
         />
       </section>
       <div className="tremplin-home__grades">
-        <TremplinGradeProgression onUnderstandGrades={onUnderstandGrades} />
+        <TremplinGradeProgression landing onUnderstandGrades={onUnderstandGrades} />
       </div>
 
       <section
@@ -904,6 +903,8 @@ export default function TremplinPublicHome({
                   >
                     <Vinyl
                       playing={playing}
+                      rpm={5}
+                      rotateReflections
                       reducedMotion={reducedMotion}
                       interactive={false}
                     />

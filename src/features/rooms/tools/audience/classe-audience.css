@@ -1,6 +1,6 @@
 .room-audience-interactions.is-classe {
-  --audience-accent: #bc9ae9;
-  --audience-accent-rgb: 188, 154, 233;
+  --audience-accent: var(--room-key-accent);
+  --audience-accent-rgb: 182, 138, 250;
   background: transparent;
 }
 
@@ -214,7 +214,7 @@
 .classe-questions-panel > header,.classe-questions-panel > header > span { display:flex; align-items:center; gap:9px; }
 .classe-questions-panel > header { justify-content:space-between; }
 .classe-questions-panel h2 { margin:0; font:650 20px/1.3 Inter,system-ui,sans-serif; color:#f4f1fa; }
-.classe-questions-panel > header svg { width:21px; color:#bc9ae9; }
+.classe-questions-panel > header svg { width:21px; color:var(--room-key-accent); }
 .classe-questions-panel > header small { color:#a6a1af; font-size:11px; }
 .classe-questions-panel .classe-questions-intro { font:400 12px/1.5 Inter,system-ui,sans-serif; color:#aaa8b3; margin:10px 0 16px; }
 .room-audience-interactions.is-classe .classe-questions-panel .room-audience-question { display:flex; flex-direction:column; gap:9px; padding:12px; border:1px solid #79718055; border-radius:14px; background:#070709; }

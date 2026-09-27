@@ -371,6 +371,10 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 }
 /* The guest commands repeat the top navigation's lacquer, geometry and key states. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__desktop-dock {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .045), transparent 35%) padding-box,
+    linear-gradient(180deg, #101013, #070709 65%, #0b0b0e) padding-box,
+    linear-gradient(145deg, #424047, #141318 45%, #28262d) border-box;
   gap: 5px;
   margin: 6px 4px 8px;
   padding: 7px;

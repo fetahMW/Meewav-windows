@@ -63,6 +63,7 @@ import {
   TREMPLIN_DISCOVERY_TOKEN_UI,
 } from "./tremplinDiscoveryToken";
 import "./tremplin-home-experience.css";
+import "../../components/shared/mixer-play-button.css";
 import "./tremplin-discovery-premium.css";
 import "./tremplin-discovery-rails.css";
 
@@ -542,14 +543,14 @@ function HeroProjectCard({
         <button
           type="button"
           tabIndex={controlsTabIndex}
-          className="tremplin-home-card__audio-overlay"
+          className="tremplin-home-card__audio-overlay mw-mixer-play"
           aria-label={`${playing ? "Mettre en pause" : "Écouter un extrait de"} ${entry.artist.audio.title} par ${entry.artist.name}`}
           aria-pressed={playing}
           onClick={onToggleAudio}
         >
           {playing ? <Pause size={16} fill="currentColor" aria-hidden="true" /> : <Play size={16} fill="currentColor" aria-hidden="true" />}
-          <span>{playing ? "Pause" : entry.artist.audio.durationLabel}</span>
         </button>
+        <span className="tremplin-card-audio-duration">{entry.artist.audio.durationLabel}</span>
       </div>
       <div className="tremplin-home-card__body">
         <div className="tremplin-home-card__heading">
@@ -603,9 +604,10 @@ function ProjectMiniCard({ entry, playing, followed, eager = false, instanceId, 
     <div className="tremplin-project-mini__visual">
       <img src={entry.artist.artwork} alt={decorativeImage ? "" : `Portrait de ${entry.artist.name}`} loading={eager ? "eager" : "lazy"} decoding="async" />
       <button className="tremplin-project-mini__portrait" type="button" tabIndex={controlsTabIndex} onClick={onOpen} aria-label={`Voir le profil de ${entry.artist.name}`} />
-      <button className="tremplin-project-mini__audio" type="button" tabIndex={controlsTabIndex} onClick={onToggleAudio} aria-pressed={playing} aria-label={`${playing ? "Mettre en pause" : "Écouter un extrait de"} ${entry.artist.name}`}>
-        {playing ? <Pause size={12} fill="currentColor" /> : <Play size={12} fill="currentColor" />}<span>{playing ? "Pause" : entry.artist.audio.durationLabel}</span>
+      <button className="tremplin-project-mini__audio mw-mixer-play" type="button" tabIndex={controlsTabIndex} onClick={onToggleAudio} aria-pressed={playing} aria-label={`${playing ? "Mettre en pause" : "Écouter un extrait de"} ${entry.artist.name}`}>
+        {playing ? <Pause size={12} fill="currentColor" /> : <Play size={12} fill="currentColor" />}
       </button>
+      <span className="tremplin-card-audio-duration">{entry.artist.audio.durationLabel}</span>
     </div>
     <div className="tremplin-project-mini__body">
       <header><button type="button" tabIndex={controlsTabIndex} onClick={onOpen}><strong id={headingId}>{entry.artist.name}</strong></button><span className="tremplin-project-mini__grade" title={`Niveau ${entry.artist.gradeLevel} · ${TREMPLIN_GRADE_EXPERIENCE[entry.artist.gradeLevel].title}`}><MeewavGradeBadge level={entry.artist.gradeLevel} size="xs" variant="icon" /></span></header>
