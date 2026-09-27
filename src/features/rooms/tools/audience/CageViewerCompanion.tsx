@@ -1,4 +1,4 @@
-import { ArrowUpRight, Expand, Heart, Headphones, LayoutPanelTop, MessageCircle, Radio, Swords, Trophy, Users } from "lucide-react";
+import { ArrowUpRight, Expand, Heart, Headphones, LayoutPanelTop, Radio, Swords, Trophy, Users } from "lucide-react";
 import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
 import type { CageState, RoomPerson } from "../roomTools.types";
 import CageResults from "../panels/CageResults";
@@ -42,9 +42,9 @@ function EmptyProgram({ published }: { published: boolean }) {
   return <div className="cage-program__empty"><Users aria-hidden="true" /><strong>{published ? "Duels à venir" : "La Cage se prépare"}</strong><p>{published ? "Le premier duel sera annoncé par le Host." : "Les duels apparaîtront après confirmation."}</p></div>;
 }
 
-export default function CageViewerCompanion({ cage, participation, onOpenChat, production, source = "live", accountId, active = true, fundraiser, fundraiserError }: {
+export default function CageViewerCompanion({ cage, participation, production, posterUrl, source = "live", accountId, active = true, fundraiser, fundraiserError }: {
   cage: CageState; participation?: ReactNode; onOpenChat?: () => void; production?: ReactNode;
-  source?: "demo" | "live"; accountId?: string; active?: boolean; fundraiser?: CageAudienceFundraiser | null; fundraiserError?: string;
+  source?: "demo" | "live"; posterUrl?: string; accountId?: string; active?: boolean; fundraiser?: CageAudienceFundraiser | null; fundraiserError?: string;
 }) {
   const [tab, setTab] = useState<"live" | "audio" | "display">("live");
   const [expanded, setExpanded] = useState(false);
@@ -80,9 +80,8 @@ export default function CageViewerCompanion({ cage, participation, onOpenChat, p
       {tab === "live" ? <div className="cage-program__live-overview">
         <header className="cage-program__live-heading"><span><Radio aria-hidden="true" />{program.voting ? "Vote du public" : program.passage ? `Passage ${program.passage}` : "Le direct"}</span>{program.seconds !== null ? <output role="timer" aria-label="Temps restant">{Math.floor(program.seconds / 60)}:{String(program.seconds % 60).padStart(2, "0")}</output> : null}</header>
         <div className="cage-program__live-status" role="status"><h2>{program.title}</h2><p>{program.detail}</p>{program.currentVote && program.voting ? <small>Votre vote est enregistré.</small> : null}</div>
-        {program.active ? <MatchCard match={program.active} source={source} current /> : <div className="cage-program__waiting-art" aria-hidden="true"><Swords /></div>}
+        {program.active ? <MatchCard match={program.active} source={source} current /> : posterUrl ? <div className="cage-program__poster"><img src={posterUrl} alt="Affiche de La Cage — Paris contre Marseille" /></div> : <div className="cage-program__waiting-art" aria-hidden="true"><Swords /></div>}
         {nextMatch ? <p className="cage-program__up-next"><small>Ensuite</small><span>{nextMatch.a?.name}{!nextMatch.solo ? <> <b>vs</b> {nextMatch.b?.name}</> : null}</span></p> : null}
-        {onOpenChat ? <button type="button" className="cage-program__cta" onClick={onOpenChat}><MessageCircle aria-hidden="true" />Rejoindre le chat<ArrowUpRight aria-hidden="true" /></button> : null}
       </div> : null}
       {tab === "audio" ? <section className="cage-program__audio" aria-label="La prod du battle"><header className="cage-program__heading"><h2>La prod du battle</h2><p>Écoutez, répétez et préparez votre passage.</p></header>{production ?? <p className="cage-production__notice">Le host n’a pas encore partagé de prod.</p>}</section> : null}
       {tab === "display" ? <>

@@ -567,6 +567,7 @@
 .room-tools-shell.is-classe .is-classroom .classroom-seat__portrait > img { width:100%; height:100%; object-fit:cover; }
 .room-tools-shell.is-classe .is-classroom .classroom-seat__identity { grid-column:1 / -1; grid-row:2; align-self:end; justify-self:stretch; align-items:start; width:100%; min-width:0; margin:0; padding:0; text-align:left; }
 .room-tools-shell.is-classe .is-classroom .classroom-seat__identity strong { display:block; width:100%; text-align:left; margin:0; font-size:clamp(10px,12cqi,12px); line-height:1.2; font-weight:600; letter-spacing:-.015em; }
+.room-tools-shell.is-classe.classe-student-workspace .classroom-seat__identity { padding-bottom: 2px; }
 .room-tools-shell.is-classe .is-classroom .classroom-seat__number { z-index:2; top:5px; left:5px; width:18px; height:15px; font-size:9px; border-radius:4px; background:#111114a6; color:#f0edf5; }
 .room-tools-shell.is-classe .is-classroom .classroom-seat__signal { width:var(--classroom-status-size); height:var(--classroom-status-size); top:4px; right:4px; }
 .classroom-seat__question { position:absolute; top:4px; right:4px; display:grid; place-items:center; width:var(--classroom-status-size,20px); height:var(--classroom-status-size,20px); border-radius:6px; color:#83bdff; background:#69aaff18; }

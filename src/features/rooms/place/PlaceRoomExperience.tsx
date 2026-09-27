@@ -208,12 +208,6 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
     window.addEventListener("wave-preview-poll", showPoll);
     return () => { window.removeEventListener("wave-preview-poll", showPoll); clearTimeout(timer); };
   }, [place.setSurface]);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const show = () => { place.setSurface("tools"); setPanelCollapsed(false); timer=setTimeout(()=>window.dispatchEvent(new Event("cage-viewer-simulation-ready")),150); };
-    window.addEventListener("cage-viewer-simulation",show);
-    return()=>{window.removeEventListener("cage-viewer-simulation",show);clearTimeout(timer);};
-  },[place.setSurface]);
   const { room } = place;
   const experienceRef = useRef<HTMLElement>(null);
   const supportContext = `${room.source}:${room.id}:${room.status}:${room.host.id}:${place.activeUserId}`;

@@ -1,0 +1,10 @@
+/* The quiet graphite finish of the inactive Chat / Mixeur keys.
+   Shared by the requested viewer controls, without changing the mixer. */
+:root {
+  --room-key-face: linear-gradient(122deg, #ffffff08, transparent 48%), linear-gradient(180deg, #19171e59, #08070c33), linear-gradient(180deg, #303034, #1a191e 55%, #121116);
+  --room-key-hover: linear-gradient(122deg, #ffffff0d, transparent 48%), linear-gradient(180deg, #37363c, #242329 55%, #1a191f);
+  --room-key-shadow: inset 0 1px #ffffff0c, inset 0 -1px 1px #0005, 0 1px 2px #0005;
+  --room-key-pressed: inset 0 2px 4px #0007, inset 0 -1px #ffffff06;
+  --room-key-text: #e4deeb;
+  --room-key-accent: #b68afa;
+}

@@ -1,21 +1,26 @@
-.cage-production { min-width: 0; padding: 4px 0 14px; border: 0; border-bottom: 1px solid #bda3e51c; color: #eeebf3; }
+@import "../../place/room-console-material.css";
+
+.cage-production { min-width: 0; padding: 14px; border: 0; border-radius: 14px; background: var(--room-key-face); box-shadow: var(--room-key-shadow); color: #eeebf3; }
 .cage-production__top { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.cage-production__icon { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; color: #c3a7e9; border-radius: 10px; background: #bda3e512; }
+.cage-production__icon { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 34px; color: var(--room-key-accent); border-radius: 9px; background: #ffffff04; }
 .cage-production__icon svg { width: 18px; height: 18px; }
 .cage-production__identity { display: grid; min-width: 70px; flex: 1 1 90px; gap: 3px; }
-.cage-production__identity h3 { margin: 0; font: 600 11px/1.3 Inter, sans-serif; color: #bda3e5; }
-.cage-production__identity strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 550; }
+.cage-production__identity h3 { margin: 0; font: 600 9px/1.3 Inter, sans-serif; color: #a6a0ae; letter-spacing:.06em; text-transform:uppercase; }
+.cage-production__identity strong { overflow-wrap:anywhere; font-size: 14px; line-height:1.4; font-weight: 600; }
 .cage-production__identity small { display: flex; flex-wrap: wrap; gap: 8px; color: #96929f; font-size: 10px; }
-.cage-production__actions { display: grid; grid-template-columns: 1fr .9fr 1.2fr; gap: 7px; flex-basis: 100%; margin-top: 2px; }
-.cage-production__actions :is(button, a) { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; min-height: 40px; padding: 6px; border: 1px solid #ffffff14; border-radius: 11px; color: #c3becd; background: linear-gradient(150deg, #ffffff09, #ffffff02); cursor: pointer; font: 550 11px/1.3 Inter, sans-serif; text-decoration: none; }
-.cage-production__actions .cage-production__listen { color: #e0d2f0; border-color: #bda3e540; background: linear-gradient(145deg, #bda3e526, #bda3e50c); }
-.cage-production__actions svg { width: 15px; height: 15px; }
-.cage-production__actions [aria-pressed="true"] { color: #d1b6f4; border-color: #bda3e547; background: #bda3e514; }
-.cage-production__actions button:disabled { opacity: .38; cursor: default; }
+.cage-production .cage-production__actions { display: flex; flex-wrap:wrap; gap: 7px; margin-top: 12px; }
+.cage-production .cage-production__actions :is(button, a) { display: flex; flex:1 1 auto; align-items: center; justify-content: center; gap: 6px; min-width: 0; min-height: 36px; padding: 8px 10px; border: 1px solid transparent; border-radius: 10px; color: var(--room-key-text); background: var(--room-key-face); box-shadow:var(--room-key-shadow); cursor: pointer; font: 600 11px/1.3 Inter, sans-serif; text-decoration: none; transition:background 120ms,box-shadow 120ms; }
+.cage-production .cage-production__actions svg { width: 15px; height: 15px; flex-shrink:0; color:var(--room-key-accent); }
+.cage-production .cage-production__actions [aria-pressed="true"] { color: #dec9ff; background:linear-gradient(180deg,#3a2c4d99,#23162faa); box-shadow:inset 0 1px #c8a7f033,var(--room-key-pressed); }
+.cage-production .cage-production__actions :is(button:enabled, a):hover { background:var(--room-key-hover); }
+.cage-production .cage-production__actions [aria-pressed="true"]:hover { background:linear-gradient(180deg,#49335eaa,#2c1d3caa); }
+.cage-production .cage-production__actions :is(button:enabled, a):active { box-shadow:var(--room-key-pressed); }
+.cage-production .cage-production__actions button:disabled { opacity: .38; cursor: default; }
 .cage-production :is(button, a, input):focus-visible { outline: 2px solid #c3a7e9; outline-offset: 3px; }
-.cage-production__waveform { position: relative; height: 36px; margin-top: 13px; }
-.cage-production__waveform svg { width: 100%; height: 100%; stroke: #5d546d; stroke-width: 1.6; }
-.cage-production__waveform .is-played { stroke: #c3a7e9; }
+.cage-production__waveform { position: relative; height: 48px; margin-top: 16px; background:linear-gradient(#09090c55,#09090c22); border-radius:6px; }
+.cage-production__waveform svg { width: 100%; height: 100%; stroke: #777080; stroke-width: 1.6; }
+.cage-production__waveform .is-played { stroke: var(--room-key-accent); }
+.cage-production__playhead { position:absolute; top:0; bottom:0; width:1px; max-width:100%; background:#d1b3fc; box-shadow:0 0 5px #b68afa44; pointer-events:none; }
 .cage-production__waveform input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .cage-production__waveform:focus-within { outline: 2px solid #c3a7e9; outline-offset: 3px; border-radius: 3px; }
 .cage-production__footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-top: 5px; color: #918d9a; font: 500 10px/1.4 Inter, sans-serif; font-variant-numeric: tabular-nums; }
@@ -27,11 +32,7 @@
 .cage-production__error button { flex-shrink: 0; }
 @media (prefers-reduced-motion: no-preference) { .cage-production .is-loading { animation: cage-production-spin 1s linear infinite; } }
 @keyframes cage-production-spin { to { transform: rotate(360deg); } }
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .cage-production__actions :is(button, a) { transition: transform 150ms ease; }
-  .cage-production__actions :is(button:enabled, a):hover { transform: scale(1.025); }
-  .cage-production__actions :is(button:enabled, a):active { transform: scale(.98); }
-}
+@media (prefers-reduced-motion: reduce) { .cage-production .cage-production__actions :is(button,a) { transition:none; } }
 .cage-viewer-companion__tabs { display: flex; gap: 20px; border-bottom: 1px solid #ffffff0f; }
 .cage-viewer-companion__tabs button { padding: 8px 0; border: 0; border-bottom: 2px solid transparent; background: none; color: #96929f; font: 600 12px/1.4 Inter, sans-serif; cursor: pointer; }
 .cage-viewer-companion__tabs [aria-selected="true"] { color: #d1b6f4; border-bottom-color: #bda3e5; }

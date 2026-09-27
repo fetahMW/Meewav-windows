@@ -1,3 +1,5 @@
+@import "../place/room-console-material.css";
+
 .wave-viewer-panel {
   --wave-cyan: #b68afa;
   display: flex;
@@ -221,13 +223,23 @@
 
 /* Quiet satin controls; the surrounding console remains transparent. */
 .rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button) {
-  min-height:36px; padding:8px 12px; border:1px solid #c4b7d333; border-radius:10px;
-  color:#ebe5f2; background:linear-gradient(180deg,#303033,#222225);
-  box-shadow:inset 0 1px #ffffff0d,0 1px 3px #0003;
+  min-height:36px; padding:8px 11px; border:1px solid transparent; border-radius:10px;
+  color:var(--room-key-text); background:var(--room-key-face);
+  box-shadow:var(--room-key-shadow);
   font:600 12px/1.4 Inter,system-ui,sans-serif;
   transition:background 120ms,border-color 120ms; filter:none; transform:none;
 }
-.rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button):hover:enabled { background:linear-gradient(180deg,#39353f,#2b2731); border-color:#c3a2e773; filter:none; transform:none; }
-.rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button):active:enabled { background:#242127; box-shadow:inset 0 1px 3px #0005; }
+.rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button):hover:enabled { background:var(--room-key-hover); border-color:transparent; filter:none; transform:none; }
+.rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button):active:enabled { box-shadow:var(--room-key-pressed); }
 .rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button):focus-visible { outline:2px solid #bd9ce6; outline-offset:3px; }
 @media(prefers-reduced-motion:reduce) { .rooms-page .place-room-shell[data-room-presentation="wave"] :is(.wave-viewer-panel button.wave-hifi-action, .wave-viewer-reference > button, .place-audience-journey__actions button) { transition:none; } }
+.wave-viewer-entry-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-bottom:14px; }
+.wave-viewer-entry-actions > .wave-hifi-action { width:100%; }
+.wave-viewer-entry-actions > .wave-hifi-action svg { color:var(--room-key-accent); }
+.rooms-page .place-room-shell[data-room-presentation="wave"] .place-audience-journey.is-queued {
+  flex:0 0 auto; gap:10px; margin:8px 12px; padding:10px 0; border:0; border-top:1px solid #ffffff12;
+  border-radius:0; background:transparent; box-shadow:none; flex-wrap:wrap;
+}
+.rooms-page .place-room-shell[data-room-presentation="wave"] .place-audience-journey.is-queued .place-audience-journey__copy { flex:1 1 160px; }
+.rooms-page .place-room-shell[data-room-presentation="wave"] .place-audience-journey.is-queued .place-audience-journey__actions { flex:0 0 auto; margin:0; }
+@media(max-width:380px) { .wave-viewer-entry-actions { grid-template-columns:minmax(0,1fr); } }

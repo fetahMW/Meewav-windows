@@ -50,23 +50,24 @@ export default function CageProductionCard({ active = true, onOpenMixer }: { act
   return <section className="cage-production" aria-label="Prod du battle" aria-busy={loading}>
     <div className="cage-production__top">
       <span className="cage-production__icon"><Music2 aria-hidden="true" /></span>
-      <div className="cage-production__identity"><h3>Prod du battle</h3><strong title={production?.title}>{production?.title ?? (error ? "Prod momentanément indisponible" : loading ? "Chargement de la prod…" : "En attente du host")}</strong>
+      <div className="cage-production__identity"><h3>Instrumentale</h3><strong title={production?.title}>{production?.title ?? (error ? "Prod momentanément indisponible" : loading ? "Chargement de la prod…" : "En attente du host")}</strong>
         <small>{production?.demo ? <span>Démo</span> : null}{production?.bpm ? <span>{production.bpm} BPM</span> : null}{asset ? <span>{clock(asset.durationSeconds)}</span> : null}</small>
-      </div>
-      <div className="cage-production__actions">
-        <button type="button" className="cage-production__listen" disabled={!asset || locked || !active || starting} onClick={() => void toggle()} aria-label={playing ? "Mettre la prod en pause" : "Écouter la prod du battle"}>{starting || loading && !asset ? <LoaderCircle className="is-loading" /> : playing ? <Pause /> : <Play />}<span>{playing ? "Pause" : "Écouter"}</span></button>
-        <button type="button" disabled={!asset || locked || !active} onClick={() => setRepeat(value => !value)} aria-label="Lecture en boucle de la prod" aria-pressed={repeat} title="Répéter la prod"><Repeat2 /><span>Boucle</span></button>
-        {asset ? <a href={asset.src} download={asset.file.name} aria-label="Télécharger la prod du battle" title="Télécharger la prod"><Download /><span>Télécharger</span></a> : <button type="button" disabled aria-label="Télécharger la prod du battle"><Download /><span>Télécharger</span></button>}
       </div>
     </div>
     {asset ? <>
       <audio ref={audio} src={asset.src} loop={repeat} preload="metadata" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onTimeUpdate={event => setSeconds(event.currentTarget.currentTime)} onEnded={() => { setPlaying(false); setSeconds(0); if (audio.current) audio.current.currentTime = 0; }} onError={() => setPlayError("Lecture impossible. Réessaie le chargement de la prod.")} />
       <div className="cage-production__waveform">
-        <svg viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">{asset.peaks.map((peak, index) => <line key={index} x1={index * 4 + 2} x2={index * 4 + 2} y1={18 - peak.max * 17} y2={18 - peak.min * 17} className={index / asset.peaks.length < seconds / asset.durationSeconds ? "is-played" : undefined} />)}</svg>
-        <input type="range" min={0} max={asset.durationSeconds} step={0.1} value={seconds} disabled={locked} aria-label="Position dans la prod du battle" aria-valuetext={`${clock(seconds)} sur ${clock(asset.durationSeconds)}`} onChange={event => { const value = Number(event.target.value); if (audio.current) audio.current.currentTime = value; setSeconds(value); }} />
+        <svg viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">{asset.peaks.map((peak, index) => <line key={index} x1={(index + .5) * 400 / asset.peaks.length} x2={(index + .5) * 400 / asset.peaks.length} y1={18 - peak.max * 17} y2={18 - peak.min * 17} className={index / asset.peaks.length < seconds / asset.durationSeconds ? "is-played" : undefined} />)}</svg>
+        <span className="cage-production__playhead" aria-hidden="true" style={{ left: `${asset.durationSeconds > 0 ? Math.min(100, seconds / asset.durationSeconds * 100) : 0}%` }} />
+        <input type="range" min={0} max={asset.durationSeconds} step={0.1} value={seconds} disabled={locked || !active} aria-label="Position dans la prod du battle" aria-valuetext={`${clock(seconds)} sur ${clock(asset.durationSeconds)}`} onChange={event => { const value = Number(event.target.value); if (audio.current) audio.current.currentTime = value; setSeconds(value); }} />
       </div>
       <div className="cage-production__footer"><span>{clock(seconds)} <i>/</i> {clock(asset.durationSeconds)}</span>{participant && onOpenMixer ? <button type="button" onClick={() => { audio.current?.pause(); onOpenMixer(); }}><Headphones />{state.mixerReady ? "Ouvrir mon mixeur" : "Préparer dans mon mixeur"}</button> : <span>Écoute privée</span>}</div>
     </> : null}
+    <div className="cage-production__actions">
+      <button type="button" className="cage-production__listen" disabled={!asset || locked || !active || starting} onClick={() => void toggle()} aria-label={playing ? "Mettre la prod en pause" : "Écouter la prod du battle"}>{starting || loading && !asset ? <LoaderCircle className="is-loading" /> : playing ? <Pause /> : <Play />}<span>{playing ? "Pause" : "Écouter"}</span></button>
+      <button type="button" disabled={!asset || locked || !active} onClick={() => setRepeat(value => !value)} aria-label="Lecture en boucle de la prod" aria-pressed={repeat} title="Répéter la prod"><Repeat2 /><span>Boucle</span></button>
+      {asset ? <a href={asset.src} download={asset.file.name} aria-label="Télécharger la prod du battle" title="Télécharger la prod"><Download /><span>Télécharger</span></a> : <button type="button" disabled aria-label="Télécharger la prod du battle"><Download /><span>Télécharger</span></button>}
+    </div>
     {locked ? <p className="cage-production__notice">La prod de ton passage se contrôle dans le mixeur.</p> : null}
     {error || playError ? <div className="cage-production__error" role="alert"><span>{error ?? playError}</span><button type="button" onClick={() => { setPlayError(null); state.retry(); }}><RotateCcw />Réessayer</button></div> : null}
   </section>;

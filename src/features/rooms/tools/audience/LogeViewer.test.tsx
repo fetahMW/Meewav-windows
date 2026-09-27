@@ -67,14 +67,18 @@ describe("Loge viewer experience", () => {
     expect(screen.queryByTestId("preview")).not.toBeInTheDocument();
     expect(screen.queryByText("PARTAGÉ PAR L’ARTISTE")).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: /Rejoindre le chat/ }));
-    expect(onOpenChat).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("button", { name: /Rejoindre le chat/ })).not.toBeInTheDocument();
+    expect(onOpenChat).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("button", { name: /Poser une question/ }));
     expect(screen.getByLabelText(/Votre question/)).toBeVisible();
     fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
-    fireEvent.click(screen.getByRole("button", { name: /Dédicaces & rencontres/ }));
+    fireEvent.click(screen.getByRole("button", { name: /^Dédicace/ }));
     expect(screen.getByRole("region", { name: "Les listes de la Loge" })).toBeVisible();
+    expect(document.querySelector(".loge-requests article strong")).toHaveTextContent("Une dédicace");
     expect(screen.getByRole("tab", { name: "Pour moi" })).toHaveAttribute("aria-selected", "true");
+    fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Rencontre/ }));
+    expect(document.querySelector(".loge-requests article strong")).toHaveTextContent("Un face-à-face");
     fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
     fireEvent.click(screen.getByRole("button", { name: "Pour moi" }));
     expect(screen.getByRole("heading", { name: "Les attentions de l’artiste." })).toBeVisible();

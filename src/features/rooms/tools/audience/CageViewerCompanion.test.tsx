@@ -23,8 +23,8 @@ describe("Cage viewer programme aligned with iOS", () => {
     fireEvent.click(screen.getByRole("button", { name: "Suivre le duel" }));
     expect(screen.getByRole("tab", { name: "En direct" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("tab", { name: "En direct" })).toHaveFocus();
-    fireEvent.click(screen.getByRole("button", { name: "Rejoindre le chat" }));
-    expect(onOpenChat).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("button", { name: "Rejoindre le chat" })).not.toBeInTheDocument();
+    expect(onOpenChat).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("tab", { name: "Audio" }));
     expect(screen.getAllByRole("button", { name: "Écouter la prod" })).toHaveLength(1);
   });
@@ -37,8 +37,9 @@ describe("Cage viewer programme aligned with iOS", () => {
     const program = cageAudienceProgram(cage, "viewer", Date.now());
     expect(program.matches).toEqual([]);
     expect(program.active).toBeUndefined();
-    render(<CageViewerCompanion cage={cage} />);
+    render(<CageViewerCompanion cage={cage} posterUrl="/images/cage/rap-paris-marseille.png" />);
     expect(screen.getByText("La Cage se prépare")).toBeVisible();
+    expect(screen.getByRole("img", { name: /Affiche de La Cage/ })).toHaveAttribute("src", "/images/cage/rap-paris-marseille.png");
     expect(screen.queryByRole("button", { name: /Profil / })).not.toBeInTheDocument();
   });
   it("follows an Open Mic passage without inventing a second artist or exposing the draft lineup", () => {

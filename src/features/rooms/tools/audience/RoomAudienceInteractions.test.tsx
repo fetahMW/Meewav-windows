@@ -320,7 +320,9 @@ describe("RoomAudienceInteractions", () => {
     expect(screen.queryByText("RÉSULTAT RÉVÉLÉ")).not.toBeInTheDocument();
     expect(screen.queryByText("Bracket public")).not.toBeInTheDocument();
     expect(screen.queryByText(/Paris versus Marseille/i)).not.toBeInTheDocument();
-    expect(screen.getByRole("combobox", { name: "Format de la simulation" })).toBeVisible();
+    expect(screen.queryByRole("combobox", { name: "Format de la simulation" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Simuler" })).not.toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Affiche de La Cage/ })).toBeVisible();
   });
 
   it("submits a VIP question and never exposes another member's private moment", async () => {

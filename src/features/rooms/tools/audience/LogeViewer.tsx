@@ -2,9 +2,10 @@ import { useState, type ReactNode, type FormEvent } from "react";
 import {
   Headphones,
   House,
-  MessageCircle,
   MessageCircleQuestion,
   Gift,
+  HeartHandshake,
+  PenLine,
   ArrowRight,
   LockKeyhole,
   UsersRound,
@@ -55,13 +56,13 @@ export default function LogeViewer({
   canEngage,
   busy,
   preview,
-  onOpenChat,
   execute,
 }: Props) {
   const [panel, setPanel] = useState<"moment" | "questions" | "personal" | "requests">(
       "moment",
     ),
     [question, setQuestion] = useState(""),
+    [preferredRequest, setPreferredRequest] = useState<"dedication" | "face-to-face">("dedication"),
     [error, setError] = useState(""),
     [sent, setSent] = useState(false);
   const ownQuestions = loge.questions.filter((q) => q.author.id === accountId);
@@ -189,11 +190,6 @@ export default function LogeViewer({
                   <p>Échangez avec {hostName}, posez vos questions et créez des souvenirs.</p>
                 </div>
               </header>
-              {onOpenChat ? <button type="button" className="loge-viewer__join-chat" onClick={onOpenChat}>
-                <MessageCircle aria-hidden="true" />
-                <span><strong>Rejoindre le chat</strong><small>Un mot pour l’artiste, un échange entre fans.</small></span>
-                <ArrowRight aria-hidden="true" />
-              </button> : null}
               <nav className="loge-viewer__home-actions" aria-label="Participer à la Loge">
                 <button type="button" onClick={() => setPanel("questions")}>
                   <MessageCircleQuestion aria-hidden="true" />
@@ -201,10 +197,16 @@ export default function LogeViewer({
                   <small>{loge.questionsOpen ? "L’artiste choisit les questions auxquelles répondre." : "Les envois sont en pause. Retrouvez vos questions."}</small>
                   <ArrowRight aria-hidden="true" />
                 </button>
-                <button type="button" onClick={() => setPanel("requests")}>
-                  <Gift aria-hidden="true" />
-                  <strong>Dédicaces & rencontres</strong>
-                  <small>Découvrez les demandes ouvertes par l’artiste.</small>
+                <button type="button" onClick={() => { setPreferredRequest("dedication"); setPanel("requests"); }}>
+                  <PenLine aria-hidden="true" />
+                  <strong>Dédicace</strong>
+                  <small>Un souvenir personnalisé.</small>
+                  <ArrowRight aria-hidden="true" />
+                </button>
+                <button type="button" onClick={() => { setPreferredRequest("face-to-face"); setPanel("requests"); }}>
+                  <HeartHandshake aria-hidden="true" />
+                  <strong>Rencontre</strong>
+                  <small>Un échange avec l’artiste.</small>
                   <ArrowRight aria-hidden="true" />
                 </button>
               </nav>
@@ -233,7 +235,7 @@ export default function LogeViewer({
                 {preview}
               </section> : <p className="loge-viewer__sharing-hint"><Headphones aria-hidden="true" />Les contenus partagés pendant le direct apparaîtront ici.</p>}
             </div>
-            {panel === "requests" ? <LogeRequestLists loge={loge} viewer={{...viewer, id: accountId}} disabled={busy || !canEngage} execute={execute} /> : panel === "questions" ? (
+            {panel === "requests" ? <LogeRequestLists loge={loge} preferredKind={preferredRequest} viewer={{...viewer, id: accountId}} disabled={busy || !canEngage} execute={execute} /> : panel === "questions" ? (
               <section className="loge-viewer__card">
                 <div className="loge-viewer__section-label">
                   <MessageCircleQuestion />
