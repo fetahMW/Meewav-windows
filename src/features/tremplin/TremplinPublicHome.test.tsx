@@ -64,14 +64,14 @@ function expectOnlyLevelPressed(level: number) {
 }
 
 describe("accueil passerelle du Tremplin", () => {
-  it("ouvre par une promesse de landing page et un visuel collectif", () => {
+  it("ouvre par la promesse éditoriale et garde des entrées réelles vers les talents", () => {
     renderPublicHome();
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Le talent se construit. Le Tremplin le rend visible.");
-    expect(screen.getByText(/Suis les artistes qui t’inspirent, comprends leur évolution/)).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Quatre artistes créent ensemble dans un studio/ })).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: /Explorer le Tremplin/ })).toHaveLength(2);
-    expect(screen.getAllByRole("button", { name: /Comprendre comment ça marche/ })).toHaveLength(2);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Les grands noms ont de petits débuts.");
+    expect(screen.getByText(/Repère le talent avant le bruit/)).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Portrait de/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /Découvrir les talents/ })).toHaveLength(2);
+    expect(screen.getAllByRole("button", { name: /Comprendre le Tremplin/ })).toHaveLength(2);
     expect(screen.getByRole("list", { name: "Ce qui reste sous ton contrôle" })).toHaveTextContent("Donner de la force est facultatif");
   });
 
@@ -101,6 +101,37 @@ describe("accueil passerelle du Tremplin", () => {
     expect(onSearch).toHaveBeenCalledWith("Projet introuvable");
   });
 
+  it("ne sélectionne pas un résultat au survol et permet de le choisir puis de le fermer au clavier", () => {
+    const { onOpenArtist, onOpenArtistSupport } = renderPublicHome();
+    const search = screen.getByRole("combobox");
+    fireEvent.change(search, { target: { value: "LUNAE" } });
+    const option = within(screen.getByRole("listbox")).getByRole("option", { name: /Lunaé/ });
+    fireEvent.mouseEnter(option);
+    expect(screen.queryByRole("article", { name: /Lunaé/ })).not.toBeInTheDocument();
+    fireEvent.keyDown(search, { key: "Escape" });
+    fireEvent.keyDown(search, { key: "ArrowDown" });
+    fireEvent.submit(search.closest("form")!);
+    expect(screen.getByRole("article", { name: /Lunaé/ })).toBeInTheDocument();
+    expect(onOpenArtist).not.toHaveBeenCalled();
+    expect(onOpenArtistSupport).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Fermer le résultat" }));
+    expect(screen.queryByRole("article", { name: /Lunaé/ })).not.toBeInTheDocument();
+    expect(search).toHaveValue("");
+  });
+
+  it("filtre la découverte sans quitter la page et rétablit tous les talents", () => {
+    const { onOpenRoute } = renderPublicHome();
+    const firstNames = screen.getAllByRole("button", { name: /^Voir le projet de/ }).map(button => button.getAttribute("aria-label"));
+    fireEvent.click(screen.getByRole("button", { name: "Production" }));
+    expect(screen.getByRole("button", { name: "Production" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getAllByRole("button", { name: /^Voir le projet de/ }).map(button => button.getAttribute("aria-label"))).not.toEqual(firstNames);
+    expect(onOpenRoute).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Tous les talents", pressed: false }));
+    expect(screen.getAllByRole("button", { name: /^Voir le projet de/ }).map(button => button.getAttribute("aria-label"))).toEqual(firstNames);
+    fireEvent.click(screen.getAllByRole("button", { name: "Découvrir les talents" })[1]);
+    expect(onOpenRoute).toHaveBeenCalledWith("/tremplin/decouvrir");
+  });
+
   it("garde l’écoute comme aperçu tertiaire et ne déclenche jamais un achat depuis l’accueil", () => {
     const { onToggleArtistAudio, onOpenArtistSupport } = renderPublicHome();
     const search = screen.getByRole("combobox", { name: "Rechercher un artiste, un projet ou un jeton de talent" });
@@ -122,19 +153,19 @@ describe("accueil passerelle du Tremplin", () => {
   it("présente les projets éditoriaux sans classement financier", () => {
     renderPublicHome();
 
-    expect(screen.getByRole("heading", { name: "Des projets, pas un classement." })).toBeInTheDocument();
-    expect(screen.getByText(/Une sélection fondée sur le talent, les projets documentés et l’évolution des artistes dans MeeWav/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Ton prochain coup de cœur." })).toBeInTheDocument();
+    expect(screen.getByText(/Sélection éditoriale · Le talent, les projets documentés et leur évolution/)).toBeInTheDocument();
     expect(screen.getByText(/La sélection est indépendante du prix et des achats de jetons/)).toBeInTheDocument();
     expect(screen.queryByText(/top hausses|meilleure performance|24 h/i)).not.toBeInTheDocument();
   });
 });
 
 describe("progression MeeWav interactive", () => {
-  it("ouvre le niveau 1 par défaut puis déplace l’explication au survol", () => {
+  it("préserve le niveau 4 initial puis déplace l’explication au survol", () => {
     renderPublicHome();
 
-    expectOnlyLevelPressed(1);
-    expect(screen.getByRole("status")).toHaveTextContent("Le profil pose ses premiers repères.");
+    expectOnlyLevelPressed(4);
+    expect(screen.getByRole("status")).toHaveTextContent("Le parcours professionnel est structuré.");
 
     fireEvent.mouseEnter(screen.getByRole("button", { name: /Niveau 3, Confirmé/ }));
 
@@ -164,6 +195,8 @@ describe("progression MeeWav interactive", () => {
 describe("protections du jeton de talent", () => {
   it("ouvre l’explication dédiée et garde les risques lisibles", () => {
     const { onUnderstandToken } = renderPublicHome();
+
+    fireEvent.click(screen.getByText("Comment donner de la force à un projet ?"));
 
     expect(screen.getByText("Achat payant et facultatif")).toBeInTheDocument();
     expect(screen.getByText("Valeur variable, aucun gain garanti")).toBeInTheDocument();

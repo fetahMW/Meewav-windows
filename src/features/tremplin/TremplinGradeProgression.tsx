@@ -62,6 +62,8 @@ export function TremplinGradeCard({ level, active = true, standalone = false, no
   return (
             <article
               tabIndex={onActivate ? 0 : undefined}
+              role={onActivate ? "button" : undefined}
+              aria-pressed={onActivate ? active : undefined}
               
               className={`tremplin-gateway__grade-card ${active ? "is-active" : ""} ${standalone ? "is-standalone" : ""}`}
               style={{ "--grade-light": getGradeBadgeMeta(level).mainColor, "--grade-soft": getGradeBadgeMeta(level).softColor } as CSSProperties}
@@ -69,6 +71,13 @@ export function TremplinGradeCard({ level, active = true, standalone = false, no
               aria-label={"Niveau " + level + ", " + TREMPLIN_GRADE_EXPERIENCE[level].title + ". " + LEVEL_GUIDANCE[level].cardLabel}
               onMouseEnter={onActivate}
               onFocus={onActivate}
+              onClick={onActivate}
+              onKeyDown={onActivate ? (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  onActivate();
+                }
+              } : undefined}
             >
               <span className="tremplin-public-home__level-stage">Niveau {level}</span>
               <MeewavGradeBadge className="tremplin-public-home__level-badge" level={level} size="hero" variant="icon" />
