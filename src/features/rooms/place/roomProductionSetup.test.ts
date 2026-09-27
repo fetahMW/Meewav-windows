@@ -43,6 +43,13 @@ describe('room production setup persistence', () => {
     expect(readRoomProductionSetup('bad-json')).toBeNull();
   });
 
+  it('persists studio sound choices without restoring headphone monitoring', () => {
+    sessionStorage.setItem(key('audio'), JSON.stringify({ layout: 'full', audio: {
+      voiceGain: .6, voiceMuted: true, musicGain: 4, musicMuted: false, mono: true, pan: -3, delayMs: 5000, monitoring: true,
+    } }));
+    expect(readRoomProductionSetup('audio')?.audio).toEqual({ voiceGain: .6, voiceMuted: true, musicGain: 1, musicMuted: false, mono: true, pan: -1, delayMs: 1000 });
+  });
+
   it('normalizes invalid and out-of-range composition values when reading storage', () => {
     sessionStorage.setItem(key('normalized'), JSON.stringify({
       cameraId: 42, microphoneId: null, musicInputId: false,

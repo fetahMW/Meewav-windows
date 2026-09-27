@@ -31,7 +31,7 @@ body .rooms-home-launch-dialog .room-launch-cage.is-desktop-sequence {
 .is-desktop-sequence:not(.is-studio-step)>.cage-launch__body { padding-inline:max(24px,calc((100% - 900px)/2)); }
 .is-desktop-sequence:not(.is-studio-step)>.room-launch__body { align-content:start; }
 .is-desktop-sequence>.room-launch__types { flex:1; align-content:start; padding:32px max(24px,calc((100% - 1100px)/2)); }
-.is-desktop-sequence .room-production__workspace { grid-template-columns:minmax(280px,340px) minmax(0,1fr); }
+.is-desktop-sequence .room-production__workspace { grid-template-columns:250px minmax(0,1fr); }
 @media(max-width:900px) { .is-desktop-sequence .room-production__workspace { grid-template-columns:minmax(0,1fr); } }
 
 .cage-launch__back { display:grid; place-items:center; flex:0 0 36px; height:36px; padding:0; border:1px solid #515662; border-radius:9px; background:#252931; color:#dce1ed; cursor:pointer; }

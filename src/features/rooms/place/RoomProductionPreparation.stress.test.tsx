@@ -86,7 +86,7 @@ it('persists the selected microphone before starting and rejects repeated start 
   fireEvent.click(screen.getByRole('button', { name: 'Appliquer le plan' }));
   const button = screen.getByRole('button', { name: 'Passer en direct' });
   fireEvent.click(button); fireEvent.click(button);
-  expect(start).toHaveBeenCalledOnce(); expect(button).toBeDisabled();
+  await waitFor(() => expect(start).toHaveBeenCalledOnce()); expect(button).toBeDisabled();
 });
 it('releases microphone when Web Audio creation fails', async () => {
   const source = capture('audio'); mocks.microphone.mockResolvedValue(source.stream);
@@ -118,4 +118,28 @@ it('stops broadcasting without discarding the prepared cameras and composition',
   expect(view.onStop).toHaveBeenCalledOnce();
   expect(source.track.stop).not.toHaveBeenCalled();
   expect(screen.getByRole('button', { name: 'Retirer Caméra QA' })).toBeInTheDocument();
+});
+
+it('uses the existing room voice engine and channel controls instead of acquiring a second microphone', async () => {
+  const voice = capture('audio');
+  const roomAudio = {
+    levels: { voiceGain: .7, voiceMuted: false, musicGain: .5, musicMuted: false },
+    voiceStream: null, voiceDeviceId: 'mic', monitoring: false,
+    onChange: vi.fn(), onToggleMonitoring: vi.fn(), prepareMicrophone: vi.fn().mockResolvedValue(undefined),
+    startVoicePreview: vi.fn().mockResolvedValue(voice.stream), onOpenEffects: vi.fn(),
+  };
+  const onStart = vi.fn();
+  render(<RoomProductionPreparation roomId="qa" liveRoom onAir={false} publicationStatus="disconnected" onStart={onStart} onStop={vi.fn()} roomAudio={roomAudio} />);
+  await choose('Micro / interface audio Windows', 'Micro QA');
+  fireEvent.click(screen.getByRole('button', { name: 'Tester le micro' }));
+  await waitFor(() => expect(roomAudio.startVoicePreview).toHaveBeenCalledOnce());
+  expect(roomAudio.prepareMicrophone).toHaveBeenCalledOnce();
+  expect(mocks.microphone).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByRole('slider', { name: 'Volume · Ma voix' }), { target: { value: '-6' } });
+  expect(roomAudio.onChange).toHaveBeenLastCalledWith({ voiceGain: expect.closeTo(.501187, 5) });
+  fireEvent.click(screen.getByRole('button', { name: 'Couper · Ma voix' }));
+  expect(roomAudio.onChange).toHaveBeenLastCalledWith({ voiceMuted: true });
+  fireEvent.click(screen.getByRole('button', { name: 'Effets de ma voix' }));
+  expect(roomAudio.onOpenEffects).toHaveBeenCalledOnce();
+  expect(onStart).not.toHaveBeenCalled();
 });

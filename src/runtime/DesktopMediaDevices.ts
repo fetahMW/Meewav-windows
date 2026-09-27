@@ -13,7 +13,9 @@ export class DesktopMediaDevices {
     return this.media.getUserMedia({ video: { deviceId: { exact: deviceId } }, audio: false });
   }
   captureMicrophone(deviceId: string) {
-    return this.media.getUserMedia({ audio: { deviceId: { exact: deviceId } }, video: false });
+    return this.media.getUserMedia({ audio: { deviceId: { exact: deviceId }, channelCount: { ideal: 1 },
+      echoCancellation: false, noiseSuppression: false, autoGainControl: false,
+    }, video: false });
   }
   captureMusic(deviceId: string) {
     return this.media.getUserMedia({ audio: { deviceId: { exact: deviceId },

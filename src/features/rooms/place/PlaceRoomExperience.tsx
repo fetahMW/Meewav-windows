@@ -45,7 +45,8 @@ import { usePlaceLiveKitRoom } from "./usePlaceLiveKitRoom";
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import type { DesktopMusicSource } from "../../../runtime/DesktopMusicSource";
 import RoomProductionPreparation from "./RoomProductionPreparation";
-import { readRoomProductionSetup } from "./roomProductionSetup";
+import { readRoomProductionSetup, saveRoomProductionSetup, type RoomProductionSetup } from "./roomProductionSetup";
+import { readRoomDevicePreferences } from "./roomDevicePreferences";
 import "./place-room-production-drawer.css";
 import { usePlaceLiveCallProgramMix } from "./usePlaceLiveCallProgramMix";
 import { usePlaceLiveCallRoomCleanup } from "./usePlaceLiveCallRoomCleanup";
@@ -336,6 +337,19 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
   const desktopMusicReservedRef = useRef(desktopMusicReserved);
   desktopMusicReservedRef.current = desktopMusicReserved;
   const musicChannel = room.channels.find((channel) => channel.kind === "audio" && channel.participantId === room.host.id);
+  const studioSetup = useMemo(() => readRoomProductionSetup(room.id), [room.id]);
+  const saveStudioSetup = useCallback((setup: RoomProductionSetup) => saveRoomProductionSetup(room.id, { ...setup, audioApplied: true }), [room.id]);
+  const restoredStudioRoom = useRef<string | null>(null);
+  useEffect(() => {
+    if (!desktopHost || place.isLoading || !personalMicrophone || !musicChannel || restoredStudioRoom.current === room.id) return;
+    restoredStudioRoom.current = room.id;
+    if (!studioSetup?.audio || studioSetup.audioApplied) return;
+    place.setChannelGain(personalMicrophone.id, studioSetup.audio.voiceGain);
+    place.setChannelGain(musicChannel.id, studioSetup.audio.musicGain);
+    if (personalMicrophone.isMuted !== studioSetup.audio.voiceMuted) place.toggleChannelMute(personalMicrophone.id);
+    if (musicChannel.isMuted !== studioSetup.audio.musicMuted) place.toggleChannelMute(musicChannel.id);
+    saveRoomProductionSetup(room.id, { ...studioSetup, audioApplied: true });
+  }, [desktopHost, place, room.id, studioSetup, personalMicrophone, musicChannel]);
   const masterChannel = room.channels.find((channel) => channel.kind === "master");
   const desktopMusicGain = musicChannel && !musicChannel.isMuted && !masterChannel?.isMuted
     ? musicChannel.gain * (masterChannel?.gain ?? 1) : 0;
@@ -1513,10 +1527,39 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
             <button ref={productionCloseRef} type="button" className="place-room-production-drawer__close" aria-label="Fermer la régie" onClick={closeProduction}><X aria-hidden="true" /></button>
             <RoomProductionPreparation
               key={room.id} roomId={room.id} liveRoom={room.source === "live"}
-              initialSetup={readRoomProductionSetup(room.id)}
+              initialSetup={studioSetup}
+              onSetupChange={saveStudioSetup}
+              roomAudio={{
+                levels: { voiceGain: personalMicrophone?.gain ?? 1, voiceMuted: personalMicrophone?.isMuted ?? false, musicGain: musicChannel?.gain ?? 1, musicMuted: musicChannel?.isMuted ?? false },
+                voiceStream: localAudio.outputStream,
+                voiceDeviceId: localAudio.inputStream?.getAudioTracks()[0]?.getSettings().deviceId,
+                monitoring: monitoringEnabled,
+                error: localAudio.error,
+                onChange: patch => {
+                  if (personalMicrophone && patch.voiceGain !== undefined) place.setChannelGain(personalMicrophone.id, patch.voiceGain);
+                  if (personalMicrophone && patch.voiceMuted !== undefined && patch.voiceMuted !== personalMicrophone.isMuted) place.toggleChannelMute(personalMicrophone.id);
+                  if (musicChannel && patch.musicGain !== undefined) place.setChannelGain(musicChannel.id, patch.musicGain);
+                  if (musicChannel && patch.musicMuted !== undefined && patch.musicMuted !== musicChannel.isMuted) place.toggleChannelMute(musicChannel.id);
+                },
+                onToggleMonitoring: () => { void toggleHeadphoneMonitoring(); },
+                prepareMicrophone: async () => {
+                  const selected = readRoomDevicePreferences().microphoneId;
+                  const current = localAudio.inputStream?.getAudioTracks()[0]?.getSettings().deviceId;
+                  // An earlier headphone test may still own a different device.
+                  if (localAudio.inputStream && selected && selected !== current) {
+                    await stopLocalCapture();
+                    place.updateVocal({ monitoring: false });
+                  }
+                },
+                startVoicePreview: async () => {
+                  if (nativePitchSelected) throw new Error("Le retour du plugin natif se règle dans Effets de ma voix.");
+                  return localAudio.startCapture();
+                },
+                onOpenEffects: () => { closeProduction(); openPanel("mixer"); setMixerView("voice_fx"); },
+              }}
               onAir={desktopOnAir} publicationStatus={roomMedia.status} transportError={roomMedia.error}
               onStart={(stream, musicSource) => {
-                if (musicSource && roomMedia.musicAudible) { place.showNotice('Arrête d’abord la musique du lecteur Meewav.'); return false; }
+                if (musicSource && roomMedia.musicAudible) throw new Error('Arrête d’abord la musique du lecteur Meewav avant de diffuser cette entrée externe.');
                 setDesktopMusicSource(musicSource);
                 setDesktopProgramStream(stream); setDesktopBroadcastRoom(room.id);
                 return true;
