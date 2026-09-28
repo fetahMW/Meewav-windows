@@ -11,6 +11,9 @@ export type DesktopDescriptor = {
 };
 export type DesktopBridge = {
   version: 1;
+  localTestAccountsEnabled?: boolean;
+  getTestAccountAliases?(supabaseUrl: string): Promise<string[]>;
+  signInTestAccount?(alias: string, supabaseUrl: string): Promise<{ access_token: string; refresh_token: string }>;
   getCapabilities(): Promise<DesktopDescriptor>;
   windowControl?(action: 'minimize' | 'toggle-maximize' | 'close'): Promise<boolean>;
   windowMenu?(action: 'undo' | 'redo' | 'cut' | 'copy' | 'paste' | 'select-all' | 'reload' | 'zoom-in' | 'zoom-out' | 'zoom-reset' | 'fullscreen'): Promise<boolean>;
