@@ -24,7 +24,7 @@ export function createRoomsHomeDemoState(
   room: RoomsHomeRoom,
   currentUserId: string | null = PLACE_DEMO_PROFILES.host.id,
 ): PlaceRoomState {
-  const base = createPlaceDemoState(currentUserId);
+  const base = createPlaceDemoState(currentUserId, room.roomType);
   const host = hostProfileFromRoom(room);
   const formerHostId = base.host.id;
   const startedAt = Number.isFinite(new Date(room.startedAt).getTime())

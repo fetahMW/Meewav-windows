@@ -1,5 +1,5 @@
 /*
- * MeeWav experimental monophonic pitch correction.
+ * MeeWav monophonic pitch correction.
  * YIN estimates F0; a dual rotating-delay shifter applies a smoothed move to
  * the nearest note in the selected scale. All real-time buffers are allocated
  * in the constructor so process() performs no heap allocation.
@@ -90,16 +90,22 @@ class MeeWavPitchCorrectionProcessor extends AudioWorkletProcessor {
     this.amount = 0.85;
     this.speed = 0.75;
     this.humanize = 0.2;
+    this.smooth = 0;
+    this.shift = 0;
 
     this.port.onmessage = (event) => {
       if (!event.data || event.data.type !== "parameters") return;
       const value = event.data.value || {};
-      this.enabled = value.tuneEnabled === true;
+      const enabled = value.tuneEnabled === true;
+      if (enabled !== this.enabled) { this.voiced = false; this.smoothedRatio = 1; }
+      this.enabled = enabled;
       this.key = typeof value.tuneKey === "string" ? value.tuneKey : "C";
       this.scale = typeof value.tuneScale === "string" ? value.tuneScale : "Chromatique";
       this.amount = clamp(Number(value.tuneAmount), 0, 1);
       this.speed = clamp(Number(value.tuneSpeed), 0, 1);
       this.humanize = clamp(Number(value.tuneHumanize), 0, 1);
+      this.smooth = clamp(Number(value.tuneSmooth ?? 0), 0, 1);
+      this.shift = clamp(Number(value.tuneShift ?? 0), -12, 12);
     };
   }
 
@@ -221,8 +227,8 @@ class MeeWavPitchCorrectionProcessor extends AudioWorkletProcessor {
     const correctedDistance = Math.abs(distanceSemitones) <= deadbandSemitones
       ? 0
       : distanceSemitones * this.amount * (1 - this.humanize * 0.38);
-    const desiredRatio = clamp(2 ** (correctedDistance / 12), 0.82, 1.22);
-    const response = 0.055 + this.speed * this.speed * 0.78;
+    const desiredRatio = clamp(2 ** ((correctedDistance + this.shift) / 12), 0.5, 2);
+    const response = (0.055 + this.speed * this.speed * 0.78) / (1 + this.smooth * 8);
     this.smoothedRatio += (desiredRatio - this.smoothedRatio) * response;
     this.voiced = bestValue < 0.3;
   }
@@ -235,7 +241,7 @@ class MeeWavPitchCorrectionProcessor extends AudioWorkletProcessor {
     if (!destination) return true;
 
     for (let index = 0; index < destination.length; index += 1) {
-      const dry = source ? source[index] || 0 : 0;
+      const dry = source && Number.isFinite(source[index]) ? source[index] : 0;
       this.inputRing[this.inputWrite] = dry;
       this.inputWrite = (this.inputWrite + 1) & (INPUT_RING_SIZE - 1);
       this.delayRing[this.delayWrite] = dry;
@@ -255,6 +261,7 @@ class MeeWavPitchCorrectionProcessor extends AudioWorkletProcessor {
         ? 1
         : 0;
       this.wet += (desiredWet - this.wet) * 0.0045;
+      if (!desiredWet && this.wet < 0.000001) this.wet = 0;
 
       this.phase = wrap01(this.phase + (1 - this.smoothedRatio) / this.delayRange);
       const otherPhase = wrap01(this.phase + 0.5);

@@ -1,0 +1,123 @@
+/* A shared navigation material, above and below the guest cards. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  --console-nav-face: linear-gradient(112deg,#ffffff14,#ffffff05 24%,transparent 39%) padding-box, radial-gradient(82% 110% at 4% -22%,#ffffff0b,transparent 48%) padding-box, linear-gradient(#191a1d,#070708 48%,#010102) padding-box, linear-gradient(112deg,#e5eaf04d,#8f959e1b 31%,#373a4009 68%,#a9aeb62a) border-box;
+  --console-nav-shadow: inset 0 2px 2px #ffffff20, inset 0 -2px 3px #000, 0 0 0 1px #000, 0 4px 9px #0008;
+  & > .place-studio-panel__bar,
+  &.is-guests .place-guests__desktop-dock {
+    border: 1px solid transparent;
+    background: var(--console-nav-face);
+    box-shadow: var(--console-nav-shadow);
+    border-radius: 15px;
+  }
+  &.is-guests .place-guests:has(.place-guests__desktop-dock) { position: relative; --guest-dock-clearance: 96px; }
+  &.is-guests .place-guests:has(.place-guests__desktop-dock-error) { --guest-dock-clearance: 136px; }
+  &.is-guests .place-guests:has(.place-guests__desktop-dock) .place-guests__rows { padding-bottom: var(--guest-dock-clearance); scroll-padding-bottom: var(--guest-dock-clearance); }
+  &.is-guests .place-guests__desktop-dock { position: absolute; z-index: 6; inset: auto 5px 6px; margin: 0; padding: 8px 10px; gap: 5px; }
+  &.is-guests .place-guests__desktop-dock-heading { display: flex; align-items: baseline; gap: 7px; min-width: 0; white-space: nowrap; }
+  &.is-guests .place-guests__desktop-dock-heading > button { flex: 0 0 auto; padding: 0; line-height: 16px; font-size: 11px; }
+  &.is-guests .place-guests__desktop-dock-heading > small { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 10px; line-height: 16px; }
+  &.is-guests .place-guests__desktop-dock-heading > small::before { content: "·"; margin-right: 7px; color: #8c8195; }
+  &.is-guests .place-guests__desktop-dock-actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0,1fr); gap: 3px; overflow: visible; }
+  &.is-guests .place-guests__desktop-dock-actions :is(button,.place-guest-camera-dock) { min-width: 0; }
+  &.is-guests .place-guests__desktop-dock-actions > button,
+  &.is-guests .place-guests__desktop-dock-actions .place-guest-camera-dock > button { width: 100%; height: 44px; min-height: 44px; border: 1px solid transparent; border-radius: 10px; background: transparent; font-size: 9px; }
+  &.is-guests .place-guests__desktop-dock-actions button:hover:not(:disabled),
+  &.is-guests .place-guests__desktop-dock-actions button:focus-visible { border-color: #ad75ed55; background: linear-gradient(#7e44e338,#7e44e338),#101014; color: #e6d5fa; box-shadow: inset 0 1px #ffffff17; }
+  &.is-guests .place-guests__section-head.is-capacity-only,
+  &.is-guests .place-guests__section-tools { min-width: 0; overflow: visible; flex-wrap: wrap; scrollbar-width: none; }
+  &.is-guests .place-guests__section-tools { gap: 6px; }
+  &.is-guests .place-guests__bulk-select { white-space: nowrap; }
+  &.is-guests .place-guests__selection-toggle { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; min-height: 30px; padding: 5px; border: 1px solid #b197cc35; border-radius: 8px; background: #ffffff06; color: #c9b8da; cursor: pointer; }
+  &.is-guests .place-guests__selection-toggle > svg { width: 16px; height: 16px; }
+  &.is-guests .place-guests__selection-toggle[aria-pressed="true"] { border-color: #ca9cf373; background: #884aba28; color: #e5caff; }
+  &.is-guests .place-guests__selection-toggle:focus-visible { outline: 2px solid #c39be9; outline-offset: 2px; }
+  &.is-guests .place-guests__selection-toggle:disabled { opacity: .4; cursor: default; }
+  &.is-guests .studio-guest-selection-chips { max-width: 100%; flex-wrap: wrap; overflow: visible; }
+  &.is-chat .place-chat__messages { scrollbar-width: thin; scrollbar-color: #c7a0c7 transparent; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar { width: 5px; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar-track { background: transparent; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar-thumb { border-radius: 10px; background: #c7a0c7; }
+  &.is-chat .place-chat__messages::-webkit-scrollbar-thumb:hover { background: #e1b7dc; }
+}
+
+/* Room tools occupy the same transparent deck as the mixer navigation. */
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  & .wave-tools-nav,
+  & .wave-tools-nav > .room-tools-shell,
+  & .wave-tools-body,
+  & .wave-tools-body > .room-tools-shell,
+  & .room-tools-shell__panel,
+  & .place-guests,
+  & .place-guests__list,
+  & .place-guests__rows { min-width: 0; border: 0; background: transparent; box-shadow: none; }
+  & .wave-tools-nav > .room-tools-shell { display: block; width: 100%; height: 100%; padding: 0; overflow: visible; }
+  & .wave-tools-nav { overflow: visible; }
+  & .wave-tools-nav .place-tools-console__switch { width: 100%; max-width: 100%; grid-template-columns: repeat(var(--studio-nav-columns, 4), minmax(0,1fr)); border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  & .wave-tools-nav .place-tools-console__switch::before { content: none; }
+  & .wave-tools-nav .place-tools-console__switch > button { min-width: 0; color: #bfb6c8; }
+  & .wave-tools-nav .place-tools-console__switch > button.is-active { color: #f5e9ff; }
+}
+@container (max-width: 480px) {
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch > button { gap: 0; padding-inline: 3px; }
+  .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch > button > svg { display: none; }
+}
+
+/* The same first row places the persistent player at the same vertical origin. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  --studio-subnav-height: 42px;
+  --studio-subnav-row: 30px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-mixer.has-audio-player {
+  grid-template-rows: var(--studio-subnav-height) auto minmax(180px,1fr);
+  row-gap: 0;
+  padding-top: 0;
+  & > .place-mixer__subnav, & > .wave-tools-nav { box-sizing: border-box; width: 100%; max-width: 100%; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); max-height: var(--studio-subnav-height); margin: 0; padding: 0; align-content: center; }
+  & > .place-mixer__subnav, & > .wave-tools-nav .place-tools-console__switch { box-sizing: border-box; width: 100%; max-width: 100%; height: var(--studio-subnav-height); min-height: var(--studio-subnav-height); margin: 0; padding: 0 6px; align-content: center; }
+  & > .place-mixer-audio { top: auto; margin-top: 0; }
+}
+
+/* The four host sections share the full rail, with one inset only. The longer
+ * Wave label owns enough space instead of borrowing from its neighbours. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-host-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  & :is(.place-mixer__subnav, .wave-tools-nav .place-tools-console__switch) {
+    column-gap: 8px;
+    & > button { padding-inline: 3px; }
+  }
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-host-panel.is-shared-studio-chassis:not(.is-collapsed) .wave-tools-nav .place-tools-console__switch {
+  grid-template-columns: minmax(0, 1fr) minmax(max-content, 1.4fr) repeat(2, minmax(0, 1fr));
+  & > button > span { flex-shrink: 0; max-width: none; overflow: visible; text-overflow: clip; white-space: nowrap; }
+}
+
+/* Every module uses the Mixer's navigation band, including inline Chat and
+ * Guests rails. Center the controls themselves, not only their outer wrapper. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
+  & :is(.place-chat-workspace, .classe-chat-workspace):has(> .place-tools-console__switch) {
+    padding-top: 0;
+  }
+  & :is(
+    .place-mixer__subnav,
+    .wave-tools-nav .place-tools-console__switch,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-guests__segments
+  ) {
+    box-sizing: border-box;
+    height: var(--studio-subnav-height);
+    min-height: var(--studio-subnav-height);
+    max-height: var(--studio-subnav-height);
+    flex-shrink: 0;
+    grid-template-rows: var(--studio-subnav-row);
+    align-content: center;
+    align-items: center;
+    margin-block: 0;
+    padding-block: 0;
+    & > button {
+      box-sizing: border-box;
+      height: var(--studio-subnav-row);
+      min-height: var(--studio-subnav-row);
+      align-self: center;
+      padding-block: 0;
+    }
+  }
+}

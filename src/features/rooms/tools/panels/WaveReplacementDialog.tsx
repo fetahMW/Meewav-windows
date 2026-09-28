@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import { useEffect, useRef, useState } from "react";
 import { Swords, X } from "lucide-react";
 import type { RoomToolsCommand, WaveState } from "../roomTools.types";
@@ -36,7 +37,7 @@ export default function WaveReplacementDialog({ wave, layerId, disabled, execute
     <header><span><Swords /><strong id="wave-replacement-title">Duel de remplacement</strong></span><button type="button" aria-label="Fermer le duel" disabled={pending} onClick={onClose}><X /></button></header>
     <p>La boucle actuelle reste dans le Beat jusqu’au verdict du public.</p>
     <div className="wave-replacement-dialog__defender"><small>Boucle à défendre</small><strong>{layer?.title}</strong></div>
-    {candidates.length ? <label>Choisir dans Vote<select aria-label="Boucle candidate au remplacement" disabled={pending} value={candidateId} onChange={event => setCandidateId(event.currentTarget.value)}>{candidates.map(item => <option key={item.id} value={item.id}>{item.title} · {item.instrument} · {item.bpm} BPM</option>)}</select></label> : <p>Aucune boucle prête dans Vote. Importez une proposition ou attendez une nouvelle boucle.</p>}
+    {candidates.length ? <label>Choisir dans Vote<MeewavSelect aria-label="Boucle candidate au remplacement" disabled={pending} value={candidateId} onChange={event => setCandidateId(event.currentTarget.value)}>{candidates.map(item => <option key={item.id} value={item.id}>{item.title} · {item.instrument} · {item.bpm} BPM</option>)}</MeewavSelect></label> : <p>Aucune boucle prête dans Vote. Importez une proposition ou attendez une nouvelle boucle.</p>}
     {error ? <p role="alert">{error}</p> : null}
     <footer><button type="button" disabled={pending} onClick={onClose}>Annuler</button><button type="button" disabled={disabled || pending || !candidates.some(item => item.id === candidateId) || wave.submissions.some(item => item.vote?.open)} onClick={() => void launch()}><Swords />{pending ? "Ouverture…" : "Soumettre au vote"}</button></footer>
   </dialog>;

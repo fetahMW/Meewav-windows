@@ -1,8 +1,11 @@
 import { useState, type ReactNode, type FormEvent } from "react";
 import {
   Headphones,
+  House,
   MessageCircleQuestion,
   Gift,
+  HeartHandshake,
+  PenLine,
   ArrowRight,
   LockKeyhole,
   UsersRound,
@@ -20,11 +23,13 @@ import type {
 } from "../roomTools.types";
 import "./loge-viewer.css";
 import { LogeRequestLists } from "./LogeRequests";
+import { RoomViewerSubmenu } from "../../place/RoomViewerToolsLayout";
 type Props = {
   loge: LogeState;
   accountId: string;
   viewer: RoomPerson;
   hostName: string;
+  hostAvatarUrl?: string;
   eligible: boolean;
   canEngage: boolean;
   busy: boolean;
@@ -46,17 +51,18 @@ export default function LogeViewer({
   accountId,
   viewer,
   hostName,
+  hostAvatarUrl,
   eligible,
   canEngage,
   busy,
   preview,
-  onOpenChat,
   execute,
 }: Props) {
   const [panel, setPanel] = useState<"moment" | "questions" | "personal" | "requests">(
       "moment",
     ),
     [question, setQuestion] = useState(""),
+    [preferredRequest, setPreferredRequest] = useState<"dedication" | "face-to-face">("dedication"),
     [error, setError] = useState(""),
     [sent, setSent] = useState(false);
   const ownQuestions = loge.questions.filter((q) => q.author.id === accountId);
@@ -108,16 +114,17 @@ export default function LogeViewer({
   };
   return (
     <div className={`loge-viewer${panel === "requests" ? " is-request-list" : ""}`}>
-      <header className="loge-viewer__welcome" hidden={panel === "requests"}>
-        <div className="loge-viewer__eyebrow">
-          <span className="loge-viewer__live" />
-          LA LOGE<span>{eligible ? "ACCÈS MEMBRE" : "ACCÈS PRIVÉ"}</span>
-        </div>
-        <h2>Un moment à part.</h2>
-        <p>
-          Avec <strong>{hostName}</strong>, au plus près de la création.
-        </p>
-      </header>
+      {eligible ? <RoomViewerSubmenu
+        activeTool={panel === "requests" ? "personal" : panel}
+        ariaLabel="Explorer la Loge"
+        idPrefix="loge-viewer-tab"
+        items={[
+          { id: "moment", label: "Accueil", icon: <House aria-hidden="true" /> },
+          { id: "questions", label: "Questions", icon: <MessageCircleQuestion aria-hidden="true" /> },
+          { id: "personal", label: "Pour moi", icon: <Gift aria-hidden="true" />, badge: moments.length },
+        ]}
+        onSelect={setPanel}
+      /> : null}
       {!eligible ? (
         <section className="loge-viewer__card loge-viewer__empty">
           <LockKeyhole />
@@ -166,90 +173,69 @@ export default function LogeViewer({
               ) : null}
             </section>
           ) : null}
-          <button className="loge-viewer__question-cta" onClick={() => setPanel("requests")}><Gift /><span><strong>{panel === "requests" ? "Mes demandes" : "Cadeaux, dédicaces et rencontres"}</strong>{panel !== "requests" ? <small>Demander une attention · Rejoindre une liste</small> : null}</span><ArrowRight /></button>
-          <nav className="loge-viewer__tabs" aria-label="Explorer la Loge">
-            {(
-              [
-                { id: "moment", label: "Le moment", Icon: Headphones },
-                {
-                  id: "questions",
-                  label: "Questions",
-                  Icon: MessageCircleQuestion,
-                },
-                { id: "personal", label: "Pour moi", Icon: Gift },
-              ] as const
-            ).map(({ id, label, Icon }) => (
-              <button
-                type="button"
-                aria-pressed={panel === id}
-                onClick={() => setPanel(id)}
-                key={id}
-              >
-                <Icon />
-                <span>{label}</span>
-                {id === "personal" && moments.length > 0 ? (
-                  <b>{moments.length}</b>
-                ) : null}
-              </button>
-            ))}
-          </nav>
           {error ? (
             <p className="loge-viewer__error" role="alert">
               {error}
             </p>
           ) : null}
-          <div className="loge-viewer__content">
+          <div className="loge-viewer__content" role="tabpanel" aria-labelledby={`loge-viewer-tab-${panel === "requests" ? "personal" : panel}`}>
             <div className="loge-viewer__moment" hidden={panel !== "moment"}>
-              <section className="loge-viewer__card loge-viewer__preview">
+              <header className="loge-viewer__home-welcome">
+                <span className="loge-viewer__host-portrait" aria-hidden="true">
+                  {hostAvatarUrl ? <img src={hostAvatarUrl} alt="" /> : <House />}
+                </span>
+                <div>
+                  <small>LA LOGE DE {hostName}</small>
+                  <h2>Bienvenue, les fans.</h2>
+                  <p>Échangez avec {hostName}, posez vos questions et créez des souvenirs.</p>
+                </div>
+              </header>
+              <nav className="loge-viewer__home-actions" aria-label="Participer à la Loge">
+                <button type="button" onClick={() => setPanel("questions")}>
+                  <MessageCircleQuestion aria-hidden="true" />
+                  <strong>{loge.questionsOpen ? "Poser une question" : "Voir les questions"}</strong>
+                  <small>{loge.questionsOpen ? "L’artiste choisit les questions auxquelles répondre." : "Les envois sont en pause. Retrouvez vos questions."}</small>
+                  <ArrowRight aria-hidden="true" />
+                </button>
+                <button type="button" onClick={() => { setPreferredRequest("dedication"); setPanel("requests"); }}>
+                  <PenLine aria-hidden="true" />
+                  <strong>Dédicace</strong>
+                  <small>Un souvenir personnalisé.</small>
+                  <ArrowRight aria-hidden="true" />
+                </button>
+                <button type="button" onClick={() => { setPreferredRequest("face-to-face"); setPanel("requests"); }}>
+                  <HeartHandshake aria-hidden="true" />
+                  <strong>Rencontre</strong>
+                  <small>Un échange avec l’artiste.</small>
+                  <ArrowRight aria-hidden="true" />
+                </button>
+              </nav>
+              <p className="loge-viewer__personal-hint">Retrouvez vos invitations et vos dédicaces reçues dans <button type="button" onClick={() => setPanel("personal")}>Pour moi <ArrowRight aria-hidden="true" /></button></p>
+              {selected ? (
+                <section className="loge-viewer__card loge-viewer__selected">
+                  <small>LA QUESTION CHOISIE PAR {hostName}</small>
+                  <blockquote>« {selected.text} »</blockquote>
+                  <span>Une question de {selected.author.name}</span>
+                </section>
+              ) : null}
+              {preview ? <section className="loge-viewer__card loge-viewer__preview">
                 <div className="loge-viewer__section-label">
-                  <Headphones />
-                  <span>AVANT-PREMIÈRE</span>
+                  <Headphones aria-hidden="true" />
+                  <span>PARTAGÉ PAR L’ARTISTE</span>
                   <small>
-                    {loge.preview.transportStatus === "playing"
-                      ? "En diffusion"
-                      : loge.preview.transportStatus === "paused"
-                        ? "En pause"
-                        : "À découvrir"}
+                    {loge.preview.transportStatus === "paused" ? "En pause" : "En diffusion"}
                   </small>
                 </div>
                 <h3>
-                  {loge.preview.title || "Dans les coulisses de la création"}
+                  {loge.preview.title || `L’avant-première de ${hostName}`}
                 </h3>
                 {loge.preview.description ? (
                   <p>{loge.preview.description}</p>
                 ) : null}
                 {preview}
-              </section>
-              {selected ? (
-                <section className="loge-viewer__card loge-viewer__selected">
-                  <small>L’ARTISTE VOUS RÉPOND</small>
-                  <blockquote>« {selected.text} »</blockquote>
-                  <span>@{selected.author.name}</span>
-                </section>
-              ) : null}
-              <button
-                className="loge-viewer__question-cta"
-                onClick={() => setPanel("questions")}
-              >
-                <MessageCircleQuestion />
-                <span>
-                  <strong>Une question pour l’artiste ?</strong>
-                  <small>
-                    {loge.questionsOpen
-                      ? "Partagez ce que vous aimeriez savoir"
-                      : "Découvrez les questions et vos envois"}
-                  </small>
-                </span>
-                <ArrowRight />
-              </button>
-              {onOpenChat ? (
-                <button className="loge-viewer__chat" onClick={onOpenChat}>
-                  Retrouver les fans dans le chat
-                  <ArrowRight />
-                </button>
-              ) : null}
+              </section> : <p className="loge-viewer__sharing-hint"><Headphones aria-hidden="true" />Les contenus partagés pendant le direct apparaîtront ici.</p>}
             </div>
-            {panel === "requests" ? <LogeRequestLists loge={loge} viewer={{...viewer, id: accountId}} disabled={busy || !canEngage} execute={execute} /> : panel === "questions" ? (
+            {panel === "requests" ? <LogeRequestLists loge={loge} preferredKind={preferredRequest} viewer={{...viewer, id: accountId}} disabled={busy || !canEngage} execute={execute} /> : panel === "questions" ? (
               <section className="loge-viewer__card">
                 <div className="loge-viewer__section-label">
                   <MessageCircleQuestion />
@@ -324,6 +310,7 @@ export default function LogeViewer({
                 </div>
                 <h3>Les attentions de l’artiste.</h3>
                 <p>Vos invitations et vos dédicaces, réunies ici.</p>
+                <button type="button" className="loge-viewer__question-cta" onClick={() => setPanel("requests")}><Gift aria-hidden="true" /><span><strong>Faire une demande</strong><small>Cadeaux, dédicaces et rencontres</small></span><ArrowRight aria-hidden="true" /></button>
                 {moments.length ? (
                   <div className="loge-viewer__moments">
                     {moments.map((m) => {

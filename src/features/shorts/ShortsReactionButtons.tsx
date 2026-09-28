@@ -16,6 +16,7 @@ export type ShortsReactionButtonsProps = {
   onToggleLike?: () => void;
   onGiveGoldenLike?: () => void;
   goldenFeedback?: ReactNode;
+  goldenOnly?: boolean;
 };
 
 function normalizeCount(value: number) {
@@ -80,16 +81,18 @@ export function ShortsReactionButtons({
   onToggleLike,
   onGiveGoldenLike,
   goldenFeedback,
+  goldenOnly = false,
 }: ShortsReactionButtonsProps) {
   const likeLabel = liked
     ? `Retirer mon Like de la vidéo de ${artistName}, ${likeCountLabel(likeCount)}`
     : `Aimer la vidéo de ${artistName}, ${likeCountLabel(likeCount)}`;
   const goldenCountLabel = goldenLikeCountLabel(goldenLikeCount);
+  const goldenCountSuffix = goldenOnly ? "" : `, ${goldenCountLabel}`;
   const goldenLabel = goldenGiven
-    ? `Golden Like déjà offert à ${artistName}, ${goldenCountLabel}`
+    ? `Golden Like déjà offert à ${artistName}${goldenCountSuffix}`
     : goldenUnavailable
-      ? `Golden Like indisponible aujourd’hui pour ${artistName}, ${goldenCountLabel}`
-      : `Offrir un Golden Like à ${artistName}, ${goldenCountLabel}`;
+      ? `Golden Like indisponible aujourd’hui pour ${artistName}${goldenCountSuffix}`
+      : `Offrir un Golden Like à ${artistName}${goldenCountSuffix}`;
   const likeContent = (
     <>
       <span className="shorts-reaction__icon" aria-hidden="true">
@@ -105,7 +108,7 @@ export function ShortsReactionButtons({
         <Star fill={goldenGiven ? "currentColor" : "none"} />
       </span>
       {variant === "player" ? <span className="shorts-reaction__label" aria-hidden="true">Golden Like</span> : null}
-      <span className="shorts-reaction__count" aria-hidden="true">{formatShortsCount(goldenLikeCount)}</span>
+      {!goldenOnly ? <span className="shorts-reaction__count" aria-hidden="true">{formatShortsCount(goldenLikeCount)}</span> : null}
     </>
   );
 
@@ -115,14 +118,14 @@ export function ShortsReactionButtons({
       aria-label={ariaLabel || `Réactions pour la vidéo de ${artistName}`}
       role="group"
     >
-      {readOnly ? (
+      {!goldenOnly && (readOnly ? (
         <span className={`shorts-reaction shorts-reaction--like is-readonly${liked ? " is-active" : ""}`} aria-label={likeCountLabel(likeCount)} title={likeCountLabel(likeCount)} role="status">{likeContent}</span>
       ) : (
         <button type="button" className={`shorts-reaction shorts-reaction--like${liked ? " is-active" : ""}`} aria-label={likeLabel} aria-pressed={liked} title={likeLabel} onClick={() => onToggleLike?.()}>{likeContent}</button>
-      )}
+      ))}
 
       {readOnly ? (
-        <span className="shorts-reaction shorts-reaction--golden is-readonly" aria-label={goldenCountLabel} title={goldenCountLabel} role="status">{goldenContent}</span>
+        <span className="shorts-reaction shorts-reaction--golden is-readonly" aria-label={goldenOnly ? `Golden Like pour ${artistName}` : goldenCountLabel} title={goldenOnly ? `Golden Like pour ${artistName}` : goldenCountLabel} role="status">{goldenContent}</span>
       ) : (
         <button type="button" className={["shorts-reaction", "shorts-reaction--golden", goldenGiven ? "is-active is-given" : ""].filter(Boolean).join(" ")} aria-label={goldenLabel} aria-pressed={goldenGiven} disabled={goldenUnavailable} title={goldenLabel} onClick={() => { if (!goldenGiven) onGiveGoldenLike?.(); }}>{goldenContent}{goldenFeedback}</button>
       )}

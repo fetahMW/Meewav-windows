@@ -7,6 +7,8 @@ export type CageLaunchConfiguration = {
   participantCount: number;
   rosterMode: "prepared" | "first-eligible" | "manual" | "random";
   rosterProfileIds: string[];
+  championshipDays?: number;
+  productionTeam?: "solo" | "regisseur";
   templateId?: string;
   rules: {
     performanceMode: "successive" | "alternating" | "simultaneous";
@@ -39,6 +41,8 @@ export const DEFAULT_CAGE_LAUNCH: CageLaunchConfiguration = {
   participantCount: 16,
   rosterMode: "manual",
   rosterProfileIds: [],
+  championshipDays: 1,
+  productionTeam: "solo",
   rules: {
     performanceMode: "successive", rounds: 1, passageDurationSeconds: 90,
     votingDurationSeconds: 60, votingMode: "public", tieBreak: "sudden-death",
@@ -58,6 +62,8 @@ export function validateCageLaunch(configuration: CageLaunchConfiguration): stri
   if (!Number.isInteger(configuration.participantCount) || configuration.participantCount < minimumParticipants || configuration.participantCount > 64) return `Choisis un format de ${minimumParticipants} à 64 participants.`;
   if (configuration.format === "tournament" && ![2, 4, 8, 16, 32, 64].includes(configuration.participantCount) && !configuration.rules.allowByes) return "Ce format nécessite des BYE. Autorise-les dans le règlement ou choisis 2, 4, 8, 16, 32 ou 64 participants.";
   if (!["tournament", "championship", "open-mic", "open-mic-battle"].includes(configuration.format)) return "Choisis un format de compétition.";
+  if (configuration.championshipDays !== undefined && (!Number.isInteger(configuration.championshipDays) || configuration.championshipDays < 1 || configuration.championshipDays > 31)) return "Prévois entre 1 et 31 jours de championnat.";
+  if (configuration.productionTeam !== undefined && !["solo", "regisseur"].includes(configuration.productionTeam)) return "Choisis qui pilote la régie.";
   if (!["prepared", "first-eligible", "manual", "random"].includes(configuration.rosterMode)) return "Choisis comment sélectionner les participants.";
   if (configuration.rosterMode === "prepared" && configuration.rosterProfileIds.length === 0) return "Ce modèle n’a pas de roster préparé. Choisis une sélection dans la file Invités.";
   if (configuration.format !== "open-mic" && !["successive", "alternating", "simultaneous"].includes(configuration.rules.performanceMode)) return "Choisis le déroulement des performances.";

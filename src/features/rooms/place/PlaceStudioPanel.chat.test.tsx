@@ -6,7 +6,10 @@ import PlaceStudioPanel from "./PlaceStudioPanel";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { MEEWAV_EMOTICONS } from "../../emoticons/MeewavEmoticons";
-import { CLASSE_ROOM_PRESENTATION, PLACE_ROOM_PRESENTATION, RoomPresentationProvider, type RoomPresentation } from "../roomPresentation";
+import { CAGE_ROOM_PRESENTATION, CLASSE_ROOM_PRESENTATION, PLACE_ROOM_PRESENTATION, RoomPresentationProvider, type RoomPresentation } from "../roomPresentation";
+
+// Saved creation templates are independent of the guest/placement navigation.
+vi.mock("./CagePreparedCompetitions", () => ({ default: () => null }));
 
 beforeEach(() => {
   Object.defineProperty(HTMLElement.prototype, "scrollTo", {
@@ -82,13 +85,68 @@ function renderHostChat(source: "live" | "demo" = "live", presentation: RoomPres
     ...overrides,
   };
 
-  render(<RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider>);
-  return { onSendMessage, props };
+  const ui = render(<RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props} /></RoomPresentationProvider>);
+  return { onSendMessage, props, ...ui };
 }
 
 function roomHostId() {
   return createPlaceDemoState().host.id;
 }
+
+it("returns directly from guest invitations to Cage placement", async () => {
+  const room = { ...createPlaceDemoState(), id: `cage-return-${crypto.randomUUID()}` };
+  const { props, rerender } = renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, surface: "tools" });
+  fireEvent.click(await screen.findByRole("button", { name: "Choisir dans les invités" }));
+  expect(props.onSurface).toHaveBeenLastCalledWith("guests");
+  rerender(<RoomPresentationProvider presentation={CAGE_ROOM_PRESENTATION}><PlaceStudioPanel {...props} surface="guests" /></RoomPresentationProvider>);
+  expect(screen.getByRole("tab", { name: /File d’attente/ })).toHaveAttribute("aria-selected", "true");
+  fireEvent.click(screen.getByRole("button", { name: "Retour au placement de la Cage" }));
+  expect(props.onSurface).toHaveBeenLastCalledWith("tools");
+});
+
+describe("Cage viewer participation beside Chat", () => {
+  function viewerRoom() {
+    const room = createPlaceDemoState();
+    room.currentUserProfile = { ...room.host, id: "cage-viewer-test", displayName: "Viewer test" };
+    room.queueOpen = true;
+    return room;
+  }
+
+  it("shows one participation action from Chat and offers a private listener mixer before admission", () => {
+    const room = viewerRoom();
+    const { props } = renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, isHost: false });
+    expect(screen.getAllByRole("button", { name: "Participer au battle" })).toHaveLength(1);
+    expect(screen.getByRole("textbox", { name: "Écrire un message" })).toBeVisible();
+    expect(screen.getByRole("tab", { name: "Mixeur" })).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Participer au battle" }));
+    expect(props.onJoinQueue).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not offer a candidature when the host closed the queue", () => {
+    const room = viewerRoom();
+    room.queueOpen = false;
+    renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, isHost: false });
+    expect(screen.queryByRole("button", { name: "Participer au battle" })).not.toBeInTheDocument();
+  });
+
+  it("mounts one private preparation panel and makes the personal mixer available after acceptance", () => {
+    const room = viewerRoom();
+    room.participants.push({ ...room.participants[0], id: "viewer-slot", profile: room.currentUserProfile!, status: "accepted" });
+    renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, isHost: false });
+    expect(screen.getAllByRole("region", { name: "Préparer votre passage en direct", hidden: true })).toHaveLength(1);
+    expect(screen.getByRole("tab", { name: "Mixeur" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Je suis prêt" })).toBeDisabled();
+  });
+
+  it("keeps the candidature available to retry after a connection error", async () => {
+    const room = viewerRoom();
+    const onJoinQueue = vi.fn().mockRejectedValue(new Error("offline"));
+    renderHostChat("demo", CAGE_ROOM_PRESENTATION, { room, isHost: false, onJoinQueue });
+    fireEvent.click(screen.getByRole("button", { name: "Participer au battle" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("La demande n’a pas abouti");
+    expect(screen.getByRole("button", { name: "Participer au battle" })).toBeEnabled();
+  });
+});
 
 describe("Place Studio Host chat", () => {
   it("place les sous-menus immédiatement sous l’onglet Chat", () => {

@@ -131,7 +131,8 @@ export default function WaveEmptyPanel({ label, wave, avatarUrl, hostName, host,
           ? Boolean(track.submission && audio?.candidate?.id === track.submission.id && audibleInBeat)
           : audibleInBeat;
         return <WaveLoopCard key={track.id} accent={track.accent} avatarUrl={track.avatarUrl}
-        avatarFallback={track.title.charAt(0)} title={track.submission ? track.layer.title : track.title}
+        avatarFallback={track.title.charAt(0)} title={track.title}
+        detail={track.submission ? track.layer.title : hostName ? base?.title : undefined}
         category={track.category} meta={track.meta} selected={selected?.id === track.id}
         onSelect={() => { void selectTrack(track); }} showPlay={false}
         stateClassName={`${track.layer.muted ? "is-muted" : "is-enabled"}${track.layer.solo ? " is-solo" : ""}${audible ? " is-in-mix" : " is-out-of-mix"}`}

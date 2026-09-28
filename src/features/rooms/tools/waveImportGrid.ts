@@ -30,8 +30,8 @@ export function assertWaveBaseDuration(input: {
   durationSeconds: number;
   bpm: number;
   beatsPerBar?: number;
-  baseBars: 4 | 8;
-}): 4 | 8 {
+  baseBars: WaveImportBars;
+}): WaveImportBars {
   const bars = waveBarsForImportedDuration({ ...input, fallbackBars: input.baseBars });
   if (bars !== input.baseBars) throw new Error("wave_import_base_length_mismatch");
   return input.baseBars;

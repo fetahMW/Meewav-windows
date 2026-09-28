@@ -5,11 +5,12 @@ import { assertDemoExperience, readDemoExperience } from "../switch-room/switchR
 import { readCageDemoSession, DEFAULT_CAGE_LAUNCH } from "../launch/cageLaunch";
 import { ROOMS_HOME_CATALOG } from "../home/roomsHome.fixtures";
 import { cageDemoGuestCandidates } from "./cageCompetition.demo";
-import { controlCageShowcase, initializeCageShowcase, moveCageDemoGuest, prepareCageShowcaseVote } from "./cageShowcase.demo";
+import { controlCageShowcase, initializeCageShowcase, moveCageDemoGuest, prepareCageDemoArtists, prepareCageShowcaseVote } from "./cageShowcase.demo";
 import { applyCageCompetitionCommand, cageCommandAlreadyApplied, finalizeExpiredCageVote, initializeCageCompetition, migrateCageDemoCompetition, migrateOpenMicRuntime, migrateChampionshipRuntime, projectCageCompetition, syncCageLegacyProjection } from "./cageCompetition";
 import { readRoomLaunchSession, applyRoomLaunchTools } from "../launch/roomLaunch";
 import { isRoomLaunchAudio, resolveRoomLaunchAudio } from "../launch/roomLaunchAudio";
-import { createRoomToolsFixture } from "./roomTools.fixtures";
+import { createRoomToolsFixture, refreshClassroomDemoPortraits } from "./roomTools.fixtures";
+import { createClassroomDemoResources } from "./classroom/classroomResources.demo";
 import { seedWaveTestProduction } from "./waveTestPacks";
 import { WAVE_LOOP_CATEGORIES, waveAcceptedCategories, waveSubmissionCategory } from "./waveLoopCategories";
 import {
@@ -1193,9 +1194,31 @@ export function reduceCommand(state: RoomToolsState, command: RoomToolsCommand, 
         else if (question.status === "displayed") question.status = "pending";
       });
       break;
+    case "wave.submissions.quarantine": {
+      if (!state.wave || !command.submissionIds.length) throw new Error("wave_submission_not_found");
+      const submissions = [...new Set(command.submissionIds)].map(id => {
+        const item = state.wave!.submissions.find(submission => submission.id === id);
+        if (!item) throw new Error("wave_submission_not_found");
+        if (item.vote?.open) throw new Error("wave_vote_open");
+        if (!["RECEIVED", "NEEDS_REVIEW", "NEEDS_CORRECTION", "READY_FOR_VOTE", "NOT_SELECTED"].includes(item.lifecycleStatus ?? "")) throw new Error("wave_submission_not_editable");
+        return item;
+      });
+      for (const submission of submissions) {
+        transitionWaveSubmission(submission, "NEEDS_CORRECTION", { actorId, reason: "host_quarantine" });
+        submission.quarantined = true;
+      }
+      state.wave.history.unshift(`${submissions.length} boucle(s) placée(s) en quarantaine`);
+      break;
+    }
     case "wave.submission.status": {
       const submission = state.wave?.submissions.find((item) => item.id === command.submissionId);
       if (!submission) throw new Error("wave_submission_not_found");
+      if (submission.quarantined && command.status === "analysis") {
+        if (!submission.rightsConfirmed) throw new Error("wave_rights_unconfirmed");
+        if (!state.wave || !waveSubmissionCompatible(state.wave, submission)) throw new Error("wave_file_incompatible");
+        if (!(submission.mediaUrl || submission.mediaPath)) throw new Error("wave_version_media_required");
+        if (submission.lifecycleStatus === "NEEDS_CORRECTION") transitionWaveSubmission(submission, "NEEDS_REVIEW", { actorId, reason: "host_quarantine_reviewed" });
+      }
       if (command.status === "accepted") {
         if (!submission.rightsConfirmed) throw new Error("wave_rights_unconfirmed");
         if (!state.wave) break;
@@ -1233,6 +1256,7 @@ export function reduceCommand(state: RoomToolsState, command: RoomToolsCommand, 
         actorId,
         reason: command.reason ? `host:${command.reason}` : `legacy_command:${command.status}`,
       });
+      if (command.status === "analysis" || command.status === "rejected") submission.quarantined = false;
       break;
     }
     case "wave.rules.update": {
@@ -1334,6 +1358,7 @@ export function reduceCommand(state: RoomToolsState, command: RoomToolsCommand, 
     case "wave.vote.open": {
       const submission = state.wave?.submissions.find((item) => item.id === command.submissionId);
       if (!submission) throw new Error("wave_submission_not_found");
+      if (command.open && submission.quarantined) throw new Error("wave_submission_quarantined");
       if (command.open) {
         if (!state.wave) break;
         if (submission.vote?.open) break;
@@ -1874,6 +1899,18 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
         state = migrated;
       }
     }
+    const runtime = state.cage?.runtime;
+    const pendingPreparation = runtime?.matches.some(match => match.id === runtime.preparedMatchId && ["GREENHOUSE", "CALLING"].includes(match.status))
+      || runtime?.openMicEntries?.some(entry => entry.id === runtime.preparedEntryId && entry.status === "GREENHOUSE");
+    if (pendingPreparation) {
+      const prepared = cloneState(state);
+      if (prepareCageDemoArtists(prepared)) {
+        prepared.updatedAt = new Date().toISOString();
+        this.persistCage(prepared);
+        this.states.set(key(prepared.roomType, prepared.roomId), prepared);
+        state = prepared;
+      }
+    }
     const current = state.cage?.runtime?.matches.find((match) => match.id === state.cage?.runtime?.activeMatchId);
     const openMicExpired = state.cage?.runtime?.openMicEntries?.some((entry) => entry.feedback?.open && entry.feedback.endsAt && Date.parse(entry.feedback.endsAt) <= Date.now());
     if (!openMicExpired && (!current?.vote?.open || !current.vote.endsAt || Date.parse(current.vote.endsAt) > Date.now())) return state;
@@ -1904,7 +1941,7 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
     let existing = this.states.get(stateKey);
     const savedSwitch = typeof localStorage!=="undefined" ? JSON.parse(localStorage.getItem(switchToolsKey(roomId,roomType))??"null") as RoomToolsState|null : null;
     if(savedSwitch && (!existing || savedSwitch.revision>=existing.revision)){existing=savedSwitch;this.states.set(stateKey,existing);}
-    if(savedSwitch && existing)return existing;
+    if(savedSwitch && existing)return roomType === "cage" ? this.refreshCage(existing) : existing;
 
     if (roomType === "loge" && typeof localStorage !== "undefined") {
       try {
@@ -1944,7 +1981,10 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
         }
       } catch { throw new Error("cage_demo_restore_failed"); }
     }
-    if (existing) return this.refreshCage(existing);
+    if (existing) {
+      this.seedClassroomResources(existing);
+      return this.refreshCage(existing);
+    }
     if (roomType === "cage" && typeof window !== "undefined") {
       try {
         const persisted = JSON.parse(window.localStorage.getItem(`meewav:cage:competition:v1:${roomId}`) ?? "null") as RoomToolsState | null;
@@ -1957,8 +1997,13 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
     const fixture = createRoomToolsFixture(roomType, roomId);
     if (fixture.cage) {
       const session = readCageDemoSession(roomId);
+      const roomLaunch = readRoomLaunchSession(roomId);
       const homeRoom = ROOMS_HOME_CATALOG.find((room) => room.id === roomId && room.roomType === "cage");
-      if (session) initializeCageCompetition(fixture.cage, session.configuration, cageDemoGuestCandidates());
+      if (roomLaunch?.configuration.roomType === 'cage') {
+        initializeCageCompetition(fixture.cage, { ...structuredClone(DEFAULT_CAGE_LAUNCH), title: roomLaunch.configuration.title }, []);
+        delete fixture.cage.demoPresentation;
+      }
+      else if (session) initializeCageCompetition(fixture.cage, session.configuration, cageDemoGuestCandidates());
       else if (homeRoom) initializeCageCompetition(fixture.cage, { ...structuredClone(DEFAULT_CAGE_LAUNCH), title: homeRoom.title }, cageDemoGuestCandidates());
       else if (!initializeCageShowcase(fixture)) migrateCageDemoCompetition(fixture.cage);
       this.persistCage(fixture);
@@ -1970,8 +2015,16 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
     }
     const launchSession = readRoomLaunchSession(roomId);
     if (launchSession && launchSession.configuration.roomType === roomType) applyRoomLaunchTools(fixture, launchSession);
+    this.seedClassroomResources(fixture);
     this.states.set(stateKey, fixture);
     return fixture;
+  }
+
+  private seedClassroomResources(state: RoomToolsState) {
+    if (!state.classe || state.classe.demoResourcesVersion || !ROOMS_HOME_CATALOG.some(room => room.id === state.roomId && room.roomType === "classe")) return;
+    if (!state.classe.resources?.length) state.classe.resources = createClassroomDemoResources();
+    state.classe.demoResourcesVersion = 1;
+    if (typeof window !== "undefined") try { window.localStorage.setItem(`meewav:classe:demo:v2:${state.roomId}`, JSON.stringify(state)); } catch { /* Demo remains available in memory. */ }
   }
 
   async load(roomType: SpecializedRoomId, roomId: string) {
@@ -2031,6 +2084,7 @@ export class DemoRoomToolsRepository implements RoomToolsRepository {
       reduceCommand(state, command, accountId ?? role);
       prepareCageShowcaseVote(state);
     }
+    prepareCageDemoArtists(state);
     applyRoomVotingPolicy(state,readDemoVotingPolicy(roomId));
     state.revision += 1;
     state.updatedAt = new Date().toISOString();

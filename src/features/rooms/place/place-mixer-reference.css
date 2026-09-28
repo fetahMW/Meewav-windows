@@ -2,68 +2,68 @@
  * Les composants audio et les outils propres à chaque room restent inchangés.
  * Les façades convexes et les fonds noirs sont déjà partagés par black-lacquer ;
  * cette couche ne complète que les détails encore limités à classe-hifi. */
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player {
   --hifi-signal: linear-gradient(90deg, #7979f5, #6386ff 42%, #69b7ff);
   --mixer-reference-key-shadow: inset 0 1px rgba(240, 246, 255, .17), inset 0 -1px #030405, 0 2px 0 #020304, 0 4px 5px rgba(0, 0, 0, .65);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player :is(.place-volume-list, .place-master-dock) > .place-volume-row {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player :is(.place-volume-list, .place-master-dock) > .place-volume-row {
   border: 1px solid transparent;
   border-radius: 12px;
   transform: none;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__identity strong {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__identity strong {
   color: #e3e8f1;
   font: 650 12px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -.015em;
   text-shadow: 0 1px 1px #000;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row output {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row output {
   color: #aab8cd;
   font: 500 9.5px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
   font-variant-numeric: tabular-nums;
   text-shadow: 0 0 7px rgba(120, 169, 244, .13);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__meter {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__meter {
   display: block;
   border-radius: 2px;
   background-color: #020407;
   box-shadow: inset 0 1px 2px #000, 0 1px rgba(220, 230, 248, .055);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row:not(.is-muted):not(.is-clipping) .place-volume-row__meter i {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row:not(.is-muted):not(.is-clipping) .place-volume-row__meter i {
   background: var(--hifi-signal);
   filter: drop-shadow(0 0 2px rgba(104, 147, 251, .28));
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__portrait {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__portrait {
   border: 0;
   box-shadow: 0 0 0 1px #020304, 0 1px 0 1px rgba(158, 175, 205, .15);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__source-icon {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__source-icon {
   border-color: rgba(151, 178, 236, .35);
   background: linear-gradient(145deg, #282d39, #070a0f 62%);
   box-shadow: inset 0 1px rgba(222, 235, 255, .2), 0 0 0 2px #05070a, 0 3px 5px #000;
   color: #9fbaff;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__source-icon > svg {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__source-icon > svg {
   color: inherit;
 }
 
 /* Rails encastrés et curseurs métalliques, avec les mêmes zones de saisie. */
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__fader::-webkit-slider-runnable-track {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__fader::-webkit-slider-runnable-track {
   height: 3px;
   background: var(--hifi-signal) 0 0 / var(--gain-pct) 100% no-repeat, #030508;
   box-shadow: inset 0 1px 2px #000, 0 1px rgba(225, 236, 255, .1);
   border-radius: 3px;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__fader::-webkit-slider-thumb {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__fader::-webkit-slider-thumb {
   width: 11px;
   height: 15px;
   margin-top: -6px;
@@ -73,18 +73,18 @@
   box-shadow: inset 1px 0 rgba(255, 255, 255, .5), 0 1px 1px #000, 0 2px 4px #000;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__fader::-moz-range-track {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__fader::-moz-range-track {
   height: 3px;
   background: #030508;
   box-shadow: inset 0 1px 2px #000, 0 1px rgba(225, 236, 255, .1);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__fader::-moz-range-progress {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__fader::-moz-range-progress {
   height: 3px;
   background: var(--hifi-signal);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row__fader::-moz-range-thumb {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row__fader::-moz-range-thumb {
   width: 9px;
   height: 13px;
   border: 1px solid #bac2cc;
@@ -93,14 +93,14 @@
   box-shadow: inset 1px 0 rgba(255, 255, 255, .5), 0 2px 4px #000;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row > button:not(.is-active) {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row > button:not(.is-active) {
   border: 1px solid transparent;
   border-radius: 8px;
   box-shadow: var(--mixer-reference-key-shadow);
   color: #bac4d4;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row > button.is-active {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row > button.is-active {
   border: 1px solid #624050;
   border-radius: 8px;
   background: linear-gradient(155deg, #301b25, #130e15);
@@ -108,35 +108,35 @@
   color: #f0a4bb;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row > button:focus-visible {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row > button:focus-visible {
   outline: 2px solid #a9c5ff;
   outline-offset: 2px;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row > button:active:not(:disabled) {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row > button:active:not(:disabled) {
   transform: translateY(1px);
   box-shadow: inset 0 1px 4px #000, 0 1px rgba(181, 204, 241, .1);
 }
 
 /* Façade du lecteur commun. Le repli pédagogique reste propre à La Classe. */
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio {
   border: 1px solid transparent;
   border-radius: 13px;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__waveform {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio__waveform {
   border-radius: 7px;
   box-shadow: inset 0 1px 5px rgba(0, 0, 0, .9), inset 0 0 0 1px rgba(133, 159, 203, .065), 0 1px rgba(187, 207, 240, .045);
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__waveform-empty {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio__waveform-empty {
   color: #8293ae;
   font-size: 8px;
   font-weight: 550;
   letter-spacing: .12em;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__track-icon {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio__track-icon {
   color: #a0b9ff;
   background: linear-gradient(145deg, #232b3b, #070b13);
   border-color: rgba(157, 185, 238, .35);
@@ -144,7 +144,7 @@
 }
 
 /* Les états talkback et routage conservent leur signal actif existant. */
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio :is(
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio :is(
   .place-mixer-audio__import,
   .place-mixer-audio__transport-buttons > button:not(.place-mixer-audio__play),
   .place-mixer-audio__utility-actions > button:not(.is-talking):not(.is-active)
@@ -153,15 +153,15 @@
   box-shadow: var(--mixer-reference-key-shadow) !important;
 }
 
-:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-mixer-audio__play {
+:where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-mixer-audio__play {
   border-color: #545e6d;
   box-shadow: inset 0 1px rgba(221, 233, 255, .3), inset 0 -2px #020304, 0 0 0 2px #030508, 0 3px 0 #000, 0 6px 9px rgba(0, 0, 0, .7) !important;
   color: #bacdff;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row,
-  :where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer.has-audio-player .place-volume-row > button {
+  :where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row,
+  :where(.rooms-page) .place-room-shell[data-room-presentation] .place-studio-panel:is(.is-mixer,.is-tools) .place-mixer.has-audio-player .place-volume-row > button {
     transition: none;
   }
 }

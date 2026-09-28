@@ -3,11 +3,9 @@ import { ROOMS_HOME_ROOM_TYPES, type RoomsHomeRoom } from "./roomsHome.types";
 
 /** Uses the same rooms_v2/public_profiles contracts as the live Room viewer. */
 export async function loadLiveRoomsCatalog(): Promise<RoomsHomeRoom[]> {
-  const { data, error } = await supabase.from("rooms_v2")
-    .select("id,host_id,type,title,cover_url,participants_count,created_at,video_format")
-    .eq("status", "live").order("created_at", { ascending: false }).limit(100);
+  const { data, error } = await supabase.rpc("rooms_live_catalog_v1");
   if (error) throw error;
-  const rooms = data ?? [];
+  const rooms = (data ?? []) as { id: string; host_id: string; type: RoomsHomeRoom["roomType"]; title: string; cover_url: string | null; video_format: string | null; participants_count: number | null; created_at: string }[];
   if (!rooms.length) return [];
   const { data: profiles, error: profileError } = await supabase.from("public_profiles")
     .select("id,username,display_name,avatar_url,profile_image_url,primary_role_key,city")

@@ -21,8 +21,8 @@
 }
 
 .place-room-shell .is-wave-tool-skin[data-active-tool="poll"] {
-  --wave-tool-accent: #b990ff;
-  --wave-tool-accent-rgb: 185, 144, 255;
+  --wave-tool-accent: #a970ff;
+  --wave-tool-accent-rgb: 169, 112, 255;
   --place-tool-accent: var(--wave-tool-accent);
   --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
 }
@@ -442,19 +442,14 @@
 /* Cadeau est un outil commun : la même finition s'applique dans La Place,
  * La Loge, La Classe et La Cage, sans effacer les teintes propres aux objets. */
 .place-room-shell .is-wave-tool-skin[data-active-tool="gift"] > .room-tools-shell__panel {
-  background: #010102;
+  background: transparent;
 }
 
 .place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool {
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: var(--wave-tool-black-surface);
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, .97),
-    inset 0 1px rgba(230, 234, 240, .15),
-    inset 0 -1px #000,
-    inset 0 0 20px rgba(0, 0, 0, .36),
-    0 6px 13px rgba(0, 0, 0, .46);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__header {
@@ -764,3 +759,32 @@
 @media (prefers-reduced-motion: reduce) {
   .place-room-shell .is-wave-tool-skin :is(button, input, select, textarea) { transition: none; }
 }
+
+/* Pin controls retain contrast while the console background stays visible. */
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-card {
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+}
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-card::after { display:none; }
+.place-room-shell .is-wave-tool-skin[data-active-tool="highlight"] .place-tool-highlight-live { background:linear-gradient(145deg,#ffffff08,#15161855); }
+
+/* The poll keeps the console violet even inside a room-colored chat tool. */
+.place-room-shell .place-tool-card.is-poll {
+  --wave-tool-accent: #a970ff;
+  --wave-tool-accent-rgb: 169, 112, 255;
+  --place-tool-accent: var(--wave-tool-accent);
+  --place-tool-accent-rgb: var(--wave-tool-accent-rgb);
+}
+
+/* Gifts keep the same violet in every room, including the Chat workspace. */
+.place-room-shell .place-gift-tool {
+  --wave-tool-accent:#a970ff;
+  --wave-tool-accent-rgb:169,112,255;
+  --place-tool-accent:#a970ff;
+  --place-tool-accent-rgb:169,112,255;
+}
+
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__glyph,
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool__header small,
+.place-room-shell .is-wave-tool-skin[data-active-tool="gift"] .place-gift-tool legend :is(svg,b) { color:#a970ff; }

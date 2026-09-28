@@ -1,4 +1,7 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
+import RoomViewerToolsLayout from "./RoomViewerToolsLayout";
 import RoomJuryControl from "../voting/RoomJuryControl";
+import "./place-console-refinement.css";
 import { useRoomVotingPolicy } from "../voting/useRoomVotingPolicy";
 import { saveVotingPolicy } from "../voting/roomVoting.service";
 import { VOTE_MODE_LABELS, type RoomVoteMode } from "../voting/roomVoting";
@@ -19,6 +22,7 @@ import { FormEvent, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffe
 import { createPortal } from "react-dom";
 import {
   ArrowDownToLine,
+  ArrowLeft,
   ArrowUpToLine,
   BarChart3,
   Camera,
@@ -44,6 +48,8 @@ import {
   Send,
   Smile,
   Scale,
+  Square,
+  SquareCheck,
   SlidersHorizontal,
   Sparkles,
   Trash2,
@@ -54,6 +60,7 @@ import {
   RadioTower,
   TriangleAlert,
   UsersRound,
+  WifiLow,
   Wrench,
 } from "lucide-react";
 import { MeewavIllustratedFilterGrid } from "../../../components/shared/search-filter/MeewavSearchFilter";
@@ -116,6 +123,7 @@ import PlaceBackstageControls from "./PlaceBackstageControls";
 import type { PlaceLiveKitVideoTrack } from "./placeLiveKit.service";
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import { hasPlaceGuestDrag, readPlaceGuestDrag, writePlaceGuestDrag } from "./placeGuestDrag";
+import CageProductionProvider from "../tools/audio/CageProductionProvider";
 
 const GuestPreProfile = lazy(() => import("../tools/panels/ClassStudentPreProfile"));
 
@@ -180,7 +188,7 @@ type PlaceStudioPanelProps = {
   onScheduleGiftDraw?: (input: RoomGiftDrawInput & { scheduledAt: string }) => Promise<RoomGiftDraw | null>;
   onStartGiftDraw?: (drawId?: string) => Promise<RoomGiftDraw | null>;
   onCancelGiftDraw?: (drawId?: string) => Promise<RoomGiftDraw | null>;
-  onMoveGuest: (participant: PlaceParticipant, destination: "backstage" | "onstage" | "accepted") => Promise<void>;
+  onMoveGuest: (participant: PlaceParticipant, destination: "backstage" | "onstage" | "accepted" | "ready") => Promise<void>;
   onInviteProfile?: (profileId: string) => Promise<void>;
   onRemoveGuest: (participant: PlaceParticipant) => Promise<void>;
   onSetQueueOpen: (open: boolean) => Promise<void>;
@@ -209,10 +217,6 @@ function chatAuthorColor(id: string) {
   return CHAT_AUTHOR_COLORS[Math.abs(hash) % CHAT_AUTHOR_COLORS.length];
 }
 
-function messageClock(value: string) {
-  return new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" }).format(new Date(value));
-}
-
 function waitingTime(value: string, now = Date.now()) {
   const startedAt = new Date(value).getTime();
   if (!Number.isFinite(startedAt)) return "1 min";
@@ -226,7 +230,7 @@ type GuestReadinessFilter = "media-ready" | "stable" | "green-house";
 const PLACE_GUEST_READINESS_FILTERS: Array<{ id: GuestReadinessFilter; label: string; detail: string }> = [
   { id: "media-ready", label: "Prêt à passer", detail: "Micro + caméra" },
   { id: "stable", label: "Connexion stable", detail: "Latence maîtrisée" },
-  { id: "green-house", label: "Green House", detail: "Déjà préparé" },
+  { id: "green-house", label: "OBS prêt", detail: "Déjà préparé" },
 ];
 
 function normalizeGuestFilterText(value: string) {
@@ -497,7 +501,7 @@ function GuestRowMenu({ participant, variant, onOpenProfile, onMessageProfile, o
   </>;
 }
 
-export function ParticipantRow({ participant, variant, profileSource = "live", actions, statusText, timeNow, isJuror = false, selected = false, onSelectedChange, onSelectExclusive, repeatOpensProfile = true, onRemove, onOpenProfile, onMessageProfile, onCollaborateProfile, stageControls, roomId }: {
+export function ParticipantRow({ participant, variant, profileSource = "live", actions, statusText, timeNow, isJuror = false, selected = false, selectionMode = false, onSelectedChange, onSelectExclusive, repeatOpensProfile = true, onRemove, onOpenProfile, onMessageProfile, onCollaborateProfile, stageControls, roomId }: {
   participant: PlaceParticipant;
   profileSource?: "demo" | "live";
   variant: "queue" | "backstage" | "onstage";
@@ -508,6 +512,7 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
   timeNow?: number;
   isJuror?: boolean;
   selected?: boolean;
+  selectionMode?: boolean;
   onSelectedChange?: (selected: boolean) => void;
   onSelectExclusive?: () => void;
   repeatOpensProfile?: boolean;
@@ -533,6 +538,7 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
   const visibleStatus = variant === "backstage" || isGreenHouse ? "Prêt" : variant === "onstage" ? "En scène" : "En attente";
   const queueWaitingTime = variant === "queue" ? waitingTime(participant.joinedAt, timeNow) : null;
   const allMediaReady = participant.isMicrophoneEnabled && participant.isCameraEnabled;
+  const backstageStatus = [!participant.isCameraEnabled ? "Caméra coupée" : null, !participant.isMicrophoneEnabled ? "Micro coupé" : null, hasUnstableConnection ? "Connexion instable" : null].filter(Boolean).join(", ") || "Prêt pour la scène";
   if (desktopCards) return <>
     <article className={`place-guest-row is-portrait-card is-desktop-compact is-${variant}${selected ? " is-selected" : ""}${isJuror ? " is-juror" : ""}`}>
       <button ref={portraitRef} type="button" className="place-guest-row__compact-hit"
@@ -542,6 +548,7 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
           writePlaceGuestDrag(event.dataTransfer, { roomId, participantId: participant.id, origin: variant });
         }}
         aria-label={`${selected ? "Sélectionné : " : "Sélectionner "}${participant.profile.displayName}`}
+        aria-description={variant === "backstage" ? backstageStatus : undefined}
         aria-pressed={selected}
         onClick={(event) => {
           if (event.ctrlKey || event.metaKey || event.shiftKey) onSelectedChange?.(!selected);
@@ -551,9 +558,18 @@ export function ParticipantRow({ participant, variant, profileSource = "live", a
         }}>
         <img className="place-guest-row__compact-image" src={participant.profile.avatarUrl} alt="" draggable={false} />
         <span className="place-guest-row__compact-shade" />
-        <span className="place-guest-row__compact-state">{selected ? <CircleCheck aria-hidden="true" /> : variant === "onstage" ? <RadioTower aria-hidden="true" /> : participant.isCameraEnabled ? <Camera aria-hidden="true" /> : <CameraOff aria-hidden="true" />}</span>
+        {selected || selectionMode ? <span className="place-guest-row__compact-state is-checkbox">{selected ? <SquareCheck aria-hidden="true" /> : <Square aria-hidden="true" />}</span>
+          : variant === "backstage" ? <span className="place-guest-row__compact-statuses">
+              {!participant.isCameraEnabled || !participant.isMicrophoneEnabled || hasUnstableConnection ? <span className="place-guest-row__status-icons">
+                {!participant.isCameraEnabled ? <span className="place-guest-row__status-chip is-icon is-media-off" title="Caméra coupée" aria-label="Caméra coupée"><CameraOff aria-hidden="true" /></span> : null}
+                {!participant.isMicrophoneEnabled ? <span className="place-guest-row__status-chip is-icon is-micro-off" title="Micro coupé" aria-label="Micro coupé"><MicOff aria-hidden="true" /></span> : null}
+                {hasUnstableConnection ? <span className="place-guest-row__status-chip is-icon is-unstable" title="Connexion instable" aria-label="Connexion instable"><WifiLow aria-hidden="true" /></span> : null}
+              </span> : null}
+              {allMediaReady && !hasUnstableConnection ? <span className="place-guest-row__status-chip is-ready" title="Prêt pour la scène">Prêt</span> : null}
+            </span>
+            : variant === "onstage" ? <span className="place-guest-row__compact-state"><RadioTower aria-hidden="true" /></span> : null}
         <span className="place-guest-row__compact-copy"><strong>{participant.profile.displayName}</strong><small>{participant.profile.role}</small></span>
-        <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="xs" variant="icon" />
+        <MeewavGradeBadge level={participant.profile.gradeLevel as GradeLevel} size="md" variant="icon" />
       </button>
     </article>
     {profileTrigger ? <Suspense fallback={null}><GuestPreProfile
@@ -796,7 +812,6 @@ function PlaceChat({ room, canEngage, isHost, active, onSend, onPinMessage, onDe
                   </span>
                   {compactChat ? <span className="wave-chat-inline-text"> <MeeWavRichText emoticonSize={34}>{message.content}</MeeWavRichText></span> : null}
                   {authorIsHost ? <span className="place-chat__host-badge" aria-label="Host de la Room">HOST</span> : null}
-                  <time dateTime={message.createdAt}>{messageClock(message.createdAt)}</time>
                   {isHost && !message.id.startsWith("demo-chat-") ? <span className="place-chat__moderation"><button type="button" className="place-chat__pin-action" onClick={() => void onPinMessage(message.id)} aria-label={`Épingler le message de ${authorName}`} title="Épingler"><Pin aria-hidden="true" /></button><button type="button" className="place-chat__delete-action" onClick={() => void onDeleteMessage(message.id)} aria-label={`Supprimer le message de ${authorName}`} title="Supprimer"><Trash2 aria-hidden="true" /></button></span> : null}
                 </header>
                 {!compactChat ? <p><MeeWavRichText emoticonSize={34}>{message.content}</MeeWavRichText></p> : null}
@@ -838,8 +853,8 @@ function PlaceChat({ room, canEngage, isHost, active, onSend, onPinMessage, onDe
             disabled={!canEngage}
             onSelect={(emoticon) => setDraft((value) => appendMeeWavEmoticon(value, emoticon.name, 1_000))}
           />
+          <button className="place-chat__send" type="submit" disabled={!canEngage || sending || !draft.trim()} aria-label="Envoyer"><Send aria-hidden="true" /></button>
         </div>
-        <button className="place-chat__send" type="submit" disabled={!canEngage || sending || !draft.trim()} aria-label="Envoyer"><Send aria-hidden="true" /></button>
       </form>
     </div>
   );
@@ -865,13 +880,15 @@ export function PlaceAudienceJourney({
   onAcceptInvitation,
   onDeclineInvitation,
   onMarkReady,
-}: Pick<PlaceStudioPanelProps, "room" | "isGuest" | "onJoinQueue" | "onLeaveQueue" | "onAcceptInvitation" | "onDeclineInvitation" | "onMarkReady">) {
+  onOpenMixer,
+}: Pick<PlaceStudioPanelProps, "room" | "isGuest" | "onJoinQueue" | "onLeaveQueue" | "onAcceptInvitation" | "onDeclineInvitation" | "onMarkReady"> & { onOpenMixer?: () => void }) {
   const presentation = useRoomPresentation();
   const personalMix = useViewerMixer();
   const [audioVerified, setAudioVerified] = useState(false);
   const [previewBusy, setPreviewBusy] = useState(false);
   const previewAttempt = useRef(0);
   const [queueBusy, setQueueBusy] = useState(false);
+  const queuePending = useRef(false);
   const [queueError, setQueueError] = useState<string | null>(null);
   const [previewStream, setPreviewStream] = useState<MediaStream | null>(null);
   const [cameraEnabled, setCameraEnabled] = useState(true);
@@ -883,6 +900,15 @@ export function PlaceAudienceJourney({
       ?? room.queue.find((participant) => participant.profile.id === profileId)
     : undefined;
   const profile = room.currentUserProfile;
+  const runCageJourneyAction = async (action: () => Promise<void>) => {
+    if (queuePending.current || !profile) return;
+    queuePending.current = true;
+    setQueueBusy(true);
+    setQueueError(null);
+    try { await action(); }
+    catch { setQueueError("La demande n’a pas abouti. Réessaie dans un instant."); }
+    finally { queuePending.current = false; setQueueBusy(false); }
+  };
   useEffect(() => () => previewStream?.getTracks().forEach((track) => track.stop()), [previewStream]);
   useEffect(() => { ++previewAttempt.current; return () => { ++previewAttempt.current; }; }, [journey?.status]);
   useEffect(() => {
@@ -938,7 +964,8 @@ export function PlaceAudienceJourney({
         <strong>{title}</strong>
         <small>{description}</small>
       </div>
-      {actionLabel && onAction ? <div className="place-audience-journey__actions"><button type="button" onClick={() => void onAction()}>{actionLabel}</button>{secondaryActionLabel && onSecondaryAction ? <button type="button" className="is-secondary" onClick={() => void onSecondaryAction()}>{secondaryActionLabel}</button> : null}</div> : null}
+      {actionLabel && onAction ? <div className="place-audience-journey__actions"><button type="button" disabled={presentation.id === "cage" && queueBusy} onClick={() => void (presentation.id === "cage" ? runCageJourneyAction(onAction) : onAction())}>{actionLabel}</button>{secondaryActionLabel && onSecondaryAction ? <button type="button" className="is-secondary" disabled={presentation.id === "cage" && queueBusy} onClick={() => void (presentation.id === "cage" ? runCageJourneyAction(onSecondaryAction) : onSecondaryAction())}>{secondaryActionLabel}</button> : null}</div> : null}
+      {presentation.id === "cage" && queueError ? <p role="alert">{queueError}</p> : null}
     </div>
   );
 
@@ -949,12 +976,12 @@ export function PlaceAudienceJourney({
     return renderJourney("is-ready", "COULISSES", "Le Host te prépare", "Tu rejoindras la Scène dès que le Host te fera monter.");
   }
   if (journey?.status === "ready" || isGuest) {
-    return renderJourney("is-ready", "GREEN HOUSE PRÊTE", "Tout est prêt", "Le Host peut maintenant t’ouvrir les Coulisses.");
+    return renderJourney("is-ready", "PRÉPARATION TERMINÉE", "Tout est prêt", "Le Host peut maintenant t’ouvrir les Coulisses.");
   }
   if (journey?.status === "accepted") {
     return (
-      <section className="place-green-house" aria-label="Green House privée">
-        <header><span><small>GREEN HOUSE</small><strong>Prépare ton entrée</strong></span><em>Privé</em></header>
+      <section className="place-green-house" aria-label="Préparer votre passage en direct">
+        <header><span><small>AVANT LE DIRECT</small><strong>Prépare ton entrée</strong></span><em>Privé</em></header>
         {previewStream ? <LocalCameraPreview stream={previewStream} format={format} /> : <button type="button" className="place-green-house__start" disabled={previewBusy} onClick={() => void openPreview()}><Camera aria-hidden="true" /> Activer mon aperçu</button>}
         <div className="place-green-house__controls">
           <button type="button" className={!cameraEnabled ? "is-off" : ""} onClick={() => { const next = !cameraEnabled; setCameraEnabled(next); togglePreviewTrack("video", next); }} aria-pressed={cameraEnabled}>{cameraEnabled ? <Camera aria-hidden="true" /> : <CameraOff aria-hidden="true" />}<span>Caméra</span></button>
@@ -962,13 +989,14 @@ export function PlaceAudienceJourney({
           <button type="button" onClick={() => setFormat((current) => current === "landscape" ? "portrait" : "landscape")} aria-label="Changer le format vidéo">{format === "landscape" ? <RectangleHorizontal aria-hidden="true" /> : <RectangleVertical aria-hidden="true" />}<span>{format === "landscape" ? "16:9" : "9:16"}</span></button>
         </div>
         {personalMix ? <ViewerGreenHouseAudioCheck onVerified={setAudioVerified} /> : null}
+        {presentation.id === "cage" && onOpenMixer ? <button type="button" onClick={onOpenMixer}><SlidersHorizontal aria-hidden="true" />Régler mon son</button> : null}
         {queueError ? <p role="alert">{queueError}</p> : null}
-        <button type="button" className="place-green-house__ready" onClick={() => void onMarkReady()} disabled={!previewStream || previewBusy || (Boolean(personalMix) && !audioVerified)}>Je suis prêt</button>
+        <button type="button" className="place-green-house__ready" onClick={() => void (presentation.id === "cage" ? runCageJourneyAction(onMarkReady) : onMarkReady())} disabled={!previewStream || previewBusy || queueBusy || (Boolean(personalMix) && !audioVerified)}>Je suis prêt</button>
       </section>
     );
   }
   if (journey?.status === "pending" && journey.invitationId) {
-    return renderJourney("is-invited", "INVITATION REÇUE", "Le Host t’invite", "Accepte pour ouvrir ta Green House privée.", "Accepter", onAcceptInvitation, "Refuser", onDeclineInvitation);
+    return renderJourney("is-invited", "INVITATION REÇUE", "Le Host t’invite", "Accepte pour préparer ton son et ta caméra.", "Accepter", onAcceptInvitation, "Refuser", onDeclineInvitation);
   }
   if (presentation.id === "place") {
     const queued = Boolean(journey?.queueEntryId) || room.queue.some(entry => entry.profile.id === room.currentUserProfile?.id);
@@ -979,12 +1007,12 @@ export function PlaceAudienceJourney({
     return <div className="scene-queue-action"><span><strong>{queued ? "Vous êtes dans la file" : "Envie de monter sur scène ?"}</strong><small>{queued ? "Le host vous avertira lorsqu’une place se libère." : "Demandez votre passage, le host vous invitera."}</small></span><button type="button" disabled={queueBusy || !room.currentUserProfile} onClick={() => {setQueueBusy(true);setQueueError(null);void (queued ? onLeaveQueue() : onJoinQueue()).catch(() => setQueueError("La demande n’a pas abouti. Réessayez.")).finally(() => setQueueBusy(false));}}>{queueBusy ? "En cours…" : queued ? "Quitter la file" : "Rejoindre la file d’attente"}</button>{queueError ? <p role="alert">{queueError}</p> : null}</div>;
   }
   if (journey?.queueEntryId) {
-    if (presentation.id === "cage") return <div className="cage-audience-apply"><span>Candidature en attente</span><button type="button" onClick={() => void onLeaveQueue()}>Retirer ma candidature</button></div>;
+    if (presentation.id === "cage") return <div className="cage-audience-apply"><span>Candidature en attente</span><button type="button" disabled={queueBusy} onClick={() => void runCageJourneyAction(onLeaveQueue)}>Retirer ma candidature</button>{queueError ? <p role="alert">{queueError}</p> : null}</div>;
     return presentation.id === "wave"
       ? renderJourney("is-queued", "INVITATION SUR SCÈNE", "Invitation sur scène : en attente", "Votre boucle suit un parcours indépendant.", "Quitter la file scène", onLeaveQueue)
-      : renderJourney("", "FILE D’ATTENTE", "Ta demande est envoyée", "Tu seras averti si le Host t’invite dans la Green House.", "Quitter", onLeaveQueue);
+      : renderJourney("", "FILE D’ATTENTE", "Ta demande est envoyée", "Tu seras averti si le host t’invite à préparer ton passage en direct.", "Quitter", onLeaveQueue);
   }
-  if (presentation.id === "cage" && !isGuest) return <div className="cage-audience-apply"><button type="button" onClick={() => void onJoinQueue()}>Participer au battle</button></div>;
+  if (presentation.id === "cage" && !isGuest) return room.queueOpen ? <div className="cage-audience-apply"><button type="button" disabled={queueBusy || !profile} onClick={() => void runCageJourneyAction(onJoinQueue)}>{queueBusy ? "Envoi…" : "Participer au battle"}</button>{queueError ? <p role="alert">{queueError}</p> : null}</div> : null;
   if (!journey && !isGuest) return null;
   return renderJourney("", "PARTICIPER", "Envie de monter sur Scène ?", "Rejoins la file sans interrompre le live.", "Rejoindre", onJoinQueue);
 }
@@ -1046,6 +1074,7 @@ function PlaceChatWorkspace({
   onStartGiftDraw,
   onCancelGiftDraw,
 }: Pick<PlaceStudioPanelProps, "room" | "isHost" | "canEngage" | "onSendMessage" | "onDeleteMessage" | "chatSocialActions" | "onVotePoll" | "onLaunchPoll" | "onStopPoll" | "onPinMessage" | "onPinHighlight" | "onClearHighlight" | "onSubmitGift" | "onCreateGiftDraw" | "onScheduleGiftDraw" | "onStartGiftDraw" | "onCancelGiftDraw"> & { active: boolean; giftOnly?: boolean; initialGiftRecipientId?: string }) {
+  const compactViewerActions = Boolean(chatSocialActions);
   const [previewPoll, setPreviewPoll] = useState<PlaceRoomState["poll"]>(null);
   useEffect(() => {
     const show = () => {
@@ -1227,14 +1256,17 @@ function PlaceChatWorkspace({
   }, [onSubmitGift]);
 
   if (!isHost) return (
-    <div className="place-chat-workspace is-viewer-chat">
+    <div className={`place-chat-workspace is-viewer-chat${compactViewerActions ? " is-compact-engagement" : ""}`}>
       {!previewPoll && room.poll && (room.poll.isActive || room.poll.resultsVisible) ? <div className="rooms-chat-poll-slot"><ChatAudiencePoll room={room} canEngage={canEngage} onVotePoll={onVotePoll} /></div> : null}
       {previewPoll ? <div className="wave-chat-poll-preview"><header><small>SONDAGE · SIMULATION</small><button type="button" aria-label="Fermer le sondage simulé" onClick={() => setPreviewPoll(null)}><X aria-hidden="true" /></button></header><ChatAudiencePoll room={{...room,poll:previewPoll}} canEngage={true} onVotePoll={votePreviewPoll} /><small>Réponses du public simulées · aucun vote réel envoyé</small></div> : null}
       <div className="place-chat-workspace__body">
+        {compactViewerActions ? <header className="place-chat-workspace__engagement">
+          <h3 className="place-chat-workspace__host-support"><span>Soutenir le host</span><small>Likes · Golden Likes · dons</small></h3>
+          {chatSocialActions}
+        </header> : null}
         <section className="place-chat-workspace__panel" aria-label="Messages du chat">
           <PlaceChat room={room} canEngage={canEngage} isHost={false} active={active} onSend={onSendMessage} onPinMessage={onPinMessage} onDeleteMessage={onDeleteMessage} />
         </section>
-        {chatSocialActions}
       </div>
     </div>
   );
@@ -1304,7 +1336,7 @@ function PlaceGuests({
   room, onMoveGuest, onInviteProfile, onRemoveGuest, onSetQueueOpen, onOpenProfile,
   onMessageProfile, onCollaborateProfile, mediaControls, momentVipPicker,
   momentVipSelectedProfileIds = [], onToggleMomentVipGuest,
-  onConfirmMomentVipGuests, onCancelMomentVipPicker,
+  onConfirmMomentVipGuests, onCancelMomentVipPicker, onReturnToCage,
 }: {
   room: PlaceRoomState;
   mediaControls: Pick<PlaceStudioPanelProps, "isHost" | "onMute" | "onCamera" | "liveKitVideoTracks">;
@@ -1320,10 +1352,13 @@ function PlaceGuests({
   onToggleMomentVipGuest?: (participant: PlaceParticipant) => void;
   onConfirmMomentVipGuests?: () => void;
   onCancelMomentVipPicker?: () => void;
+  onReturnToCage?: () => void;
 }) {
   const isCage = useRoomPresentation().id === "cage";
   const desktopGuests = useRuntime().isDesktop && mediaControls.isHost;
   const [section, setSection] = useState<"stage" | "backstage" | "queue">("backstage");
+  const cagePicking = Boolean(onReturnToCage);
+  useEffect(() => { if (cagePicking) setSection("queue"); }, [cagePicking]);
   const [timeNow, setTimeNow] = useState(() => Date.now());
   const [filterState, setFilterState] = useState<"closed" | "open">("closed");
 
@@ -1336,6 +1371,7 @@ function PlaceGuests({
   const [selectedQueueIds, setSelectedQueueIds] = useState<string[]>([]);
   const [selectedBackstageIds, setSelectedBackstageIds] = useState<string[]>([]);
   const [selectedStageIds, setSelectedStageIds] = useState<string[]>([]);
+  const [bulkSelectionMode, setBulkSelectionMode] = useState<"stage" | "queue" | "backstage" | null>(null);
   const [guestActionError, setGuestActionError] = useState("");
   const [dockPreview, setDockPreview] = useState<{ participant: PlaceParticipant; trigger: HTMLElement } | null>(null);
   const [guestActionBusy, setGuestActionBusy] = useState(false);
@@ -1346,7 +1382,7 @@ function PlaceGuests({
   const [juryBusy, setJuryBusy] = useState(false);
   const jurySaving = useRef(false);
   const [juryError, setJuryError] = useState("");
-  useEffect(() => { setJuryOnly(false); setJuryError(""); setGuestActionError(""); setDockPreview(null); setSelectedQueueIds([]); setSelectedBackstageIds([]); setSelectedStageIds([]); }, [room.id]);
+  useEffect(() => { setJuryOnly(false); setJuryError(""); setGuestActionError(""); setDockPreview(null); setSelectedQueueIds([]); setSelectedBackstageIds([]); setSelectedStageIds([]); setBulkSelectionMode(null); }, [room.id]);
   useEffect(() => {
     const timer = window.setInterval(() => setTimeNow(Date.now()), 30_000);
     return () => window.clearInterval(timer);
@@ -1421,8 +1457,20 @@ function PlaceGuests({
     setFilterState("open");
   };
   const closeFilters = useCallback(() => setFilterState("closed"), []);
-  useEffect(() => { if (momentVipPicker) { setSection("queue"); closeFilters(); } }, [momentVipPicker, closeFilters]);
+  useEffect(() => { if (momentVipPicker) { setSection("queue"); setBulkSelectionMode(null); closeFilters(); } }, [momentVipPicker, closeFilters]);
   const renderFilterButton = (owner: "stage" | "backstage" | "queue") => <GuestFilterButton panelId="studio-guests-filter-panel" activeCount={activeFilterCount} open={filterState === "open" && section === owner} buttonRef={section === owner ? (node) => { filterTriggerRef.current = node; } : undefined} onOpen={openFilters} />;
+  const renderSelectionToggle = (target: "stage" | "backstage" | "queue", count: number) => desktopGuests && !momentVipPicker ? <button
+    type="button" className="place-guests__selection-toggle" aria-pressed={bulkSelectionMode === target}
+    aria-label={bulkSelectionMode === target ? "Annuler la sélection" : "Activer la sélection multiple"}
+    title={bulkSelectionMode === target ? "Annuler la sélection" : "Sélection multiple"}
+    aria-controls={`place-guests-${target}`} disabled={(bulkSelectionMode !== target && !count) || bulkBusy || guestActionBusy}
+    onClick={() => {
+      if (bulkSelectionMode === target) {
+        (target === "stage" ? setSelectedStageIds : target === "backstage" ? setSelectedBackstageIds : setSelectedQueueIds)([]);
+        setBulkSelectionMode(null);
+      } else setBulkSelectionMode(target);
+    }}
+  >{bulkSelectionMode === target ? <X aria-hidden="true" /> : <SquareCheck aria-hidden="true" />}</button> : null;
   const toggleQueueSelection = (participantId: string, selected: boolean) => setSelectedQueueIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
   const toggleBackstageSelection = (participantId: string, selected: boolean) => setSelectedBackstageIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
   const toggleStageSelection = (participantId: string, selected: boolean) => setSelectedStageIds((current) => selected ? [...new Set([...current, participantId])] : current.filter((id) => id !== participantId));
@@ -1430,8 +1478,20 @@ function PlaceGuests({
     const visibleIds = new Set(participants.map((participant) => participant.id));
     const setter = target === "queue" ? setSelectedQueueIds : setSelectedBackstageIds;
     setter((current) => allSelected ? current.filter((id) => !visibleIds.has(id)) : [...new Set([...current, ...visibleIds])]);
+    if (desktopGuests) setBulkSelectionMode(allSelected ? null : target);
   };
-  const renderBulkSelectButton = (participants: PlaceParticipant[], allSelected: boolean, count: number, target: "queue" | "backstage") => <button type="button" className={`place-guests__bulk-select${allSelected ? " is-active" : ""}`} onClick={() => toggleAllVisible(participants, allSelected, target)} aria-label={allSelected ? "Tout désélectionner" : "Tout sélectionner"} aria-pressed={allSelected} disabled={!participants.length}><CircleCheck aria-hidden="true" /><span>{allSelected ? "Tout désélectionner" : "Tout sélectionner"}</span>{count ? <b>{count}</b> : null}</button>;
+  const renderBulkSelectButton = (participants: PlaceParticipant[], allSelected: boolean, count: number, target: "queue" | "backstage") => <button type="button" className={`place-guests__bulk-select${allSelected ? " is-active" : ""}`} onClick={() => toggleAllVisible(participants, allSelected, target)} aria-label={allSelected ? "Tout désélectionner" : "Tout sélectionner"} aria-pressed={allSelected} disabled={!participants.length}><CircleCheck aria-hidden="true" /><span>Tout</span>{count ? <b>{count}</b> : null}</button>;
+  const renderQuickSelection = (target: "queue" | "backstage", participants: PlaceParticipant[], selectedIds: string[]) => <div className="studio-guest-selection-chips" role="group" aria-label={target === "queue" ? "Sélection rapide dans la file d’attente" : "Sélection rapide en coulisses"}>
+    <span className="studio-guest-selection-chips__label">Les premiers</span>
+    <div className="studio-guest-selection-chips__options">
+      {[16, 8, 4].map((count) => {
+        const firstIds = participants.slice(0, count).map((participant) => participant.id);
+        const available = firstIds.length === count;
+        const active = available && selectedIds.length === count && firstIds.every((id) => selectedIds.includes(id));
+        return <button type="button" key={count} className={active ? "is-active" : ""} aria-label={`Les ${count} premiers`} aria-pressed={active} disabled={!available || bulkBusy} title={available ? `Sélectionner les ${count} premiers invités disponibles dans la liste affichée` : `${count} invités disponibles nécessaires (${participants.length} actuellement)`} onClick={() => { (target === "queue" ? setSelectedQueueIds : setSelectedBackstageIds)(active ? [] : firstIds); if (desktopGuests) setBulkSelectionMode(active ? null : target); }}>{count}</button>;
+      })}
+    </div>
+  </div>;
   const acceptSelectedQueue = async () => {
     if (!visibleSelectedCount || bulkBusy) return;
     setBulkBusy(true);
@@ -1465,6 +1525,7 @@ function PlaceGuests({
     if (section === "stage") setSelectedStageIds([]);
     else if (section === "backstage") setSelectedBackstageIds([]);
     else setSelectedQueueIds([]);
+    setBulkSelectionMode(null);
   };
   const switchGuestSection = (next: "stage" | "backstage" | "queue") => {
     setSection(next);
@@ -1474,6 +1535,7 @@ function PlaceGuests({
       setSelectedQueueIds([]);
       setSelectedBackstageIds([]);
       setSelectedStageIds([]);
+      setBulkSelectionMode(null);
       setGuestActionError("");
     }
   };
@@ -1512,48 +1574,39 @@ function PlaceGuests({
       </header>
       <section id="place-guests-stage" className="place-guests__list is-onstage" role="tabpanel" hidden={section !== "stage"}>
         <div className="place-guests__section-head is-capacity-only">
-          <span className="place-guests__section-tools">{renderFilterButton("stage")}</span>
+          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("stage")}{renderSelectionToggle("stage", filteredStage.length)}</span>
           <span className={`place-guests__capacity${stageFull ? " is-full" : ""}`}><strong>{onStage.length} / 3 sur scène</strong></span>
         </div>
         <div className="place-guests__rows">
-          {filteredStage.length > 0 ? filteredStage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="onstage" selected={desktopGuests && selectedStageIds.includes(participant.id)} onSelectedChange={desktopGuests ? (selected) => toggleStageSelection(participant.id, selected) : undefined} onSelectExclusive={desktopGuests ? () => setSelectedStageIds([participant.id]) : undefined} stageControls={<PlaceGuestMediaControls participant={participant} room={room} {...mediaControls} />} actions={[{ direction: "down", tone: "amber", label: "Envoyer en Coulisses", text: "Vers les coulisses", onAction: () => void onMoveGuest(participant, "backstage") }]} statusText={`En scène depuis ${waitingTime(participant.joinedAt, timeNow)}`} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{onStage.length ? "Aucun profil avec ces filtres" : "Scène libre"}</strong><span>{onStage.length ? "Modifie les filtres pour retrouver les artistes en scène." : "Monte jusqu’à trois invités."}</span></p>}
+          {filteredStage.length > 0 ? filteredStage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="onstage" selected={desktopGuests && selectedStageIds.includes(participant.id)} onSelectedChange={desktopGuests ? (selected) => toggleStageSelection(participant.id, selected) : undefined} selectionMode={bulkSelectionMode === "stage"} repeatOpensProfile={bulkSelectionMode !== "stage"} onSelectExclusive={desktopGuests && bulkSelectionMode !== "stage" ? () => setSelectedStageIds([participant.id]) : undefined} stageControls={<PlaceGuestMediaControls participant={participant} room={room} {...mediaControls} />} actions={[{ direction: "down", tone: "amber", label: "Envoyer en Coulisses", text: "Vers les coulisses", onAction: () => void onMoveGuest(participant, "backstage") }]} statusText={`En scène depuis ${waitingTime(participant.joinedAt, timeNow)}`} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{onStage.length ? "Aucun profil avec ces filtres" : "Scène libre"}</strong><span>{onStage.length ? "Modifie les filtres pour retrouver les artistes en scène." : "Monte jusqu’à trois invités."}</span></p>}
         </div>
       </section>
       <section id="place-guests-backstage" className="place-guests__list is-backstage" role="tabpanel" hidden={section !== "backstage"}>
         <div className="place-guests__section-head is-capacity-only">
-          <span className="place-guests__section-tools">{renderFilterButton("backstage")}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
-          <span className={`place-guests__capacity${stageFull ? " is-full" : ""}`}><strong>{stageFull ? "Scène complète" : `${3 - onStage.length} place${3 - onStage.length > 1 ? "s" : ""} libre${3 - onStage.length > 1 ? "s" : ""}`}</strong></span>
+          <span className="place-guests__section-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("backstage")}{renderSelectionToggle("backstage", selectableBackstage.length)}{mediaControls.isHost ? <RoomJuryControl count={juryPolicy.jurorIds.length} selected={juryOnly} onClick={() => setJuryOnly(value => !value)} /> : null}{renderBulkSelectButton(selectableBackstage, allVisibleBackstageSelected, visibleBackstageSelectedCount, "backstage")}</span>
+          {desktopGuests ? renderQuickSelection("backstage", selectableBackstage, selectedBackstageIds) : null}
         </div>
         {mediaControls.isHost && juryOnly ? <div className="room-jury-voting">
-          <label>Vote du live<select aria-label="Qui vote dans cet espace live ?" value={juryPolicy.mode} disabled={juryBusy || Boolean(juryLoadError)} onChange={event => void saveJury([...juryPolicy.jurorIds], event.target.value as RoomVoteMode)}>
+          <label>Vote du live<MeewavSelect aria-label="Qui vote dans cet espace live ?" value={juryPolicy.mode} disabled={juryBusy || Boolean(juryLoadError)} onChange={event => void saveJury([...juryPolicy.jurorIds], event.target.value as RoomVoteMode)}>
             {(Object.keys(VOTE_MODE_LABELS) as RoomVoteMode[]).map(mode => <option key={mode} value={mode} disabled={mode !== "public" && !juryPolicy.jurorIds.length}>{VOTE_MODE_LABELS[mode]}</option>)}
-          </select></label>
+          </MeewavSelect></label>
           {juryPolicy.mode === "mixed" ? <small>50 % public · 50 % jury</small> : null}
         </div> : null}
         {juryError || juryLoadError ? <p className="room-jury-error" role="alert">{juryError || juryLoadError}</p> : null}
-        {visibleBackstageSelectedCount ? <div className="place-guests__bulk-bar is-summary-only" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleBackstageSelectedCount}</strong> artiste{visibleBackstageSelectedCount > 1 ? "s" : ""} sélectionné{visibleBackstageSelectedCount > 1 ? "s" : ""}</span></div> : null}
+        {!desktopGuests && visibleBackstageSelectedCount ? <div className="place-guests__bulk-bar is-summary-only" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleBackstageSelectedCount}</strong> artiste{visibleBackstageSelectedCount > 1 ? "s" : ""} sélectionné{visibleBackstageSelectedCount > 1 ? "s" : ""}</span></div> : null}
+        {desktopGuests ? <p className="place-guests__rail-hint">Glisse une carte sur la vidéo pour monter sur scène</p> : null}
         <div className="place-guests__rows">
           {filteredBackstage.length > 0 ? filteredBackstage.map((participant) => <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="backstage" isJuror={juryPolicy.jurorIds.includes(participant.profile.id)} stageControls={<PlaceBackstageControls participant={participant} room={room} {...mediaControls} />} actions={[
             { direction: "down", tone: "cyan", label: "Renvoyer vers la File d’attente", text: "File d’attente", onAction: () => void leaveBackstage(participant, () => onMoveGuest(participant, "accepted")), disabled: juryBusy },
             ...(mediaControls.isHost ? [{ direction: juryPolicy.jurorIds.includes(participant.profile.id) ? "down" as const : "up" as const, tone: "jury" as const, label: juryPolicy.jurorIds.includes(participant.profile.id) ? "Retirer du jury" : "Ajouter au jury", text: juryPolicy.jurorIds.includes(participant.profile.id) ? "Retirer du jury" : "Jury", onAction: () => toggleJuror(participant.profile.id), disabled: juryBusy || Boolean(juryLoadError) || (!juryPolicy.jurorIds.includes(participant.profile.id) && juryPolicy.jurorIds.length >= 4) }] : []),
             { direction: "up", tone: "violet", label: "Passer sur Scène", text: "Sur scène", onAction: () => void leaveBackstage(participant, () => onMoveGuest(participant, "onstage")), disabled: stageFull || juryBusy },
-          ]} statusText={participant.latencyMs > 80 ? "Prêt · connexion instable" : "Prêt"} selected={selectedBackstageIds.includes(participant.id)} onSelectedChange={(selected) => toggleBackstageSelection(participant.id, selected)} onSelectExclusive={desktopGuests ? () => setSelectedBackstageIds([participant.id]) : undefined} onRemove={() => void leaveBackstage(participant, () => onRemoveGuest(participant))} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{juryOnly ? "Aucun membre dans le jury" : backstage.length ? "Aucun profil avec ces filtres" : "Coulisses libres"}</strong><span>{juryOnly ? "Reviens aux coulisses avec le chip Jury, puis ajoute jusqu’à quatre invités." : backstage.length ? "Modifie les filtres pour retrouver les artistes prêts." : "Les invités apparaissent ici après leurs vérifications privées."}</span></p>}
+          ]} statusText={participant.latencyMs > 80 ? "Prêt · connexion instable" : "Prêt"} selected={selectedBackstageIds.includes(participant.id)} selectionMode={bulkSelectionMode === "backstage"} onSelectedChange={(selected) => toggleBackstageSelection(participant.id, selected)} onSelectExclusive={desktopGuests && bulkSelectionMode !== "backstage" ? () => setSelectedBackstageIds([participant.id]) : undefined} repeatOpensProfile={bulkSelectionMode !== "backstage"} onRemove={() => void leaveBackstage(participant, () => onRemoveGuest(participant))} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />) : <p className="place-guests__empty"><strong>{juryOnly ? "Aucun membre dans le jury" : backstage.length ? "Aucun profil avec ces filtres" : "Coulisses libres"}</strong><span>{juryOnly ? "Reviens aux coulisses avec le chip Jury, puis ajoute jusqu’à quatre invités." : backstage.length ? "Modifie les filtres pour retrouver les artistes prêts." : "Les invités apparaissent ici après leurs vérifications privées."}</span></p>}
         </div>
       </section>
       <section id="place-guests-queue" className="place-guests__list is-queue" role="tabpanel" hidden={section !== "queue"}>
         <div className="place-guests__section-head is-capacity-only is-queue-tools">
-          <span className="place-guests__section-tools studio-guest-tools">{renderFilterButton("queue")}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
-        <div className="studio-guest-selection-chips" role="group" aria-label="Sélection rapide dans la file d’attente">
-          <span className="studio-guest-selection-chips__label">Les premiers</span>
-          <div className="studio-guest-selection-chips__options">
-          {[16, 8, 4].map((count) => {
-            const firstIds = selectableQueue.slice(0, count).map((participant) => participant.id);
-            const available = firstIds.length === count;
-            const active = available && selectedQueueIds.length === count && firstIds.every((id) => selectedQueueIds.includes(id));
-            return <button type="button" key={count} className={active ? "is-active" : ""} aria-label={`Les ${count} premiers`} aria-pressed={active} disabled={!available || bulkBusy} title={available ? `Sélectionner les ${count} premiers invités disponibles dans la liste affichée` : `${count} invités disponibles nécessaires (${selectableQueue.length} actuellement)`} onClick={() => setSelectedQueueIds(active ? [] : firstIds)}>{count}</button>;
-          })}
-          </div>
-        </div>
+          <span className="place-guests__section-tools studio-guest-tools">{onReturnToCage ? <button type="button" className="cage-guests-return" onClick={onReturnToCage} title="Revenir à la Cage pour placer les artistes" aria-label="Retour au placement de la Cage"><ArrowLeft aria-hidden="true" />Placement</button> : null}{renderFilterButton("queue")}{renderSelectionToggle("queue", selectableQueue.length)}{renderBulkSelectButton(selectableQueue, allVisibleQueueSelected, visibleSelectedCount, "queue")}<PlaceGuestInvitePicker excludedProfileIds={activeGuestProfileIds} onInvite={onInviteProfile} />{isCage ? <CagePreparedCompetitions /> : null}</span>
+        {renderQuickSelection("queue", selectableQueue, selectedQueueIds)}
           <button type="button" className={`place-guests__queue-state${room.queueOpen ? " is-open" : ""}`} onClick={() => void onSetQueueOpen(!room.queueOpen)} aria-label={room.queueOpen ? "Fermer la file d’attente" : "Ouvrir la file d’attente"} aria-pressed={room.queueOpen}><i />{room.queueOpen ? "Ouverte" : "Fermée"}<span className="place-guests__queue-toggle" aria-hidden="true" /></button>
         </div>
 
@@ -1566,7 +1619,7 @@ function PlaceGuests({
               Confirmer {momentVipSelectedProfileIds.length ? `(${momentVipSelectedProfileIds.length})` : ""}
             </button>
           </span>
-        </div> : visibleSelectedCount ? <div className="place-guests__bulk-bar" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleSelectedCount}</strong> profil{visibleSelectedCount > 1 ? "s" : ""} sélectionné{visibleSelectedCount > 1 ? "s" : ""}</span><button type="button" onClick={() => void acceptSelectedQueue()} disabled={bulkBusy}>{bulkBusy ? "Invitation…" : `Inviter la sélection (${visibleSelectedCount})`}</button></div> : null}
+        </div> : !desktopGuests && visibleSelectedCount ? <div className="place-guests__bulk-bar" role="status"><span><CircleCheck aria-hidden="true" /><strong>{visibleSelectedCount}</strong> profil{visibleSelectedCount > 1 ? "s" : ""} sélectionné{visibleSelectedCount > 1 ? "s" : ""}</span><button type="button" onClick={() => void acceptSelectedQueue()} disabled={bulkBusy}>{bulkBusy ? "Invitation…" : `Inviter la sélection (${visibleSelectedCount})`}</button></div> : null}
         <div className="place-guests__rows">
         {filteredQueue.length > 0 ? filteredQueue.map((participant) => {
           const isRawRequest = Boolean(participant.queueEntryId) && !participant.invitationId;
@@ -1579,12 +1632,12 @@ function PlaceGuests({
           const actions: GuestRowAction[] = momentVipPicker && onToggleMomentVipGuest
             ? [{ direction: "select", tone: "amber", label: isMomentVipGuest ? "Retirer du Moment VIP" : "Ajouter au Moment VIP", text: isMomentVipGuest ? "Retirer" : "Ajouter au VIP", onAction: () => onToggleMomentVipGuest(participant), disabled: !isMomentVipGuest && momentVipSelectedProfileIds.length >= ROOM_LIVE_CALL_MAX_CONTACTS }]
             : [{ direction: "up", tone: "amber", label: actionText, text: actionText, onAction: () => void onMoveGuest(participant, canSimulate ? "ready" : "accepted"), disabled: !isRawRequest && !canSimulate }];
-          return <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="queue" actions={actions} statusText={statusText} timeNow={timeNow} selected={momentVipPicker ? isMomentVipGuest : selectedQueueIds.includes(participant.id)} onSelectedChange={momentVipPicker ? desktopGuests ? (selected) => { if (selected !== isMomentVipGuest) onToggleMomentVipGuest?.(participant); } : undefined : desktopGuests || isRawRequest ? (selected) => toggleQueueSelection(participant.id, selected) : undefined} onSelectExclusive={desktopGuests && !momentVipPicker ? () => setSelectedQueueIds([participant.id]) : undefined} repeatOpensProfile={!momentVipPicker} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />;
+          return <ParticipantRow roomId={room.id} profileSource={room.source} participant={participant} variant="queue" actions={actions} statusText={statusText} timeNow={timeNow} selected={momentVipPicker ? isMomentVipGuest : selectedQueueIds.includes(participant.id)} selectionMode={bulkSelectionMode === "queue"} onSelectedChange={momentVipPicker ? desktopGuests ? (selected) => { if (selected !== isMomentVipGuest) onToggleMomentVipGuest?.(participant); } : undefined : desktopGuests || isRawRequest ? (selected) => toggleQueueSelection(participant.id, selected) : undefined} onSelectExclusive={desktopGuests && !momentVipPicker && bulkSelectionMode !== "queue" ? () => setSelectedQueueIds([participant.id]) : undefined} repeatOpensProfile={!momentVipPicker && !(desktopGuests && bulkSelectionMode === "queue")} onRemove={() => void onRemoveGuest(participant)} onOpenProfile={() => onOpenProfile(participant.profile.id)} onMessageProfile={() => onMessageProfile(participant.profile.id)} onCollaborateProfile={() => onCollaborateProfile(participant.profile)} key={participant.id} />;
         }) : <p className="place-guests__empty"><strong>{queue.length ? "Aucun profil avec ces filtres" : "Aucune demande"}</strong><span>{queue.length ? "Modifie les filtres pour retrouver les demandes." : "Les nouvelles demandes apparaîtront ici."}</span></p>}
         </div>
       </section>
-      {desktopGuests && !momentVipPicker ? <div className="place-guests__desktop-dock" role="toolbar" aria-label="Actions des invités sélectionnés">
-        <div className="place-guests__desktop-dock-heading"><button type="button" onClick={clearGuestSelection} disabled={!selectedParticipants.length} title="Annuler la sélection">{selectedParticipants.length ? `${selectedParticipants.length} sélectionné${selectedParticipants.length > 1 ? "s" : ""}` : "Sélectionne un invité"}</button><small>{section === "backstage" ? "Glisse une carte sur la vidéo pour monter sur scène" : section === "stage" ? "Glisse une vidéo ici pour redescendre en coulisses" : "Choisis les profils à inviter"}</small></div>
+      {desktopGuests && !momentVipPicker ? <div className="place-guests__desktop-dock" data-has-selection={selectedParticipants.length > 0} role="toolbar" aria-label="Actions des invités sélectionnés">
+        <div className="place-guests__desktop-dock-heading"><button type="button" onClick={clearGuestSelection} disabled={!selectedParticipants.length} title="Annuler la sélection">{selectedParticipants.length ? `${selectedParticipants.length} sélectionné${selectedParticipants.length > 1 ? "s" : ""}` : "Sélectionne un invité"}</button>{section === "backstage" ? null : <small>{section === "stage" ? "Glisse une vidéo ici pour redescendre en coulisses" : "Choisis les profils à inviter"}</small>}</div>
         <div className="place-guests__desktop-dock-actions">
           {desktopAction("Aperçu", <UserRound aria-hidden="true" />, (trigger) => { if (singleSelected) setDockPreview({ participant: singleSelected, trigger }); }, !singleSelected)}
           {desktopAction("Message", <MessageCircle aria-hidden="true" />, () => { if (singleSelected) onMessageProfile(singleSelected.profile.id); }, !singleSelected)}
@@ -1595,7 +1648,7 @@ function PlaceGuests({
             {desktopAction(singleSelected && juryPolicy.jurorIds.includes(singleSelected.profile.id) ? "Ôter jury" : "Jury", <Scale aria-hidden="true" />, () => { if (singleSelected) toggleJuror(singleSelected.profile.id); }, !singleSelected || juryBusy || Boolean(juryLoadError) || (singleSelected && !juryPolicy.jurorIds.includes(singleSelected.profile.id) && juryPolicy.jurorIds.length >= 4))}
           </> : null}
           {section === "stage" ? desktopAction("Coulisses", <ArrowDownToLine aria-hidden="true" />, () => { void runGuestAction((person) => onMoveGuest(person, "backstage")); }, !selectedParticipants.length) : null}
-          {singleSelected && (singleSelected.status === "backstage" || singleSelected.status === "onstage") ? <PlaceBackstageControls dock participant={singleSelected} room={room} {...mediaControls} /> : desktopAction("Caméra", <Camera aria-hidden="true" />, () => undefined, true)}
+          {section === "queue" ? null : singleSelected && (singleSelected.status === "backstage" || singleSelected.status === "onstage") ? <PlaceBackstageControls dock participant={singleSelected} room={room} {...mediaControls} /> : desktopAction("Caméra", <Camera aria-hidden="true" />, () => undefined, true)}
           {desktopAction(section === "queue" ? "Refuser" : "Retirer", <X aria-hidden="true" />, () => { void runGuestAction(onRemoveGuest); }, !selectedParticipants.length)}
         </div>
         {guestActionError ? <p role="alert" className="place-guests__desktop-dock-error">{guestActionError}</p> : null}
@@ -1617,6 +1670,7 @@ function PlaceGuests({
 
 export default function PlaceStudioPanel(props: PlaceStudioPanelProps) {
   const presentation = useRoomPresentation();
+  if (presentation.id === "cage" && !props.isHost) return <CageProductionProvider key={`${props.room.source}:${props.room.id}:${props.room.currentUserProfile?.id}`} room={props.room}><PlaceStudioPanelContent {...props} /></CageProductionProvider>;
   const content = presentation.id === "wave" && props.isHost
     ? <WaveTransportProvider toolsVisible={props.surface === "tools"}>
       <WaveRoomTransportController room={props.room} />
@@ -1641,6 +1695,9 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
     || actorRole === "teacher"
     || (specializedRoomId === "scene" && actorRole === "artist");
   const showsAudienceInteractions = !hasProductionTools;
+  const cageViewer = specializedRoomId === "cage" && showsAudienceInteractions;
+  const cageParticipant = [...room.participants, ...room.queue].find((person) => person.profile.id === room.currentUserProfile?.id);
+  const cageListenerOnly = cageViewer && !(cageParticipant && ["accepted", "ready", "backstage", "onstage"].includes(cageParticipant.status));
   const visibleSurface: PlaceStudioSurface = isHost
     ? surface
     : surface === "mixer"
@@ -1648,6 +1705,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       : surface === "tools"
         ? "tools"
         : "chat";
+  const [cageGuestPicking, setCageGuestPicking] = useState(false);
   const [momentVipPersonIds, setMomentVipPersonIds] = useState<string[]>([]);
   const [momentVipDraftPersonIds, setMomentVipDraftPersonIds] = useState<string[]>([]);
   const [momentVipPicker, setMomentVipPicker] = useState(false);
@@ -1676,9 +1734,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
   };
   const availableSurfaces = isHost
     ? SURFACES
-    : isGuest
-      ? SURFACES.filter((item) => item.id === "chat" || item.id === "mixer" || item.id === "tools")
-      : SURFACES.filter((item) => item.id === "chat" || item.id === "mixer" || item.id === "tools");
+    : SURFACES.filter((item) => item.id === "chat" || item.id === "mixer" || item.id === "tools");
   const featureSurfaceLabel = roomPresentation.label.replace(/^La\s+/, "");
   const FeatureIcon = { place: UsersRound, loge: DoorOpen, wave: AudioLines, cage: Radio, classe: GraduationCap, scene: Mic2 }[roomPresentation.id];
   const surfaceLabel = (id: PlaceStudioSurface, label: string) => id === "tools" ? featureSurfaceLabel : label;
@@ -1691,6 +1747,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       onAcceptInvitation={props.onAcceptInvitation}
       onDeclineInvitation={props.onDeclineInvitation}
       onMarkReady={props.onMarkReady}
+      onOpenMixer={() => onSurface("mixer")}
     />
   ) : null;
 
@@ -1705,24 +1762,23 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       case "chat":
         return <PlaceChatWorkspace room={room} isHost={isHost} canEngage={canEngage} active={visibleSurface === "chat" && !collapsed} onSendMessage={props.onSendMessage} onDeleteMessage={props.onDeleteMessage} chatSocialActions={props.chatSocialActions} onVotePoll={props.onVotePoll} onLaunchPoll={props.onLaunchPoll} onStopPoll={props.onStopPoll} onPinMessage={props.onPinMessage} onPinHighlight={props.onPinHighlight} onClearHighlight={props.onClearHighlight} onSubmitGift={props.onSubmitGift} onCreateGiftDraw={props.onCreateGiftDraw} onScheduleGiftDraw={props.onScheduleGiftDraw} onStartGiftDraw={props.onStartGiftDraw} onCancelGiftDraw={props.onCancelGiftDraw} />;
       case "mixer":
-        return <PlaceMixer room={room} mode={isHost ? "host" : isGuest ? "guest" : "viewer"} currentUserId={room.currentUserProfile?.id} view={props.mixerView} toolsVisible={isHost && visibleSurface === "tools"} onView={props.onMixerView} onGain={props.onGain} onMute={props.onMute} onCamera={props.onCamera} onVocal={props.onVocal} onTune={props.onTune} pitchProvider={props.pitchProvider} pitchCorrection={props.pitchCorrection} localAudioStatus={props.localAudioStatus} localAudioError={props.localAudioError} pluginInventory={props.pluginInventory} pluginsRefreshing={props.pluginsRefreshing} nativePluginStatus={props.nativePluginStatus} nativePluginAudioReady={props.nativePluginAudioReady} nativePluginError={props.nativePluginError} onPitchProvider={props.onPitchProvider} onRefreshPlugins={props.onRefreshPlugins} onRemoveNativePlugin={props.onRemoveNativePlugin} onToggleMonitoring={props.onToggleMonitoring} onAudioPreview={props.onAudioPreview} onAudioPreviewMetadata={props.onAudioPreviewMetadata} onAudioRoute={props.onAudioRoute} onAudioPlaybackState={props.onAudioPlaybackState} programAudio={props.programAudio} hostVoiceMeterStream={props.hostVoiceMeterStream} />;
+        return <PlaceMixer room={room} listenerOnly={cageListenerOnly} mode={isHost ? "host" : isGuest ? "guest" : "viewer"} currentUserId={room.currentUserProfile?.id} view={props.mixerView} toolsVisible={isHost && visibleSurface === "tools"} onView={props.onMixerView} onGain={props.onGain} onMute={props.onMute} onCamera={props.onCamera} onVocal={props.onVocal} onTune={props.onTune} pitchProvider={props.pitchProvider} pitchCorrection={props.pitchCorrection} localAudioStatus={props.localAudioStatus} localAudioError={props.localAudioError} pluginInventory={props.pluginInventory} pluginsRefreshing={props.pluginsRefreshing} nativePluginStatus={props.nativePluginStatus} nativePluginAudioReady={props.nativePluginAudioReady} nativePluginError={props.nativePluginError} onPitchProvider={props.onPitchProvider} onRefreshPlugins={props.onRefreshPlugins} onRemoveNativePlugin={props.onRemoveNativePlugin} onToggleMonitoring={props.onToggleMonitoring} onAudioPreview={props.onAudioPreview} onAudioPreviewMetadata={props.onAudioPreviewMetadata} onAudioRoute={props.onAudioRoute} onAudioPlaybackState={props.onAudioPlaybackState} programAudio={props.programAudio} hostVoiceMeterStream={props.hostVoiceMeterStream} />;
       case "tools":
         if (props.experienceWaiting) return props.experienceWaiting;
         if (showsAudienceInteractions) {
-          return <>
+          return <RoomViewerToolsLayout>
             {specializedRoomId && specializedRoomId !== "cage" && specializedRoomId !== "classe" && specializedRoomId !== "scene" ? audienceJourney : null}
             {specializedRoomId === "wave" ? <WaveViewerPanel room={room} canEngage={canEngage} /> : specializedRoomId
-            ? <RoomAudienceInteractions active={visibleSurface === "tools" && !collapsed} onOpenChat={() => onSurface("chat")} onLeaveRoom={props.onLeaveRoom}
+            ? <RoomAudienceInteractions active={visibleSurface === "tools" && !collapsed} onOpenChat={() => onSurface("chat")} onOpenMixer={() => onSurface("mixer")} onLeaveRoom={props.onLeaveRoom}
               roomType={specializedRoomId}
               sceneParticipation={specializedRoomId === "scene" ? audienceJourney : undefined}
-              cageParticipation={specializedRoomId === "cage" ? audienceJourney : undefined}
               room={room}
               isHost={isHost}
               isGuest={isGuest}
               canEngage={canEngage}
             />
             : <PlaceConversationTools participation={audienceJourney} room={room} isHost={isHost} canEngage={canEngage} visible={visibleSurface === "tools" && !collapsed} />}
-          </>;
+          </RoomViewerToolsLayout>;
         }
         return specializedRoomId
           ? <RoomToolsShell
@@ -1733,7 +1789,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
             isHost={isHost}
             isGuest={isGuest}
             onOpenMixer={() => onSurface("mixer")}
-            onOpenGuests={() => onSurface("guests")}
+            onOpenGuests={() => { if (specializedRoomId === "cage") setCageGuestPicking(true); onSurface("guests"); }}
             onOpenGuestQueue={openMomentVipQueue}
             momentVipPersonIds={momentVipPersonIds}
             onMomentVipPersonIdsChange={setMomentVipPersonIds}
@@ -1749,14 +1805,14 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
           ? <PlaceConversationTools participation={audienceJourney} room={room} isHost={isHost} canEngage={canEngage} visible={visibleSurface === "tools" && !collapsed} />
           : <div className="place-room-tools-coming-soon" role="status"><Wrench aria-hidden="true" /><small>{roomPresentation.uppercaseLabel}</small><strong>Outils en cours de construction</strong><span>Les outils propres à cet espace seront ajoutés pendant son chantier dédié.</span></div>;
       case "guests":
-        return <PlaceGuests room={room} mediaControls={props} onMoveGuest={props.onMoveGuest} onInviteProfile={props.onInviteProfile ?? (async () => undefined)} onRemoveGuest={props.onRemoveGuest} onSetQueueOpen={props.onSetQueueOpen} onOpenProfile={props.onOpenProfile} onMessageProfile={props.onMessageProfile} onCollaborateProfile={props.onCollaborateProfile} momentVipPicker={momentVipPicker} momentVipSelectedProfileIds={momentVipDraftPersonIds} onToggleMomentVipGuest={toggleMomentVipGuest} onConfirmMomentVipGuests={confirmMomentVipGuests} onCancelMomentVipPicker={cancelMomentVipPicker} />;
+        return <PlaceGuests onReturnToCage={cageGuestPicking && specializedRoomId === "cage" ? () => { setCageGuestPicking(false); onSurface("tools"); } : undefined} room={room} mediaControls={props} onMoveGuest={props.onMoveGuest} onInviteProfile={props.onInviteProfile ?? (async () => undefined)} onRemoveGuest={props.onRemoveGuest} onSetQueueOpen={props.onSetQueueOpen} onOpenProfile={props.onOpenProfile} onMessageProfile={props.onMessageProfile} onCollaborateProfile={props.onCollaborateProfile} momentVipPicker={momentVipPicker} momentVipSelectedProfileIds={momentVipDraftPersonIds} onToggleMomentVipGuest={toggleMomentVipGuest} onConfirmMomentVipGuests={confirmMomentVipGuests} onCancelMomentVipPicker={cancelMomentVipPicker} />;
     }
   };
 
   return (
     <aside
       data-switch-version={props.experienceVersion || undefined}
-      className={`place-studio-panel is-shared-studio-chassis is-${visibleSurface} ${isHost ? "is-host-panel" : isGuest ? "is-guest-panel" : "is-viewer-panel"}${collapsed ? " is-collapsed" : ""}${isHost ? " has-tools-deck has-wave-transport" : ""}`}
+      className={`place-studio-panel is-shared-studio-chassis is-${visibleSurface} ${isHost ? "is-host-panel" : isGuest ? "is-guest-panel" : "is-viewer-panel"}${collapsed ? " is-collapsed" : ""}${isHost ? " has-tools-deck has-wave-transport" : ""}${cageViewer ? " has-cage-viewer-participation" : ""}`}
       aria-label={isHost ? "Studio de production de la Room" : isGuest ? "Contrôles personnels, interactions et chat de la Room" : "Chat et interactions publiques de la Room"}
     >
       <div className="place-studio-panel__bar">
@@ -1793,6 +1849,7 @@ function PlaceStudioPanelContent(props: PlaceStudioPanelProps) {
       >
         {availableSurfaces.map(({ id }) => <section key={id} id={`place-studio-surface-${id}`} className="place-studio-panel__surface" role="tabpanel" aria-labelledby={`place-studio-tab-${id === "mixer" && isHost && visibleSurface === "tools" ? "tools" : id}`} hidden={isHost && (id === "mixer" || id === "tools") ? id === "tools" || !["mixer", "tools"].includes(visibleSurface) : visibleSurface !== id}>{id === "tools" ? <RoomExperienceBoundary version={props.experienceVersion} onChat={()=>onSurface("chat")}>{renderSurface(id)}</RoomExperienceBoundary> : renderSurface(id)}</section>)}
       </div>
+      {cageViewer ? <div className="cage-viewer-participation" hidden={collapsed || visibleSurface === "mixer"}>{audienceJourney}</div> : null}
       {!isHost && specializedRoomId === "wave" ? <WaveViewerListeningBar onOpenWave={() => { onSurface("tools"); props.onCollapsedChange(false); }} /> : null}
     </aside>
   );

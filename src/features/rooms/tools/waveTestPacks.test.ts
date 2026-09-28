@@ -1,4 +1,3 @@
-// @ts-expect-error Node is available in Vitest; the app tsconfig only includes browser types.
 import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { DemoRoomToolsRepository } from "./roomTools.service";

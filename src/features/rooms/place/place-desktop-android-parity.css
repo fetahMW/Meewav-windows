@@ -1,3 +1,5 @@
+@import "./room-console-material.css";
+
 /* Desktop shares the Room components and actions with Web. These refinements
  * stay inside the Desktop runtime and leave the pillar and backgrounds alone. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
@@ -5,21 +7,71 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   --studio-section-light: #a98ef0;
 }
 
+/* Glass keeps its colour on hover; size alone signals the upcoming press. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface] {
+  animation: none;
+  filter: none;
+  transform: translateY(0) scale(1);
+  transition: transform 150ms cubic-bezier(.2, .8, .2, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:hover:not(:disabled) {
+    transform: translateY(0) scale(1.025);
+  }
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:active:not(:disabled) {
+  transform: translateY(1px) scale(.97);
+  transition-duration: 60ms;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface] > svg {
+  transition: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:focus-visible {
+  outline: 2px solid #c6a1f0;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface],
+  body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:is(:hover, :active):not(:disabled) {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Unselected glass keys keep their rim visible, with no illuminated accent. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active) {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(122deg, #ffffff08, transparent 48%) padding-box,
+    linear-gradient(180deg, #19171e59, #08070c33) padding-box,
+    linear-gradient(140deg, #ddd6e633, #9991a315 35%, #302a3612 64%, #c4bbd02b) border-box;
+  backdrop-filter: blur(8px) saturate(105%);
+  box-shadow: inset 0 1px 0 #ffffff0c, inset 0 -1px 1px #0005, 0 1px 2px #0005;
+  color: #b8b2c1;
+  text-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:not(.is-active) > svg {
+  color: #a49aac;
+  filter: none;
+}
+
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active {
   --studio-key-rgb: 126, 68, 227;
   --studio-key-light: #a98ef0;
-  border: 1px solid rgba(126, 68, 227, .4);
-  background: linear-gradient(rgba(126, 68, 227, .22), rgba(126, 68, 227, .22)), #101014;
+  border: 1px solid transparent;
+  background: var(--room-key-active-face);
+  backdrop-filter: blur(10px) saturate(135%);
   color: #f8f6fa;
-  box-shadow: inset 0 1px rgba(255, 255, 255, .09);
-  text-shadow: none;
+  box-shadow: var(--room-key-active-shadow);
+  text-shadow: 0 1px 2px #08040db3;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active > svg {
-  color: #c27aff;
+  color: var(--room-key-active-icon);
   filter: none;
 }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active::before,
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active::after {
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]::before,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]::after {
   display: none !important;
 }
 
@@ -36,8 +88,22 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   color: #a98ef0;
   filter: none;
 }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments {
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr) minmax(0, .82fr);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-queue {
+  gap: 4px;
+  padding-inline: 2px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-queue .place-guests__segment-copy,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-queue .place-guests__segment-copy > small {
+  width: max-content;
+  min-width: max-content;
+  overflow: visible;
+  text-overflow: clip;
+}
 
-/* Portrait rail: two square cards, vertical scrolling, no controls on cards. */
+/* Portrait rail: three square cards, vertical scrolling, no controls on cards. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests {
   display: flex;
   flex-direction: column;
@@ -54,7 +120,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   box-sizing: border-box;
   display: grid;
   flex: 1 1 0;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: max-content;
   align-content: start;
   gap: 8px;
@@ -68,6 +134,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: #62527f #101114;
+  scrollbar-gutter: stable both-edges;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__rows > .place-guests__empty {
   grid-column: 1 / -1;
@@ -132,9 +199,111 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   color: #a98ef0;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-state svg { width: 14px; height: 14px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-statuses {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  display: grid;
+  justify-items: start;
+  gap: 3px;
+  max-width: calc(100% - 62px);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 15px;
+  padding: 0 4px;
+  overflow: hidden;
+  border: 1px solid;
+  border-radius: 999px;
+  font: 700 8px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .55);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip.is-ready {
+  border-color: rgba(147, 216, 178, .45);
+  background: rgba(5, 20, 14, .78);
+  color: #b6efca;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip.is-media-off {
+  border-color: rgba(201, 177, 225, .48);
+  background: rgba(20, 13, 26, .82);
+  color: #e4c9f2;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-icons {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip.is-icon {
+  width: 17px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0;
+  border-radius: 5px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip.is-icon svg {
+  width: 12px;
+  min-width: 12px;
+  height: 12px;
+  stroke-width: 2.4;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip.is-micro-off {
+  border-color: rgba(255, 105, 115, .65);
+  background: rgba(36, 7, 11, .88);
+  color: #ff6b77;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__status-chip.is-unstable {
+  border-color: rgba(255, 190, 113, .55);
+  background: rgba(27, 15, 6, .86);
+  color: #ffca8c;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-state.is-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #d9c4ff;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-state.is-checkbox svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 2.4;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .95));
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__list.is-backstage .place-guests__section-head:has(.studio-guest-selection-chips) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  height: auto;
+  padding-bottom: 4px;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__list.is-backstage .studio-guest-selection-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 9px;
+  min-width: 0;
+  padding: 0;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__list.is-backstage .place-guests__rail-hint {
+  box-sizing: border-box;
+  width: min(100%, 440px);
+  margin: 0 auto;
+  padding: 0 12px;
+  color: #a09ba9;
+  font: 500 9px/1.3 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .01em;
+}
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-copy {
   position: absolute;
-  right: 30px;
+  right: 8px;
   bottom: 8px;
   left: 8px;
   display: grid;
@@ -151,10 +320,17 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-copy small { color: #bca3fb; font-size: 9px; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-hit > .mw-grade-badge {
   position: absolute;
-  right: 6px;
-  bottom: 6px;
+  z-index: 2;
+  right: 4px;
+  top: 4px;
+  bottom: auto;
   width: 23px;
   height: 23px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .9));
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row__compact-hit > .mw-grade-badge :is(.mw-grade-badge__icon, .mw-grade-badge__svg) {
+  width: 100%;
+  height: 100%;
 }
 
 /* Android-inspired action dock: single home for all guest commands. */
@@ -260,7 +436,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 
 /* Material and transport geometry from Android WaveMixerMaterials and WaveMixerDeckPanel. */
 .place-mixer-deck__advanced.is-web { display: contents; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] :is(.place-guests__desktop-dock, .place-studio-panel .place-mixer-audio__surface) { background:linear-gradient(90deg,#0003,transparent 14%,transparent 86%,#0003),linear-gradient(180deg,#1a1b1e 0%,#17181b 12%,#111214 32%,#090a0c 65%,#050608 91%,#030405);border:1px solid #ffffff16;border-top-color:#ffffff29;border-bottom-color:#000a;box-shadow:inset 0 1px #ffffff0e,0 2px 3px #0008; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio__surface { background:linear-gradient(90deg,#0003,transparent 14%,transparent 86%,#0003),linear-gradient(180deg,#1a1b1e 0%,#17181b 12%,#111214 32%,#090a0c 65%,#050608 91%,#030405);border:1px solid #ffffff16;border-top-color:#ffffff29;border-bottom-color:#000a;box-shadow:inset 0 1px #ffffff0e,0 2px 3px #0008; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-guests__desktop-dock-heading > button { justify-self:start;padding:0;border:0;background:none;color:#d4d0da;font:inherit;cursor:pointer; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-guest-camera-dock { display:contents; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-guests__desktop-dock-actions .place-guest-camera-dock > button { display:grid;flex:1 0 46px;justify-items:center;align-content:center;gap:4px;width:auto;height:48px;padding:4px 2px;border:0;border-radius:9px;background:transparent;color:#a98ef0;font-size:9px; }
@@ -285,7 +461,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .is-android-deck .place-mixer-deck__advanced[open] .place-mixer-audio__utility-actions { display:flex;justify-content:space-around;padding:6px 0; }
 
 /* Shared Desktop deck: controls above, options below, waveform unobstructed. */
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player:has(.is-android-deck) { grid-template-rows: auto auto minmax(180px, 1fr); overflow:auto; background:#070809; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player:has(.is-android-deck) { grid-template-rows: auto auto minmax(180px, 1fr); overflow:auto; background:transparent; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:has(.is-android-deck) { height:auto; min-height:0; max-height:none; flex-shrink:0; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:has(.is-android-deck) .place-mixer-audio__surface { height:auto; min-height:0; max-height:none; display:block; padding:0; background:linear-gradient(170deg,#24262b 0%,#101113 28%,#030405 65%,#000); border:1px solid #ffffff20; box-shadow:inset 0 1px #ffffff30,0 3px 8px #0008; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio .place-mixer-audio__body.is-android-deck { position:relative; display:grid; height:auto; min-height:0; max-height:none; grid-template-columns:minmax(0,1fr); grid-template-areas:"controls" "track" "waveform" "timeline" "options"; grid-template-rows:auto auto 80px 24px auto; gap:8px; padding:12px; }
@@ -294,11 +470,10 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck > .place-mixer-audio__waveform { position:relative; height:80px; min-height:80px; margin:0; background:#030405; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck > .place-mixer-deck__bottom { grid-area:options; min-width:0; padding-top:8px; border-top:1px solid #ffffff12; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom > .place-mixer-audio__utility-actions { position:static; inset:auto; transform:none; display:flex; flex-wrap:wrap; justify-content:space-evenly; gap:10px; width:100%; height:auto; min-height:40px; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer > .place-volume-view { background:#070809; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-volume-list,.place-master-dock) { background:linear-gradient(165deg,#222428 0%,#0b0c0e 25%,#000 75%); border:1px solid #ffffff1a; border-top-color:#ffffff30; border-radius:12px; box-shadow:inset 0 1px #ffffff18,0 3px 8px #0008; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer > .place-volume-view { background:transparent; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-volume-list { background:transparent; border:0; box-shadow:none; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-master-dock { background:linear-gradient(165deg,#222428 0%,#0b0c0e 25%,#000 75%); border:1px solid #ffffff1a; border-top-color:#ffffff30; border-radius:12px; box-shadow:inset 0 1px #ffffff18,0 3px 8px #0008; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-volume-list .place-volume-row { background:transparent; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:is(:hover,:focus-visible) { --studio-key-rgb:126,68,227; --studio-key-light:#a98ef0; background:linear-gradient(#7e44e338,#7e44e338),#101014; border-color:#7e44e366; color:#f8f6fa; box-shadow:inset 0 1px #ffffff17; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]:is(:hover,:focus-visible) > svg { color:#a98ef0; filter:none; }
 
 /* Room submenus sit directly on the chassis, without underlines. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.wave-tools-nav,.place-mixer__subnav) { background:transparent; border:0; box-shadow:none; }
@@ -308,8 +483,22 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.wave-tools-nav .place-tools-console__switch,.place-mixer__subnav) > button.is-active::after { content:none !important; display:none !important; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.wave-tools-nav .place-tools-console__switch,.place-mixer__subnav) > button:hover { background:#a98ef014; color:#ddd0ff; }
 
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer { background:linear-gradient(165deg,#191b1f,#08090b 35%,#000); }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsed:has(.is-android-deck) { height:52px; min-height:52px; max-height:52px; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis { background:linear-gradient(165deg,#191b1f,#08090b 35%,#000); }
+/* Folding only releases space below the player; its upper edge stays fixed.
+ * Override the shared fixed rows as well as the expanded Desktop deck sizing. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) .place-mixer.has-audio-player.has-classroom-player.is-classroom-player-collapsed {
+  grid-template-rows: var(--studio-subnav-height, 42px) 52px minmax(0, 1fr) !important;
+  row-gap: 0;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsed:has(.is-android-deck) {
+  box-sizing: border-box;
+  align-self: start;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  margin-block: 0 4px;
+  overflow: hidden;
+}
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsed:has(.is-android-deck) .place-mixer-audio__surface { display:none; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio.is-classroom-collapsible:not(.is-classroom-collapsed) .is-android-deck > .place-mixer-audio__controls { padding-right:44px; }
 
@@ -389,7 +578,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-deck__queue-add { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; border: 1px solid #d5acef44; border-radius: 8px; background: #d5acef12; }
 
 /* One compact icon/label rhythm and rose-lavender accent for Room submenus. */
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch) { display:flex; align-items:center; gap:4px; height:auto; min-height:38px; padding:4px 8px; border:0; border-radius:0; background:transparent; box-shadow:none; overflow-x:auto; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch) { display:flex; align-items:center; gap:4px; height:auto; min-height:38px; padding:4px 8px; border:0; border-radius:0; background:transparent; box-shadow:none; overflow:visible; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch) > button { position:relative; display:flex; flex:1 0 auto; flex-direction:row; align-items:center; justify-content:center; gap:5px; height:30px; min-height:30px; padding:0 7px; border:0; border-radius:6px; background:transparent; box-shadow:none; font-size:11px; color:#b9b2c2; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch) > button > span { position:static; display:inline; width:auto; flex:0 1 auto; margin:0; padding:0; font-size:inherit; line-height:1.2; text-align:left; white-space:nowrap; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch) > button > svg { position:static; inset:auto; transform:none; flex:0 0 14px; width:14px; height:14px; margin:0; padding:0; color:#b26aff; filter:none; }
@@ -510,6 +699,32 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="place"] .place-studio-panel.is-tools .wave-tools-body .place-conversation__floor-deck::before { content: none; display: none; }
 
+/* Wave uses the same open tool rail as La Place, without a framed backplate. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav .place-tools-console__switch {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav :is(.room-tools-shell, .place-tools-console__switch)::before,
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .place-studio-panel.is-tools .wave-tools-nav :is(.room-tools-shell, .place-tools-console__switch)::after {
+  content: none;
+  display: none;
+}
+
+/* Match validation feedback on cards and on the selected loop's action bar. */
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .room-tools-shell.is-wave .wave-sas button:is(.wave-sas-card__quick-accept, .is-validate):is(:hover, :focus-visible):not(:disabled) {
+  border-color: #45e58a;
+  background: rgba(25, 155, 85, .18);
+  color: #60ee9d;
+  box-shadow: 0 0 15px rgba(43, 211, 118, .2), inset 0 0 10px rgba(43, 211, 118, .08);
+}
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation="wave"] .room-tools-shell.is-wave .wave-sas button:is(.wave-sas-card__quick-accept, .is-validate):is(:hover, :focus-visible):not(:disabled) svg {
+  border-color: #45e58a;
+  color: #60ee9d;
+  box-shadow: none;
+}
+
 /* The Mixer Volumes label is the type reference for every Desktop Room submenu. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch, .place-chat-workspace__nav, .place-guests__segments) > button {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
@@ -551,7 +766,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer.has-audio-player:has(.is-android-deck) {
   grid-template-rows: 38px 198px minmax(180px, 1fr);
 }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:has(.is-android-deck):not(.is-queue-open) {
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-audio:has(.is-android-deck):not(.is-queue-open):not(.is-classroom-collapsed):not(.is-room-collapsed) {
   height: 198px;
   min-height: 198px;
   max-height: 198px;
@@ -564,7 +779,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   grid-template-areas: "controls" "track" "waveform" "timeline" "options";
   grid-template-rows: 46px 16px 48px 18px minmax(0, 1fr);
   gap: 3px;
-  padding: 6px 9px;
+  padding: 6px 9px 4px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck > .place-mixer-audio__track {
   min-height: 0;
@@ -654,8 +869,9 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 
 /* Régie stays left; cue and its settings form one group at the far right. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck > .place-mixer-deck__bottom {
-  padding: 4px 0 6px;
-  align-self: start;
+  --studio-player-utility-size: 28px;
+  padding: 2px 0;
+  align-self: end;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-audio__transport-buttons {
   transform: none;
@@ -665,28 +881,23 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   display: grid;
   height: 30px;
   min-height: 30px;
-  grid-template-columns: auto minmax(0, 1fr) 28px 28px;
+  grid-template-columns: auto minmax(0, 1fr) repeat(2, var(--studio-player-utility-size));
   align-items: center;
+  justify-content: stretch;
   justify-items: end;
-  gap: 6px;
+  gap: 4px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom .place-mixer-audio__regie-button {
   justify-self: start;
-  height: 30px;
-  min-height: 30px;
-  max-height: 30px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom .wave-listening-selector { grid-column: 2; grid-row: 1; justify-self: center; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom .place-mixer-cue { grid-column: 3; grid-row: 1; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom .place-mixer-audio__playback-menu-shell { grid-column: 4; grid-row: 1; }
-body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom :is(.place-mixer-cue, .place-mixer-audio__playback-menu-shell) { width: 28px; min-width: 28px; height: 28px; margin: 0; }
+body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom :is(.place-mixer-cue, .place-mixer-audio__playback-menu-shell) { width: var(--studio-player-utility-size); min-width: var(--studio-player-utility-size); height: var(--studio-player-utility-size); margin: 0; }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom :is(.place-mixer-audio__cue-return, .place-mixer-audio__playback-menu-button) {
-  width: 28px;
-  min-width: 28px;
-  max-width: 28px;
-  height: 28px;
-  min-height: 28px;
-  max-height: 28px;
+  width: var(--studio-player-utility-size);
+  min-width: var(--studio-player-utility-size);
+  max-width: var(--studio-player-utility-size);
   padding: 0;
   border-radius: 6px;
 }
@@ -695,6 +906,9 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   height: 11px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .is-android-deck .place-mixer-deck__bottom :is(.place-mixer-audio__regie-button, .place-mixer-audio__cue-return, .place-mixer-audio__playback-menu-button) {
+  height: var(--studio-player-utility-size);
+  min-height: var(--studio-player-utility-size);
+  max-height: var(--studio-player-utility-size);
   position: static;
   inset: auto;
   transform: none;
@@ -718,3 +932,23 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shellbar__host-side .
   flex-basis: 280px;
   grid-template-columns: repeat(4, 70px);
 }
+
+/* Cage uses the console texture directly, including both portal containers. */
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav :is(.room-tools-shell, .place-tools-console__switch),
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-body,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .room-tools-shell.is-cage,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .cage-tools-body,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .room-tools-shell__panel {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav { padding: 0; outline: 0; }
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav::before,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav::after,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .place-tools-console__switch::before,
+.rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .place-tools-console__switch::after { display: none; }
+body .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav .place-tools-console__switch { min-height: 34px; padding: 2px 8px; outline: 0; }
+body .rooms-page .place-room-shell[data-room-presentation="cage"] .place-studio-panel .wave-tools-nav .place-tools-console__switch > button { border: 0; background: transparent; box-shadow: none; }

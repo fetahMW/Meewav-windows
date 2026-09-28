@@ -98,10 +98,10 @@ const coreTremplinArtists: readonly TremplinArtist[] = [
       "newMembers30Days": 42
     },
     "audio": {
-      "title": "Sans bruit",
-      "subtitle": "Extrait exclusif · 1:08",
-      "durationLabel": "1:08",
-      "audioSrc": "/media/preprofile-demo/hazy-after-hours.mp3",
+      "title": "Fille 1",
+      "subtitle": "Écouter · 3:38",
+      "durationLabel": "3:38",
+      "audioSrc": "/media/tremplin/fille-1.mp3",
       "waveform": [0.63,0.44,0.22,0.12,0.12,0.14,0.32,0.5,0.62,0.63,0.55,0.42,0.3,0.24,0.24,0.3,0.39,0.47,0.51,0.52,0.51,0.5,0.48,0.46,0.43,0.4,0.36,0.35,0.39,0.46,0.55,0.63,0.66,0.61,0.48,0.32,0.19,0.15,0.23,0.4,0.59,0.73,0.74,0.62,0.39,0.16,0.12,0.12,0.18,0.42,0.65,0.77,0.72,0.52,0.25,0.12]
     },
     "updates": [
@@ -167,10 +167,10 @@ const coreTremplinArtists: readonly TremplinArtist[] = [
       "newMembers30Days": 31
     },
     "audio": {
-      "title": "Dernier arrêt",
-      "subtitle": "Maquette live · 0:54",
-      "durationLabel": "0:54",
-      "audioSrc": "/media/preprofile-demo/tech-house-vibes.mp3",
+      "title": "Rapeur 1",
+      "subtitle": "Écouter · 3:16",
+      "durationLabel": "3:16",
+      "audioSrc": "/media/tremplin/rapeur-1.mp3",
       "waveform": [0.12,0.12,0.3,0.56,0.73,0.75,0.61,0.37,0.15,0.12,0.12,0.21,0.43,0.63,0.73,0.69,0.55,0.37,0.23,0.18,0.23,0.36,0.49,0.59,0.63,0.6,0.53,0.46,0.42,0.39,0.39,0.4,0.41,0.43,0.45,0.49,0.53,0.56,0.54,0.48,0.38,0.27,0.2,0.21,0.3,0.45,0.59,0.67,0.63,0.48,0.28,0.12,0.12,0.12,0.25,0.48]
     },
     "updates": [
@@ -305,10 +305,10 @@ const coreTremplinArtists: readonly TremplinArtist[] = [
       "newMembers30Days": 28
     },
     "audio": {
-      "title": "Les heures bleues",
-      "subtitle": "Version piano-voix · 1:05",
-      "durationLabel": "1:05",
-      "audioSrc": "/media/preprofile-demo/hazy-after-hours.mp3",
+      "title": "Fille 2",
+      "subtitle": "Écouter · 4:18",
+      "durationLabel": "4:18",
+      "audioSrc": "/media/tremplin/fille-2.mp3",
       "waveform": [0.28,0.13,0.12,0.12,0.26,0.47,0.65,0.72,0.65,0.47,0.24,0.12,0.12,0.13,0.36,0.62,0.79,0.82,0.68,0.44,0.19,0.12,0.12,0.25,0.5,0.73,0.85,0.8,0.63,0.4,0.21,0.13,0.19,0.35,0.54,0.67,0.71,0.63,0.49,0.35,0.25,0.22,0.27,0.36,0.44,0.49,0.49,0.47,0.43,0.4,0.37,0.33,0.3,0.27,0.25,0.26]
     },
     "updates": [
@@ -655,10 +655,10 @@ const coreTremplinArtists: readonly TremplinArtist[] = [
       "newMembers30Days": 55
     },
     "audio": {
-      "title": "Pixel tendre",
-      "subtitle": "Pré-mix · 1:00",
-      "durationLabel": "1:00",
-      "audioSrc": "/media/preprofile-demo/tech-house-vibes.mp3",
+      "title": "Fille 3",
+      "subtitle": "Écouter · 3:52",
+      "durationLabel": "3:52",
+      "audioSrc": "/media/tremplin/fille-3.mp3",
       "waveform": [0.23,0.5,0.7,0.76,0.65,0.43,0.17,0.12,0.12,0.13,0.37,0.61,0.76,0.75,0.61,0.39,0.2,0.12,0.15,0.29,0.48,0.64,0.7,0.66,0.55,0.43,0.33,0.3,0.34,0.4,0.48,0.53,0.54,0.54,0.51,0.49,0.46,0.43,0.38,0.33,0.3,0.3,0.35,0.43,0.53,0.59,0.58,0.49,0.33,0.18,0.12,0.12,0.24,0.43,0.61,0.69]
     },
     "updates": [

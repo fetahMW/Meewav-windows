@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { RoomEvent, type Room } from "livekit-client";
+import { RoomEvent, type Room } from "../../../lib/byteplusRtc";
 import {
   PLACE_LIVE_CALL_HOST_TRACK_NAME,
   PlaceLiveCallMediaService,
@@ -9,14 +9,18 @@ import {
 
 const CALL_ID = "0d8e2999-9ba6-47da-902b-b3e0b5f340ad";
 const PUBLIC_ROOM_ID = "78c1d981-71a6-4ef3-aa59-32800cb856b2";
-const HOST_IDENTITY = `${PUBLIC_ROOM_ID}:call:${CALL_ID}`;
-const CONTACT_IDENTITY = `f12a0714-3a04-45d0-8c62-c0dd439680b1:call:${CALL_ID}`;
-const TOKEN = `${"a".repeat(20)}.${"b".repeat(20)}.${"c".repeat(20)}`;
+const HOST_IDENTITY = `${PUBLIC_ROOM_ID}.call.${CALL_ID}`;
+const CONTACT_IDENTITY = `f12a0714-3a04-45d0-8c62-c0dd439680b1.call.${CALL_ID}`;
+const TOKEN = `001testapp${"a".repeat(80)}`;
+const EXPIRY = new Date(Date.now() + 120_000).toISOString();
 
 function accessFixture(overrides: Partial<PlaceLiveCallMediaAccess> = {}): PlaceLiveCallMediaAccess {
   return {
     token: TOKEN,
-    serverUrl: "wss://rtc.meewav.test/",
+    appId: "testapp", expiresAt: EXPIRY, roomName: "mw-call-private-test", roomId: PUBLIC_ROOM_ID,
+    identity: HOST_IDENTITY, canPublish: true,
+    members: [{identity: CONTACT_IDENTITY, role: "contact", canPublish: true, canReceive: true,
+      audioTrackName: "meewav.call.input", metadata: {roomId: PUBLIC_ROOM_ID, liveCallInvitationId: CALL_ID, role: "phone_contact"}}],
     participantIdentity: HOST_IDENTITY,
     peerIdentity: CONTACT_IDENTITY,
     role: "host",
@@ -102,7 +106,7 @@ describe("parsePlaceLiveCallMediaAccess", () => {
   it("normalise le contrat canonique host/contact sans élargir les identités", () => {
     expect(parsePlaceLiveCallMediaAccess({
       token: TOKEN,
-      serverUrl: "wss://rtc.meewav.test",
+      appId: "testapp", roomName: "mw-call-private-test", expiresAt: EXPIRY, canPublish: true,
       participantIdentity: HOST_IDENTITY,
       peerIdentity: CONTACT_IDENTITY,
       role: "host",
@@ -114,7 +118,7 @@ describe("parsePlaceLiveCallMediaAccess", () => {
   it("accepte les alias de transition callee/callId/roomId puis les normalise", () => {
     const access = parsePlaceLiveCallMediaAccess({
       token: TOKEN,
-      serverUrl: "ws://127.0.0.1:7880",
+      appId: "testapp", roomName: "mw-call-private-test", expiresAt: EXPIRY, canPublish: true,
       participantIdentity: CONTACT_IDENTITY,
       peerIdentity: HOST_IDENTITY,
       role: "callee",
@@ -127,11 +131,11 @@ describe("parsePlaceLiveCallMediaAccess", () => {
     expect(access.publicRoomId).toBe(PUBLIC_ROOM_ID);
   });
 
-  it("refuse un transport non sécurisé ou des alias d’appel contradictoires", () => {
+  it("refuse un jeton d’un autre fournisseur ou des alias d’appel contradictoires", () => {
     expect(() => parsePlaceLiveCallMediaAccess({
       ...accessFixture(),
-      serverUrl: "ws://rtc.meewav.test",
-    })).toThrow(/transport sécurisé/u);
+      token: "old.jwt.token",
+    })).toThrow(/Jeton/u);
     expect(() => parsePlaceLiveCallMediaAccess({
       ...accessFixture(),
       callId: "b24146f2-c79f-4523-9333-6eefc6a64289",

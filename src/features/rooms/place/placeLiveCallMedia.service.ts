@@ -12,7 +12,8 @@ import {
   type RemoteTrack,
   type RemoteTrackPublication,
   type TrackPublication,
-} from "livekit-client";
+  type BytePlusAccess,
+} from "../../../lib/byteplusRtc";
 import { supabase } from "../../../lib/supabaseClient";
 
 export const PLACE_LIVE_CALL_HOST_TRACK_NAME = "meewav.call.return";
@@ -20,7 +21,7 @@ export const PLACE_LIVE_CALL_CONTACT_TRACK_NAME = "meewav.call.input";
 export const PLACE_LIVE_CALL_STREAM_NAME = "meewav.call";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
-const SAFE_IDENTITY_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:@-]{0,255}$/u;
+const SAFE_IDENTITY_PATTERN = /^[A-Za-z0-9_@.-]{1,128}$/u;
 
 export type PlaceLiveCallMediaRole = "host" | "contact";
 
@@ -33,9 +34,7 @@ export type PlaceLiveCallMediaStatus =
   | "disconnected"
   | "failed";
 
-export type PlaceLiveCallMediaAccess = {
-  token: string;
-  serverUrl: string;
+export type PlaceLiveCallMediaAccess = BytePlusAccess & {
   participantIdentity: string;
   peerIdentity: string;
   role: PlaceLiveCallMediaRole;
@@ -105,23 +104,6 @@ function parseAliasedUuid(
   return value;
 }
 
-function parseSecureLiveKitUrl(value: string | null) {
-  if (!value) throw new Error("Adresse de l’appel absente.");
-  let url: URL;
-  try {
-    url = new URL(value);
-  } catch {
-    throw new Error("Adresse de l’appel invalide.");
-  }
-  const loopback = url.hostname === "localhost"
-    || url.hostname === "127.0.0.1"
-    || url.hostname === "[::1]";
-  if (url.protocol !== "wss:" && !(url.protocol === "ws:" && loopback)) {
-    throw new Error("L’appel doit utiliser un transport sécurisé.");
-  }
-  return url.toString();
-}
-
 function normalizeRole(value: unknown): PlaceLiveCallMediaRole | null {
   if (value === "host") return "host";
   if (value === "contact" || value === "callee") return "contact";
@@ -140,6 +122,9 @@ export function parsePlaceLiveCallMediaAccess(value: unknown): PlaceLiveCallMedi
   const participantIdentity = optionalString(record, "participantIdentity");
   const peerIdentity = optionalString(record, "peerIdentity");
   const role = normalizeRole(record.role);
+  const appId = optionalString(record, "appId");
+  const roomName = optionalString(record, "roomName");
+  const expiresAt = optionalString(record, "expiresAt");
   const invitationId = parseAliasedUuid(
     record,
     "invitationId",
@@ -159,7 +144,8 @@ export function parsePlaceLiveCallMediaAccess(value: unknown): PlaceLiveCallMedi
     "Identifiant de la Room publique",
   );
 
-  if (!token || token.length < 32 || token.length > 32_768 || token.split(".").length !== 3) {
+  if (!appId || !/^[A-Za-z0-9_-]{1,128}$/.test(appId) || !token || token.length < 32 || token.length > 32_768
+    || !token.startsWith(`001${appId}`) || !/^[A-Za-z0-9+/=]+$/.test(token.slice(3 + appId.length))) {
     throw new Error("Jeton de l’appel invalide.");
   }
   if (!participantIdentity
@@ -170,10 +156,17 @@ export function parsePlaceLiveCallMediaAccess(value: unknown): PlaceLiveCallMedi
     throw new Error("Identité de l’appel invalide.");
   }
   if (!role) throw new Error("Rôle de l’appel invalide.");
+  if (!roomName || !/^mw-call-[A-Za-z0-9_.@-]{1,119}$/.test(roomName) || !expiresAt
+    || !Number.isFinite(Date.parse(expiresAt)) || Date.parse(expiresAt) <= Date.now()) throw new Error("Canal BytePlus privé invalide.");
+  if (record.canPublish !== true) throw new Error("Publication privée non autorisée.");
+  const peerRole = role === "host" ? "contact" : "host";
 
   return {
     token,
-    serverUrl: parseSecureLiveKitUrl(optionalString(record, "serverUrl")),
+    appId, roomName, expiresAt, roomId: publicRoomId, identity: participantIdentity, canPublish: true,
+    members: [{ identity: peerIdentity, role: peerRole, canPublish: true, canReceive: true,
+      audioTrackName: peerRole === "host" ? PLACE_LIVE_CALL_HOST_TRACK_NAME : PLACE_LIVE_CALL_CONTACT_TRACK_NAME,
+      metadata: { roomId: publicRoomId, liveCallInvitationId: invitationId, role: peerRole === "host" ? "phone_host" : "phone_contact" } }],
     participantIdentity,
     peerIdentity,
     role,
@@ -193,7 +186,11 @@ export async function requestPlaceLiveCallMediaAccess(
   const { data, error } = await client.functions.invoke("rooms-live-call-token", {
     body: { invitationId },
   });
-  if (error) throw new Error("Le transport privé de l’appel est indisponible.");
+  if (error) {
+    const response = (error as { context?: unknown }).context;
+    const denied = typeof Response !== "undefined" && response instanceof Response && [401, 403, 404, 410].includes(response.status);
+    throw Object.assign(new Error("Le transport BytePlus privé de l’appel est indisponible."), { accessDenied: denied });
+  }
   const access = parsePlaceLiveCallMediaAccess(data);
   if (access.invitationId !== invitationId && access.callId !== invitationId) {
     throw new Error("Le jeton reçu ne correspond pas à l’appel demandé.");
@@ -485,7 +482,7 @@ export class PlaceLiveCallMediaService {
     });
 
     try {
-      await room.connect(access.serverUrl, access.token, { autoSubscribe: true });
+      await room.connect(access.appId, access.token, { access, refreshAccess: () => this.requestAccess(access.invitationId), policyRefreshIntervalMs: 15_000 });
       if (!this.isCurrent(room, generation) || request !== this.lifecycleRequest) {
         await room.disconnect(false).catch(() => undefined);
         return false;

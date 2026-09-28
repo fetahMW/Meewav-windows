@@ -580,9 +580,9 @@ export default function MessagingPage() {
   }, [explicitDemoTarget, location.pathname, location.search, routeState]);
 
   useEffect(() => {
-    if (!liveEnabled || routeState.space !== "collabs" || !routeState.requestId) return;
-    if (liveCollaborations.status !== "ready") return;
-    const requested = liveCollaborations.items.find((item) => item.id === routeState.requestId);
+    if (routeState.space !== "collabs" || !routeState.requestId) return;
+    if (liveEnabled ? liveCollaborations.status !== "ready" : !explicitDemoTarget) return;
+    const requested = (liveEnabled ? liveCollaborations.items : globeCollabs).find((item) => item.id === routeState.requestId);
     if (!requested) return;
     const signature = `${location.pathname}${location.search}`;
     if (processedCollaborationRouteRef.current === signature) return;
@@ -591,6 +591,8 @@ export default function MessagingPage() {
     setSelectedRailKey(`collabs:${requested.id}`);
     setOpenCollabRequest({ token, id: requested.id });
   }, [
+    explicitDemoTarget,
+    globeCollabs,
     liveCollaborations.items,
     liveCollaborations.status,
     liveEnabled,

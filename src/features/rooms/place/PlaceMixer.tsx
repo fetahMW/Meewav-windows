@@ -1,7 +1,9 @@
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import "./place-mixer-android-fx.css";
+import "./place-mixer-pro.css";
 import { useViewerMixer } from "./ViewerMixerContext";
 import type { ViewerFader, ViewerInput } from "./viewerSendAudio";
+import PlaceFxFader from './PlaceFxFader';
 import "./viewer-mixer-routing.css";
 import { useWaveViewerListening } from "../wave-viewer/WaveViewerListening";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
@@ -18,6 +20,7 @@ import {
   ListMusic,
   Mic,
   MicOff,
+  Music2,
   Pause,
   Play,
   Radio,
@@ -54,12 +57,13 @@ import PlaceMixerAudioPlayer, { type PlaceMixerProgramAudioTransport } from "./P
 import PlaceTime from "./PlaceTime";
 import PlacePluginManager from "./PlacePluginManager";
 import { isNativePitchProvider } from "./placeAudioRouting";
-import { PLACE_MIXER_FALLBACK_COVERS } from "./placeMixerCoverCatalog";
 import { useStudioToolsLayout } from "./StudioToolsLayoutProvider";
 
 type PlaceMixerProps = {
   room: PlaceRoomState;
   mode: "host" | "guest" | "viewer";
+  /** Cage audience: local listening only, until admitted as a performer. */
+  listenerOnly?: boolean;
   currentUserId?: string | null;
   view: PlaceMixerView;
   onView: (view: PlaceMixerView) => void;
@@ -220,6 +224,7 @@ function FxAccordion({
   onToggle,
   headerAction,
   children,
+  tabbed = false,
 }: {
   id: FxAccordionId;
   title: string;
@@ -231,6 +236,7 @@ function FxAccordion({
   onToggle: () => void;
   headerAction?: ReactNode;
   children: ReactNode;
+  tabbed?: boolean;
 }) {
   const panelId = `place-fx-accordion-${id}`;
   const statusId = `place-fx-accordion-${id}-status`;
@@ -252,10 +258,14 @@ function FxAccordion({
     </button>
   );
   return (
-    <section className={`place-fx-accordion${open ? " is-open" : ""}`} data-section={id}>
-      {headerAction ? <div className="place-fx-accordion__header">{trigger}{headerAction}</div> : trigger}
+    <section className={tabbed ? "place-fx-pro-panel" : `place-fx-accordion${open ? " is-open" : ""}`} data-section={id} hidden={tabbed && !open}>
+      {tabbed ? <header className="place-fx-pro-panel__heading">
+        <span aria-hidden="true">{icon}</span>
+        <div><h3>{title}</h3><p>{headerAction && status ? status : description}</p></div>
+        {headerAction ?? <small>{status}</small>}
+      </header> : headerAction ? <div className="place-fx-accordion__header">{trigger}{headerAction}</div> : trigger}
       {status && statusLive ? <span id={statusId} className="sr-only" role="status" aria-live="polite" aria-atomic="true">{status}</span> : null}
-      {open ? <div className="place-fx-accordion__panel" id={panelId}>{children}</div> : null}
+      {open ? <div className={tabbed ? "place-fx-pro-panel__body" : "place-fx-accordion__panel"} id={panelId}>{children}</div> : null}
     </section>
   );
 }
@@ -286,21 +296,13 @@ function channelStatus(channel: PlaceMixerChannel) {
   return "";
 }
 
-function randomMixerCover(previous?: string) {
-  const covers = previous
-    ? PLACE_MIXER_FALLBACK_COVERS.filter((cover) => cover !== previous)
-    : PLACE_MIXER_FALLBACK_COVERS;
-  return covers[Math.floor(Math.random() * covers.length)] ?? PLACE_MIXER_FALLBACK_COVERS[0];
-}
-
-function SourceVisual({ channel, participant, room, musicCover }: {
+function SourceVisual({ channel, participant, room }: {
   channel: PlaceMixerChannel;
   participant?: PlaceParticipant;
   room: PlaceRoomState;
-  musicCover?: string;
 }) {
   if (channel.kind === "audio") {
-    return <span className="place-volume-row__source-icon is-music" aria-hidden="true"><img src={musicCover ?? PLACE_MIXER_FALLBACK_COVERS[0]} alt="" /></span>;
+    return <span className="place-volume-row__source-icon is-music" aria-hidden="true"><Music2 /></span>;
   }
   if (channel.kind === "master") {
     return <span className="place-volume-row__source-icon is-master" aria-hidden="true"><Radio /></span>;
@@ -366,7 +368,6 @@ function VolumeRow({
   isPlaying,
   onTogglePlayback,
   onOpenPlaylist,
-  musicCover,
   onConfigure,
   configureLabel,
   sourceStateLabel,
@@ -386,7 +387,6 @@ function VolumeRow({
   isPlaying?: boolean;
   onTogglePlayback?: () => void;
   onOpenPlaylist?: () => void;
-  musicCover?: string;
   onConfigure?: () => void;
   configureLabel?: string;
   sourceStateLabel?: string;
@@ -421,7 +421,7 @@ function VolumeRow({
 
   return (
     <article className={`place-volume-row${isMaster ? " is-master" : ""}${channel.kind === "audio" ? " is-music-channel" : channel.kind === "master" ? " is-master-channel" : " is-voice-channel"} is-${signalState}${level >= 0.82 && signalState !== "clipping" ? " is-near-peak" : ""}${channel.isMuted ? " is-muted" : ""}`} style={style}>
-      <SourceVisual channel={channel} participant={participant} room={room} musicCover={musicCover} />
+      <SourceVisual channel={channel} participant={participant} room={room} />
       <div className="place-volume-row__identity">
         <strong title={channel.detail}>{channel.label}</strong>
         {channel.id.startsWith("viewer-") ? <small>{sourceStateLabel ?? (channel.id === "viewer-live-return" ? "Écoute locale" : channel.signalState === "disconnected" ? "Source indisponible" : channel.signalState === "connecting" ? "Reconnexion…" : channel.isMuted ? "Muet" : channel.id === "viewer-master" ? "Mix personnel" : "Dans le Master")}</small> : null}
@@ -474,7 +474,7 @@ function VolumeRow({
   );
 }
 
-function EffectCard({ title, enabled, value, visualValue = value, valueLabel, lowLabel, highLabel, sliderLabel, disabled, onToggle, onValue }: {
+function EffectCard({ title, enabled, value, visualValue = value, valueLabel, lowLabel, highLabel, sliderLabel, disabled, onToggle, onValue, vertical = false }: {
   title: string;
   enabled: boolean;
   value: number;
@@ -486,7 +486,10 @@ function EffectCard({ title, enabled, value, visualValue = value, valueLabel, lo
   disabled: boolean;
   onToggle: () => void;
   onValue: (value: number) => void;
+  vertical?: boolean;
 }) {
+  if (vertical) return <PlaceFxFader label={title} sliderLabel={sliderLabel ?? `Intensité ${title}`} value={value} valueLabel={valueLabel}
+    lowLabel={lowLabel} highLabel={highLabel} disabled={disabled} enabled={enabled} onToggle={onToggle} onChange={onValue} />;
   const visualPercentage = Math.round(clampUnit(visualValue) * 10_000) / 100;
   return (
     <article className={`place-fx-card${enabled ? " is-active" : ""}${disabled ? " is-readonly" : ""}`} style={{ "--fx-value": `${visualPercentage}%` } as CSSProperties}>
@@ -715,7 +718,8 @@ function CanonicalAutotuneControls({
   onTune: (key: string, scale: PlaceMusicalScale) => void;
   onVocal: (patch: Partial<PlaceRoomState["personalVocal"]>) => void;
 }) {
-  const androidEngine = useRuntime().isDesktop && pitchProvider === "meewav_test";
+  const desktop = useRuntime().isDesktop;
+  const androidEngine = desktop && pitchProvider === "meewav_test";
   const providerSelected = pitchProvider !== "none";
   const enableSelectedProvider = providerSelected ? { tuneEnabled: true, enabled: true } : {};
   const [openSelector, setOpenSelector] = useState<AutotuneSelectorId | null>(null);
@@ -755,7 +759,14 @@ function CanonicalAutotuneControls({
           onChange={(scale) => onTune(room.personalVocal.tuneKey, scale as PlaceMusicalScale)}
         />
       </div>
-      <div className="place-autotune-controls__ranges">
+      {desktop ? <div className="place-pro-faders is-correction" role="group" aria-label="Vitesse et humanisation">
+        <PlaceFxFader label="Retune speed" sliderLabel="Vitesse de correction" value={room.personalVocal.tuneSpeed}
+          valueLabel={`${Math.round(room.personalVocal.tuneSpeed * 100)} %`} lowLabel="Naturel" highLabel="Rapide" disabled={!editable}
+          onChange={tuneSpeed => onVocal({ tuneSpeed, ...enableSelectedProvider })} />
+        <PlaceFxFader label="Humanisation" value={room.personalVocal.tuneHumanize}
+          valueLabel={`${Math.round(room.personalVocal.tuneHumanize * 100)} %`} lowLabel="Précis" highLabel="Humain" disabled={!editable || !humanizeSupported}
+          onChange={value => onVocal({ tuneSmooth: value, tuneHumanize: value, ...enableSelectedProvider })} />
+      </div> : <div className="place-autotune-controls__ranges">
         <DetailRange
           label="Vitesse de correction"
           value={Math.round(room.personalVocal.tuneSpeed * 100)}
@@ -785,9 +796,8 @@ function CanonicalAutotuneControls({
             onVocal({ tuneSmooth: mapped, tuneHumanize: mapped, ...enableSelectedProvider });
           }}
         />
-      </div>
-      {androidEngine ? <p>Le mode Simple reprend la correction fixe Android. Clé, gamme et réverb restent réglables.</p> : null}
-      {providerSelected && !humanizeSupported ? <p>Humanisation reste visible pour conserver la même interface, mais ce plugin ne publie pas de paramètre compatible.</p> : null}
+      </div>}
+      {providerSelected && !humanizeSupported ? <p>L’humanisation n’est pas disponible avec ce plugin.</p> : null}
       <div className="place-autotune-controls__engine" aria-busy={engineBusy} title={engineError ?? "Vos réglages sont conservés quand vous changez de moteur."}>
         <AutotunePremiumSelect
           id="engine"
@@ -817,6 +827,7 @@ function CanonicalAutotuneControls({
 export default function PlaceMixer({
   room,
   mode,
+  listenerOnly = false,
   currentUserId,
   view,
   onView,
@@ -849,8 +860,9 @@ export default function PlaceMixer({
   const roomPresentation = useRoomPresentation();
   const toolsLayout = useStudioToolsLayout();
   const showRoomTools = toolsVisible ?? toolsLayout?.toolsVisible ?? false;
-  const classroomPlayerCollapsible = roomPresentation.id === "classe" || roomPresentation.id === "loge";
-  const [classroomPlayerCollapsed, setClassroomPlayerCollapsed] = useState(false);
+  const classroomPlayerCollapsible = (roomPresentation.id === "classe" && mode === "host") || roomPresentation.id === "loge";
+  const [classroomPlayerCollapsed, setClassroomPlayerCollapsed] = useState(roomPresentation.id === "classe" && mode === "host");
+  useEffect(() => { setClassroomPlayerCollapsed(roomPresentation.id === "classe" && mode === "host"); }, [room.id, roomPresentation.id, mode]);
   const desktopFx = useRuntime().isDesktop;
   const [fxPro, setFxPro] = useState(false);
   const [simpleSelector, setSimpleSelector] = useState<AutotuneSelectorId | null>(null);
@@ -858,8 +870,6 @@ export default function PlaceMixer({
   const [autotuneStartError, setAutotuneStartError] = useState<string | null>(null);
   const [autotunePending, setAutotunePending] = useState(false);
   const [providerSelectionPending, setProviderSelectionPending] = useState(false);
-  const [musicCover, setMusicCover] = useState(() => randomMixerCover());
-  const musicCoverScopeRef = useRef(`${room.id}|${programAudio?.musicGeneration ?? ""}`);
   const autotunePendingRef = useRef(false);
   const autotuneRequestRef = useRef(0);
   const providerSelectionPendingRef = useRef(false);
@@ -933,13 +943,6 @@ export default function PlaceMixer({
     setAutotuneStartError(null);
   }, [room.id]);
 
-  useEffect(() => {
-    const nextScope = `${room.id}|${programAudio?.musicGeneration ?? ""}`;
-    if (musicCoverScopeRef.current === nextScope) return;
-    musicCoverScopeRef.current = nextScope;
-    setMusicCover((current) => randomMixerCover(current));
-  }, [programAudio?.musicGeneration, room.id]);
-
   useEffect(() => () => {
     autotuneRequestRef.current += 1;
     autotunePendingRef.current = false;
@@ -1006,10 +1009,12 @@ export default function PlaceMixer({
     onVocal({ tuneEnabled: true, enabled: true });
   };
   const [previewMusicLevel, setPreviewMusicLevel] = useState(0);
+  const [listenerAudio, setListenerAudio] = useState({ gain: .75, muted: false });
   const listening = useWaveViewerListening();
   const personalMix = useViewerMixer();
-  const personalMode = mode !== "host" && Boolean(personalMix);
-  const returnChannel: PlaceMixerChannel = { id:"viewer-live-return", label:"Retour du live", detail:"Règle le volume de la Room dans votre écoute.", kind:"master", gain:listening?.returnVolume ?? 1, level:room.source === "demo" ? (room.channels.find(channel => channel.kind === "master")?.level ?? 0) * (listening?.returnVolume ?? 1) : 0, isMuted:listening?.returnMuted ?? false, isSolo:false, signalState:"silent", accent:"#a9b6c8" };
+  const personalMode = !listenerOnly && mode !== "host" && Boolean(personalMix);
+  const showAudioPlayer = (roomPresentation.id !== "classe" || mode === "host") && (mode !== "guest" || personalMode || listenerOnly);
+  const returnChannel: PlaceMixerChannel = { id:"viewer-live-return", label:listenerOnly ? "Direct" : "Retour du live", detail:"Règle le volume de la Room dans votre écoute.", kind:"master", gain:listening?.returnVolume ?? 1, level:room.source === "demo" ? (room.channels.find(channel => channel.kind === "master")?.level ?? 0) * (listening?.returnVolume ?? 1) : 0, isMuted:listening?.returnMuted ?? false, isSolo:false, signalState:"silent", accent:"#a9b6c8" };
   const viewerChannels: PlaceMixerChannel[] = ([
     ["voice", "Ma voix", "Règle votre voix dans votre mix envoyé.", "guest"],
     ["music", "Musique", "Règle votre source musicale dans votre mix.", "audio"],
@@ -1024,9 +1029,10 @@ export default function PlaceMixer({
       isMuted: settings.muted, isSolo: false, signalState: settings.muted ? "muted" : !available ? "disconnected" : level >= 1 ? "clipping" : level > .001 ? "active" : "silent", accent: "#b48cff" };
   });
   const ownMix = personalMode || mode === "viewer";
-  const changeGain = ownMix ? (id: string, gain: number) => personalMix?.setGain(id.replace("viewer-", "") as ViewerFader, gain) : onGain;
-  const changeMute = ownMix ? (id: string) => personalMix?.toggleMute(id.replace("viewer-", "") as ViewerFader) : onMute;
+  const changeGain = listenerOnly ? (_id: string, gain: number) => setListenerAudio(previous => ({ ...previous, gain })) : ownMix ? (id: string, gain: number) => personalMix?.setGain(id.replace("viewer-", "") as ViewerFader, gain) : onGain;
+  const changeMute = listenerOnly ? (_id: string) => setListenerAudio(previous => ({ ...previous, muted: !previous.muted })) : ownMix ? (id: string) => personalMix?.toggleMute(id.replace("viewer-", "") as ViewerFader) : onMute;
   const orderedSources = useMemo(() => {
+    if (listenerOnly) return [{ ...viewerChannels.find(channel => channel.id === "viewer-music")!, label: "Audio", detail: "Volume du lecteur dans ton écoute privée.", gain: listenerAudio.gain, isMuted: listenerAudio.muted, level: previewMusicLevel }];
     if (ownMix) return viewerChannels.filter(channel => channel.kind !== "master");
     const host = room.channels.filter((channel) => channel.kind === "microphone");
     const availableGuests = [...room.participants, ...room.queue]
@@ -1041,9 +1047,11 @@ export default function PlaceMixer({
     const ownVoice = allGuestChannels.filter((channel) => channel.participantId === currentUserId);
     const ownMusic = music.filter((channel) => channel.participantId === currentUserId);
     return [...ownVoice, ...ownMusic];
-  }, [currentUserId, mode, room.channels, room.participants, room.queue, viewerChannels, ownMix]);
-  const master = ownMix ? viewerChannels.find(channel => channel.kind === "master") : mode !== "guest" ? room.channels.find((channel) => channel.kind === "master") : undefined;
-  const ownVocalSources = orderedSources.filter((channel) => (
+  }, [currentUserId, mode, room.channels, room.participants, room.queue, viewerChannels, ownMix, listenerOnly, listenerAudio, previewMusicLevel]);
+  const master = listenerOnly ? undefined : ownMix ? viewerChannels.find(channel => channel.kind === "master") : mode !== "guest" ? room.channels.find((channel) => channel.kind === "master") : undefined;
+  // A Cage listener can prepare their own effects before being invited. The
+  // public faders and routing remain in listener mode until participation.
+  const ownVocalSources = (listenerOnly ? viewerChannels : orderedSources).filter((channel) => (
     mode === "host"
       ? channel.kind === "microphone"
       : channel.kind === "guest" && channel.participantId === currentUserId
@@ -1051,7 +1059,7 @@ export default function PlaceMixer({
   const selectedChannel = ownVocalSources[0];
   const selectedParticipant = selectedChannel ? participantFor(room, selectedChannel) : undefined;
   const fxEditable = Boolean(selectedChannel);
-  const activeView: PlaceMixerView = (mode === "guest" && (view === "twists" || view === "time") || mode === "viewer" && view === "time") ? "volumes" : view;
+  const activeView: PlaceMixerView = listenerOnly && view !== "voice_fx" || (mode === "guest" && (view === "twists" || view === "time") || mode === "viewer" && view === "time") ? "volumes" : view;
   const usableNativePlugins = useMemo(() => pluginInventory
     .filter((plugin): plugin is AudioEnginePlugin & { id: PlaceNativePitchProvider } => (
       isNativePitchProvider(plugin.id as PlacePitchProvider) && isDetectedNativePlugin(plugin)
@@ -1102,38 +1110,40 @@ export default function PlaceMixer({
   };
 
   return (
-    <div className={`place-mixer${mode !== "guest" || personalMode ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
+    <div className={`place-mixer${showAudioPlayer ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
       {toolsLayout ? <><div className="wave-tools-nav" ref={toolsLayout.setNav} hidden={!showRoomTools} /><div className="wave-tools-body" ref={toolsLayout.setBody} hidden={!showRoomTools} /></> : null}
       <nav className={`place-mixer__subnav${mode !== "guest" ? " has-twists" : ""}`} aria-label="Sections du mixeur">
         <button type="button" className={activeView === "volumes" ? "is-active" : ""} onClick={() => onView("volumes")}><SlidersHorizontal aria-hidden="true" /> Volumes</button>
         <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> FX voix</button>
-        {mode !== "guest" ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> Pads</button> : null}
+        {mode !== "guest" && !listenerOnly ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> Pads</button> : null}
         {mode === "host" ? <button type="button" className={activeView === "time" ? "is-active" : ""} onClick={() => onView("time")}><Timer aria-hidden="true" /> Time</button> : null}
       </nav>
 
-      {mode !== "guest" || personalMode ? (
+      {showAudioPlayer ? (
         <PlaceMixerAudioPlayer
-          key={room.id}
+          key={`${room.id}:${listenerOnly ? "listener" : "performer"}`}
+          privateOnly={listenerOnly}
           roomId={room.id}
           ownerId={currentUserId ?? room.host.id ?? null}
           queueParticipants={room.queue}
           musicGain={personalMode ? 1 : orderedSources.find((channel) => channel.kind === "audio")?.gain ?? 0.75}
           masterGain={personalMode ? 1 : master?.gain ?? 1}
           publicMusicMuted={!personalMode && ((orderedSources.find((channel) => channel.kind === "audio")?.isMuted ?? false) || (master?.isMuted ?? false))}
-          onPreviewPrepare={personalMode ? async () => true : onAudioPreview}
-          onPreviewMetadata={personalMode ? async () => true : onAudioPreviewMetadata}
-          onRouteChange={personalMode ? async () => true : onAudioRoute}
-          onPlaybackStateChange={personalMode ? async () => true : onAudioPlaybackState}
-          programAudio={personalMode ? personalMix!.musicTransport : programAudio}
+          onPreviewPrepare={personalMode || listenerOnly ? async () => true : onAudioPreview}
+          onPreviewMetadata={personalMode || listenerOnly ? async () => true : onAudioPreviewMetadata}
+          onRouteChange={listenerOnly ? async (route) => route === "preview" : personalMode ? async () => true : onAudioRoute}
+          onPlaybackStateChange={personalMode || listenerOnly ? async () => true : onAudioPlaybackState}
+          programAudio={listenerOnly ? undefined : personalMode ? personalMix!.musicTransport : programAudio}
           personalSend={personalMode}
-          onPreviewLevel={personalMode ? setPreviewMusicLevel : undefined}
+          onPreviewLevel={personalMode || listenerOnly ? setPreviewMusicLevel : undefined}
           classroomCollapsible={classroomPlayerCollapsible}
+          classroomInitiallyCollapsed={roomPresentation.id === "classe" && mode === "host"}
           roomLabel={roomPresentation.label}
           onClassroomCollapsedChange={setClassroomPlayerCollapsed}
         />
       ) : null}
 
-      {mode !== "guest" ? <PlaceTwists key={`pads-${room.id}`} active={activeView === "twists"} /> : null}
+      {mode !== "guest" && !listenerOnly ? <PlaceTwists key={`pads-${room.id}`} active={activeView === "twists"} /> : null}
 
       {activeView === "volumes" ? (
         <section className="place-volume-view">
@@ -1141,7 +1151,7 @@ export default function PlaceMixer({
             {personalMode ? <small className="viewer-mix-section">ÉCOUTE PERSONNELLE</small> : null}
             {mode !== "host" && listening ? <VolumeRow channel={returnChannel} room={room} onGain={(_id,gain) => listening.setReturnVolume(gain)} onMute={() => listening.setReturnMuted(!listening.returnMuted)} onCamera={onCamera} canEditGain canEditMute cameraControl="none" /> : null}
             {personalMode ? <small className="viewer-mix-section">MES SOURCES</small> : null}
-            {personalMix?.error ? <p className="viewer-mix-error" role="alert">{personalMix.error}</p> : null}
+            {!listenerOnly && personalMix?.error ? <p className="viewer-mix-error" role="alert">{personalMix.error}</p> : null}
             {orderedSources.map((channel) => {
               const permissions = permissionsFor(channel);
               const participant = participantFor(room, channel);
@@ -1157,21 +1167,21 @@ export default function PlaceMixer({
                   : mode === "host"
                     ? "host"
                     : "none";
-              const stateLabel = personalMode && channel.id === "viewer-music" && previewMusicLevel > 0 ? "Préécoute locale" : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "permission-denied" ? "Autorisation refusée" : personalMix!.systemState === "reconnecting" ? "Sélection de source…" : personalMix!.engine.inputState("system") === "disconnected" || personalMix!.systemState === "disconnected" ? "Déconnecté" : undefined : personalMode && channel.id === "viewer-voice" && personalMix!.voiceStatus === "requesting_permission" ? "Autorisation micro…" : undefined;
-              return <VolumeRow key={channel.id} sourceStateLabel={stateLabel} onConfigure={personalMode && channel.id === "viewer-voice" ? () => void personalMix!.prepareVoice().catch(() => undefined) : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "active" ? personalMix!.stopSystem : () => void personalMix!.configureSystem() : undefined} configureLabel={channel.id === "viewer-system" && personalMix?.systemState === "active" ? "Arrêter la capture du son du PC" : `Configurer ${channel.label}`} channel={channel} room={room} onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={permissions.canEditGain} canEditMute={permissions.canEditMute} hostMuteControl={mode === "host" && channel.kind === "guest"} meterSuppressed={master?.isMuted === true} meterStream={mode === "host" && channel.kind === "microphone" ? hostVoiceMeterStream : null} cameraControl={cameraControl} musicCover={channel.kind === "audio" && channel.id !== "viewer-system" ? musicCover : undefined} onOpenPlaylist={channel.kind === "audio" && channel.id !== "viewer-system" ? () => window.dispatchEvent(new CustomEvent("meewav:mixer-playlist-open", { detail: { roomId: room.id } })) : undefined} />;
+              const stateLabel = listenerOnly ? "Écoute privée" : personalMode && channel.id === "viewer-music" && previewMusicLevel > 0 ? "Préécoute locale" : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "permission-denied" ? "Autorisation refusée" : personalMix!.systemState === "reconnecting" ? "Sélection de source…" : personalMix!.engine.inputState("system") === "disconnected" || personalMix!.systemState === "disconnected" ? "Déconnecté" : undefined : personalMode && channel.id === "viewer-voice" && personalMix!.voiceStatus === "requesting_permission" ? "Autorisation micro…" : undefined;
+              return <VolumeRow key={channel.id} sourceStateLabel={stateLabel} onConfigure={personalMode && channel.id === "viewer-voice" ? () => void personalMix!.prepareVoice().catch(() => undefined) : personalMode && channel.id === "viewer-system" ? personalMix!.systemState === "active" ? personalMix!.stopSystem : () => void personalMix!.configureSystem() : undefined} configureLabel={channel.id === "viewer-system" && personalMix?.systemState === "active" ? "Arrêter la capture du son du PC" : `Configurer ${channel.label}`} channel={channel} room={room} onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={permissions.canEditGain} canEditMute={permissions.canEditMute} hostMuteControl={mode === "host" && channel.kind === "guest"} meterSuppressed={master?.isMuted === true} meterStream={mode === "host" && channel.kind === "microphone" ? hostVoiceMeterStream : null} cameraControl={cameraControl} onOpenPlaylist={channel.kind === "audio" && channel.id !== "viewer-system" ? () => window.dispatchEvent(new CustomEvent("meewav:mixer-playlist-open", { detail: { roomId: room.id } })) : undefined} />;
             })}
           </div>
           {master ? <div className="place-master-dock" data-sending={personalMix ? ["En scène", "Avec le host"].includes(personalMix.publication) && !personalMix.levels.master.muted : undefined}><span className="place-master-dock__label">{ownMix ? "ENVOI VERS LE HOST" : "SORTIE PUBLIQUE"} <em><i aria-hidden="true" />{ownMix ? personalMix?.publication ?? "Préparation locale" : "ACTIVE"}</em></span>{personalMix && personalMix.meters.master >= 1 ? <p className="viewer-mix-error" role="status">Master trop fort</p> : null}<VolumeRow channel={master} room={room} isMaster onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={ownMix || room.source === "demo"} canEditMute cameraControl="none" /></div> : null}
         </section>
       ) : activeView === "twists" ? null : activeView === "time" ? (
-        <PlaceTime />
+        <PlaceTime ownerId={currentUserId ?? room.host.id ?? null} />
       ) : (
         <section className={`place-fx-view is-accordion${desktopFx ? " is-android-fx" : ""}`}>
           {desktopFx ? <>
             <div className="android-fx-toolbar">
               <div role="group" aria-label="Mode des effets voix">
                 <button type="button" aria-pressed={!fxPro} onClick={() => setFxPro(false)}>Simple</button>
-                <button type="button" aria-pressed={fxPro} onClick={() => setFxPro(true)}>Pro</button>
+                <button type="button" aria-pressed={fxPro} onClick={() => { setFxPro(true); setOpenFxSection((current) => current ?? "autotune"); }}>Pro</button>
               </div>
               <button type="button" className="android-fx-monitor" aria-label="Retour des effets au casque" aria-pressed={room.personalVocal.monitoring} disabled={engineSelectionBusy} onClick={onToggleMonitoring}><Headphones aria-hidden="true" /></button>
             </div>
@@ -1191,8 +1201,14 @@ export default function PlaceMixer({
               </section>
             </div> : null}
           </> : null}
-          <div className="place-fx-accordion-stack" hidden={desktopFx && !fxPro}>
+          <div className={desktopFx ? "place-fx-pro" : "place-fx-accordion-stack"} hidden={desktopFx && !fxPro}>
+            {desktopFx ? <nav className="place-fx-pro__nav" aria-label="Réglages Pro">
+              <button type="button" aria-pressed={openFxSection === "autotune"} onClick={() => setOpenFxSection("autotune")}><AudioWaveform aria-hidden="true" />Correction</button>
+              <button type="button" aria-pressed={openFxSection === "effects"} onClick={() => setOpenFxSection("effects")}><SlidersHorizontal aria-hidden="true" />Effets</button>
+              <button type="button" aria-label="Plugins du PC" aria-pressed={openFxSection === "plugins"} onClick={() => setOpenFxSection("plugins")}><Settings2 aria-hidden="true" />Plugins</button>
+            </nav> : null}
             <FxAccordion
+              tabbed={desktopFx}
               id="effects"
               title="Effets voix"
               description="Réverb, délai, compression et EQ"
@@ -1201,20 +1217,20 @@ export default function PlaceMixer({
               open={openFxSection === "effects"}
               onToggle={() => toggleFxSection("effects")}
             >
-              <div className="place-fx-effect-list" role="group" aria-label="Réglages des effets voix">
-                <EffectCard title="Réverb" enabled={fxEditable && room.personalVocal.reverbEnabled} value={fxEditable ? toVisualPosition(room.personalVocal.reverbAmount, 0.18, 0.25) : 0} valueLabel={fxEditable ? `${Math.round(room.personalVocal.reverbAmount * 100)} %` : "Indisponible"} lowLabel="Sec" highLabel="Ambiant" sliderLabel="Mix réverb" disabled={!fxEditable} onToggle={() => {
+              <div className={desktopFx ? "place-pro-faders" : "place-fx-effect-list"} role="group" aria-label="Réglages des effets voix">
+                <EffectCard vertical={desktopFx} title="Réverb" enabled={fxEditable && room.personalVocal.reverbEnabled} value={fxEditable ? toVisualPosition(room.personalVocal.reverbAmount, 0.18, 0.25) : 0} valueLabel={fxEditable ? `${Math.round(room.personalVocal.reverbAmount * 100)} %` : "Indisponible"} lowLabel="Sec" highLabel="Ambiant" sliderLabel="Mix réverb" disabled={!fxEditable} onToggle={() => {
                   const next = !room.personalVocal.reverbEnabled;
                   onVocal({ reverbEnabled: next, enabled: room.personalVocal.tuneEnabled || next || room.personalVocal.compEnabled || room.personalVocal.delayEnabled || room.personalVocal.eqEnabled });
                 }} onValue={(value) => onVocal({ reverbAmount: fromVisualPosition(value, 0.18, 0.25), reverbEnabled: true, enabled: true })} />
-                <EffectCard title="Délai" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.delayEnabled} value={toVisualPosition(clampUnit((room.personalVocal.delayTimeMs - 100) / 900), 20 / 900, 0.027)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.delayTimeMs)} ms` : "Indisponible"} lowLabel="Court" highLabel="Long" sliderLabel="Durée du délai" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
+                <EffectCard vertical={desktopFx} title="Délai" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.delayEnabled} value={toVisualPosition(clampUnit((room.personalVocal.delayTimeMs - 100) / 900), 20 / 900, 0.027)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.delayTimeMs)} ms` : "Indisponible"} lowLabel="Court" highLabel="Long" sliderLabel="Durée du délai" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
                   const next = !room.personalVocal.delayEnabled;
                   onVocal({ delayEnabled: next, enabled: room.personalVocal.tuneEnabled || room.personalVocal.reverbEnabled || room.personalVocal.compEnabled || next || room.personalVocal.eqEnabled });
                 }} onValue={(value) => onVocal({ delayTimeMs: Math.round(100 + fromVisualPosition(value, 20 / 900, 0.027) * 900), delayEnabled: true, enabled: true })} />
-                <EffectCard title="Compression" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.compEnabled} value={!browserOnlyFxDisabled && fxEditable ? toVisualPosition(room.personalVocal.compAmount, 0.62, 0.567) : 0} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.compAmount * 100)} %` : "Indisponible"} lowLabel="Doux" highLabel="Fort" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
+                <EffectCard vertical={desktopFx} title="Compression" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.compEnabled} value={!browserOnlyFxDisabled && fxEditable ? toVisualPosition(room.personalVocal.compAmount, 0.62, 0.567) : 0} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${Math.round(room.personalVocal.compAmount * 100)} %` : "Indisponible"} lowLabel="Doux" highLabel="Fort" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
                   const next = !room.personalVocal.compEnabled;
                   onVocal({ compEnabled: next, enabled: room.personalVocal.tuneEnabled || room.personalVocal.reverbEnabled || room.personalVocal.delayEnabled || room.personalVocal.eqEnabled || next });
                 }} onValue={(value) => onVocal({ compAmount: fromVisualPosition(value, 0.62, 0.567), compEnabled: true, enabled: true })} />
-                <EffectCard title="EQ" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.eqEnabled} value={toVisualPosition(clampUnit((EQ_GAIN_BY_PRESET[room.personalVocal.preset] + 12) / 27), 15 / 27, 0.558)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${EQ_GAIN_BY_PRESET[room.personalVocal.preset] >= 0 ? "+" : ""}${EQ_GAIN_BY_PRESET[room.personalVocal.preset]} dB` : "Indisponible"} lowLabel="Grave" highLabel="Clair" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
+                <EffectCard vertical={desktopFx} title="EQ" enabled={!browserOnlyFxDisabled && fxEditable && room.personalVocal.eqEnabled} value={toVisualPosition(clampUnit((EQ_GAIN_BY_PRESET[room.personalVocal.preset] + 12) / 27), 15 / 27, 0.558)} valueLabel={browserOnlyFxDisabled ? "Moteur Web requis" : fxEditable ? `${EQ_GAIN_BY_PRESET[room.personalVocal.preset] >= 0 ? "+" : ""}${EQ_GAIN_BY_PRESET[room.personalVocal.preset]} dB` : "Indisponible"} lowLabel="Grave" highLabel="Clair" disabled={!fxEditable || browserOnlyFxDisabled} onToggle={() => {
                   const next = !room.personalVocal.eqEnabled;
                   onVocal({ eqEnabled: next, enabled: room.personalVocal.tuneEnabled || room.personalVocal.reverbEnabled || room.personalVocal.compEnabled || room.personalVocal.delayEnabled || next });
                 }} onValue={(value) => onVocal({ preset: nearestEqPreset(fromVisualPosition(value, 15 / 27, 0.558)), eqEnabled: true, enabled: true })} />
@@ -1222,9 +1238,10 @@ export default function PlaceMixer({
             </FxAccordion>
 
             <FxAccordion
+              tabbed={desktopFx}
               id="autotune"
               title="Autotune"
-              description="Tonalité, gamme, vitesse et humanisation"
+              description={desktopFx && testPitchSelected ? "Accorde ta voix à ton morceau" : "Tonalité, gamme, vitesse et humanisation"}
               status={openFxSection === "autotune" ? autotuneRuntimeLabel : autotuneEnabled ? "Actif" : "Inactif"}
               statusLive
               icon={<AutotuneSparkleIcon />}
@@ -1233,7 +1250,7 @@ export default function PlaceMixer({
               headerAction={(
                 <button
                   type="button"
-                  className={`place-autotune-toggle${autotuneEnabled ? " is-active" : ""}`}
+                  className={desktopFx ? "place-fx-pro__power" : `place-autotune-toggle${autotuneEnabled ? " is-active" : ""}`}
                   hidden={openFxSection !== "autotune"}
                   tabIndex={openFxSection === "autotune" ? undefined : -1}
                   aria-label="Activer ou bypasser l’Autotune"
@@ -1243,7 +1260,7 @@ export default function PlaceMixer({
                   disabled={openFxSection !== "autotune" || !fxEditable || engineSelectionBusy}
                   onClick={() => void toggleAutotune()}
                 >
-                  {autotuneEnabled ? "ON" : "OFF"}
+                  {desktopFx ? <Power aria-hidden="true" /> : autotuneEnabled ? "ON" : "OFF"}
                 </button>
               )}
             >
@@ -1263,6 +1280,7 @@ export default function PlaceMixer({
 
 
             <FxAccordion
+              tabbed={desktopFx}
               id="plugins"
               title="Plugins du PC"
               description="Connectez vos plugins audio à MeeWav"
@@ -1282,7 +1300,7 @@ export default function PlaceMixer({
               />
             </FxAccordion>
 
-            <header className="place-fx-view__voice is-compact">
+            {!desktopFx ? <header className="place-fx-view__voice is-compact">
               {selectedParticipant ? <img src={selectedParticipant.profile.avatarUrl} alt="" /> : <span><Mic aria-hidden="true" /></span>}
               <div><small>RETOUR CASQUE</small><strong>{selectedParticipant?.profile.displayName || room.currentUserProfile?.displayName || room.host.displayName}</strong></div>
               <MeewavTooltip content="Ta voix reste audible : ce bouton ajoute uniquement les effets.">
@@ -1291,7 +1309,7 @@ export default function PlaceMixer({
                   <span className="place-fx-view__monitor-switch" aria-hidden="true"><b>{room.personalVocal.monitoring ? "ON" : "OFF"}</b><i /></span>
                 </button>
               </MeewavTooltip>
-            </header>
+            </header> : null}
           </div>
         </section>
       )}

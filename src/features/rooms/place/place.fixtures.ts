@@ -264,7 +264,7 @@ export function createPlaceDemoState(currentUserId?: string | null, roomType = "
       isMicrophoneEnabled: index % 4 !== 1,
       isSpeaking: false,
       latencyMs: 42 + (index % 8) * 7,
-    })),
+    })).filter(participant => roomType !== "loge" || participant.profile.id !== currentUserId),
     messages: [
       { id: "message-1", author: viewerA, content: "Je te renvoie la boucle avec le kick plus sec. [[mw:beatpad-en-flamme]]", createdAt: new Date(Date.now() - 8 * 60_000).toISOString() },
       { id: "message-2", author: guestB, content: "Le refrain reste en tête, garde cette prise [[mw:micro-flamme]]", createdAt: new Date(Date.now() - 6 * 60_000).toISOString() },

@@ -6,6 +6,7 @@ import HoverPreProfileContent from "./reference/features/globe/components/prePro
 import { getPreProfileArtistForSeed } from "./reference/features/globe/components/preProfile/demoPreProfileArtist";
 import { getGradeBadgeMeta } from "./reference/features/grades/gradeBadges";
 import "./ring-artist-preprofile.css";
+import { openProfileAction } from "./host-bridge";
 
 export type GroundAvatarSelection = {
   id: string;
@@ -135,8 +136,14 @@ export default function GroundArtistPreProfile({
           window.dispatchEvent(new CustomEvent("meewav:ground-avatar-pin", { detail: { id, color, active } }));
         }}
         onOpenProfile={() => setNotice("Le profil complet sera bientôt disponible.")}
-        onContact={() => setNotice("La messagerie sera bientôt disponible.")}
-        onCollabRequest={() => setNotice("Les demandes de collaboration seront bientôt disponibles.")} />
+        onContact={() => {
+          if (openProfileAction("demo-contact", artist)) onClose();
+          else setNotice("Ouvre ce profil depuis Meewav pour accéder à la messagerie.");
+        }}
+        onCollabRequest={() => {
+          if (openProfileAction(selection.isHost ? "manage-collabs" : "demo-collaboration", artist)) onClose();
+          else setNotice("Ouvre ce profil depuis Meewav pour accéder aux collaborations.");
+        }} />
     </PreProfileFrame>
     <button ref={closeButton} className="ring-artist-preprofile__close" type="button" onClick={onClose} aria-label="Fermer le pré-profil">
       <X aria-hidden="true" />

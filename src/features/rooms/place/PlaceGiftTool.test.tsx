@@ -190,7 +190,8 @@ describe("PlaceGiftTool", () => {
     chooseGiftAndRecipient("Distinction Live", "June Kairo");
     const deliveryChoices = screen.getByRole("group", { name: "Moment d’envoi" });
     fireEvent.click(within(deliveryChoices).getByRole("button", { name: "Ajouter à une ronde" }));
-    fireEvent.change(screen.getByRole("combobox", { name: "Ronde" }), { target: { value: "Fans récents" } });
+    fireEvent.click(screen.getByRole("combobox", { name: "Ronde" }));
+    fireEvent.click(screen.getByRole("option", { name: "Fans récents" }));
     fireEvent.click(screen.getByRole("button", { name: "Ajouter" }));
 
     await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));

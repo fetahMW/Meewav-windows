@@ -50,6 +50,40 @@ function Harness() {
   </WaveTransportProvider></StudioToolsLayoutProvider></MemoryRouter>;
 }
 describe("Wave · une seule instance persistante", () => {
+  it("met un lot de boucles en quarantaine puis en libère une seule vers le vote", async () => {
+    render(<Harness />);
+    fireEvent.click(screen.getByRole("button", { name: "Changer de surface" }));
+    fireEvent.click(await screen.findByRole("tab", { name: "Sas des boucles" }));
+    fireEvent.click(screen.getByRole("button", { name: "Sélection multiple" }));
+    const choices = screen.getAllByRole("checkbox", { name: /Sélection multiple/ });
+    fireEvent.click(choices[0]); fireEvent.click(choices[1]);
+    const firstName = choices[0].getAttribute("aria-label")!.replace("Sélection multiple : ", "");
+    await act(async () => fireEvent.click(screen.getByRole("button", { name: "Quarantaine (2)" })));
+    fireEvent.click(screen.getByRole("tab", { name: "Quarantaine" }));
+    const quarantine = await screen.findByRole("region", { name: "Boucles en quarantaine" });
+    expect(within(quarantine).getAllByRole("article")).toHaveLength(2);
+    expect(within(quarantine).getByRole("button", { name: `Télécharger ${firstName}` })).toBeEnabled();
+    expect(within(quarantine).getByRole("button", { name: `Remplacer ${firstName}` })).toBeEnabled();
+    await act(async () => fireEvent.click(screen.getByRole("button", { name: `Envoyer ${firstName} au vote` })));
+    await waitFor(() => expect(within(quarantine).getAllByRole("article")).toHaveLength(1));
+    fireEvent.click(screen.getByRole("tab", { name: "Vote du public" }));
+    expect(await screen.findByRole("region", { name: "Boucles validées pour le vote" })).toHaveTextContent(firstName);
+    fireEvent.click(screen.getByRole("tab", { name: "Quarantaine" }));
+    expect(within(await screen.findByRole("region", { name: "Boucles en quarantaine" })).getAllByRole("article")).toHaveLength(1);
+  });
+  it("refuse depuis le menu de la carte sans confirmation et avance dans le sas", async () => {
+    render(<Harness />);
+    fireEvent.click(screen.getByRole("button", { name: "Changer de surface" }));
+    fireEvent.click(await screen.findByRole("tab", { name: "Sas des boucles" }));
+    const row = await screen.findByRole("article", { name: "Sélectionner Afro · Basse A de Eliott Waves" });
+    fireEvent.click(within(row).getByRole("button", { name: "Refuser Afro · Basse A" }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(row).toBeInTheDocument();
+    await act(async () => fireEvent.click(screen.getByRole("menuitem", { name: "Catégorie déjà complète" })));
+    await waitFor(() => expect(row).not.toBeInTheDocument());
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(screen.getByTestId("candidate").textContent).not.toBe("test-Afro-Bass_A");
+  });
   it("change de production depuis Simulation et remplace la référence du lecteur", async () => {
     render(<Harness />);
     await waitFor(() => expect(WaveAudioTransport.prototype.setReference).toHaveBeenCalledWith(expect.objectContaining({ url: expect.stringContaining("Afro_Melody_A") })));
@@ -75,7 +109,7 @@ describe("Wave · une seule instance persistante", () => {
     expect(within(row).getByRole("button", { name: "Écouter Koda Sweep" })).toBeInTheDocument();
     expect(within(row).getByRole("button", { name: "Valider Afro · Mélodie B" })).toBeInTheDocument();
     expect(within(row).getByRole("button", { name: "Refuser Afro · Mélodie B" })).toBeInTheDocument();
-    expect(within(row).getAllByRole("button")).toHaveLength(3);
+    expect(within(row).getAllByRole("button")).toHaveLength(4);
     expect(container.querySelectorAll(".wave-tools-body audio")).toHaveLength(0);
     for (const label of ["Vote du public", "Beat collectif", "Sas des boucles"]) {
       fireEvent.click(screen.getByRole("tab", { name: label }));

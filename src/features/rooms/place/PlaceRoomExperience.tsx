@@ -1,9 +1,7 @@
-import { superpoweredVoiceAdapter } from "./placeSuperpoweredAdapter";
 import { ViewerMixerContext, useViewerSendMixer } from "./ViewerMixerContext";
 import { useSwitchRoom } from "../switch-room/useSwitchRoom";
 import { SwitchRoomButton, SwitchRoomInvitation, SwitchRoomWaiting } from "../switch-room/SwitchRoom";
 import type { RoomPerson } from "../tools/roomTools.types";
-import CageShellMatchup from "./CageShellMatchup";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
@@ -29,13 +27,16 @@ import LiveActionPopover from "./LiveActionPopover";
 import { getRoomSupportWallet } from "./roomSupport";
 import { useRoomSupportThrows } from "./useRoomSupportThrows";
 import PlaceStage from "./PlaceStage";
+import { CageMixerTimer } from "./CageStageProgram";
 import PlaceStudioPanel from "./PlaceStudioPanel";
 import PlaceChatSocialActions from "./PlaceChatSocialActions";
+import { CageGoldenLikeProvider } from "./CageGoldenLikeContext";
 import { WaveViewerListeningProvider, useWaveViewerListening } from "../wave-viewer/WaveViewerListening";
 import type { PlaceDemoRole, PlaceMixerView, PlaceNativePitchProvider, PlacePitchProvider, PlaceProfile, PlaceRoomState, PlaceStudioSurface, PlaceVocalState } from "./place.types";
 import type { PlacePitchCorrectionAdapter } from "./placeLocalAudioEngine";
 import { isNativePitchProvider, isWebPitchProvider, resolvePlaceMonitoringRoute } from "./placeAudioRouting";
 import { meewavPitchCorrectionAdapter } from "./placeMeeWavPitchAdapter";
+import { androidVoiceAdapter } from "./placeAndroidVoiceAdapter";
 import { usePlaceLocalAudio } from "./usePlaceLocalAudio";
 import { usePlaceNativeVst3Monitor } from "./usePlaceNativeVst3Monitor";
 import { usePlaceProgramLayout } from "./usePlaceProgramLayout";
@@ -45,7 +46,8 @@ import { usePlaceLiveKitRoom } from "./usePlaceLiveKitRoom";
 import { useRuntime } from "../../../runtime/RuntimeProvider";
 import type { DesktopMusicSource } from "../../../runtime/DesktopMusicSource";
 import RoomProductionPreparation from "./RoomProductionPreparation";
-import { readRoomProductionSetup } from "./roomProductionSetup";
+import { readRoomProductionSetup, saveRoomProductionSetup, type RoomProductionSetup } from "./roomProductionSetup";
+import { readRoomDevicePreferences } from "./roomDevicePreferences";
 import "./place-room-production-drawer.css";
 import { usePlaceLiveCallProgramMix } from "./usePlaceLiveCallProgramMix";
 import { usePlaceLiveCallRoomCleanup } from "./usePlaceLiveCallRoomCleanup";
@@ -207,12 +209,6 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
     window.addEventListener("wave-preview-poll", showPoll);
     return () => { window.removeEventListener("wave-preview-poll", showPoll); clearTimeout(timer); };
   }, [place.setSurface]);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const show = () => { place.setSurface("tools"); setPanelCollapsed(false); timer=setTimeout(()=>window.dispatchEvent(new Event("cage-viewer-simulation-ready")),150); };
-    window.addEventListener("cage-viewer-simulation",show);
-    return()=>{window.removeEventListener("cage-viewer-simulation",show);clearTimeout(timer);};
-  },[place.setSurface]);
   const { room } = place;
   const experienceRef = useRef<HTMLElement>(null);
   const supportContext = `${room.source}:${room.id}:${room.status}:${room.host.id}:${place.activeUserId}`;
@@ -336,6 +332,19 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
   const desktopMusicReservedRef = useRef(desktopMusicReserved);
   desktopMusicReservedRef.current = desktopMusicReserved;
   const musicChannel = room.channels.find((channel) => channel.kind === "audio" && channel.participantId === room.host.id);
+  const studioSetup = useMemo(() => readRoomProductionSetup(room.id), [room.id]);
+  const saveStudioSetup = useCallback((setup: RoomProductionSetup) => saveRoomProductionSetup(room.id, { ...setup, audioApplied: true }), [room.id]);
+  const restoredStudioRoom = useRef<string | null>(null);
+  useEffect(() => {
+    if (!desktopHost || place.isLoading || !personalMicrophone || !musicChannel || restoredStudioRoom.current === room.id) return;
+    restoredStudioRoom.current = room.id;
+    if (!studioSetup?.audio || studioSetup.audioApplied) return;
+    place.setChannelGain(personalMicrophone.id, studioSetup.audio.voiceGain);
+    place.setChannelGain(musicChannel.id, studioSetup.audio.musicGain);
+    if (personalMicrophone.isMuted !== studioSetup.audio.voiceMuted) place.toggleChannelMute(personalMicrophone.id);
+    if (musicChannel.isMuted !== studioSetup.audio.musicMuted) place.toggleChannelMute(musicChannel.id);
+    saveRoomProductionSetup(room.id, { ...studioSetup, audioApplied: true });
+  }, [desktopHost, place, room.id, studioSetup, personalMicrophone, musicChannel]);
   const masterChannel = room.channels.find((channel) => channel.kind === "master");
   const desktopMusicGain = musicChannel && !musicChannel.isMuted && !masterChannel?.isMuted
     ? musicChannel.gain * (masterChannel?.gain ?? 1) : 0;
@@ -450,11 +459,11 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
     inputEnabled: (place.isHost ? personalMicrophoneEnabled : true)
       && ((!nativeRoomAudioReady && rawBrowserAudioAuthorized) || hostPrivateCallNeedsBrowserVoice),
     inputGain: personalInputGain,
-    pitchAdapter: room.personalVocal.tuneEnabled || (runtime.isDesktop && pitchProvider === "meewav_test" && room.personalVocal.reverbEnabled)
+    pitchAdapter: room.personalVocal.tuneEnabled || (runtime.isDesktop && pitchProvider === "meewav_test")
       ? pitchProvider === "opendaw"
         ? OPENDAW_ROOM_ADAPTER
         : pitchProvider === "meewav_test"
-          ? runtime.isDesktop ? superpoweredVoiceAdapter : meewavPitchCorrectionAdapter
+          ? runtime.isDesktop ? androidVoiceAdapter : meewavPitchCorrectionAdapter
           : null
       : null,
   });
@@ -1098,7 +1107,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           await audioEngine.useWebAudioFallback("Autotune MeeWav sélectionné.");
         }
         if (!selectionIsCurrent()) return false;
-        await startCaptureWithPitchAdapter(runtime.isDesktop ? superpoweredVoiceAdapter : meewavPitchCorrectionAdapter, selectionIsCurrent);
+        await startCaptureWithPitchAdapter(runtime.isDesktop ? androidVoiceAdapter : meewavPitchCorrectionAdapter, selectionIsCurrent);
         if (!selectionIsCurrent()) return false;
         setPitchProvider(provider);
         place.updateVocal({ tuneEnabled: true, enabled: true });
@@ -1314,34 +1323,19 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
   }, [nativePitchSelected, nativePluginAudioReady, personalInputGain, room.personalVocal, showNotice, updateNativeVst3]);
 
   const shellbarVisible = !place.isLoading && (room.status === "live" || room.status === "ended");
-  useEffect(() => {
-    if (roomPresentation.id !== "cage" || !shellbarVisible) return;
-    const surface = experienceRef.current;
-    const header = surface?.previousElementSibling as HTMLElement | null;
-    const stage = surface?.querySelector<HTMLElement>(".place-stage");
-    if (!header?.classList.contains("place-room-shellbar") || !stage) return;
-    const align = () => {
-      const stageBox = stage.getBoundingClientRect();
-      const headerBox = header.getBoundingClientRect();
-      header.style.setProperty("--cage-stage-center", `${stageBox.left + stageBox.width / 2 - headerBox.left}px`);
-    };
-    const observer = new ResizeObserver(align);
-    observer.observe(stage);
-    observer.observe(header);
-    align();
-    window.addEventListener("resize", align);
-    return () => { observer.disconnect(); window.removeEventListener("resize", align); header.style.removeProperty("--cage-stage-center"); };
-  }, [roomPresentation.id, shellbarVisible]);
-
-
+  const hostSocialActions = !place.isHost ? <PlaceChatSocialActions room={room}
+    canEngage={place.canEngage} goldenUnavailable={place.goldenLikeUnavailable}
+    onLike={place.toggleLike} onGoldenLike={place.giveGoldenLike}
+    onOpenDonation={openDonation} supportAction={support.action}
+    onSupportThrow={() => { void support.launch(); }} /> : undefined;
   return (
     <ViewerMixerContext.Provider value={place.isHost ? null : { ...viewerMix, prepareVoice: prepareViewerVoice, voiceStatus: localAudio.status, publication: roomMedia.voiceAudible ? "En scène" : contactMixAudible ? "Avec le host" : roomMedia.status === "reconnecting" ? "Reconnexion…" : "Préparation locale" }}>
     <RoomPresentationProvider presentation={roomPresentation}>
+    <CageGoldenLikeProvider key={`${room.source}:${room.id}:${place.activeUserId}`} room={room} viewerId={place.activeUserId} canSupport={room.source === "demo" || Boolean(currentUserId)} enabled={roomPresentation.id === "cage" && !place.isHost}>
       <SwitchRoomInvitation controller={switching} hostName={room.host.displayName}/>
       {shellbarVisible ? (
         <PlaceRoomShellHeader
           switchSlot={place.isHost ? <SwitchRoomButton room={room} onQueueOpen={place.setQueueOpen} controller={switching} enabled={room.status === "live"}/> : room.source === "demo" && roomPresentation.id === "place" ? <div className="switch-room-anchor"><button type="button" disabled={switching.busy} onClick={()=>void switching.simulate()}>Simuler un switch</button>{switching.error?<span role="alert">{switching.error}</span>:null}</div> : undefined}
-          centerSlot={roomPresentation.id === "cage" ? <CageShellMatchup room={room} onOpenProfile={onOpenProfile} /> : undefined}
           room={room}
           isHost={place.isHost}
           endConfirmationOpen={endConfirmationOpen}
@@ -1371,8 +1365,10 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
         </div>
       ) : <div className={`place-room-workspace${panelCollapsed ? " is-panel-collapsed" : ""}${room.status === "ended" ? " is-broadcast-ended" : ""}`}>
         <div className="place-room-live-column">
+          {roomPresentation.id === "cage" && place.isHost ? <CageMixerTimer /> : null}
           <PlaceStage
             room={room}
+            hostSocialActions={hostSocialActions}
             isHost={place.isHost}
             isGuest={place.isGuest}
             canEngage={place.canEngage}
@@ -1451,16 +1447,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           programAudio={room.source === "live" && place.isHost ? programAudio : undefined}
           hostVoiceMeterStream={desktopHost && desktopOnAir ? localAudio.outputStream : null}
           onSendMessage={place.sendMessage}
-          chatSocialActions={!place.isHost ? <PlaceChatSocialActions
-            room={room}
-            canEngage={place.canEngage}
-            goldenUnavailable={place.goldenLikeUnavailable}
-            onLike={place.toggleLike}
-            onGoldenLike={place.giveGoldenLike}
-            onOpenDonation={openDonation}
-            supportAction={support.action}
-            onSupportThrow={() => { void support.launch(); }}
-          /> : undefined}
+          chatSocialActions={hostSocialActions}
           onJoinQueue={place.joinQueue}
           onLeaveQueue={place.leaveCurrentQueue}
           onAcceptInvitation={place.acceptCurrentInvitation}
@@ -1535,10 +1522,39 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
             <button ref={productionCloseRef} type="button" className="place-room-production-drawer__close" aria-label="Fermer la régie" onClick={closeProduction}><X aria-hidden="true" /></button>
             <RoomProductionPreparation
               key={room.id} roomId={room.id} liveRoom={room.source === "live"}
-              initialSetup={readRoomProductionSetup(room.id)}
+              initialSetup={studioSetup}
+              onSetupChange={saveStudioSetup}
+              roomAudio={{
+                levels: { voiceGain: personalMicrophone?.gain ?? 1, voiceMuted: personalMicrophone?.isMuted ?? false, musicGain: musicChannel?.gain ?? 1, musicMuted: musicChannel?.isMuted ?? false },
+                voiceStream: localAudio.outputStream,
+                voiceDeviceId: localAudio.inputStream?.getAudioTracks()[0]?.getSettings().deviceId,
+                monitoring: monitoringEnabled,
+                error: localAudio.error,
+                onChange: patch => {
+                  if (personalMicrophone && patch.voiceGain !== undefined) place.setChannelGain(personalMicrophone.id, patch.voiceGain);
+                  if (personalMicrophone && patch.voiceMuted !== undefined && patch.voiceMuted !== personalMicrophone.isMuted) place.toggleChannelMute(personalMicrophone.id);
+                  if (musicChannel && patch.musicGain !== undefined) place.setChannelGain(musicChannel.id, patch.musicGain);
+                  if (musicChannel && patch.musicMuted !== undefined && patch.musicMuted !== musicChannel.isMuted) place.toggleChannelMute(musicChannel.id);
+                },
+                onToggleMonitoring: () => { void toggleHeadphoneMonitoring(); },
+                prepareMicrophone: async () => {
+                  const selected = readRoomDevicePreferences().microphoneId;
+                  const current = localAudio.inputStream?.getAudioTracks()[0]?.getSettings().deviceId;
+                  // An earlier headphone test may still own a different device.
+                  if (localAudio.inputStream && selected && selected !== current) {
+                    await stopLocalCapture();
+                    place.updateVocal({ monitoring: false });
+                  }
+                },
+                startVoicePreview: async () => {
+                  if (nativePitchSelected) throw new Error("Le retour du plugin natif se règle dans Effets de ma voix.");
+                  return localAudio.startCapture();
+                },
+                onOpenEffects: () => { closeProduction(); openPanel("mixer"); setMixerView("voice_fx"); },
+              }}
               onAir={desktopOnAir} publicationStatus={roomMedia.status} transportError={roomMedia.error}
               onStart={(stream, musicSource) => {
-                if (musicSource && roomMedia.musicAudible) { place.showNotice('Arrête d’abord la musique du lecteur Meewav.'); return false; }
+                if (musicSource && roomMedia.musicAudible) throw new Error('Arrête d’abord la musique du lecteur Meewav avant de diffuser cette entrée externe.');
                 setDesktopMusicSource(musicSource);
                 setDesktopProgramStream(stream); setDesktopBroadcastRoom(room.id);
                 return true;
@@ -1553,6 +1569,7 @@ function PlaceRoomExperienceContent({ requestedRoomId, currentUserId, demoRole, 
           </div>
         </div>, document.body,
       ) : null}
+    </CageGoldenLikeProvider>
     </RoomPresentationProvider>
     </ViewerMixerContext.Provider>
   );

@@ -1,0 +1,92 @@
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { createRoomToolsFixture } from "../roomTools.fixtures";
+import { startCageViewerSimulation } from "../cageViewerSimulation";
+import CageViewerCompanion from "./CageViewerCompanion";
+import { cageAudienceProgram } from "./cageAudienceProgram";
+
+vi.mock("../panels/WaveProfileButton", () => ({ default: ({ person, children }: any) => <button disabled={!person} aria-label={person ? `Profil ${person.name}` : "À venir"}>{children}</button> }));
+afterEach(cleanup);
+
+describe("Cage viewer programme aligned with iOS", () => {
+  it("shows the published rounds, artist profiles and direct CTA instead of repeating the event title", () => {
+    const cage = createRoomToolsFixture("cage", "viewer-program").cage!;
+    const onOpenChat = vi.fn();
+    render(<CageViewerCompanion cage={cage} source="demo" onOpenChat={onOpenChat} production={<button>Écouter la prod</button>} />);
+    expect(screen.getByRole("tab", { name: "En direct" })).toHaveAttribute("aria-selected", "true");
+    fireEvent.click(screen.getByRole("tab", { name: "Affichage" }));
+    expect(screen.getByRole("heading", { name: "Tableau du tournoi" })).toBeVisible();
+    expect(screen.queryByText(cage.event!.title)).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /Profil / }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: /Demi-finales/ })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Écouter la prod" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Suivre le duel" }));
+    expect(screen.getByRole("tab", { name: "En direct" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("tab", { name: "En direct" })).toHaveFocus();
+    expect(screen.queryByRole("button", { name: "Rejoindre le chat" })).not.toBeInTheDocument();
+    expect(onOpenChat).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("tab", { name: "Audio" }));
+    expect(screen.getAllByRole("button", { name: "Écouter la prod" })).toHaveLength(1);
+  });
+  it("never exposes draft participants or prepared matches", () => {
+    const cage = startCageViewerSimulation().cage!;
+    const runtime = cage.runtime!;
+    runtime.publicBracketVisible = false;
+    runtime.activeMatchId = null;
+    runtime.preparedMatchId = runtime.matches[0].id;
+    const program = cageAudienceProgram(cage, "viewer", Date.now());
+    expect(program.matches).toEqual([]);
+    expect(program.active).toBeUndefined();
+    render(<CageViewerCompanion cage={cage} posterUrl="/images/cage/rap-paris-marseille.png" />);
+    expect(screen.getByText("La Cage se prépare")).toBeVisible();
+    expect(screen.getByRole("img", { name: /Affiche de La Cage/ })).toHaveAttribute("src", "/images/cage/rap-paris-marseille.png");
+    expect(screen.queryByRole("button", { name: /Profil / })).not.toBeInTheDocument();
+  });
+  it("follows an Open Mic passage without inventing a second artist or exposing the draft lineup", () => {
+    const cage = startCageViewerSimulation("open-mic").cage!;
+    const runtime = cage.runtime!;
+    const participant = runtime.participants[0];
+    runtime.publicBracketVisible = false;
+    runtime.activeEntryId = "on-air";
+    runtime.openMicEntries = [{ id: "on-air", participantId: participant.id, order: 1, status: "IN_PROGRESS", timer: { startedAt: "2026-09-26T12:00:00Z", elapsedSeconds: 0 }, durationSeconds: 60, incident: null }];
+    const program = cageAudienceProgram(cage, participant.person.id, Date.parse("2026-09-26T12:00:10Z"));
+    expect(program.matches).toEqual([]);
+    expect(program.active).toMatchObject({ a: participant.person, solo: true });
+    expect(program.seconds).toBe(50);
+    expect(program.mine).toBe(true);
+    render(<CageViewerCompanion cage={cage} />);
+    expect(screen.queryByText("VS")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: `Profil ${participant.person.name}` })).toBeVisible();
+  });
+  it("derives the live passage and clock from the actual runtime and keeps unpublished results hidden", () => {
+    const cage = startCageViewerSimulation().cage!;
+    const runtime = cage.runtime!;
+    const match = runtime.matches.find(m => m.id === runtime.activeMatchId)!;
+    match.status = "IN_PROGRESS";
+    match.stepIndex = 0;
+    match.steps = [{ id: "a", side: "A", label: "A", durationSeconds: 60 }, { id: "b", side: "B", label: "B", durationSeconds: 60 }];
+    match.timer = { startedAt: "2026-09-26T12:00:00Z", elapsedSeconds: 5 };
+    const artist = runtime.participants.find(p => p.id === match.participantAId)!.person;
+    match.winnerId = match.participantAId;
+    cage.resultsHidden = true; runtime.publicResults = null;
+    const result = cageAudienceProgram(cage, artist.id, Date.parse("2026-09-26T12:00:10Z"));
+    expect(result.title).toBe("C’est ton tour de performer");
+    expect(result.seconds).toBe(45);
+    expect(result.passage).toBe("1/2");
+    expect(result.active?.winner).toBeUndefined();
+  });
+  it("keeps the public fund read-only in Affichage without adding a fourth tab", () => {
+    const cage = createRoomToolsFixture("cage", "viewer-fund").cage!;
+    const props = { cage, fundraiser: { title: "Studio associatif", beneficiary: "Les artistes", target: 1500, isOpen: true } };
+    const ui = render(<CageViewerCompanion {...props} />);
+    fireEvent.click(screen.getByRole("tab", { name: "Affichage" }));
+    expect(screen.getAllByRole("tab")).toHaveLength(3);
+    expect(screen.getByText("Studio associatif")).toBeVisible();
+    expect(screen.getByText(/Au bénéfice de Les artistes/)).toBeVisible();
+    expect(screen.queryByRole("button", { name: /payer|contribuer|donner/i })).not.toBeInTheDocument();
+    ui.rerender(<CageViewerCompanion cage={cage} />);
+    expect(screen.queryByRole("tab", { name: "Cagnotte" })).not.toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Affichage" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.queryByText("Studio associatif")).not.toBeInTheDocument();
+  });
+});

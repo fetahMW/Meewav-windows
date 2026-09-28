@@ -9,7 +9,7 @@ export const LOGE_REQUESTS = [
 ] as const;
 const active = (m: VipMoment) => ["pending", "scheduled", "accepted", "live"].includes(m.status);
 type Common = { loge: LogeState; disabled: boolean; execute: (command: RoomToolsCommand) => Promise<unknown> };
-export function LogeRequestLists({ loge, disabled, execute, viewer }: Common & { viewer: RoomPerson }) {
+export function LogeRequestLists({ loge, disabled, execute, viewer, preferredKind }: Common & { viewer: RoomPerson; preferredKind?: VipMoment["kind"] }) {
   const [pending, setPending] = useState(false), [feedback, setFeedback] = useState("");
   const lock = useRef(false);
   const run = async (command: RoomToolsCommand) => {
@@ -22,7 +22,7 @@ export function LogeRequestLists({ loge, disabled, execute, viewer }: Common & {
   return <section className="loge-requests" aria-label="Les listes de la Loge">
     <header><h3>Votre moment avec l’artiste</h3><p>Choisissez une liste ouverte. L’inscription reste soumise à la disponibilité de l’artiste.</p></header>
     {feedback ? <p role="status">{feedback}</p> : null}
-    {LOGE_REQUESTS.map(({ kind, title, action, description, Icon }) => {
+    {[...LOGE_REQUESTS].sort((a, b) => Number(b.kind === preferredKind) - Number(a.kind === preferredKind)).map(({ kind, title, action, description, Icon }) => {
       const own = loge.moments.find((m) => m.beneficiary.id === viewer.id && m.kind === kind && active(m));
       const open = loge.requestQueues?.[kind] === true;
       return <article key={kind}><Icon aria-hidden="true" /><div><strong>{title}</strong><p>{description}</p>

@@ -27,3 +27,9 @@
 .room-viewer-host .room-viewer-host__share:hover,.room-viewer-host .room-viewer-host__leave:hover { border-color:#ffffff48; color:#eee; }
 
 .place-room-shellbar.is-viewer .place-room-shellbar__audience-group { margin-left:8px; display:inline-flex; align-items:center; flex:none; }
+
+/* Reserve the longest follow label, including while the request is pending. */
+.room-viewer-host .room-viewer-host__follow { box-sizing:border-box; flex:0 0 88px; width:88px; min-width:88px; max-width:88px; height:38px; min-height:38px; }
+.room-viewer-host .room-viewer-host__follow.is-following { color:#f0dfff; border-color:#c591f2; background:linear-gradient(#422754,#24132f); box-shadow:inset 0 1px #ffffff25,0 0 12px #b76cef38; }
+.room-viewer-host .room-viewer-host__follow.is-following:hover:not(:disabled) { background:linear-gradient(#4a2d5e,#2c1939); border-color:#deafff; }
+.room-viewer-host__identity small { contain:inline-size; overflow:hidden; text-overflow:ellipsis; }

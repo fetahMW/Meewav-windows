@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { useRoomVotingPolicy } from "../voting/useRoomVotingPolicy";
 import { canCastRoomVote } from "../voting/roomVoting";
 import RoomVotePolicyLabel from "../voting/RoomVotePolicyLabel";
@@ -322,7 +323,7 @@ export function ViewerPanel({ submissionHint, submissionError, room, snapshot, c
           <label>Volume ma boucle<input aria-label="Volume ma boucle" type="range" min="0" max="1" step=".01" value={loopVolume} onChange={event => { const value = Number(event.target.value); setLoopVolume(value); if (audio?.mode === "workshop") audio.engine.setVolume(0, value); }} /></label>
           {audio?.voiceAvailable ? <label className="wave-viewer-check"><input type="checkbox" checked={audio.keepVoice} onChange={event => audio.setKeepVoice(event.target.checked)} />Garder la voix du host pendant mon essai</label> : <p>Le son du live est coupé pendant votre écoute privée.</p>}
           <label>Titre<input maxLength={80} value={title} disabled={Boolean(frozenSubmission.current)} onChange={event => setTitle(event.target.value)} /></label>
-          <label>Famille<select value={category} disabled={Boolean(frozenSubmission.current)} onChange={event => setCategory(event.target.value)}>{WAVE_LOOP_CATEGORIES.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label>
+          <label>Famille<MeewavSelect value={category} disabled={Boolean(frozenSubmission.current)} onChange={event => setCategory(event.target.value)}>{WAVE_LOOP_CATEGORIES.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</MeewavSelect></label>
           {submissionHint ? <p>{submissionHint(category)}</p> : null}
           <label className="wave-viewer-check"><input type="checkbox" required checked={rights} disabled={Boolean(frozenSubmission.current)} onChange={event => setRights(event.target.checked)} />Je possède les droits nécessaires sur cette boucle et j’autorise son traitement, sa présentation dans cette Wave, ainsi que son téléchargement et son utilisation par les autres utilisateurs.</label>
           {blockReason && !submitted ? <p role="status">{blockReason}</p> : null}

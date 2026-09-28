@@ -5,6 +5,7 @@ import { MemoryRouter, Route, Routes, useLocation, useParams } from "react-route
 import RoomsHome from "./RoomsHome";
 
 vi.mock("./roomsHome.live", () => ({ loadLiveRoomsCatalog: async () => [] }));
+vi.mock("../../auth", () => ({ useAuth: () => ({ user: null }) }));
 
 class ResizeObserverStub implements ResizeObserver {
   observe() {}
@@ -106,15 +107,15 @@ describe("RoomsHome", () => {
 
     await user.click(screen.getByRole("button", { name: "Ouvrir les filtres" }));
     const panel = screen.getByRole("dialog", { name: "Filtrer les Rooms" });
-    await user.click(within(panel).getByRole("button", { name: "Violoniste", exact: true }));
+    await user.click(within(panel).getByRole("button", { name: "Violoniste" }));
 
-    expect(within(panel).getByRole("button", { name: "Violoniste", exact: true })).toHaveAttribute("aria-pressed", "true");
+    expect(within(panel).getByRole("button", { name: "Violoniste" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByText("288 Rooms en direct")).toBeInTheDocument();
     await user.click(within(panel).getByRole("button", { name: "Afficher 9 Rooms" }));
     expect(screen.getByText("9 Rooms en direct")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Ouvrir les filtres" }));
-    expect(within(panel).getByRole("button", { name: "Violoniste", exact: true })).toHaveAttribute("aria-pressed", "true");
+    expect(within(panel).getByRole("button", { name: "Violoniste" })).toHaveAttribute("aria-pressed", "true");
     await user.click(within(panel).getByRole("button", { name: "Tout effacer" }));
     await user.click(within(panel).getByRole("button", { name: "Afficher 288 Rooms" }));
     expect(screen.getByText("288 Rooms en direct")).toBeInTheDocument();

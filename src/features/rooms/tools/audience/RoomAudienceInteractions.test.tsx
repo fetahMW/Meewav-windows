@@ -16,6 +16,7 @@ vi.mock("../audio/logePreviewMedia.service", () => ({
 
 vi.mock("../classroom/classroomResourceMedia.service", () => ({
   downloadClassroomResource,
+  resolveClassroomResourceUrl: vi.fn(),
 }));
 
 afterEach(() => {
@@ -72,7 +73,8 @@ describe("RoomAudienceInteractions", () => {
     };
     render(<RoomAudienceInteractions roomType={roomType} room={currentRoom} isHost={false} isGuest={false} canEngage />);
 
-    expect(await screen.findByText(roomType === "loge" ? "Un moment à part." : "Interactions")).toBeVisible();
+    if (roomType === "cage") expect(await screen.findByRole("region", { name: "La Cage · participation" })).toBeVisible();
+    else expect(await screen.findByText(roomType === "loge" ? "Bienvenue, les fans." : "Interactions")).toBeVisible();
     expect(screen.queryByText("Envoyer un cadeau")).not.toBeInTheDocument();
     expect(screen.queryByText(currentRoom.poll.question)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Premier titre|Deuxième titre/i })).not.toBeInTheDocument();
@@ -160,7 +162,7 @@ describe("RoomAudienceInteractions", () => {
 
   it("keeps a Classe question draft after failure and confirms the retry", async () => {
     render(<RoomAudienceInteractions roomType="classe" room={room("classe-question-retry")} isHost={false} isGuest canEngage />);
-    fireEvent.click(await screen.findByRole("button", {name:"Questions"}));
+    fireEvent.click(await screen.findByRole("tab", {name:"Questions"}));
     const input = screen.getByLabelText(/Votre question/i);
     fireEvent.change(input, {target:{value:"Comment jouer cet accord ?"}});
     const execute = vi.spyOn(roomToolsRepository, "execute").mockRejectedValueOnce(new Error("network_lost"));
@@ -174,7 +176,7 @@ describe("RoomAudienceInteractions", () => {
   });
   it("lets a Class place submit and support questions without exposing other votes", async () => {
     render(<RoomAudienceInteractions roomType="classe" room={room("audience-classe-questions")} isHost={false} isGuest canEngage />);
-    fireEvent.click(await screen.findByRole("button", {name: "Questions"}));
+    fireEvent.click(await screen.findByRole("tab", {name: "Questions"}));
     const input = await screen.findByLabelText(/Votre question/i);
     fireEvent.change(input, { target: { value: "Peux-tu détailler le deuxième temps ?" } });
     fireEvent.click(screen.getByRole("button", { name: /Envoyer/i }));
@@ -205,10 +207,10 @@ describe("RoomAudienceInteractions", () => {
     };
     await roomToolsRepository.execute("classe", roomId, "teacher", { type: "classe.resource.add", resource });
     render(<RoomAudienceInteractions roomType="classe" room={room(roomId)} isHost={false} isGuest canEngage />);
-    fireEvent.click(await screen.findByRole("button", {name: "Ressources"}));
-    expect(await screen.findByText("À garder après la classe")).toBeVisible();
+    fireEvent.click(await screen.findByRole("tab", {name: "Ressources"}));
+    expect(await screen.findByRole("heading", { name: "Ressources du cours" })).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Télécharger fiche-rythmique.png" }));
-    await waitFor(() => expect(downloadClassroomResource).toHaveBeenCalledWith(expect.objectContaining({ id: resource.id }), roomId));
+    await waitFor(() => expect(downloadClassroomResource).toHaveBeenCalledWith(expect.objectContaining({ id: resource.id }), roomId, "demo"));
   });
 
   it("does not expose Class resources to a non-seated public Viewer", async () => {
@@ -311,18 +313,21 @@ describe("RoomAudienceInteractions", () => {
     expect(execute).not.toHaveBeenCalled();
   });
 
-  it("keeps Cage results hidden, records one ballot and states gift independence", async () => {
+  it("keeps Cage focused on the live, with votes handled by the persistent stage", async () => {
     render(<RoomAudienceInteractions roomType="cage" room={room("audience-cage")} isHost={false} isGuest={false} canEngage />);
-    const choices = await screen.findAllByRole("button", { name: /Rook|Zélie/i });
-    fireEvent.click(choices[0]);
-    await screen.findByText(/Votre choix : A/i);
+    expect(await screen.findByRole("region", { name: "La Cage · participation" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: /^Voter /i })).not.toBeInTheDocument();
     expect(screen.queryByText("RÉSULTAT RÉVÉLÉ")).not.toBeInTheDocument();
-    expect(screen.getByText(/aucun cadeau ne modifie un score/i)).toBeVisible();
+    expect(screen.queryByText("Bracket public")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Paris versus Marseille/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("combobox", { name: "Format de la simulation" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Simuler" })).not.toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Affiche de La Cage/ })).toBeVisible();
   });
 
   it("submits a VIP question and never exposes another member's private moment", async () => {
     render(<RoomAudienceInteractions roomType="loge" room={room("audience-loge")} isHost={false} isGuest={false} canEngage />);
-    fireEvent.click(await screen.findByRole("button",{name:"Questions"}));
+    fireEvent.click(await screen.findByRole("tab",{name:"Questions"}));
     const input = await screen.findByLabelText(/Votre question/i);
     fireEvent.change(input, { target: { value: "Quel morceau a déclenché cet album ?" } });
     fireEvent.click(screen.getByRole("button", { name: "Envoyer" }));
@@ -344,7 +349,8 @@ describe("RoomAudienceInteractions", () => {
     const now = vi.spyOn(Date, "now").mockReturnValue(new Date("2026-09-19T00:00:00.000Z").getTime());
     try {
       render(<RoomAudienceInteractions roomType="loge" room={room("audience-loge-expired")} isHost={false} isGuest={false} canEngage />);
-      expect(await screen.findByText("L’artiste prépare une avant-première")).toBeVisible();
+      expect(await screen.findByRole("heading", { name: "Bienvenue, les fans." })).toBeVisible();
+      expect(screen.getByText("Les contenus partagés pendant le direct apparaîtront ici.")).toBeVisible();
       expect(screen.queryByText("eclipse-premix-v7.wav")).not.toBeInTheDocument();
       expect(requestLogePreviewMediaUrl).not.toHaveBeenCalled();
     } finally { now.mockRestore(); }
@@ -435,4 +441,18 @@ it("displays the host seat price when a viewer opens a free chair",async()=>{
  render(<RoomAudienceInteractions roomType="classe" room={room(roomId)} isHost={false} isGuest={false} canEngage/>);
  fireEvent.click(await screen.findByRole("button",{name:"Acheter la place 20"}));
  expect(await screen.findByRole("dialog",{name:"Ticket place 20"})).toHaveTextContent(/8,50/);
+});
+
+it('lets a viewer enter a newly prepared free class with their own identity', async () => {
+  const { createRoomLaunchSession, defaultRoomLaunch } = await import('../../launch/roomLaunch');
+  const config = defaultRoomLaunch('classe'); config.title = 'Cours gratuit';
+  const session = createRoomLaunchSession(config);
+  window.history.replaceState({}, '', '?classAccess=audience');
+  render(<RoomAudienceInteractions roomType="classe" room={room(session.id)} isHost={false} isGuest={false} canEngage />);
+  fireEvent.click(await screen.findByRole('button', { name: 'Prendre la place 1' }));
+  fireEvent.click(await screen.findByRole('button', { name: 'Entrer gratuitement' }));
+  await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Ticket place 1' })).not.toBeInTheDocument());
+  const state = await roomToolsRepository.load('classe', session.id);
+  expect(state.classe?.seats[0].person).toMatchObject({ id: PLACE_DEMO_PROFILES.viewerA.id, name: PLACE_DEMO_PROFILES.viewerA.displayName, avatarUrl: PLACE_DEMO_PROFILES.viewerA.avatarUrl });
+  expect(state.classe?.seatPriceCents).toBe(0);
 });

@@ -1,0 +1,30 @@
+.immersive-globe .ring-top-one-player.ring-key-surface {
+  --ring-key-radius: 16px;
+  position: absolute; z-index: 24; bottom: 28px;
+  left: max(96px, calc(50% - 210px));
+  width: min(420px, calc(100% - 120px)); min-height: 60px;
+  box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 7px;
+  user-select: none;
+}
+.ring-top-one-player audio { display: none; }
+.ring-top-one-player > img { flex: none; width: 36px; height: 36px; object-fit: cover; border-radius: 9px; }
+.ring-top-one-player button {
+  display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px;
+  border: 0; border-radius: 11px; padding: 0; background: transparent;
+  color: #c1a0ff; cursor: pointer; touch-action: manipulation;
+}
+.ring-top-one-player .ring-top-one-player__play { background: radial-gradient(ellipse, #713fc766, transparent 75%); color: #fff; }
+.ring-top-one-player button:hover:not(:disabled) { background-color: #bda3e51a; }
+.ring-top-one-player button:focus-visible { outline: 2px solid #b88aff; outline-offset: 2px; }
+.ring-top-one-player button:disabled { opacity: .5; cursor: wait; }
+.ring-top-one-player button[aria-pressed="true"] { color: #fff; }
+.ring-top-one-player__copy { flex: 1; min-width: 0; display: grid; gap: 5px; }
+.ring-top-one-player__copy > span { display: flex; align-items: center; gap: 4px; color: #c1a0ff; font: 650 10px/1.2 Inter,sans-serif; }
+.ring-top-one-player__copy > strong { color: #fff; font: 600 12px/1.3 Inter,sans-serif; }
+.ring-top-one-player__copy small { color: #bdb5ca; font-size: 10px; font-weight: 400; }
+.ring-top-one-player__error { position: absolute; bottom: calc(100% + 8px); left: 0; right: 0; padding: 10px; border-radius: 10px; background: #15121e; color: #fff; font: 12px/1.4 Inter,sans-serif; }
+@media (max-width: 600px) {
+  .immersive-globe .ring-top-one-player.ring-key-surface { bottom: 18px; gap: 5px; }
+  .ring-top-one-player > img { width: 30px; height: 30px; }
+  .ring-top-one-player__copy small { display: block; margin-top: 2px; }
+}

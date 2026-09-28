@@ -1,3 +1,5 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
+import { RoomViewerSubmenu } from "../../place/RoomViewerToolsLayout";
 import RoomVotePolicyLabel from "../../voting/RoomVotePolicyLabel";
 import { canCastRoomVote } from "../../voting/roomVoting";
 import CageResults from "../panels/CageResults";
@@ -8,7 +10,9 @@ import SceneViewerProgram, { SceneConsoleDialog } from "./SceneViewerProgram";
 import ClassroomMessageBubble from "../classroom/ClassroomMessageBubble";
 import { ClassroomRoster } from "../panels/ClassroomPanel";
 import { MessageCircleMore, LogOut, Armchair } from "lucide-react";
-import CageViewerShowcase from "./CageViewerShowcase";
+import CageViewerCompanion from "./CageViewerCompanion";
+import CageProductionCard from "./CageProductionCard";
+import { useCageAudienceFundraiser } from "./useCageAudienceFundraiser";
 import { cageEvent, cageEntrants } from "../cageTools.domain";
 import {
   ArrowRight,
@@ -49,7 +53,7 @@ import {
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import type { PlaceRoomState } from "../../place/place.types";
 import { requestLogePreviewMediaUrl } from "../audio/logePreviewMedia.service";
-import { downloadClassroomResource } from "../classroom/classroomResourceMedia.service";
+import ClassroomResources from "./ClassroomResources";
 import { dequantizeWaveformPeaks, type WaveformPeak } from "../audio/previewWaveform";
 import { useOptionalRoomLiveCall } from "../../live-call/RoomLiveCallProvider";
 import { resolveRoomActorRole } from "../roomTools.config";
@@ -82,6 +86,7 @@ export type RoomAudienceInteractionsProps = {
   cageParticipation?: ReactNode;
   sceneParticipation?: ReactNode;
   onOpenChat?: () => void;
+  onOpenMixer?: () => void;
   onLeaveRoom?: () => void;
   roomType: SpecializedRoomId;
   room: PlaceRoomState;
@@ -356,8 +361,7 @@ export async function endClasseAudienceIntervention({
   liveCall: ClasseAudienceLiveCall | null;
   execute: (command: RoomToolsCommand) => Promise<unknown>;
 }) {
-  if (source === "live") {
-    if (!liveCall) throw new Error("class_live_call_transport_unavailable");
+  if (source === "live" && liveCall) {
     const invitation = [...liveCall.invitations]
       .filter((candidate) => candidate.roomId === roomId
         && candidate.partyRole === "contact"
@@ -374,7 +378,7 @@ export async function endClasseAudienceIntervention({
   await execute({ type: "classe.speaker.end-own", accountId });
 }
 
-function ClasseAudience({ classe, role, accountId, roomId, canEngage, busy, execute, onEndIntervention, source, onOpenChat, onLeaveRoom, visible }: { classe: ClasseState; role: RoomActorRole; accountId: string; roomId: string; canEngage: boolean; busy: boolean; execute: (command: RoomToolsCommand) => Promise<unknown>; onEndIntervention: () => Promise<void>; source: "demo" | "live"; onOpenChat?: () => void; onLeaveRoom?: () => void; visible: boolean }) {
+function ClasseAudience({ viewer, classe, role, accountId, roomId, canEngage, busy, execute, onEndIntervention, source, onOpenChat, onLeaveRoom, visible }: { viewer: RoomPerson; classe: ClasseState; role: RoomActorRole; accountId: string; roomId: string; canEngage: boolean; busy: boolean; execute: (command: RoomToolsCommand) => Promise<unknown>; onEndIntervention: () => Promise<void>; source: "demo" | "live"; onOpenChat?: () => void; onLeaveRoom?: () => void; visible: boolean }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [questionSending, setQuestionSending] = useState(false);
   const [questionError, setQuestionError] = useState<string | null>(null);
@@ -389,18 +393,22 @@ function ClasseAudience({ classe, role, accountId, roomId, canEngage, busy, exec
   const [questionText, setQuestionText] = useState("");
   const [endingIntervention, setEndingIntervention] = useState(false);
   const [interventionError, setInterventionError] = useState<string | null>(null);
-  const [resourceDownloadId, setResourceDownloadId] = useState<string | null>(null);
-  const [resourceError, setResourceError] = useState<string | null>(null);
+
+
   const seat = classe.seats.find((candidate) => candidate.person?.id === accountId);
   const selectedStudent = classe.seats.find(candidate => candidate.person?.id === selectedStudentId)?.person;
   const activeSpeaker = classe.people.find((person) => person.id === classe.activeSpeakerId);
   const handRaised = classe.raisedHands.some((hand) => hand.personId === accountId);
-  const canRaise = canEngage && role === "premium_participant" && Boolean(seat) && classe.handsOpen && !handRaised && classe.activeSpeakerId !== accountId;
+  const canRequestFloor = source === "live"
+    ? classe.floorEligible === true && (role === "viewer" || role === "premium_participant")
+    : role === "premium_participant" && Boolean(seat);
+  const canRaise = canEngage && canRequestFloor && classe.handsOpen && !handRaised && classe.activeSpeakerId !== accountId;
   const active = classe.activeSpeakerId === accountId;
   const privateActive = classe.privateTalkStudentId === accountId;
   const questions = classe.questions ?? [];
   const resources = classe.resources ?? [];
   const canAccessResources = Boolean(seat) || role === "host" || role === "teacher" || role === "regisseur";
+  useEffect(() => { if (panel === "resources" && !canAccessResources) setPanel("class"); }, [panel, canAccessResources]);
   const visibleQuestions = [...questions].sort((left, right) => {
     if (left.id === sentQuestionId) return -1;
     if (right.id === sentQuestionId) return 1;
@@ -438,8 +446,13 @@ function ClasseAudience({ classe, role, accountId, roomId, canEngage, busy, exec
     }
   };
   return <div ref={classroomRef} className="room-tools-shell is-classe classe-student-workspace" data-room-tools="classe">
+    <RoomViewerSubmenu activeTool={panel} onSelect={setPanel} ariaLabel="Explorer la Classe" idPrefix="classe-viewer-tab" items={[
+      { id: "class", label: "Classe", icon: <Armchair aria-hidden="true" />, controlsId: "classe-viewer-content" },
+      { id: "questions", label: "Questions", icon: <MessageCircleMore aria-hidden="true" />, controlsId: "classe-viewer-content" },
+      ...(canAccessResources ? [{ id: "resources" as const, label: "Ressources", icon: <Download aria-hidden="true" />, controlsId: "classe-viewer-content" }] : []),
+    ]} />
     <header className="classe-student-heading"><strong>{seat && role === "premium_participant" ? `Élève premium · Place ${seat.number}/24` : "Spectateur · La Classe"}</strong><small>{seat?.person?.name}</small></header>
-    <div ref={contentRef} className="classe-student-content">
+    <div ref={contentRef} className="classe-student-content" id="classe-viewer-content" role="tabpanel" aria-labelledby={`classe-viewer-tab-${panel}`}>
     {privateActive ? <div className="room-audience-callout is-private" role="status"><span><Headphones /></span><span><small>CONVERSATION PRIVÉE</small><strong>Le professeur vous parle en privé.</strong><em>Vous continuez d’entendre le cours. Votre retour n’est pas envoyé à la classe.</em></span></div> : null}
     {active ? <div className="room-audience-callout is-speaking" role="status"><span><Mic /></span><span><small>PRISE DE PAROLE</small><strong>Le professeur vous donne la parole.</strong><em>{interventionError ?? "Votre micro est autorisé pour cette intervention."}</em></span><button type="button" disabled={!canEngage || busy || endingIntervention} onClick={() => {
       setEndingIntervention(true);
@@ -449,29 +462,13 @@ function ClasseAudience({ classe, role, accountId, roomId, canEngage, busy, exec
         .finally(() => setEndingIntervention(false));
     }}>{endingIntervention ? "Fermeture…" : "Terminer mon intervention"}</button></div> : null}
     {panel === "class" ? <div className="room-tool-panel is-classroom">
-      <ClassroomRoster classe={classe} onSelectFreeSeat={!seat && !classe.seatsLocked ? number => { setTicketError(null); setTicketSeat(number); } : undefined} selectedStudentId={selectedStudentId} onSelectStudent={(id) => { profileTriggerRef.current = document.activeElement as HTMLElement; setSelectedStudentId(id); }} audioBridge={{ mode: privateActive ? "private" : active ? "public" : null, studentId: privateActive || active ? accountId : null, phase: privateActive || active ? "active" : "idle" }} />
+      <ClassroomRoster showQuestionIndicators classe={classe} onSelectFreeSeat={!seat && !classe.seatsLocked ? number => { setTicketError(null); setTicketSeat(number); } : undefined} selectedStudentId={selectedStudentId} onSelectStudent={(id) => { profileTriggerRef.current = document.activeElement as HTMLElement; setSelectedStudentId(id); }} audioBridge={{ mode: privateActive ? "private" : active ? "public" : null, studentId: privateActive || active ? accountId : null, phase: privateActive || active ? "active" : "idle" }} />
     </div> : null}
 
     {seat && classe.people[0] ? <ClassroomMessageBubble roomId={roomId} accountId={accountId} peerId={classe.people[0].id} peerName={classe.people[0].name} source={source} /> : null}
-    {ticketSeat !== null ? <div className="classe-ticket" role="dialog" aria-modal="true" aria-label={`Ticket place ${ticketSeat}`}><button type="button" aria-label="Fermer le ticket" onClick={() => setTicketSeat(null)}><X /></button><Armchair /><h3>Votre place dans La Classe</h3><p>Place {ticketSeat} · {((classe.seatPriceCents ?? 499) / 100).toLocaleString("fr-FR", {style:"currency",currency:"EUR"})}</p><p>{source === "demo" ? "Maquette : aucun débit réel." : "L’achat sécurisé de places n’est pas encore disponible."}</p>{ticketError ? <p role="alert">{ticketError}</p> : null}<button type="button" disabled={busy || source !== "demo" || !canEngage} onClick={() => { void execute({type:"classe.demo.seat.purchase", seat:ticketSeat, cents:classe.seatPriceCents ?? 499, person:{...classe.people[1], id:accountId, name:"Vous", microphone:"ready"}}).then(() => {setTicketSeat(null); setPanel("class");}).catch(() => setTicketError("Cette place ou son prix a changé. Fermez puis choisissez à nouveau.")); }}>Simuler l’achat et entrer</button></div> : null}
+    {ticketSeat !== null ? <div className="classe-ticket" role="dialog" aria-modal="true" aria-label={`Ticket place ${ticketSeat}`}><button type="button" aria-label="Fermer le ticket" onClick={() => setTicketSeat(null)}><X /></button><Armchair /><h3>Votre place dans La Classe</h3><p>Place {ticketSeat} · {((classe.seatPriceCents ?? 499) / 100).toLocaleString("fr-FR", {style:"currency",currency:"EUR"})}</p><p>{source === "demo" ? classe.seatPriceCents === 0 ? "Cette classe est gratuite." : "Maquette : aucun débit réel." : classe.seatPriceCents === 0 ? "L’accès aux places gratuites n’est pas encore disponible en LIVE." : "L’achat sécurisé de places n’est pas encore disponible."}</p>{ticketError ? <p role="alert">{ticketError}</p> : null}<button type="button" disabled={busy || source !== "demo" || !canEngage} onClick={() => { void execute({type:"classe.demo.seat.purchase", seat:ticketSeat, cents:classe.seatPriceCents ?? 499, person:{...viewer, id:accountId, role:"Élève", microphone:"ready"}}).then(() => {setTicketSeat(null); setPanel("class");}).catch(() => setTicketError("Cette place ou son prix a changé. Fermez puis choisissez à nouveau.")); }}>{classe.seatPriceCents === 0 ? "Entrer gratuitement" : "Simuler l’achat et entrer"}</button></div> : null}
     {selectedStudent ? <Suspense fallback={null}><ClassStudentPreProfile returnFocusTo={profileTriggerRef.current} boundsElement={classroomRef.current} person={selectedStudent} source={source} onClose={() => setSelectedStudentId(null)} /></Suspense> : null}
-    {panel === "resources" && canAccessResources && resources.length ? <Section eyebrow="RESSOURCES DU COURS" title="À garder après la classe" action={<span className="room-audience-count">{resources.length}</span>}>
-      <div className="room-audience-class-resources">
-        {resources.map((resource) => <article key={resource.id}>
-          <span className={`is-${resource.kind}`}>{resource.kind === "image" ? <Images /> : <FileAudio />}</span>
-          <span><strong>{resource.name}</strong><small>{resource.kind === "image" ? "IMAGE" : "AUDIO"} · {resource.size >= 1_048_576 ? `${(resource.size / 1_048_576).toFixed(1)} Mo` : `${Math.max(1, Math.round(resource.size / 1024))} Ko`}</small></span>
-          <button type="button" disabled={resourceDownloadId !== null} onClick={() => {
-            setResourceDownloadId(resource.id);
-            setResourceError(null);
-            void downloadClassroomResource(resource, roomId)
-              .catch(() => setResourceError("Le téléchargement sécurisé n’a pas pu démarrer."))
-              .finally(() => setResourceDownloadId(null));
-          }} aria-label={`Télécharger ${resource.name}`}><Download />{resourceDownloadId === resource.id ? "Préparation…" : "Télécharger"}</button>
-        </article>)}
-        {resourceError ? <p role="alert"><CircleHelp />{resourceError}</p> : null}
-      </div>
-    </Section> : null}
-    {panel === "resources" && !resources.length ? <p className="room-audience-notice">Le professeur n’a pas encore partagé de ressource.</p> : null}
+    {panel === "resources" && canAccessResources ? <ClassroomResources resources={resources} roomId={roomId} source={source} /> : null}
     {panel === "questions" ? <section className="classe-questions-panel" aria-label="Questions de la classe">
       <header><span><MessageCircleQuestion /><h2>Questions</h2></span><small>{questions.length} questions</small></header>
       <p className="classe-questions-intro">Posez votre question au professeur ou soutenez celle d’un élève.</p>
@@ -488,11 +485,7 @@ function ClasseAudience({ classe, role, accountId, roomId, canEngage, busy, exec
     </div>
     <div className="is-classroom classe-student-navbar"><nav className="classroom-command-dock classe-student-dock" aria-label="Commandes de l’élève">
       <div className="classroom-command-dock__controls">
-        <button type="button" aria-pressed={panel === "class"} aria-label="Classe" title="Classe" onClick={() => setPanel("class")}><Armchair /><span>Classe</span></button>
-        {seat && role === "premium_participant" ? <button type="button" aria-label={handRaised ? "Baisser ma main" : "Lever la main"} title={handRaised ? "Baisser ma main" : "Lever la main"} className={handRaised ? "is-hand-action is-active" : "is-hand-action"} aria-pressed={handRaised} disabled={busy || !canEngage || (!handRaised && !canRaise)} onClick={() => void execute(handRaised ? {type:"classe.hand.lower-own", accountId} : {type:"classe.hand.raise", personId:accountId})}><Hand /><span>{handRaised ? "Baisser ma main" : "Lever la main"}</span></button> : null}
-        <button type="button" aria-label="Questions" aria-pressed={panel === "questions"} className={panel === "questions" ? "is-active" : ""} title="Poser une question" onClick={() => setPanel("questions")}><MessageCircleMore /></button>
-
-        {canAccessResources ? <button type="button" aria-label="Ressources" title="Ressources" aria-pressed={panel === "resources"} onClick={() => setPanel("resources")}><Download /><span>Ressources</span></button> : null}
+        {canRequestFloor || handRaised ? <button type="button" aria-label={handRaised ? "Baisser ma main" : "Lever la main"} title={handRaised ? "Baisser ma main" : "Lever la main"} className={handRaised ? "is-hand-action is-active" : "is-hand-action"} aria-pressed={handRaised} disabled={busy || !canEngage || (!handRaised && !canRaise)} onClick={() => void execute(handRaised ? {type:"classe.hand.lower-own", accountId} : {type:"classe.hand.raise", personId:accountId}).catch(() => undefined)}><Hand /><span>{handRaised ? "Baisser ma main" : "Lever la main"}</span></button> : null}
         <button type="button" aria-label="Quitter la classe" title="Quitter la classe" onClick={onLeaveRoom} disabled={!onLeaveRoom}><LogOut /><span>Quitter la classe</span></button>
       </div>
     </nav></div>
@@ -629,7 +622,7 @@ function DemoWaveAudience({ wave, accountId, viewer, canEngage, busy, execute }:
         {filteredIntake ? <p className="room-audience-notice" role="status">Catégories ouvertes : {acceptedLabels}.</p> : null}
         <button type="button" className="room-audience-dropzone" disabled={!canEngage} onClick={() => fileRef.current?.click()}><FileAudio /><span><strong>{file?.name ?? "Choisir un fichier audio"}</strong><small>WAV, MP3, AAC, FLAC ou M4A · 25 Mo maximum</small></span></button>
         <input ref={fileRef} hidden type="file" accept="audio/wav,audio/mpeg,audio/aac,audio/flac,audio/mp4,audio/x-m4a,.wav,.mp3,.aac,.flac,.m4a" onChange={(event) => { const next = event.currentTarget.files?.[0] ?? null; setSuccess(false); setUploadError(""); if (!next) { setFile(null); return; } try { validateWaveAudienceFile(next); setFile(next); } catch (reason) { setFile(null); const code = reason instanceof Error ? reason.message : "wave_file_type_invalid"; setUploadError(code === "wave_file_size_invalid" ? "Le fichier doit peser au maximum 25 Mo." : "Format non pris en charge. Utilisez WAV, MP3, AAC, FLAC ou M4A."); } }} />
-        <div className="room-audience-form-grid"><label>Titre<input maxLength={80} value={title} onChange={(event) => setTitle(event.currentTarget.value)} /></label><label>Type<select value={selectedInstrument?.label ?? ""} onChange={(event) => setInstrument(event.currentTarget.value)}>{acceptedInstruments.map((item) => <option key={item.label}>{item.label}</option>)}</select></label><label className="is-wide">Message facultatif<textarea rows={2} maxLength={240} value={message} onChange={(event) => setMessage(event.currentTarget.value)} /></label></div>
+        <div className="room-audience-form-grid"><label>Titre<input maxLength={80} value={title} onChange={(event) => setTitle(event.currentTarget.value)} /></label><label>Type<MeewavSelect value={selectedInstrument?.label ?? ""} onChange={(event) => setInstrument(event.currentTarget.value)}>{acceptedInstruments.map((item) => <option key={item.label}>{item.label}</option>)}</MeewavSelect></label><label className="is-wide">Message facultatif<textarea rows={2} maxLength={240} value={message} onChange={(event) => setMessage(event.currentTarget.value)} /></label></div>
         <label className="room-audience-check"><input type="checkbox" checked={rightsConfirmed} onChange={(event) => setRightsConfirmed(event.currentTarget.checked)} /> Je possède les droits nécessaires sur cette boucle et j’autorise son traitement, sa présentation dans cette Wave, ainsi que son téléchargement et son utilisation par les autres utilisateurs.</label>
         {progress ? <progress value={progress} max={100}>{progress}%</progress> : null}
         <button type="submit" className="is-primary" disabled={!canEngage || busy || !file || !title.trim() || !rightsConfirmed}>Envoyer au Sas</button>
@@ -652,77 +645,7 @@ export function WaveAudience(props: WaveAudienceProps) {
   return <DemoWaveAudience {...props} />;
 }
 
-function battleStatusLabel(status: CageState["battleStatus"]) {
-  if (status === "ready") return "Prochain round";
-  if (status === "countdown") return "Départ imminent";
-  if (status === "live-a") return "Passage A";
-  if (status === "live-b") return "Passage B";
-  if (status === "paused") return "Pause arbitrage";
-  if (status === "incident") return "Incident technique";
-  return "Round terminé";
-}
-
-function CageCompetitor({ person, side, selected, disabled, onVote }: { person: RoomPerson; side: "A" | "B"; selected: boolean; disabled: boolean; onVote: () => void }) {
-  return <button type="button" className={`room-audience-competitor is-${side.toLowerCase()}${selected ? " is-selected" : ""}`} disabled={disabled} onClick={onVote}><span>{side}</span><img src={person.avatarUrl} alt="" /><strong>{person.name}</strong><small>{person.role}</small>{selected ? <Check /> : null}</button>;
-}
-
-function standings(matches: CageMatch[]) {
-  const table = new Map<string, { person: RoomPerson; played: number; wins: number; losses: number; points: number }>();
-  matches.filter((match) => match.status === "done").forEach((match) => {
-    [match.competitorA, match.competitorB].forEach((person) => { if (!table.has(person.id)) table.set(person.id, { person, played: 0, wins: 0, losses: 0, points: 0 }); });
-    const a = table.get(match.competitorA.id)!; const b = table.get(match.competitorB.id)!; a.played += 1; b.played += 1;
-    if (match.winnerId === a.person.id) { a.wins += 1; a.points += 3; b.losses += 1; } else if (match.winnerId === b.person.id) { b.wins += 1; b.points += 3; a.losses += 1; }
-  });
-  return [...table.values()].sort((a, b) => b.points - a.points || b.wins - a.wins);
-}
-
-function CagePosterCountdown() {
-  const [deadline] = useState(() => Date.now() + 5 * 60_000);
-  const [seconds, setSeconds] = useState(300);
-  useEffect(() => {
-    const tick = () => {
-      const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
-      setSeconds(remaining);
-      if (remaining === 0) window.clearInterval(timer);
-    };
-    const timer = window.setInterval(tick, 1000);
-    return () => window.clearInterval(timer);
-  }, [deadline]);
-  return <div className="cage-poster-countdown"><small>AVANT LE TOURNOI · SIMULATION</small><output role="timer" aria-label="Compte à rebours avant le tournoi">{String(Math.floor(seconds / 60)).padStart(2, "0")}<span>:</span>{String(seconds % 60).padStart(2, "0")}</output>{seconds === 0 ? <small>La régie donne le départ</small> : null}</div>;
-}
-
-function CageAudience({ cage, accountId, canEngage, busy, execute, participation }: { cage: CageState; accountId: string; canEngage: boolean; busy: boolean; execute: (command: RoomToolsCommand) => Promise<unknown>; participation?: ReactNode }) {
-  const match = cage.matches.find((candidate) => candidate.id === cage.currentMatchId);
-  const choice = cage.votes[accountId];
-  const ranking = standings(cage.matches);
-  const secondsLeft = useVoteCountdown(cage.votingOpen, cage.votingEndsAt);
-  const voteOpen = cage.votingOpen && secondsLeft !== 0;
-  if (!match) return <section className="cage-tournament-poster" aria-label="Affiche du tournoi">
-    <img className="cage-tournament-poster__art" src="/images/cage/rap-paris-marseille.png" alt="La Cage — RAP Paris versus Marseille. Le tournoi commence bientôt." />
-    <CagePosterCountdown />
-    <div className="cage-poster-participation">{participation}</div>
-    <small>LA CAGE · TOURNOI LIVE</small>
-    <Trophy className="cage-tournament-poster__trophy" aria-hidden="true" />
-    <h2>{cageEvent(cage).title}</h2>
-    <p>{cageEvent(cage).discipline}</p>
-    <div className="cage-tournament-poster__portraits">{cageEntrants(cage).slice(0, 8).map(person => <img key={person.id} src={person.avatarUrl} alt={person.name} title={person.name} />)}</div>
-    <strong>Un ring. Des talents. Un champion.</strong>
-    <footer><span><i /> En attente du lancement</span><p>Les affiches, le chrono et les votes suivent les annonces de la régie.</p></footer>
-  </section>;
-  return <>
-    {participation}
-    <Section eyebrow="BATTLE EN COURS" title={`${match.competitorA.name} vs ${match.competitorB.name}`} action={<span className="room-audience-live"><i />{battleStatusLabel(cage.battleStatus)}</span>}>
-      <div className="room-audience-battle"><CageCompetitor person={match.competitorA} side="A" selected={choice === "A"} disabled={!canEngage || busy || !voteOpen || Boolean(choice)} onVote={() => void execute({ type: "cage.vote.cast", accountId, choice: "A" })} /><span className="room-audience-versus"><Swords />VS</span><CageCompetitor person={match.competitorB} side="B" selected={choice === "B"} disabled={!canEngage || busy || !voteOpen || Boolean(choice)} onVote={() => void execute({ type: "cage.vote.cast", accountId, choice: "B" })} /></div>
-      <div className={`room-audience-vote-state${voteOpen ? " is-open" : ""}`}>{voteOpen ? <><Vote /><span><strong>{choice ? "Vote enregistré." : "Vote ouvert"}</strong><small>{choice ? `Votre choix : ${choice}` : `Une seule voix par compte${secondsLeft === null ? "." : ` · ${secondsLeft}s`}`}</small></span></> : <><Clock3 /><span><strong>Vote fermé</strong><small>Regardez le passage : le vote apparaîtra au signal de la régie.</small></span></>}</div>
-      {!cage.resultsHidden && match.status === "done" ? <div className="room-audience-result"><Trophy /><span><small>RÉSULTAT RÉVÉLÉ</small><strong>{match.winnerId === match.competitorA.id ? match.competitorA.name : match.competitorB.name}</strong></span><b>{match.scoreA} – {match.scoreB}</b></div> : null}
-    </Section>
-    {cage.format === "championship" ? <Section eyebrow="CHAMPIONNAT" title="Classement"><div className="room-audience-ranking"><header><span>#</span><span>Concurrent</span><span>J</span><span>V</span><span>D</span><span>Pts</span></header>{ranking.map((entry, index) => <div key={entry.person.id}><b>{index + 1}</b><Person person={entry.person} /><span>{entry.played}</span><span>{entry.wins}</span><span>{entry.losses}</span><strong>{entry.points}</strong></div>)}</div></Section> : <Section eyebrow="TOURNOI" title="Bracket public"><div className="room-audience-bracket">{[...new Set(cage.matches.map((candidate) => candidate.round))].map((round) => <section key={round}><strong>{round === Math.max(...cage.matches.map((candidate) => candidate.round)) ? "Finale" : `Tour ${round}`}</strong>{cage.matches.filter((candidate) => candidate.round === round).map((candidate) => <article key={candidate.id} className={candidate.id === cage.currentMatchId ? "is-current" : ""}><span className={candidate.winnerId === candidate.competitorA.id ? "is-winner" : ""}>{candidate.competitorA.name}</span><i>vs</i><span className={candidate.winnerId === candidate.competitorB.id ? "is-winner" : ""}>{candidate.competitorB.name}</span></article>)}</section>)}</div></Section>}
-    <p className="room-audience-privacy"><ShieldCheck /> Les cadeaux et les votes sont totalement indépendants : aucun cadeau ne modifie un score ou une qualification.</p>
-  </>;
-}
-
-
-export default function RoomAudienceInteractions({ roomType, room, isHost, isGuest, canEngage, onContributeFundraiser, cageParticipation, sceneParticipation, onOpenChat, onLeaveRoom, active = true }: RoomAudienceInteractionsProps) {
+export default function RoomAudienceInteractions({ roomType, room, isHost, isGuest, canEngage, onContributeFundraiser, cageParticipation, sceneParticipation, onOpenChat, onOpenMixer, onLeaveRoom, active = true }: RoomAudienceInteractionsProps) {
   const liveCall = useOptionalRoomLiveCall();
   const actorRole = resolveRoomActorRole(roomType, isHost, isGuest, room.currentUserProfile?.role);
   const requestedAccountId = room.currentUserProfile?.id ?? `anonymous-${roomType}`;
@@ -734,6 +657,7 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
     : requestedAccountId, [demoSeedRole, requestedAccountId, room.id, room.source, roomType]);
   const { state, busy, error, execute, role: toolsRole, canVote } = useRoomTools({ roomType, roomId: room.id, role: actorRole, accountId: initialAccountId, source: room.source });
   const accountId = effectiveDemoAccount(roomType, actorRole, initialAccountId, state);
+  const { fundraiser: cageFundraiser, error: cageFundraiserError } = useCageAudienceFundraiser(room.id, accountId, roomType === "cage" && room.source === "live" && active && canEngage);
   const viewer: RoomPerson = {
     id: accountId,
     name: room.currentUserProfile?.displayName ?? "Membre MeeWav",
@@ -744,18 +668,19 @@ export default function RoomAudienceInteractions({ roomType, room, isHost, isGue
   };
   const audienceRole = resolveRoomAudienceRole({ roomType, actorRole: toolsRole, accountId, state });
 
+  if (!state && roomType === "cage") return <div className="room-audience-interactions is-cage"><div className="room-audience-interactions__body"><CageProductionCard active={active} onOpenMixer={onOpenMixer} />{error ? <p role="alert" className="room-audience-error">Le programme du tournoi est momentanément indisponible.</p> : <p role="status">Chargement du programme…</p>}</div></div>;
   if (!state) return <div className="room-audience-interactions is-loading" role="status"><Sparkles /><span><strong>Préparation de l’expérience publique…</strong><small>Les interactions disponibles vont apparaître sans interrompre le live.</small></span></div>;
 
   return <div className={`room-audience-interactions is-${roomType}`} data-audience-role={audienceRole}><RoomVotePolicyLabel roomId={room.id} source={room.source} accountId={accountId}/>
-    {roomType!=="loge"?<header className="room-audience-interactions__header"><span><Headphones /><span><small>{roomType.toUpperCase()} · EN DIRECT</small><strong>Interactions</strong><em>Ce qui se passe maintenant, et ce que vous pouvez faire.</em></span></span><b>{audienceRoleLabel(audienceRole)}</b></header>:null}
+    {roomType!=="loge" && roomType!=="cage"?<header className="room-audience-interactions__header"><span><Headphones /><span><small>{roomType.toUpperCase()} · EN DIRECT</small><strong>Interactions</strong><em>Ce qui se passe maintenant, et ce que vous pouvez faire.</em></span></span><b>{audienceRoleLabel(audienceRole)}</b></header>:null}
     {error ? <p className="room-audience-error" role="alert">Action impossible : {error.replace(/_/g, " ")}</p> : null}
     <div className="room-audience-interactions__body">
       {!canEngage ? <p className="room-audience-auth"><LockKeyhole /><span><strong>Regardez le live sans interruption.</strong><small>{roomType === "wave" ? "Pour voter ou proposer une boucle, utilisez la connexion MeeWav." : "Pour voter, participer ou envoyer un cadeau, utilisez la connexion MeeWav."}</small></span><a href={existingAuthHref()}>Se connecter</a></p> : null}
       {roomType === "scene" && state.scene ? <SceneAudience canVote={canVote} source={room.source} active={active} participation={sceneParticipation} state={state.scene} accountId={accountId} canEngage={canEngage} busy={busy} execute={execute} onContributeFundraiser={onContributeFundraiser} /> : null}
-      {roomType === "classe" && state.classe ? <ClasseAudience visible={active} source={room.source} onOpenChat={onOpenChat} onLeaveRoom={onLeaveRoom} classe={state.classe} role={toolsRole} accountId={accountId} roomId={room.id} canEngage={canEngage} busy={busy} execute={execute} onEndIntervention={() => endClasseAudienceIntervention({ source: room.source, roomId: room.id, accountId, liveCall, execute })} /> : null}
+      {roomType === "classe" && state.classe ? <ClasseAudience viewer={viewer} visible={active} source={room.source} onOpenChat={onOpenChat} onLeaveRoom={onLeaveRoom} classe={state.classe} role={toolsRole} accountId={accountId} roomId={room.id} canEngage={canEngage} busy={busy} execute={execute} onEndIntervention={() => endClasseAudienceIntervention({ source: room.source, roomId: room.id, accountId, liveCall, execute })} /> : null}
       {roomType === "wave" && state.wave ? <WaveAudience wave={state.wave} source={room.source} roomId={room.id} accountId={accountId} viewer={viewer} canEngage={canEngage} busy={busy} execute={execute} /> : null}
-      {roomType === "cage" && state.cage ? state.cage.runtime?.publicResults ? <CageResults runtime={state.cage.runtime} matchId={state.cage.runtime.publicResults.matchId}/> : state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerShowcase enabled={room.source === "demo"}><CageAudience cage={state.cage} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute} participation={cageParticipation} /></CageViewerShowcase> : null}
-      {roomType === "loge" && state.loge ? <LogeViewer loge={state.loge} accountId={accountId} viewer={viewer} hostName={room.host.displayName} eligible={Boolean(state.audience?.eligible)} canEngage={canEngage} busy={busy} execute={execute} onOpenChat={onOpenChat} preview={isLogePreviewAvailable(state.loge.preview)?<LogePreviewPlayer roomId={room.id} source={room.source} preview={state.loge.preview} available/>:<div className="loge-viewer__waiting"><Headphones/><strong>L’artiste prépare une avant-première</strong><p>Continuez à profiter du live. Le contenu apparaîtra ici à son lancement.</p></div>}/> : null}
+      {roomType === "cage" && state.cage ? state.cage.runtime?.config.format === "open-mic" ? <>{cageParticipation}<CageOpenMicAudience state={state} accountId={accountId} canEngage={canEngage && canVote} busy={busy} execute={execute}/></> : <CageViewerCompanion cage={state.cage} source={room.source} accountId={accountId} active={active} fundraiser={cageFundraiser} fundraiserError={cageFundraiserError} participation={cageParticipation} posterUrl={room.source === "demo" ? "/images/cage/rap-paris-marseille.png" : undefined} production={<CageProductionCard active={active} onOpenMixer={onOpenMixer} />} /> : null}
+      {roomType === "loge" && state.loge ? <LogeViewer loge={state.loge} accountId={accountId} viewer={viewer} hostName={room.host.displayName} hostAvatarUrl={room.host.avatarUrl} eligible={Boolean(state.audience?.eligible)} canEngage={canEngage} busy={busy} execute={execute} onOpenChat={onOpenChat} preview={isLogePreviewAvailable(state.loge.preview)?<LogePreviewPlayer roomId={room.id} source={room.source} preview={state.loge.preview} available/>:null}/> : null}
     </div>
   </div>;
 }

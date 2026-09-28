@@ -309,8 +309,7 @@ export function HoverPreProfileContent({
     ? hydratedArtist ?? seedArtist
     : seedArtist;
   const hasRealRecipientProfile = !isOwner
-    && hydratedArtist !== null
-    && isCanonicalProfileId(hydratedArtist.id)
+    && isCanonicalProfileId(artist.id)
     && !isLocalAuthPreviewEnabled();
   const pinColors = isOwner
     ? artist.pinColors
@@ -630,6 +629,25 @@ export function HoverPreProfileContent({
     setActiveTab("shorts");
     setPlayingMedia({ type: "short", id: shortId });
   };
+
+  useEffect(() => {
+    const stopPreview = () => {
+      audioRef.current?.pause();
+      videoRef.current?.pause();
+      setPlayingMedia(null);
+      setAudioProgress(0);
+    };
+    const visibility = () => { if (document.hidden) stopPreview(); };
+    const lifecycle = (event: Event) => {
+      if ((event as CustomEvent<{ active: boolean }>).detail?.active === false) stopPreview();
+    };
+    document.addEventListener("visibilitychange", visibility);
+    document.addEventListener("globelab-lifecycle", lifecycle);
+    return () => {
+      document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener("globelab-lifecycle", lifecycle);
+    };
+  }, []);
 
   const handleAudioToggle = (audioId: string) => {
     const isAlreadyPlaying = playingMedia?.type === "audio" && playingMedia.id === audioId;
@@ -1611,6 +1629,7 @@ export function HoverPreProfileContent({
                 recipientProfileId={artist.id}
                 recipientName={artist.name}
                 attachmentsEnabled
+                demoMode={!hasRealRecipientProfile}
                 onOpen={() => interactionLockChangeRef.current?.(true)}
                 onClose={closeCollabComposer}
                 onSubmit={async (draft) => {

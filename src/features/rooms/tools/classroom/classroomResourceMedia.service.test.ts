@@ -89,7 +89,7 @@ describe("Classroom resource media service", () => {
       size: 12,
       addedAt: new Date().toISOString(),
       mediaUrl: "blob:classe-resource",
-    }, "demo-classe");
+    }, "demo-classe", "demo");
     expect(click).toHaveBeenCalledOnce();
     expect(invoke).not.toHaveBeenCalled();
   });
@@ -121,7 +121,7 @@ describe("Classroom resource media service", () => {
       size: 1,
       addedAt: new Date().toISOString(),
       mediaUrl: "javascript:alert(1)",
-    }, "demo-classe")).rejects.toThrow("class_resource_download_failed");
+    }, "demo-classe", "demo")).rejects.toThrow("class_resource_download_failed");
     expect(click).not.toHaveBeenCalled();
   });
 });

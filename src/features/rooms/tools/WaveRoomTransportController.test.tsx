@@ -56,6 +56,19 @@ beforeEach(() => vi.clearAllMocks());
 afterEach(() => { cleanup(); mocks.wave = null; });
 
 describe("WaveRoomTransportController · mute et solo réels", () => {
+  it("envoie une boucle de vote au sas sans remplacer la base", async () => {
+    mocks.wave = makeWave([base()]);
+    render(<WaveRoomTransportController room={room} />);
+    await waitFor(() => expect(mocks.registerImportHandler).toHaveBeenCalled());
+    await mocks.registerImportHandler.mock.calls[0][0]({ destination: "vote", category: "drums", audio: {
+      id: "vote-loop", title: "Vote drums", src: "blob:vote-loop", durationSeconds: 8,
+      file: new File(["audio"], "drums.wav", { type: "audio/wav" }),
+    } });
+    expect(mocks.execute).toHaveBeenCalledTimes(1);
+    expect(mocks.execute).toHaveBeenCalledWith(expect.objectContaining({
+      type: "wave.submission.importToVote", submission: expect.objectContaining({ title: "Vote drums", lifecycleStatus: "READY_FOR_VOTE", category: "drums" }),
+    }));
+  });
   it("conserve le type choisi pour une nouvelle boucle de base", async () => {
     mocks.wave = makeWave([base()]);
     render(<WaveRoomTransportController room={room} />);

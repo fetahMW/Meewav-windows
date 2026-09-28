@@ -1,0 +1,13 @@
+@import "./room-console-material.css";
+
+/* The Mixeur glass recipe, preserving the colour of each musical Pad. */
+:is(.place-twists__pad, .place-time-cue) {
+  --pad-light: color-mix(in srgb, var(--twist-accent) 40%, white);
+  --pad-glass-face:
+    linear-gradient(122deg, #ffffff2b, #ffffff08 26%, transparent 48%) padding-box,
+    radial-gradient(ellipse at 50% -30%, color-mix(in srgb, var(--pad-light) 28%, transparent), transparent 66%) padding-box,
+    linear-gradient(180deg, color-mix(in srgb, var(--twist-accent) 22%, #252329), color-mix(in srgb, var(--twist-accent) 15%, #19151e) 46%, color-mix(in srgb, var(--twist-accent) 32%, #25202d)) padding-box,
+    linear-gradient(140deg, color-mix(in srgb, var(--pad-light) 52%, transparent), color-mix(in srgb, var(--twist-accent) 42%, transparent) 29%, #211f256b 60%, color-mix(in srgb, var(--pad-light) 55%, transparent)) border-box;
+  --pad-glass-shadow: inset 0 1px 0 #ffffff2b, inset 0 3px 6px #09040e99, inset 1px 0 0 #ffffff0d,
+    inset 0 -2px 1px color-mix(in srgb, var(--pad-light) 32%, transparent), inset 0 -10px 20px color-mix(in srgb, var(--twist-accent) 13%, transparent), 0 1px 0 #ffffff0a, 0 3px 7px #0009;
+}

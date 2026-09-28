@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { RoomServiceClient } from "npm:livekit-server-sdk@2.17.0";
+import { BytePlusAdmin } from "../_shared/byteplusAdmin.ts";
 import { timingSafeEqual } from "../_shared/audioPairing.ts";
 
 const MAX_BATCH_SIZE = 50;
@@ -21,32 +21,6 @@ function requiredEnvironment(name: string) {
   const value = Deno.env.get(name)?.trim() ?? "";
   if (!value) throw new Error(`Missing required environment variable: ${name}`);
   return value;
-}
-
-function isLoopbackHostname(hostname: string) {
-  const normalized = hostname.toLowerCase();
-  return normalized === "localhost"
-    || normalized === "127.0.0.1"
-    || normalized === "::1"
-    || normalized === "[::1]";
-}
-
-function liveKitHttpUrl() {
-  const raw = Deno.env.get("LIVEKIT_URL")?.trim()
-    || Deno.env.get("LIVEKIT_SERVER_URL")?.trim()
-    || "";
-  if (!raw) throw new Error("Missing required environment variable: LIVEKIT_URL");
-  const parsed = new URL(raw);
-  if (!["wss:", "ws:", "https:", "http:"].includes(parsed.protocol)) {
-    throw new Error("LIVEKIT_URL must use https:// or wss://");
-  }
-  if ((parsed.protocol === "ws:" || parsed.protocol === "http:")
-    && !isLoopbackHostname(parsed.hostname)) {
-    throw new Error("LIVEKIT_URL requires TLS outside an explicit loopback development host");
-  }
-  if (parsed.protocol === "wss:") parsed.protocol = "https:";
-  else if (parsed.protocol === "ws:") parsed.protocol = "http:";
-  return parsed.toString().replace(/\/$/u, "");
 }
 
 function jsonResponse(status: number, body: unknown) {
@@ -104,11 +78,7 @@ Deno.serve(async (request) => {
       requiredEnvironment("SUPABASE_SERVICE_ROLE_KEY"),
       { auth: { persistSession: false, autoRefreshToken: false } },
     );
-    const roomService = new RoomServiceClient(
-      liveKitHttpUrl(),
-      requiredEnvironment("LIVEKIT_API_KEY"),
-      requiredEnvironment("LIVEKIT_API_SECRET"),
-    );
+    const roomService = new BytePlusAdmin();
 
     const { error: expiryError } = await service.rpc(
       "rooms_expire_live_call_invitations_v1",
@@ -147,7 +117,7 @@ Deno.serve(async (request) => {
             : "private_call_ended_server_side";
         } else if (shouldExecute === true) {
           // The route row is the authority consumed by the Host bridge. Once
-          // it is preview, no remote LiveKit admin action can selectively
+          // it is preview, no remote RTC admin action can selectively
           // remove only that locally mixed source from the public program.
           result = "public_mix_route_revoked";
         }

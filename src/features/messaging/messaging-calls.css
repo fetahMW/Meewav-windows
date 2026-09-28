@@ -1,0 +1,18 @@
+.messaging-call-backdrop { position:fixed; inset:0; z-index:12000; display:grid; place-items:center; padding:28px; background:rgb(3 6 12 / .78); backdrop-filter:blur(12px); }
+.messaging-call { width:min(760px,100%); max-height:90vh; overflow:auto; padding:28px; color:#f5f7fb; border:1px solid #3b4355; border-radius:24px; background:#111722; box-shadow:0 24px 100px #0009; font-family:inherit; }
+.messaging-call header,.messaging-call footer { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.messaging-call header p { color:#b4c5dc; font-size:11px; letter-spacing:.16em; margin:0 0 8px; }
+.messaging-call h2 { margin:0; font-size:26px; overflow-wrap:anywhere; }
+.messaging-call button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:46px; padding:10px 16px; border:1px solid #455168; border-radius:14px; background:#253248; color:#fff; cursor:pointer; font:inherit; }
+.messaging-call button:disabled { opacity:.55; cursor:wait; }
+.messaging-call button:focus-visible { outline:3px solid #88d8fc; outline-offset:4px; }
+.messaging-call button svg { width:21px; height:21px; }
+.messaging-call button[aria-pressed=true] { background:#705328; }
+.messaging-call .messaging-call-accept { background:#146745; border-color:#399473; }
+.messaging-call .messaging-call-end { background:#9d3145; border-color:#ba4b5f; margin-left:auto; }
+.messaging-call-status { color:#c4d1e3; line-height:1.6; min-height:26px; }
+.messaging-call footer { justify-content:center; margin-top:24px; flex-wrap:wrap; }
+.messaging-call-media { width:1px; height:1px; overflow:hidden; }
+.messaging-call-media.is-video { position:relative; width:100%; height:auto; aspect-ratio:16/9; overflow:hidden; background:#05080d; border-radius:16px; }
+.messaging-call-remote { width:100%; height:100%; }
+.messaging-call-local { position:absolute; right:12px; bottom:12px; width:27%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#171e2a; }

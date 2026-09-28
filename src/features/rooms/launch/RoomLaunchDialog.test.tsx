@@ -4,21 +4,24 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import RoomLaunchDialog from "./RoomLaunchDialog";
 import { RuntimeProvider } from '../../../runtime/RuntimeProvider';
 
-const mocks = vi.hoisted(() => ({ navigate: vi.fn(), measure: vi.fn(), save: vi.fn(), createLive: vi.fn() }));
+const mocks = vi.hoisted(() => ({ navigate: vi.fn(), measure: vi.fn(), save: vi.fn(), createLive: vi.fn(), createCage: vi.fn() }));
 vi.mock("react-router-dom", async (original) => ({ ...await original<typeof import("react-router-dom")>(), useNavigate: () => mocks.navigate }));
-vi.mock("./CageLaunchDialog", () => ({ default: () => null }));
+vi.mock("../../auth", () => ({ useAuth: () => ({ user: null }) }));
+vi.mock("./CageLaunchDialog", () => ({ default: () => <section aria-label="Préparer La Cage complète" /> }));
 vi.mock("../place/GreenHouse", () => ({ default: ({ onReady, readyLabel }: { onReady: () => Promise<void>; readyLabel: string }) => <button onClick={onReady}>{readyLabel}</button> }));
 vi.mock("../tools/waveAudioRules", async (original) => ({ ...await original<typeof import("../tools/waveAudioRules")>(), measureWaveAudio: mocks.measure }));
 vi.mock("./roomLaunchAudio", async (original) => ({ ...await original<typeof import("./roomLaunchAudio")>(), saveRoomLaunchAudio: mocks.save }));
-vi.mock("./createLiveRoom", () => ({ createLivePlace: mocks.createLive }));
-vi.mock("../place/RoomProductionPreparation", () => ({ default: ({ stage, onSetupChange }: { stage: string; onSetupChange: (value: unknown) => void }) =>
-  <div role="region" aria-label="Studio Meewav · préparation de la Room"><span>{stage}</span><button onClick={() => onSetupChange({ cameraId: 'camera-qa', microphoneId: 'micro-qa', cameraIds: ['camera-qa'], layout: 'split' })}>Préparer les sources QA</button></div> }));
+vi.mock("./createLiveRoom", () => ({ createLiveRoom: mocks.createLive }));
+vi.mock("../place/RoomProductionPreparation", () => ({ default: ({ stage, onSetupChange, onReadinessChange }: { stage: string; onSetupChange: (value: unknown) => void; onReadinessChange?: (value: unknown) => void }) =>
+  <div role="region" aria-label="Studio Meewav · préparation de la Room"><span>{stage}</span><button onClick={() => { onSetupChange({ cameraId: 'camera-qa', microphoneId: 'micro-qa', cameraIds: ['camera-qa'], layout: 'split' }); onReadinessChange?.({ video: true, microphone: true, music: false, pending: false }); }}>Préparer les sources QA</button></div> }));
 
 beforeEach(() => {
+  vi.clearAllMocks();
   mocks.navigate.mockClear();
   mocks.measure.mockResolvedValue(245);
   mocks.save.mockResolvedValue("/__meewav_room_launch_audio__/test-ui");
   mocks.createLive.mockResolvedValue('a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3');
+  mocks.createCage.mockResolvedValue('a8333bbe-dbb6-43d4-83bc-0a23b6bc00d3');
   vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: vi.fn(() => "blob:test-base"), revokeObjectURL: vi.fn() }));
 });
 afterEach(() => { cleanup(); localStorage.clear(); sessionStorage.clear(); vi.unstubAllGlobals(); });
@@ -31,10 +34,9 @@ it('opens Studio inside the Desktop launch sequence after configuration and carr
   render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
   fireEvent.click(screen.getByRole('button', { name: /^La Place/ }));
   fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Place QA' } });
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
   expect(await screen.findByLabelText('Sujet de la rencontre')).toBeVisible();
   expect(screen.queryByRole('region', { name: 'Studio Meewav · préparation de la Room' })).not.toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer Studio Meewav' }));
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'Préparer les sources QA' }));
   fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
@@ -58,7 +60,7 @@ function settings() {
 
 it.each([
   ['La Loge', 'Titre de l’avant-première'],
-  ['La Classe', 'Places élèves'],
+  ['La Classe', 'Tarif du cours'],
   ['La Scène', 'Programme · un titre par ligne'],
   ['La Wave', 'Tempo (BPM)'],
 ])('shows the existing %s configuration before Studio and preserves it on return', async (name, field) => {
@@ -70,21 +72,20 @@ it.each([
   fireEvent.click(screen.getByRole('button', { name: new RegExp(`^${name}`) }));
   await screen.findByText('Studio Meewav');
   fireEvent.change(screen.getByLabelText('Titre du direct'), { target: { value: 'Configuration QA' } });
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
   expect(screen.getByLabelText(field)).toBeVisible();
   if (name === 'La Wave') {
-    expect(screen.getByRole('button', { name: 'Continuer' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Préparer Studio Meewav' })).toBeDisabled();
     fireEvent.click(screen.getByRole('button', { name: 'Son long' }));
     fireEvent.change(screen.getByLabelText('Fichier de la boucle de base'), { target: { files: [new File(['audio'], 'base.wav', { type: 'audio/wav' })] } });
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Continuer' })).toBeEnabled());
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Préparer Studio Meewav' })).toBeEnabled());
   }
-  fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Préparer Studio Meewav' }));
   expect(screen.getByRole('region', { name: 'Studio Meewav · préparation de la Room' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'Retour' }));
   expect(screen.getByLabelText(field)).toBeVisible();
   if (name === 'La Wave') {
     expect(screen.getByText('base.wav')).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Continuer' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Préparer Studio Meewav' })).toBeEnabled();
   }
 });
 
@@ -108,7 +109,8 @@ it.each([/^Accès direct host/, /^Provisoire/])("opens each demo host via %s wit
 it("requires verified audio and preserves a long base with an independent 4-bar contribution limit", async () => {
   settings();
   expect(screen.getByRole("button", { name: "Continuer" })).toBeDisabled();
-  fireEvent.change(screen.getByLabelText("Longueur maximale des instruments (mesures)"), { target: { value: "4" } });
+  fireEvent.click(screen.getByRole("combobox", { name: "Longueur maximale des instruments (mesures)" }));
+  fireEvent.click(screen.getByRole("option", { name: "4" }));
   fireEvent.click(screen.getByRole("button", { name: "Son long" }));
   fireEvent.change(screen.getByLabelText("Fichier de la boucle de base"), { target: { files: [new File(["audio"], "piano.wav", { type: "audio/wav" })] } });
   await waitFor(() => expect(screen.getByRole("button", { name: "Continuer" })).toBeEnabled());
@@ -134,4 +136,12 @@ it("rejects unreadable audio and blocks launch again when the file is removed", 
   await waitFor(() => expect(screen.getByRole("button", { name: "Continuer" })).toBeEnabled());
   fireEvent.click(screen.getByRole("button", { name: "Retirer la boucle de base" }));
   expect(screen.getByRole("button", { name: "Continuer" })).toBeDisabled();
+});
+
+it('routes the Cage card to the full competition preparation', async () => {
+  vi.stubGlobal('meewavDesktop', { version: 1, getCapabilities: async () => ({ runtime: 'desktop-windows', screenCapture: true, windowCapture: true, systemAudioCapture: false, professionalAudioDriver: false }) });
+  render(<RuntimeProvider><RoomLaunchDialog closeRef={createRef()} onClose={() => undefined} /></RuntimeProvider>);
+  fireEvent.click(screen.getByRole('button', { name: /^La Cage/ }));
+  expect(await screen.findByRole('region', { name: 'Préparer La Cage complète' })).toBeVisible();
+  expect(mocks.createCage).not.toHaveBeenCalled();
 });

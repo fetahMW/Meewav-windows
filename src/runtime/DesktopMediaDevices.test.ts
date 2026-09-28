@@ -19,7 +19,7 @@ describe('Desktop device ownership', () => {
     await expect(devices.captureMicrophone('mic-selected')).rejects.toThrow();
     expect(getUserMedia.mock.calls).toEqual([
       [{ video: { deviceId: { exact: 'camera-selected' } }, audio: false }],
-      [{ audio: { deviceId: { exact: 'mic-selected' } }, video: false }],
+      [{ audio: { deviceId: { exact: 'mic-selected' }, channelCount: { ideal: 1 }, echoCancellation: false, noiseSuppression: false, autoGainControl: false }, video: false }],
     ]);
   });
 

@@ -15,7 +15,8 @@ describe("SceneEvaluationPanel", () => {
     expect(screen.getByText("88%")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Rendre les résultats publics pour Deux voix" }));
     await waitFor(() => expect(execute).toHaveBeenCalledWith({ type: "scene.evaluation.configure", performanceId: "perf-6", enabled: true, resultsVisibility: "public" }));
-    fireEvent.change(screen.getByLabelText("Choisir une prestation"), { target: { value: "perf-4" } });
+    fireEvent.click(screen.getByRole("combobox", { name: "Choisir une prestation" }));
+    fireEvent.click(screen.getByRole("option", { name: /Corps électrique/ }));
     expect(screen.getByText("Les avis sont désactivés pour cette prestation.")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("switch", { name: "Activer l’évaluation pour Corps électrique" }));
     await waitFor(() => expect(execute).toHaveBeenLastCalledWith({ type: "scene.evaluation.configure", performanceId: "perf-4", enabled: true }));

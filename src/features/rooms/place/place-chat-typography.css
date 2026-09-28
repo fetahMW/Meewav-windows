@@ -6,7 +6,7 @@
   font-family: var(--room-chat-font);
 }
 
-.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat :is(.place-chat__message, .place-chat__message p, .place-chat__message time, .place-chat__author, .place-chat__author strong, .place-chat__pinned, .place-chat__pinned strong, .place-chat__pinned small, .place-chat__system, .place-chat__composer.is-liquid-glass, .place-chat__composer.is-liquid-glass .mw-emoticon-composer),
+.rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis .place-chat :is(.place-chat__message, .place-chat__message p, .place-chat__author, .place-chat__author strong, .place-chat__pinned, .place-chat__pinned strong, .place-chat__pinned small, .place-chat__system, .place-chat__composer.is-liquid-glass, .place-chat__composer.is-liquid-glass .mw-emoticon-composer),
 .place-chat-message-actions :is(button, strong, small, blockquote),
 .place-chat-pins :is(button, strong, blockquote, p) {
   font-family: var(--room-chat-font);

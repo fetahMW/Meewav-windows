@@ -105,7 +105,7 @@ class PlaceTwistAudioEngine {
 
   async play(kind: PlaceTwistKind, onEnded?: () => void, onOneSecondBeforeEnd?: () => void, onError?: () => void) {
     if (kind === "dj_horn") {
-      await this.playHorn(onEnded);
+      await this.playHorn(onEnded, onError);
       return;
     }
     this.stop();
@@ -157,7 +157,7 @@ class PlaceTwistAudioEngine {
     this.hornTemplate = template;
   }
 
-  private async playHorn(onEnded?: () => void) {
+  private async playHorn(onEnded?: () => void, onError?: () => void) {
     this.preloadHorn();
     // Un klaxon fonctionne comme un sampler monophonique : chaque nouveau
     // coup coupe net le précédent, revient à zéro, puis seul le dernier coup
@@ -183,20 +183,25 @@ class PlaceTwistAudioEngine {
         finish?.();
       }
     };
-    await voice.play();
+    voice.onerror = () => { this.hornVoices.delete(voice); this.hornOnIdle = null; onError?.(); };
+    try { await voice.play(); }
+    catch (error) { this.hornVoices.delete(voice); this.hornOnIdle = null; throw error; }
   }
 
-  async playFile(source: string, onEnded?: () => void) {
+  async playFile(source: string, onEnded?: () => void, onError?: () => void) {
     this.stop();
     const audio = new Audio(source);
     audio.preload = "auto";
     audio.volume = this.volume;
     audio.onended = () => {
-      if (this.audio === audio) this.audio = null;
+      if (this.audio !== audio) return;
+      this.audio = null;
       onEnded?.();
     };
+    audio.onerror = () => { if (this.audio === audio) { this.stop(); onError?.(); } };
     this.audio = audio;
-    await audio.play();
+    try { await audio.play(); }
+    catch (error) { if (this.audio === audio) this.stop(); throw error; }
   }
 
   private getContext() {

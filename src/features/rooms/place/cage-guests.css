@@ -166,3 +166,6 @@
   .meewav-filter-dock #studio-guests-filter-panel.is-open { transition: none; }
   .cage-prepared-overlay.rooms-home-launch-dialog > :is(.cage-prepared-panel, .cage-launch) { animation-duration: 0s; }
 }
+.place-room-shell[data-room-presentation="cage"] .place-guests__section-tools .cage-guests-return { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 30px; padding: 5px 8px; border: 1px solid #c9a6ed40; border-radius: 9px; background: #30223f50; color: #dec5fa; font-size: 11px; white-space: nowrap; cursor: pointer; }
+.place-room-shell[data-room-presentation="cage"] .cage-guests-return svg { width: 14px; height: 14px; }
+.place-room-shell[data-room-presentation="cage"] .cage-guests-return:focus-visible { outline: 2px solid #c99cf9; outline-offset: 3px; }

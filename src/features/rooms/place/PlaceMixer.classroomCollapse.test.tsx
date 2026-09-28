@@ -4,12 +4,12 @@ import { CLASSE_ROOM_PRESENTATION, RoomPresentationProvider } from "../roomPrese
 import { createPlaceDemoState } from "./place.fixtures";
 import PlaceMixer from "./PlaceMixer";
 
-function Mixer({ classroom }: { classroom: boolean }) {
+function Mixer({ classroom, mode = "host" }: { classroom: boolean; mode?: "host" | "viewer" | "guest" }) {
   const room = createPlaceDemoState();
   const mixer = (
     <PlaceMixer
       room={room}
-      mode="host"
+      mode={mode}
       currentUserId={room.host.id}
       view="volumes"
       onView={vi.fn()}
@@ -52,13 +52,25 @@ afterEach(() => {
 });
 
 describe("PlaceMixer — lecteur repliable de La Classe", () => {
+  it.each(["viewer", "guest"] as const)("n’ajoute aucun lecteur dans le mixeur Classe %s", mode => {
+    const { container } = render(<Mixer classroom mode={mode} />);
+    expect(screen.queryByRole("region", { name: "Lecteur audio du Mixeur" })).not.toBeInTheDocument();
+    expect(container.querySelector(".place-mixer")).not.toHaveClass("has-audio-player");
+    expect(screen.getByRole("button", { name: "Volumes" })).toBeVisible();
+  });
   it("replie uniquement la façade et conserve le lecteur audio monté et actif", () => {
     const { container } = render(<Mixer classroom />);
     const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
     const audio = container.querySelector("audio")!;
     audio.currentTime = 12;
+    const initialExpand = within(player).getByRole("button", { name: "Déplier le lecteur audio · La Classe" });
+    expect(initialExpand).toHaveAttribute("aria-expanded", "false");
+    expect(player).toHaveClass("is-classroom-collapsed");
+    expect(container.querySelector(".place-mixer")).toHaveClass("is-classroom-player-collapsed");
+    expect(within(player).queryByRole("button", { name: "Importer un son" })).not.toBeInTheDocument();
+    fireEvent.click(initialExpand);
 
-    const collapse = within(player).getByRole("button", { name: "Replier le lecteur audio de La Classe" });
+    const collapse = within(player).getByRole("button", { name: "Replier le lecteur audio · La Classe" });
     const controlledId = collapse.getAttribute("aria-controls")!;
     const controlledSurface = document.getElementById(controlledId)!;
     expect(collapse).toHaveAttribute("aria-expanded", "true");
@@ -69,7 +81,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
     expect(within(player).getByRole("menu", { name: "Choisir la source" })).toBeVisible();
     fireEvent.click(collapse);
 
-    const expand = within(player).getByRole("button", { name: "Déplier le lecteur audio de La Classe" });
+    const expand = within(player).getByRole("button", { name: "Déplier le lecteur audio · La Classe" });
     expect(expand).toHaveAttribute("aria-expanded", "false");
     expect(expand).toHaveAttribute("aria-controls", controlledId);
     expect(player).toHaveClass("is-classroom-collapsed");
@@ -84,7 +96,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
     expect(screen.queryByRole("dialog", { name: "Playlist du Mixeur" })).not.toBeInTheDocument();
 
     fireEvent.click(expand);
-    const collapseAgain = within(player).getByRole("button", { name: "Replier le lecteur audio de La Classe" });
+    const collapseAgain = within(player).getByRole("button", { name: "Replier le lecteur audio · La Classe" });
     expect(collapseAgain).toHaveAttribute("aria-expanded", "true");
     expect(player).not.toHaveClass("is-classroom-collapsed");
     expect(container.querySelector(".place-mixer")).not.toHaveClass("is-classroom-player-collapsed");
@@ -101,7 +113,7 @@ describe("PlaceMixer — lecteur repliable de La Classe", () => {
   it("laisse le lecteur de La Place strictement inchangé", () => {
     render(<Mixer classroom={false} />);
     const player = screen.getByRole("region", { name: "Lecteur audio du Mixeur" });
-    expect(within(player).queryByRole("button", { name: /lecteur audio de La Classe/i })).not.toBeInTheDocument();
+    expect(within(player).queryByRole("button", { name: /lecteur audio · La Classe/i })).not.toBeInTheDocument();
     expect(player).not.toHaveClass("is-classroom-collapsible");
   });
 });

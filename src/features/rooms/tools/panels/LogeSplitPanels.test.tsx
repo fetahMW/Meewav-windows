@@ -28,20 +28,19 @@ describe("standalone Loge tools", () => {
     const waitingGuest = logeFixture("dedication-panel").questions[0].author;
     render(<LogeDedicationPanel loge={logeFixture("dedication-panel")} waitingGuests={[waitingGuest]} initialFanIds={[waitingGuest.id]} disabled={false} execute={vi.fn(async () => undefined)} roomId="52000000-0000-4000-8000-000000000001" source="demo" />);
 
-    expect(screen.getByRole("region", { name: "1 sélectionné" })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: new RegExp(`Créer pour ${waitingGuest.name}`, "i") })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Créer une dédicace ou un moment en direct" })).toHaveTextContent(waitingGuest.name);
     expect(screen.getByText("Dédicace audio")).toBeInTheDocument();
     expect(screen.getByText("Dédicace vidéo")).toBeInTheDocument();
-    expect(screen.getByText("Monter avec moi")).toBeInTheDocument();
+    expect(screen.getByText("Moment en direct")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Dédicace audio pour/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Dédicace vidéo pour/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Monter avec moi pour/i })).toBeInTheDocument();
-    expect(screen.getByRole("region", {name:"Inscriptions des fans"})).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Moment en direct pour/i })).toBeInTheDocument();
+    expect(screen.getByRole("region", {name:"Membres de la Loge et VIP"})).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /Dédicace audio pour/i }));
     expect(screen.getByRole("button", { name: /Enregistrer/i })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Retour aux moments" }));
-    fireEvent.click(screen.getByRole("button", { name: /Monter avec moi pour/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Moment en direct pour/i }));
     expect(screen.getByRole("button", { name: "5 min" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: /Inviter le groupe/i })).toBeInTheDocument();
   });

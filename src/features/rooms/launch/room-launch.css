@@ -37,3 +37,7 @@
 .room-launch__types .room-launch__direct:focus-visible { outline: 2px solid #b9a0ed; outline-offset: 2px; }
 
 .room-launch > header, .room-launch > footer, .room-launch__steps { flex-shrink: 0; }
+.room-launch__preflight { display: grid; gap: 0; width: min(100%, 500px); padding: 0; margin: 12px auto; list-style: none; text-align: left; }
+.room-launch__preflight li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 12px 0; border-bottom: 1px solid #ffffff12; font-size: 12px; }
+.room-launch__preflight strong { color: #cfb998; font-size: 11px; font-weight: 500; }
+.room-launch__preflight [data-ready=true] strong { color: #97c6b4; }

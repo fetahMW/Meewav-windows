@@ -30,3 +30,14 @@ export function sceneFrames(scene: VideoScene): VideoFrame[] {
 export function copyScene(scene: VideoScene): VideoScene {
   return { ...scene, sourceIds: [...scene.sourceIds], pipPosition: scene.pipPosition && { ...scene.pipPosition }, frames: scene.frames?.map((frame) => ({ ...frame })), fits: scene.fits && [...scene.fits] };
 }
+
+/** Keep slot identity stable while reusing empty zones, capped at nine sources. */
+export function selectSceneSource(ids: string[], id: string, enabled: boolean): string[] {
+  const next = ids.slice(0, 9);
+  if (!enabled) return next.map((value) => value === id ? '' : value);
+  if (next.includes(id)) return next;
+  const empty = next.findIndex((value) => !value);
+  if (empty >= 0) next[empty] = id;
+  else if (next.length < 9) next.push(id);
+  return next;
+}

@@ -7,6 +7,25 @@ afterEach(cleanup);
 function freshRoom() { return { ...createPlaceDemoState(), id: crypto.randomUUID(), currentUserProfile: PLACE_DEMO_PROFILES.host }; }
 
 describe("Place conversation tools journeys", () => {
+  it("selects Clash guests through the custom menu and retains their guest-card photos", () => {
+    const room = freshRoom();
+    const guest = room.participants.find(person => person.profile.id !== PLACE_DEMO_PROFILES.guestA.id && ["backstage", "ready"].includes(person.status))!;
+    render(<PlaceConversationTools room={room} isHost canEngage visible />);
+    fireEvent.click(screen.getByRole("tab", { name: "Clash" }));
+    const first = screen.getByRole("combobox", { name: "Premier participant" });
+    expect(first.tagName).toBe("BUTTON");
+    fireEvent.click(first);
+    fireEvent.click(screen.getByRole("option", { name: guest.profile.displayName }));
+    expect(first).toHaveTextContent(guest.profile.displayName);
+    const portrait = first.closest(".place-conversation__contender")?.querySelector(".place-conversation__portrait");
+    expect(portrait).toHaveClass("is-square");
+    expect(portrait?.querySelector("img")).toHaveAttribute("src", guest.profile.avatarUrl);
+    fireEvent.click(screen.getByRole("combobox", { name: "Second participant" }));
+    expect(screen.getByRole("option", { name: guest.profile.displayName })).toHaveAttribute("aria-disabled", "true");
+    fireEvent.click(screen.getByRole("option", { name: guest.profile.displayName }));
+    expect(screen.getByRole("combobox", { name: "Second participant" })).not.toHaveTextContent(guest.profile.displayName);
+  });
+
   it("separates the speaking queue from the current turn", async () => {
     const room = freshRoom();
     room.participants = room.participants.map((person) => person.profile.displayName === "Lior Benali" ? { ...person, status: "backstage" } : person);

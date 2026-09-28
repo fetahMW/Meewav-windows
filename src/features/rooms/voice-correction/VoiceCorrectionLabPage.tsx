@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
 import {
   Activity,
   CheckCircle2,
@@ -1424,7 +1425,7 @@ export function VoiceCorrectionLabPage({
             <div className="voice-correction-lab__panel-body">
               <label className="voice-correction-lab__field">
                 <span>Microphone</span>
-                <select
+                <MeewavSelect
                   value={selectedDeviceId ?? ""}
                   onChange={(event) => {
                     const nextId = event.target.value || null;
@@ -1439,7 +1440,7 @@ export function VoiceCorrectionLabPage({
                       {device.label || `Microphone ${index + 1}`}
                     </option>
                   ))}
-                </select>
+                </MeewavSelect>
               </label>
               <fieldset className="voice-correction-lab__segmented">
                 <legend>Traitements du navigateur</legend>
@@ -1582,8 +1583,8 @@ export function VoiceCorrectionLabPage({
                 ))}
               </fieldset>
               <div className="voice-correction-lab__select-grid">
-                <label className="voice-correction-lab__field"><span>Tonalité</span><select value={settings.key} disabled={busy || nativeMonitorBusy} onChange={(event) => changeSetting("key", Number(event.target.value) as VoiceCorrectionSettings["key"])}>{OPENDAW_VOICE_CORRECTION_KEYS.map((key, index) => <option key={key} value={index}>{key}</option>)}</select></label>
-                <label className="voice-correction-lab__field"><span>Gamme</span><select value={settings.scale} disabled={busy || nativeMonitorBusy} onChange={(event) => changeSetting("scale", Number(event.target.value) as VoiceCorrectionSettings["scale"])}>{OPENDAW_VOICE_CORRECTION_SCALES.map((scale, index) => <option key={scale} value={index}>{scale}</option>)}</select></label>
+                <label className="voice-correction-lab__field"><span>Tonalité</span><MeewavSelect value={settings.key} disabled={busy || nativeMonitorBusy} onChange={(event) => changeSetting("key", Number(event.target.value) as VoiceCorrectionSettings["key"])}>{OPENDAW_VOICE_CORRECTION_KEYS.map((key, index) => <option key={key} value={index}>{key}</option>)}</MeewavSelect></label>
+                <label className="voice-correction-lab__field"><span>Gamme</span><MeewavSelect value={settings.scale} disabled={busy || nativeMonitorBusy} onChange={(event) => changeSetting("scale", Number(event.target.value) as VoiceCorrectionSettings["scale"])}>{OPENDAW_VOICE_CORRECTION_SCALES.map((scale, index) => <option key={scale} value={index}>{scale}</option>)}</MeewavSelect></label>
               </div>
               <SliderField label="Intensité de correction" value={Math.round(settings.amount * 100)} min={0} max={100} step={1} suffix=" %" disabled={busy || nativeMonitorBusy} onChange={(value) => changeSetting("amount", value / 100)} />
               <SliderField label="Retune speed" value={Math.round(settings.retune * 100)} min={0} max={100} step={1} suffix=" %" disabled={busy || nativeMonitorBusy} onChange={(value) => changeSetting("retune", value / 100)} />

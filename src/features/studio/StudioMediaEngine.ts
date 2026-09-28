@@ -1,4 +1,4 @@
-import { AudioPresets, Room, Track } from "livekit-client";
+import { AudioPresets, Room, Track } from "../../lib/byteplusRtc";
 import {
   PLACE_LIVEKIT_PROGRAM_STREAM_NAME,
   PLACE_LIVEKIT_VOICE_TRACK_NAME,
@@ -111,7 +111,7 @@ export class StudioMediaEngine {
       }
       room = this.dependencies.room();
       this.transport = room;
-      await room.connect(access.url, access.token);
+      await room.connect(access.appId, access.token, { access, refreshAccess: () => this.dependencies.access(roomId) });
       if (generation !== this.generation) return;
       await room.localParticipant.publishTrack(video, {
         source: Track.Source.Camera,
@@ -151,7 +151,9 @@ export class StudioMediaEngine {
     const stream = this.snapshot.stream;
     this.transport = null;
     this.update({ phase: "idle", stream: null, roomId: null, error: null });
-    if (room) await room.disconnect().catch(() => undefined);
+    // Leaving the RTC room can wait on the network. Release capture immediately
+    // so navigation cannot leave this studio's microphone publishing behind it.
     stream?.getTracks().forEach((track) => track.stop());
+    if (room) await room.disconnect().catch(() => undefined);
   }
 }

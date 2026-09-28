@@ -1,112 +1,62 @@
-/* Reference: thin black glass capsule; the send key lights only during input.
-   Reflections are static gradients, with no animated blur in the live chat. */
+/* One slim input surface. The send action belongs to the field. */
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis.is-chat .place-chat .place-chat__composer.is-liquid-glass {
-  --composer-key: clamp(32px, 8.5cqi, 53px);
-  --composer-image-key: calc(var(--composer-key) - 3px);
-  --composer-inset: clamp(4px, 1.4cqi, 8px);
-  position: relative; isolation: isolate; box-sizing: border-box;
-  display: grid; grid-template-columns: minmax(0, 1fr) var(--composer-key);
-  align-items: center; gap: clamp(7px, 1.85cqi, 12px);
-  min-width: 0; min-height: 0; width: auto; height: auto;
-  margin: 4px 5px 3px; padding: var(--composer-inset) clamp(8px, 2.2cqi, 15px);
-  overflow: visible; border: 1px solid transparent; border-radius: 999px;
-  background:
-    radial-gradient(ellipse at 100% 110%, #5945de22, transparent 25%) padding-box,
-    radial-gradient(ellipse at 0% 0%, #9baec923, transparent 35%) padding-box,
-    linear-gradient(180deg, #10121a, #020305 46%, #06080d) padding-box,
-    radial-gradient(ellipse at 0% 42%, #b7c5df, #65718a 9%, transparent 36%) border-box,
-    radial-gradient(ellipse at 100% 60%, #6d61a6, transparent 30%) border-box,
-    linear-gradient(180deg, #77758e, #202330 42%, #171b26 65%, #62697e) border-box;
-  box-shadow: inset 0 1px 3px #c7c9e02b, inset 1px 0 4px #afc2df1f, inset 0 -2px 4px #7683ab1c, 0 3px 8px #000a;
+  --composer-key: 32px;
+  position: relative;
+  display: block;
+  min-width: 0;
+  width: auto;
+  min-height: 0;
+  height: auto;
+  margin: 5px 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   font-family: var(--room-chat-font, system-ui, sans-serif);
-
-  &::after {
-    content: ""; position: absolute; pointer-events: none;
-    right: 7%; top: 0; width: 38%; height: 2px; border-radius: 50%;
-    background: radial-gradient(ellipse, #9c98d04d, transparent 72%);
-  }
+  &::before, &::after { content: none; }
   & .place-chat__input-well {
-    position: relative; display: grid; grid-template-columns: minmax(0, 1fr) var(--composer-image-key);
-    align-items: center; gap: clamp(10px, 2.7cqi, 17px); min-width: 0; height: calc(var(--composer-key) + 4px);
-    padding: 2px; box-sizing: border-box; border: 1px solid transparent; border-radius: 999px;
-    background:
-      radial-gradient(ellipse at 15% -70%, #adc3e47a, transparent 70%) padding-box,
-      linear-gradient(180deg, #121620, #040507 48%, #090b11) padding-box,
-      linear-gradient(135deg, #7f90aa, #323a4b 19%, #181d27 53%, #303346 87%, #44415d) border-box;
-    box-shadow: inset 0 2px 4px #dce5ff1f, inset 0 -2px 5px #7283b214;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--composer-key) var(--composer-key);
+    align-items: center;
+    gap: 3px;
+    min-width: 0;
+    height: 42px;
+    padding: 4px 5px 4px 14px;
+    box-sizing: border-box;
+    border: 1px solid #ffffff20;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #15151a, #0a0a0e);
+    box-shadow: inset 0 1px 2px #0006;
   }
-  & label {
-    position: relative; display: flex; align-items: center; width: 100%; min-width: 0; height: 100%;
-    padding-left: clamp(14px, 3.6cqi, 25px); box-sizing: border-box;
-  }
-  & label::before {
-    content: ""; position: absolute; top: 29%; bottom: 29%; left: clamp(12px, 3.4cqi, 24px);
-    width: 2px; border-radius: 2px; background: linear-gradient(#c1a2ff, #8973ed);
-    box-shadow: 0 0 5px #9b7ff94d; opacity: 0; pointer-events: none;
-  }
-  & label:has(.mw-emoticon-composer[data-empty="true"]:focus)::before { opacity: 1; }
+  & .place-chat__input-well:focus-within { border-color: #b786ed70; }
+  & label { display: flex; align-items: center; min-width: 0; height: 100%; padding: 0; }
+  & label::before { content: none; }
   & .mw-emoticon-composer {
-    box-sizing: border-box; display: block; width: 100%; height: auto; min-width: 0; min-height: 0;
-    max-height: calc(var(--composer-key) - 8px); margin: 0; padding: 2px 9px 2px 10px;
+    display: block;
+    box-sizing: border-box;
+    width: 100%; min-width: 0; min-height: 0; max-height: 30px;
+    margin: 0; padding: 2px 4px;
     overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
     border: 0; border-radius: 0; background: transparent; box-shadow: none;
-    color: #e4e3ee; font: 400 clamp(11.5px, 2.85cqi, 19px)/1.5 var(--room-chat-font, system-ui, sans-serif);
-    letter-spacing: normal; caret-color: #b49aff; white-space: nowrap;
+    color: #efedf4;
+    font: 400 13px/1.5 var(--room-chat-font, system-ui, sans-serif);
+    caret-color: #c495ff; white-space: nowrap;
   }
-  & .mw-emoticon-composer:focus { outline: 0; border: 0; box-shadow: none; }
-  & .mw-emoticon-composer[data-empty="true"]:focus { caret-color: transparent; }
-  & .mw-emoticon-composer[data-empty="true"]::before { color: #9794a6; opacity: 1; }
-  & .mw-emoticon-composer__image { width: 23px; height: 23px; }
-  & .place-chat__emoji { display: block; position: relative; width: var(--composer-image-key); height: var(--composer-image-key); }
-  & .place-chat__emoji::before {
-    content: ""; position: absolute; pointer-events: none; right: calc(100% + 7px); top: 21%; bottom: 21%;
-    width: 1px; background: linear-gradient(transparent, #77759c40 30%, #77759c40 70%, transparent);
-  }
+  & .mw-emoticon-composer:focus { outline: 0; box-shadow: none; }
+  & .mw-emoticon-composer[data-empty="true"]::before { color: #92909e; }
+  & .mw-emoticon-composer__image { width: 22px; height: 22px; }
+  & .place-chat__emoji { display: block; width: var(--composer-key); height: var(--composer-key); }
   & :is(.place-chat__emoji > button, .place-chat__send) {
-    position: relative; box-sizing: border-box; display: grid; place-items: center; flex: none;
-    width: var(--composer-key); height: var(--composer-key); min-height: 0; padding: 0; margin: 0;
-    border: 1px solid transparent; border-radius: 36%;
-    background:
-      radial-gradient(ellipse at 24% -35%, #b7c6e366, transparent 68%) padding-box,
-      linear-gradient(155deg, #1d2330, #080a10 46%, #030407 73%, #101018) padding-box,
-      linear-gradient(145deg, #8a99b5, #394356 23%, #1b1f2c 60%, #46435f) border-box;
-    color: #bdbdce; box-shadow: inset 0 1px 2px #e3e9ff20, inset 0 -1px 2px #7d83bd20, 0 1px 2px #0008;
-    opacity: 1; cursor: pointer; transition: box-shadow 140ms ease, color 140ms ease;
+    display: grid; place-items: center; box-sizing: border-box;
+    width: var(--composer-key); height: var(--composer-key); min-height: 0;
+    margin: 0; padding: 0; border: 0; border-radius: 50%;
+    background: transparent; color: #a9a4b5; box-shadow: none; cursor: pointer;
   }
-  & :is(.place-chat__emoji > button, .place-chat__send) > svg {
-    width: 42%; height: 42%; stroke-width: 1.8; color: inherit;
-    filter: none;
-  }
-  & .place-chat__emoji > button { width: var(--composer-image-key); height: var(--composer-image-key); color: #a7a8bb; border: 0; background: transparent; box-shadow: none; }
-  & .place-chat__send > svg { width: 47%; height: 47%; }
-  & :is(.place-chat__emoji > button, .place-chat__send):hover:not(:disabled) { color: #fff; box-shadow: inset 0 1px 2px #e3e9ff3b, inset 0 -1px 2px #7d83bd30, 0 1px 2px #0008; }
-  & .place-chat__emoji > button:hover:not(:disabled) { background: transparent; box-shadow: none; color: #ddd5f4; }
-  &:focus-within .place-chat__send[type="submit"] {
-    background:
-      radial-gradient(ellipse at 14% -26%, #e9e5ffb0, transparent 52%) padding-box,
-      radial-gradient(ellipse at 100% 115%, #b39aff, #5744ff85 32%, transparent 62%) padding-box,
-      linear-gradient(153deg, #554bff 5%, #3020c4 43%, #1d107e 66%, #4330cc) padding-box,
-      linear-gradient(150deg, #d9d3ff, #9690eb 35%, #5b50d9 69%, #c2b2ff) border-box;
-    color: #e3ddff;
-    box-shadow: inset 0 2px 4px #fff3, inset 0 -2px 4px #cab7ff60, 0 0 8px #5932ff40, 0 2px 3px #0006;
-  }
-  &:has(.mw-emoticon-composer:focus) {
-    box-shadow: inset 0 1px 3px #c7c9e038, inset 1px 0 4px #afc2df28, inset 0 -2px 4px #7683ab24, 0 3px 8px #000a, 3px 1px 10px #4933a530;
-    background:
-      radial-gradient(ellipse at 100% 110%, #5945de70, transparent 25%) padding-box,
-      radial-gradient(ellipse at 0% 0%, #9baec923, transparent 35%) padding-box,
-      linear-gradient(180deg, #10121a, #020305 46%, #06080d) padding-box,
-      radial-gradient(ellipse at 0% 42%, #c2cee7, #72809e 9%, transparent 36%) border-box,
-      radial-gradient(ellipse at 100% 60%, #a398ff, #6454c9 10%, transparent 32%) border-box,
-      linear-gradient(180deg, #89839f, #252637 42%, #171b26 65%, #69718b) border-box;
-  }
-  &:focus-within .place-chat__send[type="submit"] > svg { filter: drop-shadow(0 0 3px #c4acff33); }
-  & :is(.place-chat__emoji > button, .place-chat__send):active:not(:disabled) { transform: translateY(1px); }
-  & :is(.place-chat__emoji > button, .place-chat__send):focus-visible { outline: 2px solid #d2c3ff; outline-offset: 3px; }
-  & :is(.place-chat__emoji > button, .place-chat__send):disabled { cursor: not-allowed; }
-  & .place-chat__input-well:has(.mw-emoticon-composer[aria-disabled="true"]) { opacity: .6; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .place-chat__composer.is-liquid-glass :is(button, .mw-emoticon-composer) { transition: none !important; }
+  & .place-chat__emoji > button > svg { width: 19px; height: 19px; }
+  & .place-chat__send > svg { width: 21px; height: 21px; stroke-width: 1.7; }
+  & .place-chat__send:not(:disabled) { color: #d4b4ff; background: #ad76f01c; }
+  & :is(.place-chat__emoji > button, .place-chat__send):hover:not(:disabled) { color: #f2e7ff; background: #b27ae82a; }
+  & :is(.place-chat__emoji > button, .place-chat__send):focus-visible { outline: 2px solid #c295fa; outline-offset: 1px; }
+  & :is(.place-chat__emoji > button, .place-chat__send):disabled { opacity: .45; cursor: default; }
 }

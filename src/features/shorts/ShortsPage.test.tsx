@@ -431,10 +431,10 @@ describe("La Scène page interactions", () => {
     const user = userEvent.setup();
     renderScene();
     const chips = screen.getByRole("navigation", { name: "Catégories vidéo" });
-    await user.click(within(chips).getByRole("button", { name: "Jazz", exact: true }));
+    await user.click(within(chips).getByRole("button", { name: "Jazz" }));
     expect(screen.getByLabelText("Route La Scène active")).toHaveTextContent("jazz");
-    expect(within(chips).getByRole("button", { name: "Jazz", exact: true })).toHaveAttribute("aria-pressed", "true");
-    await user.click(within(chips).getByRole("button", { name: "Tous", exact: true }));
+    expect(within(chips).getByRole("button", { name: "Jazz" })).toHaveAttribute("aria-pressed", "true");
+    await user.click(within(chips).getByRole("button", { name: "Tous" }));
     expect(screen.getByRole("region", { name: "Vidéos recommandées" })).toBeVisible();
   });
 

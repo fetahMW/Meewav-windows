@@ -7,3 +7,5 @@ Les modifications de sources suivies présentes dans le dossier Web local à cet
 Le frontend React est partagé par conception avec le site. Les ressources du Globe déjà intégrées au dépôt Web restent incluses. Aucun projet natif Android ou iOS, clone historique du Globe, profil local, fichier d'environnement, dépendance installée, build, capture ou artefact de diagnostic n'a été importé.
 
 Pour suivre l'évolution du site, comparer explicitement `upstream/main` avec `main` puis porter uniquement les changements utiles au bureau. Ne pas fusionner automatiquement les historiques des dépôts de plateformes.
+
+Finition hi-fi laquée du Mixeur (25 septembre 2026) : `src/features/rooms/place/place-mixer-hifi-lacquer.css` reprend le fichier du commit Web `112674a6f` et le complète pour le deck Windows (`.is-android-deck` : surface laquée, touches laquées, LED violette des touches enclenchées). Il est chargé après `place-desktop-android-parity.css` ; les tailles des touches Windows restent inchangées.

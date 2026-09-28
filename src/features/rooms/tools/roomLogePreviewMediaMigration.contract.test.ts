@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import sql from "../../../../supabase/migrations/20260820150000_loge_preview_private_media_v1.sql?raw";
+import rawSql from "../../../../supabase/migrations/20260820150000_loge_preview_private_media_v1.sql?raw";
+
+const sql = rawSql.replace(/\r\n/g, "\n");
 
 describe("Loge private preview media SQL contract", () => {
   it("creates a bounded private audio bucket with control-only object policies", () => {

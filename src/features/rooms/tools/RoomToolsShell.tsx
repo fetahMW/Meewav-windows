@@ -1,7 +1,7 @@
 import PlacePollToolPanel from "./panels/PlacePollToolPanel";
 import RoomExperienceBoundary from "../switch-room/RoomExperienceBoundary";
 import RoomVotePolicyLabel from "../voting/RoomVotePolicyLabel";
-import CageResults from "./panels/CageResults";
+import CageResultsDialog from "./panels/CageResultsDialog";
 import CageCompetitionWorkspace, { CageCommandBar, useCageCommand, type CageWorkspaceView } from "./panels/CageCompetitionWorkspace";
 import CagePresentationControls from "./panels/CagePresentationControls";
 import {
@@ -142,8 +142,9 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
     return fixture.loge?.questions[0]?.author.id ?? baseAccountId;
   }, [baseAccountId, role, room.id, room.source, roomType]);
   const [resultTarget, setResultTarget] = useState<{matchId?:string}|null>(null);
+  useEffect(() => { setResultTarget(null); }, [room.id, roomType]);
   const [activeTool, setActiveTool] = useState<RoomToolId>(() => configs[0].id);
-  const [momentVipPersonId, setMomentVipPersonId] = useState<string | null>(null);
+  const [momentVipPersonIds, setMomentVipPersonIds] = useState<string[]>([]);
   const logeWaitingGuests = useMemo<RoomPerson[]>(() => [...new Map([...room.queue, ...room.participants].filter(person => person.profile.id !== room.host.id).map(person => [person.profile.id, person])).values()].map((participant) => ({
     id: participant.profile.id,
     name: participant.profile.displayName,
@@ -212,7 +213,8 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
           setActiveTool("classe-room");
         }}
       /> : null;
-      case "wave-gate": return state.wave ? <WaveGatePanel wave={state.wave} role={role} roomId={room.id} source={room.source} accountId={accountId} disabled={controlDisabled} execute={execute} /> : null;
+      case "wave-gate":
+      case "wave-quarantine": return state.wave ? <WaveGatePanel key={activeTool} quarantine={activeTool === "wave-quarantine"} wave={state.wave} role={role} roomId={room.id} source={room.source} accountId={accountId} disabled={controlDisabled} execute={execute} /> : null;
       // Only the shared dock is present while these panels are rebuilt.
       case "wave-sequencer": return state.wave ? <WaveVoteQueuePanel wave={state.wave} role={role} source={room.source} disabled={controlDisabled} execute={execute} /> : null;
       case "wave-orchestra": return <WaveEmptyPanel label="Beat" wave={state.wave}
@@ -232,10 +234,10 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
       /> : <div className="room-tools-shell__loading">La configuration de cette compétition n’est pas encore disponible.</div>;
       case "loge-preview": return state.loge ? <LogePreviewPanel roomId={room.id} source={room.source} loge={state.loge} disabled={controlDisabled} execute={execute} /> : null;
       case "loge-face-to-face": return state.loge ? <LogeFaceToFacePanel loge={state.loge} disabled={controlDisabled} execute={execute} /> : null;
-      case "loge-dedication": return state.loge ? <LogeDedicationPanel loge={state.loge} disabled={controlDisabled} execute={execute} waitingGuests={logeWaitingGuests} initialFanId={controlledMomentVipPersonIds?.[0] ?? momentVipPersonId} onFanChange={id => { setMomentVipPersonId(id); onMomentVipPersonIdsChange?.([id]); }} roomId={room.id} source={room.source} /> : null;
+      case "loge-dedication": return state.loge ? <LogeDedicationPanel key={room.id} loge={state.loge} disabled={controlDisabled} execute={execute} waitingGuests={logeWaitingGuests} initialFanIds={controlledMomentVipPersonIds ?? momentVipPersonIds} onFanIdsChange={ids => { setMomentVipPersonIds(ids); onMomentVipPersonIdsChange?.(ids); }} roomId={room.id} source={room.source} /> : null;
       case "loge-audience-choice": return onLaunchPoll && onStopPoll && onOpenChat ? <PlacePollToolPanel room={room} disabled={controlDisabled} onLaunchPoll={onLaunchPoll} onStopPoll={onStopPoll} onOpenChat={onOpenChat} /> : null;
       case "gift": return logeGiftPanel;
-      case "loge-questions": return state.loge ? <LogeQuestionsPanel loge={state.loge} role={role} accountId={accountId} disabled={controlDisabled} execute={execute} source={room.source} authenticated={Boolean(room.currentUserProfile)} onDisplayQuestion={onPinHighlight ? (question) => onPinHighlight(`Question de ${question.author.name} — ${question.text}`, 30) : undefined} onClearQuestion={onClearHighlight ? (question) => room.highlightText === `Question de ${question.author.name} — ${question.text}` ? onClearHighlight() : Promise.resolve() : undefined} onOpenMomentVip={(personId) => { setMomentVipPersonId(personId); onMomentVipPersonIdsChange?.([personId]); setActiveTool("loge-dedication"); }} /> : null;
+      case "loge-questions": return state.loge ? <LogeQuestionsPanel loge={state.loge} role={role} accountId={accountId} disabled={controlDisabled} execute={execute} source={room.source} authenticated={Boolean(room.currentUserProfile)} onDisplayQuestion={onPinHighlight ? (question) => onPinHighlight(`Question de ${question.author.name} — ${question.text}`, 30) : undefined} onClearQuestion={onClearHighlight ? (question) => room.highlightText === `Question de ${question.author.name} — ${question.text}` ? onClearHighlight() : Promise.resolve() : undefined} onOpenMomentVip={(personId) => { setMomentVipPersonIds([personId]); onMomentVipPersonIdsChange?.([personId]); setActiveTool("loge-dedication"); }} /> : null;
     }
   })();
 
@@ -266,7 +268,7 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
   const shellError = error && !(roomType === "classe" && activeTool === "classe-room")
     ? <p className="room-tools-shell__error" role="alert">{actionErrorLabel(roomType, activeTool, error)}</p>
     : null;
-  const panelSection = <section className="room-tools-shell__panel" id={`room-tool-panel-${activeTool}`} role="tabpanel" aria-label={activeConfig.label} aria-labelledby={`room-tool-tab-${activeTool}`}><RoomVotePolicyLabel roomId={room.id} source={room.source} accountId={accountId}/>{shellError}{roomType === "cage" && state?.cage?.runtime && resultTarget ? <CageResults runtime={state.cage.runtime} matchId={resultTarget.matchId} busy={busy} send={role === "host" || role === "regisseur" ? sendCageCommand : undefined} onBack={() => setResultTarget(null)} /> : panel}</section>;
+  const panelSection = <section className="room-tools-shell__panel" id={`room-tool-panel-${activeTool}`} role="tabpanel" aria-label={activeConfig.label} aria-labelledby={`room-tool-tab-${activeTool}`}><RoomVotePolicyLabel roomId={room.id} source={room.source} accountId={accountId}/>{shellError}{panel}</section>;
   const toolPanel = roomType === "cage" ? <div className="cage-tools-body">{state?.cage?.runtime && (role === "host" || role === "regisseur") ? <CagePresentationControls runtime={state.cage.runtime} demo={room.source === "demo"} busy={busy} send={sendCageCommand} onConfigured={() => { setResultTarget(null); setActiveTool("cage-competition"); }} /> : null}{panelSection}{state?.cage?.runtime ? <CageCommandBar
     runtime={state.cage.runtime} view={cageView(activeTool)} disabled={busy}
     isControl={role === "host" || role === "regisseur"} accountId={accountId} send={sendCageCommand}
@@ -276,6 +278,7 @@ export default function RoomToolsShell({ roomType, room, isHost, isGuest, onOpen
   /> : null}</div> : panelSection;
   const waveToolSkinClass = " is-wave-tool-skin";
   return <div className={`room-tools-shell is-${roomType} place-tools-console${waveToolSkinClass}`} data-room-tools={roomType} data-active-tool={activeTool}>
+    {roomType === "cage" && state?.cage?.runtime && resultTarget ? <CageResultsDialog key={resultTarget.matchId ?? "competition"} runtime={state.cage.runtime} matchId={resultTarget.matchId} busy={busy} send={role === "host" || role === "regisseur" ? sendCageCommand : undefined} onClose={() => setResultTarget(null)} /> : null}
     {toolsLayout?.nav ? createPortal(<div className={`room-tools-shell is-${roomType} place-tools-console${waveToolSkinClass}`}>{toolRail}</div>, toolsLayout.nav) : toolRail}
     {toolsLayout?.body ? createPortal(<div className={`room-tools-shell is-${roomType} place-tools-console${waveToolSkinClass}`} data-active-tool={activeTool}><RoomExperienceBoundary onChat={() => onOpenChat?.()}>{toolPanel}</RoomExperienceBoundary></div>, toolsLayout.body) : toolPanel}
   </div>;

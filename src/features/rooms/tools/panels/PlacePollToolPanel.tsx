@@ -76,7 +76,7 @@ export default function PlacePollToolPanel({
   };
 
   return <form className="place-tool-card is-poll" hidden={hidden} onSubmit={submitPoll}>
-    <header className="place-tool-card__header"><span className="place-tool-card__glyph"><BarChart3 aria-hidden="true" /></span><span><small>INTERACTION PUBLIC</small><strong>Sondage rapide</strong><em>Demandez l’avis du public en direct</em></span><b className="place-tool-card__status"><i /> {room.poll?.isActive ? "EN DIRECT" : "PRÊT"}</b></header>
+    <header className="place-tool-card__header"><span className="place-tool-card__glyph"><BarChart3 aria-hidden="true" /></span><span><small>INTERACTION PUBLIQUE</small><strong>Sondage rapide</strong><em>Demandez l’avis du public en direct</em></span><b className="place-tool-card__status"><i /> {room.poll?.isActive ? "EN DIRECT" : "PRÊT"}</b></header>
     {room.poll?.isActive ? (
       <div className="place-tool-poll-live">
         <header><span><i /> À l’antenne</span><time>{`${String(Math.floor(pollRemaining / 60)).padStart(2, "0")}:${String(pollRemaining % 60).padStart(2, "0")}`}</time></header>

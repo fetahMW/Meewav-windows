@@ -37,8 +37,48 @@ it("Desktop exposes Android's two compact FX cards and keeps the existing contro
   expect(onTune).toHaveBeenCalledWith("D#", room.personalVocal.tuneScale);
   fireEvent.change(screen.getByRole("slider", { name: "Mix réverb" }), { target: { value: "0.4" } });
   expect(onVocal).toHaveBeenCalledWith({ reverbAmount: .4, reverbEnabled: true, enabled: true });
-  fireEvent.click(screen.getByRole("button", { name: "Pro", exact: true }));
+  fireEvent.click(screen.getByRole("button", { name: "Pro" }));
   expect(screen.getByRole("button", { name: "Plugins du PC" })).toBeVisible();
+  expect(screen.getByRole("combobox", { name: "Tonalité" })).toBeVisible();
+  const speed = screen.getByRole("slider", { name: "Vitesse de correction" });
+  expect(speed).toBeVisible();
+  fireEvent.change(speed, { target: { value: '.7' } });
+  expect(onVocal).toHaveBeenCalledWith({ tuneSpeed: .7, tuneEnabled: true, enabled: true });
+  fireEvent.change(screen.getByRole("slider", { name: "Humanisation" }), { target: { value: '.3' } });
+  expect(onVocal).toHaveBeenCalledWith({ tuneHumanize: .3, tuneSmooth: .3, tuneEnabled: true, enabled: true });
+  fireEvent.click(screen.getByRole("button", { name: "Effets" }));
+  expect(screen.getByRole("slider", { name: "Mix réverb" })).toBeVisible();
+  const faders = within(screen.getByRole('group', { name: 'Réglages des effets voix' })).getAllByRole('slider');
+  expect(faders).toHaveLength(4);
+  faders.forEach(fader => expect(fader).toHaveAttribute('aria-orientation', 'vertical'));
+  fireEvent.click(screen.getByRole("button", { name: "Correction" }));
+  expect(screen.getByRole("combobox", { name: "Tonalité" })).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Simple" }));
+  expect(screen.getByRole("region", { name: "Autotune simple" })).toBeVisible();
+  expect(screen.queryByRole("button", { name: "Correction" })).toBeNull();
+});
+
+it('Desktop Pro wires all four faders and their bypass buttons independently', () => {
+  runtimeMode.desktop = true;
+  const onVocal = vi.fn();
+  renderMixer('meewav_test', vi.fn(), onVocal, [], room => {
+    Object.assign(room.personalVocal, { reverbEnabled: true, delayEnabled: true, compEnabled: true, eqEnabled: true });
+  });
+  fireEvent.click(screen.getByRole('button', { name: 'Pro' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Effets' }));
+  for (const [label, patch] of [
+    ['Mix réverb', { reverbAmount: 1, reverbEnabled: true, enabled: true }],
+    ['Durée du délai', { delayTimeMs: 1000, delayEnabled: true, enabled: true }],
+    ['Intensité Compression', { compAmount: 1, compEnabled: true, enabled: true }],
+    ['Intensité EQ', { preset: 'Radio', eqEnabled: true, enabled: true }],
+  ] as const) {
+    fireEvent.change(screen.getByRole('slider', { name: label }), { target: { value: '1' } });
+    expect(onVocal).toHaveBeenLastCalledWith(patch);
+  }
+  for (const [label, key] of [['Réverb', 'reverbEnabled'], ['Délai', 'delayEnabled'], ['Compression', 'compEnabled'], ['EQ', 'eqEnabled']] as const) {
+    fireEvent.click(screen.getByRole('button', { name: `Désactiver ${label}` }));
+    expect(onVocal).toHaveBeenLastCalledWith({ [key]: false, enabled: true });
+  }
 });
 
 function renderMixer(
@@ -514,7 +554,7 @@ describe("PlaceMixer Autotune", () => {
 
     expect(screen.getByRole("slider", { name: "Humanisation" })).toBeVisible();
     expect(screen.getByRole("slider", { name: "Humanisation" })).toBeDisabled();
-    expect(screen.getByText(/ne publie pas de paramètre compatible/i)).toBeVisible();
+    expect(screen.getByText(/L’humanisation n’est pas disponible avec ce plugin/i)).toBeVisible();
   });
 
   it("provides one real dry comparison that removes every browser effect", () => {

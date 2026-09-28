@@ -112,10 +112,10 @@
   width: 32px;
   height: 32px;
   place-items: center;
-  border: 1px solid rgba(136, 159, 255, .2);
+  border: 1px solid rgba(169, 112, 255, .24);
   border-radius: 9px;
-  color: #9eb4ff;
-  background: linear-gradient(145deg, rgba(89, 113, 220, .2), rgba(28, 35, 69, .12));
+  color: #a970ff;
+  background: linear-gradient(145deg, rgba(169, 112, 255, .14), rgba(169, 112, 255, .04));
 }
 
 .place-mixer-audio__classroom-summary-icon > svg {
@@ -131,7 +131,7 @@
 
 .place-mixer-audio__classroom-summary small {
   overflow: hidden;
-  color: rgba(174, 190, 246, .6);
+  color: #ba95ef;
   font-size: 8px;
   font-weight: 800;
   letter-spacing: .11em;

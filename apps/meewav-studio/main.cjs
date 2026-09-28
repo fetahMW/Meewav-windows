@@ -1,8 +1,14 @@
-const { app, BrowserWindow, Menu, session, ipcMain, desktopCapturer } = require('electron');
-const { isAbsolute, join } = require('node:path');
+const { app, BrowserWindow, Menu, session, ipcMain, desktopCapturer, protocol, net } = require('electron');
+const { isAbsolute, join, resolve, extname, sep } = require('node:path');
+const { pathToFileURL } = require('node:url');
+const { appendFileSync, existsSync } = require('node:fs');
+const { authReturnUrl } = require('./auth-links.cjs');
 
-const studioUrl = `http://127.0.0.1:${process.env.MEEWAV_DESKTOP_DEV_PORT || '5197'}/`;
+const studioUrl = app.isPackaged ? 'meewav://app/' : `http://127.0.0.1:${process.env.MEEWAV_DESKTOP_DEV_PORT || '5197'}/`;
 const trustedOrigin = new URL(studioUrl).origin;
+protocol.registerSchemesAsPrivileged([{ scheme: 'meewav', privileges: {
+  standard: true, secure: true, supportFetchAPI: true, corsEnabled: true, stream: true,
+} }]);
 const capabilities = process.platform === 'win32' ? require('./platforms/windows.cjs')
   : process.platform === 'darwin' ? require('./platforms/macos.cjs')
   : Object.freeze({ runtime: 'desktop-unsupported', screenCapture: false, windowCapture: false, systemAudioCapture: false, professionalAudioDriver: false });
@@ -11,11 +17,44 @@ const captureSelections = new Map();
 // An explicit QA profile isolates automated Room sessions from the artist's desktop session.
 const qaUserData = process.env.MEEWAV_DESKTOP_QA_USER_DATA;
 if (qaUserData && !isAbsolute(qaUserData)) throw new Error('QA userData must be an absolute path');
-app.setPath('userData', qaUserData || join(app.getPath('appData'), 'Meewav Studio Dev'));
+app.setPath('userData', qaUserData || join(app.getPath('appData'), app.isPackaged ? 'Meewav Studio' : 'Meewav Studio Dev'));
 app.setAppUserModelId('com.meewav.studio');
+const primaryInstance = app.requestSingleInstanceLock();
+if (!primaryInstance) app.quit();
+let mainWindow = null;
+let pendingAuthUrl = app.isPackaged ? process.argv.map(authReturnUrl).find(Boolean) : null;
+function acceptAuthReturn(value) {
+  if (!app.isPackaged) return;
+  const url = authReturnUrl(value);
+  if (!url) return;
+  pendingAuthUrl = url;
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    const target = pendingAuthUrl; pendingAuthUrl = null;
+    void mainWindow.loadURL(target).catch(() => logLifecycle('auth-return-load-failed'));
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+}
+app.on('second-instance', (_event, argv) => {
+  const link = argv.map(authReturnUrl).find(Boolean);
+  if (link) acceptAuthReturn(link);
+  else if (mainWindow && !mainWindow.isDestroyed()) { if (mainWindow.isMinimized()) mainWindow.restore(); mainWindow.focus(); }
+});
+app.on('open-url', (event, url) => { event.preventDefault(); acceptAuthReturn(url); });
+
+function logLifecycle(event, details = {}) {
+  try {
+    appendFileSync(join(app.getPath('userData'), 'desktop-lifecycle.log'),
+      `${JSON.stringify({ time: new Date().toISOString(), event, ...details })}\n`);
+  } catch (error) { console.error('Desktop diagnostic log unavailable:', error.message); }
+}
 
 function isTrusted(url) {
-  try { return new URL(url).origin === trustedOrigin; }
+  try {
+    const parsed = new URL(url);
+    return app.isPackaged ? parsed.protocol === 'meewav:' && parsed.hostname === 'app' && !parsed.port
+      : parsed.origin === trustedOrigin;
+  }
   catch { return false; }
 }
 
@@ -47,14 +86,56 @@ function createWindow() {
     window.setMenuBarVisibility(false);
   }
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  // The frameless Windows shell has no application menu to supply Ctrl+R.
+  window.webContents.on('before-input-event', (event, input) => {
+    if (input.type === 'keyDown' && ((input.control && input.key.toLowerCase() === 'r') || input.key === 'F5')) {
+      event.preventDefault();
+      window.webContents.reload();
+    }
+  });
+  mainWindow = window;
+  window.on('closed', () => { if (mainWindow === window) mainWindow = null; });
+  let recoveredRenderer = false;
+  window.webContents.on('render-process-gone', (_event, details) => {
+    logLifecycle('render-process-gone', details);
+    if (details.reason === 'clean-exit' || recoveredRenderer || window.isDestroyed()) return;
+    recoveredRenderer = true;
+    // Recover once only: a repeat crash must not create an endless reload loop.
+    window.webContents.reload();
+  });
+  window.webContents.on('did-finish-load', () => logLifecycle('did-finish-load'));
+  window.webContents.on('did-fail-load', (_event, errorCode, errorDescription, _url, isMainFrame) => {
+    if (isMainFrame) logLifecycle('did-fail-load', { errorCode, errorDescription });
+  });
   window.webContents.on('will-navigate', (event, url) => {
     if (!isTrusted(url)) event.preventDefault();
   });
   window.once('ready-to-show', () => window.show());
-  void window.loadURL(studioUrl);
+  const initialUrl = pendingAuthUrl || studioUrl; pendingAuthUrl = null;
+  // Auth return URLs can contain session tokens; never include them in diagnostics.
+  void window.loadURL(initialUrl).catch(() => logLifecycle('load-error'));
 }
 
 app.whenReady().then(() => {
+  if (!primaryInstance) return;
+  if (app.isPackaged) {
+    const root = resolve(app.getAppPath(), 'dist');
+    protocol.handle('meewav', async (request) => {
+      if (!isTrusted(request.url) || !['GET','HEAD'].includes(request.method)) return new Response(null, {status:403});
+      let path;
+      try { path = resolve(root, '.' + decodeURIComponent(new URL(request.url).pathname)); }
+      catch { return new Response(null, {status:400}); }
+      if (path !== root && !path.startsWith(root + sep)) return new Response(null, {status:403});
+      if (path === root || (!extname(path) && !existsSync(path))) path = join(root, 'index.html');
+      if (!existsSync(path)) return new Response(null, {status:404});
+      const response = await net.fetch(pathToFileURL(path).href);
+      const headers = new Headers(response.headers);
+      headers.set('Cross-Origin-Opener-Policy','same-origin');
+      headers.set('Cross-Origin-Embedder-Policy','credentialless');
+      return new Response(response.body, {status:response.status, headers});
+    });
+  }
+  logLifecycle('app-ready', { electron: process.versions.electron });
   // Remove the default Electron menu after initialization and on each window.
   if (process.platform === 'win32') Menu.setApplicationMenu(null);
   const assertTrusted = (event) => {

@@ -49,14 +49,47 @@ describe("Loge viewer experience", () => {
     setup();
     const media = screen.getByTestId("preview");
     fireEvent.click(
-      screen.getByRole("button", { name: "Questions" }),
+      screen.getByRole("tab", { name: "Questions" }),
     );
     expect(screen.getByTestId("preview")).toBe(media);
     expect(media).not.toBeVisible();
-    fireEvent.click(screen.getByRole("button", { name: "Pour moi" }));
-    fireEvent.click(screen.getByRole("button", { name: "Le moment" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Pour moi" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
     expect(screen.getByTestId("preview")).toBe(media);
     expect(media).toBeVisible();
+  });
+
+  it("welcomes fans without an empty preview and routes each participation action", () => {
+    const { props, rerender } = setup({ questionsOpen: true });
+    const onOpenChat = vi.fn();
+    rerender(<LogeViewer {...props} preview={null} onOpenChat={onOpenChat} />);
+    expect(screen.getByRole("heading", { name: "Bienvenue, les fans." })).toBeVisible();
+    expect(screen.queryByTestId("preview")).not.toBeInTheDocument();
+    expect(screen.queryByText("PARTAGÉ PAR L’ARTISTE")).not.toBeInTheDocument();
+
+    expect(screen.queryByRole("button", { name: /Rejoindre le chat/ })).not.toBeInTheDocument();
+    expect(onOpenChat).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: /Poser une question/ }));
+    expect(screen.getByLabelText(/Votre question/)).toBeVisible();
+    fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Dédicace/ }));
+    expect(screen.getByRole("region", { name: "Les listes de la Loge" })).toBeVisible();
+    expect(document.querySelector(".loge-requests article strong")).toHaveTextContent("Une dédicace");
+    expect(screen.getByRole("tab", { name: "Pour moi" })).toHaveAttribute("aria-selected", "true");
+    fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Rencontre/ }));
+    expect(document.querySelector(".loge-requests article strong")).toHaveTextContent("Un face-à-face");
+    fireEvent.click(screen.getByRole("tab", { name: "Accueil" }));
+    fireEvent.click(screen.getByRole("button", { name: "Pour moi" }));
+    expect(screen.getByRole("heading", { name: "Les attentions de l’artiste." })).toBeVisible();
+  });
+
+  it("does not invite fans to submit questions while the artist has paused them", () => {
+    setup({ questionsOpen: false });
+    expect(screen.queryByRole("button", { name: /Poser une question/ })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /Voir les questions/ }));
+    expect(screen.getByRole("heading", { name: "Les questions sont en pause." })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Envoyer" })).not.toBeInTheDocument();
   });
 
   it("preserves a failed question and shows the confirmed question with its status", async () => {
@@ -66,7 +99,7 @@ describe("Loge viewer experience", () => {
       .mockResolvedValueOnce(undefined);
     const { props, rerender } = setup({ questionsOpen: true }, execute);
     fireEvent.click(
-      screen.getByRole("button", { name: "Questions" }),
+      screen.getByRole("tab", { name: "Questions" }),
     );
     const input = screen.getByLabelText(/Votre question/);
     fireEvent.change(input, {
@@ -134,7 +167,7 @@ describe("Loge viewer experience", () => {
         },
       ],
     });
-    fireEvent.click(screen.getByRole("button", { name: /Pour moi/ }));
+    fireEvent.click(screen.getByRole("tab", { name: /Pour moi/ }));
     expect(
       screen
         .getByRole("link", { name: "Ouvrir ma dédicace" })

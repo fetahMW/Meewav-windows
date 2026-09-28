@@ -55,19 +55,20 @@ export function moveCageDemoGuest(state: RoomToolsState, participantId: string, 
     return;
   }
   if (destination === "accepted") {
-    // Guest placement is independent of tournament registration. Returning to
-    // the queue must not remove a seed, redraw matches or unregister an artist.
+    // An active invitation registers the artist, as in the live room projection.
+    // Media readiness stays separate; existing seeds and matches are preserved.
+    person.registered = true;
     person.status = person.status === "READY" || person.guestStatus === "backstage" || person.guestStatus === "on_stage" ? "WAITING" : "GREENHOUSE";
     person.guestStatus = "waiting";
     person.readiness = { camera: false, microphone: false, connection: false, mixer: false, permissions: false };
   } else if (destination === "ready") {
-    if (person.status !== "GREENHOUSE" && person.status !== "CALLED") throw new Error("Invite d’abord cet artiste dans la Green House.");
+    if (person.status !== "GREENHOUSE" && person.status !== "CALLED") throw new Error("Invite d’abord cet artiste à préparer son OBS MeeWav.");
     person.registered = true;
     person.readiness = { camera: true, microphone: true, connection: true, mixer: true, permissions: true };
     person.status = "READY"; person.guestStatus = "backstage";
   } else {
     if (destination === "onstage" && person.guestStatus !== "backstage" && person.status !== "READY") throw new Error("Cet invité doit rejoindre les coulisses avant de monter sur scène.");
-    if (destination === "backstage" && person.status !== "READY" && person.guestStatus !== "on_stage") throw new Error("Cet invité doit valider sa Green House avant les coulisses.");
+    if (destination === "backstage" && person.status !== "READY" && person.guestStatus !== "on_stage") throw new Error("Cet invité doit valider sa préparation OBS MeeWav avant les coulisses.");
     if (["ELIMINATED", "FORFEIT", "DISQUALIFIED"].includes(person.status)) throw new Error("Cet artiste a terminé sa participation au tournoi.");
     if (destination === "onstage" && runtime.participants.filter((item) => item.guestStatus === "on_stage" && item.id !== person.id).length >= 2) throw new Error("La Cage accueille deux artistes sur scène.");
     person.registered = true;
@@ -77,6 +78,26 @@ export function moveCageDemoGuest(state: RoomToolsState, participantId: string, 
     person.guestStatus = destination === "onstage" ? "on_stage" : "backstage";
   }
   syncCageLegacyProjection(cage);
+}
+
+/** Simulated artists complete their own checks; called only by the demo repository. */
+export function prepareCageDemoArtists(state: RoomToolsState): boolean {
+  const runtime = state.cage?.runtime;
+  if (!runtime || ["COMPLETED", "CANCELLED"].includes(runtime.status)) return false;
+  const match = runtime.matches.find(item => item.id === runtime.preparedMatchId);
+  const entry = runtime.openMicEntries?.find(item => item.id === runtime.preparedEntryId);
+  const preparation = runtime.config.format === "open-mic" ? entry : match;
+  if (!preparation || !["GREENHOUSE", "CALLING", "READY"].includes(preparation.status)) return false;
+  const ids = runtime.config.format === "open-mic" ? [entry?.participantId] : [match?.participantAId, match?.participantBId];
+  let changed = false;
+  for (const id of ids) {
+    const person = runtime.participants.find(item => item.id === id);
+    if (!person?.registered || !person.eligible || !["GREENHOUSE", "CALLED", "READY"].includes(person.status)) continue;
+    if (preparation.status === "READY" && Object.values(person.readiness).every(Boolean)) continue;
+    run(state, "regie.ready", { participantId: person.id, readiness: { camera: true, microphone: true, connection: true, mixer: true, permissions: true } }, person.id);
+    changed = true;
+  }
+  return changed;
 }
 
 /** Fictitious ballots follow Open vote; only the host's Close vote command resolves the demo. */

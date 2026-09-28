@@ -49,7 +49,7 @@ describe("Green House personal audio",()=>{
   fireEvent.click(screen.getByRole("checkbox"));
   await waitFor(()=>expect(screen.getByRole("button",{name:"Je suis prêt"})).toBeEnabled());
   fireEvent.click(screen.getByRole("button",{name:"Je suis prêt"}));expect(onMarkReady).toHaveBeenCalledOnce();
-  fireEvent.click(screen.getByRole("button",{name:"Micro",exact:true}));expect(mix.toggleMute).toHaveBeenCalledWith("voice");
+  fireEvent.click(screen.getByRole("button",{name:"Micro"}));expect(mix.toggleMute).toHaveBeenCalledWith("voice");
   view.unmount();expect(camera.stop).toHaveBeenCalled();expect(mix.outputTrack!.stop).not.toHaveBeenCalled();
  });
 });

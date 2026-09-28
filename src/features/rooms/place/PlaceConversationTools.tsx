@@ -1,3 +1,5 @@
+import MeewavSelect from "../../../components/shared/MeewavSelect";
+import { RoomViewerSubmenu } from "./RoomViewerToolsLayout";
 import { Check, ChevronRight, Flag, Hand, Mic2, Pause, Play, Plus, RotateCcw, SkipForward, Square, Swords, Timer, UsersRound, X, Zap } from "lucide-react";
 import { memo, useEffect, useMemo, useState, type ReactNode, type CSSProperties, type FormEvent } from "react";
 import { createPortal } from "react-dom";
@@ -7,6 +9,7 @@ import { useStudioToolsLayout } from "./StudioToolsLayoutProvider";
 import { clockRemaining, type PlaceConversationCommand, type PlaceConversationState, type PlaceConversationTool, type PlaceToolClock, type PlaceToolPerson } from "./placeConversationTools.domain";
 import { usePlaceConversationTools } from "./placeConversationTools.store";
 import "./place-conversation-tools.css";
+import "./room-console-material.css";
 
 type SharedProps = {
   state: PlaceConversationState; people: PlaceToolPerson[]; actorId: string; isHost: boolean;
@@ -23,8 +26,8 @@ const DURATIONS = [30, 60, 90, 120, 180, 300];
 const durationLabel = (value: number) => value < 60 ? `${value} s` : value % 60 ? `${Math.floor(value / 60)} min ${value % 60}` : `${value / 60} min`;
 const findPerson = (people: PlaceToolPerson[], id?: string | null) => people.find((person) => person.id === id);
 
-function Portrait({ person, large = false }: { person?: PlaceToolPerson; large?: boolean }) {
-  return <span className={`place-conversation__portrait${large ? " is-large" : ""}`}>
+function Portrait({ person, large = false, square = false }: { person?: PlaceToolPerson; large?: boolean; square?: boolean }) {
+  return <span className={`place-conversation__portrait${large ? " is-large" : ""}${square ? " is-square" : ""}`}>
     {person?.avatar ? <img src={person.avatar} alt="" /> : <UsersRound aria-hidden="true" />}
   </span>;
 }
@@ -47,7 +50,7 @@ function Clock({ clock, visible, label = "Temps de parole" }: { clock: PlaceTool
 }
 
 function DurationSelect({ value, onChange, label = "Durée par passage", disabled = false }: { value: number; onChange: (value: number) => void; label?: string; disabled?: boolean }) {
-  return <label className="place-conversation__field"><span>{label}</span><select value={value} disabled={disabled} onChange={(event) => onChange(Number(event.target.value))}>{DURATIONS.map((seconds) => <option value={seconds} key={seconds}>{durationLabel(seconds)}</option>)}</select></label>;
+  return <label className="place-conversation__field"><span>{label}</span><MeewavSelect value={value} disabled={disabled} onChange={(event) => onChange(Number(event.target.value))}>{DURATIONS.map((seconds) => <option value={seconds} key={seconds}>{durationLabel(seconds)}</option>)}</MeewavSelect></label>;
 }
 
 function FloorPanel({ state, people, actorId, isHost, busy, canEngage, visible, execute }: SharedProps) {
@@ -110,9 +113,9 @@ function ClashPanel({ state, people, actorId, isHost, busy, canEngage, visible, 
     event.preventDefault();
     if (await execute({ type: "clash.invite", id: crypto.randomUUID(), title, left, right, seconds, rounds })) setTitle("");
   };
-  const face = (id: string, side: 0 | 1) => <div className={`place-conversation__contender${live && clash?.turn === side ? " is-speaking" : ""}`}><Portrait person={findPerson(people, id)} large /><strong>{findPerson(people, id)?.name ?? "Participant"}</strong><small>{live ? clash?.turn === side ? "AU MICRO" : "À L’ÉCOUTE" : clash?.accepted.includes(id) ? "ACCORD REÇU" : "INVITATION ENVOYÉE"}</small></div>;
+  const face = (id: string, side: 0 | 1) => <div className={`place-conversation__contender${live && clash?.turn === side ? " is-speaking" : ""}`}><Portrait person={findPerson(people, id)} square /><strong>{findPerson(people, id)?.name ?? "Participant"}</strong><small>{live ? clash?.turn === side ? "AU MICRO" : "À L’ÉCOUTE" : clash?.accepted.includes(id) ? "ACCORD REÇU" : "INVITATION ENVOYÉE"}</small></div>;
   return <div className="place-conversation__panel">
-    <header className="place-conversation__heading"><span><small>LE FACE-À-FACE</small><h2>Clash</h2></span><Swords className="place-conversation__heading-icon" /></header>
+    <header className="place-conversation__heading" data-tool="clash"><span><small>LE FACE-À-FACE</small><h2>Clash</h2></span><Swords className="place-conversation__heading-icon" /></header>
     {active && clash ? <>
       <section className="place-conversation__glass place-conversation__duel" aria-label="Clash en cours de préparation ou de jeu"><div className="place-conversation__duel-title"><span className={`place-conversation__status${live ? " is-live" : ""}`}><i />{live ? `Manche ${clash.round} / ${clash.rounds}` : ready ? "Prêts à démarrer" : "Accord des participants"}</span><h3>{clash.title}</h3></div><div className="place-conversation__faceoff">{face(clash.left, 0)}<span className="place-conversation__versus">VS</span>{face(clash.right, 1)}</div><Clock clock={clash} visible={visible} label={clash.status === "paused" ? "En pause" : "Par personne · par manche"} />
         {isHost ? <div className="place-conversation__transport">{live ? <button type="button" aria-label={clash.status === "paused" ? "Reprendre le clash" : "Mettre le clash en pause"} disabled={busy} onClick={() => void execute({ type: clash.status === "paused" ? "clash.resume" : "clash.pause" })}>{clash.status === "paused" ? <Play /> : <Pause />}</button> : null}<button type="button" className="is-primary" disabled={busy || (!live && !ready)} onClick={() => void execute({ type: live ? "clash.next" : "clash.start" })}>{live ? <SkipForward /> : <Play />}{live ? clash.round === clash.rounds && clash.turn === 1 ? "Clore le clash" : "Passage suivant" : "Lancer le clash"}</button><button type="button" aria-label="Arrêter le clash" disabled={busy} onClick={() => void execute({ type: "clash.end" })}><Square /></button></div> : null}
@@ -122,7 +125,7 @@ function ClashPanel({ state, people, actorId, isHost, busy, canEngage, visible, 
     </> : <>
       {clash ? <div className="place-conversation__result" role="status"><Flag /><span><strong>{clash.status === "ended" ? "Clash terminé" : "Clash annulé"}</strong><small>{clash.title}</small></span></div> : null}
       {isHost ? <form onSubmit={(event) => void submit(event)} className="place-conversation__glass place-conversation__editor">
-        <div className="place-conversation__faceoff"><div className="place-conversation__contender"><Portrait person={findPerson(people, left)} large /><label className="place-conversation__field"><span>Premier participant</span><select value={left} onChange={(event) => setLeft(event.target.value)}><option value="" disabled>Choisir</option>{people.map((person) => <option value={person.id} key={person.id}>{person.name}</option>)}</select></label></div><span className="place-conversation__versus">VS</span><div className="place-conversation__contender"><Portrait person={findPerson(people, right)} large /><label className="place-conversation__field"><span>Second participant</span><select value={right} onChange={(event) => setRight(event.target.value)}><option value="" disabled>Choisir</option>{people.map((person) => <option value={person.id} key={person.id} disabled={person.id === left}>{person.name}</option>)}</select></label></div></div>
+        <div className="place-conversation__faceoff"><div className="place-conversation__contender"><Portrait person={findPerson(people, left)} square /><label className="place-conversation__field"><span>Premier participant</span><MeewavSelect value={left} onChange={(event) => setLeft(event.target.value)}><option value="" disabled>Choisir</option>{people.map((person) => <option value={person.id} key={person.id}>{person.name}</option>)}</MeewavSelect></label></div><span className="place-conversation__versus">VS</span><div className="place-conversation__contender"><Portrait person={findPerson(people, right)} square /><label className="place-conversation__field"><span>Second participant</span><MeewavSelect value={right} onChange={(event) => setRight(event.target.value)}><option value="" disabled>Choisir</option>{people.map((person) => <option value={person.id} key={person.id} disabled={person.id === left}>{person.name}</option>)}</MeewavSelect></label></div></div>
         <label className="place-conversation__field"><span>Le sujet du face-à-face</span><input value={title} maxLength={160} required placeholder="Ex. Le talent ou le travail ?" onChange={(event) => setTitle(event.target.value)} /></label>
         <div className="place-conversation__settings-row"><fieldset className="place-conversation__segments"><legend>Manches</legend><div>{[1, 3, 5].map((count) => <label key={count}><input type="radio" name="place-clash-rounds" checked={rounds === count} onChange={() => setRounds(count)} /><span>{count}</span></label>)}</div></fieldset><DurationSelect value={seconds} onChange={setSeconds} label="Par personne" /></div>
         <button type="submit" className="place-conversation__wide is-primary" disabled={busy || !title.trim() || !left || !right || left === right}><Swords />Envoyer les invitations</button>
@@ -144,11 +147,11 @@ function ChallengesPanel({ state, people, actorId, isHost, busy, canEngage, visi
   const active = state.challenges.filter((item) => ["open", "running"].includes(item.status));
   const completed = state.challenges.filter((item) => !["open", "running"].includes(item.status));
   return <div className="place-conversation__panel">
-    <header className="place-conversation__heading"><span><small>ON SE LANCE ?</small><h2>Défis</h2></span><button type="button" className="place-conversation__new" aria-expanded={editing} disabled={!canEngage} onClick={() => setEditing(!editing)}>{editing ? <X /> : <Plus />}{editing ? "Fermer" : "Nouveau"}</button></header>
+    <header className="place-conversation__heading" data-tool="challenge"><span><small>ON SE LANCE ?</small><h2>Défis</h2></span><button type="button" className="place-conversation__new" aria-expanded={editing} disabled={!canEngage} onClick={() => setEditing(!editing)}>{editing ? <X /> : <Plus />}{editing ? "Fermer" : "Nouveau"}</button></header>
     {editing && canEngage ? <form onSubmit={(event) => void submit(event)} className="place-conversation__glass place-conversation__editor">
-      <div className="place-conversation__challenge-intro"><span className="place-conversation__emblem"><Zap /></span><strong>Une idée.<br />À vous de jouer.</strong></div>
+      <div className="place-conversation__challenge-intro"><span className="place-conversation__emblem"><Zap aria-hidden="true" /></span><span><strong>Une idée. À vous de jouer.</strong><small>Un défi, un public, un temps pour le relever.</small></span></div>
       <label className="place-conversation__field"><span>Ton défi</span><textarea value={title} required maxLength={160} rows={2} placeholder="Raconte une histoire en une minute…" onChange={(event) => setTitle(event.target.value)} /></label>
-      <div className="place-conversation__settings-row"><label className="place-conversation__field"><span>Pour qui ?</span><select value={target} onChange={(event) => setTarget(event.target.value)}><option value="">Tout le monde</option>{people.map((person) => <option value={person.id} key={person.id}>{person.name}</option>)}</select></label><DurationSelect value={seconds} onChange={setSeconds} label="Temps imparti" /></div>
+      <div className="place-conversation__settings-row"><label className="place-conversation__field"><span>Pour qui ?</span><MeewavSelect value={target} onChange={(event) => setTarget(event.target.value)}><option value="">Tout le monde</option>{people.map((person) => <option value={person.id} key={person.id}>{person.name}</option>)}</MeewavSelect></label><DurationSelect value={seconds} onChange={setSeconds} label="Temps imparti" /></div>
       <button type="submit" className="place-conversation__wide is-primary" disabled={busy || !title.trim()}><Zap />Proposer le défi</button>
     </form> : null}
     <div className="place-conversation__section-title"><span>À RELEVER <b>{active.length.toString().padStart(2, "0")}</b></span></div>
@@ -179,7 +182,8 @@ const ConversationToolsContent = memo(function ConversationToolsContent({ roomId
   const [activeTool, setActiveTool] = useState<PlaceConversationTool>("floor");
   const peopleIds = useMemo(() => people.map((person) => person.id), [people]);
   const { state, busy, error, execute, retry } = usePlaceConversationTools({ roomId, source, actorId, isHost, canEngage, peopleIds, backstageIds });
-  const rail = <PlaceToolsSwitch activeTool={activeTool} ariaLabel="Outils de La Place" idPrefix="place-conversation-tab" items={TOOLS} onSelect={setActiveTool} semantics="tabs" />;
+  const ToolRail = isHost ? PlaceToolsSwitch : RoomViewerSubmenu;
+  const rail = <ToolRail activeTool={activeTool} ariaLabel="Outils de La Place" idPrefix="place-conversation-tab" items={TOOLS} onSelect={setActiveTool} semantics="tabs" />;
   const shared = state ? { state, people, actorId, isHost, busy, canEngage, execute, visible, backstageIds } : null;
   const content = <section className="place-conversation__body" role="tabpanel" id={`place-conversation-${activeTool}`} aria-labelledby={`place-conversation-tab-${activeTool}`}>
     {participation ? <div className="place-conversation__participation">{participation}</div> : null}

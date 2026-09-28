@@ -7,6 +7,7 @@ import { getPreProfileArtistForSeed } from "./reference/features/globe/component
 import { sceneDemoArtist } from "./reference/features/shorts/sceneArtistPortraits";
 import { getGradeBadgeMeta } from "./reference/features/grades/gradeBadges";
 import "./ring-artist-preprofile.css";
+import { openProfileAction } from "./host-bridge";
 
 const RING_ARTIST_GRADE = getGradeBadgeMeta(6);
 
@@ -46,10 +47,10 @@ export default function RingArtistPreProfile({ selection, onClose }: { selection
     };
   }, [selection]);
 
-  // Keep the original 413 x 588 Rooms composition, fitting it only when needed.
+  // Match Rooms without reserving the Globe's map-pin row.
   const margin = 16, leftGuard = viewport.width > 760 ? 112 : 88;
-  const scale = Math.min(1, (viewport.width - leftGuard - margin * 2) / 413, (viewport.height - 104) / 588);
-  const width = 413 * scale, height = 588 * scale;
+  const scale = Math.min(1, (viewport.width - leftGuard - margin * 2) / 413, (viewport.height - 104) / 520);
+  const width = 413 * scale, height = 520 * scale;
   const anchor = selection.anchor;
   const x = anchor.x * viewport.width / anchor.viewportWidth;
   const y = anchor.y * viewport.height / anchor.viewportHeight;
@@ -95,16 +96,22 @@ export default function RingArtistPreProfile({ selection, onClose }: { selection
     return () => window.clearTimeout(timeout);
   }, [notice]);
 
-  return createPortal(<div ref={panel} className="ring-artist-preprofile" role="dialog" aria-modal="false"
+  return createPortal(<div ref={panel} className="ring-artist-preprofile is-compact" role="dialog" aria-modal="false"
     aria-label={`Pré-profil de ${selection.name}`} data-placement={placement}
     style={{ left: popupLeft, top: popupTop, transform: `scale(${scale})`,
-      "--mw-arrow-y": `${Math.max(40, Math.min(548, (y - popupTop) / scale))}px` } as CSSProperties}
+      "--mw-arrow-y": `${Math.max(40, Math.min(480, (y - popupTop) / scale))}px` } as CSSProperties}
     onPointerDown={event => event.stopPropagation()} onClick={event => event.stopPropagation()}>
     <PreProfileFrame arrow>
       <HoverPreProfileContent artist={artist} demoFollow showMapPin={false}
         onOpenProfile={() => setNotice("Le profil complet sera bientôt disponible.")}
-        onContact={() => setNotice("La messagerie sera bientôt disponible.")}
-        onCollabRequest={() => setNotice("Les demandes de collaboration seront bientôt disponibles.")} />
+        onContact={() => {
+          if (openProfileAction("demo-contact", artist)) onClose();
+          else setNotice("Ouvre ce profil depuis Meewav pour accéder à la messagerie.");
+        }}
+        onCollabRequest={() => {
+          if (openProfileAction("demo-collaboration", artist)) onClose();
+          else setNotice("Ouvre ce profil depuis Meewav pour proposer une collaboration.");
+        }} />
     </PreProfileFrame>
     <button ref={closeButton} className="ring-artist-preprofile__close" type="button" onClick={onClose} aria-label="Fermer le pré-profil">
       <X aria-hidden="true" />

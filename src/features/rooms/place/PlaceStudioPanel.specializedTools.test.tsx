@@ -6,6 +6,8 @@ import { LIVE_ROOM_PRESENTATIONS, RoomPresentationProvider, SCENE_ROOM_PRESENTAT
 import { createPlaceDemoState, PLACE_DEMO_PROFILES } from "./place.fixtures";
 import PlaceStudioPanel from "./PlaceStudioPanel";
 
+vi.mock("../../auth", () => ({ useAuth: () => ({ user: null }) }));
+
 afterEach(cleanup);
 
 function props(overrides: Partial<ComponentProps<typeof PlaceStudioPanel>> = {}): ComponentProps<typeof PlaceStudioPanel> {
@@ -43,15 +45,16 @@ describe("PlaceStudioPanel specialized tools routing", () => {
     expect(screen.getByLabelText("Lecteur audio du Mixeur")).toBeInTheDocument();
     if (presentation.id === "place") {
       const rail = await screen.findByRole("tablist", { name: "Outils de La Place" });
-      expect(within(rail).getAllByRole("tab")).toHaveLength(3);
+      expect(within(rail).getAllByRole("tab")).toHaveLength(4);
       expect(within(rail).getByRole("tab", { name: "Tour de parole" })).toBeVisible();
+      expect(within(rail).getByRole("tab", { name: "File de parole" })).toBeVisible();
       expect(within(rail).getByRole("tab", { name: "Clash" })).toBeVisible();
       expect(within(rail).getByRole("tab", { name: "Défis" })).toBeVisible();
     } else {
       const rail = await screen.findByRole("tablist", { name: `Outils de ${presentation.label}` });
       expect(container.querySelector(".wave-tools-nav")).toContainElement(rail);
-      expect(within(rail).getAllByRole("tab")).toHaveLength({ scene: 4, classe: 2, cage: 3, loge: 2, wave: 3 }[presentation.id]);
-      expect(within(rail).queryByRole("tab", { name: /Partage|Sondage|Cadeau|Récompense/ })).not.toBeInTheDocument();
+      expect(within(rail).getAllByRole("tab")).toHaveLength({ scene: 4, classe: 2, cage: 4, loge: 4, wave: 4 }[presentation.id]);
+      if (presentation.id !== "loge") expect(within(rail).queryByRole("tab", { name: /Partage|Sondage|Cadeau|Récompense/ })).not.toBeInTheDocument();
     }
     expect(container.querySelector(".wave-tools-body")).not.toBeEmptyDOMElement();
   }, 10_000);
@@ -59,7 +62,7 @@ describe("PlaceStudioPanel specialized tools routing", () => {
   it("gives a Viewer contextual interactions without exposing Host production tools", async () => {
     render(<RoomPresentationProvider presentation={SCENE_ROOM_PRESENTATION}><PlaceStudioPanel {...props()} /></RoomPresentationProvider>);
     expect(await screen.findByRole("tab", { name: "Scène" })).toBeInTheDocument();
-    expect(await screen.findByText("Performance en cours")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "À l’affiche" })).toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: /Prompteur/i })).not.toBeInTheDocument();
     expect(screen.queryByTestId("room-tools-shell")).not.toBeInTheDocument();
   });
@@ -70,6 +73,23 @@ describe("PlaceStudioPanel specialized tools routing", () => {
     expect(screen.queryByTestId("room-tools-shell")).not.toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: /Prompteur/i })).not.toBeInTheDocument();
   });
+
+  it.each([
+    [LIVE_ROOM_PRESENTATIONS.place, "Outils de La Place"],
+    [LIVE_ROOM_PRESENTATIONS.loge, "Explorer la Loge"],
+    [LIVE_ROOM_PRESENTATIONS.cage, "Programme Cage"],
+    [LIVE_ROOM_PRESENTATIONS.classe, "Explorer la Classe"],
+  ] as const)("keeps the viewer submenu outside the scrolling content in %s", async (presentation, label) => {
+    const room = createPlaceDemoState(PLACE_DEMO_PROFILES.viewerA.id);
+    const { container } = render(<MemoryRouter><RoomPresentationProvider presentation={presentation}><PlaceStudioPanel {...props({ room })} /></RoomPresentationProvider></MemoryRouter>);
+    const rail = await screen.findByRole("tablist", { name: label });
+    expect(container.querySelector(".room-viewer-tools-layout__nav")).toContainElement(rail);
+    expect(container.querySelector(".room-viewer-tools-layout__body")).not.toContainElement(rail);
+    const tabs = within(rail).getAllByRole("tab");
+    fireEvent.keyDown(tabs[0], { key: "End" });
+    expect(tabs[tabs.length - 1]).toHaveAttribute("aria-selected", "true");
+    expect(tabs[tabs.length - 1]).toHaveFocus();
+  });
 });
 
 it("respects the Place host queue gate in every conversation tab", async () => {
@@ -78,7 +98,7 @@ it("respects the Place host queue gate in every conversation tab", async () => {
  const join=vi.fn().mockResolvedValue(undefined);
  const view=render(<MemoryRouter><PlaceStudioPanel {...props({room,onJoinQueue:join})}/></MemoryRouter>);
  for(const name of ["Tour de parole","File de parole","Clash","Défis"]){
-  fireEvent.click(await screen.findByRole("tab",{name,exact:true}));
+  fireEvent.click(await screen.findByRole("tab",{name}));
   expect(screen.getByRole("button",{name:"Rejoindre la file d’attente"})).toBeDisabled();
  }
  expect(join).not.toHaveBeenCalled();

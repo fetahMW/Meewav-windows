@@ -9371,22 +9371,8 @@
   overflow: visible !important;
 }
 
-.place-room-shell .place-mixer-audio__source-menu button svg { color: #8d78ff; }
-
-.place-room-shell .place-mixer-audio__source-menu button:hover,
-.place-room-shell .place-mixer-audio__source-menu button:focus-visible {
-  border-color: rgba(112, 105, 255, .55) !important;
-  background: rgba(91, 67, 201, .16) !important;
-  color: #fff !important;
-}
-
-.place-room-shell .place-mixer-audio__source-menu button.is-close:hover,
-.place-room-shell .place-mixer-audio__source-menu button.is-close:focus-visible {
-  border: 0 !important;
-  background: transparent !important;
-  color: #c6b7ff !important;
-  filter: none;
-}
+/* Import button surfaces, hover and focus are owned by place-mixer-play-finish.css,
+ * including the Wave menu portalled outside the audio player. */
 
 .place-room-shell .place-mixer-audio__cover-picker > img {
   box-sizing: border-box;
@@ -13197,15 +13183,6 @@
   clip-path: inset(0 round 8px);
   border-color: rgba(140, 91, 232, .68);
   background: #090b19;
-}
-
-.place-room-shell .place-mixer.has-audio-player .place-volume-row__source-icon.is-music img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 7px;
-  clip-path: inset(0 round 7px);
-  object-fit: cover;
 }
 
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__mute,
@@ -17212,8 +17189,7 @@
     0 0 8px rgba(151, 71, 232, .15);
 }
 
-.place-room-shell .place-studio-panel.is-mixer .place-volume-row__portrait .place-volume-row__avatar,
-.place-room-shell .place-studio-panel.is-mixer .place-volume-row__source-icon.is-music img {
+.place-room-shell .place-studio-panel.is-mixer .place-volume-row__portrait .place-volume-row__avatar {
   filter: saturate(.94) contrast(1.04);
 }
 

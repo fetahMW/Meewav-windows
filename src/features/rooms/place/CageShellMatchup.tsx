@@ -70,7 +70,9 @@ function withBannerGrade(person: RoomPerson, room: PlaceRoomState): RoomPerson {
   const gradeLevel = participant
     ? participant.profile.gradeLevel
     : room.source === "demo" ? ROOM_TOOL_PEOPLE.cage.find((candidate) => candidate.id === person.id)?.gradeLevel : undefined;
-  return { ...person, gradeLevel };
+  const validatedGrade = gradeLevel !== undefined && [1,2,3,4,5,6].includes(gradeLevel)
+    ? gradeLevel as RoomPerson['gradeLevel'] : undefined;
+  return { ...person, gradeLevel: validatedGrade };
 }
 
 function BattleBanner({ cage, left, right, leftStatus, rightStatus, matchRound, remaining, countdown, demo, onOpenProfile }: {

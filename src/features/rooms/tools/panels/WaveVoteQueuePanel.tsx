@@ -72,7 +72,8 @@ export default function WaveVoteQueuePanel({ wave, role, disabled, execute, sour
   const total = boardSubmission?.vote?.totalVotes ?? votes.length;
   const yes = boardSubmission?.vote?.yesCount ?? votes.filter(choice => choice === "yes").length;
   const no = boardSubmission?.vote?.noCount ?? votes.filter(choice => choice === "no").length;
-  const yesPercent = boardSubmission?.vote?.weightedApprovalPercent ?? (total ? Math.round(yes / total * 100) : 0);
+  const rawYesPercent = boardSubmission?.vote?.weightedApprovalPercent ?? (total ? yes / total * 100 : 0);
+  const yesPercent = Number.isFinite(rawYesPercent) ? Math.max(0, Math.min(100, Math.round(rawYesPercent))) : 0;
   const noPercent = total ? 100 - yesPercent : 0;
   const effectiveEndsAt = selected?.vote?.endsAt ? Date.parse(selected.vote.endsAt) : localVoteEndsAt;
   const seconds = effectiveEndsAt ? Math.max(0, Math.ceil((effectiveEndsAt - now) / 1000)) : duration;

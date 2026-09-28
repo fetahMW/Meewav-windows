@@ -8,7 +8,7 @@ let instanceNumber = 0;
 /**
  * Un vinyle autonome, sans image bitmap ni dépendance d'animation.
  * Props : playing, rpm, label, resetKey, reducedMotion, onToggle.
- * Les reflets et le centre métallique restent fixes : seul le disque tourne.
+ * Les reflets restent fixes par défaut. rotateReflections anime toute la surface.
  */
 export default class Vinyl extends PureComponent {
   static defaultProps = {
@@ -18,29 +18,39 @@ export default class Vinyl extends PureComponent {
     resetKey: 0,
     reducedMotion: false,
     interactive: true,
+    rotateReflections: false,
   };
 
   rotor = createRef();
+  surface = createRef();
   pose = createRef();
   hitArea = createRef();
   animation = null;
   frame = null;
   filterId = `meewav-paper-${++instanceNumber}`;
 
-  componentDidMount() {
-    if (this.rotor.current?.animate) {
-      this.animation = this.rotor.current.animate(
+  setupAnimation = () => {
+    const elapsed = this.animation?.currentTime ?? 0;
+    this.animation?.cancel();
+    const target = this.props.rotateReflections ? this.surface.current : this.rotor.current;
+    if (target?.animate) {
+      this.animation = target.animate(
         [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }],
         { duration: REVOLUTION_MS, iterations: Infinity, easing: 'linear' },
       );
       this.animation.pause();
-      this.animation.currentTime = 0;
+      this.animation.currentTime = elapsed;
       this.syncAnimation();
     }
+  };
+
+  componentDidMount() {
+    this.setupAnimation();
     document.addEventListener('visibilitychange', this.syncAnimation);
   }
 
   componentDidUpdate(previous) {
+    if (previous.rotateReflections !== this.props.rotateReflections) this.setupAnimation();
     if (previous.resetKey !== this.props.resetKey && this.animation) {
       // Pauser avant de modifier le temps évite un décalage d'une frame.
       this.animation.pause();
@@ -100,7 +110,7 @@ export default class Vinyl extends PureComponent {
       <div className={`vinyl-shell ${className}`} style={style} ref={this.hitArea}
         onPointerMove={interactive ? this.onPointerMove : undefined} onPointerLeave={interactive ? this.clearTilt : undefined}>
         <div className="vinyl-pose" ref={this.pose}>
-          <Disc className="vinyl" {...controls}
+          <Disc className="vinyl" ref={this.surface} {...controls}
             data-testid="vinyl">
             <span className="vinyl-base" />
             <span className="vinyl-rotor" ref={this.rotor}>

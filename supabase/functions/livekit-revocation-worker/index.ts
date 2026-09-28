@@ -1,9 +1,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { RoomServiceClient } from "npm:livekit-server-sdk@2.17.0";
+import { BytePlusAdmin } from "../_shared/byteplusAdmin.ts";
 
 const MAX_BATCH_SIZE = 50;
 const MAX_ATTEMPTS = 8;
-const TOKEN_TTL_SECONDS = 5 * 60;
+const TOKEN_TTL_SECONDS = 120;
 const SELF_HOSTED_SWEEP_BUFFER_SECONDS = 30;
 
 type OutboxEvent = {
@@ -37,20 +37,6 @@ function requiredEnvironment(name: string) {
   const value = Deno.env.get(name)?.trim() ?? "";
   if (!value) throw new Error(`Missing required environment variable: ${name}`);
   return value;
-}
-
-function liveKitHttpUrl() {
-  const raw = Deno.env.get("LIVEKIT_URL")?.trim()
-    || Deno.env.get("LIVEKIT_SERVER_URL")?.trim()
-    || "";
-  if (!raw) throw new Error("Missing required environment variable: LIVEKIT_URL");
-  const parsed = new URL(raw);
-  if (parsed.protocol === "wss:") parsed.protocol = "https:";
-  else if (parsed.protocol === "ws:") parsed.protocol = "http:";
-  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-    throw new Error("LIVEKIT_URL must use http(s):// or ws(s)://");
-  }
-  return parsed.toString().replace(/\/$/u, "");
 }
 
 function jsonResponse(status: number, body: unknown) {
@@ -91,18 +77,6 @@ function isNotFoundError(error: unknown) {
     || code === "5"
     || message.includes("not found")
     || message.includes("does not exist");
-}
-
-function remotePublicationGeneration(metadata: string | undefined) {
-  if (!metadata) return null;
-  try {
-    const value = JSON.parse(metadata) as { publicationGeneration?: unknown };
-    return typeof value.publicationGeneration === "string"
-      ? value.publicationGeneration
-      : null;
-  } catch {
-    return null;
-  }
 }
 
 async function readRequestBatch(request: Request) {
@@ -152,11 +126,7 @@ Deno.serve(async (request) => {
     // Validate every remote dependency before leasing durable work. A missing
     // deployment secret must not leave rows stuck in `processing` until the
     // stale-lease timeout elapses.
-    const roomService = new RoomServiceClient(
-      liveKitHttpUrl(),
-      requiredEnvironment("LIVEKIT_API_KEY"),
-      requiredEnvironment("LIVEKIT_API_SECRET"),
-    );
+    const roomService = new BytePlusAdmin();
     const workerId = `edge:${crypto.randomUUID()}`;
     const { data: claimedData, error: claimError } = await supabase.rpc(
       "rooms_claim_livekit_revocations_v1",
@@ -230,22 +200,19 @@ Deno.serve(async (request) => {
       const grant = grantResult.data as PublicationGrant | null;
       const participant = participantResult.data as { role: string; left_at: string | null } | null;
       const invitation = invitationResult.data as { status: string; ended_at: string | null } | null;
-      const sourceStateAuthorizesPublication = Boolean(
-        room?.status === "live"
-        && room.type === "place"
-        && participant?.role === "guest"
-        && participant.left_at === null
-        && invitation?.status === "onstage"
-        && invitation.ended_at === null
-        && !banResult.data,
-      );
+      let mediaAuthorized=false;
+      if(event.participant_identity&&room?.status==="live") {
+        const {data:policy,error:policyError}=await supabase.rpc("rooms_byteplus_media_policy_v1",{p_room_id:event.room_id,p_user_id:event.participant_identity});
+        if(policyError&&!['42501','P0002'].includes(policyError.code))throw policyError;
+        mediaAuthorized=policy?.canPublish===true;
+      }
       return {
         room,
         grant,
         participantActive: Boolean(participant && participant.left_at === null),
         banned: Boolean(banResult.data),
         kicked: Boolean(kickResult.data),
-        currentlyAuthorized: Boolean(grant?.is_authorized || sourceStateAuthorizesPublication),
+        currentlyAuthorized: mediaAuthorized,
       };
     };
 
@@ -311,27 +278,6 @@ Deno.serve(async (request) => {
         return { resolution: "succeeded", result: "superseded_currently_authorized" };
       }
 
-      let remoteGeneration: string | null = null;
-      try {
-        const participant = await roomService.getParticipant(
-          event.livekit_room_name,
-          event.participant_identity,
-        );
-        remoteGeneration = remotePublicationGeneration(participant.metadata);
-      } catch (error) {
-        if (!isNotFoundError(error)) throw error;
-      }
-
-      // A different remote generation is a newer session. Never remove it,
-      // even if this event was delayed for minutes in the outbox.
-      if (
-        event.publication_generation
-        && remoteGeneration
-        && remoteGeneration !== event.publication_generation
-      ) {
-        return { resolution: "succeeded", result: "superseded_remote_generation" };
-      }
-
       // Re-read immediately before the destructive Admin API operation. This
       // also protects legacy sessions whose metadata has no generation.
       const finalGuard = await loadCurrentGuard(event);
@@ -350,38 +296,35 @@ Deno.serve(async (request) => {
         return { resolution: "succeeded", result: "room_ended_server_side" };
       }
 
-      const retainSubscriber = finalGuard.participantActive
-        && !finalGuard.banned;
-      try {
-        if (retainSubscriber) {
-          // Moving off-stage revokes publication without ejecting a legitimate
-          // audience member. LiveKit unpublishes their tracks immediately.
-          await roomService.updateParticipant(
-            event.livekit_room_name,
-            event.participant_identity,
-            {
-              permission: {
-                canSubscribe: true,
-                canPublish: false,
-                canPublishData: false,
-                canUpdateMetadata: false,
-              },
-            },
-          );
-        } else {
-          await roomService.removeParticipant(
-            event.livekit_room_name,
-            event.participant_identity,
-            { revokeTokenTs: BigInt(Math.floor(Date.now() / 1000)) },
-          );
-        }
-      } catch (error) {
-        if (!isNotFoundError(error)) throw error;
+      const retainSubscriber = finalGuard.participantActive && !finalGuard.banned;
+      let tokenQuery=supabase.from("room_byteplus_tokens_v1")
+        .select("token").eq("room_id",event.room_id).eq("user_id",event.participant_identity).gt("expires_at",new Date().toISOString());
+      if(event.publication_generation)tokenQuery=tokenQuery.eq("generation",event.publication_generation);
+      const {data:tokens,error:tokensError}=await tokenQuery;
+      if(tokensError)throw tokensError;
+      // LimitTokenPrivilege revokes every issued, unexpired publishing grant.
+      // Audience membership can then stay connected with its receive-only grant.
+      for(const row of tokens??[]) {
+        await roomService.revokePublication(event.livekit_room_name,event.participant_identity,row.token);
+        await new Promise(resolve=>setTimeout(resolve,50));
       }
-
-      // LiveKit Cloud revokes the old token immediately. Self-hosted LiveKit
-      // cannot revoke a disconnected token, so one delayed idempotent sweep
-      // catches any reconnect made with the existing five-minute token.
+      if(!retainSubscriber) {
+        const current=await loadCurrentGuard(event);
+        if(current.currentlyAuthorized || (event.publication_generation && current.grant?.generation !== event.publication_generation))
+          return {resolution:"succeeded",result:"superseded_before_ban"};
+        const stamp=new Date().toISOString();
+        const {error:banError}=await supabase.from("room_byteplus_bans_v1").upsert({room_id:event.room_id,user_id:event.participant_identity,created_at:stamp});
+        if(banError)throw banError;
+        await roomService.removeParticipant(event.livekit_room_name,event.participant_identity);
+        // A re-entry granted while the API was in flight wins over this event.
+        const after=await loadCurrentGuard(event);
+        if(after.participantActive&&!after.banned) {
+          await roomService.clearBan(event.livekit_room_name,event.participant_identity);
+          const {error:clearError}=await supabase.from("room_byteplus_bans_v1").delete().eq("room_id",event.room_id).eq("user_id",event.participant_identity).eq("created_at",stamp);
+          if(clearError)throw clearError;
+        }
+      }
+      // Sweep after all previously issued BytePlus grants have expired.
       const sweepAtMs = Date.parse(event.created_at)
         + (TOKEN_TTL_SECONDS + SELF_HOSTED_SWEEP_BUFFER_SECONDS) * 1000;
       if (Number.isFinite(sweepAtMs) && Date.now() < sweepAtMs) {
@@ -402,7 +345,8 @@ Deno.serve(async (request) => {
       };
     };
 
-    const outcomes = await Promise.all(claimed.map(async (event) => {
+    const outcomes = [];
+    for (const event of claimed) {
       let resolution: Resolution;
       try {
         resolution = event.action === "end_room"
@@ -424,8 +368,9 @@ Deno.serve(async (request) => {
         }
       }
       await resolve(event, resolution);
-      return { id: event.id, action: event.action, ...resolution };
-    }));
+      outcomes.push({ id: event.id, action: event.action, ...resolution });
+      await new Promise(resolve=>setTimeout(resolve,50));
+    }
 
     return jsonResponse(200, {
       claimed: claimed.length,

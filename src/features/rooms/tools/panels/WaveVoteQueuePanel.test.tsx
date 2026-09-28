@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { useWaveTransportState, WaveTransportProvider } from "../../wave-transport/WaveTransportProvider";
@@ -28,6 +28,23 @@ afterEach(() => {
 });
 
 describe("WaveVoteQueuePanel", () => {
+  it("affiche un verdict pondéré arrondi sans décimales qui débordent", () => {
+    const wave = createRoomToolsFixture("wave", "wave-vote-verdict").wave!;
+    const candidate = wave.submissions[0];
+    candidate.status = "analysis";
+    candidate.lifecycleStatus = "READY_FOR_VOTE";
+    candidate.vote = { open: false, hidden: false, durationSeconds: 30, thresholdPercent: 60,
+      submissionVersion: candidate.version, votes: {}, totalVotes: 21, yesCount: 17, noCount: 4,
+      weightedApprovalPercent: 80.95238095238095, finalizedAt: new Date().toISOString(), outcome: "accepted" };
+    wave.submissions = [candidate];
+
+    render(<MemoryRouter><WaveVoteQueuePanel wave={wave} role="host" disabled={false} source="demo" execute={vi.fn().mockResolvedValue(undefined)} /></MemoryRouter>);
+
+    const board = screen.getByText("VERDICT DU PUBLIC").closest("header")!;
+    expect(within(board).getAllByText("81%")).toHaveLength(2);
+    expect(within(board).getByText("19%")).toBeInTheDocument();
+    expect(board).not.toHaveTextContent("80.95238095238095");
+  });
   it("charge immédiatement dans le transport la nouvelle carte sélectionnée", async () => {
     const fixture = createRoomToolsFixture("wave", "wave-vote-selection").wave!;
     const wave = {

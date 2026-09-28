@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useMemo, useRef, useState } from "rea
 import { Building2, Crosshair, EyeOff, MapPin, Minus, Plus, X, Orbit, ArrowLeft, ArrowRight, Hand, MoveVertical, MousePointer2 } from "lucide-react";
 import GlobeNavigationPole from "./GlobeNavigationPole";
 import NationalTopTen from "./NationalTopTen";
+import RingTopOnePlayer from "./RingTopOnePlayer";
 import { RingPreProfileBoundary } from "./RingPreProfileBoundary";
 import { MeewavSearchFilterBar, MeewavFilterPanel, MeewavIllustratedFilterGrid } from "./reference/components/shared/search-filter/MeewavSearchFilter";
 import { GLOBE_ARTIST_ROLE_OPTIONS } from "./reference/components/shared/avatar/profileIconCatalog";
@@ -11,6 +12,7 @@ import { targetFor } from "./geo.mjs";
 import { EIFFEL, MONTPARNASSE, NEGRESCO, CITY_LANDMARKS } from "./eiffel-landmark.mjs";
 import { CHARONNE_ID } from "./navigation-presets.mjs";
 import meewavBrandLogo from "../../assets/ui/assets/meewav-logo.svg";
+import { openLiveProfile } from './host-bridge';
 import "./globe-interface.css";
 import "./reference/features/globe/styles/globe-v2.css";
 
@@ -28,6 +30,7 @@ const persist = (key: string, value: any) => { try { localStorage.setItem(key, J
 const names: Record<string, string> = { "/messages": "Messagerie", "/rooms/home": "Rooms", "/scene": "La Scène", "/market": "Marketplace", "/tremplin": "Tremplin", "/profile": "Profil" };
 
 export function GlobeInterface({ ready, data, engine, navigate, selection, zoomLimit }: any) {
+  const realMode = new URLSearchParams(location.search).get('mode') === 'real';
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -215,10 +218,14 @@ export function GlobeInterface({ ready, data, engine, navigate, selection, zoomL
     return () => window.removeEventListener('meewav:ring-portrait-select', selectPortrait);
   }, []);
   useEffect(() => {
-    const selectAvatar = (event: Event) => setGroundAvatar((event as CustomEvent).detail || null);
+    const selectAvatar = (event: Event) => {
+      const avatar = (event as CustomEvent).detail;
+      if (realMode) { setGroundAvatar(null); if (avatar?.live) openLiveProfile(avatar.id); }
+      else setGroundAvatar(avatar || null);
+    };
     window.addEventListener('meewav:ground-avatar-select', selectAvatar);
     return () => window.removeEventListener('meewav:ground-avatar-select', selectAvatar);
-  }, []);
+  }, [realMode]);
   const goPosition = () => {
     if (!ready) return;
     const charonne = data.sectors.features.find((feature: any) => feature.id === CHARONNE_ID);
@@ -241,13 +248,14 @@ export function GlobeInterface({ ready, data, engine, navigate, selection, zoomL
   const toggleGrade = (level: number) => commitFilters({ ...draft, grades: draft.grades.includes(level) ? draft.grades.filter((x: number) => x !== level) : [...draft.grades, level] });
   const applyFilters = () => setFilterOpen(false);
   return <>
-    {ready && mode === 'globe' && <button className="ring-explore-button ring-key-surface" type="button"
+    {ready && !realMode && mode === 'globe' && <button className="ring-explore-button ring-key-surface" type="button"
       aria-label="Explorer les artistes légendaires" onClick={() => engine.current.enterRing()}>
       <Orbit className="ring-explore-icon" size={18} aria-hidden="true" />
       <span>Explorer les artistes<span className="ring-explore-detail"> légendaires</span></span>
     </button>}
     {mode === 'ring' && <>
       <button className="ring-return-button ring-key-surface" onClick={goGlobe} disabled={ringReturning}><ArrowLeft size={17} aria-hidden="true" />{ringReturning ? 'Retour au globe…' : 'Retour au globe'}</button>
+      {!ringReturning && <RingTopOnePlayer profileOpen={Boolean(ringPortrait)} />}
       {!ringReturning && !ringPortrait && <section className="ring-visit-panel ring-key-surface" aria-label="Se déplacer sur l’anneau">
         <div className="ring-visit-main">
           <div className="ring-visit-gesture" aria-hidden="true"><ArrowLeft size={17} /><Hand size={26} strokeWidth={1.6} /><ArrowRight size={17} /></div>

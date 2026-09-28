@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type CSSProperties } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 import {
   Repeat,
@@ -31,6 +31,7 @@ import { PLACE_MIXER_FALLBACK_COVERS } from "./placeMixerCoverCatalog";
 import type { PlaceLiveKitStatus } from "./placeLiveKit.service";
 import { placeRoomTime } from "./placeRoomTime";
 import { waitForPlaceMixerStart } from "./placeMixerStart";
+import { placeTransportCues } from "./placeTransportCues";
 import { useWaveTransport, useWaveTransportState } from "../wave-transport/WaveTransportProvider";
 import type { WaveImportedAudio, WaveImportDestination } from "../wave-transport/WaveTransportProvider";
 import WaveListeningSelector from "../wave-transport/WaveListeningSelector";
@@ -42,6 +43,7 @@ import PlaceMixerPlaybackMenu from "./PlaceMixerPlaybackMenu";
 import { createMixerLoop, mixerLoopPosition, moveMixerLoopEdge, type PlaceMixerLoopRegion } from "./placeMixerLoop";
 import type { PlaceAudioPlaybackState, PlaceAudioPreviewInput, PlaceAudioRoute, PlaceParticipant } from "./place.types";
 import PlaceMixerRegie from "./PlaceMixerRegie";
+import { useCageProduction } from "../tools/audio/CageProductionProvider";
 import { createPlaceClientId } from "./placeClientId";
 import "./place-mixer-play-finish.css";
 import "./place-mixer-classroom-collapse.css";
@@ -61,10 +63,21 @@ type MixerAudioTrack = {
   fileSize?: number;
   fileLastModified?: number;
   file?: File;
+  waveDestination?: "base" | "player";
+  waveCategory?: WaveLoopCategory;
+  cageProductionReference?: string;
 };
 
-type PickerView = "closed" | "sources" | "library" | "setlists" | "covers" | "queue" | "playback";
+type PickerView = "closed" | "wave-destination" | "sources" | "library" | "setlists" | "covers" | "queue" | "playback";
 type PlaybackMode = "ordered" | "shuffle" | "loop";
+
+function keepImportFocus(event: ReactKeyboardEvent<HTMLElement>) {
+  if (event.key !== "Tab") return;
+  const controls = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"));
+  const first = controls[0], last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+}
 
 export type PlaceMixerProgramAudioTransport = {
   status: PlaceLiveKitStatus;
@@ -88,8 +101,10 @@ type PlaceMixerAudioPlayerProps = {
   onPlaybackStateChange: (state: PlaceAudioPlaybackState, generation: string) => Promise<boolean>;
   programAudio?: PlaceMixerProgramAudioTransport;
   personalSend?: boolean;
+  privateOnly?: boolean;
   onPreviewLevel?: (level: number) => void;
   classroomCollapsible?: boolean;
+  classroomInitiallyCollapsed?: boolean;
   roomLabel?: string;
   onClassroomCollapsedChange?: (collapsed: boolean) => void;
 };
@@ -180,17 +195,20 @@ export default function PlaceMixerAudioPlayer({
   onPreviewMetadata,
   onRouteChange,
   personalSend = false,
+  privateOnly = false,
   onPreviewLevel,
   onPlaybackStateChange,
   programAudio,
   classroomCollapsible = false,
+  classroomInitiallyCollapsed = false,
   roomLabel = "La Classe",
   onClassroomCollapsedChange,
 }: PlaceMixerAudioPlayerProps) {
   const desktopDeck = useRuntime().isDesktop;
+  const cageProduction = useCageProduction();
+  const adoptedCageSource = useRef<string | null>(null);
   const waveTransport = useWaveTransport();
-  const waveState = useWaveTransportState();
-  const waveEngine = waveTransport?.engine;
+  const sharedWaveState = useWaveTransportState();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioGraphRef = useRef<PlayerAudioGraph | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -203,6 +221,11 @@ export default function PlaceMixerAudioPlayer({
   const [libraryTracks, setLibraryTracks] = useState<MixerAudioTrack[]>(LIBRARY_TRACKS);
   const [setlists, setSetlists] = useState(FALLBACK_SETLISTS);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const currentTrack = queue[currentIndex];
+  const playerOnlySelected = Boolean(waveTransport && currentTrack?.waveDestination === "player");
+  const waveEngine = playerOnlySelected ? undefined : waveTransport?.engine;
+  const waveState = playerOnlySelected ? null : sharedWaveState;
+  const [activeBaseTrackId, setActiveBaseTrackId] = useState("wave-reference");
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const [cueSeconds, setCueSeconds] = useState(0);
   const [loopRegion, setLoopRegion] = useState<PlaceMixerLoopRegion | null>(null);
@@ -226,7 +249,7 @@ export default function PlaceMixerAudioPlayer({
   const programAudioRef = useRef(programAudio);
   const programGenerationRef = useRef(createPlaceClientId());
   const [pickerView, setPickerView] = useState<PickerView>("closed");
-  const [classroomCollapsed, setClassroomCollapsed] = useState(false);
+  const [classroomCollapsed, setClassroomCollapsed] = useState(classroomCollapsible && classroomInitiallyCollapsed);
   const classroomPlayerContentId = useId();
   const [playbackMode, setPlaybackMode] = useState<PlaybackMode>("ordered");
   const playlistResumeRef = useRef<string | null>(null);
@@ -235,12 +258,16 @@ export default function PlaceMixerAudioPlayer({
   const [pendingImportCover, setPendingImportCover] = useState<string | null>(null);
   const [pendingWaveImport, setPendingWaveImport] = useState<WaveImportedAudio | null>(null);
   const [waveImportCategory, setWaveImportCategory] = useState<WaveLoopCategory | null>(null);
-  const [waveImportDestination, setWaveImportDestination] = useState<WaveImportDestination | null>(null);
+  const [waveImportDestination, setWaveImportDestination] = useState<WaveImportDestination | "player" | null>(null);
   const [waveImportPending, setWaveImportPending] = useState(false);
   const [waveImportAnalyzing, setWaveImportAnalyzing] = useState(false);
   const [waveImportError, setWaveImportError] = useState("");
+  const [waveImportTitle, setWaveImportTitle] = useState("");
+  const [waveSetlist, setWaveSetlist] = useState<{ title: string; tracks: MixerAudioTrack[] } | null>(null);
+  const waveImportRequestRef = useRef(0);
+  const waveImportAbortRef = useRef<AbortController | null>(null);
+  useEffect(() => () => { waveImportRequestRef.current++; waveImportAbortRef.current?.abort(); }, []);
   const [waveformPeaks, setWaveformPeaks] = useState<readonly WaveformPeak[]>([]);
-  const currentTrack = queue[currentIndex];
   const waveReferenceReady = !waveEngine || Boolean(currentTrack && waveState?.referenceId === currentTrack.id && !waveState.referenceLoading);
   const updateLoopRegion = useCallback((region: PlaceMixerLoopRegion | null) => {
     loopRegionRef.current = region;
@@ -288,8 +315,10 @@ export default function PlaceMixerAudioPlayer({
     void (baseLoop.mediaUrl ? Promise.resolve(baseLoop.mediaUrl) : signedWaveAudienceUrl(baseLoop.mediaPath!)).then(src => {
       if (!active) return;
       if (currentTrack?.src === src && currentTrack.title === baseLoop.title) return;
-      const tracks = [{ id: "wave-reference", title: baseLoop.title, displayTitle: baseLoop.title,
-        src, durationSeconds: baseLoop.durationSeconds ?? 0 }];
+      const reference: MixerAudioTrack = { id: "wave-reference", title: baseLoop.title, displayTitle: baseLoop.title,
+        src, durationSeconds: baseLoop.durationSeconds ?? 0, waveDestination: "base",
+        waveCategory: WAVE_LOOP_CATEGORIES.find(category => category.label === baseLoop.kind)?.id ?? "drums" };
+      const tracks = [reference, ...queue.filter(track => track.id !== "wave-reference")];
       setQueue(tracks);
       activateTrack(tracks, 0);
     }).catch(() => setSafetyError("Beat de référence indisponible"));
@@ -319,10 +348,10 @@ export default function PlaceMixerAudioPlayer({
   const pickerTitle = useMemo(() => {
     if (pickerView === "queue") return "Playlist du Mixeur";
     if (pickerView === "library") return "Ma médiathèque";
-    if (pickerView === "setlists") return "Mes setlists";
+    if (pickerView === "setlists") return waveSetlist?.title ?? "Mes setlists";
     if (pickerView === "covers") return "Choisir une cover";
     return "";
-  }, [pickerView]);
+  }, [pickerView, waveSetlist?.title]);
 
   const analyzeTrackWaveform = useCallback((track: MixerAudioTrack) => {
     const identity = waveformTrackIdentity(track);
@@ -396,11 +425,10 @@ export default function PlaceMixerAudioPlayer({
   }, [classroomCollapsed, classroomCollapsible, roomId]);
 
   useEffect(() => {
-    if (!classroomCollapsible) {
-      setClassroomCollapsed(false);
-      onClassroomCollapsedChange?.(false);
-    }
-  }, [classroomCollapsible, onClassroomCollapsedChange]);
+    const collapsed = classroomCollapsible && classroomInitiallyCollapsed;
+    setClassroomCollapsed(collapsed);
+    onClassroomCollapsedChange?.(collapsed);
+  }, [roomId, classroomCollapsible, classroomInitiallyCollapsed, onClassroomCollapsedChange]);
 
   useEffect(() => {
     safetyCallbacksRef.current = { onRouteChange, onPlaybackStateChange };
@@ -642,7 +670,13 @@ export default function PlaceMixerAudioPlayer({
   };
 
   const pause = () => {
+    const wasPlaying = isPlaying;
     pauseLocal();
+    // pauseLocal also ticks Time: a pause exactly at zero may have emitted
+    // the chrono cue already, before the interval gets its next turn.
+    const time = placeRoomTime.getSnapshot();
+    const chronoCuePlayed = time.enabled && time.status === "complete" && placeTransportCues.getSnapshot().end.chrono;
+    if (wasPlaying && !chronoCuePlayed) placeTransportCues.end("player");
     void onPlaybackStateChange(route === "public" ? "ready" : "paused", programGenerationRef.current);
   };
 
@@ -665,11 +699,13 @@ export default function PlaceMixerAudioPlayer({
       else if (audioGraphRef.current?.context.state === "suspended") {
         await audioGraphRef.current.context.resume();
       }
-      // Le Pad retient le transport lui-même, pas seulement l'affichage Time.
-      // Une reprise en cours de piste ne rejoue pas l'introduction.
-      if (!waveEngine?.getSnapshot().quickPreview && audio.currentTime === 0 && placeRoomTime.getSnapshot().status !== "running") {
+      // One cue owns a combined Play + Time start. A resumed player follows
+      // its own association; a resumed chrono does not restart its intro.
+      if (!waveEngine?.getSnapshot().quickPreview) {
+        const time = placeRoomTime.getSnapshot();
+        const startsChrono = time.enabled && time.status !== "running" && time.status !== "paused";
         setCountdownPending(true);
-        const ready = await waitForPlaceMixerStart(controller.signal);
+        const ready = await waitForPlaceMixerStart(controller.signal, startsChrono ? "both" : "player");
         setCountdownPending(false);
         if (!ready) return;
       }
@@ -740,14 +776,18 @@ export default function PlaceMixerAudioPlayer({
 
   useEffect(() => { playlistHandlersRef.current = { play, ended: handleTrackEnd }; });
   useEffect(() => {
-    if (!waveEngine || !currentTrack || playlistResumeRef.current !== currentTrack.id || !waveReferenceReady || !previewReady || playbackPending) return;
+    if (!currentTrack || playlistResumeRef.current !== currentTrack.id || !waveReferenceReady || !previewReady || playbackPending) return;
     playlistResumeRef.current = null;
     void playlistHandlersRef.current?.play();
   }, [waveEngine, currentTrack, waveReferenceReady, previewReady, playbackPending]);
 
   // The Sas shortcuts use this player's routing, countdown and stop controls.
   const registerWavePlaybackControls = waveTransport?.registerPlaybackControls;
-  useEffect(() => registerWavePlaybackControls?.({ play, pause }), [registerWavePlaybackControls, play, pause]);
+  useEffect(() => registerWavePlaybackControls?.({ play: async () => {
+    if (!playerOnlySelected) return play();
+    const index = queue.findIndex(track => track.id === activeBaseTrackId);
+    if (index >= 0) { activateTrack(queue, index, true); playlistResumeRef.current = queue[index].id; }
+  }, pause }), [registerWavePlaybackControls, play, pause, playerOnlySelected, queue, activeBaseTrackId]);
 
   const prepareSelectedTrack = async (track: MixerAudioTrack, requestId: number, generation: string) => {
     const prepared = await onPreviewPrepare({
@@ -762,7 +802,7 @@ export default function PlaceMixerAudioPlayer({
     if (!prepared) setSafetyError("Préécoute indisponible");
   };
 
-  const activateTrack = (tracks: MixerAudioTrack[], index: number) => {
+  const activateTrack = (tracks: MixerAudioTrack[], index: number, preserveWaveTransport = false) => {
     const track = tracks[index];
     if (!track) return;
     const requestId = ++previewRequestRef.current;
@@ -771,8 +811,11 @@ export default function PlaceMixerAudioPlayer({
     metadataCommitRef.current = null;
     failedTransportGenerationRef.current = null;
     pauseLocal();
-    waveEngine?.setMode(waveTransport?.context === "wave-orchestra" ? "beat" : "base");
-    waveEngine?.seek(0);
+    const targetEngine = track.waveDestination === "player" ? undefined : waveTransport?.engine;
+    if (!preserveWaveTransport) {
+      targetEngine?.setMode(waveTransport?.context === "wave-orchestra" ? "beat" : "base");
+      targetEngine?.seek(0);
+    }
     void programAudioRef.current?.releaseMusicTrack();
     setRoute("preview");
     setPreviewReady(false);
@@ -786,11 +829,45 @@ export default function PlaceMixerAudioPlayer({
   };
 
   const selectTrack = (index: number) => {
+    const track = queue[index];
+    if (waveTransport && track?.waveDestination === "base" && track.id !== activeBaseTrackId) {
+      setWaveImportDestination("base");
+      void stageWaveImport(track);
+      return;
+    }
     activateTrack(queue, index);
   };
 
+  const cageDeckActions = useRef({ activateTrack, pauseLocal, route });
+  cageDeckActions.current = { activateTrack, pauseLocal, route };
+  useEffect(() => cageProduction?.registerMixerPreview(() => {
+    if (cageDeckActions.current.route === "preview") cageDeckActions.current.pauseLocal();
+  }), [cageProduction?.registerMixerPreview]);
+  useEffect(() => {
+    const asset = cageProduction?.asset;
+    if (!asset || !cageProduction?.participant || adoptedCageSource.current === asset.src) return;
+    if (cageProduction.onstage && adoptedCageSource.current) return;
+    adoptedCageSource.current = asset.src;
+    const track: MixerAudioTrack = { id: `cage-production:${asset.production.reference}`, title: asset.production.title,
+      artist: "Prod du battle", badge: "Prod du battle", src: asset.src, durationSeconds: asset.durationSeconds,
+      file: asset.file, fileName: asset.file.name, cageProductionReference: asset.production.reference };
+    const nextQueue = [track, ...queue.filter(item => !item.cageProductionReference)];
+    setQueue(nextQueue);
+    cageDeckActions.current.activateTrack(nextQueue, 0);
+  }, [cageProduction?.asset, cageProduction?.participant, cageProduction?.onstage]);
+  useEffect(() => {
+    if (previewReady && currentTrack?.cageProductionReference) cageProduction?.markMixerLoaded(currentTrack.cageProductionReference);
+  }, [previewReady, currentTrack?.cageProductionReference, cageProduction?.markMixerLoaded]);
+
+  const queueNeighbour = (index: number, direction: -1 | 1) => {
+    for (let next = index + direction; next >= 0 && next < queue.length; next += direction) {
+      if (!waveTransport || queue[next].waveDestination === queue[index].waveDestination) return next;
+    }
+    return -1;
+  };
+
   const moveQueueTrack = (index: number, direction: -1 | 1) => {
-    const destination = index + direction;
+    const destination = queueNeighbour(index, direction);
     if (destination < 0 || destination >= queue.length) return;
     const activeTrackId = currentTrack?.id;
     const nextQueue = [...queue];
@@ -804,7 +881,7 @@ export default function PlaceMixerAudioPlayer({
 
   const removeQueueTrack = (index: number) => {
     const removedTrack = queue[index];
-    if (!removedTrack) return;
+    if (!removedTrack || removedTrack.cageProductionReference || (waveTransport && removedTrack.id === activeBaseTrackId)) return;
     const nextQueue = queue.filter((_, trackIndex) => trackIndex !== index);
     const removedWaveformIdentity = waveformTrackIdentity(removedTrack);
     waveformCacheRef.current.delete(removedWaveformIdentity);
@@ -834,7 +911,10 @@ export default function PlaceMixerAudioPlayer({
 
     if (index === currentIndex) {
       setQueue(nextQueue);
-      activateTrack(nextQueue, Math.min(index, nextQueue.length - 1));
+      const nextIndex = waveTransport
+        ? nextQueue.findIndex((track) => track.waveDestination !== "base" || track.id === activeBaseTrackId)
+        : Math.min(index, nextQueue.length - 1);
+      activateTrack(nextQueue, Math.max(0, nextIndex));
       return;
     }
 
@@ -850,16 +930,17 @@ export default function PlaceMixerAudioPlayer({
         : track
     ));
     const firstTrack = importedTracks[0];
-    const firstImportedIndex = queue.length;
-    const nextQueue = [...queue, ...importedTracks];
+    const nextQueue = [...queue.filter(track => !importedTracks.some(imported => imported.id === track.id)), ...importedTracks];
+    const firstImportedIndex = nextQueue.findIndex(track => track.id === firstTrack.id);
     const requestId = ++previewRequestRef.current;
     const generation = createPlaceClientId();
     programGenerationRef.current = generation;
     metadataCommitRef.current = null;
     failedTransportGenerationRef.current = null;
     pauseLocal();
-    waveEngine?.setMode(waveTransport?.context === "wave-orchestra" ? "beat" : "base");
-    waveEngine?.seek(0);
+    const targetEngine = firstTrack.waveDestination === "player" ? undefined : waveTransport?.engine;
+    targetEngine?.setMode(waveTransport?.context === "wave-orchestra" ? "beat" : "base");
+    targetEngine?.seek(0);
     void programAudioRef.current?.releaseMusicTrack();
     setRoute("preview");
     setPreviewReady(false);
@@ -876,7 +957,63 @@ export default function PlaceMixerAudioPlayer({
   };
 
   const openUpload = () => {
-    setPickerView("sources");
+    setWaveImportDestination(null);
+    setWaveImportCategory(null);
+    setWaveImportError("");
+    setWaveSetlist(null);
+    setPickerView(waveTransport ? "wave-destination" : "sources");
+  };
+
+  const stageWaveImport = async (track: MixerAudioTrack, ignored = 0) => {
+    const request = ++waveImportRequestRef.current;
+    waveImportAbortRef.current?.abort();
+    const controller = new AbortController();
+    waveImportAbortRef.current = controller;
+    setWaveImportTitle(track.title);
+    setPendingWaveImport(null);
+    setWaveImportAnalyzing(true);
+    setWaveImportCategory(track.waveCategory ?? null);
+    setWaveImportError(ignored ? "Choisis une boucle à la fois. Les autres fichiers n’ont pas été importés." : "");
+    setPickerView("closed");
+    try {
+      let file = track.file;
+      let src = track.src;
+      if (!file) {
+        const response = await fetch(track.src, { signal: controller.signal });
+        if (!response.ok) throw new Error("Ce son n’est pas accessible. Choisis un autre fichier ou réessaie.");
+        const blob = await response.blob();
+        if (request !== waveImportRequestRef.current) return;
+        const fileName = track.fileName || new URL(track.src, window.location.href).pathname.split("/").pop() || "boucle.wav";
+        file = new File([blob], fileName, { type: blob.type });
+        src = URL.createObjectURL(file);
+        objectUrlsRef.current.add(src);
+      }
+      if (request !== waveImportRequestRef.current) return;
+      const audio = { id: track.id, title: track.title, src, file, durationSeconds: track.durationSeconds };
+      setPendingWaveImport(audio);
+      const analyzedTrack = { ...track, src, file };
+      await analyzeTrackWaveform(analyzedTrack);
+      if (request !== waveImportRequestRef.current) return;
+      const measuredDuration = waveformDurationCacheRef.current.get(waveformTrackIdentity(analyzedTrack));
+      setPendingWaveImport({ ...audio, durationSeconds: measuredDuration || track.durationSeconds });
+    } catch (reason) {
+      if (request === waveImportRequestRef.current) setWaveImportError(reason instanceof Error ? reason.message : "Impossible de lire ce son.");
+    } finally {
+      if (request === waveImportRequestRef.current) setWaveImportAnalyzing(false);
+    }
+  };
+
+  const importSelectedTracks = (tracks: MixerAudioTrack[]) => {
+    if (!tracks.length) return;
+    if (waveTransport && waveImportDestination === "player") {
+      loadTracks(tracks.map(track => ({ ...track, waveDestination: "player" })));
+    } else if (waveTransport && (waveImportDestination || waveTransport.hasImportHandler())) {
+      const [track, ...ignored] = tracks;
+      ignored.forEach(item => {
+        if (item.localObjectUrl) { URL.revokeObjectURL(item.src); objectUrlsRef.current.delete(item.src); }
+      });
+      void stageWaveImport(track, ignored.length);
+    } else loadTracks(tracks);
   };
 
   const toggleClassroomPlayer = () => {
@@ -909,42 +1046,27 @@ export default function PlaceMixerAudioPlayer({
     });
     // Analyze every imported file immediately, including tracks that are not
     // yet selected in the playlist. Selecting them later is then instant.
-    tracks.forEach((track) => { void analyzeTrackWaveform(track); });
-    if (waveTransport?.hasImportHandler()) {
-      const [track, ...ignored] = tracks;
-      ignored.forEach((item) => {
-        if (item.localObjectUrl) URL.revokeObjectURL(item.src);
-        objectUrlsRef.current.delete(item.src);
-      });
-      setPendingWaveImport({ id: track.id, title: track.title, src: track.src, file: track.file!, durationSeconds: track.durationSeconds });
-      setWaveImportAnalyzing(true);
-      void analyzeTrackWaveform(track).then(() => {
-        const measuredDuration = waveformDurationCacheRef.current.get(waveformTrackIdentity(track));
-        if (!measuredDuration) return;
-        setPendingWaveImport(current => current?.id === track.id
-          ? { ...current, durationSeconds: measuredDuration }
-          : current);
-      }).finally(() => setWaveImportAnalyzing(false));
-      setWaveImportCategory(null);
-      setWaveImportDestination(null);
-      setWaveImportError(ignored.length ? "Classez une production à la fois. Les fichiers supplémentaires n’ont pas été importés." : "");
-      setPickerView("closed");
-    } else loadTracks(tracks);
+    if (!waveTransport || (!waveImportDestination && !waveTransport.hasImportHandler())) tracks.forEach((track) => { void analyzeTrackWaveform(track); });
+    importSelectedTracks(tracks);
     event.currentTarget.value = "";
   };
 
   const closeWaveImport = () => {
     if (waveImportPending) return;
-    if (pendingWaveImport) {
+    waveImportRequestRef.current++;
+    waveImportAbortRef.current?.abort();
+    if (pendingWaveImport && !queue.some(track => track.src === pendingWaveImport.src)) {
       URL.revokeObjectURL(pendingWaveImport.src);
       objectUrlsRef.current.delete(pendingWaveImport.src);
     }
     setPendingWaveImport(null);
+    setWaveImportTitle("");
+    setWaveImportAnalyzing(false);
     setWaveImportError("");
   };
 
   const commitWaveImport = async () => {
-    if (!pendingWaveImport || !waveTransport || waveImportAnalyzing || waveImportPending || !waveImportDestination || !waveImportCategory) return;
+    if (!pendingWaveImport || !waveTransport || waveImportAnalyzing || waveImportPending || !waveImportDestination || waveImportDestination === "player" || !waveImportCategory) return;
     const destination = waveImportDestination;
     setWaveImportPending(true);
     setWaveImportError("");
@@ -952,7 +1074,10 @@ export default function PlaceMixerAudioPlayer({
       await waveTransport.commitImport({ audio: pendingWaveImport, destination, category: waveImportCategory });
       const imported = pendingWaveImport;
       setPendingWaveImport(null);
-      if (destination === "base") loadTracks([{
+      setWaveImportTitle("");
+      if (destination === "base") {
+        setActiveBaseTrackId(imported.id);
+        loadTracks([{
         id: imported.id,
         title: imported.title,
         displayTitle: imported.title,
@@ -965,7 +1090,10 @@ export default function PlaceMixerAudioPlayer({
         fileSize: imported.file.size,
         fileLastModified: imported.file.lastModified,
         file: imported.file,
+        waveDestination: "base",
+        waveCategory: waveImportCategory,
       }]);
+      }
     } catch (reason) {
       const code = reason instanceof Error ? reason.message : "";
       setWaveImportError(code === "wave_import_duration_off_grid"
@@ -980,20 +1108,24 @@ export default function PlaceMixerAudioPlayer({
     }
   };
 
+  const playlistIndices = queue.flatMap((track, index) =>
+    !waveTransport || (currentTrack?.waveDestination !== "base" && track.waveDestination !== "base") ? [index] : []);
+  const canNavigateTracks = waveEngine && (waveTransport?.context === "wave-gate" || waveTransport?.context === "wave-quarantine")
+    ? waveTransport.queue.length > 1 : playlistIndices.length > 1;
   const selectAdjacent = (direction: -1 | 1) => {
-    if (queue.length < 2) return;
-    const next = (currentIndex + direction + queue.length) % queue.length;
-    selectTrack(next);
+    if (playlistIndices.length < 2) return;
+    const position = playlistIndices.indexOf(currentIndex);
+    selectTrack(playlistIndices[(position + direction + playlistIndices.length) % playlistIndices.length]);
   };
 
   const handleNextTrack = () => {
-    if (waveTransport?.context === "wave-gate" && waveTransport.queue.length) { waveTransport.adjacent(1); return; }
+    if (waveEngine && (waveTransport?.context === "wave-gate" || waveTransport?.context === "wave-quarantine") && waveTransport.queue.length) { waveTransport.adjacent(1); return; }
     if (!currentTrack || queue.length < 2) return;
     selectAdjacent(1);
   };
 
   const handlePreviousTrack = () => {
-    if (waveTransport?.context === "wave-gate" && waveTransport.queue.length) { waveTransport.adjacent(-1); return; }
+    if (waveEngine && (waveTransport?.context === "wave-gate" || waveTransport?.context === "wave-quarantine") && waveTransport.queue.length) { waveTransport.adjacent(-1); return; }
     if (!currentTrack || queue.length < 2) return;
     selectAdjacent(-1);
   };
@@ -1044,18 +1176,19 @@ export default function PlaceMixerAudioPlayer({
       void play();
       return;
     }
-    if (playbackMode === "shuffle" && queue.length > 1) {
-      const offset = Math.floor(Math.random() * (queue.length - 1)) + 1;
-      const next = (currentIndex + offset) % queue.length;
+    if (playbackMode === "shuffle" && playlistIndices.length > 1) {
+      const offset = Math.floor(Math.random() * (playlistIndices.length - 1)) + 1;
+      const next = playlistIndices[(playlistIndices.indexOf(currentIndex) + offset) % playlistIndices.length];
       selectTrack(next);
       // Keep the existing public-route safety gate: track changes do not
       // silently publish another file. Private playlists may continue.
-      if (waveEngine && route === "preview") playlistResumeRef.current = queue[next].id;
+      if (route === "preview") playlistResumeRef.current = queue[next].id;
       return;
     }
-    if (currentIndex < queue.length - 1) {
-      selectTrack(currentIndex + 1);
-      if (waveEngine && route === "preview") playlistResumeRef.current = queue[currentIndex + 1].id;
+    const nextIndex = currentTrack?.waveDestination === "base" ? undefined : playlistIndices[playlistIndices.indexOf(currentIndex) + 1];
+    if (nextIndex !== undefined) {
+      selectTrack(nextIndex);
+      if (route === "preview") playlistResumeRef.current = queue[nextIndex].id;
       return;
     }
     // Cut the public branch before publishing the terminal state. Keeping a
@@ -1109,6 +1242,7 @@ export default function PlaceMixerAudioPlayer({
   }, [isPlaying, route, onPreviewLevel]);
 
   const selectRoute = async (nextRoute: PlaceAudioRoute) => {
+    if (privateOnly && nextRoute === "public") return;
     if (!currentTrack || !previewReady || routePendingRef.current || playbackPendingRef.current || nextRoute === route) return;
     routePendingRef.current = true;
     pauseLocal();
@@ -1172,6 +1306,28 @@ export default function PlaceMixerAudioPlayer({
         onChange={(mode) => waveEngine.setMode(mode)} />
     : null;
 
+  const renderQueueTrack = (track: MixerAudioTrack, index: number, position: number) => (
+    <article key={track.id} className={`place-mixer-audio-queue-row${index === currentIndex ? " is-current" : ""}`}>
+      <button type="button" className="place-mixer-audio-queue-row__select" onClick={() => selectTrack(index)} aria-label={`Lire ${track.displayTitle ?? track.title}`}>
+        <span>{String(position + 1).padStart(2, "0")}</span>
+        <strong>{track.displayTitle ?? track.title}</strong>
+        <small>{waveTransport && track.waveDestination === "base" ? (track.id === activeBaseTrackId ? "Base active" : "Activer cette base") : index === currentIndex ? "Piste active" : track.artist ?? "Son importé"}</small>
+      </button>
+      <span className="place-mixer-audio-queue-row__order">
+        <button type="button" onClick={() => moveQueueTrack(index, -1)} disabled={queueNeighbour(index, -1) < 0} aria-label={`Monter ${track.displayTitle ?? track.title}`}><ArrowUp aria-hidden="true" /></button>
+        <button type="button" onClick={() => moveQueueTrack(index, 1)} disabled={queueNeighbour(index, 1) < 0} aria-label={`Descendre ${track.displayTitle ?? track.title}`}><ArrowDown aria-hidden="true" /></button>
+      </span>
+      <button type="button" className="place-mixer-audio-queue-row__remove" disabled={Boolean(track.cageProductionReference || (waveTransport && track.id === activeBaseTrackId))} title={track.cageProductionReference ? "Prod commune publiée par le host" : waveTransport && track.id === activeBaseTrackId ? "Activez une autre base avant de supprimer celle-ci" : undefined} onClick={() => removeQueueTrack(index)} aria-label={`Supprimer ${track.displayTitle ?? track.title}`}><Trash2 aria-hidden="true" /></button>
+    </article>
+  );
+  const queueList = waveTransport ? (["base", "player"] as const).map((destination) => {
+    const tracks = queue.map((track, index) => ({ track, index })).filter(({ track }) => destination === "base" ? track.waveDestination === "base" : track.waveDestination !== "base");
+    return tracks.length ? <section className="place-mixer-audio-queue-group" key={destination} aria-label={destination === "base" ? "Boucles de base" : "Dans le lecteur"}>
+      <h3>{destination === "base" ? "Boucles de base" : "Dans le lecteur"}<span>{tracks.length}</span></h3>
+      {tracks.map(({ track, index }, position) => renderQueueTrack(track, index, position))}
+    </section> : null;
+  }) : queue.map((track, index) => renderQueueTrack(track, index, index));
+
   const playbackOptions = (
 <span className="place-mixer-audio__utility-actions">
               <PlaceMixerRegie
@@ -1189,6 +1345,7 @@ export default function PlaceMixerAudioPlayer({
                 onReturn={handleReturnToCue}
               />
               <PlaceMixerPlaybackMenu
+                waveEnabled={!playerOnlySelected}
                 open={pickerView === "playback"}
                 onOpenChange={(open) => setPickerView(open ? "playback" : "closed")}
                 mode={playbackMode}
@@ -1207,6 +1364,7 @@ export default function PlaceMixerAudioPlayer({
       aria-label="Lecteur audio du Mixeur"
     >
       <audio
+        key={playerOnlySelected ? "standalone" : "wave"}
         ref={audioRef}
         src={currentTrack?.src}
         loop={playbackMode === "loop"}
@@ -1245,7 +1403,7 @@ export default function PlaceMixerAudioPlayer({
         }}
         onEnded={handleEnded}
       />
-      <input ref={fileInputRef} className="place-mixer-audio__file" type="file" accept="audio/*" multiple onChange={handleDeviceFile} />
+      <input ref={fileInputRef} className="place-mixer-audio__file" type="file" accept="audio/*" multiple={!waveTransport || waveImportDestination === "player"} onChange={handleDeviceFile} />
 
       {classroomCollapsible ? (
         <>
@@ -1382,7 +1540,7 @@ export default function PlaceMixerAudioPlayer({
           <div className="place-mixer-audio__controls">
             {desktopDeck ? <>
               <button type="button" className="place-mixer-deck__route" aria-label="Destination du lecteur" aria-pressed={route === "public"}
-                disabled={!currentTrack || !previewReady || routePending} onClick={() => { void selectRoute(route === "public" ? "preview" : "public"); }}>
+                disabled={privateOnly || !currentTrack || !previewReady || routePending} onClick={() => { void selectRoute(route === "public" ? "preview" : "public"); }}>
                 {route === "public" ? personalSend ? "Mon mix" : "Public" : "Privé"}
               </button>
               <button type="button" className="place-mixer-deck__key" onClick={openUpload} aria-label="Importer un son"><Upload aria-hidden="true" /></button>
@@ -1405,7 +1563,7 @@ export default function PlaceMixerAudioPlayer({
                   role="radio"
                   aria-checked={route === "public"}
                   className={route === "public" ? "is-active" : undefined}
-                  disabled={!currentTrack || !previewReady || routePending}
+                  disabled={privateOnly || !currentTrack || !previewReady || routePending}
                   onClick={() => { void selectRoute("public"); }}
                 >
                   <Globe2 aria-hidden="true" /><b>{personalSend ? "Mon mix" : "Public"}</b>
@@ -1418,7 +1576,7 @@ export default function PlaceMixerAudioPlayer({
               <button
                 type="button"
                 onClick={handlePreviousTrack}
-                disabled={!currentTrack || (waveTransport?.context === "wave-gate" ? waveTransport.queue.length < 2 : queue.length < 2)}
+                disabled={!currentTrack || !canNavigateTracks}
                 aria-label="Piste précédente"
               >
                 <SkipBack aria-hidden="true" />
@@ -1440,7 +1598,7 @@ export default function PlaceMixerAudioPlayer({
               >
                 {isPlaying || countdownPending ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
               </button>
-              <button type="button" onClick={handleNextTrack} disabled={!currentTrack || (waveTransport?.context === "wave-gate" ? waveTransport.queue.length < 2 : queue.length < 2)} aria-label="Piste suivante"><SkipForward aria-hidden="true" /></button>
+              <button type="button" onClick={handleNextTrack} disabled={!currentTrack || !canNavigateTracks} aria-label="Piste suivante"><SkipForward aria-hidden="true" /></button>
             </span>
             {desktopDeck ? <>
               <button type="button" className="place-mixer-deck__key" aria-label="Boucle" aria-pressed={Boolean(loopRegion)} disabled={!currentTrack || durationSeconds <= 0} onClick={toggleLoopRegion}><Repeat aria-hidden="true" /></button>
@@ -1450,23 +1608,45 @@ export default function PlaceMixerAudioPlayer({
           </div>
           {desktopDeck && pickerView === "queue" ? <section className="place-mixer-deck__queue" aria-label="Pistes du Mixeur">
         <div className="place-mixer-deck__queue-list">
-          {queue.length ? queue.map((track, index) => <article key={track.id} className={`place-mixer-audio-queue-row${index === currentIndex ? " is-current" : ""}`}>
-            <button type="button" className="place-mixer-audio-queue-row__select" onClick={() => selectTrack(index)} aria-label={`Lire ${track.displayTitle ?? track.title}`}><span>{String(index + 1).padStart(2, "0")}</span><strong>{track.displayTitle ?? track.title}</strong><small>{index === currentIndex ? "Piste active" : track.artist ?? "Son importé"}</small></button>
-            <span className="place-mixer-audio-queue-row__order"><button type="button" onClick={() => moveQueueTrack(index, -1)} disabled={index === 0} aria-label={`Monter ${track.displayTitle ?? track.title}`}><ArrowUp aria-hidden="true" /></button><button type="button" onClick={() => moveQueueTrack(index, 1)} disabled={index === queue.length - 1} aria-label={`Descendre ${track.displayTitle ?? track.title}`}><ArrowDown aria-hidden="true" /></button></span>
-            <button type="button" className="place-mixer-audio-queue-row__remove" onClick={() => removeQueueTrack(index)} aria-label={`Supprimer ${track.displayTitle ?? track.title}`}><Trash2 aria-hidden="true" /></button>
-          </article>) : <button type="button" className="place-mixer-deck__queue-empty" onClick={() => setPickerView("sources")} aria-label="Ajouter un son"><Plus aria-hidden="true" /></button>}
+          {queue.length ? queueList : <button type="button" className="place-mixer-deck__queue-empty" onClick={openUpload} aria-label="Ajouter un son"><Plus aria-hidden="true" /></button>}
         </div>
-        {queue.length ? <button type="button" className="place-mixer-deck__queue-add" onClick={() => setPickerView("sources")}><Plus aria-hidden="true" /> Ajouter des sons</button> : null}
+        {queue.length ? <button type="button" className="place-mixer-deck__queue-add" onClick={openUpload}><Plus aria-hidden="true" /> Ajouter des sons</button> : null}
           </section> : null}
           {desktopDeck ? <div className="place-mixer-deck__bottom">{playbackOptions}</div> : null}
         </div>
       </div>
-      {pickerView === "sources" ? (
+      {waveTransport && (pickerView === "wave-destination" || pickerView === "sources") && audioRef.current?.closest<HTMLElement>(".place-studio-panel") ? createPortal(
+        <div className={`place-mixer-audio__source-menu place-mixer-audio__wave-flow${pickerView === "wave-destination" ? " is-destination" : " is-sources"}`}
+          role={pickerView === "wave-destination" ? "dialog" : "menu"}
+          aria-label={pickerView === "wave-destination" ? "Importer dans la Wave" : "Choisir la source"}
+          aria-modal={pickerView === "wave-destination" ? true : undefined}
+          onKeyDown={keepImportFocus}
+        >
+          <strong className="place-mixer-audio__source-menu-title">{pickerView === "wave-destination" ? "Importer dans la Wave" : waveImportDestination === "base" ? "Importer une boucle de base" : waveImportDestination === "vote" ? "Importer une boucle de vote" : "Importer dans le lecteur"}</strong>
+          {pickerView === "wave-destination" ? <div className="place-mixer-wave-import__choices" role="group" aria-label="Destination du son">
+            {([
+              { id: "base", title: "Boucle de base", detail: "Devient la base active du séquenceur.", Icon: Repeat },
+              { id: "vote", title: "Boucle de vote", detail: "Rejoint le sas de vote.", Icon: ListMusic },
+              { id: "player", title: "Dans le lecteur", detail: "Ajoute une prod à la liste de lecture.", Icon: Music2 },
+            ] as const).map(({ id, title, detail, Icon }, index) => <button key={id} type="button" autoFocus={index === 0} onClick={() => { setWaveImportDestination(id); setPickerView("sources"); }}><Icon aria-hidden="true" /><span><strong>{title}</strong><small>{detail}</small></span></button>)}
+          </div> : <>
+            <button type="button" role="menuitem" autoFocus onClick={() => fileInputRef.current?.click()}><Smartphone aria-hidden="true" /><span>Depuis mon appareil</span></button>
+            <button type="button" role="menuitem" onClick={() => setPickerView("library")}><Library aria-hidden="true" /><span>Depuis ma médiathèque</span></button>
+            <button type="button" role="menuitem" onClick={() => { setWaveSetlist(null); setPickerView("setlists"); }}><ListMusic aria-hidden="true" /><span>Depuis mes setlists</span></button>
+            <button type="button" role="menuitem" className="place-mixer-audio__cover-picker" onClick={() => setPickerView("covers")}>
+              {pendingImportCover ? <img src={pendingImportCover} alt="" /> : <Images aria-hidden="true" />}
+              <span>Choisir une cover</span>
+            </button>
+            <button type="button" role="menuitem" onClick={openUpload}><ChevronLeft aria-hidden="true" /><span>Changer de destination</span></button>
+          </>}
+          <button type="button" className="is-close" onClick={() => setPickerView("closed")} aria-label="Fermer"><X aria-hidden="true" /></button>
+        </div>, audioRef.current.closest<HTMLElement>(".place-studio-panel")!
+      ) : !waveTransport && pickerView === "sources" ? (
         <div className="place-mixer-audio__source-menu" role="menu" aria-label="Choisir la source">
           <strong className="place-mixer-audio__source-menu-title">Importer un son</strong>
-          <button type="button" role="menuitem" onClick={() => fileInputRef.current?.click()}><Smartphone aria-hidden="true" /><span>Depuis mon appareil</span></button>
+          <button type="button" role="menuitem" autoFocus onClick={() => fileInputRef.current?.click()}><Smartphone aria-hidden="true" /><span>Depuis mon appareil</span></button>
           <button type="button" role="menuitem" onClick={() => setPickerView("library")}><Library aria-hidden="true" /><span>Depuis ma médiathèque</span></button>
-          <button type="button" role="menuitem" onClick={() => setPickerView("setlists")}><ListMusic aria-hidden="true" /><span>Depuis mes setlists</span></button>
+          <button type="button" role="menuitem" onClick={() => { setWaveSetlist(null); setPickerView("setlists"); }}><ListMusic aria-hidden="true" /><span>Depuis mes setlists</span></button>
           <button type="button" role="menuitem" className="place-mixer-audio__cover-picker" onClick={() => setPickerView("covers")}>
             {pendingImportCover ? <img src={pendingImportCover} alt="" /> : <Images aria-hidden="true" />}
             <span>Choisir une cover</span>
@@ -1524,60 +1704,47 @@ export default function PlaceMixerAudioPlayer({
         >
           <section className={`place-mixer-audio-library-modal__panel${pickerView === "queue" ? " is-queue" : ""}`} role="dialog" aria-modal="true" aria-label={pickerTitle}>
             <header>
-              <button type="button" onClick={() => setPickerView("sources")} aria-label="Retour aux sources"><ChevronLeft aria-hidden="true" /></button>
+              <button type="button" onClick={() => { if (waveSetlist) setWaveSetlist(null); else if (pickerView === "queue") openUpload(); else setPickerView("sources"); }} aria-label={waveSetlist ? "Retour aux setlists" : "Retour aux sources"}><ChevronLeft aria-hidden="true" /></button>
               <strong>{pickerTitle}</strong>
               <button type="button" onClick={() => setPickerView("closed")} aria-label="Fermer"><X aria-hidden="true" /></button>
             </header>
             <div className="place-mixer-audio-library-modal__list">
-              {pickerView === "queue" ? queue.length > 0 ? queue.map((track, index) => (
-                <article key={track.id} className={`place-mixer-audio-queue-row${index === currentIndex ? " is-current" : ""}`}>
-                  <button type="button" className="place-mixer-audio-queue-row__select" onClick={() => selectTrack(index)} aria-label={`Lire ${track.displayTitle ?? track.title}`}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <strong>{track.displayTitle ?? track.title}</strong>
-                    <small>{index === currentIndex ? "Piste active" : track.artist ?? "Son importé"}</small>
-                  </button>
-                  <span className="place-mixer-audio-queue-row__order">
-                    <button type="button" onClick={() => moveQueueTrack(index, -1)} disabled={index === 0} aria-label={`Monter ${track.displayTitle ?? track.title}`}><ArrowUp aria-hidden="true" /></button>
-                    <button type="button" onClick={() => moveQueueTrack(index, 1)} disabled={index === queue.length - 1} aria-label={`Descendre ${track.displayTitle ?? track.title}`}><ArrowDown aria-hidden="true" /></button>
-                  </span>
-                  <button type="button" className="place-mixer-audio-queue-row__remove" onClick={() => removeQueueTrack(index)} aria-label={`Supprimer ${track.displayTitle ?? track.title}`}><Trash2 aria-hidden="true" /></button>
-                </article>
-              )) : <p className="place-mixer-audio-library-modal__empty">Aucun son dans la playlist.</p> : pickerView === "library" ? libraryTracks.map((track) => (
-                <button type="button" key={track.id} className="place-mixer-audio-library-modal__choice" onClick={() => loadTracks([{ ...track, coverSeed: track.coverSeed ?? track.id, id: `${track.id}-${Date.now()}` }])}>
+              {pickerView === "queue" ? queue.length > 0 ? queueList : <p className="place-mixer-audio-library-modal__empty">Aucun son dans la playlist.</p> : pickerView === "library" || waveSetlist ? (waveSetlist?.tracks ?? libraryTracks).map((track) => (
+                <button type="button" key={track.id} className="place-mixer-audio-library-modal__choice" onClick={() => importSelectedTracks([{ ...track, coverSeed: track.coverSeed ?? track.id, id: `${track.id}-${Date.now()}` }])}>
                   <span><Music2 aria-hidden="true" /></span><strong>{track.title}</strong><small>{formatTime(track.durationSeconds)}</small><Plus aria-hidden="true" />
                 </button>
               )) : setlists.map((setlist) => (
-                <button type="button" key={setlist.id} className="place-mixer-audio-library-modal__choice" onClick={() => loadTracks(cloneTracks(setlist.tracks, `${setlist.id}-${Date.now()}`))}>
+                <button type="button" key={setlist.id} className="place-mixer-audio-library-modal__choice" onClick={() => { if (waveTransport && waveImportDestination !== "player") setWaveSetlist(setlist); else importSelectedTracks(cloneTracks(setlist.tracks, `${setlist.id}-${Date.now()}`)); }}>
                   <span><ListMusic aria-hidden="true" /></span><strong>{setlist.title}</strong><small>{setlist.tracks.length} contenus</small><Plus aria-hidden="true" />
                 </button>
               ))}
             </div>
             {pickerView === "queue" ? (
-              <button type="button" className="place-mixer-audio-library-modal__add" onClick={() => setPickerView("sources")}><Plus aria-hidden="true" />Ajouter des sons</button>
+              <button type="button" className="place-mixer-audio-library-modal__add" onClick={openUpload}><Plus aria-hidden="true" />Ajouter des sons</button>
             ) : null}
           </section>
         </div>,
         document.body,
       ) : null}
 
-      {pendingWaveImport && typeof document !== "undefined" ? createPortal(
+      {waveImportTitle && typeof document !== "undefined" ? createPortal(
         <div className="place-mixer-wave-import" role="presentation" onMouseDown={(event) => {
           if (event.target === event.currentTarget) closeWaveImport();
         }}>
-          <section role="dialog" aria-modal="true" aria-labelledby="wave-import-title">
+          <section role="dialog" aria-modal="true" aria-labelledby="wave-import-title" onKeyDown={event => { if (event.key === "Escape") closeWaveImport(); keepImportFocus(event); }}>
             <header>
               <span><Music2 aria-hidden="true" /><span><small>IMPORT WAVE</small><strong id="wave-import-title">Comment intégrer ce son ?</strong></span></span>
               <button type="button" aria-label="Fermer" disabled={waveImportPending} onClick={closeWaveImport}><X /></button>
             </header>
-            <p><strong>{pendingWaveImport.title}</strong><small>Choisis sa destination et son type, puis valide l’import.</small></p>
-            <div className="place-mixer-wave-import__choices" role="group" aria-label="Destination du son">
+            <p><strong>{waveImportTitle}</strong><small>{waveImportDestination === "base" ? "Boucle de base · séquenceur" : waveImportDestination === "vote" ? "Boucle de vote · sas de vote" : "Choisis sa destination"} · Choisis le type de boucle, puis valide.</small></p>
+            {!waveImportDestination ? <div className="place-mixer-wave-import__choices" role="group" aria-label="Destination du son">
               <button type="button" disabled={waveImportPending} aria-pressed={waveImportDestination === "base"} onClick={() => setWaveImportDestination("base")}>
                 <Music2 /><span><strong>Nouvelle boucle de base</strong><small>Remplace la référence du lecteur et conserve l’horloge musicale.</small></span>
               </button>
               <button type="button" disabled={waveImportPending} aria-pressed={waveImportDestination === "vote"} onClick={() => setWaveImportDestination("vote")}>
-                <ListMusic /><span><strong>Boucle normale</strong><small>Va directement dans Vote. Elle ne remplace jamais la base.</small></span>
+                <ListMusic /><span><strong>Boucle de vote</strong><small>Rejoint le sas de vote.</small></span>
               </button>
-            </div>
+            </div> : null}
             <fieldset disabled={waveImportPending} role="radiogroup" aria-label="Type de la boucle">
               <legend>Type de la boucle</legend>
               {WAVE_LOOP_CATEGORIES.map((category) => <button key={category.id} type="button" role="radio"
@@ -1589,7 +1756,7 @@ export default function PlaceMixerAudioPlayer({
             {waveImportError ? <p className="place-mixer-wave-import__error" role="alert">{waveImportError}</p> : null}
             <footer className="place-mixer-wave-import__actions">
               <button type="button" disabled={waveImportPending} onClick={closeWaveImport}>Annuler</button>
-              <button type="button" className="is-primary" disabled={!waveImportDestination || !waveImportCategory || waveImportPending || waveImportAnalyzing} onClick={() => void commitWaveImport()}>{waveImportPending ? "Import en cours…" : "Valider l’import"}</button>
+              <button type="button" className="is-primary" disabled={!pendingWaveImport || !waveImportDestination || !waveImportCategory || waveImportPending || waveImportAnalyzing} onClick={() => void commitWaveImport()}>{waveImportPending ? "Import en cours…" : "Valider l’import"}</button>
             </footer>
           </section>
         </div>,

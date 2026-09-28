@@ -1,3 +1,5 @@
+@import "../../place/room-console-material.css";
+
 .loge-requests { display: flex; flex-direction: column; gap: 12px; color: #eff0f4; font: 13px/1.5 Inter, system-ui, sans-serif; }
 .loge-requests h3, .loge-requests p { margin: 0; }
 .loge-requests p, .loge-requests small { color: #a8abb6; }
@@ -16,3 +18,14 @@
 
 .loge-viewer__welcome[hidden] { display:none; }
 .loge-viewer.is-request-list > .loge-viewer__question-cta { padding:10px 12px; min-height:44px; flex-shrink:0; }
+
+.loge-viewer .loge-requests:not(.loge-requests--host) button {
+  min-height: 36px; padding: 8px 11px; border: 1px solid transparent; border-radius: 10px;
+  background: var(--room-key-face); box-shadow: var(--room-key-shadow); color: var(--room-key-text);
+  font-size: 12px; line-height: 1.4; transition: background 120ms, box-shadow 120ms;
+}
+.loge-viewer .loge-requests button > svg { width: 15px; height: 15px; color: var(--room-key-accent); }
+.loge-viewer .loge-requests button:hover:enabled { background: var(--room-key-hover); border-color: transparent; outline: none; }
+.loge-viewer .loge-requests button:active:enabled { box-shadow: var(--room-key-pressed); }
+.loge-viewer .loge-requests button:focus-visible { outline: 2px solid var(--room-key-accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .loge-viewer .loge-requests button, .loge-viewer__home-actions > button { transition: none; } }

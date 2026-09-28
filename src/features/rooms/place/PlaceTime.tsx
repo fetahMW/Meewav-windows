@@ -1,8 +1,12 @@
 import { Pause, Play, RotateCcw, Timer } from "lucide-react";
+import "./place-time-refinement.css";
 import { formatPlaceRoomTime, placeRoomTime, usePlaceRoomTime } from "./placeRoomTime";
+import PlaceTimeCues from "./PlaceTimeCues";
+import { placeTransportCues, usePlaceTransportCues } from "./placeTransportCues";
 
-export default function PlaceTime() {
+export default function PlaceTime({ ownerId }: { ownerId?: string | null }) {
   const time = usePlaceRoomTime();
+  const cues = usePlaceTransportCues();
   const minutes = Math.floor(time.durationSeconds / 60);
   const seconds = time.durationSeconds % 60;
 
@@ -11,7 +15,6 @@ export default function PlaceTime() {
       <header className="place-time__header">
         <span className="place-time__icon"><Timer aria-hidden="true" /></span>
         <span>
-          <small>RÉGIE TEMPS</small>
           <strong id="place-time-title">Compte à rebours</strong>
         </span>
         <label className="place-time__toggle">
@@ -21,7 +24,8 @@ export default function PlaceTime() {
         </label>
       </header>
 
-      <output className={`place-time__display is-${time.status}`} aria-live="polite">
+      <div className="place-time__timing">
+      <output className={`place-time__display is-${time.status}${time.durationSeconds >= 3600 ? " has-hours" : ""}`} aria-live="polite">
         {formatPlaceRoomTime(time.remainingMs)}
       </output>
 
@@ -50,18 +54,20 @@ export default function PlaceTime() {
           />
         </label>
       </div>
+      </div>
 
       <div className="place-time__controls">
-        <button type="button" className="is-primary" onClick={() => time.status === "running" ? placeRoomTime.pause() : placeRoomTime.start()} disabled={!time.enabled}>
+        <button type="button" className="is-primary" onClick={() => cues.waiting ? placeTransportCues.cancel() : time.status === "running" ? placeRoomTime.pause() : placeRoomTime.start()} disabled={!time.enabled && !cues.waiting}>
           {time.status === "running" ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
-          {time.status === "running" ? "Pause" : time.status === "paused" ? "Reprendre" : "Démarrer"}
+          {cues.waiting ? "Annuler le lancement" : time.status === "running" ? "Pause" : time.status === "paused" ? "Reprendre" : "Démarrer"}
         </button>
         <button type="button" onClick={() => placeRoomTime.reset()} disabled={!time.enabled}>
           <RotateCcw aria-hidden="true" /> Réinitialiser
         </button>
       </div>
 
-      <p>Quand Time est activé, Lecture et Pause du lecteur pilotent aussi ce compte à rebours.</p>
+      <p>Time activé : le lecteur pilote aussi le chrono.</p>
+      <PlaceTimeCues ownerId={ownerId} />
     </section>
   );
 }

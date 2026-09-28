@@ -17,26 +17,6 @@
   box-shadow: 0 0 8px #ffffff50;
 }
 
-/* An empty player needs no waiting waveform above the evening controls. */
-.rooms-page .place-room-shell[data-room-presentation="scene"] .place-studio-panel.is-tools .place-mixer.has-audio-player:has(> .place-mixer-audio.is-empty) {
-  grid-template-rows: 39px 90px minmax(0, 1fr);
-}
-.rooms-page .place-room-shell[data-room-presentation="scene"] .place-studio-panel.is-tools .place-mixer-audio.is-empty {
-  height: 86px;
-  min-height: 86px;
-  max-height: 86px;
-}
-.rooms-page .place-room-shell[data-room-presentation="scene"] .place-studio-panel.is-tools .place-mixer-audio.is-empty .place-mixer-audio__surface {
-  height: 84px;
-  grid-template-rows: 84px;
-}
-.rooms-page .place-room-shell[data-room-presentation="scene"] .place-studio-panel.is-tools .place-mixer-audio.is-empty .place-mixer-audio__body {
-  height: 84px;
-  grid-template-rows: 32px 44px;
-}
-.rooms-page .place-room-shell[data-room-presentation="scene"] .place-studio-panel.is-tools .place-mixer-audio.is-empty :is(.place-mixer-audio__waveform, .place-mixer-audio__timeline) { display: none; }
-.rooms-page .place-room-shell[data-room-presentation="scene"] .place-studio-panel.is-tools .place-mixer-audio.is-empty .place-mixer-audio__controls { grid-row: 2; }
-
 @media (max-width: 520px) {
   .rooms-page .place-room-shell[data-room-presentation="scene"] .room-tools-shell.is-scene .place-tools-console__switch > button { padding-inline: 4px; gap: 0; }
   .rooms-page .place-room-shell[data-room-presentation="scene"] .room-tools-shell.is-scene .place-tools-console__switch > button > svg { display: none; }

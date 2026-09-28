@@ -1,3 +1,4 @@
+import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import { BarChart3, Eye, EyeOff, MessageSquareMore, SlidersHorizontal, Star } from "lucide-react";
 import { useState } from "react";
 import type { PerformanceStatus, RoomToolsCommand, SceneEvaluationReaction, SceneState } from "../roomTools.types";
@@ -39,9 +40,9 @@ export default function SceneEvaluationPanel({ scene, disabled, execute }: { sce
     <ToolPanelHeader eyebrow="L’ÉCHO DE LA SALLE" title="Évaluation" description="Un retour pour chaque prestation." icon={<BarChart3 />} />
     {!entry ? <EmptyState title="Le programme est encore vide">Ajoutez une prestation dans Programme pour recueillir les avis.</EmptyState> : <>
       <label className="room-tool-field scene-engagement__selector">Choisir une prestation
-        <select value={entry.id} onChange={(event) => { setSelectedId(event.currentTarget.value); setError(""); }}>
+        <MeewavSelect value={entry.id} onChange={(event) => { setSelectedId(event.currentTarget.value); setError(""); }}>
           {scene.program.map((item) => <option key={item.id} value={item.id}>{item.artistName} · {item.title} — {STATUS[item.status]}</option>)}
-        </select>
+        </MeewavSelect>
       </label>
       <section className="scene-review" aria-label={`Évaluation de ${entry.title}`}>
         <header className="scene-engagement__identity"><span><small>{entry.artistName}</small><h3>{entry.title}</h3></span><span className={`scene-engagement__badge${entry.status === "live" ? " is-live" : ""}`}>{STATUS[entry.status]}</span></header>

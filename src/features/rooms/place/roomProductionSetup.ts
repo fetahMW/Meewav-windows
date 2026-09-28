@@ -1,4 +1,5 @@
 import { clamp, constrainFrame, type VideoLayout, type VideoPosition, type VideoFrame } from '../../../runtime/videoScene';
+import { studioAudioSettings, type StudioAudioSettings } from '../../../runtime/studioAudioSettings';
 
 export type RoomProductionSetup = {
   cameraId: string;
@@ -12,6 +13,9 @@ export type RoomProductionSetup = {
   frames?: VideoFrame[];
   fits?: Array<'contain' | 'cover'>;
   sourceKeys?: string[];
+  audio?: StudioAudioSettings;
+  /** Launch gains are seeded once; subsequent room state remains authoritative. */
+  audioApplied?: boolean;
 };
 
 const storageKey = (roomId: string) => `meewav:room-production-setup:v1:${roomId}`;
@@ -29,6 +33,8 @@ export function readRoomProductionSetup(roomId: string): RoomProductionSetup | n
       cameraId: typeof value.cameraId === 'string' ? value.cameraId : '',
       microphoneId: typeof value.microphoneId === 'string' ? value.microphoneId : '',
       musicInputId: typeof value.musicInputId === 'string' ? value.musicInputId : '',
+      audio: value.audio && typeof value.audio === 'object' ? studioAudioSettings(value.audio) : undefined,
+      audioApplied: value.audioApplied === true ? true : undefined,
       cameraIds: Array.isArray(value.cameraIds) ? value.cameraIds.filter((id: unknown) => typeof id === 'string').slice(0, 9) : [],
       layout: value.layout,
       pipScale: typeof value.pipScale === 'number' ? clamp(value.pipScale, .15, .75) : undefined,

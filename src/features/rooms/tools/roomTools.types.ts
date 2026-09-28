@@ -20,7 +20,7 @@ export type RoomActorRole =
 export type RoomToolId =
   | "scene-program" | "scene-prompter" | "scene-evaluation" | "scene-fundraiser"
   | "classe-screen" | "classe-room" | "classe-questions" | "classe-hands" | "classe-seats"
-  | "wave-screen" | "wave-gate" | "wave-sequencer" | "wave-orchestra"
+  | "wave-screen" | "wave-gate" | "wave-quarantine" | "wave-sequencer" | "wave-orchestra"
   | "cage-regie" | "cage-competition" | "cage-battle" | "cage-vote"
   | "loge-preview" | "loge-face-to-face" | "loge-dedication" | "loge-questions" | "loge-audience-choice"
   | "gift";
@@ -170,15 +170,20 @@ export type ClassQuestion = {
 export type ClassResource = {
   id: string;
   name: string;
-  kind: "image" | "audio";
+  kind: "image" | "audio" | "video" | "link";
   mimeType: string;
   size: number;
   addedAt: string;
+  description?: string;
   /** Demo-only object URL. Live rooms persist only the opaque Storage path. */
   mediaUrl?: string;
   mediaPath?: string;
 };
 export type ClasseState = {
+  /** Demo repository fixture version, never populated by live initialization. */
+  demoResourcesVersion?: number;
+  /** Canonical live floor eligibility, independent of a paid seat. */
+  floorEligible?: boolean;
   people: RoomPerson[];
   handsOpen: boolean;
   raisedHands: RaisedHand[];
@@ -248,6 +253,8 @@ export type WaveBaseLoop = {
 };
 export type WaveSubmission = {
   id: string;
+  /** Private host workbench; replacement files stay here until explicitly released. */
+  quarantined?: boolean;
   contributor: RoomPerson;
   title: string;
   instrument: string;
@@ -325,6 +332,7 @@ export type WaveSubmission = {
 };
 export type WaveLayer = { id: string; submissionId?: string; submissionVersion?: number; title: string; author: string; active: boolean; solo: boolean; muted: boolean; gain?: number };
 export type WaveState = {
+  maxSubmissionBars?: 4 | 8 | 16;
   votingPolicy?: RoomVotingPolicy;
   title: string;
   baseLoop: WaveBaseLoop;
@@ -510,6 +518,7 @@ export type RoomToolsCommand =
   | { type: "wave.base.replace"; baseLoop: WaveBaseLoop }
   | { type: "wave.rules.update"; patch: Pick<WaveBaseLoop, "bpm" | "key" | "bars" | "kind"> }
   | { type: "wave.submissions.setOpen"; open: boolean; acceptedCategories?: WaveLoopCategory[] }
+  | { type: "wave.submissions.quarantine"; submissionIds: string[] }
   | { type: "wave.submission.status"; submissionId: string; status: WaveSubmissionStatus; reason?: WaveReviewReason; feedback?: string }
   | { type: "wave.submission.add"; submission: WaveSubmission }
   | { type: "wave.submission.importToVote"; submission: WaveSubmission }

@@ -1,7 +1,8 @@
 import CageStageProgram from "./CageStageProgram";
+import RoomViewerHostSupport from "./RoomViewerHostSupport";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import type { SyntheticEvent, PointerEvent } from "react";
+import type { SyntheticEvent, PointerEvent, ReactNode } from "react";
 import {
   ArrowDownToLine,
   BarChart3,
@@ -24,6 +25,7 @@ import type { GradeLevel } from "../../grades/gradeBadges";
 import { useRoomPresentation } from "../roomPresentation";
 import PlaceGiftDrawOverlay from "./PlaceGiftDrawOverlay";
 import LiveActionBar from "./LiveActionBar";
+import "./place-viewer-player.css";
 import PlaceRemoteAudioRenderer from "./PlaceRemoteAudioRenderer";
 import type { PlaceLiveKitVideoTrack, PlaceRemoteAudioTrack } from "./placeLiveKit.service";
 import type { PlaceRoomState } from "./place.types";
@@ -65,6 +67,7 @@ type PlaceStageProps = {
   isHost: boolean;
   isGuest: boolean;
   canEngage: boolean;
+  hostSocialActions?: ReactNode;
   currentUserId?: string | null;
   hostCameraEnabled: boolean;
   hostMicrophoneEnabled: boolean;
@@ -182,6 +185,7 @@ export default function PlaceStage({
   isHost,
   isGuest,
   canEngage,
+  hostSocialActions,
   currentUserId,
   hostCameraEnabled,
   hostMicrophoneEnabled,
@@ -213,11 +217,13 @@ export default function PlaceStage({
   canDirectProgram = true,
   onParticipantQualityIntent,
 }: PlaceStageProps) {
-  const desktopStage = useRuntime().isDesktop && isHost;
+  const isDesktop = useRuntime().isDesktop;
+  const desktopStage = isDesktop && isHost;
+  const desktopViewer = isDesktop && !isHost && !isGuest;
   const [guestDropActive, setGuestDropActive] = useState(false);
   const roomPresentation = useRoomPresentation();
   const isCageStage = roomPresentation.id === "cage";
-  const ControlBar = isGuest ? "div" : LiveActionBar;
+  const ControlBar = isGuest || desktopViewer ? "div" : LiveActionBar;
   const [fallbackPlaybackMuted, setFallbackPlaybackMuted] = useState(true);
   const waveListening = useWaveViewerListening();
   const playbackMuted = !isHost && !isGuest && waveListening ? waveListening.liveMuted : fallbackPlaybackMuted;
@@ -248,8 +254,8 @@ export default function PlaceStage({
   const layoutTriggerRef = useRef<HTMLButtonElement | null>(null);
   const layoutMenuRef = useRef<HTMLDivElement | null>(null);
   const programMutationPendingRef = useRef(false);
-  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const autoDirectorTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const controlsTimerRef = useRef<number | null>(null);
+  const autoDirectorTimerRef = useRef<number | null>(null);
   const lastAutoSwitchRef = useRef(Date.now());
 
   const onStage = useMemo<PlaceStageParticipant[]>(() => {
@@ -1102,7 +1108,7 @@ export default function PlaceStage({
 
   return (
     <section
-      className={`place-stage place-stage--director${isCageStage ? " is-cage-stage" : ""}${controlsVisible ? " is-controls-visible" : ""}${isHost ? " is-host-stage" : isGuest ? " is-guest-stage" : " is-viewer-stage"}${guestDropActive ? " is-guest-drop-target" : ""}`}
+      className={`place-stage place-stage--director${desktopViewer ? " has-desktop-viewer-footer" : ""}${isCageStage ? " is-cage-stage" : ""}${controlsVisible ? " is-controls-visible" : ""}${isHost ? " is-host-stage" : isGuest ? " is-guest-stage" : " is-viewer-stage"}${guestDropActive ? " is-guest-drop-target" : ""}`}
       ref={stageRef}
       aria-label="Scène en direct"
       onDragStartCapture={(event) => {
@@ -1285,10 +1291,11 @@ export default function PlaceStage({
           ? <ScreenShareMedia stream={screenShareStream} />
           : screenShareOnAir && liveKitScreenShareForPlayback
             ? <LiveKitScreenShareMedia item={liveKitScreenShareForPlayback} />
-            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
+            : isCageStage ? <CageStageProgram room={room} isHost={isHost} isGuest={isGuest} canEngage={canEngage} hostActions={hostSocialActions} onStage={onStage} liveKitVideoTracks={liveKitVideoTracks} useRtcVideo={rtcVideoPrimary} programMuted={isHost || isGuest || viewerProgramMuted} playbackVolume={masterGain} onOpenProfile={onOpenProfile} />
             : orderedParticipants.map((participant, index) => (
           <PlaceStageLayoutTile
             participant={participant}
+            viewerActions={!isHost && participant.profile.id === room.host.id && hostSocialActions ? <RoomViewerHostSupport>{hostSocialActions}</RoomViewerHostSupport> : undefined}
             dragRoomId={desktopStage && participant.status === "onstage" ? room.id : undefined}
             key={participant.id}
             formatIndex={orderedParticipants.slice(0, index + 1).filter((candidate) => (
@@ -1360,7 +1367,7 @@ export default function PlaceStage({
         </nav>
       ) : null}
 
-      {!isCageStage ? <div className="place-stage__title">
+      {!isCageStage && !desktopViewer ? <div className="place-stage__title">
         <span>HOST · {room.host.displayName}</span>
         <h1>{room.title}</h1>
         <button type="button" className="place-stage__creator" onClick={() => onOpenProfile(room.host.id)} aria-label={`Voir le profil de ${room.host.displayName}`}>
@@ -1376,6 +1383,10 @@ export default function PlaceStage({
       <PlaceGiftDrawOverlay draw={room.giftDraw} />
 
       <ControlBar className={`place-stage__controls${isHost || isGuest ? " place-stage__controls--host" : ""}`} aria-label={isHost ? "Commandes immédiates du Host" : isGuest ? "Mes commandes immédiates" : "Contrôles du lecteur et interactions"}>
+        {desktopViewer ? <div className="place-viewer-player__identity">
+          <h1 title={room.title}>{room.title}</h1>
+          <button type="button" onClick={() => onOpenProfile(room.host.id)} aria-label={`Voir le profil de ${room.host.displayName}`}>{room.host.displayName}</button>
+        </div> : null}
         {isHost || isGuest ? (
           <>
             <button
