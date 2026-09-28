@@ -9,6 +9,7 @@ const trackUrl = new URL("../media/vinyl/003-king.mp3", document.baseURI).href;
 export default function RingTopOnePlayer({ profileOpen }: { profileOpen: boolean }) {
   const audio = useRef<HTMLAudioElement>(null);
   const mounted = useRef(false);
+  const active = useRef(!document.hidden);
   const [playing, setPlaying] = useState(false);
   const [pending, setPending] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -17,18 +18,24 @@ export default function RingTopOnePlayer({ profileOpen }: { profileOpen: boolean
     mounted.current = true;
     const player = audio.current!;
     player.volume = 0.35;
-    const hide = () => { if (document.hidden) player.pause(); };
+    const hide = () => { active.current = !document.hidden; if (!active.current) player.pause(); };
+    const lifecycle = (event: Event) => {
+      active.current = (event as CustomEvent<{ active: boolean }>).detail?.active === true && !document.hidden;
+      if (!active.current) player.pause();
+    };
     document.addEventListener("visibilitychange", hide);
+    document.addEventListener("globelab-lifecycle", lifecycle);
     return () => {
       mounted.current = false;
       player.pause();
       document.removeEventListener("visibilitychange", hide);
+      document.removeEventListener("globelab-lifecycle", lifecycle);
     };
   }, []);
   useEffect(() => { if (profileOpen) audio.current?.pause(); }, [profileOpen]);
   const toggle = async () => {
     const player = audio.current;
-    if (!player || pending) return;
+    if (!player || pending || !active.current || profileOpen) return;
     if (!player.paused) { player.pause(); return; }
     setError("");
     setPending(true);
@@ -39,7 +46,7 @@ export default function RingTopOnePlayer({ profileOpen }: { profileOpen: boolean
   return <section className="ring-top-one-player ring-key-surface" data-profile-open={profileOpen} aria-label="Lecteur du Top 1"
     onPointerDown={event => event.stopPropagation()} onClick={event => event.stopPropagation()}>
     <audio ref={audio} src={trackUrl} preload="none" muted={muted}
-      onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)}
+      onPlay={() => { if (!active.current || profileOpen) audio.current?.pause(); else setPlaying(true); }} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)}
       onError={() => { setPlaying(false); setPending(false); setError("Le morceau est indisponible. Réessaie dans un instant."); }} />
     <button type="button" className="ring-top-one-player__play" onClick={() => void toggle()}
       disabled={pending} aria-busy={pending} aria-pressed={playing}

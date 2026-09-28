@@ -30,6 +30,17 @@ export function notifyHost(type: 'ready' | 'loading' | 'error') {
   if (window.parent !== window) window.parent.postMessage({ channel: CHANNEL, type }, window.location.origin);
 }
 
+/** Account/session ownership stays in the parent. Demo IDs cannot be sent as live recipients. */
+export function openProfileAction(action: 'manage-collabs' | 'demo-contact' | 'demo-collaboration',
+  artist?: { id: string; name: string; role: string; portraitUrl: string; gradeLevel?: number | null }) {
+  if (window.parent === window) return false;
+  window.parent.postMessage({ channel: CHANNEL, type: 'profile-action', action,
+    artist: artist ? { id: artist.id, name: artist.name, role: artist.role,
+      portraitUrl: new URL(artist.portraitUrl, document.baseURI).href, gradeLevel: artist.gradeLevel } : undefined,
+  }, window.location.origin);
+  return true;
+}
+
 export function installHostBridge() {
   const navigate = (event: Event) => {
     const path = (event as CustomEvent).detail?.path;

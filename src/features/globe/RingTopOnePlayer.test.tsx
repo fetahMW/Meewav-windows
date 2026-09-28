@@ -31,4 +31,20 @@ describe("lecteur du Top 1", () => {
     rerender(<RingTopOnePlayer profileOpen />);
     expect(pause).toHaveBeenCalled();
   });
+  it("arrête la lecture quand le parent désactive le Globe sans reprendre automatiquement", () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue();
+    const pause = vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {});
+    const { container } = render(<RingTopOnePlayer profileOpen={false} />);
+    fireEvent(document, new CustomEvent("globelab-lifecycle", { detail: { active: false } }));
+    expect(pause).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole("button", { name: "Écouter 003 KING" }));
+    expect(play).not.toHaveBeenCalled();
+    // A delayed play promise must not restart hidden playback either.
+    fireEvent.play(container.querySelector("audio")!);
+    expect(pause).toHaveBeenCalledTimes(2);
+    fireEvent(document, new CustomEvent("globelab-lifecycle", { detail: { active: true } }));
+    expect(play).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Écouter 003 KING" }));
+    expect(play).toHaveBeenCalledTimes(1);
+  });
 });

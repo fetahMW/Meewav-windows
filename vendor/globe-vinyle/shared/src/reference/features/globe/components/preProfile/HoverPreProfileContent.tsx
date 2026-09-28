@@ -365,6 +365,25 @@ export function HoverPreProfileContent({
     setPlayingMedia({ type: "short", id: shortId });
   };
 
+  useEffect(() => {
+    const stopPreview = () => {
+      audioRef.current?.pause();
+      videoRef.current?.pause();
+      setPlayingMedia(null);
+      setAudioProgress(0);
+    };
+    const visibility = () => { if (document.hidden) stopPreview(); };
+    const lifecycle = (event: Event) => {
+      if ((event as CustomEvent<{ active: boolean }>).detail?.active === false) stopPreview();
+    };
+    document.addEventListener("visibilitychange", visibility);
+    document.addEventListener("globelab-lifecycle", lifecycle);
+    return () => {
+      document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener("globelab-lifecycle", lifecycle);
+    };
+  }, []);
+
   const handleAudioToggle = (audioId: string) => {
     const isAlreadyPlaying = playingMedia?.type === "audio" && playingMedia.id === audioId;
     if (!isAlreadyPlaying) {

@@ -53,6 +53,11 @@ function safeUuid(value: string | null) {
   return isMessagingUuid(value) ? value : null;
 }
 
+function safeCollaborationRequestId(value: string | null | undefined, mode: string | undefined) {
+  if (isMessagingUuid(value)) return value;
+  return mode === "demo" && typeof value === "string" && /^globe-collab-\d{10,17}$/.test(value) ? value : null;
+}
+
 function safeDemoId(value: string | null) {
   const normalized = value?.trim() ?? "";
   return normalized && normalized.length <= 200 ? normalized : null;
@@ -165,7 +170,7 @@ export function parseMessagingRoute(search: string | URLSearchParams): Messaging
       : null,
     mode,
     conversationId: safeUuid(params.get("conversation")),
-    requestId: safeUuid(params.get("request")),
+    requestId: safeCollaborationRequestId(params.get("request"), mode),
     projectId: safeUuid(params.get("project")),
     groupId: safeUuid(params.get("group")),
     marketListingId,
@@ -181,7 +186,8 @@ export function buildMessagingRoute(state: Partial<MessagingRouteState>) {
   const space = state.space && spaces.has(state.space) ? state.space : "messages";
   params.set("space", space);
   if (state.conversationId && isMessagingUuid(state.conversationId)) params.set("conversation", state.conversationId);
-  if (state.requestId && isMessagingUuid(state.requestId)) params.set("request", state.requestId);
+  const requestId = safeCollaborationRequestId(state.requestId, state.mode);
+  if (requestId) params.set("request", requestId);
   if (state.projectId && isMessagingUuid(state.projectId)) params.set("project", state.projectId);
   if (state.groupId && isMessagingUuid(state.groupId)) params.set("group", state.groupId);
   if (state.profileId && isMessagingUuid(state.profileId)) params.set("profileId", state.profileId);

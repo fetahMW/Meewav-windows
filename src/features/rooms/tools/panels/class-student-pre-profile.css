@@ -4,7 +4,7 @@
 .class-student-pre-profile {
   --mw-bubble-w: 100%; --mw-bubble-h: 100%;
   position: absolute; top: 0; right: 0; pointer-events: auto;
-  width: 413px; height: 588px; max-width: none; max-height: none;
+  width: 413px; height: 520px; max-width: none; max-height: none;
   padding: 0; overflow: visible; border: 0; background: transparent; color: #eee;
   animation: class-profile-enter 220ms cubic-bezier(.22,.7,.25,1) both;
 }
@@ -30,4 +30,4 @@
 .class-student-pre-profile__close:active { transform: translateY(1px); box-shadow: inset 0 2px 4px #000, 0 1px 0 #010101; }
 .class-student-pre-profile__close:focus-visible { outline: 2px solid #c0ccdf; outline-offset: 3px; }
 
-/* Keep the original content layout; extra room height belongs to the frame. */
+/* Compact Rooms and Top 10 share a 413 × 520 composition. */

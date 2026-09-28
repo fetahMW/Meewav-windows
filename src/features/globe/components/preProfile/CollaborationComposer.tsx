@@ -29,6 +29,8 @@ export type CollaborationComposerProps = {
   recipientProfileId: string;
   recipientName: string;
   attachmentsEnabled?: boolean;
+  demoMode?: boolean;
+  onOpenMessaging?: () => void;
   onOpen?: () => void;
   onClose?: () => void;
   onSubmit?: (draft: CollaborationDraft) => void | Promise<void>;
@@ -62,6 +64,8 @@ export function CollaborationComposer({
   recipientProfileId,
   recipientName,
   attachmentsEnabled = true,
+  demoMode = false,
+  onOpenMessaging,
   onOpen,
   onClose,
   onSubmit,
@@ -99,9 +103,10 @@ export function CollaborationComposer({
     event.target.value = "";
     if (selectedFiles.length === 0) return;
 
-    const supportedFiles = selectedFiles.filter((file) => getAttachmentKind(file));
+    const supportedFiles = selectedFiles.filter((file) => getAttachmentKind(file)
+      && (!demoMode || file.type.startsWith("audio/") || file.type.startsWith("video/")));
     if (supportedFiles.length !== selectedFiles.length) {
-      setErrorMessage("Formats acceptés : image JPG/PNG/WebP, audio, vidéo ou PDF.");
+      setErrorMessage(demoMode ? "Formats acceptés en démonstration : audio ou vidéo." : "Formats acceptés : image JPG/PNG/WebP, audio, vidéo ou PDF.");
     } else {
       setErrorMessage(null);
     }
@@ -124,7 +129,8 @@ export function CollaborationComposer({
     setStatus("submitting");
     setErrorMessage(null);
     try {
-      await onSubmit?.({
+      if (!onSubmit) throw new Error("Envoi indisponible");
+      await onSubmit({
         recipientProfileId,
         message: trimmedMessage,
         attachments,
@@ -170,7 +176,7 @@ export function CollaborationComposer({
           <span className="mw-collaboration-composer__ready-icon" aria-hidden="true">
             <HeartHandshake size={22} strokeWidth={2.15} />
           </span>
-          <strong>Demande envoyée</strong>
+          <strong>{demoMode ? "Demande de démonstration enregistrée" : "Demande envoyée"}</strong>
           <p>Elle est disponible dans Messagerie → Collabs → Envoyées.</p>
         </div>
       ) : (
@@ -208,7 +214,7 @@ export function CollaborationComposer({
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/jpeg,image/png,image/webp,audio/*,video/*,application/pdf"
+              accept={demoMode ? "audio/*,video/*" : "image/jpeg,image/png,image/webp,audio/*,video/*,application/pdf"}
               multiple
               disabled={!attachmentsEnabled}
               tabIndex={-1}
@@ -244,7 +250,7 @@ export function CollaborationComposer({
 
       <footer className="mw-collaboration-composer__footer">
         {status === "ready" ? (
-          <button className="is-primary" type="button" onClick={onClose}>Fermer</button>
+          <button className="is-primary" type="button" onClick={onOpenMessaging ?? onClose}>{onOpenMessaging ? "Ouvrir dans la messagerie" : "Fermer"}</button>
         ) : (
           <>
             <button type="button" onClick={onClose}>Annuler</button>

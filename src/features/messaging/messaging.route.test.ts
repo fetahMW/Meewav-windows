@@ -141,6 +141,14 @@ describe("messaging route contract", () => {
     expect(getMarketplaceListingId("?listing=%2Fmarket%3Fevil%3D1")).toBeNull();
   });
 
+  it("accepts local collaboration request IDs only on an explicit demo route", () => {
+    const requestId = "globe-collab-1780000000000";
+    const route = buildMessagingRoute({ space: "collabs", mode: "demo", mockArtistId: "ring-demo-test", requestId });
+    expect(parseMessagingRoute(route.split("?")[1]).requestId).toBe(requestId);
+    expect(parseMessagingRoute(`?space=collabs&mode=real&request=${requestId}`).requestId).toBeNull();
+    expect(parseMessagingRoute("?mode=demo&request=../../bad").requestId).toBeNull();
+  });
+
   it("cannot desynchronize a Marketplace listing from its return target", () => {
     const route = buildMessagingRoute({
       source: "marketplace",

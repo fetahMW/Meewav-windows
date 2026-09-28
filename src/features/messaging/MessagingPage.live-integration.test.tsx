@@ -429,6 +429,13 @@ afterEach(() => {
 });
 
 describe("MessagingPage live integration", () => {
+  it("opens a saved Globe demo request in Collabs without enabling the live inbox", async () => {
+    const id = "globe-collab-1780000000000";
+    harness.getLocalCollaborationRequests.mockReturnValue([{ ...liveCollaboration(), id, origin: "globe", isReceived: false, status: "sent" }]);
+    renderPage(`/messages?space=collabs&mode=demo&mockArtistId=ring-demo-test&source=globe&request=${id}`);
+    await waitFor(() => expect(harness.collabsWorkspaceProps?.openCollabRequest).toEqual(expect.objectContaining({ id })));
+    expect(harness.useMessagingLive).toHaveBeenLastCalledWith(expect.objectContaining({ enabled: false }));
+  });
   it("branche la base authentifiée sur le contrôleur live sans exposer les mutations démo", () => {
     renderPage("/messages?space=messages");
 

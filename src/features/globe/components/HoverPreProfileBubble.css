@@ -36,7 +36,7 @@
 }
 .mw-hover-preprofile-bubble__shell::before {
   content: ""; position: absolute; z-index: 20; box-sizing: border-box;
-  inset: 0; padding: 5px; border-radius: inherit; pointer-events: none;
+  inset: 0; padding: 1.5px; border-radius: inherit; pointer-events: none;
   background:
     radial-gradient(110px 90px at 0 0, #ecf4ff94, transparent 75%),
     radial-gradient(110px 80px at 100% 100%, #d3e3f945, transparent 80%),
@@ -66,7 +66,8 @@
   background:
     radial-gradient(ellipse 76% 32px at 42% -13px, #e6eefa1f, #b9c9df06 50%, transparent 76%),
     linear-gradient(180deg, #e1ebf90b, #aab9cf03 12px, transparent 28px),
-    linear-gradient(180deg, #101216, #07090c 9px, #020304 27px, #000 54%, #000 79%, #040506);
+    repeating-linear-gradient(0deg, #ffffff02 0 1px, transparent 1px 3px),
+    linear-gradient(160deg, #1c1d1f, #111214 45%, #090a0c);
   box-shadow: inset 0 1px #e6effb33, inset 0 2px 1px #000c, inset 1px 0 #cbddf40e, inset -1px 0 #000c;
   pointer-events: none;
 }
@@ -78,12 +79,12 @@
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
-  padding: 46px 30px 36px;
+  padding: 44px 20px 24px;
   pointer-events: auto;
 }
 
 .mw-hover-preprofile-bubble__surface:has(.mw-preprofile.is-visitor) {
-  padding: 42px 20px 36px;
+  padding: 42px 20px 24px;
 }
 
 .mw-hover-preprofile-bubble__arrow {

@@ -17,9 +17,9 @@ export default function ClassStudentPreProfile({ person, source, onClose, return
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [closing, setClosing] = useState(false);
   const [bounds, setBounds] = useState({ left: 0, top: 0, width: 0, height: 0 });
-  // Preserve the profile's original composition while letting its frame stay tall.
+  // Same compact composition as the Top 10: never stretch to fill the console.
   const scale = bounds.width > 0 && bounds.height > 0
-    ? Math.min(1, bounds.width * 0.96 / 413, bounds.height / 588)
+    ? Math.min(1, bounds.width * 0.96 / 413, bounds.height / 520)
     : 1;
   const requestClose = () => {
     if (closeTimer.current) return;
@@ -72,7 +72,7 @@ export default function ClassStudentPreProfile({ person, source, onClose, return
   return createPortal(<div className="class-student-pre-profile-viewport" style={bounds}>
     <div role="dialog" aria-modal="false" className={`class-student-pre-profile${closing ? " is-closing" : ""}`}
     aria-label={`Pré-profil de ${person.name}`}
-    style={{ zoom: scale, height: bounds.height > 0 ? bounds.height / scale : 588 }}
+    style={{ zoom: scale }}
     onKeyDown={(event) => { if (event.key === "Escape" && !event.defaultPrevented) { event.preventDefault(); event.stopPropagation(); requestClose(); } }}>
     <PreProfileFrame><HoverPreProfileContent artist={artist} demoFollow={source === "demo"} showMapPin={false} /></PreProfileFrame>
     <button ref={closeButton} type="button" className="class-student-pre-profile__close" aria-label="Fermer le pré-profil" onClick={requestClose}><X aria-hidden="true" /></button>

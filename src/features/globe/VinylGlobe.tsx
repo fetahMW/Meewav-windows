@@ -6,6 +6,7 @@ import { consumePendingMusicSceneArrival, peekPendingMusicSceneArrival, type Mus
 import './vinyl-globe.css';
 import { loadPublicGlobeMarkers, type LiveGlobeMarker } from './api/globePublicMarkers';
 import LiveGlobeProfile from './LiveGlobeProfile';
+import EmbeddedGlobeProfileActions from './EmbeddedGlobeProfileActions';
 
 const CHANNEL = 'meewav:vinyl-globe:v1';
 const destinations = new Set(['/messages', '/rooms/home', '/scene', '/market', '/tremplin', '/profile']);
@@ -89,6 +90,7 @@ export default function VinylGlobe({ arrival, ownerKey = 'anonymous' }: VinylGlo
       src={`${import.meta.env.BASE_URL}globe-vinyle/index.html${getDesktopApplicationMode() ? `?mode=${getDesktopApplicationMode() === "demo" ? "demo" : "real"}` : ""}`} allow="fullscreen" inert={loading}
       data-loading={loading} />}
     {loading && <GlobeLoading />}
+    {ownerKey && <EmbeddedGlobeProfileActions key={ownerKey} frame={frame} ownerId={ownerKey} allowDemo={getDesktopApplicationMode() !== "live"} />}
     {profile && ownerKey && <LiveGlobeProfile key={profile.id} marker={profile} ownerId={ownerKey} onClose={() => {
       setProfile(null);
       frame.current?.contentWindow?.postMessage({ channel: CHANNEL, type: 'profile-close' }, window.location.origin);
