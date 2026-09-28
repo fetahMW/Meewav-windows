@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Library, Megaphone, Play, RotateCcw, Square, Timer, Upload, X } from "lucide-react";
+import { Library, Megaphone, Pause, Play, RefreshCw, RotateCcw, Square, Timer, Upload, X } from "lucide-react";
 import { profileMediaRepository, type OwnerMediaItem } from "../../profile/profile.media.service";
 import { placeTransportCues, usePlaceTransportCues, type CueSide } from "./placeTransportCues";
 
@@ -66,7 +66,7 @@ export default function PlaceTimeCues({ ownerId }: { ownerId?: string | null }) 
   const cues = usePlaceTransportCues();
   const [choosing, setChoosing] = useState<CueSide | null>(null);
   return <section className="place-time-cues" aria-label="Sons automatiques">
-    <header><h3>Sons automatiques</h3><p>Choisis quand chaque pad se déclenche.</p></header>
+    <header><h3>Sons automatiques</h3><p>Active Chrono, Lecteur ou les deux.</p></header>
     <div className="place-time-cues__grid">
       {(["start", "end"] as const).map(side => {
         const cue = cues[side];
@@ -74,21 +74,19 @@ export default function PlaceTimeCues({ ownerId }: { ownerId?: string | null }) 
         const Icon = side === "start" ? Timer : Megaphone;
         const playing = cues.playing === side;
         return <article key={side} className={`place-time-cue${playing ? " is-playing" : ""}`} style={{ "--twist-accent": side === "start" ? "#64d98b" : "#ffc34a" } as CSSProperties}>
-          <header><span><Icon />{title}</span><small>{cue.chrono || cue.player ? "Activé" : "Désactivé"}</small></header>
+          <header><span><Icon />{title}</span><div className="place-time-cue__tools"><small>{cue.chrono || cue.player ? "Activé" : "Désactivé"}</small><button type="button" aria-label={`Remplacer le son de ${title.toLowerCase()}`} title="Remplacer le son" onClick={() => setChoosing(side)}><RefreshCw /></button>{!cue.sound.builtin ? <button type="button" aria-label={`Rétablir le son de ${title.toLowerCase()} par défaut`} title="Son d’origine" onClick={() => placeTransportCues.restore(side)}><RotateCcw /></button> : null}</div></header>
           <button type="button" className="place-time-cue__sound" aria-label={`${playing ? "Arrêter" : "Écouter"} le son de ${title.toLowerCase()}`} onClick={() => placeTransportCues.preview(side)}>
             <span className="place-time-cue__play">{playing ? <Square /> : <Play />}</span>
             <span><strong>{cue.sound.title}</strong><small>{playing ? cues.waiting ? "Avant le démarrage…" : "Écoute du son…" : "Écouter le son"}</small></span>
           </button>
           <div className="place-time-cue__targets" role="group" aria-label={`Déclencher le pad ${title}`}>
             <button type="button" aria-label={`${title} avec le chrono`} aria-pressed={cue.chrono} onClick={() => placeTransportCues.setTarget(side, "chrono", !cue.chrono)}><Timer />Chrono</button>
-            <button type="button" aria-label={`${title} avec le lecteur`} aria-pressed={cue.player} onClick={() => placeTransportCues.setTarget(side, "player", !cue.player)}><Play />Lecteur</button>
+            <button type="button" aria-label={`${title} avec le lecteur`} aria-pressed={cue.player} onClick={() => placeTransportCues.setTarget(side, "player", !cue.player)}>{side === "start" ? <Play /> : <Pause />}Lecteur</button>
           </div>
-          <p>{side === "start" ? "Le son précède le démarrage." : "À zéro du chrono ou à la pause du lecteur."}</p>
-          <footer><button type="button" onClick={() => setChoosing(side)}><Upload />Remplacer</button>{!cue.sound.builtin ? <button type="button" aria-label={`Rétablir le son de ${title.toLowerCase()} par défaut`} title="Son d’origine" onClick={() => placeTransportCues.restore(side)}><RotateCcw /></button> : null}</footer>
+          <p>{side === "start" ? "Le son précède le démarrage." : "Chrono à zéro ou lecteur en pause."}</p>
         </article>;
       })}
     </div>
-    <p className="place-time-cues__hint">Les deux boutons actifs associent le son au chrono et au lecteur. Aucun bouton actif : pas de déclenchement automatique.</p>
     {cues.error ? <p role="alert" className="place-time-cues__error">{cues.error}</p> : null}
     {choosing ? <CueLibrary side={choosing} ownerId={ownerId} onClose={() => setChoosing(null)} /> : null}
   </section>;

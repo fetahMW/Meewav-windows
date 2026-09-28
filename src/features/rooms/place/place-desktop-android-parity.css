@@ -1,3 +1,5 @@
+@import "./room-console-material.css";
+
 /* Desktop shares the Room components and actions with Web. These refinements
  * stay inside the Desktop runtime and leave the pillar and backgrounds alone. */
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) {
@@ -58,25 +60,14 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   --studio-key-rgb: 126, 68, 227;
   --studio-key-light: #a98ef0;
   border: 1px solid transparent;
-  background:
-    linear-gradient(122deg, #ffffff2b, #ffffff08 26%, transparent 48%) padding-box,
-    radial-gradient(ellipse at 50% -30%, #eadbff47, transparent 66%) padding-box,
-    linear-gradient(180deg, #3a2c4dc9, #23162fcc 46%, #472b66db) padding-box,
-    linear-gradient(140deg, #e8d5ff85, #b089e16b 29%, #3521436b 60%, #c6a1f08c) border-box;
+  background: var(--room-key-active-face);
   backdrop-filter: blur(10px) saturate(135%);
   color: #f8f6fa;
-  box-shadow:
-    inset 0 1px 0 #ffffff2b,
-    inset 0 3px 6px #09040e99,
-    inset 1px 0 0 #ffffff0d,
-    inset 0 -2px 1px #c798ff52,
-    inset 0 -10px 20px #7e44e321,
-    0 1px 0 #ffffff0a,
-    0 3px 7px #0009;
+  box-shadow: var(--room-key-active-shadow);
   text-shadow: 0 1px 2px #08040db3;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface].is-active > svg {
-  color: #c27aff;
+  color: var(--room-key-active-icon);
   filter: none;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-shared-studio-chassis:not(.is-collapsed) > .place-studio-panel__bar .place-studio-panel__tabs > button[data-surface]::before,

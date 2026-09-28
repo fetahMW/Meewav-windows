@@ -9371,22 +9371,8 @@
   overflow: visible !important;
 }
 
-.place-room-shell .place-mixer-audio__source-menu button svg { color: #8d78ff; }
-
-.place-room-shell .place-mixer-audio__source-menu button:hover,
-.place-room-shell .place-mixer-audio__source-menu button:focus-visible {
-  border-color: rgba(112, 105, 255, .55) !important;
-  background: rgba(91, 67, 201, .16) !important;
-  color: #fff !important;
-}
-
-.place-room-shell .place-mixer-audio__source-menu button.is-close:hover,
-.place-room-shell .place-mixer-audio__source-menu button.is-close:focus-visible {
-  border: 0 !important;
-  background: transparent !important;
-  color: #c6b7ff !important;
-  filter: none;
-}
+/* Import button surfaces, hover and focus are owned by place-mixer-play-finish.css,
+ * including the Wave menu portalled outside the audio player. */
 
 .place-room-shell .place-mixer-audio__cover-picker > img {
   box-sizing: border-box;

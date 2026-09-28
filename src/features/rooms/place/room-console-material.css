@@ -7,4 +7,15 @@
   --room-key-pressed: inset 0 2px 4px #0007, inset 0 -1px #ffffff06;
   --room-key-text: #e4deeb;
   --room-key-accent: #b68afa;
+  /* Exact illuminated glass finish of the active Wave / Mixeur tab. */
+  --room-key-active-face:
+    linear-gradient(122deg, #ffffff2b, #ffffff08 26%, transparent 48%) padding-box,
+    radial-gradient(ellipse at 50% -30%, #eadbff47, transparent 66%) padding-box,
+    linear-gradient(180deg, #3a2c4dc9, #23162fcc 46%, #472b66db) padding-box,
+    linear-gradient(140deg, #e8d5ff85, #b089e16b 29%, #3521436b 60%, #c6a1f08c) border-box;
+  --room-key-active-shadow:
+    inset 0 1px 0 #ffffff2b, inset 0 3px 6px #09040e99, inset 1px 0 0 #ffffff0d,
+    inset 0 -2px 1px #c798ff52, inset 0 -10px 20px #7e44e321,
+    0 1px 0 #ffffff0a, 0 3px 7px #0009;
+  --room-key-active-icon: #c27aff;
 }

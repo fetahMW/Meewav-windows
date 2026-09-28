@@ -15,7 +15,6 @@ export default function PlaceTime({ ownerId }: { ownerId?: string | null }) {
       <header className="place-time__header">
         <span className="place-time__icon"><Timer aria-hidden="true" /></span>
         <span>
-          <small>RÉGIE TEMPS</small>
           <strong id="place-time-title">Compte à rebours</strong>
         </span>
         <label className="place-time__toggle">
@@ -25,7 +24,8 @@ export default function PlaceTime({ ownerId }: { ownerId?: string | null }) {
         </label>
       </header>
 
-      <output className={`place-time__display is-${time.status}`} aria-live="polite">
+      <div className="place-time__timing">
+      <output className={`place-time__display is-${time.status}${time.durationSeconds >= 3600 ? " has-hours" : ""}`} aria-live="polite">
         {formatPlaceRoomTime(time.remainingMs)}
       </output>
 
@@ -54,6 +54,7 @@ export default function PlaceTime({ ownerId }: { ownerId?: string | null }) {
           />
         </label>
       </div>
+      </div>
 
       <div className="place-time__controls">
         <button type="button" className="is-primary" onClick={() => cues.waiting ? placeTransportCues.cancel() : time.status === "running" ? placeRoomTime.pause() : placeRoomTime.start()} disabled={!time.enabled && !cues.waiting}>
@@ -65,7 +66,7 @@ export default function PlaceTime({ ownerId }: { ownerId?: string | null }) {
         </button>
       </div>
 
-      <p>Quand Time est activé, Lecture et Pause du lecteur pilotent aussi ce compte à rebours.</p>
+      <p>Time activé : le lecteur pilote aussi le chrono.</p>
       <PlaceTimeCues ownerId={ownerId} />
     </section>
   );

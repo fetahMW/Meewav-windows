@@ -32,7 +32,7 @@ describe("Time sound controls", () => {
   it("imports a local sound, keeps its associations and can restore the real default asset", async () => {
     render(<PlaceTimeCues ownerId="test-owner" />);
     fireEvent.click(screen.getByRole("button", { name: "Début avec le lecteur" }));
-    fireEvent.click(screen.getAllByRole("button", { name: "Remplacer" })[0]);
+    fireEvent.click(screen.getByRole("button", { name: "Remplacer le son de début" }));
     await screen.findByText(/Aucun fichier audio/);
     fireEvent.change(document.querySelector('input[type="file"]')!, { target: { files: [new File(["sound"], "Mon départ.wav", { type: "audio/wav" })] } });
     expect(placeTransportCues.getSnapshot().start).toMatchObject({ player: true, sound: { title: "Mon départ", source: "blob:custom-cue", local: true } });
@@ -47,7 +47,7 @@ describe("Time sound controls", () => {
       { id: "b", kind: "video", title: "Ma vidéo", sourceUrl: "https://example.test/video" },
     ] as Awaited<ReturnType<typeof profileMediaRepository.listOwnerMedia>>);
     render(<PlaceTimeCues ownerId="test-owner" />);
-    fireEvent.click(screen.getAllByRole("button", { name: "Remplacer" })[1]);
+    fireEvent.click(screen.getByRole("button", { name: "Remplacer le son de fin" }));
     fireEvent.click(await screen.findByRole("button", { name: /Outro profil/ }));
     expect(profileMediaRepository.listOwnerMedia).toHaveBeenCalledWith("test-owner");
     expect(placeTransportCues.getSnapshot().end.sound.source).toBe("https://example.test/private-signed-audio");

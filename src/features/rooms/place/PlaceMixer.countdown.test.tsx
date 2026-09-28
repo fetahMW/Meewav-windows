@@ -181,7 +181,7 @@ describe("Mixer countdown transport", () => {
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("n’a pas pu être lu"));
     expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
-    expect(screen.getByRole("button", { name: "Préécouter localement" })).toBeEnabled();
+    await waitFor(() => expect(screen.getByRole("button", { name: "Préécouter localement" })).toBeEnabled());
   });
 
   it("replays the intro on resume when explicitly linked to the player", async () => {
