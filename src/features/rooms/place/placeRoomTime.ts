@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { requestPlaceMixerStart } from "./placeMixerStart";
+import { placeTransportCues } from "./placeTransportCues";
 
 export type PlaceRoomTimeStatus = "idle" | "running" | "paused" | "complete";
 
@@ -39,6 +40,7 @@ function cancelPendingStart() {
 function completeCountdown() {
   stopTicker();
   publish({ ...snapshot, status: "complete", remainingMs: 0 });
+  placeTransportCues.end("chrono");
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("meewav:mixer-chrono-ended", {
       detail: { durationSeconds: snapshot.durationSeconds },

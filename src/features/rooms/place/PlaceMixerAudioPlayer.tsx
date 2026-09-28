@@ -31,6 +31,7 @@ import { PLACE_MIXER_FALLBACK_COVERS } from "./placeMixerCoverCatalog";
 import type { PlaceLiveKitStatus } from "./placeLiveKit.service";
 import { placeRoomTime } from "./placeRoomTime";
 import { waitForPlaceMixerStart } from "./placeMixerStart";
+import { placeTransportCues } from "./placeTransportCues";
 import { useWaveTransport, useWaveTransportState } from "../wave-transport/WaveTransportProvider";
 import type { WaveImportedAudio, WaveImportDestination } from "../wave-transport/WaveTransportProvider";
 import WaveListeningSelector from "../wave-transport/WaveListeningSelector";
@@ -669,7 +670,13 @@ export default function PlaceMixerAudioPlayer({
   };
 
   const pause = () => {
+    const wasPlaying = isPlaying;
     pauseLocal();
+    // pauseLocal also ticks Time: a pause exactly at zero may have emitted
+    // the chrono cue already, before the interval gets its next turn.
+    const time = placeRoomTime.getSnapshot();
+    const chronoCuePlayed = time.enabled && time.status === "complete" && placeTransportCues.getSnapshot().end.chrono;
+    if (wasPlaying && !chronoCuePlayed) placeTransportCues.end("player");
     void onPlaybackStateChange(route === "public" ? "ready" : "paused", programGenerationRef.current);
   };
 
@@ -692,11 +699,13 @@ export default function PlaceMixerAudioPlayer({
       else if (audioGraphRef.current?.context.state === "suspended") {
         await audioGraphRef.current.context.resume();
       }
-      // Le Pad retient le transport lui-même, pas seulement l'affichage Time.
-      // Une reprise en cours de piste ne rejoue pas l'introduction.
-      if (!waveEngine?.getSnapshot().quickPreview && audio.currentTime === 0 && placeRoomTime.getSnapshot().status !== "running") {
+      // One cue owns a combined Play + Time start. A resumed player follows
+      // its own association; a resumed chrono does not restart its intro.
+      if (!waveEngine?.getSnapshot().quickPreview) {
+        const time = placeRoomTime.getSnapshot();
+        const startsChrono = time.enabled && time.status !== "running" && time.status !== "paused";
         setCountdownPending(true);
-        const ready = await waitForPlaceMixerStart(controller.signal);
+        const ready = await waitForPlaceMixerStart(controller.signal, startsChrono ? "both" : "player");
         setCountdownPending(false);
         if (!ready) return;
       }

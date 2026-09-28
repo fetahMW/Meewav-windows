@@ -1174,7 +1174,7 @@ export default function PlaceMixer({
           {master ? <div className="place-master-dock" data-sending={personalMix ? ["En scène", "Avec le host"].includes(personalMix.publication) && !personalMix.levels.master.muted : undefined}><span className="place-master-dock__label">{ownMix ? "ENVOI VERS LE HOST" : "SORTIE PUBLIQUE"} <em><i aria-hidden="true" />{ownMix ? personalMix?.publication ?? "Préparation locale" : "ACTIVE"}</em></span>{personalMix && personalMix.meters.master >= 1 ? <p className="viewer-mix-error" role="status">Master trop fort</p> : null}<VolumeRow channel={master} room={room} isMaster onGain={changeGain} onMute={changeMute} onCamera={onCamera} canEditGain={ownMix || room.source === "demo"} canEditMute cameraControl="none" /></div> : null}
         </section>
       ) : activeView === "twists" ? null : activeView === "time" ? (
-        <PlaceTime />
+        <PlaceTime ownerId={currentUserId ?? room.host.id ?? null} />
       ) : (
         <section className={`place-fx-view is-accordion${desktopFx ? " is-android-fx" : ""}`}>
           {desktopFx ? <>

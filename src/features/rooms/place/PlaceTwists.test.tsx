@@ -1,14 +1,16 @@
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { LIVE_ROOM_PRESENTATIONS, RoomPresentationProvider, type RoomPresentation } from "../roomPresentation";
 import { createPlaceDemoState } from "./place.fixtures";
 import PlaceMixer from "./PlaceMixer";
 import PlaceTwists from "./PlaceTwists";
 import { placeRoomTime } from "./placeRoomTime";
+import { placeTransportCues } from "./placeTransportCues";
 import { DEFAULT_PLACE_TWIST_VOLUME, PLACE_TWIST_ASSETS, placeTwistAudio } from "./placeTwistAudio";
 
 afterEach(() => {
   cleanup();
+  placeTransportCues.reset();
   placeRoomTime.setEnabled(false);
   vi.restoreAllMocks();
 });
@@ -60,10 +62,10 @@ describe("PlaceTwists infrastructure pads", () => {
     expect(play).toHaveBeenNthCalledWith(2, "countdown", expect.any(Function));
   });
 
-  it("starts the countdown Pad before the chrono and releases it one second before the sound ends", () => {
+  it("starts the countdown Pad before the chrono and releases it when the sound ends", () => {
     let releaseChrono: (() => void) | undefined;
-    const play = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, _onEnded, onOneSecondBeforeEnd) => {
-      releaseChrono = onOneSecondBeforeEnd;
+    const play = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, onEnded) => {
+      releaseChrono = onEnded;
     });
     render(<PlaceTwists />);
 
@@ -71,7 +73,7 @@ describe("PlaceTwists infrastructure pads", () => {
     placeRoomTime.setEnabled(true);
     placeRoomTime.start();
 
-    expect(play).toHaveBeenCalledWith("countdown", expect.any(Function), expect.any(Function), expect.any(Function));
+    expect(play).toHaveBeenCalledWith("countdown", expect.any(Function), undefined, expect.any(Function));
     expect(placeRoomTime.getSnapshot().status).toBe("idle");
     releaseChrono?.();
     expect(placeRoomTime.getSnapshot().status).toBe("running");
@@ -82,6 +84,36 @@ describe("PlaceTwists infrastructure pads", () => {
 
     expect(screen.getByRole("button", { name: "Jouer Applause" })).toBeVisible();
     expect(screen.queryByText("Applaudissements")).not.toBeInTheDocument();
+  });
+
+  it("arms the chrono independently of the Pad playback button", async () => {
+    const play = vi.spyOn(placeTwistAudio, "play").mockResolvedValue();
+    render(<PlaceTwists />);
+
+    const link = screen.getByRole("checkbox", { name: "Fin du chrono" });
+    expect(link.closest("button")).toBeNull();
+    fireEvent.click(link);
+    expect(link).toBeChecked();
+    expect(play).not.toHaveBeenCalled();
+
+    await act(async () => { placeTransportCues.end("chrono"); });
+    expect(play).toHaveBeenCalledWith("dj_horn", expect.any(Function), undefined, expect.any(Function));
+  });
+
+  it("keeps pause and resume separate from retriggering a Pad", async () => {
+    const play = vi.spyOn(placeTwistAudio, "play").mockResolvedValue();
+    const pause = vi.spyOn(placeTwistAudio, "pause").mockResolvedValue(true);
+    const resume = vi.spyOn(placeTwistAudio, "resume").mockResolvedValue(true);
+    render(<PlaceTwists />);
+
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Jouer Battement" })); });
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Mettre Battement en pause" })); });
+    expect(pause).toHaveBeenCalledOnce();
+    expect(screen.getByText("En pause")).toBeVisible();
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Reprendre Battement" })); });
+    expect(resume).toHaveBeenCalledOnce();
+    expect(play).toHaveBeenCalledOnce();
+    expect(screen.getByText("Lecture en cours")).toBeVisible();
   });
 
   it("provides fifteen slots with a fifth row of neutral empty Pads", () => {

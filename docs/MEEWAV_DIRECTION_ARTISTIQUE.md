@@ -31,6 +31,8 @@ Les couleurs fonctionnelles conservent leur sens : Golden Like et récompenses d
 ## 2. Matières et profondeur
 
 - **Touches** : graphite en dégradé, reflet supérieur doux, ombre courte, volume faible. Utiliser `--room-key-face`, `--room-key-hover`, `--room-key-shadow` et `--room-key-pressed`.
+- **Touche active** : référence exacte du bouton **Mixeur** sélectionné : verre violet bombé, reflet clair en haut, profondeur interne et lumière douce sur le bord inférieur. Reprendre les quatre couches de dégradés et les ombres de `place-desktop-android-parity.css`, avec l’icône `#C27AFF`. Un simple contour violet autour d’une surface noire ne reproduit pas cette finition.
+- **Pads** : conserver leurs identités distinctes — Battement rose, DJ Horn ambre, Applause violet, Huées du public indigo, Roulement de tambour cyan et Compte à rebours vert. Ils reprennent la matière vitrée du Mixeur, teintée avec leur propre couleur pendant la lecture. Au repos, le corps reste graphite avec l’icône et un liseré discret de cette couleur. La cohérence de finition ne signifie pas uniformiser ces repères fonctionnels en violet. Les emplacements libres restent neutres.
 - **Verre** : noir translucide maîtrisé, flou d’arrière-plan seulement s’il améliore la lecture. Le mot « verre » décrit la matière ; il ne signifie pas recolorer l’interface en vert.
 - **Cadres** : fins, intégrés à la matière. Pas de stroke blanc épais ni de rectangle décoratif autour d’un sous-menu.
 - **Glow** : lueur douce autour de l’élément, sans halo flou qui masque son contenu ni éclairage qui semble venir uniquement du dessous.

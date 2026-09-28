@@ -1,0 +1,145 @@
+@import "./place-pad-material.css";
+
+/* A compact bank of console keys. Empty slots never stretch to fill the panel. */
+.place-room-shell .place-twists.place-twists--console {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-content: start;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  gap: 10px;
+  padding: 12px;
+  overflow: hidden;
+  color: var(--room-key-text);
+  font-family: var(--room-chat-font, system-ui, sans-serif);
+  container-type: inline-size;
+
+  & .place-pads-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 0 0 2px;
+  }
+  & .place-pads-heading strong { font-size: 15px; font-weight: 650; letter-spacing: -.02em; }
+  & .place-pads-volume {
+    display: grid;
+    grid-template-columns: 16px minmax(48px, 1fr) 36px;
+    align-items: center;
+    width: 160px;
+    min-height: 32px;
+    gap: 7px;
+    color: #bcb5c7;
+  }
+  & .place-pads-volume svg { width: 16px; height: 16px; }
+  & .place-pads-volume output { font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; }
+  & .place-pads-volume input { width: 100%; min-width: 0; height: 24px; margin: 0; accent-color: var(--room-key-accent); cursor: pointer; }
+  & .place-pad-bank {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: max-content;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+    min-height: 0;
+    padding: 2px 3px 3px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #b68afa80 transparent;
+  }
+  & .place-twists__pad {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    overflow: visible;
+    border: 1px solid color-mix(in srgb, var(--twist-accent) 17%, transparent);
+    border-radius: 12px;
+    background: var(--room-key-face);
+    box-shadow: var(--room-key-shadow);
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  & .place-pad-key {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    min-height: 68px;
+    padding: 11px 11px 6px;
+    border: 0;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--room-key-text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  & .place-pad-key__top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  & .place-pad-key__top svg { width: 19px; height: 19px; color: var(--twist-accent); stroke-width: 1.7; }
+  & .place-pad-key__top > span { color: #918b9a; font-size: 10px; font-variant-numeric: tabular-nums; letter-spacing: .07em; }
+  & .place-pad-key strong { color: inherit; font-size: 12px; line-height: 1.35; font-weight: 650; white-space: normal; overflow-wrap: anywhere; }
+  & .place-pad-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    min-height: 31px;
+    padding: 0 11px 9px;
+  }
+  & .place-pad-footer small { color: #a8a1b2; font-size: 10px; line-height: 1.35; white-space: normal; }
+  & .place-pad-chrono { position: relative; display: flex; flex: 1; align-items: center; justify-content: space-between; gap: 5px; min-height: 24px; color: #bcb5c7; font-size: 10px; line-height: 1.3; cursor: pointer; }
+  & .place-pad-chrono input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  & .place-pad-chrono > i { flex: 0 0 22px; width: 22px; height: 12px; border-radius: 20px; background: #49454e; box-shadow: inset 0 1px 2px #0006; pointer-events: none; }
+  & .place-pad-chrono > i::after { content: ""; display: block; width: 8px; height: 8px; margin: 2px; border-radius: 50%; background: #d3cddc; transition: transform 120ms ease; }
+  & .place-pad-chrono:has(input:checked) > i { background: color-mix(in srgb, var(--twist-accent) 65%, #17151c); }
+  & .place-pad-chrono:has(input:checked) > i::after { transform: translateX(10px); background: var(--pad-light); }
+  & .place-pad-playback, & .place-pad-tools button {
+    display: grid; place-items: center; flex: 0 0 26px; width: 26px; height: 26px; min-width: 26px;
+    padding: 0; border: 1px solid #ffffff0c; border-radius: 7px; background: #101013; color: var(--twist-accent); cursor: pointer;
+  }
+  & .place-pad-playback svg, & .place-pad-tools svg { width: 13px; height: 13px; }
+  & .place-pad-playback { position: absolute; top: 7px; right: 8px; }
+  & .place-pad-tools { display: flex; justify-content: flex-end; gap: 5px; padding: 0 9px 9px; }
+  & .place-twists__pad.is-empty { background: linear-gradient(180deg, #1c1b2080, #100f1359); border: 1px solid #ffffff0a; box-shadow: inset 0 1px #ffffff04; }
+  & .is-empty .place-pad-key { display: grid; grid-template-columns: 1fr auto; align-items: center; min-height: 44px; padding: 9px 11px; gap: 5px; }
+  & .is-empty .place-pad-key__top { display: contents; }
+  & .is-empty .place-pad-key__top svg { grid-column: 1; grid-row: 1; width: 14px; height: 14px; color: #958c9f; }
+  & .is-empty .place-pad-key__top > span { grid-column: 2; grid-row: 1; color: #787080; font-size: 9px; }
+  & .is-empty .place-pad-key strong { grid-column: 1; grid-row: 1; padding-left: 20px; font-size: 10px; font-weight: 500; color: #a8a1b2; }
+  /* Mixeur glass construction, tinted with each Pad's original identity. */
+  & .place-twists__pad.is-playing {
+    border: 1px solid transparent;
+    background: var(--pad-glass-face);
+    backdrop-filter: blur(10px) saturate(135%);
+    color: #f8f6fa;
+    box-shadow: var(--pad-glass-shadow);
+    text-shadow: 0 1px 2px #08040db3;
+  }
+  & .is-playing .place-pad-key__top svg { color: var(--pad-light); }
+  & .is-playing .place-pad-key__top > span { visibility: hidden; }
+  & .place-twists__pad.is-paused { border-color: color-mix(in srgb, var(--twist-accent) 22%, transparent); box-shadow: var(--room-key-shadow); }
+  & .place-pad-key:active { background: #0002; box-shadow: var(--room-key-pressed); }
+  & button:focus-visible, & input:focus-visible { outline: 2px solid var(--room-key-accent); outline-offset: 2px; }
+  & .place-twists__pad button:focus-visible { outline-color: var(--twist-accent); }
+  & .place-pad-chrono:has(input:focus-visible) { outline: 2px solid var(--twist-accent); outline-offset: 2px; border-radius: 4px; }
+  & .place-twists__error { font-size: 11px; grid-row: 3; }
+}
+
+@media (hover: hover) {
+  .place-room-shell .place-twists.place-twists--console .place-twists__pad:not(.is-playing):has(.place-pad-key:hover) { background: var(--room-key-hover); border-color: color-mix(in srgb, var(--twist-accent) 30%, transparent); }
+  .place-room-shell .place-twists.place-twists--console :is(.place-pad-playback, .place-pad-tools button):hover { background: color-mix(in srgb, var(--twist-accent) 15%, #1b1820); color: var(--pad-light); }
+}
+@container (max-width: 310px) {
+  .place-room-shell .place-twists.place-twists--console .place-pad-bank { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .place-room-shell .place-twists.place-twists--console *, .place-room-shell .place-twists.place-twists--console *::after { transition: none; animation: none; }
+}

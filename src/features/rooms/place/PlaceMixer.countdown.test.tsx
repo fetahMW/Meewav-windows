@@ -5,6 +5,7 @@ import PlaceMixer from "./PlaceMixer";
 import { createPlaceDemoState } from "./place.fixtures";
 import type { PlaceMixerView } from "./place.types";
 import { placeRoomTime } from "./placeRoomTime";
+import { placeTransportCues } from "./placeTransportCues";
 import { placeTwistAudio } from "./placeTwistAudio";
 
 vi.mock("../tools/audio/previewWaveform", () => ({ decodeAudioWaveform: vi.fn(async () => []) }));
@@ -41,7 +42,9 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  placeTransportCues.reset();
   placeRoomTime.setEnabled(false);
+  vi.useRealTimers();
   vi.restoreAllMocks();
 });
 
@@ -75,16 +78,17 @@ describe("Mixer countdown transport", () => {
     fireEvent.click(screen.getByRole("button", { name: "Time" }));
     fireEvent.click(screen.getByRole("checkbox", { name: "Afficher" }));
     fireEvent.click(screen.getByRole("button", { name: "Démarrer" }));
-    expect(pad).toHaveBeenCalledWith("countdown", expect.any(Function), expect.any(Function), expect.any(Function));
-    act(() => window.dispatchEvent(new CustomEvent("meewav:mixer-chrono-ended")));
-    expect(pad).toHaveBeenCalledWith("dj_horn", expect.any(Function));
+    expect(pad).toHaveBeenCalledWith("countdown", expect.any(Function), undefined, expect.any(Function));
+    act(() => placeTransportCues.end("chrono"));
+    expect(pad).toHaveBeenCalledWith("dj_horn", expect.any(Function), undefined, expect.any(Function));
   });
 
-  it.each([false, true])("holds the actual player until the one-second cue (Time enabled: %s)", async (enabled) => {
+  it.each([false, true])("holds the actual player until the actual sound end (Time enabled: %s)", async (enabled) => {
     let release: (() => void) | undefined;
-    const pad = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, _ended, nearEnd) => { release = nearEnd; });
+    const pad = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, ended) => { release = ended; });
     render(<MixerHarness />);
     fireEvent.click(screen.getByRole("checkbox", { name: "Début du chrono" }));
+    act(() => placeTransportCues.setTarget("start", "player", true));
     importTrack();
     act(() => placeRoomTime.setEnabled(enabled));
     fireEvent.click(screen.getByRole("button", { name: "Volumes" }));
@@ -111,11 +115,52 @@ describe("Mixer countdown transport", () => {
     expect(pad).not.toHaveBeenCalled();
   });
 
+  it("plays the end sound on an explicit player pause", async () => {
+    const pad = vi.spyOn(placeTwistAudio, "play").mockResolvedValue();
+    render(<MixerHarness />);
+    act(() => placeTransportCues.setTarget("end", "player", true));
+    importTrack();
+    fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Mettre en pause" })).toBeEnabled());
+    expect(pad).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Mettre en pause" }));
+    expect(pad).toHaveBeenCalledTimes(1);
+    expect(pad.mock.calls[0][0]).toBe("dj_horn");
+    expect(screen.getByRole("button", { name: "Préécouter localement" })).toBeEnabled();
+  });
+
+  it.each(["timer", "pause"])("stops the linked player at zero with one horn from %s when both targets are enabled", async (trigger) => {
+    const pad = vi.spyOn(placeTwistAudio, "play").mockResolvedValue();
+    render(<MixerHarness />);
+    act(() => {
+      placeTransportCues.setTarget("end", "player", true);
+      placeTransportCues.setTarget("end", "chrono", true);
+      placeRoomTime.configure(0, 1);
+      placeRoomTime.setEnabled(true);
+    });
+    importTrack();
+    vi.useFakeTimers();
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
+    });
+    expect(placeRoomTime.getSnapshot().status).toBe("running");
+    await act(async () => {
+      if (trigger === "pause") {
+        vi.setSystemTime(Date.now() + 1_000);
+        fireEvent.click(screen.getByRole("button", { name: "Mettre en pause" }));
+      } else vi.advanceTimersByTime(1_200);
+    });
+    expect(pad).toHaveBeenCalledTimes(1);
+    expect(pad.mock.calls[0][0]).toBe("dj_horn");
+    expect(screen.getByRole("button", { name: "Préécouter localement" })).toBeEnabled();
+  });
+
   it.each(["cancel", "track", "unmount", "disable"])("does not launch from an old cue after %s", async (action) => {
     let release: (() => void) | undefined;
-    const pad = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, _ended, nearEnd) => { release = nearEnd; });
+    const pad = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, ended) => { release = ended; });
     const view = render(<MixerHarness />);
     fireEvent.click(screen.getByRole("checkbox", { name: "Début du chrono" }));
+    act(() => placeTransportCues.setTarget("start", "player", true));
     importTrack();
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
     await waitFor(() => expect(pad).toHaveBeenCalledTimes(1));
@@ -131,18 +176,20 @@ describe("Mixer countdown transport", () => {
     vi.spyOn(placeTwistAudio, "play").mockRejectedValue(new Error("audio unavailable"));
     render(<MixerHarness />);
     fireEvent.click(screen.getByRole("checkbox", { name: "Début du chrono" }));
+    act(() => placeTransportCues.setTarget("start", "player", true));
     importTrack();
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
-    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("n’a pas pu lire"));
+    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("n’a pas pu être lu"));
     expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
     expect(screen.getByRole("button", { name: "Préécouter localement" })).toBeEnabled();
   });
 
-  it("resumes a paused production without replaying the countdown", async () => {
+  it("replays the intro on resume when explicitly linked to the player", async () => {
     let release: (() => void) | undefined;
-    const pad = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, _ended, nearEnd) => { release = nearEnd; });
+    const pad = vi.spyOn(placeTwistAudio, "play").mockImplementation(async (_kind, ended) => { release = ended; });
     render(<MixerHarness />);
     fireEvent.click(screen.getByRole("checkbox", { name: "Début du chrono" }));
+    act(() => placeTransportCues.setTarget("start", "player", true));
     importTrack();
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
     await waitFor(() => expect(pad).toHaveBeenCalledTimes(1));
@@ -151,7 +198,9 @@ describe("Mixer countdown transport", () => {
     audio.currentTime = 12;
     fireEvent.click(screen.getByRole("button", { name: "Mettre en pause" }));
     fireEvent.click(screen.getByRole("button", { name: "Préécouter localement" }));
-    await waitFor(() => expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2));
-    expect(pad).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(pad).toHaveBeenCalledTimes(2));
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
+    await act(async () => { release?.(); });
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2);
   });
 });
