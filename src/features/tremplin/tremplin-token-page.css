@@ -663,7 +663,7 @@
   border: 1px solid rgba(170, 144, 240, 0.28);
   border-radius: 12px;
   background: rgba(113, 85, 190, 0.15);
-  color: #b49bf4;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-token-hero__eyebrow svg {
@@ -1333,7 +1333,7 @@
   width: 17px;
   height: 17px;
   flex: 0 0 17px;
-  color: #9b8be2;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-token-value-chart__summary p {
@@ -2220,7 +2220,7 @@
   width: 17px;
   height: 17px;
   flex: 0 0 17px;
-  color: #a596dd;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-token-artist__separation {
@@ -2250,7 +2250,7 @@
   left: 18px;
   width: 27px;
   height: 27px;
-  color: #9e91dc;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-token-artist__separation h3 {
@@ -2378,7 +2378,7 @@
   width: 16px;
   height: 16px;
   flex: 0 0 16px;
-  color: #a596dd;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-token-artist__trade-cta {
@@ -2598,7 +2598,7 @@
   width: 10px;
   height: 10px;
   flex: 0 0 10px;
-  color: #9b83ed;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-my-artists__latest strong {

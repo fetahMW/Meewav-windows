@@ -2996,7 +2996,7 @@
   border: 1px solid rgba(160, 103, 255, 0.3);
   border-radius: 12px;
   background: radial-gradient(circle at 50% 35%, rgba(142, 86, 242, 0.22), rgba(38, 23, 70, 0.2));
-  color: #a870ff;
+  color: var(--mw-accent-secondary);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.035), 0 0 18px rgba(122, 73, 214, 0.09);
 }
 
@@ -4341,7 +4341,7 @@
   border: 1px solid #4b3768;
   border-radius: 9px;
   background: #211630;
-  color: #bd8dff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-fx-accordion[data-section="effects"] .place-fx-accordion__icon { color: #62ddeb; background: #10252c; border-color: #26545e; }
@@ -4352,7 +4352,7 @@
 .place-fx-accordion__copy strong { color: #fff; font-size: 13px; line-height: 1.15; }
 .place-fx-accordion__copy small { overflow: hidden; color: #aaa2b7; font-size: 10.5px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
 .place-fx-accordion__trigger > em { color: #c4b8d2; font-size: 9.5px; font-style: normal; white-space: nowrap; }
-.place-fx-accordion__chevron { width: 15px; height: 15px; color: #8f849c; transition: transform .18s ease; }
+.place-fx-accordion__chevron { width: 15px; height: 15px; color: var(--mw-accent-secondary); transition: transform .18s ease; }
 .place-fx-accordion.is-open .place-fx-accordion__chevron { transform: rotate(180deg); }
 
 .place-fx-accordion__panel {
@@ -4481,7 +4481,7 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #a97aff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 5px rgba(111, 119, 255, .17));
 }
 
@@ -4647,7 +4647,7 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #b574ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-fx-accordion[data-section="engines"] .place-fx-engine-choice__icon svg {
@@ -5428,7 +5428,7 @@
 .place-room-shellbar__audience svg {
   width: 15px;
   height: 15px;
-  color: #9766f5;
+  color: var(--mw-accent-secondary);
   stroke-width: 1.8;
 }
 
@@ -5467,7 +5467,7 @@
 .place-room-shellbar__countdown > svg {
   width: 20px;
   height: 20px;
-  color: #a477ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shellbar__countdown > span {
@@ -5476,7 +5476,7 @@
 }
 
 .place-room-shellbar__countdown small {
-  color: #9e84cc;
+  color: var(--mw-accent-secondary);
   font-size: 7px;
   font-weight: 850;
   letter-spacing: .16em;
@@ -5579,7 +5579,7 @@
   border: 1px solid rgba(155, 101, 247, .34);
   border-radius: 13px;
   background: #171028;
-  color: #ac7dff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-time__icon svg { width: 21px; height: 21px; }
@@ -5733,7 +5733,7 @@
 .place-room-shell .place-mixer-audio__icon.is-upload-icon {
   border-color: rgba(142, 102, 247, .48) !important;
   background: #171027 !important;
-  color: #bca4ff !important;
+  color: var(--mw-accent-secondary) !important;
 }
 
 .place-room-shell .place-mixer-audio__chrono-toggle,
@@ -6580,7 +6580,7 @@
 .place-room-shell .place-mixer-audio__icon[aria-pressed="true"] {
   border-color: rgba(128, 87, 255, .74) !important;
   background: rgba(72, 49, 146, .48) !important;
-  color: #cbbdff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-mixer-audio__icon svg,
@@ -7306,7 +7306,7 @@
   font-size: 9px;
 }
 
-.place-room-shell .place-tool-poll__duration-summary svg { width: 15px; height: 15px; color: #a66bff; }
+.place-room-shell .place-tool-poll__duration-summary svg { width: 15px; height: 15px; color: var(--mw-accent-secondary); }
 
 .place-room-shell .place-tool-card.is-poll .place-tool-card__footer {
   display: grid;
@@ -10089,7 +10089,7 @@
 }
 
 .place-room-shellbar__counters .is-audience svg {
-  color: #9a63ff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 4px rgba(124, 79, 255, .32));
   stroke-width: 1.7;
 }
@@ -11345,13 +11345,13 @@
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__source-icon svg {
   width: 18px;
   height: 18px;
-  color: #aa83ff;
+  color: var(--mw-accent-secondary);
   stroke-width: 1.8;
 }
 
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__source-icon.is-master {
   border-color: rgba(140, 93, 232, .58);
-  color: #a778ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-mixer.has-audio-player .place-volume-row__identity {
@@ -11757,7 +11757,7 @@
 
 .place-room-shell .place-fx-accordion[data-section="plugins"]:not(.is-open) .place-fx-accordion__icon {
   border-color: rgba(104, 83, 158, .27);
-  color: #9c68ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-fx-accordion:not(.is-open) .place-fx-accordion__copy {
@@ -11805,7 +11805,7 @@
 }
 
 .place-room-shell .place-fx-accordion[data-section="autotune"]:not(.is-open) .place-fx-accordion__trigger > em {
-  color: #a666ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-fx-accordion:not(.is-open) .place-fx-accordion__chevron,
@@ -12311,7 +12311,7 @@
   border: 1px solid rgba(130, 103, 225, .22);
   border-radius: 7px;
   background: linear-gradient(145deg, rgba(77, 56, 151, .28), rgba(27, 27, 70, .38));
-  color: #a96fff;
+  color: var(--mw-accent-secondary);
   box-shadow: inset 0 1px rgba(255,255,255,.045), 0 0 9px rgba(125, 72, 220, .08);
 }
 
@@ -13082,7 +13082,7 @@
 .place-room-shell .place-mixer-audio__utility-actions .place-mixer-audio__regie-button > svg {
   width: 11px;
   height: 11px;
-  color: #d4b9ff;
+  color: var(--mw-accent-secondary);
   stroke-width: 1.9;
 }
 
@@ -14329,7 +14329,7 @@
 .place-mixer-audio-library-modal__panel.is-queue .place-mixer-audio-queue-row__select > span {
   grid-row: 1 / 3;
   align-self: center;
-  color: #ad82ff;
+  color: var(--mw-accent-secondary);
   font-size: 10px;
 }
 
@@ -15313,7 +15313,7 @@
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-accordion[data-section="plugins"] .place-plugin-manager__empty > svg {
   border-color: #b778f3;
-  color: #b778f3;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 5px rgba(157, 99, 234, .22));
 }
 
@@ -15358,7 +15358,7 @@
 }
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-view__monitor-label svg {
-  color: #b778f3;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-view__monitor-switch {
@@ -15468,7 +15468,7 @@
   border: 0;
   border-radius: 0;
   background: var(--fx-expanded-icon-face);
-  color: var(--fx-rack-violet-soft);
+  color: var(--mw-accent-secondary);
   box-shadow: var(--fx-expanded-icon-shadow);
   filter: none;
 }
@@ -15495,7 +15495,7 @@
 }
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-accordion[data-section="effects"].is-open .place-fx-accordion__trigger > em {
-  color: var(--fx-reference-violet-light);
+  color: var(--mw-accent-secondary);
   font-size: 8.5px;
   font-weight: 500;
   margin-right: -7px;
@@ -15780,7 +15780,7 @@
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(31, 21, 48, .56), rgba(14, 11, 24, .72));
   box-shadow: inset 0 1px rgba(209, 165, 255, .035);
-  color: var(--fx-reference-violet-light);
+  color: var(--mw-accent-secondary);
   font-size: 8px;
   line-height: 1;
   font-weight: 500;
@@ -15937,7 +15937,7 @@
 }
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-accordion[data-section="autotune"].is-open .place-fx-accordion__trigger > em {
-  color: #c6a1ee;
+  color: var(--mw-accent-secondary);
   text-shadow: none;
 }
 
@@ -16249,7 +16249,7 @@
 }
 
 .place-room-shell .place-mixer-audio__playback-menu [role="menuitemradio"].is-selected > svg {
-  color: #be82ff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 4px rgba(157, 99, 234, .28));
 }
 
@@ -16315,7 +16315,7 @@
   border: 0;
   border-radius: 0;
   background: var(--fx-expanded-icon-face);
-  color: var(--fx-rack-violet-soft);
+  color: var(--mw-accent-secondary);
   box-shadow: var(--fx-expanded-icon-shadow);
   filter: none;
 }
@@ -16348,7 +16348,7 @@
 }
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-accordion[data-section="engines"].is-open .place-fx-accordion__trigger > em {
-  color: #bd70ff;
+  color: var(--mw-accent-secondary);
   font-size: 8px;
   font-weight: 500;
   text-shadow: none;
@@ -16480,7 +16480,7 @@
   background:
     radial-gradient(circle at 50% 44%, rgba(117, 72, 190, .11), transparent 62%),
     var(--fx-control-face);
-  color: #b465fa;
+  color: var(--mw-accent-secondary);
   box-shadow: inset 0 0 8px rgba(104, 61, 177, .07);
 }
 
@@ -16584,7 +16584,7 @@
 .place-room-shell .place-studio-panel.is-mixer .place-fx-accordion[data-section="engines"] .place-fx-engine-note svg {
   width: 14px;
   height: 14px;
-  color: #b35eff;
+  color: var(--mw-accent-secondary);
   stroke-width: 1.8;
 }
 
@@ -16648,7 +16648,7 @@
 .place-room-shell .place-studio-panel.is-mixer .place-fx-view__monitor-label svg {
   width: 18px;
   height: 18px;
-  color: #a95bf3;
+  color: var(--mw-accent-secondary);
 }
 
 .place-room-shell .place-studio-panel.is-mixer .place-fx-view__monitor-switch {
@@ -16812,7 +16812,7 @@
 }
 
 .place-room-shell .place-studio-panel.is-host-panel.is-mixer:not(.is-collapsed) .place-studio-panel__tabs > button.is-active > svg {
-  color: #c584ff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 4px rgba(168, 84, 247, .32));
 }
 

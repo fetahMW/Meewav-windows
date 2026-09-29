@@ -1,3 +1,6 @@
+import "./styles/navigation-indicator.css";
+import './styles/primary-cta-material.css'
+import "./styles/compact-control-material.css";
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'

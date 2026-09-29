@@ -118,7 +118,7 @@
   overflow: hidden;
   border: 1px solid rgba(168, 100, 255, 0.35);
   border-radius: 14px;
-  color: #c99cff;
+  color: var(--mw-accent-secondary);
   background: rgba(119, 61, 194, 0.14);
 }
 
@@ -204,7 +204,7 @@
 .market-seller-drafts__empty svg {
   width: 30px;
   height: 30px;
-  color: #b47aff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-seller-drafts__empty strong {

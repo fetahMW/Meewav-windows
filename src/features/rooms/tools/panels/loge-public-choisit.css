@@ -84,7 +84,7 @@
 
 .loge-public-choice__header > span:first-child > strong svg {
   width: 18px;
-  color: var(--choice-violet-bright);
+  color: var(--mw-accent-secondary);
 }
 
 .loge-public-choice__live {
@@ -257,7 +257,7 @@
 .loge-public-choice__option-art {
   display: grid;
   place-items: center;
-  color: #d095ff;
+  color: var(--mw-accent-secondary);
   background: radial-gradient(circle at 70% 25%, rgba(199, 108, 255, 0.35), transparent 34%), linear-gradient(145deg, #16122e, #080e20);
 }
 

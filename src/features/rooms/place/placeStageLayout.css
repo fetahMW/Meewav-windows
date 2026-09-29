@@ -780,7 +780,7 @@
 }
 
 .place-stage-layout__mode-trigger svg { width: 15px; height: 15px; }
-.place-stage-layout__mode-trigger svg:last-child { width: 12px; color: rgba(227, 211, 246, 0.52); }
+.place-stage-layout__mode-trigger svg:last-child { width: 12px; color: var(--mw-accent-secondary); }
 
 .place-stage-layout__menu {
   position: absolute;
@@ -820,7 +820,7 @@
 .place-stage-layout__menu button.is-active { background: rgba(151, 91, 241, 0.14); color: #fff; }
 .place-stage-layout__menu button:disabled { cursor: not-allowed; opacity: .42; }
 .place-stage-layout__menu button > svg { width: 15px; height: 15px; }
-.place-stage-layout__menu button > svg:last-child { color: #b985ff; }
+.place-stage-layout__menu button > svg:last-child { color: var(--mw-accent-secondary); }
 .place-stage-layout__menu-divider { height: 1px; margin: 3px 6px; background: rgba(226, 210, 246, 0.1); }
 .place-stage-layout__menu-label { padding: 3px 7px 0; color: rgba(222, 204, 244, 0.42); font-size: 7px; font-weight: 900; letter-spacing: .13em; }
 .place-stage-layout__preset-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; }
@@ -912,7 +912,7 @@
   white-space: nowrap;
 }
 .place-stage-layout__personal-view { margin-left: auto; }
-.place-stage-layout__personal-view > svg { width: 16px; color: #b884ff; }
+.place-stage-layout__personal-view > svg { width: 16px; color: var(--mw-accent-secondary); }
 .place-stage-layout__screen-preview { margin-left: auto; }
 .place-stage-layout__screen-preview > svg { width: 16px; color: #75e8b8; }
 .place-stage-layout__screen-preview button.is-active { border-color: rgba(115, 232, 187, .28); background: rgba(28, 126, 92, .2); color: #83efc6; }
@@ -931,7 +931,7 @@
   pointer-events: auto;
   backdrop-filter: blur(18px);
 }
-.place-stage-layout__suggestion > svg { width: 15px; color: #c69aff; }
+.place-stage-layout__suggestion > svg { width: 15px; color: var(--mw-accent-secondary); }
 .place-stage-layout__suggestion > span { display: grid; gap: 1px; }
 .place-stage-layout__suggestion small { color: #b985fa; font-size: 7px; font-weight: 900; letter-spacing: .1em; }
 .place-stage-layout__suggestion strong { color: #fff; font-size: 10px; }

@@ -1416,6 +1416,7 @@ set search_path = ''
 as $$
 declare
   v_actor uuid := auth.uid();
+  v_room public.rooms_v2%rowtype;
   v_session public.wave_sessions_v3%rowtype;
   v_revision_id uuid;
   v_category jsonb;

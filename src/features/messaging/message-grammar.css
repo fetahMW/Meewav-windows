@@ -482,7 +482,7 @@
 
 .mw-message-actions > header span {
   display: block;
-  color: #aa8eff;
+  color: var(--mw-accent-secondary);
   font-size: 11px;
   font-weight: 800;
 }
@@ -653,7 +653,7 @@
 .messaging-page .mw-composer-reply > svg {
   width: 17px;
   height: 17px;
-  color: #af90ff;
+  color: var(--mw-accent-secondary);
 }
 
 .messaging-page .mw-composer-reply > span {
@@ -873,7 +873,7 @@
 
 .mw-message-forward-dialog__list > button > svg {
   width: 16px;
-  color: #9e7ce8;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-message-forward-dialog__empty,

@@ -145,7 +145,7 @@
 .ttw-identity strong svg {
   width: 15px;
   height: 15px;
-  color: #a57bff;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-topbar__title {
@@ -832,7 +832,7 @@
   width: 17px;
   height: 17px;
   margin-bottom: 7px;
-  color: #9872ee;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-metric-grid strong {
@@ -942,7 +942,7 @@
 .ttw-upload-grid button > svg {
   width: 24px;
   height: 24px;
-  color: #a47bfa;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-upload-grid button span {
@@ -1383,7 +1383,7 @@
 
 .ttw-last-update > svg {
   width: 16px;
-  color: #9d7af2;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-last-update span {
@@ -1732,7 +1732,7 @@
 .ttw-kpi-row > section > svg {
   width: 19px;
   flex: 0 0 auto;
-  color: #9f7af5;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-kpi-row section > span {
@@ -2252,7 +2252,7 @@
 
 .ttw-policy-card article > svg {
   width: 17px;
-  color: #9980d5;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-policy-card article > span {
@@ -2290,7 +2290,7 @@
 
 .ttw-documents-card > button > svg:first-child {
   width: 16px;
-  color: #9e7bee;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-documents-card button span {
@@ -2860,7 +2860,7 @@
 .ttw-creator-hero__trust svg {
   width: 16px;
   grid-row: span 2;
-  color: #9a78ee;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-creator-hero__trust strong {
@@ -3199,7 +3199,7 @@
 
 .ttw-creator-goals button.is-selected > span {
   background: rgba(139, 90, 241, 0.2);
-  color: #d0baff;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-creator-goals svg {
@@ -3266,7 +3266,7 @@
 .ttw-creator-proofstrip svg {
   width: 15px;
   grid-row: span 2;
-  color: #9976ec;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-creator-proofstrip strong {
@@ -3298,7 +3298,7 @@
 .ttw-creator-principles article > svg {
   width: 16px;
   flex: 0 0 auto;
-  color: #a07af0;
+  color: var(--mw-accent-secondary);
 }
 
 .ttw-creator-principles article:last-child > svg {

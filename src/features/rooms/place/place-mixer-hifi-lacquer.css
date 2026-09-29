@@ -233,7 +233,7 @@
     radial-gradient(120% 56% at 50% 0, rgba(197, 108, 255, .12), transparent 70%) padding-box,
     linear-gradient(180deg, #151018, #08070b 56%, #040305) padding-box,
     linear-gradient(180deg, #5e6167, #2e3034 30%, #121315 60%, #34363b) border-box;
-  color: #c56cff;
+  color: var(--mw-accent-secondary);
 }
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer:is(.has-audio-player, .has-classroom-player) .place-volume-row__source-icon.is-music svg {
   width: 20px;
@@ -404,7 +404,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   outline-offset: -2px;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__desktop-dock[data-has-selection="true"] .place-guests__desktop-dock-actions :is(button, .place-guest-camera-dock button):not(:disabled):not([aria-label="Retirer"]):not([aria-label="Refuser"]) {
-  color: #c9a6ff;
+  color: var(--mw-accent-secondary);
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__desktop-dock[data-has-selection="true"] .place-guests__desktop-dock-actions :is(button, .place-guest-camera-dock button):not(:disabled):not([aria-label="Retirer"]):not([aria-label="Refuser"]) svg {
   filter: drop-shadow(0 0 4px rgba(176, 99, 255, .95)) drop-shadow(0 0 9px rgba(139, 76, 238, .65));
@@ -415,7 +415,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row.is-desktop-compact.is-selected .place-guest-row__compact-state {
   border: 0;
   background: transparent;
-  color: #d4b5ff;
+  color: var(--mw-accent-secondary);
   box-shadow: none;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guest-row.is-desktop-compact.is-selected .place-guest-row__compact-state svg {

@@ -37,8 +37,8 @@
 }
 .immersive-globe button.ring-key-surface:focus-visible { outline:2px solid var(--ring-key-light); outline-offset:3px; }
 .immersive-globe button.ring-key-surface:disabled { cursor:wait; }
-.ring-explore-icon { width:18px; height:18px; flex:none; color:rgb(var(--ring-key-rgb)); }
-.ring-return-button > svg { flex:none; color:rgb(var(--ring-key-rgb)); }
+.ring-explore-icon { width:18px; height:18px; flex:none; color:var(--mw-accent-secondary); }
+.ring-return-button > svg { flex:none; color:var(--mw-accent-secondary); }
 .immersive-globe .map-control-button--perspective.ring-key-surface { --ring-key-radius:14px; font-size:12px; font-weight:650; letter-spacing:.02em; }
 @media (prefers-reduced-motion:reduce) { .immersive-globe button.ring-key-surface { transition:none; } }
 .immersive-globe:not([data-globe-brand-visible="true"]) .ring-explore-button { display:none; }
@@ -56,13 +56,13 @@
   pointer-events:none;
 }
 .ring-visit-main { display:flex; align-items:center; justify-content:center; gap:14px; }
-.ring-visit-gesture { display:flex; align-items:center; justify-content:center; gap:5px; flex:none; color:rgb(var(--ring-key-rgb)); }
-.ring-visit-gesture .lucide-hand { color:var(--ring-key-light); }
+.ring-visit-gesture { display:flex; align-items:center; justify-content:center; gap:5px; flex:none; color:var(--mw-accent-secondary); }
+.ring-visit-gesture .lucide-hand { color:var(--mw-accent-secondary); }
 .ring-visit-copy h2 { margin:0; font-size:17px; font-weight:650; line-height:1.3; letter-spacing:-.025em; }
 .ring-visit-copy p { margin:5px 0 0; font-size:12px; line-height:1.4; color:#c9bcd9; }
 .ring-visit-hints { display:flex; justify-content:center; flex-wrap:wrap; gap:6px 18px; padding-top:10px; margin-top:12px; border-top:1px solid rgba(var(--ring-key-rgb), .16); }
 .ring-visit-hints span { display:inline-flex; align-items:center; gap:5px; font-size:11px; line-height:1.4; color:#cbbedd; }
-.ring-visit-hints svg { color:rgb(var(--ring-key-rgb)); }
+.ring-visit-hints svg { color:var(--mw-accent-secondary); }
 .ring-return-button { --ring-key-radius:12px; position:absolute; top:28px; left:128px; z-index:24; display:flex; align-items:center; gap:8px; padding:8px 12px; }
 .immersive-globe[data-navigation-mode="ring"] :is(.reference-search-dock, .reference-city-strip, .reference-view-switch, .reference-controls, .reference-selection, .city-marker-layer) { display:none; }
 @media (max-width:760px) {

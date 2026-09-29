@@ -1,28 +1,30 @@
 # Comptes de test locaux — Windows
 
-Le pont Electron peut connecter les comptes dédiés `windows` / `redmi` avec leur
-nom court. Il lit exclusivement `qa-test-accounts.json` dans son dossier userData.
-Ce fichier est provisionné séparément, ne fait pas partie du dépôt ni du paquet
-distribué. Sans fichier valide, la connexion classique reste inchangée.
+Trois identités réelles : testeur1, testeur2, testeur3. La suite de tests commune
+se trouve dans Meewav-Android/scripts/qa-three-users et utilise la connexion
+classique par e-mail/mot de passe, dans un userData Electron isolé.
 
-Le provisioner commun se trouve dans le dépôt Android :
-`scripts/test-accounts/provision.mjs`, puis `scripts/test-accounts/install-local.mjs`.
-Il crée de vrais comptes Supabase, complète leurs profils et contrôle leur
-recherche mutuelle avant de produire une configuration activable. Le compte
-personnel `puf` du S22 est conservé. Les secrets générés restent dans son dossier
-`app/build/test-accounts/`, ignoré par Git.
+Le raccourci local est facultatif et réservé au développement :
 
-En mode test local, l’application démarre sur l’authentification réelle, en mode
-Live. Saisir `windows`, puis **Se connecter**. Le mot de passe reste dans le
-processus principal ; React reçoit seulement une session Supabase authentifiée.
-Le projet et l’identité retournée doivent correspondre à la configuration locale.
-Une erreur réseau n’ouvre jamais de session simulée. Les permissions et la logique
-backend restent celles du compte. Le navigateur Web ne dispose pas de ce pont.
+- app.isPackaged doit être false ;
+- MEEWAV_TEST_MODE doit valoir 1 ;
+- qa-test-accounts.json doit être explicitement installé dans ce userData.
 
-Supprimer le fichier local puis relancer désactive ce raccourci. Ne jamais publier
-ce fichier, le copier dans des assets Web ou le distribuer avec un installateur.
+Une version empaquetée refuse toujours ces raccourcis, même avec la variable et
+le fichier présents. Le navigateur Web ne dispose pas du pont. Sans activation
+explicite, les identifiants et le formulaire normaux restent nécessaires.
 
-À la préparation du 28 septembre 2026, le backend est inaccessible : les deux
-profils, les connexions réelles et les communications à trois appareils restent
-à valider. Les tests du module Electron utilisent un transport simulé et ne
-constituent pas une validation du backend.
+Le provisionneur commun Meewav-Android/scripts/test-accounts/provision.mjs
+réutilise les anciennes identités QA, les renomme et vérifie leurs identifiants.
+Les mots de passe aléatoires restent dans .local/test-accounts du dépôt Android,
+ignoré par Git. Le compte personnel puf n'est pas modifié.
+
+En développement configuré, saisir testeur1, testeur2 ou testeur3 dans le champ
+identifiant. Le main process effectue une vraie authentification Supabase et
+vérifie l'identité ; React ne reçoit que les jetons de session. Ce mécanisme ne
+fabrique ni accès hors ligne, ni permission. Retirer uniquement le fichier privé
+puis relancer désactive le raccourci.
+
+Ne jamais publier ces fichiers, les embarquer dans le Web ou les installateurs.
+Les tests de la barrière de production sont dans test-accounts.test.cjs. Leur
+réussite ne valide pas les appels, l'audio, la vidéo ou les Rooms entre appareils.

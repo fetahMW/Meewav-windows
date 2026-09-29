@@ -3,7 +3,7 @@ const { isAbsolute, join, resolve, extname, sep } = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { appendFileSync, existsSync } = require('node:fs');
 const { authReturnUrl } = require('./auth-links.cjs');
-const { readTestAccounts, signInTestAccount } = require('./test-accounts.cjs');
+const { readTestAccounts, signInTestAccount, testAccountsAllowed } = require('./test-accounts.cjs');
 
 const studioUrl = app.isPackaged ? 'meewav://app/' : `http://127.0.0.1:${process.env.MEEWAV_DESKTOP_DEV_PORT || '5197'}/`;
 const trustedOrigin = new URL(studioUrl).origin;
@@ -20,7 +20,8 @@ const qaUserData = process.env.MEEWAV_DESKTOP_QA_USER_DATA;
 if (qaUserData && !isAbsolute(qaUserData)) throw new Error('QA userData must be an absolute path');
 app.setPath('userData', qaUserData || join(app.getPath('appData'), app.isPackaged ? 'Meewav Studio' : 'Meewav Studio Dev'));
 const testAccountsFile = join(app.getPath('userData'), 'qa-test-accounts.json');
-const localTestAccountsEnabled = Boolean(readTestAccounts(testAccountsFile));
+const localTestAccountsEnabled = testAccountsAllowed(app.isPackaged, process.env.MEEWAV_TEST_MODE)
+  && Boolean(readTestAccounts(testAccountsFile));
 app.setAppUserModelId('com.meewav.studio');
 const primaryInstance = app.requestSingleInstanceLock();
 if (!primaryInstance) app.quit();

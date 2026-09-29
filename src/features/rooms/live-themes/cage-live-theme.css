@@ -2821,7 +2821,7 @@
   width: clamp(17px, 1.7vw, 22px);
   height: clamp(17px, 1.7vw, 22px);
   flex: 0 0 auto;
-  color: #c89bff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 10px rgba(var(--cage-stage-accent-rgb), 0.35));
 }
 
@@ -3525,7 +3525,7 @@
   width: 22px;
   height: 22px;
   flex: 0 0 auto;
-  color: #c69cff;
+  color: var(--mw-accent-secondary);
 }
 
 .cage-stage-program__interruption > span { display: grid; gap: 2px; }
@@ -3597,7 +3597,7 @@
   border: 1px solid rgba(var(--cage-stage-accent-rgb), 0.25);
   border-radius: 20px;
   background: rgba(var(--cage-stage-accent-rgb), 0.1);
-  color: #c89bff;
+  color: var(--mw-accent-secondary);
 }
 
 .cage-stage-program.is-empty > span svg { width: 26px; }

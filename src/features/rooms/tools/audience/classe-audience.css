@@ -116,7 +116,7 @@
 
 .room-audience-interactions.is-classe .room-audience-class-resources article > span:first-child.is-audio {
   background: rgba(160, 102, 238, .13);
-  color: #bd8cff;
+  color: var(--mw-accent-secondary);
 }
 
 .room-audience-interactions.is-classe .room-audience-class-resources article > span:first-child svg {

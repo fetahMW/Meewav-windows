@@ -1,7 +1,11 @@
 const { readFileSync } = require('node:fs');
 
-const ALIASES = new Set(['redmi', 'windows']);
+const ALIASES = new Set(['testeur1', 'testeur2', 'testeur3']);
 const unavailable = 'Compte test indisponible. Vérifie la configuration locale et la connexion Supabase.';
+
+function testAccountsAllowed(isPackaged, testMode) {
+  return isPackaged === false && testMode === '1';
+}
 
 // Opt-in file in Electron userData, never bundled with the application.
 function readTestAccounts(file) {
@@ -11,7 +15,7 @@ function readTestAccounts(file) {
     if (config.version !== 1 || config.enabled !== true || url.protocol !== 'https:'
       || url.username || url.password || url.search || url.hash || url.pathname !== '/') return null;
     if (typeof config.publishableKey !== 'string' || !config.publishableKey) return null;
-    if (!Array.isArray(config.accounts) || !config.accounts.length || config.accounts.length > 2) return null;
+    if (!Array.isArray(config.accounts) || !config.accounts.length || config.accounts.length > ALIASES.size) return null;
     const aliases = new Set();
     for (const account of config.accounts) {
       if (!ALIASES.has(account.alias) || aliases.has(account.alias)
@@ -42,4 +46,4 @@ async function signInTestAccount(config, alias, expectedUrl, fetcher = fetch) {
   } catch { throw new Error(unavailable); }
 }
 
-module.exports = { readTestAccounts, signInTestAccount };
+module.exports = { readTestAccounts, signInTestAccount, testAccountsAllowed };

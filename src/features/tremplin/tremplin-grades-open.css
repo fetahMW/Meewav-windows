@@ -163,6 +163,10 @@
 .tremplin-home #niveaux.tremplin-grades-open .tremplin-grade-card__tour-note small { color:var(--grade-soft); font-size:9px; font-weight:500; }
 .tremplin-home #niveaux.tremplin-grades-open .tremplin-grade-card__tour-note strong { color:#f2eef8; font-size:11px; font-weight:600; line-height:1.3; }
 .tremplin-home #niveaux.tremplin-grades-open .is-illuminated .tremplin-grade-card__tour-note { opacity:1; }
+/* Keep the six explanations readable when the automatic tour is disabled. */
+@media (prefers-reduced-motion:reduce) {
+  .tremplin-home #niveaux.tremplin-grades-open .tremplin-grade-card__tour-note { opacity:1; }
+}
 .tremplin-home #niveaux.tremplin-grades-open .tremplin-public-home__level-track { margin-top:65px; }
 
 .tremplin-home #niveaux.tremplin-grades-open:focus { outline:none; }

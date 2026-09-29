@@ -251,7 +251,7 @@
 .loge-viewer__selected small {
   font-size: 9px;
   letter-spacing: 0.12em;
-  color: #bd9de4;
+  color: var(--mw-accent-secondary);
 }
 .loge-viewer__selected blockquote {
   margin: 9px 0;

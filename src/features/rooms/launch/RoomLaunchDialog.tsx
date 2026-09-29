@@ -17,6 +17,7 @@ import type { RoomsHomeRoomType } from "../home/roomsHome.types";
 import "./room-launch.css";
 import "./room-launch-picker.css";
 import "./desktop-launch.css";
+import "./launch-console.css";
 import { useRuntime } from '../../../runtime/RuntimeProvider';
 import { createLiveRoom } from './createLiveRoom';
 import RoomProductionPreparation from '../place/RoomProductionPreparation';
@@ -147,6 +148,7 @@ export default function RoomLaunchDialog({ closeRef, onClose, initialType, fromP
       </article>;
     })}</div> : <>
       <nav className="room-launch__steps" aria-label="Étapes de lancement">{(desktopStudio ? ["Préparation", "Studio Meewav", "Lancement"] : ["Identité", "Réglages", "Résumé", "Green Room"]).map((label, i) => <span key={label} aria-current={step === i ? "step" : undefined} className={step === i ? "is-active" : ""}>{i < step ? <Check /> : <b>{i + 1}</b>}{label}</span>)}</nav>
+      <div className="room-launch__lead"><h3>{step === greenStep ? "Tout est prêt pour ton direct." : step === studioStep ? "Compose ton écran." : step === summaryStep ? "Un dernier regard." : step === settingsStep ? "Prépare ta session." : "Donne le ton."}</h3><p>{step === greenStep ? "Vérifie ta configuration, puis ouvre ta room." : step === studioStep ? "Tes sources et ton cadrage, avant la diffusion." : step === summaryStep ? "Retrouve les réglages de ta session." : "Personnalise ton espace avant de retrouver ta communauté."}</p></div>
       {desktopStudio && type && step === studioStep ? <div className="room-launch__studio"><RoomProductionPreparation
         key={type} roomId={`launch:${type}`} liveRoom={false} onAir={false} publicationStatus="disconnected"
         stage="launch" initialSetup={studioSetup} onSetupChange={setStudioSetup}

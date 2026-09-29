@@ -106,7 +106,7 @@
   min-height: 32px;
   align-items: center;
   gap: 9px;
-  color: #b995ff;
+  color: var(--mw-accent-secondary);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .17em;
@@ -214,7 +214,7 @@
 
 .tremplin-gateway__search > svg {
   width: 20px;
-  color: #a88be4;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-gateway__search input {
@@ -367,7 +367,7 @@
 .tremplin-gateway__reassurance svg {
   width: 14px;
   height: 14px;
-  color: #ae8aec;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-gateway__ecosystem {

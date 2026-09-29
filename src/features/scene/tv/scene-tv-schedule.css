@@ -915,7 +915,7 @@
 }
 
 .scene-tv-now__scene-link {
-  color: #d4b2ff;
+  color: var(--mw-accent-secondary);
 }
 
 .scene-tv.is-cinema .scene-tv__masthead,
@@ -1255,7 +1255,7 @@
 
 .scene-tv-guide__empty svg {
   width: 26px;
-  color: #bd8cf7;
+  color: var(--mw-accent-secondary);
 }
 
 .scene-tv-guide__empty span {

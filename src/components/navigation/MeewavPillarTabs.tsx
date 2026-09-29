@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import "./meewav-pillar-tabs.css";
 
@@ -60,10 +60,43 @@ export default function MeewavPillarTabs<Id extends string>({
   const activeAccent = activeIndex >= 0
     ? resolveMeewavPillarAccent(items[activeIndex])
     : undefined;
+  const [indicatorPosition, setIndicatorPosition] = useState({ left: 0, top: 0, width: 0 });
+  useLayoutEffect(() => {
+    const navigation = navigationRef.current;
+    const activeTab = navigation?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!navigation || !activeTab) return;
+    let disposed = false;
+    const measure = () => {
+      if (disposed) return;
+      const label = activeTab.querySelector<HTMLElement>("strong");
+      const icon = activeTab.querySelector<HTMLElement>(".meewav-pillar-tabs__icon");
+      const anchor = label && label.getBoundingClientRect().height > 0 ? label : icon ?? activeTab;
+      const navBounds = navigation.getBoundingClientRect();
+      const tabBounds = activeTab.getBoundingClientRect();
+      const gap = Number.parseFloat(getComputedStyle(navigation).getPropertyValue("--mw-nav-label-gap")) || 6;
+      const next = {
+        left: tabBounds.left - navBounds.left - navigation.clientLeft + navigation.scrollLeft,
+        top: anchor.getBoundingClientRect().bottom - navBounds.top - navigation.clientTop + navigation.scrollTop + gap,
+        width: tabBounds.width,
+      };
+      setIndicatorPosition(previous =>
+        previous.left === next.left && previous.top === next.top && previous.width === next.width ? previous : next);
+    };
+    measure();
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    observer?.observe(navigation);
+    observer?.observe(activeTab);
+    const label = activeTab.querySelector<HTMLElement>("strong");
+    if (label) observer?.observe(label);
+    void document.fonts?.ready.then(measure);
+    window.addEventListener("resize", measure);
+    return () => { disposed = true; observer?.disconnect(); window.removeEventListener("resize", measure); };
+  }, [activeId, items.length]);
   const indicatorStyle = {
-    width: `calc((100% - 8px) / ${Math.max(1, items.length)})`,
-    transform: `translateX(${Math.max(0, activeIndex) * 100}%)`,
-    opacity: activeIndex >= 0 ? 1 : 0,
+    width: indicatorPosition.width,
+    top: indicatorPosition.top,
+    transform: `translateX(${indicatorPosition.left}px)`,
+    opacity: activeIndex >= 0 && indicatorPosition.width > 0 ? 1 : 0,
     "--meewav-pillar-tab-accent": activeAccent ?? MEEWAV_PILLAR_SEMANTIC_ACCENTS.fallback,
   } as CSSProperties;
 

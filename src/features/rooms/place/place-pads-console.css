@@ -11,6 +11,7 @@
   gap: 10px;
   padding: 12px;
   overflow: hidden;
+  background: transparent;
   color: var(--room-key-text);
   font-family: var(--room-chat-font, system-ui, sans-serif);
   container-type: inline-size;
@@ -35,7 +36,7 @@
   }
   & .place-pads-volume svg { width: 16px; height: 16px; }
   & .place-pads-volume output { font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; }
-  & .place-pads-volume input { width: 100%; min-width: 0; height: 24px; margin: 0; accent-color: var(--room-key-accent); cursor: pointer; }
+  & .place-pads-volume input { width: 100%; min-width: 0; height: 24px; margin: 0; accent-color: #a876ff; cursor: pointer; }
   & .place-pad-bank {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

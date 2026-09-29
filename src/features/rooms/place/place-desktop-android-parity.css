@@ -85,7 +85,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   background: rgba(126, 68, 227, .15);
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments > button.is-active :is(svg, strong) {
-  color: #a98ef0;
+  color: var(--mw-accent-secondary);
   filter: none;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-guests .place-guests__segments {
@@ -375,7 +375,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   border: 0;
   border-radius: 9px;
   background: transparent;
-  color: #c7b3f7;
+  color: var(--mw-accent-secondary);
   font-size: 9px;
   white-space: nowrap;
 }
@@ -508,7 +508,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   filter: none !important;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel :is(.place-mixer__subnav, .place-tools-console__switch, .place-chat-workspace__nav, .place-guests__segments) > button.is-active > svg {
-  color: #b26aff !important;
+  color: var(--mw-accent-secondary) !important;
   filter: none !important;
 }
 
@@ -626,7 +626,7 @@ body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-prese
   border-radius: 12px;
   background: transparent;
   box-shadow: none;
-  color: #c28cf5;
+  color: var(--mw-accent-secondary);
   cursor: pointer;
 }
 body:has(.meewav-desktop-titlebar) .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer-deck__queue-empty:hover { border-color: #d9a7ff; background: #b26aff12; }

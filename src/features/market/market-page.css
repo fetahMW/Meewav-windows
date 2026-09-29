@@ -776,7 +776,7 @@
   place-items: center;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.045);
-  color: #9d7cff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-pillar__icon svg {
@@ -786,7 +786,7 @@
 
 .market-pillar.is-active .market-pillar__icon {
   background: rgba(132, 82, 245, 0.22);
-  color: #c6b1ff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-pillar__copy {
@@ -1117,7 +1117,7 @@
 .market-empty svg {
   width: 29px;
   height: 29px;
-  color: #8d5cff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-empty h3 {
@@ -1941,7 +1941,7 @@
 .market-detail__guarantee svg {
   width: 15px;
   height: 15px;
-  color: #9b79ff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-date-grid {
@@ -2139,7 +2139,7 @@
 .market-popover button svg {
   width: 16px;
   height: 16px;
-  color: #9e7aff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-modal {
@@ -2243,7 +2243,7 @@
 
 .market-toast svg {
   width: 17px;
-  color: #9f7eff;
+  color: var(--mw-accent-secondary);
 }
 
 @keyframes market-fade-in {

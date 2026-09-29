@@ -1915,7 +1915,7 @@
 
 .mw-preprofile__contact-button svg {
   flex: 0 0 auto;
-  color: #c9a9ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-preprofile__contact-button:hover {

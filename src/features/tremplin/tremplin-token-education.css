@@ -366,7 +366,7 @@
 .tremplin-how__hero-note svg {
   width: 17px;
   flex: 0 0 17px;
-  color: #b99dff;
+  color: var(--mw-accent-secondary);
 }
 
 /* The three steps */
@@ -455,7 +455,7 @@
   border: 1px solid rgba(190, 164, 255, 0.2);
   border-radius: 15px;
   background: rgba(136, 93, 240, 0.11);
-  color: #bea5ff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-how__channel-icon svg {
@@ -543,7 +543,7 @@
 
 .tremplin-how__follow-card li svg {
   width: 15px;
-  color: #ac91f1;
+  color: var(--mw-accent-secondary);
 }
 
 /* Step 3: token and purchase */
@@ -652,7 +652,7 @@
 .tremplin-how__rights-note svg {
   width: 20px;
   margin: 2px auto 0;
-  color: #b89df9;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-how__rights-note p {
@@ -792,7 +792,7 @@
 
 .tremplin-how__artist-support > p svg {
   width: 17px;
-  color: #b99fff;
+  color: var(--mw-accent-secondary);
 }
 
 /* Four rules and CTA */
@@ -823,7 +823,7 @@
 .tremplin-how__rules li svg {
   width: 18px;
   margin: 2px auto 0;
-  color: #ae93f2;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-how__rules > p {
@@ -839,7 +839,7 @@
 .tremplin-how__rules > p svg {
   width: 16px;
   flex: 0 0 16px;
-  color: #ad92ef;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-how__next {
@@ -1552,7 +1552,7 @@
 .tremplin-how__mw-details h3 > button svg {
   width: 18px;
   flex: 0 0 18px;
-  color: #b89bff;
+  color: var(--mw-accent-secondary);
   transition: transform 180ms ease;
 }
 
@@ -1650,7 +1650,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #c7afff;
+  color: var(--mw-accent-secondary);
   font-size: 14px;
 }
 

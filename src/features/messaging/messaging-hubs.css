@@ -526,7 +526,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 8px;
-  color: var(--mw-violet);
+  color: var(--mw-accent-secondary);
 }
 
 .mw-hub__empty strong {
@@ -814,7 +814,7 @@
   width: 12px;
   height: 12px;
   flex: 0 0 auto;
-  color: #a76bff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-collab-attachments {
@@ -1077,7 +1077,7 @@
   width: 14px;
   height: 14px;
   flex: 0 0 auto;
-  color: #a879f2;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-collab-card__footer > div {
@@ -1597,7 +1597,7 @@
 }
 
 .mw-project-card__indicators svg.is-active {
-  color: var(--mw-violet);
+  color: var(--mw-accent-secondary);
 }
 
 /* Project creation wizard */
@@ -3936,7 +3936,7 @@
 
 .mwp-stems-console__actions .mwp-save-take {
   border-color: rgba(155, 99, 255, 0.28);
-  color: var(--mw-violet);
+  color: var(--mw-accent-secondary);
   background: rgba(155, 99, 255, 0.08);
 }
 
@@ -5343,7 +5343,7 @@
 }
 
 .mwp-project-detail .mwp-project-floating-controls .agw-group-toolbar.is-project button.is-active svg {
-  color: #c49cff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 7px rgba(155, 99, 255, 0.44));
 }
 
@@ -6277,7 +6277,7 @@
   width: 11px;
   height: 11px;
   flex: 0 0 auto;
-  color: #a66cff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-collab-preview__chevron {
@@ -6326,7 +6326,7 @@
   width: 12px;
   height: 12px;
   flex: 0 0 auto;
-  color: #9f6bea;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-collab-preview__footer > div {
@@ -6505,7 +6505,7 @@
 .mw-collab-detail-inline .mw-collab-request__profile dt svg {
   width: 22px;
   height: 22px;
-  color: #a56aff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 7px rgba(165, 106, 255, 0.34));
 }
 
@@ -6561,7 +6561,7 @@
 .mw-collab-detail-inline .mw-collab-request__content > header .mw-collab-card__kind svg:first-child {
   width: 21px;
   height: 21px;
-  color: #bd8dff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-collab-detail-inline .mw-collab-request__content > header .mw-collab-card__kind svg:last-child {
@@ -6627,7 +6627,7 @@
 .mw-collab-detail-inline .mw-collab-request__content .mw-collab-card__chips svg {
   width: 18px;
   height: 18px;
-  color: #a767ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-collab-request__attachments {
@@ -6882,7 +6882,7 @@
 .mw-collab-request__verified svg {
   width: 28px;
   height: 28px;
-  color: #a780e0;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 7px rgba(167, 128, 224, 0.22));
 }
 

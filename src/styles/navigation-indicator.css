@@ -1,0 +1,254 @@
+/* Profile / Médias reference. Foreground accents and polished button faces are separate. */
+:root {
+  --mw-nav-core: linear-gradient(90deg, transparent, #9274d8 18%, #d7c6ff 50%, #9274d8 82%, transparent);
+  --mw-nav-haze: linear-gradient(90deg, transparent, #8060cc 24%, #b39aef 50%, #8060cc 76%, transparent);
+  --mw-nav-label-gap: 6px;
+  --mw-nav-core-height: 1px;
+  --mw-nav-haze-height: 5px;
+  --mw-nav-haze-blur: 3px;
+  --mw-nav-haze-opacity: .4;
+  --mw-nav-max-width: none;
+}
+
+/* The shared component measures the bottom of its visible label. This keeps
+ * the gap identical with icon-above-label, inline, and icon-only layouts. */
+#root .meewav-pillar-tabs > .meewav-pillar-tabs__indicator {
+  display: block !important;
+  left: 0 !important;
+  bottom: auto !important;
+  height: var(--mw-nav-core-height) !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  pointer-events: none;
+}
+#root .meewav-pillar-tabs > .meewav-pillar-tabs__indicator::before,
+#root .meewav-pillar-tabs > .meewav-pillar-tabs__indicator::after {
+  content: "";
+  display: block !important;
+  position: absolute;
+  inset: auto auto auto 50% !important;
+  top: 0 !important;
+  width: 72%;
+  max-width: var(--mw-nav-max-width);
+  height: var(--mw-nav-core-height);
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: var(--mw-nav-core);
+  box-shadow: none;
+  filter: none;
+  opacity: 1;
+  pointer-events: none;
+}
+#root .meewav-pillar-tabs > .meewav-pillar-tabs__indicator::before {
+  top: -2px !important;
+  height: var(--mw-nav-haze-height);
+  background: var(--mw-nav-haze);
+  filter: blur(var(--mw-nav-haze-blur));
+  opacity: var(--mw-nav-haze-opacity);
+}
+/* Retire mobile duplicates; only the measured indicator draws the underline. */
+#root .meewav-pillar-tabs > button::before,
+#root .meewav-pillar-tabs > button::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Label-anchored sub-navigation, including profile media/private sections.
+ * These are text tabs, never the polished Plugin/Pads/Pro button family. */
+#root .profile-private-shell-header__row nav > button::before,
+#root .profile-private-shell-header__row nav > button::after {
+  content: none !important;
+}
+#root .profile-private-shell-header__row nav > button strong {
+  position: relative;
+  overflow: visible;
+}
+#root .profile-private-shell-header__row nav > button strong::after,
+#root .profile-private-shell-header__row nav > button strong::before {
+  content: "";
+  position: absolute;
+  top: calc(100% + var(--mw-nav-label-gap));
+  left: 50%;
+  width: max(100%, 38px);
+  max-width: 56px;
+  height: var(--mw-nav-core-height);
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: var(--mw-nav-core);
+  box-shadow: none;
+  opacity: 0;
+  pointer-events: none;
+}
+#root .profile-private-shell-header__row nav > button strong::before {
+  top: calc(100% + var(--mw-nav-label-gap) - 2px);
+  height: var(--mw-nav-haze-height);
+  background: var(--mw-nav-haze);
+  filter: blur(var(--mw-nav-haze-blur));
+}
+#root .profile-private-shell-header__row nav > button.is-active strong::after { opacity: 1; }
+#root .profile-private-shell-header__row nav > button.is-active strong::before { opacity: var(--mw-nav-haze-opacity); }
+
+/* Only the audited text submenus. Main mixer keys and vertical profile rails
+ * retain their own surfaces. Layered !important declarations retire older
+ * unlayered per-room overrides without escalating selector specificity. */
+@layer meewav-navigation-reference {
+  #root :is(
+    .place-mixer.has-audio-player .place-mixer__subnav.has-twists,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-chat-workspace__nav,
+    .place-guests .place-guests__segments,
+    .android-room-viewer .place-conversation > .place-tools-console__switch,
+    .android-room-viewer .place-studio-panel.is-tools .place-tools-console__switch,
+    .android-room-viewer .loge-viewer__tabs,
+    .android-room-viewer .cage-viewer-showcase nav,
+    .android-room-viewer .cb-rounds,
+    .android-room-viewer .cvm-tabs,
+    .android-room-viewer .viewer-room-subtabs
+  ) > button {
+    --mw-nav-visible: 0;
+    --mw-nav-subtab-core-top: calc(50% + .6em + 1.5px);
+    position: relative !important;
+    line-height: 1.2 !important;
+    padding-block: 0 9px !important;
+  }
+  #root :is(
+    .place-mixer.has-audio-player .place-mixer__subnav.has-twists,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-chat-workspace__nav,
+    .place-guests .place-guests__segments,
+    .android-room-viewer .place-conversation > .place-tools-console__switch,
+    .android-room-viewer .place-studio-panel.is-tools .place-tools-console__switch,
+    .android-room-viewer .loge-viewer__tabs,
+    .android-room-viewer .cage-viewer-showcase nav,
+    .android-room-viewer .cb-rounds,
+    .android-room-viewer .cvm-tabs,
+    .android-room-viewer .viewer-room-subtabs
+  ) > button:is(.is-active, [aria-pressed="true"], [aria-selected="true"]) {
+    --mw-nav-visible: 1;
+  }
+  #root :is(
+    .place-mixer.has-audio-player .place-mixer__subnav.has-twists,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-chat-workspace__nav,
+    .place-guests .place-guests__segments,
+    .android-room-viewer .place-conversation > .place-tools-console__switch,
+    .android-room-viewer .place-studio-panel.is-tools .place-tools-console__switch,
+    .android-room-viewer .loge-viewer__tabs,
+    .android-room-viewer .cage-viewer-showcase nav,
+    .android-room-viewer .cb-rounds,
+    .android-room-viewer .cvm-tabs,
+    .android-room-viewer .viewer-room-subtabs
+  ) > button::before,
+  #root :is(
+    .place-mixer.has-audio-player .place-mixer__subnav.has-twists,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-chat-workspace__nav,
+    .place-guests .place-guests__segments,
+    .android-room-viewer .place-conversation > .place-tools-console__switch,
+    .android-room-viewer .place-studio-panel.is-tools .place-tools-console__switch,
+    .android-room-viewer .loge-viewer__tabs,
+    .android-room-viewer .cage-viewer-showcase nav,
+    .android-room-viewer .cb-rounds,
+    .android-room-viewer .cvm-tabs,
+    .android-room-viewer .viewer-room-subtabs
+  ) > button::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    inset: var(--mw-nav-subtab-core-top) auto auto 50% !important;
+    width: min(72%, 56px) !important;
+    height: var(--mw-nav-core-height) !important;
+    transform: translateX(-50%) !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--mw-nav-core) !important;
+    box-shadow: none !important;
+    filter: none !important;
+    opacity: var(--mw-nav-visible) !important;
+    pointer-events: none !important;
+  }
+  #root :is(
+    .place-mixer.has-audio-player .place-mixer__subnav.has-twists,
+    .place-chat-workspace > .place-tools-console__switch,
+    .classe-chat-workspace > .place-tools-console__switch,
+    .place-chat-workspace__nav,
+    .place-guests .place-guests__segments,
+    .android-room-viewer .place-conversation > .place-tools-console__switch,
+    .android-room-viewer .place-studio-panel.is-tools .place-tools-console__switch,
+    .android-room-viewer .loge-viewer__tabs,
+    .android-room-viewer .cage-viewer-showcase nav,
+    .android-room-viewer .cb-rounds,
+    .android-room-viewer .cvm-tabs,
+    .android-room-viewer .viewer-room-subtabs
+  ) > button::before {
+    top: calc(var(--mw-nav-subtab-core-top) - 2px) !important;
+    height: var(--mw-nav-haze-height) !important;
+    background: var(--mw-nav-haze) !important;
+    filter: blur(var(--mw-nav-haze-blur)) !important;
+    opacity: calc(var(--mw-nav-visible) * var(--mw-nav-haze-opacity)) !important;
+  }
+}
+
+/* Icon-only dock: same light, 6px below its 23px icon in a 48px target. */
+#root .profile-bottom-dock__side button[aria-current]::before,
+#root .profile-bottom-dock__side button[aria-current]::after {
+  content: "" !important;
+  position: absolute !important;
+  display: block !important;
+  inset: calc(50% + 17.5px) auto auto 50% !important;
+  width: 20px !important;
+  height: var(--mw-nav-core-height) !important;
+  border-radius: 999px !important;
+  background: var(--mw-nav-core) !important;
+  box-shadow: none !important;
+  transform: translateX(-50%) !important;
+  pointer-events: none;
+}
+#root .profile-bottom-dock__side button[aria-current]::before {
+  top: calc(50% + 15.5px) !important;
+  height: var(--mw-nav-haze-height) !important;
+  background: var(--mw-nav-haze) !important;
+  filter: blur(var(--mw-nav-haze-blur));
+  opacity: var(--mw-nav-haze-opacity);
+}
+
+/* Auth labels sit on one line; anchor to their actual line instead of the 52px slot. */
+#root .steps-container > .step-item::after { content: none; }
+#root .steps-container .step-label { position: relative; line-height: 14px; }
+#root .steps-container .step-label::before,
+#root .steps-container .step-label::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + var(--mw-nav-label-gap));
+  left: 50%;
+  width: 56px;
+  height: var(--mw-nav-core-height);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--mw-nav-core);
+  opacity: 0;
+  pointer-events: none;
+}
+#root .steps-container .step-label::before {
+  top: calc(100% + var(--mw-nav-label-gap) - 2px);
+  height: var(--mw-nav-haze-height);
+  background: var(--mw-nav-haze);
+  filter: blur(var(--mw-nav-haze-blur));
+}
+#root .steps-container > .step-item.active .step-label::after { opacity: 1; }
+#root .steps-container > .step-item.active .step-label::before { opacity: var(--mw-nav-haze-opacity); }
+
+@media (max-width: 760px) {
+  :root { --mw-nav-max-width: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #root .meewav-pillar-tabs__indicator { transition: none !important; }
+}
