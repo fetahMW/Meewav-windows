@@ -18,8 +18,6 @@
 
 @layer meewav-compact-controls {
   :is(
-    #root .mobile-messaging .agw-panel__toolbar .mw-hub-chips button,
-    #root .mobile-messaging .mw-mobile-workspace-header.mw-hub-chipbar .mw-hub-chips button,
     #root .mobile-messaging .agw-vote-options > button,
     .mw-emoticon-wall__categories > button,
     #root .profile-media-view .profile-library-filters button,
@@ -40,9 +38,7 @@
     .rooms-launch-page .launch-studio__camera button,
     .cvm-tabs button,
     .cvm-amounts button,
-    .mw-hub-chips > button,
     .mw-collab-return > button,
-    .mwp-project-floating-controls .mw-hub-chips > button,
     .agw-panel-option,
     .profile-artist-filter__grades > button,
     .profile-artist-filter__roles > button,
@@ -86,7 +82,6 @@
     .quick-auth-btn,
     .btn-use-current-location,
     .back-step-button,
-    .mw-hub-chips button,
     .profile-library-filters button,
     .profile-studio-filter-row button,
     .mw-preprofile__tabs button,
@@ -116,8 +111,6 @@
     box-shadow:var(--mw-control-shadow)!important; color:#ddd9e7!important;
   }
   :is(
-    #root .mobile-messaging .agw-panel__toolbar .mw-hub-chips button,
-    #root .mobile-messaging .mw-mobile-workspace-header.mw-hub-chipbar .mw-hub-chips button,
     #root .mobile-messaging .agw-vote-options > button,
     .mw-emoticon-wall__categories > button,
     #root .profile-media-view .profile-library-filters button,
@@ -138,9 +131,7 @@
     .rooms-launch-page .launch-studio__camera button,
     .cvm-tabs button,
     .cvm-amounts button,
-    .mw-hub-chips > button,
     .mw-collab-return > button,
-    .mwp-project-floating-controls .mw-hub-chips > button,
     .agw-panel-option,
     .profile-artist-filter__grades > button,
     .profile-artist-filter__roles > button,
@@ -184,7 +175,6 @@
     .quick-auth-btn,
     .btn-use-current-location,
     .back-step-button,
-    .mw-hub-chips button,
     .profile-library-filters button,
     .profile-studio-filter-row button,
     .mw-preprofile__tabs button,
@@ -214,8 +204,6 @@
     box-shadow:var(--mw-primary-shadow)!important; color:#fff!important;
   }
   :is(
-    #root .mobile-messaging .agw-panel__toolbar .mw-hub-chips button,
-    #root .mobile-messaging .mw-mobile-workspace-header.mw-hub-chipbar .mw-hub-chips button,
     #root .mobile-messaging .agw-vote-options > button,
     .mw-emoticon-wall__categories > button,
     #root .profile-media-view .profile-library-filters button,
@@ -236,9 +224,7 @@
     .rooms-launch-page .launch-studio__camera button,
     .cvm-tabs button,
     .cvm-amounts button,
-    .mw-hub-chips > button,
     .mw-collab-return > button,
-    .mwp-project-floating-controls .mw-hub-chips > button,
     .agw-panel-option,
     .profile-artist-filter__grades > button,
     .profile-artist-filter__roles > button,
@@ -282,7 +268,6 @@
     .quick-auth-btn,
     .btn-use-current-location,
     .back-step-button,
-    .mw-hub-chips button,
     .profile-library-filters button,
     .profile-studio-filter-row button,
     .mw-preprofile__tabs button,
@@ -309,8 +294,6 @@
     .room-launch > header > button
   ):focus-visible {outline:2px solid #d3c7f5!important;outline-offset:3px;}
   :is(
-    #root .mobile-messaging .agw-panel__toolbar .mw-hub-chips button,
-    #root .mobile-messaging .mw-mobile-workspace-header.mw-hub-chipbar .mw-hub-chips button,
     #root .mobile-messaging .agw-vote-options > button,
     .mw-emoticon-wall__categories > button,
     #root .profile-media-view .profile-library-filters button,
@@ -331,9 +314,7 @@
     .rooms-launch-page .launch-studio__camera button,
     .cvm-tabs button,
     .cvm-amounts button,
-    .mw-hub-chips > button,
     .mw-collab-return > button,
-    .mwp-project-floating-controls .mw-hub-chips > button,
     .agw-panel-option,
     .profile-artist-filter__grades > button,
     .profile-artist-filter__roles > button,
@@ -377,7 +358,6 @@
     .quick-auth-btn,
     .btn-use-current-location,
     .back-step-button,
-    .mw-hub-chips button,
     .profile-library-filters button,
     .profile-studio-filter-row button,
     .mw-preprofile__tabs button,

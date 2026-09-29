@@ -1,0 +1,110 @@
+/* Group / project workspace finish. No selectors for the direct-message view. */
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub {
+  --hub-face:linear-gradient(135deg,#ffffff09,transparent 42%),linear-gradient(180deg,#19191e,#101014 52%,#09090c);
+  --hub-rim:#d4ccdf29;
+  --hub-shadow:inset 0 1px #ffffff16,inset 0 -1px #0008,0 5px 14px #0003;
+  --group-ink:#09090c; --group-surface:var(--hub-face); --group-rim:var(--hub-rim); --group-muted:#b5b1c2;
+  --agw-violet:#a98ef0; --agw-violet-strong:#5137a1; --agw-cyan:#a98ef0;
+  --mw-violet:#a98ef0; --mw-cyan:#a98ef0;
+  color:#f1eef6; background:transparent;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub.agw::before { display:none; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-panel,.mw-project-detail,.agw-create) {
+  background:linear-gradient(135deg,#ffffff05,transparent 40%),#09090c;
+  border-color:var(--hub-rim); box-shadow:inset 0 1px #ffffff12;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-panel__bar,.agw-panel > .mw-hub-chipbar,.mwp-project-floating-controls) {
+  background:linear-gradient(125deg,#ffffff09,transparent 50%),linear-gradient(#1c1c22,#101014);
+  border-color:var(--hub-rim); box-shadow:inset 0 1px #ffffff14,0 3px 12px #0003;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-subview,.mwp-project-detail__content) { background:transparent; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-panel__identity small,.agw-subview__heading p,.agw-subview__heading small) { color:#b5b1c2; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-next-session,.agw-list-tile,.agw-members-list article,.agw-decision-card,.agw-project-list > button,.agw-session-details,.agw-inline-form,.agw-agenda-card,.agw-invite-list article,.agw-settings-detail,.agw-live-invitations > article,.mwp-task-card,.mwp-info-card,.mwp-track-card) {
+  min-width:0; border:1px solid var(--hub-rim); border-radius:17px;
+  background:var(--hub-face); box-shadow:var(--hub-shadow);
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-empty-inline,.mwp-empty-panel) {
+  min-height:160px; height:auto; gap:10px; padding:24px 18px;
+  border:1px solid var(--hub-rim); border-radius:18px;
+  background:var(--hub-face); box-shadow:var(--hub-shadow); color:#a98ef0;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-empty-inline,.mwp-empty-panel) strong { color:#e8e4ef; font-size:15px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-empty-inline,.mwp-empty-panel) > span { max-width:48ch; color:#b5b1c2; font-size:12px; line-height:1.5; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-state,.mwp-project-empty-direct) {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:12px; align-self:start; justify-self:center; width:calc(100% - 32px); max-width:480px;
+  min-height:0; height:auto; margin:24px auto; padding:26px 20px;
+  border:1px solid var(--hub-rim); border-radius:22px; background:var(--hub-face); box-shadow:var(--hub-shadow); text-align:center;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-state,.mwp-project-empty-direct) > svg { width:48px; height:48px; padding:11px; box-sizing:border-box; border:1px solid #b5a0d636; border-radius:15px; color:#a98ef0; background:var(--mw-control-face); box-shadow:var(--mw-control-shadow); }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-state,.mwp-project-empty-direct) > strong { color:#f1eef6; font-size:19px; line-height:1.25; letter-spacing:-.025em; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-state,.mwp-project-empty-direct) > :is(span,p) { max-width:36ch; margin:0; color:#b5b1c2; font-size:13px; line-height:1.55; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-state,.mwp-project-empty-direct) > button { min-height:44px; margin-top:6px; padding:10px 16px; border-radius:13px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-secondary-button,.agw-icon-button,.agw-panel-option,.agw-open-hub,.agw-member-role,.agw-vote-options > button,.agw-live-invitations button,.agw-panel__controls > button) {
+  border:1px solid transparent; background:var(--mw-control-face); box-shadow:var(--mw-control-shadow); color:#e1dce9; border-radius:12px;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-create-button,.agw-primary-button,.agw-panel-create,.mw-button--primary),
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-live-invitations button:last-child { border:1px solid transparent; background:var(--mw-primary-face); box-shadow:var(--mw-primary-shadow); color:#fff; border-radius:12px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-panel-option.is-active,
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-vote-options > button.is-selected { background:var(--mw-primary-face); box-shadow:var(--mw-primary-shadow); color:#f5f1fb; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-search,.agw-inline-form input:not([type=checkbox]):not([type=range]),.agw-inline-form select,.agw-inline-form textarea,.agw-create input:not([type=checkbox]):not([type=range]),.agw-create textarea,.agw-create select) {
+  min-height:44px; border:1px solid #ffffff26; border-radius:13px;
+  background:linear-gradient(125deg,#ffffff07,transparent 45%),linear-gradient(#161619,#08080a); box-shadow:inset 0 1px #ffffff0c; color:#eeeaf4;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(input,textarea)::placeholder { color:#aaa4b7; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(button,input,textarea,select):focus-visible { outline:2px solid #a98ef0; outline-offset:2px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-project-list > button > span,
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-decision-card > div:first-child > svg { background:var(--mw-control-face); color:#a98ef0; border-color:#bca5ed35; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-setting-row { border-color:#ffffff18; background:transparent; color:#e8e3ef; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-setting-row small { color:#b5b1c2; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-setting-row > i.is-on { background:var(--mw-primary-face); box-shadow:var(--mw-primary-shadow); }
+/* A compact wizard with the same black fields, bevel and violet primary actions. */
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard {
+  --mw-cyan:#a98ef0; color:#f1eef6; border:1px solid #c7bed645;
+  background:linear-gradient(135deg,#ffffff08,transparent 42%),linear-gradient(#18181d,#09090c 60%);
+  box-shadow:inset 0 1px #ffffff24,inset 0 -1px #0008,0 18px 45px #0007;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__header { padding:20px 22px 14px; border-color:#ffffff15; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__header h3 { font-size:21px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__header > button { display:grid; place-items:center; width:44px; height:44px; padding:0; flex-shrink:0; border:1px solid transparent; border-radius:13px; background:var(--mw-control-face); box-shadow:var(--mw-control-shadow); color:#eeeaf5; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps { gap:8px; padding:12px 22px; border-color:#ffffff15; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps li { gap:6px; color:#aaa4b7; min-width:0; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps li::after { display:none; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps li > span { width:26px; height:26px; flex-basis:26px; color:#b9b2c6; background:var(--mw-control-face); border-color:transparent; box-shadow:var(--mw-control-shadow); }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps li.is-current > span,
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps li.is-complete > span { background:var(--mw-primary-face); color:#f6f2ff; border-color:transparent; box-shadow:var(--mw-primary-shadow); }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps small { background:none; font-weight:550; font-size:11px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__body { padding:20px 22px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard :is(input:not([type=file]):not([type=checkbox]),textarea,select) { min-height:46px; border:1px solid #ffffff26; border-radius:13px; background:linear-gradient(135deg,#ffffff07,transparent 45%),linear-gradient(#151518,#08080a); box-shadow:inset 0 1px #ffffff10; color:#f0edf5; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard :is(input,textarea,select):focus-visible { outline:2px solid #a98ef0; outline-offset:2px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard :is(.mw-members-grid > button,.mwp-global-permissions > button,.mw-permission-list > article,.mw-cover-picker) { border:1px solid #ffffff20; border-radius:16px; background:linear-gradient(135deg,#ffffff06,transparent 40%),linear-gradient(#19191e,#0c0c10); box-shadow:inset 0 1px #ffffff12; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard :is(.mw-members-grid > button.is-selected,.mwp-global-permissions > button.is-active) { border-color:#a98ef060; box-shadow:inset 0 1px #d3c7f526; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard :is(.mw-button--quiet,.mw-permission-list button) { background:var(--mw-control-face); border:1px solid transparent; box-shadow:var(--mw-control-shadow); color:#dfd9e9; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard :is(.mw-button--primary,.mw-permission-list button.is-active) { background:var(--mw-primary-face); border:1px solid transparent; box-shadow:var(--mw-primary-shadow); color:#fff; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__footer { gap:12px; padding:14px 22px; background:#101014; border-color:#ffffff15; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__footer button { min-height:44px; border-radius:13px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-project-wizard .mw-wizard-note { color:#b5b1c2; }
+/* Group and project chat keep their attachment features, in the DM material. */
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-panel--planning :is(.agw-next-session,.agw-list-tile,.agw-session-details,.agw-inline-form) { background:var(--hub-face); border-color:var(--hub-rim); box-shadow:var(--hub-shadow); }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-panel--planning .agw-secondary-button { background:var(--mw-control-face); border-color:transparent; box-shadow:var(--mw-control-shadow); }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-project-chat__composer {
+  border:1px solid #c5cbd335; border-radius:28px; background:linear-gradient(125deg,#ffffff15,#ffffff05 48%,#ffffff0b),#17191faa;
+  box-shadow:inset 0 1px #edf0f34d,inset 0 -1px #0007,0 4px 12px #0004;
+  backdrop-filter:blur(22px) saturate(1.15); -webkit-backdrop-filter:blur(22px) saturate(1.15);
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-project-chat__composer .mw-composer-send { background:var(--mw-primary-face); box-shadow:var(--mw-primary-shadow); border:1px solid transparent; color:#f6f2ff; }
+@media (max-width:700px) {
+  #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-invitations > article,.agw-invite-list article) { display:grid; grid-template-columns:40px minmax(0,1fr); gap:10px; padding:14px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-live-invitations article > div { grid-column:1 / -1; display:flex; justify-content:flex-end; gap:8px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-live-invitations button { min-height:44px; padding:8px 14px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-live-state,.mwp-project-empty-direct) { width:calc(100% - 24px); margin:16px auto; padding:22px 18px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard { width:100%; max-height:calc(100dvh - 24px); border-radius:22px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__header { padding:16px 16px 12px; gap:12px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps { padding:12px 16px; gap:6px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps li { flex-direction:column; align-items:center; gap:5px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__steps small { font-size:10px; padding:0; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__body { padding:16px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard .mw-wizard-grid--infos { grid-template-columns:minmax(0,1fr); }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard .mw-cover-picker { min-height:100px; max-height:180px; }
+  #root :is(.mobile-messaging,.messaging-page) .mw-project-wizard__footer { padding:12px 16px; }
+}

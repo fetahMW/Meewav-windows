@@ -252,3 +252,28 @@
 @media (prefers-reduced-motion: reduce) {
   #root .meewav-pillar-tabs__indicator { transition: none !important; }
 }
+
+/* Project / group submenus are text navigation, never polished action keys. */
+@layer meewav-navigation-reference {
+  #root .mw-hub-chips.meewav-pillar-tabs {
+    display:flex !important; flex-wrap:nowrap !important; gap:0 !important; width:100% !important; max-width:none !important;
+    height:auto !important; min-height:48px; padding:0 !important;
+    border:0 !important; border-radius:0 !important; background:none !important; box-shadow:none !important;
+    overflow-x:auto; scrollbar-width:none;
+  }
+  #root .mw-hub-chips.meewav-pillar-tabs > button {
+    flex:1 0 auto !important; display:flex !important; flex-direction:row !important;
+    align-items:center !important; justify-content:center !important; gap:6px !important;
+    min-height:48px !important; height:48px !important; padding:0 10px 12px !important;
+    border:0 !important; border-radius:0 !important; background:none !important;
+    box-shadow:none !important; transform:none !important; color:#b5b1c2 !important;
+  }
+  #root .mw-hub-chips.meewav-pillar-tabs > button.is-active { color:#f4f0fa !important; }
+  #root .mw-hub-chips.meewav-pillar-tabs > button strong { display:block !important; visibility:visible !important; opacity:1 !important; width:auto !important; height:auto !important; max-width:none !important; overflow:visible !important; color:inherit !important; font-size:12px !important; font-weight:550 !important; line-height:16px !important; white-space:nowrap; }
+  #root .mw-hub-chips.meewav-pillar-tabs .meewav-pillar-tabs__icon {
+    display:grid !important; visibility:visible !important; opacity:1 !important; width:17px !important; height:17px !important; flex:0 0 17px !important; padding:0 !important;
+    border:0 !important; border-radius:0 !important; background:none !important; box-shadow:none !important; color:inherit !important;
+  }
+  #root .mw-hub-chips.meewav-pillar-tabs .meewav-pillar-tabs__icon svg { display:block !important; width:17px !important; height:17px !important; }
+  #root .mw-hub-chips.meewav-pillar-tabs > button:focus-visible { outline:2px solid #a98ef0; outline-offset:-2px; }
+}

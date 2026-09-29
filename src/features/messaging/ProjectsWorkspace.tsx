@@ -1,3 +1,4 @@
+import MeewavPillarTabs from "../../components/navigation/MeewavPillarTabs";
 import { demoTrackPackAudio } from "./demoTrackPackAudio";
 import {
   Archive,
@@ -2831,13 +2832,13 @@ function ProjectDetail({
           <span><small>{project.members} MEMBRE{project.members > 1 ? "S" : ""} · {statusLabel(project.status)}</small><strong>{project.name}</strong></span>
         </div>
         <div className="agw-panel__toolbar">
-          <nav className={`mw-hub-chips is-project is-${tab}`} aria-label="Espaces du projet">
-            {projectTabs.map(([id, label, Icon]) => (
-              <button type="button" key={id} className={tab === id ? "is-active" : ""} onClick={() => onTabChange(id)} aria-pressed={tab === id}>
-                <Icon size={17} /> {label}
-              </button>
-            ))}
-          </nav>
+          <MeewavPillarTabs
+            className={`mw-hub-chips is-unframed-icons is-project is-${tab}`}
+            ariaLabel="Espaces du projet"
+            activeId={tab}
+            onSelect={onTabChange}
+            items={projectTabs.map(([id, label, icon]) => ({ id, label, icon }))}
+          />
         </div>
         <div className="agw-panel__controls">
           <button type="button" className={`agw-panel-option${tab === "info" ? " is-active" : ""}`} onClick={() => onTabChange("info")} aria-label="Options du projet" aria-pressed={tab === "info"}>
@@ -3131,7 +3132,7 @@ export function ProjectsWorkspace({
   };
 
   return (
-    <section className="mwp-project-workspace" aria-label="Projets musicaux">
+    <section className="mwp-project-workspace mw-polished-hub" aria-label="Projets musicaux">
       {selectedProject ? (
         <ProjectDetail
           key={selectedProject.id}
@@ -3153,7 +3154,9 @@ export function ProjectsWorkspace({
         </div>
       ) : (
         <div className="mwp-project-empty-direct">
+          <Music2 size={28} aria-hidden="true" />
           <strong>Aucun projet actif</strong>
+          <p>Un espace pour vos pistes, vos échanges et vos prochaines étapes.</p>
           {liveController && <ProjectInvitationsButton controller={liveController} />}
           <button type="button" className="agw-panel-create" onClick={openNewProject}><Plus size={17} /> <span>Nouveau projet</span></button>
         </div>

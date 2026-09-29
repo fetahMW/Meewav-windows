@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  ArrowLeft,
   Heart,
   CirclePlay,
   CircleUserRound,
@@ -49,6 +50,7 @@ import "./tremplin-public-home-compact.css";
 import "./tremplin-public-home-gateway.css";
 import "./tremplin-grades-prestige.css";
 import "./tremplin-home-editorial.css";
+import "./tremplin-home-rails.css";
 import "../../components/shared/mixer-play-button.css";
 
 type TremplinPublicHomeProps = {
@@ -357,6 +359,8 @@ export default function TremplinPublicHome({
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const searchTrackedRef = useRef(false);
   const gradeViewTrackedRef = useRef(false);
+  const talentRailRef = useRef<HTMLDivElement>(null);
+  const [railEdges, setRailEdges] = useState({ start: true, end: false });
 
   const defaultEntry =
     HOME_ENTRIES.find(({ artist }) => artist.id === "kylian-osei") ??
@@ -443,6 +447,25 @@ export default function TremplinPublicHome({
       )
       .slice(0, 4);
   }, [discoveryFilter]);
+  useEffect(() => {
+    const rail = talentRailRef.current;
+    if (!rail) return;
+    rail.scrollLeft = 0;
+    const sync = () => setRailEdges({ start: rail.scrollLeft <= 2, end: rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2 });
+    sync();
+    rail.addEventListener("scroll", sync, { passive: true });
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(sync);
+    observer?.observe(rail);
+    return () => { rail.removeEventListener("scroll", sync); observer?.disconnect(); };
+  }, [discoveryFilter]);
+  const moveTalents = (direction: number) => {
+    const rail = talentRailRef.current;
+    if (!rail) return;
+    const first = rail.children[0] as HTMLElement | undefined;
+    const second = rail.children[1] as HTMLElement | undefined;
+    const step = first && second ? second.offsetLeft - first.offsetLeft : rail.clientWidth;
+    rail.scrollBy({ left: direction * step, behavior: reducedMotion ? "auto" : "smooth" });
+  };
   const scrollToTalents = () =>
     document.getElementById("a-la-une")?.scrollIntoView({
       behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
@@ -877,7 +900,12 @@ export default function TremplinPublicHome({
               </article>
             </div>
           )}
-        <div className="tremplin-home__talents" aria-live="polite">
+        <div className="tremplin-home__rail-controls">
+          <span>{spotlightEntries.length} {spotlightEntries.length > 1 ? "artistes à découvrir" : "artiste à découvrir"}</span>
+          <button type="button" className="mw-compact-control" aria-label="Artiste précédent" disabled={railEdges.start} onClick={() => moveTalents(-1)}><ArrowLeft aria-hidden="true" /></button>
+          <button type="button" className="mw-compact-control" aria-label="Artiste suivant" disabled={railEdges.end} onClick={() => moveTalents(1)}><ArrowRight aria-hidden="true" /></button>
+        </div>
+        <div className="tremplin-home__talents" ref={talentRailRef} role="group" aria-label="Artistes à découvrir, défilement horizontal" tabIndex={0}>
           {spotlightEntries.map((entry) => {
             const project = getTremplinProjectSnapshot(entry.artist);
             const playing = playingArtistId === entry.artist.id;

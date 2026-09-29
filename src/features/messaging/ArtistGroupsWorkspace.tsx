@@ -1,3 +1,4 @@
+import MeewavPillarTabs from "../../components/navigation/MeewavPillarTabs";
 import {
   ArrowLeft,
   Archive,
@@ -1214,13 +1215,18 @@ export default function ArtistGroupsWorkspace({
   );
 
   const renderGroupToolbar = (group: ArtistGroup, activeView: GroupPanel) => (
-    <nav className={`mw-hub-chips is-${activeView}`} aria-label={`Espaces de ${group.name}`}>
-      <button type="button" className={activeView === "chat" ? "is-active" : ""} onClick={() => openPanel(group.id, "chat")}><MessageCircleMore size={17} /> Chat</button>
-      <button type="button" className={activeView === "planning" ? "is-active" : ""} onClick={() => openPanel(group.id, "planning")}><CalendarClock size={17} /> Planning</button>
-      <button type="button" className={activeView === "members" ? "is-active" : ""} onClick={() => openPanel(group.id, "members")}><Users size={17} /> Membres</button>
-      <button type="button" className={activeView === "decisions" ? "is-active" : ""} onClick={() => openPanel(group.id, "decisions")}><Vote size={17} /> Décisions</button>
-      <button type="button" className={activeView === "projects" ? "is-active" : ""} onClick={() => openPanel(group.id, "projects")}><FolderKanban size={17} /> Projets liés</button>
-    </nav>
+    <MeewavPillarTabs<GroupPanel>
+      className={`mw-hub-chips is-unframed-icons is-${activeView}`}
+      ariaLabel={`Espaces de ${group.name}`}
+      activeId={activeView}
+      onSelect={view => openPanel(group.id, view)}
+      items={[
+        { id: "chat", label: "Chat", icon: MessageCircleMore },
+        { id: "planning", label: "Planning", icon: CalendarClock },
+        { id: "members", label: "Membres", icon: Users },
+        { id: "decisions", label: "Décisions", icon: Vote },
+      ]}
+    />
   );
 
   const renderGroupSideAction = (group: ArtistGroup, activeView: GroupPanel) => (
@@ -1430,10 +1436,10 @@ export default function ArtistGroupsWorkspace({
   };
 
   return (
-    <main className={`agw${panel || createOpen ? " has-panel" : ""}`}>
+    <main className={`agw mw-polished-hub${panel || createOpen ? " has-panel" : ""}`}>
       {toast && <div className="agw-toast" role="status"><CheckCircle2 size={17} /> {toast}<button type="button" onClick={() => { setToast(""); liveController?.clearActionError(); }} aria-label="Fermer"><X size={15} /></button></div>}
       {renderLiveInvitations()}
-      {liveController && !groups.length && <section className="agw-live-state" role="status"><Users size={28} /><strong>{liveController.status === "loading" ? "Chargement des groupes…" : "Aucun groupe actif"}</strong><span>{liveController.error?.message ?? "Crée un groupe depuis le bandeau supérieur ou accepte une invitation reçue."}</span></section>}
+      {liveController && !groups.length && <section className="agw-live-state" role="status"><Users size={28} /><strong>{liveController.status === "loading" ? "Chargement des groupes…" : "Aucun groupe actif"}</strong><span>{liveController.error?.message ?? "Réunis ton équipe ou rejoins une invitation reçue."}</span>{liveController.status !== "loading" && !liveController.error && <button type="button" className="agw-primary-button mw-primary-action" onClick={() => setCreateOpen(true)}><Plus size={17} />Créer un groupe</button>}</section>}
       {renderActivePanel()}
       {createOpen && renderCreateFlow()}
     </main>

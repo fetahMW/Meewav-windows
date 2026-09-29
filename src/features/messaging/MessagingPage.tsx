@@ -61,6 +61,7 @@ import {
 import { mapMessagingArtistGroupToWorkspace } from "./messaging.groups.workspace-adapters";
 import "./messaging-page.css";
 import "./messaging-premium.css";
+import "./messaging-hub-polish.css";
 
 function requestFromConversation(conversation: DemoConversation, token: number): ConversationRequest {
   return {
