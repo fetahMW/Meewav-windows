@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Send, X } from "lucide-react";
 import {
@@ -127,7 +128,7 @@ export default function RoomQuickPrivateMessage({
     <form onSubmit={(event) => { event.preventDefault(); void send(); }}>
       <header>
         <span className="room-quick-private-message__identity">
-          {target.avatarUrl ? <img src={target.avatarUrl} alt="" /> : null}
+          {target.avatarUrl ? <img {...portraitProps({id:target.id,name:target.displayName,avatarUrl:target.avatarUrl})} src={target.avatarUrl} alt="" /> : null}
           <span><small>MESSAGE PRIVÉ</small><strong>{target.name}</strong>{target.role ? <em>{target.role}</em> : null}</span>
         </span>
         <button type="button" aria-label="Fermer" disabled={pending} onClick={close}><X aria-hidden="true" /></button>

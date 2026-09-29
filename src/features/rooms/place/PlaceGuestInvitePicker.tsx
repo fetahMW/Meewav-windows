@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import { Check, LoaderCircle, MessageCircleMore, Plus, Search, UserRoundSearch, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
@@ -154,7 +155,7 @@ export default function PlaceGuestInvitePicker({
             {loading ? <p><LoaderCircle className="is-spinning" /> Chargement…</p> : null}
             {!loading && visible.map((profile) => {
               const sent = sentIds.has(profile.id);
-              return <button type="button" key={profile.id} disabled={Boolean(busyId) || sent} onClick={() => void invite(profile.id)}><img src={profile.avatarUrl} alt="" /><span><strong>{profile.displayName}</strong><small>{profile.username ? `@${profile.username}` : profile.detail}</small></span>{sent ? <Check /> : busyId === profile.id ? <LoaderCircle className="is-spinning" /> : <Plus />}</button>;
+              return <button type="button" key={profile.id} disabled={Boolean(busyId) || sent} onClick={() => void invite(profile.id)}><img {...portraitProps({id:profile.id,name:profile.displayName,avatarUrl:profile.avatarUrl})} src={profile.avatarUrl} alt="" /><span><strong>{profile.displayName}</strong><small>{profile.username ? `@${profile.username}` : profile.detail}</small></span>{sent ? <Check /> : busyId === profile.id ? <LoaderCircle className="is-spinning" /> : <Plus />}</button>;
             })}
             {!loading && visible.length === 0 ? <p><UserRoundSearch />{source === "search" && query.trim().length < 2 ? "Écris au moins deux caractères." : "Aucun profil disponible ici."}</p> : null}
           </div>

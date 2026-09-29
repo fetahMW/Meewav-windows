@@ -1,3 +1,4 @@
+import { PolishedChartPoint } from "../../components/shared/PolishedChartPoint";
 import {
   ArrowUpRight,
   Eye,
@@ -554,10 +555,7 @@ export function TremplinArtistAnalytics({ artist }: TremplinArtistAnalyticsProps
               />
               <path key={`line-${period}-${metric}`} d={linePath} className="tremplin-artist-analytics__chart-line" stroke={`url(#${strokeGradientId})`} />
               {points[points.length - 1] ? (
-                <g className="tremplin-artist-analytics__chart-current" aria-hidden="true">
-                  <circle cx={points[points.length - 1].x} cy={points[points.length - 1].y} r="11" />
-                  <circle cx={points[points.length - 1].x} cy={points[points.length - 1].y} r="4.5" />
-                </g>
+                <PolishedChartPoint x={points[points.length - 1].x} y={points[points.length - 1].y} />
               ) : null}
               {pinnedPointIndices.map((index) => {
                 const point = points[index];

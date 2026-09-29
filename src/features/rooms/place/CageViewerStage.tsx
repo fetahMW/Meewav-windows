@@ -1,3 +1,4 @@
+import { openPortraitPreProfile } from "../../../components/shared/portraitPreProfile";
 import { CameraOff, Grip, Mic, Pause, Radio, Swords, TriangleAlert, UserRound } from "lucide-react";
 import type { CageState, RoomPerson } from "../tools/roomTools.types";
 import type { CageStageProgramProps } from "./CageStageProgram";
@@ -48,7 +49,7 @@ function ViewerCamera({ person, assignment, label, active, side, audible, artist
       </div>}
     {!hasCamera && actions ? <div className="place-camera__viewer-overlay">{actions}</div> : null}
     <div className="cage-viewer-camera__identity">
-      {person ? <button type="button" onClick={() => props.onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
+      {person ? <button type="button" onClick={() => openPortraitPreProfile({id:person.id,name:person.name,avatarUrl:person.avatarUrl,role:person.role})} aria-label={`Voir le profil de ${person.name}`}>
         {person.avatarUrl ? <img src={person.avatarUrl} alt="" /> : <UserRound aria-hidden="true" />}
         <span><small>{label}</small><strong>{person.name}</strong></span>
       </button> : <span>Artiste {side}</span>}

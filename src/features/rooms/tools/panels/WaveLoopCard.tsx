@@ -1,9 +1,11 @@
+import { portraitProps } from "../../../../components/shared/portraitPreProfile";
 import { Headphones, Layers3, Pause, Play } from "lucide-react";
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
 import WaveCategoryChip from "./WaveCategoryChip";
 
 type WaveLoopCardProps = {
   accent: string;
+  profileId?: string;
   avatarUrl?: string;
   avatarFallback: string;
   title: string;
@@ -25,7 +27,7 @@ type WaveLoopCardProps = {
   children?: ReactNode;
 };
 
-export function WaveLoopCard({ accent, avatarUrl, avatarFallback, title, selectionLabel, grade, category, meta, detail, selected = false, playing = false, disabled = false, onSelect, onPlay, selectOnPlay = true, showPlay = true, beforeCategoryAction, quickActions, stateClassName = "", children }: WaveLoopCardProps) {
+export function WaveLoopCard({ accent, profileId, avatarUrl, avatarFallback, title, selectionLabel, grade, category, meta, detail, selected = false, playing = false, disabled = false, onSelect, onPlay, selectOnPlay = true, showPlay = true, beforeCategoryAction, quickActions, stateClassName = "", children }: WaveLoopCardProps) {
   const selectFromKeyboard = (event: KeyboardEvent<HTMLElement>) => {
     if (event.target !== event.currentTarget || !onSelect || (event.key !== "Enter" && event.key !== " ")) return;
     event.preventDefault();
@@ -41,7 +43,7 @@ export function WaveLoopCard({ accent, avatarUrl, avatarFallback, title, selecti
     onClick={onSelect}
     onKeyDown={onSelect ? selectFromKeyboard : undefined}
   >
-    <span className="wave-loop-card__avatar">
+    <span className="wave-loop-card__avatar" {...portraitProps(profileId ? {id:profileId,name:title,avatarUrl} : null)}>
       <em>{avatarFallback}</em>
       {avatarUrl ? <img src={avatarUrl} alt="" loading="lazy" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}
     </span>
@@ -65,6 +67,7 @@ export function WaveLoopCard({ accent, avatarUrl, avatarFallback, title, selecti
 
 type WaveBottomBarProps = {
   accent: string;
+  profileId?: string;
   avatarUrl?: string;
   avatarFallback: string;
   title: string;
@@ -75,10 +78,10 @@ type WaveBottomBarProps = {
   label: string;
 };
 
-export function WaveBottomBar({ accent, avatarUrl, avatarFallback, title, grade, category, meta, children, label }: WaveBottomBarProps) {
+export function WaveBottomBar({ accent, profileId, avatarUrl, avatarFallback, title, grade, category, meta, children, label }: WaveBottomBarProps) {
   return <aside className="wave-bottom-bar" style={{ "--wave-loop-accent": accent } as CSSProperties} aria-label={label}>
     <header className="wave-bottom-bar__identity">
-      <span className="wave-bottom-bar__avatar"><em>{avatarFallback}</em>{avatarUrl ? <img key={avatarUrl} src={avatarUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}</span>
+      <span className="wave-bottom-bar__avatar" {...portraitProps(profileId ? {id:profileId,name:title,avatarUrl} : null)}><em>{avatarFallback}</em>{avatarUrl ? <img key={avatarUrl} src={avatarUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}</span>
       <span><span className="wave-bottom-bar__name"><strong>{title}</strong>{grade}</span><span className="wave-bottom-bar__meta"><b>{category}</b>{meta ? <small>{meta}</small> : null}</span></span>
     </header>
     <div className="wave-bottom-bar__controls">{children}</div>

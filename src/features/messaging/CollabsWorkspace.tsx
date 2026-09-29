@@ -1,3 +1,4 @@
+import { portraitProps } from "../../components/shared/portraitPreProfile";
 import { Link } from "react-router-dom";
 import CollabInlineAudio from "./CollabInlineAudio";
 import {
@@ -266,6 +267,7 @@ export function buildCollabConversation(collab: DemoCollab, accepted = false): D
   return {
       id: accepted ? `conv_friend_collab_${collab.id}` : `conv_collab_${collab.id}`,
       collaborationRequestId: accepted ? null : collab.id,
+      profileId: collab.userId,
     name: collab.name,
     handle: `@${collab.name.toLocaleLowerCase("fr-FR").replace(/ /g, "_")}`,
     role: collab.role,
@@ -776,7 +778,7 @@ export function CollabsWorkspace({
                   </span>
                 </header>
                 <aside className="mw-collab-request__profile">
-                  <span className="mw-collab-request__avatar"><img src={localCollabAvatar(detailCollab)} alt="" /></span>
+                  <span className="mw-collab-request__avatar" {...portraitProps({id:detailCollab.userId,name:detailCollab.name,avatarUrl:localCollabAvatar(detailCollab),role:detailCollab.role,gradeLevel:getCollabGradeLevel(detailCollab)})}><img src={localCollabAvatar(detailCollab)} alt="" /></span>
                   <div className="mw-collab-request__identity">
                   <div className="mw-collab-request__heading">
                   <h3 id={`mw-collab-title-${detailCollab.id}`}><span>{detailCollab.name}</span></h3>

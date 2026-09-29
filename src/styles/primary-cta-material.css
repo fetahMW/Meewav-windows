@@ -23,6 +23,19 @@
     .launch-workflow-nav__next,
     .primary-button,
     .tremplin-primary-cta,
+    .tremplin-home__primary,
+    .tremplin-gateway__feature-actions .is-primary,
+    .profile-primary-button,
+    .profile-hero__live,
+    .mw-hidden-gift-modal__primary,
+    .scene-inline-comments button.is-primary,
+    .tremplin-artist-analytics__primary-button,
+    .tremplin-gateway__closing button.is-primary,
+    .tremplin-my-token-card > footer > button.is-primary,
+    .audio-engine-diagnostics button.is-primary,
+    .voice-fx-engine__inline-cta:not(.is-secondary),
+    .tremplin-how__mw-conclusion-actions button.is-primary,
+    .profile-library-dialog__actions > button.is-primary,
     .ttw-primary-button,
     .tremplin-gateway__hero-actions .is-primary,
     .tremplin-gateway__section-actions .is-primary,
@@ -52,7 +65,8 @@
     .room-launch-confirmation button,
     .place-room-shell .place-guests-filter-drawer > footer > button.is-primary,
     .place-time__controls button.is-primary,
-    .mw-button--primary:not(.mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary),
+    .mw-button--primary,
+    .mw-collab-request__attachment-play,
     .messaging-page .mw-chat-header__primary-action,
     .messaging-page .mw-workspace .mw-composer .mw-composer-send,
     .messaging-page .mw-attachment-queue__send,
@@ -109,7 +123,7 @@
     .scene-studio-subtitles header button,
     .scene-studio-tv__request footer button:first-child,
     .meewav-download-dialog .meewav-download__primary
-  ):not(.mw-button--danger,.is-danger,.is-following,.is-secondary,.room-live-call-incoming__actions .is-accept,.mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary) {
+  ):not(.mw-button--danger,.is-danger,.is-following,.is-secondary,.room-live-call-incoming__actions .is-accept) {
     background: var(--mw-primary-face) !important;
     border-color: transparent !important;
     box-shadow: var(--mw-primary-shadow) !important;
@@ -123,6 +137,19 @@
     .launch-workflow-nav__next,
     .primary-button,
     .tremplin-primary-cta,
+    .tremplin-home__primary,
+    .tremplin-gateway__feature-actions .is-primary,
+    .profile-primary-button,
+    .profile-hero__live,
+    .mw-hidden-gift-modal__primary,
+    .scene-inline-comments button.is-primary,
+    .tremplin-artist-analytics__primary-button,
+    .tremplin-gateway__closing button.is-primary,
+    .tremplin-my-token-card > footer > button.is-primary,
+    .audio-engine-diagnostics button.is-primary,
+    .voice-fx-engine__inline-cta:not(.is-secondary),
+    .tremplin-how__mw-conclusion-actions button.is-primary,
+    .profile-library-dialog__actions > button.is-primary,
     .ttw-primary-button,
     .tremplin-gateway__hero-actions .is-primary,
     .tremplin-gateway__section-actions .is-primary,
@@ -152,7 +179,8 @@
     .room-launch-confirmation button,
     .place-room-shell .place-guests-filter-drawer > footer > button.is-primary,
     .place-time__controls button.is-primary,
-    .mw-button--primary:not(.mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary),
+    .mw-button--primary,
+    .mw-collab-request__attachment-play,
     .messaging-page .mw-chat-header__primary-action,
     .messaging-page .mw-workspace .mw-composer .mw-composer-send,
     .messaging-page .mw-attachment-queue__send,
@@ -209,7 +237,7 @@
     .scene-studio-subtitles header button,
     .scene-studio-tv__request footer button:first-child,
     .meewav-download-dialog .meewav-download__primary
-  ):not(.mw-button--danger,.is-danger,.is-following,.is-secondary,.room-live-call-incoming__actions .is-accept,.mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary):is(:disabled,[aria-disabled="true"]) {
+  ):not(.mw-button--danger,.is-danger,.is-following,.is-secondary,.room-live-call-incoming__actions .is-accept):is(:disabled,[aria-disabled="true"]) {
     opacity: .45 !important;
   }
 
@@ -219,6 +247,19 @@
     .launch-workflow-nav__next,
     .primary-button,
     .tremplin-primary-cta,
+    .tremplin-home__primary,
+    .tremplin-gateway__feature-actions .is-primary,
+    .profile-primary-button,
+    .profile-hero__live,
+    .mw-hidden-gift-modal__primary,
+    .scene-inline-comments button.is-primary,
+    .tremplin-artist-analytics__primary-button,
+    .tremplin-gateway__closing button.is-primary,
+    .tremplin-my-token-card > footer > button.is-primary,
+    .audio-engine-diagnostics button.is-primary,
+    .voice-fx-engine__inline-cta:not(.is-secondary),
+    .tremplin-how__mw-conclusion-actions button.is-primary,
+    .profile-library-dialog__actions > button.is-primary,
     .ttw-primary-button,
     .tremplin-gateway__hero-actions .is-primary,
     .tremplin-gateway__section-actions .is-primary,
@@ -248,7 +289,8 @@
     .room-launch-confirmation button,
     .place-room-shell .place-guests-filter-drawer > footer > button.is-primary,
     .place-time__controls button.is-primary,
-    .mw-button--primary:not(.mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary),
+    .mw-button--primary,
+    .mw-collab-request__attachment-play,
     .messaging-page .mw-chat-header__primary-action,
     .messaging-page .mw-workspace .mw-composer .mw-composer-send,
     .messaging-page .mw-attachment-queue__send,
@@ -305,7 +347,7 @@
     .scene-studio-subtitles header button,
     .scene-studio-tv__request footer button:first-child,
     .meewav-download-dialog .meewav-download__primary
-  ):not(.mw-button--danger,.is-danger,.is-following,.is-secondary,.room-live-call-incoming__actions .is-accept,.mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary):focus-visible {
+  ):not(.mw-button--danger,.is-danger,.is-following,.is-secondary,.room-live-call-incoming__actions .is-accept):focus-visible {
     outline: 2px solid #d3c7f5;
     outline-offset: 3px;
   }

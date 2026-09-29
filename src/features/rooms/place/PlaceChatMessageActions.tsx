@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowUpRight, MessageCircle, Pin, PinOff, Sparkles, Trash2, UserRound, X } from "lucide-react";
@@ -126,7 +127,7 @@ export default function PlaceChatMessageActions({
       }}
     >
       <header className="place-chat-message-actions__header">
-        {message.author?.avatarUrl ? <img src={message.author.avatarUrl} alt="" /> : null}
+        {message.author?.avatarUrl ? <img {...portraitProps({id:message.author.id,name:message.author.displayName,avatarUrl:message.author.avatarUrl})} src={message.author.avatarUrl} alt="" /> : null}
         <span><strong id={titleId}>Message de {authorName}</strong></span>
         <button type="button" aria-label="Fermer les actions du message" onClick={onClose}><X aria-hidden="true" /></button>
       </header>
@@ -165,7 +166,7 @@ export function PlaceChatPins({ room, isHost, busy, onRemove, onChoose }: {
     <header className="place-chat-pins__heading"><span><Pin aria-hidden="true" /></span><div><h2>Épinglés</h2><p>Un repère pour la conversation.</p></div></header>
     {content ? <article className="place-chat-pins__card">
       <div className="place-chat-pins__status">{pinned ? <Pin aria-hidden="true" /> : <Sparkles aria-hidden="true" />}{pinned ? "Dans le chat" : "À l’écran"}</div>
-      {pinned?.author ? <div className="place-chat-pins__author"><img src={pinned.author.avatarUrl} alt="" /><div><strong>{pinned.author.displayName}</strong></div></div> : null}
+      {pinned?.author ? <div className="place-chat-pins__author"><img {...portraitProps({id:pinned.author.id,name:pinned.author.displayName,avatarUrl:pinned.author.avatarUrl})} src={pinned.author.avatarUrl} alt="" /><div><strong>{pinned.author.displayName}</strong></div></div> : null}
       <blockquote><MeeWavRichText>{content}</MeeWavRichText></blockquote>
       {isHost ? <footer><button type="button" className="place-chat-pins__remove" disabled={busy} onClick={onRemove}><PinOff aria-hidden="true" />{busy ? "Retrait…" : pinned ? "Désépingler" : "Retirer de l’écran"}</button></footer> : null}
     </article> : <div className="place-chat-pins__empty"><Pin aria-hidden="true" /><strong>Aucun message épinglé</strong><p>{isHost ? "Gardez une information utile à portée de tous." : "Les messages retenus par le Host apparaîtront ici."}</p></div>}

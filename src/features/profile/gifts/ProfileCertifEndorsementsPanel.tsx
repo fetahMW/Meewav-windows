@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import { BadgeCheck, Eye, EyeOff, RotateCcw, ShieldAlert } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -95,7 +96,7 @@ export default function ProfileCertifEndorsementsPanel({ profileId, onDone }: Pr
     {loadState === "error" ? <p className="profile-certif-panel__state is-error" role="alert">Les validations sont momentanément indisponibles.</p> : null}
     {loadState === "ready" && visibleEndorsements.length > 0 ? <div className="profile-certif-panel__list">
       {visibleEndorsements.map((endorsement) => <article key={endorsement.id} className={`is-${endorsement.state}`}>
-        <span className="profile-certif-panel__avatar">
+        <span className="profile-certif-panel__avatar" {...portraitProps({id:endorsement.counterpartProfileId,name:endorsement.counterpartDisplayName,avatarUrl:endorsement.counterpartAvatarUrl || undefined})}>
           {endorsement.counterpartAvatarUrl ? <img src={endorsement.counterpartAvatarUrl} alt="" /> : <BadgeCheck size={17} />}
         </span>
         <div>

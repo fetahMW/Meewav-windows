@@ -59,7 +59,7 @@ const LEVEL_GUIDANCE: Readonly<Record<GradeLevel, {
 } as const;
 
 
-export function TremplinGradeCard({ level, active = true, standalone = false, noteId, onActivate, polished = false, showcased = false, illuminated = false, orbitOffset }: { level: GradeLevel; active?: boolean; standalone?: boolean; noteId?: string; onActivate?: () => void; polished?: boolean; showcased?: boolean; illuminated?: boolean; orbitOffset?: number }) {
+export function TremplinGradeCard({ level, active = true, standalone = false, noteId, onActivate, polished = false, showcased = false, illuminated = false }: { level: GradeLevel; active?: boolean; standalone?: boolean; noteId?: string; onActivate?: () => void; polished?: boolean; showcased?: boolean; illuminated?: boolean }) {
   return (
             <article
               tabIndex={onActivate ? 0 : undefined}
@@ -67,8 +67,7 @@ export function TremplinGradeCard({ level, active = true, standalone = false, no
               aria-pressed={onActivate ? active : undefined}
               
               className={`tremplin-gateway__grade-card ${active ? "is-active" : ""} ${standalone ? "is-standalone" : ""} ${illuminated ? "is-illuminated" : ""} ${showcased ? "is-showcased" : ""} ${showcased && level === 6 ? "is-showcase-finale" : ""}`}
-              style={{ "--grade-index": level - 1, "--grade-light": getGradeBadgeMeta(level).mainColor, "--grade-soft": getGradeBadgeMeta(level).softColor, "--orbit-offset": orbitOffset, "--orbit-distance": Math.abs(orbitOffset ?? 0) } as CSSProperties}
-              data-orbit-slot={orbitOffset}
+              style={{ "--grade-index": level - 1, "--grade-light": getGradeBadgeMeta(level).mainColor, "--grade-soft": getGradeBadgeMeta(level).softColor } as CSSProperties}
               aria-controls={onActivate ? noteId : undefined}
               aria-label={"Niveau " + level + ", " + TREMPLIN_GRADE_EXPERIENCE[level].title + ". " + LEVEL_GUIDANCE[level].cardLabel}
               onMouseEnter={onActivate}
@@ -83,6 +82,9 @@ export function TremplinGradeCard({ level, active = true, standalone = false, no
             >
               {polished && <span className="tremplin-grade-card__sheen" aria-hidden="true" />}
               {polished && level === 6 && <span className="tremplin-grade-card__waves" aria-hidden="true"><i /><i /><i /></span>}
+              {polished && <span className="tremplin-grade-card__tour-note" aria-hidden="true">
+                <small>Niveau {level}</small><strong>{LEVEL_GUIDANCE[level].cardLabel}</strong>
+              </span>}
               <span className="tremplin-public-home__level-stage">Niveau {level}</span>
               <MeewavGradeBadge className="tremplin-public-home__level-badge" level={level} size="hero" variant="icon" />
               <strong>{TREMPLIN_GRADE_EXPERIENCE[level].title}</strong>
@@ -93,43 +95,50 @@ export function TremplinGradeCard({ level, active = true, standalone = false, no
 }
 
 export default function TremplinGradeProgression({ id = "niveaux", onUnderstandGrades, children, landing = false }: { id?: string; onUnderstandGrades?: () => void; children?: ReactNode; landing?: boolean }) {
-  const [activeGradeLevel, setActiveGradeLevel] = useState<GradeLevel>(landing ? 1 : 4);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [showcaseLevel, setShowcaseLevel] = useState<GradeLevel>(1);
+  const [activeGradeLevel, setActiveGradeLevel] = useState<GradeLevel>(landing ? 3 : 4);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [entered, setEntered] = useState(false);
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [showcaseLevel, setShowcaseLevel] = useState<GradeLevel | 0>(0);
+  const [allowMotion, setAllowMotion] = useState(false);
   useEffect(() => {
     if (!landing) return;
-    const track = trackRef.current;
-    if (!track) return;
-    let frame = 0;
-    const update = () => {
-      const center = track.scrollLeft + track.clientWidth / 2;
-      const cards = Array.from(track.querySelectorAll<HTMLElement>(":scope > article"));
-      let nearest = 0;
-      cards.forEach((card, index) => {
-        const previous = cards[nearest];
-        if (Math.abs(card.offsetLeft + card.offsetWidth / 2 - center) < Math.abs(previous.offsetLeft + previous.offsetWidth / 2 - center)) nearest = index;
-      });
-      if (cards.length) setShowcaseLevel((nearest + 1) as GradeLevel);
+    const preference = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const syncMotion = () => setAllowMotion(!preference?.matches && !document.hidden);
+    syncMotion();
+    preference?.addEventListener("change", syncMotion);
+    document.addEventListener("visibilitychange", syncMotion);
+    return () => {
+      preference?.removeEventListener("change", syncMotion);
+      document.removeEventListener("visibilitychange", syncMotion);
     };
-    const onScroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => { track.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
   }, [landing]);
-  const displayedLevel = landing ? showcaseLevel : activeGradeLevel;
-  const activeGradeGuidance = LEVEL_GUIDANCE[displayedLevel];
-  const activeGradeMeta = getGradeBadgeMeta(displayedLevel);
-  const moveGrade = (direction: number) => {
-    const level = Math.max(1, Math.min(6, showcaseLevel + direction));
-    const track = trackRef.current;
-    const card = track?.querySelectorAll<HTMLElement>(":scope > article")[level - 1];
-    if (track && card) track.scrollTo({ left: card.offsetLeft + card.offsetWidth / 2 - track.clientWidth / 2, behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  };
+  const showcaseRunning = landing && sectionVisible && allowMotion;
+  useEffect(() => {
+    if (!showcaseRunning) return;
+    const timer = window.setTimeout(() => setShowcaseLevel(level => (level === 6 ? 0 : level + 1) as GradeLevel | 0), showcaseLevel === 0 ? 700 : showcaseLevel === 6 ? 5000 : 2000);
+    return () => window.clearTimeout(timer);
+  }, [showcaseRunning, showcaseLevel]);
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!landing || !section || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry) return;
+      setSectionVisible(entry.isIntersecting);
+      if (entry.isIntersecting) setEntered(true);
+    }, { threshold: 0.08 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [landing]);
+  const activeGradeGuidance = LEVEL_GUIDANCE[activeGradeLevel];
+  const activeGradeMeta = getGradeBadgeMeta(activeGradeLevel);
   const titleId = id + "-title";
   const noteId = id + "-note";
   return (
 <section
         id={id}
-        className={`tremplin-public-home__section tremplin-public-home__levels tremplin-gateway__levels${landing ? " tremplin-grades-open" : ""}`}
+        ref={sectionRef}
+        className={`tremplin-public-home__section tremplin-public-home__levels tremplin-gateway__levels${landing ? " tremplin-grades-open" : ""}${landing && entered ? " has-entered" : ""}`}
         aria-labelledby={titleId}
         tabIndex={-1}
         style={{
@@ -146,25 +155,15 @@ export default function TremplinGradeProgression({ id = "niveaux", onUnderstandG
             <small className="tremplin-public-home__levels-clarification">Le grade ne fixe pas automatiquement le prix du jeton et ne garantit pas le succès futur.</small>
             {onUnderstandGrades ? <button type="button" className="tremplin-public-home__levels-recognition" onClick={onUnderstandGrades}>Comment un grade est-il attribué&nbsp;? <ArrowRight aria-hidden="true" /></button> : null}
           </header>
-          {!landing && <div className="tremplin-gateway__grade-art" aria-hidden="true" />}
+          <div className="tremplin-gateway__grade-art" aria-hidden="true" />
         </div>
-        {landing && <div className="tremplin-grade-orbit__caption" aria-live="off">
-          <span>{String(showcaseLevel).padStart(2, "0")} <small>/ 06</small></span>
-          <strong>{activeGradeGuidance.cardLabel}</strong>
-        </div>}
-        <div ref={trackRef} className="tremplin-public-home__level-track" role="group" aria-roledescription={landing ? "carrousel" : undefined} aria-label={landing ? "Les six grades, défilement manuel" : "Explorer les six niveaux MeeWav"}
-          tabIndex={landing ? 0 : undefined}
-          onKeyDown={landing ? event => {
-            if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-              event.preventDefault(); moveGrade(event.key === "ArrowRight" ? 1 : -1);
-            }
-          } : undefined}>
+        <div className="tremplin-public-home__level-track" role="group" aria-label={landing ? "Les six niveaux MeeWav" : "Explorer les six niveaux MeeWav"}>
           <div className="tremplin-gateway__prestige-bridges" aria-hidden="true">{[1, 2, 3, 4, 5].map(index => <i key={index} style={{ "--bridge-index": index } as CSSProperties} />)}</div>
           {GRADE_LEVELS.map((level) => (
-            <TremplinGradeCard polished={landing} illuminated={landing && showcaseLevel === level} orbitOffset={landing ? Math.max(-2, Math.min(2, level - showcaseLevel)) : undefined} key={level} level={level} active={!landing && level === activeGradeLevel} noteId={noteId} onActivate={landing ? undefined : () => setActiveGradeLevel(level)} />
+            <TremplinGradeCard polished={landing} showcased={showcaseRunning && showcaseLevel === level} illuminated={landing && showcaseLevel >= level} key={level} level={level} active={!landing && level === activeGradeLevel} noteId={noteId} onActivate={landing ? undefined : () => setActiveGradeLevel(level)} />
           ))}
         </div>
-        <div id={noteId} className="tremplin-public-home__level-note" role="status" aria-live={landing ? "off" : "polite"} aria-atomic="true">
+        <div id={noteId} className="tremplin-public-home__level-note" role="status" aria-live="polite" aria-atomic="true">
           <i aria-hidden="true"><ShieldCheck /></i>
           <p><strong>{activeGradeGuidance.headline}</strong><span>{activeGradeGuidance.detail}</span></p>
           <span className="tremplin-gateway__grade-principles">Transparent · Équitable · Évolutif</span>

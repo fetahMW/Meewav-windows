@@ -1113,10 +1113,10 @@ export default function PlaceMixer({
     <div className={`place-mixer${showAudioPlayer ? " has-audio-player" : ""}${personalMode ? " is-personal-mix" : ""}${showRoomTools ? " is-wave-tools" : ""}${classroomPlayerCollapsible ? " has-classroom-player" : ""}${classroomPlayerCollapsed ? " is-classroom-player-collapsed" : ""}`} aria-label={`Régie audio de ${roomPresentation.label}`}>
       {toolsLayout ? <><div className="wave-tools-nav" ref={toolsLayout.setNav} hidden={!showRoomTools} /><div className="wave-tools-body" ref={toolsLayout.setBody} hidden={!showRoomTools} /></> : null}
       <nav className={`place-mixer__subnav${mode !== "guest" ? " has-twists" : ""}`} aria-label="Sections du mixeur">
-        <button type="button" className={activeView === "volumes" ? "is-active" : ""} onClick={() => onView("volumes")}><SlidersHorizontal aria-hidden="true" /> Volumes</button>
-        <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> FX voix</button>
-        {mode !== "guest" && !listenerOnly ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> Pads</button> : null}
-        {mode === "host" ? <button type="button" className={activeView === "time" ? "is-active" : ""} onClick={() => onView("time")}><Timer aria-hidden="true" /> Time</button> : null}
+        <button type="button" className={activeView === "volumes" ? "is-active" : ""} onClick={() => onView("volumes")}><SlidersHorizontal aria-hidden="true" /> <span>Volumes</span></button>
+        <button type="button" className={activeView === "voice_fx" ? "is-active" : ""} onClick={() => onView("voice_fx")} disabled={mode !== "viewer" && ownVocalSources.length === 0}><AudioWaveform aria-hidden="true" /> <span>FX voix</span></button>
+        {mode !== "guest" && !listenerOnly ? <button type="button" className={activeView === "twists" ? "is-active" : ""} onClick={() => onView("twists")}><Grid3X3 aria-hidden="true" /> <span>Pads</span></button> : null}
+        {mode === "host" ? <button type="button" className={activeView === "time" ? "is-active" : ""} onClick={() => onView("time")}><Timer aria-hidden="true" /> <span>Time</span></button> : null}
       </nav>
 
       {showAudioPlayer ? (
@@ -1146,7 +1146,7 @@ export default function PlaceMixer({
       {mode !== "guest" && !listenerOnly ? <PlaceTwists key={`pads-${room.id}`} active={activeView === "twists"} /> : null}
 
       {activeView === "volumes" ? (
-        <section className="place-volume-view">
+        <section className="place-volume-view" data-preprofile-exempt="volumes">
           <div className="place-volume-list">
             {personalMode ? <small className="viewer-mix-section">ÉCOUTE PERSONNELLE</small> : null}
             {mode !== "host" && listening ? <VolumeRow channel={returnChannel} room={room} onGain={(_id,gain) => listening.setReturnVolume(gain)} onMute={() => listening.setReturnMuted(!listening.returnMuted)} onCamera={onCamera} canEditGain canEditMute cameraControl="none" /> : null}

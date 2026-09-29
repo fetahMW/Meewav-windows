@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { useEffect, useState } from "react";
 import { Check, Search, UsersRound } from "lucide-react";
@@ -55,7 +56,7 @@ export default function RoomLaunchExtras({ config, scope, onChange }: { config: 
       <label className="launch-contact-search"><span><Search aria-hidden="true" />Rechercher un contact</span><input type="search" value={query} placeholder="Nom ou pseudo" onChange={event => setQuery(event.target.value)} /></label>
       {loading ? <p role="status">Chargement des contacts…</p> : error ? <p role="alert">{error} <button type="button" onClick={() => setRetry(value => value + 1)}>Réessayer</button></p> : <div className="launch-contact-list">{contacts.map(person => {
         const selected = classroom.students.some(student => student.id === person.id);
-        return <button type="button" role="checkbox" aria-checked={selected} key={person.id} disabled={!selected && classroom.students.length >= capacity} onClick={() => patch({ students: selected ? classroom.students.filter(student => student.id !== person.id) : [...classroom.students, person] })}><img src={person.avatarUrl} alt="" /><span>{person.name}</span><i>{selected ? <Check aria-hidden="true" /> : null}</i></button>;
+        return <button type="button" role="checkbox" aria-checked={selected} key={person.id} disabled={!selected && classroom.students.length >= capacity} onClick={() => patch({ students: selected ? classroom.students.filter(student => student.id !== person.id) : [...classroom.students, person] })}><img {...portraitProps({id:person.id,name:person.name,avatarUrl:person.avatarUrl})} src={person.avatarUrl} alt="" /><span>{person.name}</span><i>{selected ? <Check aria-hidden="true" /> : null}</i></button>;
       })}{!contacts.length ? <p>Aucun contact trouvé. Recherche un profil par son nom.</p> : null}</div>}
       <p>Les places sont réservées dans ta préparation ; aucune invitation n’est envoyée à cette étape.</p>
     </> : <p>Les {capacity} chaises restent disponibles au départ.</p>}

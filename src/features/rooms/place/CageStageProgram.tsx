@@ -1,3 +1,4 @@
+import { openPortraitPreProfile } from "../../../components/shared/portraitPreProfile";
 import {
   AlertTriangle,
   CameraOff,
@@ -178,7 +179,7 @@ function FeedTile({
     </div>
     <div className="cage-stage-feed__shade" aria-hidden="true" />
     {portraitPresentation && !cleanProgram ? <>
-      <button type="button" className="cage-stage-feed__portrait-identity" onClick={() => onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
+      <button type="button" className="cage-stage-feed__portrait-identity" onClick={() => openPortraitPreProfile({id:person.id,name:person.name,avatarUrl:person.avatarUrl,role:person.role})} aria-label={`Voir le profil de ${person.name}`}>
         <strong>{person.name}</strong>
         <small>{person.role}</small>
       </button>
@@ -188,13 +189,13 @@ function FeedTile({
         <span><Heart aria-hidden="true" /><b>{formatMetric(supportCount)}</b></span>
       </span>
     </> : null}
-    {cleanProgram ? <button type="button" className="cage-stage-feed__artist" onClick={() => onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
+    {cleanProgram ? <button type="button" className="cage-stage-feed__artist" onClick={() => openPortraitPreProfile({id:person.id,name:person.name,avatarUrl:person.avatarUrl,role:person.role})} aria-label={`Voir le profil de ${person.name}`}>
       <img src={person.avatarUrl} alt="" /><span><strong>{person.name}</strong><small>{person.role}</small></span>
     </button> : null}
     {cleanProgram ? null : <span className="cage-stage-feed__side"><b>{solo ? <Radio aria-hidden="true" /> : <img src={person.avatarUrl} alt="" />}</b>{live ? <><i />{solo ? "SUR SCÈNE" : "À L’ANTENNE"}</> : solo ? "PASSAGE" : "ADVERSAIRE"}</span>}
     {battleWins > 0 ? <span className="cage-stage-feed__battle-wins" role="status" aria-label={`${person.name} : ${battleWins} duel${battleWins > 1 ? "s" : ""} gagné${battleWins > 1 ? "s" : ""}`} title={`${battleWins} victoire${battleWins > 1 ? "s" : ""} en Open Mic Battle`}><Crown aria-hidden="true" /><b aria-hidden="true">{battleWins}</b></span> : null}
     {winner && !cleanProgram ? <span className="cage-stage-feed__winner"><Crown aria-hidden="true" /> VAINQUEUR</span> : null}
-    {!cleanProgram ? <button type="button" className="cage-stage-feed__identity" onClick={() => onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
+    {!cleanProgram ? <button type="button" className="cage-stage-feed__identity" onClick={() => openPortraitPreProfile({id:person.id,name:person.name,avatarUrl:person.avatarUrl,role:person.role})} aria-label={`Voir le profil de ${person.name}`}>
         <img src={person.avatarUrl} alt="" />
         <span><small>{person.role}</small><strong>{person.name}</strong></span>
         {score === null ? null : <b>{score}</b>}

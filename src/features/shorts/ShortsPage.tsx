@@ -1,3 +1,4 @@
+import { portraitProps } from "../../components/shared/portraitPreProfile";
 import GoldenLikeConfirmationDialog from "../goldenLikes/GoldenLikeConfirmationDialog";
 import AppRouteLoading from "../../components/shared/AppRouteLoading";
 import { readSceneRecommendationPreferences } from "../scene/recommendations/sceneRecommendationPreferences";
@@ -1228,7 +1229,7 @@ function VideoCard({
             aria-label={`Voir le profil de ${item.artist}`}
             onClick={(event) => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onViewProfile(item); }}
           >
-            <img src={item.artistPortrait ?? item.image} alt="" loading="lazy" decoding="async" />
+            <img src={item.artistPortrait ?? item.image} alt="" loading="lazy" decoding="async" {...portraitProps({id:item.profileId || item.artistId,name:item.artist,avatarUrl:item.artistPortrait ?? item.image})} />
           </a>
         </div>
         <div className="scene-video-card__details">

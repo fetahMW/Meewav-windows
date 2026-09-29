@@ -110,7 +110,7 @@
 .messaging-page .mw-collab-detail-inline .mw-collab-request__verified { font-size: 10px; color: #998ca9; }
 .messaging-page .mw-collab-detail-inline .mw-collab-request__actions { margin-left: auto; gap: 12px; }
 .messaging-page .mw-collab-detail-inline .mw-collab-request__actions .mw-button { min-height: 43px; min-width: 120px; padding: 10px 22px; border-radius: 13px; border: 1px solid #cbbad779; background: linear-gradient(165deg,#302a37,#08060d 60%); box-shadow: inset 0 1px 2px #ffffff35; }
-.messaging-page .mw-collab-detail-inline .mw-collab-request__actions .mw-button--primary { color: #d8cbe7; border-color: #79658f80; background: linear-gradient(165deg,#241e2d,#0b090f 65%); box-shadow: inset 0 1px 2px #ffffff19; }
+.messaging-page .mw-collab-detail-inline .mw-collab-request__actions .mw-button--quiet { background: linear-gradient(180deg,#24222c,#111015); color: #dedbe6; border-color: #8470b24d; box-shadow: inset 0 1px #ffffff0f; }
 .messaging-page .mw-collab-preview { border-radius: 25px; }
 .messaging-page .mw-collab-preview__avatar { border: 1px solid #ba87ec; border-radius: 50%; }
 .messaging-page .mw-collab-preview__footer { background: #09070b70; border-color: #c4a0f029; }
@@ -286,13 +286,8 @@
 .messaging-page .mw-track-capsule .mw-waveform__played,
 .mw-track-studio .mw-waveform__played { stroke: #8054d9; }
 
-/* The Pads' polished violet material, with light passing through the contact row. */
+/* Shared translucent contact material: see polished-glass.css. */
 .messaging-page .mw-workspace .mw-conversation-list > article.is-active {
-  --mw-contact-selected-face:
-    linear-gradient(180deg, transparent 74%, #a98ef01f),
-    linear-gradient(135deg, #ffffff14, #ffffff03 28%, transparent 52%),
-    linear-gradient(180deg, #2b234145, #1d153122 50%, #5137a142);
-  --mw-contact-selected-shadow: inset 0 1px #f0eaff1a, inset 0 -1px #a98ef040, 0 2px 6px #00000014;
   border: 1px solid #bca5ed42;
   background: var(--mw-contact-selected-face);
   box-shadow: var(--mw-contact-selected-shadow);
@@ -370,7 +365,7 @@
 .mw-track-studio .mw-track-studio__window > main::-webkit-scrollbar-thumb { background-color: #62606c; }
 
 /* Cool, restrained messaging palette; the pillar keeps its existing material. */
-.messaging-page .mw-workspace .mw-chat-scene,
+.messaging-page .mw-workspace .mw-chat-scene { background: transparent; }
 .messaging-page .mw-workspace .mw-context-pane {
   background: #0c0a1133;
 }
@@ -519,9 +514,9 @@
 .messaging-page .mw-collab-detail-inline .mw-collab-request {
   display: block; box-sizing: border-box; width: 100%; max-width: 920px;
   height: auto; min-height: 0; max-height: none; margin: 0 auto; padding: 18px 20px;
-  border: 1px solid #9b82c65c; border-radius: 18px;
-  background: radial-gradient(ellipse at 100% 100%,#5541841a,transparent 55%),linear-gradient(145deg,#14121c,#09090e 70%);
-  box-shadow: inset 0 1px 0 #ffffff16,0 10px 24px #00000040,0 0 15px #7954c510;
+  border: 1px solid transparent; border-radius: 18px;
+  background: linear-gradient(120deg,#ffffff0c,transparent 40%) padding-box,linear-gradient(155deg,#202126,#0d0e12 65%,#171222) padding-box,linear-gradient(135deg,#83739e,#463754 38%,#302838 70%,#6b529d) border-box;
+  box-shadow: inset 0 1px #ffffff12,inset 0 -1px #0009,0 5px 16px #0005;
 }
 .messaging-page .is-wall-card .mw-collab-request { max-width: none; }
 .messaging-page .mw-collab-detail-inline .mw-collab-request::before,
@@ -572,7 +567,7 @@
   grid-template-columns: 38px minmax(0,1fr) auto; grid-template-rows: auto 25px auto;
   grid-template-areas: "play title duration" "play wave actions" "play meta actions";
   align-items: center; gap: 2px 10px; border: 1px solid #aa95cd38; border-radius: 12px;
-  background: linear-gradient(155deg,#1b182380,#08080c); box-shadow: inset 0 1px 0 #ffffff0d;
+  background: linear-gradient(155deg,#1c1b23,#0c0d10); box-shadow: inset 0 1px #ffffff0b,inset 0 -1px #0007;
 }
 .messaging-page .mw-collab-detail-inline .mw-collab-request__attachment-cover { display: none; }
 .messaging-page .mw-collab-detail-inline .mw-collab-request__attachment-play {
@@ -896,9 +891,7 @@
 .messaging-page .mw-collab-detail-inline .mw-collab-request.compact-card {
   width: 100%; max-width: 680px; padding: 20px; border-radius: 22px;
   height: auto; min-height: 0; overflow: visible;
-  border-color: #8d7aaa59;
-  background: radial-gradient(ellipse at 0% 0%,#56417e10,transparent 60%),linear-gradient(145deg,#14131d,#0b0b12 75%);
-  box-shadow: inset 0 1px #ffffff0d,0 8px 20px #00000030;
+  border-color: transparent;
 }
 .messaging-page .mw-conversation-header .mw-collab-request.compact-card { max-width: 552px; margin-inline: 0; }
 .messaging-page .mw-collab-detail-inline .compact-card .mw-collab-request__content > header { min-height: 34px; flex-wrap: nowrap; }
@@ -963,21 +956,21 @@
 .messaging-page .mw-workspace :is(.mw-composer-zone,.mw-composer-row)::before,
 .messaging-page .mw-workspace :is(.mw-composer-zone,.mw-composer-row)::after { content: none; }
 
-/* Group tools share a fixed navigation row, independent of the active panel. */
-.messaging-page .mw-workspace .mw-context-pane .agw-panel { grid-template-rows: 56px minmax(0,1fr); }
-.messaging-page .mw-workspace .mw-context-pane .agw-panel > .mw-hub-chipbar {
+/* Projects and groups share the same navigation geometry and underline. */
+.messaging-page .mw-workspace .mw-context-pane :is(.agw-panel,.mwp-project-detail) { grid-template-rows: 56px minmax(0,1fr); }
+.messaging-page .mw-workspace .mw-context-pane :is(.agw-panel,.mwp-project-detail) > .mw-hub-chipbar {
   box-sizing: border-box; height: 56px; min-height: 56px; max-height: 56px; flex-wrap: nowrap;
   padding: 14px 22px; gap: 10px; align-items: center; transform: none;
 }
-.messaging-page .mw-workspace .mw-context-pane .agw-panel > .mw-hub-chipbar > .agw-panel__toolbar {
+.messaging-page .mw-workspace .mw-context-pane :is(.agw-panel,.mwp-project-detail) > .mw-hub-chipbar > .agw-panel__toolbar {
   transform: none; align-self: center; flex: 1 1 0; width: auto; min-width: 0;
   justify-content: flex-start; overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
 }
-.messaging-page .mw-workspace .agw-panel .mw-hub-chips { height: 28px; min-height: 28px; flex-wrap: nowrap; }
-.messaging-page .mw-workspace .agw-panel .mw-hub-chips button {
+.messaging-page .mw-workspace :is(.agw-panel,.mwp-project-detail) .mw-hub-chips { height: 28px; min-height: 28px; flex-wrap: nowrap; }
+.messaging-page .mw-workspace :is(.agw-panel,.mwp-project-detail) .mw-hub-chips button {
   box-sizing: border-box; height: 28px; min-height: 28px; max-height: 28px; padding: 0 10px; line-height: 1; white-space: nowrap;
 }
-.messaging-page .mw-workspace .agw-panel .agw-panel__controls { width: auto; flex: 0 0 auto; transform: none; }
+.messaging-page .mw-workspace :is(.agw-panel,.mwp-project-detail) .agw-panel__controls { width: auto; flex: 0 0 auto; transform: none; }
 .messaging-page .agw-panel--members .agw-members-list {
   grid-template-columns: repeat(auto-fill,minmax(min(100%,280px),1fr)); max-width: 1120px; gap: 12px;
 }

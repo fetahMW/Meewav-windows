@@ -4,6 +4,7 @@ export type MessagingTab = "messages" | "collabs" | "projects" | "groups";
 export type MessagingSpace = "all" | MessagingTab;
 
 export type MessagingSidebarItem = {
+  profileId?: string | null;
   key: string;
   id: string;
   space: MessagingTab;
@@ -70,6 +71,8 @@ export type DemoContact = {
 };
 
 export type DemoConversation = {
+  /** Public identity; never substitute the live conversation UUID. */
+  profileId?: string | null;
   collaborationRequestId?: string | null;
   id: string;
   name: string;
@@ -541,7 +544,8 @@ const premiumConversationContent: Partial<Record<string, PremiumConversationCont
 
 export const demoConversations: DemoConversation[] = baseDemoConversations.map((conversation) => {
   const premiumContent = premiumConversationContent[conversation.id];
-  return premiumContent ? { ...conversation, ...premiumContent } : conversation;
+  const contact = demoContacts.find(person => person.username === conversation.handle.replace(/^@/, ""));
+  return { ...conversation, ...premiumContent, profileId: contact?.id ?? null };
 });
 
 const baseDemoCollabs: DemoCollab[] = [

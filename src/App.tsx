@@ -1,3 +1,4 @@
+import PortraitPreProfileHost from "./components/shared/PortraitPreProfileHost";
 import { lazy, Suspense, type ReactNode } from "react";
 import {
   BrowserRouter,
@@ -324,6 +325,7 @@ function App() {
         <DesktopEntryGate><AuthProvider>
         <DesktopAuthenticationBoundary><RoomLiveCallProvider>
           <MessagingCalls />
+          <PortraitPreProfileHost />
           <RoomsHomeWorkspaceBoundary>
             <ClasseWorkspaceBoundary>
               <Routes>

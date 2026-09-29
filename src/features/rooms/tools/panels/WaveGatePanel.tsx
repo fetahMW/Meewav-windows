@@ -430,7 +430,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
           key={submission.id}
           stateClassName={quarantine ? "is-quarantine" : "is-gate"}
           accent={category.color}
-          avatarUrl={submission.contributor.avatarUrl}
+          profileId={submission.contributor.id} avatarUrl={submission.contributor.avatarUrl}
           avatarFallback={submission.contributor.name.charAt(0)}
           title={submission.contributor.name}
           selectionLabel={`Sélectionner ${submission.title} de ${submission.contributor.name}`}
@@ -467,7 +467,7 @@ export default function WaveGatePanel({ quarantine = false, wave, role, roomId, 
       {!visibleSubmissions.length ? <p className="wave-sas__empty">Aucune boucle dans cet état.</p> : null}
     </div>
 
-    {selected ? (() => { const category = LOOP_CATEGORIES.find((item) => item.id === categoryFor(selected)) ?? LOOP_CATEGORIES[4]; const tab = gateTabFor(selected); const canPreview = canPreviewSubmission(selected); return <WaveBottomBar accent={category.color} avatarUrl={selected.contributor.avatarUrl} avatarFallback={selected.contributor.name.charAt(0)} title={selected.contributor.name} category={category.badge} label={`Actions pour ${selected.contributor.name}`}>
+    {selected ? (() => { const category = LOOP_CATEGORIES.find((item) => item.id === categoryFor(selected)) ?? LOOP_CATEGORIES[4]; const tab = gateTabFor(selected); const canPreview = canPreviewSubmission(selected); return <WaveBottomBar accent={category.color} profileId={selected.contributor.id} avatarUrl={selected.contributor.avatarUrl} avatarFallback={selected.contributor.name.charAt(0)} title={selected.contributor.name} category={category.badge} label={`Actions pour ${selected.contributor.name}`}>
       <button type="button" aria-label={`Télécharger ${selected.title}`} disabled={disabled || working || !canPreview} onClick={() => requestDownload(selected)}><Download /></button>
       {quarantine ? <>
         <button type="button" className="wave-quarantine-dock__replace" aria-label={`Remplacer ${selected.title}`} disabled={disabled || working || uploading} onClick={() => { setVersionFile(null); setVersionError(""); setVersionOpen(true); }}>Remplacer</button>

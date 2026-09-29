@@ -4,6 +4,7 @@ import { supabase } from "../../../lib/supabaseClient";
 type JsonRecord = Record<string, unknown>;
 
 export type ProfileCertifPublicEndorser = {
+  profileId?: string | null;
   displayName: string;
   avatarUrl: string | null;
   gradeLevelAtEndorsement: number;
@@ -32,6 +33,7 @@ export type ProfileCertifEndorsement = {
   direction: "sent" | "received";
   state: ProfileCertifState;
   roomIdSnapshot: string;
+  counterpartProfileId: string;
   counterpartDisplayName: string;
   counterpartAvatarUrl: string | null;
   senderGradeLevelSnapshot: number;
@@ -107,6 +109,7 @@ export function mapProfileCertifSummary(value: unknown): ProfileCertifSummary | 
       const endorsedAt = textValue(endorser.endorsed_at);
       if (!displayName || !endorsedAt) return [];
       return [{
+        profileId: textValue(endorser.profile_id) || null,
         displayName,
         avatarUrl: textValue(endorser.avatar_url) || null,
         gradeLevelAtEndorsement: wholeNumber(endorser.grade_level_at_endorsement, 1, 6),
@@ -204,6 +207,7 @@ export function createProfileCertifEndorsementsRepository(client: SupabaseClient
           direction: sent ? "sent" : "received",
           state,
           roomIdSnapshot: textValue(record.room_id_snapshot),
+          counterpartProfileId: sent ? recipientId : senderId,
           counterpartDisplayName: sent
             ? textValue(record.recipient_display_name_snapshot, "Membre MeeWav")
             : textValue(record.sender_display_name_snapshot, "Membre MeeWav"),

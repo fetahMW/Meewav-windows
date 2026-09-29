@@ -1,3 +1,4 @@
+import { portraitProps } from "../../components/shared/portraitPreProfile";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown, ChevronRight, Clock3, Heart, Home, ListVideo, Play, Settings2, Tv, UserRound, UsersRound } from "lucide-react";
@@ -29,7 +30,7 @@ export default function SceneBrowseNavigation({ active, subscriptions, canPublis
       <Link className="scene-browse-nav__heading" to="/scene/following" onClick={onNavigate}>Abonnements <ChevronRight /></Link>
       <nav aria-label="Artistes suivis">
         {subscriptions.slice(0, showAll ? subscriptions.length : 7).map((artist) => <Link key={artist.artistId} to={getSceneArtistPath(artist.profileId ?? artist.artistId)} onClick={onNavigate} aria-current={active === artist.artistId ? "page" : undefined}>
-          <img src={artist.artistPortrait ?? artist.image} alt="" loading="lazy" /><span>{artist.artist}</span>
+          <img src={artist.artistPortrait ?? artist.image} alt="" loading="lazy" {...portraitProps({id:artist.profileId || artist.artistId,name:artist.artist,avatarUrl:artist.artistPortrait ?? artist.image})} /><span>{artist.artist}</span>
         </Link>)}
         {subscriptions.length === 0 && <p>Suis des artistes pour les retrouver ici.</p>}
         {subscriptions.length > 7 && <button type="button" onClick={() => setShowAll(!showAll)} aria-expanded={showAll}><ChevronDown /><span>{showAll ? "Moins" : "Plus"}</span></button>}

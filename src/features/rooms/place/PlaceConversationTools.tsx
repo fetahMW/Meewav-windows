@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import MeewavSelect from "../../../components/shared/MeewavSelect";
 import { RoomViewerSubmenu } from "./RoomViewerToolsLayout";
 import { Check, ChevronRight, Flag, Hand, Mic2, Pause, Play, Plus, RotateCcw, SkipForward, Square, Swords, Timer, UsersRound, X, Zap } from "lucide-react";
@@ -27,7 +28,7 @@ const durationLabel = (value: number) => value < 60 ? `${value} s` : value % 60 
 const findPerson = (people: PlaceToolPerson[], id?: string | null) => people.find((person) => person.id === id);
 
 function Portrait({ person, large = false, square = false }: { person?: PlaceToolPerson; large?: boolean; square?: boolean }) {
-  return <span className={`place-conversation__portrait${large ? " is-large" : ""}${square ? " is-square" : ""}`}>
+  return <span className={`place-conversation__portrait${large ? " is-large" : ""}${square ? " is-square" : ""}`} {...portraitProps(person && !square ? {id:person.id,name:person.name,avatarUrl:person.avatar} : null)}>
     {person?.avatar ? <img src={person.avatar} alt="" /> : <UsersRound aria-hidden="true" />}
   </span>;
 }

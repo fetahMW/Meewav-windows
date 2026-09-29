@@ -62,11 +62,14 @@ import { mapMessagingArtistGroupToWorkspace } from "./messaging.groups.workspace
 import "./messaging-page.css";
 import "./messaging-premium.css";
 import "./messaging-hub-polish.css";
+import "./messaging-wallpaper-preview.css";
+import "./messaging-console-material.css";
 
 function requestFromConversation(conversation: DemoConversation, token: number): ConversationRequest {
   return {
     token,
     id: conversation.id,
+    profileId: conversation.profileId,
     name: conversation.name,
     role: conversation.role,
     status: conversation.status,
@@ -80,6 +83,7 @@ function selectionRequestFromConversation(conversation: DemoConversation, token:
   return {
     token,
     id: conversation.id,
+    profileId: conversation.profileId,
     name: conversation.name,
     role: conversation.role,
     status: conversation.status,
@@ -91,6 +95,7 @@ function selectionRequestFromConversation(conversation: DemoConversation, token:
 function conversationSidebarItem(conversation: DemoConversation): MessagingSidebarItem {
   return {
     key: `messages:${conversation.id}`,
+    profileId: conversation.profileId,
     id: conversation.id,
     space: "messages",
     name: conversation.name,
@@ -118,6 +123,7 @@ function collabSidebarItem(collab: DemoCollab): MessagingSidebarItem {
     : collab.isReceived ? `Demande reçue depuis ${sourceLabel}` : `Demande envoyée depuis ${sourceLabel}`;
   return {
     key: `collabs:${collab.id}`,
+    profileId: collab.userId,
     id: collab.id,
     space: "collabs",
     name: collab.name,
@@ -561,6 +567,7 @@ export default function MessagingPage() {
     ));
     const conversation: DemoConversation = existing ?? {
       id: `globe-${normalizedTarget || "artist"}`,
+      profileId: targetId,
       name: routeState.mockArtistName ?? "Artiste du Globe",
       handle: routeState.source === "shorts"
         ? `Profil découvert sur ${SCENE_NAME}`

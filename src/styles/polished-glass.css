@@ -1,0 +1,47 @@
+/* Shared desktop glass: the selected messaging contact is the surface reference. */
+:root {
+  --mw-contact-selected-face: linear-gradient(180deg,transparent 74%,#a98ef01f),linear-gradient(135deg,#ffffff14,#ffffff03 28%,transparent 52%),linear-gradient(180deg,#2b234145,#1d153122 50%,#5137a142);
+  --mw-contact-selected-shadow: inset 0 1px #f0eaff1a,inset 0 -1px #a98ef040,0 2px 6px #00000014;
+  --mw-follow-face: linear-gradient(122deg,#ffffff08,transparent 48%),linear-gradient(180deg,#19171e59,#08070c33),linear-gradient(180deg,#303034,#1a191e 55%,#121116);
+  --mw-follow-shadow: inset 0 1px #ffffff12,inset 0 -1px 1px #0005,0 2px 4px #0006;
+  --mw-orb-face: radial-gradient(ellipse 38% 26% at 31% 23%,#f4edfff0,#d3c1f666 48%,transparent 75%),radial-gradient(circle at 35% 28%,#ae95df,#7457a5 33%,#291b43 65%,#483077 83%,#a98ef0);
+  --mw-orb-shadow: inset 1px 1px 2px #eee2ff66,inset -1px -2px 3px #10071bc2,0 2px 3px #0006;
+}
+
+/* A layer owns material only, above legacy unlayered overrides. */
+@layer meewav-polished-surfaces {
+  .rooms-page .place-chat__message.is-host {
+    border:1px solid #bca5ed42 !important; border-radius:12px !important;
+    background:var(--mw-contact-selected-face) !important; box-shadow:var(--mw-contact-selected-shadow) !important;
+    -webkit-backdrop-filter:blur(16px) !important; backdrop-filter:blur(16px) !important;
+  }
+  .room-viewer-host .room-viewer-host__follow:not(.is-following),
+  .mw-hover-preprofile-bubble__shell.is-black-glass .mw-preprofile__button--primary:not(.is-active) {
+    border-color:transparent !important; background:var(--mw-follow-face) !important;
+    box-shadow:var(--mw-follow-shadow) !important; color:#dfe4ef !important;
+  }
+  .room-viewer-host .room-viewer-host__follow.is-following {
+    border-color:transparent !important; background:var(--mw-primary-face) !important;
+    box-shadow:var(--mw-primary-shadow) !important; color:#fff !important;
+  }
+  .profile-pulse-chart__point,
+  .profile-chart-point:is(.is-endpoint,.is-active,.is-pinned)::before,
+  .tremplin-artist-analytics__chart-point:is(.is-active,.is-pinned)::before {
+    box-sizing:border-box !important; border:1px solid #c8b4e780 !important;
+    border-radius:50% !important; background:var(--mw-orb-face) !important;
+    box-shadow:var(--mw-orb-shadow) !important;
+  }
+}
+
+@layer meewav-polished-surfaces {
+  .mw-chart-orb__body {
+    fill:var(--mw-orb-paint) !important; stroke:#c8b4e780 !important; stroke-width:1px !important;
+    opacity:1 !important; filter:drop-shadow(0 1px 1px #0008) !important;
+  }
+  .mw-chart-orb__shine { fill:var(--mw-orb-shine) !important; stroke:none !important; opacity:1 !important; filter:none !important; }
+}
+
+/* Keep the latest value visible when another sample is pinned or hovered. */
+@layer meewav-polished-surfaces {
+  .profile-chart-point.is-endpoint::before { width:15px !important; height:15px !important; opacity:1 !important; }
+}

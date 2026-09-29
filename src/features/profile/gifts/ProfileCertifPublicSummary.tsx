@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import { BadgeCheck, ShieldAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -37,7 +38,7 @@ export default function ProfileCertifPublicSummary({ profileId, profileName }: {
     </dl>
     {summary.recentPublicEndorsers.length > 0 ? <div className="profile-viewer-certif-card__people">
       {summary.recentPublicEndorsers.slice(0, 4).map((endorser) => <span key={`${endorser.displayName}:${endorser.endorsedAt}`} title={`${endorser.displayName} · grade ${endorser.gradeLevelAtEndorsement}`}>
-        {endorser.avatarUrl ? <img src={endorser.avatarUrl} alt="" loading="lazy" /> : <BadgeCheck aria-hidden="true" />}
+        {endorser.avatarUrl ? <img {...portraitProps(endorser.profileId ? {id:endorser.profileId,name:endorser.displayName,avatarUrl:endorser.avatarUrl || undefined} : null)} src={endorser.avatarUrl} alt="" loading="lazy" /> : <BadgeCheck aria-hidden="true" />}
         <strong>{endorser.displayName}</strong>
         <small>Grade {endorser.gradeLevelAtEndorsement}</small>
       </span>)}

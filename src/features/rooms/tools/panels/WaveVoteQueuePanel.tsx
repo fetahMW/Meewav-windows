@@ -139,7 +139,7 @@ export default function WaveVoteQueuePanel({ wave, role, disabled, execute, sour
     <div className="wave-sas__queue" role="region" aria-label="Boucles validées pour le vote">
       {queue.map(item => {
         const category = categoryFor(item);
-        return <WaveLoopCard key={item.id} accent={category.color} avatarUrl={item.contributor.avatarUrl}
+        return <WaveLoopCard key={item.id} accent={category.color} profileId={item.contributor.id} avatarUrl={item.contributor.avatarUrl}
           avatarFallback={item.contributor.name.charAt(0)} title={item.contributor.name} detail={item.title}
           grade={<MeewavGradeBadge className="wave-sas-card__grade" level={contributorGrade(item)} size="xl" variant="icon" labelMode="none" />}
           category={category.badge} meta={`${item.bars} mesures · ${Math.round(item.bpm)} BPM`}

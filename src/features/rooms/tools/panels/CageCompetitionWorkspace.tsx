@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../../components/shared/portraitPreProfile";
 import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Camera, Check, ChevronRight, CircleCheck, Clock3, Crown, LockKeyhole, Mic, MonitorUp, Pause, Play, RefreshCw, Settings2, ShieldCheck, Shuffle, Swords, Trophy, Users, Wifi } from "lucide-react";
@@ -51,7 +52,7 @@ function formatTime(seconds: number) { const value = Math.max(0, Math.ceil(secon
 
 function Person({ participant, label }: { participant?: TournamentParticipant; label?: string }) {
   return <span className="cage-workspace__person">
-    {participant?.person.avatarUrl ? <img src={participant.person.avatarUrl} alt="" /> : <span className="cage-workspace__avatar"><Users aria-hidden="true" /></span>}
+    {participant?.person.avatarUrl ? <img {...portraitProps({id:participant.person.id,name:participant.person.name,avatarUrl:participant.person.avatarUrl})} src={participant.person.avatarUrl} alt="" /> : <span className="cage-workspace__avatar"><Users aria-hidden="true" /></span>}
     <span><strong>{participant?.person.name ?? label ?? "À déterminer"}</strong><small>{participant ? participant.present === false ? "Connexion perdue" : PHASE[participant.status] : "En attente du résultat"}</small></span>
     {participant && ready(participant) ? <CircleCheck className="is-ready" aria-label="Prêt" /> : null}
   </span>;

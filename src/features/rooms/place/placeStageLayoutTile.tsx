@@ -1,3 +1,4 @@
+import { openPortraitPreProfile } from "../../../components/shared/portraitPreProfile";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 import { CameraOff, Ellipsis, Radio, WifiOff } from "lucide-react";
 import { meewavMediaSession } from "../../scene/mediaSession/mediaSessionCoordinator";
@@ -525,7 +526,7 @@ export default function PlaceStageLayoutTile({
       {!presentationOnly ? <button
         type="button"
         className="place-stage-layout__profile"
-        onClick={(event) => { event.stopPropagation(); onOpenProfile(participant.profile.id); }}
+        onClick={(event) => { event.stopPropagation(); openPortraitPreProfile({id:participant.profile.id,name:participant.profile.displayName,avatarUrl:participant.profile.avatarUrl}); }}
         aria-label={`Voir le profil de ${participant.profile.displayName}`}
         title={participant.profile.displayName}
       >

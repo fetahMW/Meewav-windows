@@ -142,6 +142,7 @@ export function mapConversationRowToViewModel(
 
   return {
     id: row.conversation_id,
+    profileId: group ? null : row.counterpart_profile_id,
     name,
     handle: group
       ? "Groupe d’artistes"

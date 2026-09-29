@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../components/shared/portraitPreProfile";
 import MeewavSelect from "../../../components/shared/MeewavSelect";
 import RoomViewerToolsLayout from "./RoomViewerToolsLayout";
 import RoomJuryControl from "../voting/RoomJuryControl";
@@ -804,7 +805,7 @@ function PlaceChat({ room, canEngage, isHost, active, onSend, onPinMessage, onDe
               >
                 <header>
                   <span className="place-chat__author">
-                    <span className="place-chat__portrait" aria-hidden="true">
+                    <span className="place-chat__portrait" {...portraitProps(message.author?.id ? {id:message.author.id,name:authorName,avatarUrl:message.author.avatarUrl} : null)}>
                       {authorName.slice(0, 1)}
                       {message.author?.avatarUrl ? <img src={message.author.avatarUrl} alt="" decoding="async" onError={(event) => { event.currentTarget.style.display = "none"; }} /> : null}
                     </span>
@@ -1285,7 +1286,7 @@ function PlaceChatWorkspace({
     onSelect={(tool) => { setToolError(null); setActiveTool(tool); }}
     semantics="tabs"
   />;
-  const messagePicker = <fieldset className="place-chat-message-picker"><legend>Choisir un message récent</legend><div>{selectableMessages.slice(-12).reverse().map((message) => <label key={message.id} className={selectedMessageId === message.id ? "is-selected" : ""}><input type="radio" name={`chat-message-${activeTool}`} value={message.id} checked={selectedMessageId === message.id} onChange={() => setSelectedMessageId(message.id)} /><img src={message.author?.avatarUrl} alt="" /><span><strong>{message.author?.displayName}</strong><span><MeeWavRichText>{message.content}</MeeWavRichText></span></span></label>)}{!selectableMessages.length ? <p>Aucun message à sélectionner pour le moment.</p> : null}</div></fieldset>;
+  const messagePicker = <fieldset className="place-chat-message-picker"><legend>Choisir un message récent</legend><div>{selectableMessages.slice(-12).reverse().map((message) => <label key={message.id} className={selectedMessageId === message.id ? "is-selected" : ""}><input type="radio" name={`chat-message-${activeTool}`} value={message.id} checked={selectedMessageId === message.id} onChange={() => setSelectedMessageId(message.id)} /><img {...portraitProps(message.author ? {id:message.author.id,name:message.author.displayName,avatarUrl:message.author.avatarUrl} : null)} src={message.author?.avatarUrl} alt="" /><span><strong>{message.author?.displayName}</strong><span><MeeWavRichText>{message.content}</MeeWavRichText></span></span></label>)}{!selectableMessages.length ? <p>Aucun message à sélectionner pour le moment.</p> : null}</div></fieldset>;
   const durationPicker = <fieldset className="place-tool-card__section"><legend>Durée d’affichage</legend><div className="place-tool-card__durations" aria-label="Durée d’affichage">{([10, 20, 30] as const).map((duration) => <button type="button" key={duration} className={highlightDuration === duration ? "is-active" : ""} aria-pressed={highlightDuration === duration} onClick={() => setHighlightDuration(duration)}>{duration} s</button>)}</div></fieldset>;
   const toolPanel = <>
       {!giftOnly ? <section id="place-chat-panel-messages" role="tabpanel" aria-labelledby="place-chat-action-messages" className="place-chat-workspace__panel" hidden={activeTool !== "messages"}><PlaceChat room={room} canEngage={canEngage} isHost={isHost} active={active && activeTool === "messages"} onSend={onSendMessage} onPinMessage={onPinMessage} onDeleteMessage={onDeleteMessage} /></section> : null}

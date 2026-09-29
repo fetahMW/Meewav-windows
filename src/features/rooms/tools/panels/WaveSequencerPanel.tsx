@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../../components/shared/portraitPreProfile";
 import MeewavSelect from "../../../../components/shared/MeewavSelect";
 import { submissionAsset, useWaveTransport, useWaveTransportState } from "../../wave-transport/WaveTransportProvider";
 import {
@@ -355,7 +356,7 @@ export default function WaveSequencerPanel({ wave, role, disabled, execute, sour
         const rowPreviewReady = source === "demo" || officialPreviews[submission.id]?.status === "ready";
         return <article key={submission.id} data-submission-id={submission.id} className={`wave-vote-row${active ? " is-selected" : ""}${submission.vote?.open ? " is-live" : ""}${lockedOut ? " is-locked" : ""}`} style={{ "--vote-category": category.color } as CSSProperties}>
           <button type="button" className="wave-vote-row__select" aria-label={`Sélectionner ${submission.contributor.name}`} aria-pressed={active} aria-controls="wave-vote-control-dock" disabled={lockedOut} onClick={() => selectCandidate(submission)}>
-            <span className="wave-vote-row__avatar"><em>{submission.contributor.name.charAt(0)}</em>{submission.contributor.avatarUrl ? <img src={submission.contributor.avatarUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}</span>
+            <span className="wave-vote-row__avatar"><em>{submission.contributor.name.charAt(0)}</em>{submission.contributor.avatarUrl ? <img {...portraitProps({id:submission.contributor.id,name:submission.contributor.name,avatarUrl:submission.contributor.avatarUrl})} src={submission.contributor.avatarUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}</span>
             <span className="wave-vote-row__identity"><strong>{submission.contributor.name}</strong><MeewavGradeBadge className="wave-vote-row__grade" level={contributorGrade(submission)} size="lg" variant="icon" labelMode="none" title={`Badge de ${submission.contributor.name}`} /></span>
             <span className="wave-vote-row__meta"><b>{category.badge}</b></span>
           </button>
@@ -368,7 +369,7 @@ export default function WaveSequencerPanel({ wave, role, disabled, execute, sour
     {selected && selectedCategory ? <nav id="wave-vote-control-dock" className="wave-vote-dock" aria-label="Pilotage du vote public" aria-live="polite" style={{ "--candidate-category": selectedCategory.color } as CSSProperties}>
       <div className="wave-vote-dock__main">
         <section className="wave-vote-dock__identity" aria-label="Candidate sélectionnée">
-          <span className="wave-vote-dock__avatar"><em>{selected.contributor.name.charAt(0)}</em>{selected.contributor.avatarUrl ? <img src={selected.contributor.avatarUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}</span>
+          <span className="wave-vote-dock__avatar"><em>{selected.contributor.name.charAt(0)}</em>{selected.contributor.avatarUrl ? <img {...portraitProps({id:selected.contributor.id,name:selected.contributor.name,avatarUrl:selected.contributor.avatarUrl})} src={selected.contributor.avatarUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}</span>
           <span className="wave-vote-dock__candidate"><span className="wave-vote-dock__candidate-name"><strong>{selected.contributor.name}</strong><MeewavGradeBadge className="wave-vote-dock__grade" level={contributorGrade(selected)} size="sm" variant="icon" labelMode="none" title={`Badge de ${selected.contributor.name}`} /></span><b className="wave-vote-dock__category">{selectedCategory.badge}</b><small className="wave-vote-dock__technical">{selected.bpm} BPM · {formatDuration(selected.durationSeconds)}</small></span>
         </section>
         <WaveListeningModeSelector className="wave-vote-dock__mode" mode={mode} disabled={disabled || voteOpen || voteFinished} onChange={selectMode} soloLabel="Écoute officielle en solo" beatLabel="Écoute officielle avec le beat" />

@@ -1,3 +1,4 @@
+import { openPortraitPreProfile } from "../../../components/shared/portraitPreProfile";
 import { useEffect, useId, useState } from "react";
 import { MeewavGradeBadge } from "../../grades/MeewavGradeBadge";
 import { normalizeOptionalGradeLevel } from "../../grades/gradeBadges";
@@ -53,7 +54,7 @@ export function CageBannerPerson({ person, side, status, onOpenProfile }: {
   const grade = normalizeOptionalGradeLevel(person.gradeLevel);
   const initials = person.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("");
 
-  return <button type="button" className={`cage-battle-banner__clock-person is-${side}`} onClick={() => onOpenProfile(person.id)} aria-label={`Voir le profil de ${person.name}`}>
+  return <button type="button" className={`cage-battle-banner__clock-person is-${side}`} onClick={() => openPortraitPreProfile({id:person.id,name:person.name,avatarUrl:person.avatarUrl,role:person.role})} aria-label={`Voir le profil de ${person.name}`}>
     <span className="cage-battle-banner__person-portrait">
       {person.avatarUrl && failedAvatar !== person.avatarUrl
         ? <img src={person.avatarUrl} alt={`Portrait de ${person.name}`} onError={() => setFailedAvatar(person.avatarUrl)} />

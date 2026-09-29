@@ -277,3 +277,40 @@
   #root .mw-hub-chips.meewav-pillar-tabs .meewav-pillar-tabs__icon svg { display:block !important; width:17px !important; height:17px !important; }
   #root .mw-hub-chips.meewav-pillar-tabs > button:focus-visible { outline:2px solid #a98ef0; outline-offset:-2px; }
 }
+
+/* Mixer navigation stays on the console: labels and the Profile/Médias underline. */
+@layer meewav-navigation-reference {
+  #root .place-mixer__subnav {
+    display:grid !important; grid-auto-flow:column !important; grid-auto-columns:minmax(0,1fr) !important;
+    grid-template-columns:none !important; grid-template-rows:36px !important;
+    height:40px !important; min-height:40px !important; padding:2px 0 !important; gap:0 !important;
+    border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important;
+  }
+  #root .place-mixer__subnav::before,
+  #root .place-mixer__subnav::after,
+  #root .place-mixer__subnav > button::before,
+  #root .place-mixer__subnav > button::after { display:none !important; content:none !important; }
+  #root .place-mixer__subnav > button {
+    position:relative !important; display:flex !important; flex-direction:row !important;
+    align-items:center !important; justify-content:center !important; gap:6px !important;
+    min-width:0 !important; height:36px !important; min-height:36px !important; margin:0 !important; padding:0 4px 8px !important;
+    border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important;
+    font-size:12px !important; font-weight:550 !important; line-height:16px !important;
+    color:#aaa6b7 !important; text-shadow:none !important; transform:none !important;
+  }
+  #root .place-mixer__subnav > button:is(.is-active,:hover,:focus-visible) { color:#f4f0fa !important; }
+  #root .place-mixer__subnav > button:disabled { opacity:.4 !important; }
+  #root .place-mixer__subnav > button:focus-visible { outline:1px solid #a98ef0 !important; outline-offset:-1px !important; }
+  #root .place-mixer__subnav > button > svg { position:static !important; width:16px !important; height:16px !important; flex:0 0 16px !important; color:inherit !important; filter:none !important; }
+  #root .place-mixer__subnav > button.is-active > svg { color:var(--mw-accent-secondary) !important; }
+  #root .place-mixer__subnav > button > span { position:relative !important; display:inline-block !important; width:auto !important; padding:0 !important; line-height:16px !important; }
+  #root .place-mixer__subnav > button > span::after,
+  #root .place-mixer__subnav > button > span::before {
+    content:''; position:absolute; top:calc(100% + var(--mw-nav-label-gap)); left:50%; width:calc(100% + 12px);
+    height:var(--mw-nav-core-height); border:0; border-radius:99px; pointer-events:none;
+    background:var(--mw-nav-core); transform:translateX(-50%); opacity:0;
+  }
+  #root .place-mixer__subnav > button > span::before { height:var(--mw-nav-haze-height); background:var(--mw-nav-haze); filter:blur(var(--mw-nav-haze-blur)); }
+  #root .place-mixer__subnav > button.is-active > span::after { opacity:1; }
+  #root .place-mixer__subnav > button.is-active > span::before { opacity:var(--mw-nav-haze-opacity); }
+}

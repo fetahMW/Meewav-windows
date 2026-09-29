@@ -1,3 +1,4 @@
+import { portraitProps } from "../../components/shared/portraitPreProfile";
 import { demoTrackPackAudio } from "./demoTrackPackAudio";
 import { requestDirectCall } from "./MessagingCalls";
 import {
@@ -146,6 +147,7 @@ function storeContactRailWidth(value: number) {
 }
 
 export type ConversationRequest = {
+  profileId?: string | null;
   token: number;
   id: string;
   name: string;
@@ -963,18 +965,18 @@ export function TrackPackCard({ message, onOpen }: { message: DemoMessage; onOpe
   );
 }
 
-function ConversationAvatar({ conversation, small = false, showPresence = true }: { conversation: Pick<DemoConversation, "avatar" | "online">; small?: boolean; showPresence?: boolean }) {
+function ConversationAvatar({ conversation, small = false, showPresence = true }: { conversation: Pick<DemoConversation, "avatar" | "online"> & Partial<DemoConversation>; small?: boolean; showPresence?: boolean }) {
   return (
-    <span className={`mw-avatar ${small ? "is-small" : ""}`}>
+    <span className={`mw-avatar ${small ? "is-small" : ""}`} {...portraitProps(conversation.conversationKind && conversation.conversationKind !== "direct" ? null : conversation.profileId ? {id:conversation.profileId || conversation.id!,name:conversation.name,avatarUrl:conversation.avatar,role:conversation.role} : null)}>
       <img src={conversation.avatar} alt="" />
       {showPresence && conversation.online && <i />}
     </span>
   );
 }
 
-function SidebarItemAvatar({ item, showPresence = true }: { item: Pick<MessagingSidebarItem, "avatar" | "online">; showPresence?: boolean }) {
+function SidebarItemAvatar({ item, showPresence = true }: { item: Pick<MessagingSidebarItem, "avatar" | "online"> & Partial<MessagingSidebarItem>; showPresence?: boolean }) {
   return (
-    <span className="mw-avatar">
+    <span className="mw-avatar" {...portraitProps(item.profileId ? {id:item.profileId,name:item.name,avatarUrl:item.avatar,role:item.role} : null)}>
       <img src={item.avatar} alt="" />
       {showPresence && item.online && <i />}
     </span>
@@ -1570,6 +1572,7 @@ function NewConversationDialog({
         const existing = conversations.find((conversation) => conversation.handle === `@${contact.username}`);
         onCreate(existing ?? {
           id: `conversation-${contact.id}`,
+          profileId: contact.id,
           name: contact.displayName,
           handle: `@${contact.username}`,
           role: contact.role,
@@ -1612,14 +1615,14 @@ function NewConversationDialog({
     <Overlay label="Nouvelle conversation" onClose={onClose}>
       <header className="mw-dialog__header"><div><span>NOUVELLE CONVERSATION</span><h2>Trouver un ami</h2></div><button type="button" className="mw-icon-button" onClick={onClose} aria-label="Fermer"><X /></button></header>
       <label className="mw-dialog-search"><Search /><input autoFocus value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Nom ou @identifiant" aria-label="Rechercher un ami sur Meewav" /></label>
-      {selectedContacts.length > 0 && <div className="mw-selected-contacts">{selectedContacts.map((contact) => <button type="button" key={contact.id} onClick={() => toggle(contact)}><ConversationAvatar conversation={{ avatar: contact.avatar, online: contact.online }} small /><span>{contact.displayName.split(" ")[0]}</span><X /></button>)}</div>}
+      {selectedContacts.length > 0 && <div className="mw-selected-contacts">{selectedContacts.map((contact) => <button type="button" key={contact.id} onClick={() => toggle(contact)}><ConversationAvatar conversation={{ avatar: contact.avatar, online: contact.online, profileId:contact.id, name:contact.displayName, role:contact.role }} small /><span>{contact.displayName.split(" ")[0]}</span><X /></button>)}</div>}
       <div className="mw-contact-picker">
         {live && search.trim().replace(/^@/, "").length < 2 && <div className="mw-list-empty"><Search /><strong>Retrouve tes amis sur Meewav</strong><span>Saisis au moins deux lettres de leur nom ou de leur identifiant.</span></div>}
         {live?.contactsStatus === "loading" && <div className="mw-list-empty"><Search /><strong>Recherche en cours…</strong></div>}
         {live?.contactsStatus === "error" && <div className="mw-list-empty"><Info /><strong>Recherche indisponible</strong><span>{live.contactsError}</span></div>}
         {visible.map((contact) => (
           <button type="button" key={contact.id} className={selectedContacts.some((item) => item.id === contact.id) ? "is-selected" : ""} onClick={() => toggle(contact)}>
-            <ConversationAvatar conversation={{ avatar: contact.avatar, online: contact.online }} />
+            <ConversationAvatar conversation={{ avatar: contact.avatar, online: contact.online, profileId:contact.id, name:contact.displayName, role:contact.role }} />
             <span><strong>{contact.displayName}</strong><small>{contact.username.startsWith("@") ? contact.username : `@${contact.username}`} · {contact.role}</small></span>
             <i>{selectedContacts.some((item) => item.id === contact.id) && <Check />}</i>
           </button>
@@ -2258,6 +2261,7 @@ export default function MessageWorkspace({
       }
       const created: DemoConversation = openRequest.conversation ?? {
         id: openRequest.id,
+        profileId: openRequest.group ? null : openRequest.profileId,
         name: openRequest.name,
         handle: openRequest.group ? "Groupe d'artistes" : `@${openRequest.name.toLowerCase().replace(/\s+/g, "_")}`,
         role: openRequest.role,
@@ -2963,7 +2967,7 @@ export default function MessageWorkspace({
                 const mutating = liveController.isInvitationMutating?.(invitation.conversation_id) ?? false;
                 return (
                   <article key={invitation.conversation_id}>
-                    <ConversationAvatar small conversation={{ avatar: invitation.inviter_avatar_url ?? "/avatars/utilisateur.png", online: false }} />
+                    <ConversationAvatar small conversation={{ avatar: invitation.inviter_avatar_url ?? "/avatars/utilisateur.png", online: false, profileId:invitation.inviter_profile_id, name:invitation.inviter_display_name }} />
                     <span><strong>{invitation.title}</strong><small>Invité par {invitation.inviter_display_name} · {invitation.requested_member_count} membres</small></span>
                     <div>
                       <button type="button" disabled={mutating} onClick={() => void liveController.respondToInvitation?.(invitation.conversation_id, false)}>Refuser</button>

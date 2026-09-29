@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../../components/shared/portraitPreProfile";
 import { ArrowDown, ArrowUp, Search, Users } from "lucide-react";
 import { useState } from "react";
 import type { TournamentParticipant } from "../cageCompetition.types";
@@ -41,7 +42,7 @@ export default function CageArtistPicker({ people, selectedIds, maximum, disable
         const locked = lockedIds.includes(person.id);
         return <div className={`cage-artist-picker__row${chosen ? " is-selected" : ""}`} key={person.id}>
           <label><input type="checkbox" aria-label={`Sélectionner ${person.person.name}`} checked={chosen} disabled={disabled || locked || (!chosen && (selectedIds.length >= maximum || !person.present || !person.eligible))} onChange={event => onSelect(person.id, event.target.checked)} />
-            {person.person.avatarUrl ? <img src={person.person.avatarUrl} alt="" /> : <Users aria-hidden="true" />}
+            {person.person.avatarUrl ? <img {...portraitProps({id:person.person.id,name:person.person.name,avatarUrl:person.person.avatarUrl,role:person.person.role})} src={person.person.avatarUrl} alt="" /> : <Users aria-hidden="true" />}
             <span><strong>{person.person.name}</strong><small>{!person.present ? "Indisponible" : chosen ? solo ? `Passage ${index + 1}${statusLabels[person.id] ? ` · ${statusLabels[person.id]}` : ""}` : championship ? `Position ${index + 1}` : battle && index > 1 ? `Challenger ${index - 1}` : `Duel ${Math.floor(index / 2) + 1} · ${index % 2 === 0 ? "A" : "B"}` : person.person.role}</small></span>
           </label>
           {chosen ? <span className="cage-artist-picker__order"><button type="button" aria-label={`Monter ${person.person.name}`} disabled={disabled || locked || index === 0 || lockedIds.includes(selectedIds[index - 1])} onClick={() => onMove(person.id, -1)}><ArrowUp aria-hidden="true" /></button><button type="button" aria-label={`Descendre ${person.person.name}`} disabled={disabled || locked || index === selectedIds.length - 1 || lockedIds.includes(selectedIds[index + 1])} onClick={() => onMove(person.id, 1)}><ArrowDown aria-hidden="true" /></button></span> : null}

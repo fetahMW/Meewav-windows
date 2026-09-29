@@ -1,4 +1,5 @@
 import "./styles/navigation-indicator.css";
+import "./styles/polished-glass.css";
 import './styles/primary-cta-material.css'
 import "./styles/compact-control-material.css";
 import { StrictMode } from 'react'

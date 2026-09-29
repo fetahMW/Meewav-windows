@@ -1,3 +1,4 @@
+import { portraitProps } from "../../components/shared/portraitPreProfile";
 import RailEdgeNavigation from "../../components/shared/rail/RailEdgeNavigation";
 import {
   ArrowRight,
@@ -2054,7 +2055,7 @@ export default function MarketPage() {
               )}
 
               <div className="market-detail__seller">
-                <span className="market-detail__seller-avatar">
+                <span className="market-detail__seller-avatar" {...portraitProps({id:selectedProduct.seller.profileId || (!marketLive.active ? selectedProduct.seller.id : ""),name:selectedProduct.seller.name,avatarUrl:selectedSellerPortrait || undefined})}>
                   {selectedSellerPortrait ? (
                     <img src={selectedSellerPortrait} alt="" />
                   ) : (

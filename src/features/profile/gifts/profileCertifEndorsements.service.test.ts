@@ -29,6 +29,10 @@ const summary = {
 };
 
 describe("Profile Certif repository", () => {
+  it("preserves the public endorser identity when the RPC exposes it", () => {
+    const result = mapProfileCertifSummary({...summary, recent_public_endorsers:[{...summary.recent_public_endorsers[0], profile_id: ENDORSEMENT_ID}]});
+    expect(result?.recentPublicEndorsers[0].profileId).toBe(ENDORSEMENT_ID);
+  });
   it("maps only the signed community context and never promotes it to official verification", () => {
     expect(mapProfileCertifSummary({ ...summary, official_meewav_verification: true })).toEqual({
       profileId: PROFILE_ID,
@@ -39,6 +43,7 @@ describe("Profile Certif repository", () => {
       verifiedEndorsers: 1,
       signalContextVersion: "profile-signals-v1",
       recentPublicEndorsers: [{
+        profileId: null,
         displayName: "Naya Oris",
         avatarUrl: "https://cdn.example/naya.webp",
         gradeLevelAtEndorsement: 5,

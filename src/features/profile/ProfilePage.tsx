@@ -1,3 +1,4 @@
+import { portraitProps } from "../../components/shared/portraitPreProfile";
 import { getDesktopApplicationMode } from "../../runtime/applicationMode";
 import {
   ArrowRight,
@@ -311,7 +312,7 @@ export default function ProfilePage() {
 
         <div className="profile-command-bar__actions">
           <button type="button" className="profile-command-avatar" onClick={() => setDialog({ type: "edit-profile" })} aria-label="Modifier le profil">
-            <img src={profile.avatarUrl} alt="" /><span><strong>{profile.displayName}</strong><small>{profile.username}</small></span>
+            <img src={profile.avatarUrl} alt="" {...portraitProps({id:user?.id || (demoFallbackEnabled ? "meewav-demo-owner" : ""),name:profile.displayName,avatarUrl:profile.avatarUrl})} /><span><strong>{profile.displayName}</strong><small>{profile.username}</small></span>
           </button>
         </div>
       </header>

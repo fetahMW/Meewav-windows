@@ -1,3 +1,4 @@
+import { portraitProps } from "../../../../components/shared/portraitPreProfile";
 import { CheckCircle2, CircleHelp, Clock3, MessageCircle, Mic, MonitorUp, Radio, ThumbsUp, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
@@ -258,7 +259,7 @@ export default function ClassQuestionsPanel({
         <article className="class-question-card is-featured">
           <header className="class-question-card__header">
             <span className="class-question__author">
-              <img src={featuredAuthor.avatarUrl} alt="" />
+              <img {...portraitProps({id:featuredAuthor.id,name:featuredAuthor.name,avatarUrl:featuredAuthor.avatarUrl})} src={featuredAuthor.avatarUrl} alt="" />
               <span>
                 <strong>{featuredAuthor.name}</strong>
                 <small>
@@ -319,7 +320,7 @@ export default function ClassQuestionsPanel({
         return <article key={question.id} role="listitem" className={`class-question-card is-${question.status}`}>
             <header className="class-question-card__header">
               <span className="class-question__author">
-                <img src={author.avatarUrl} alt="" loading="lazy" />
+                <img {...portraitProps({id:author.id,name:author.name,avatarUrl:author.avatarUrl})} src={author.avatarUrl} alt="" loading="lazy" />
                 <span><strong>{author.name}</strong><small>Place {author.place ?? authorSeat?.number ?? "—"}</small></span>
               </span>
               <span className="class-question__meta">

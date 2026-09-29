@@ -1,0 +1,374 @@
+/* Messaging uses the mixer's graphite chassis and the shared polished-glass
+   controls. Solid bottom layers keep both message directions fully opaque. */
+@layer meewav-messaging-console;
+
+:is(.messaging-page, .mobile-messaging, .mw-track-studio) {
+  --msg-glass-incoming:
+    linear-gradient(125deg, #ffffff13, transparent 40%),
+    linear-gradient(180deg, #25262b, #151619 52%, #1b1c20);
+  --msg-glass-outgoing:
+    linear-gradient(125deg, #ffffff19, transparent 42%),
+    linear-gradient(180deg, #443679, #30234e 54%, #423069);
+  --msg-glass-shadow: inset 0 1px 1px #ffffff24, inset 0 -1px 2px #0007, 0 2px 5px #0004;
+  --msg-console-face:
+    linear-gradient(130deg, #ffffff12, transparent 34%) padding-box,
+    linear-gradient(180deg, #25262b, #151619 38%, #101114 82%, #1b1c20) padding-box,
+    linear-gradient(145deg, #85868e, #393a40 32%, #16171a 66%, #62636b) border-box;
+  --msg-console-shadow: inset 0 1px #ffffff26, inset 0 -2px 3px #000a, 0 3px 9px #0006;
+  --msg-console-well: linear-gradient(180deg, #08090c, #121317);
+}
+
+@layer meewav-messaging-console {
+  /* Only the rail container changes; selected contact rows keep their violet. */
+  :is(.messaging-page, .mobile-messaging) .mw-conversation-rail {
+    background: linear-gradient(115deg, #202126, #111215 65%, #0d0e11) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: inset 0 1px #ffffff0c !important;
+  }
+
+  :is(.messaging-page, .mobile-messaging) .mw-message :is(.mw-bubble--text, .mw-bubble--file, .mw-audio-capsule, .mw-brief) {
+    background: var(--msg-glass-incoming) !important;
+    background-color: #151619 !important;
+    border: 1px solid #515258 !important;
+    box-shadow: var(--msg-glass-shadow) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+    color: #f2eff7 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message.is-mine :is(.mw-bubble--text, .mw-bubble--file, .mw-audio-capsule, .mw-brief) {
+    background: var(--msg-glass-outgoing) !important;
+    background-color: #30234e !important;
+    border-color: #75608f !important;
+  }
+
+  /* The approved Android composer material, without changing its geometry. */
+  :is(.messaging-page, .mobile-messaging) :is(.mw-composer, .mwp-project-chat__composer) {
+    background: linear-gradient(125deg, #ffffff15, #ffffff05 48%, #ffffff0b), #17191faa !important;
+    border-color: #c5cbd335 !important;
+    border-top-color: #edf0f34d !important;
+    box-shadow: inset 0 1px #ffffff12, inset 0 -1px #0003, 0 6px 20px #0004 !important;
+    backdrop-filter: blur(22px) saturate(1.15) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.15) !important;
+  }
+  :is(.messaging-page, .mobile-messaging) :is(.mw-composer, .mwp-project-chat__composer):focus-within {
+    border-color: #8e89b575 !important;
+    border-top-color: #c5c1dd88 !important;
+  }
+
+  /* Opaque glass pills: full-size emoji and a clear reaction count. */
+  :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    min-width: 42px !important;
+    min-height: 36px !important;
+    height: auto !important;
+    padding: 4px 10px !important;
+    border: 1px solid #85838f !important;
+    border-radius: 18px !important;
+    background: linear-gradient(135deg, #ffffff12, transparent 55%), linear-gradient(180deg, #34343c, #202026) !important;
+    box-shadow: inset 0 1px #ffffff20, 0 2px 4px #0005 !important;
+    color: #faf8ff !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 26px !important;
+    opacity: 1 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button:is(:hover, [aria-pressed="true"]) {
+    border-color: #b8a3ed !important;
+    box-shadow: inset 0 1px #ffffff30, 0 0 0 1px #a98ef04d !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button:focus-visible {
+    outline: 2px solid #cbb5ff !important;
+    outline-offset: 3px !important;
+  }
+
+  /* A compact audio row: title, waveform and duration beside one glass disc. */
+  :is(.messaging-page, .mobile-messaging) .mw-message:has(.mw-audio-capsule) {
+    width: min(380px, 100%) !important;
+    max-width: 100% !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message .mw-audio-capsule {
+    display: grid !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    grid-template-columns: 40px minmax(0, 1fr) auto 28px !important;
+    grid-template-rows: 16px 24px !important;
+    align-items: center !important;
+    gap: 0 7px !important;
+    padding: 5px 9px !important;
+    border-radius: 20px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__title {
+    grid-column: 2 / 4 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: 11px !important;
+    line-height: 16px !important;
+    color: #e1d8ed !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__play {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 0 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__play svg {
+    width: 17px !important; height: 17px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__wave {
+    grid-column: 2 !important; grid-row: 2 !important; min-width: 0 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__wave .mw-waveform {
+    height: 20px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__duration {
+    grid-column: 3 !important; grid-row: 2 !important;
+    color: #c7bbda !important; font-size: 10px !important;
+    white-space: nowrap !important; font-variant-numeric: tabular-nums !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule__options {
+    grid-column: 4 !important; grid-row: 1 / 3 !important;
+    width: 28px !important; height: 40px !important;
+    padding: 0 !important; border: 0 !important;
+    background: transparent !important; box-shadow: none !important;
+    color: #d3c8e4 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-audio-capsule .mw-audio-error {
+    grid-column: 1 / -1 !important; grid-row: 3 !important;
+    margin: 4px 0 !important; font-size: 11px !important;
+  }
+
+  /* Exactly the send button material, including the standalone studio portal. */
+  :is(.messaging-page, .mobile-messaging) :is(.mw-audio-capsule__play, .mw-track-capsule__player > button, .mwp-stems-console__transport button.is-main),
+  .mw-track-studio :is(.mw-track-master__play, .mw-stem-row__play) {
+    background: var(--mw-primary-face) !important;
+    box-shadow: var(--mw-primary-shadow) !important;
+    border: 1px solid transparent !important;
+    border-radius: 50% !important;
+    color: #f4efff !important;
+    filter: none !important;
+  }
+
+  /* A single chassis, recessed transport and tactile instrument keys. */
+  :is(.messaging-page, .mobile-messaging) :is(.mw-track-capsule, .mwp-stems-console),
+  .mw-track-studio .mw-track-studio__window {
+    background: var(--msg-console-face) !important;
+    border: 1px solid transparent !important;
+    box-shadow: var(--msg-console-shadow) !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule {
+    width: 100% !important; max-width: 480px !important;
+    min-height: 0 !important; height: auto !important;
+    border-radius: 24px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule::before,
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule::after {
+    display: none !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule > header {
+    grid-template-columns: 38px minmax(0, 1fr) auto !important;
+    min-height: 0 !important; padding: 14px 12px !important; gap: 10px !important;
+    background: none !important; border: 0 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__icon > .mw-track-pack-mark {
+    width: 38px !important; height: 38px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule > header strong {
+    font-size: 15px !important; color: #f0edf4 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule > header small {
+    font-size: 9px !important; letter-spacing: .09em !important; color: #a98ef0 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule > header em {
+    font-size: 11px !important; color: #a9a5b3 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__player {
+    display: grid !important; grid-template-columns: 42px minmax(0, 1fr) auto !important;
+    align-items: center !important; min-height: 0 !important;
+    margin: 0 12px 12px !important; padding: 8px 10px !important; gap: 9px !important;
+    border: 1px solid #36363e !important; border-radius: 18px !important;
+    background: var(--msg-console-well) !important;
+    box-shadow: inset 0 2px 5px #000a, 0 1px #ffffff0c !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__player > button {
+    width: 42px !important; height: 42px !important; padding: 0 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__player .mw-waveform {
+    width: 100% !important; min-width: 0 !important; height: 32px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__player > span {
+    color: #c0b8ce !important; font-size: 10px !important;
+    white-space: nowrap !important; font-variant-numeric: tabular-nums !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__stems {
+    display: flex !important; flex-wrap: wrap !important;
+    gap: 6px !important; padding: 0 12px 12px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) :is(.mw-track-capsule__launch, .mw-track-capsule__stems button, .mwp-stems-console__mix > button),
+  .mw-track-studio :is(.mw-stem-row__actions button, .mw-track-studio__download, .mw-track-studio__close) {
+    background: var(--mw-control-face) !important;
+    box-shadow: var(--mw-control-shadow) !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    color: #d9d4e1 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__launch {
+    width: auto !important; min-height: 36px !important;
+    padding: 0 10px !important; font-size: 11px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__stems button {
+    min-height: 34px !important; height: auto !important; gap: 5px !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule__stems button.is-on,
+  .mw-track-studio .mw-stem-row__actions button.is-active {
+    background: var(--mw-primary-face) !important;
+    box-shadow: var(--mw-primary-shadow) !important;
+    color: #f4efff !important;
+  }
+
+  /* The open Track Pack uses a fluid header instead of overlapping controls. */
+  .mw-track-studio .mw-track-studio__window {
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    border-radius: 28px !important;
+  }
+  .mw-track-studio .mw-track-studio__ambient { display: none !important; }
+  .mw-track-studio .mw-track-studio__hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto 40px !important;
+    grid-template-rows: auto auto auto !important;
+    align-items: center !important;
+    gap: 8px 14px !important;
+    height: auto !important; min-height: 0 !important;
+    padding: 22px 22px 16px !important;
+    background: none !important; border-bottom: 1px solid #ffffff0c !important;
+  }
+  .mw-track-studio .mw-track-studio__hero h1 {
+    grid-column: 1 !important; grid-row: 1 !important;
+    margin: 0 !important; min-width: 0 !important;
+    font-size: clamp(19px, 2.2vw, 28px) !important;
+    line-height: 1.2 !important; overflow-wrap: anywhere !important;
+    color: #f0edf4 !important; letter-spacing: -.025em !important;
+  }
+  .mw-track-studio .mw-track-studio__hero > p {
+    grid-column: 1 !important; grid-row: 2 !important;
+    margin: 0 !important; gap: 7px !important; flex-wrap: wrap !important;
+    font-size: 11px !important; color: #aaa5b5 !important;
+  }
+  .mw-track-studio :is(.mw-track-studio__download, .mw-track-studio__close, .mw-track-studio__rule, .mw-track-master) {
+    position: static !important; inset: auto !important; transform: none !important;
+    margin: 0 !important;
+  }
+  .mw-track-studio .mw-track-studio__download {
+    grid-column: 2 !important; grid-row: 1 !important;
+    min-height: 38px !important; padding: 0 12px !important; font-size: 12px !important;
+  }
+  .mw-track-studio .mw-track-studio__close {
+    grid-column: 3 !important; grid-row: 1 !important;
+    width: 40px !important; height: 40px !important; padding: 0 !important;
+    display: grid !important; place-items: center !important; border-radius: 50% !important;
+  }
+  .mw-track-studio .mw-track-studio__rule {
+    grid-column: 2 / -1 !important; grid-row: 2 !important;
+    width: auto !important; min-height: 0 !important; padding: 0 !important;
+    background: none !important; border: 0 !important; box-shadow: none !important;
+    font-size: 10px !important; color: #9691a0 !important; justify-self: end !important;
+  }
+  .mw-track-studio .mw-track-master {
+    grid-column: 1 / -1 !important; grid-row: 3 !important;
+    display: grid !important; grid-template-columns: 48px minmax(0, 1fr) 92px !important;
+    width: 100% !important; min-height: 0 !important; gap: 12px !important;
+    margin-top: 8px !important; padding: 10px 12px !important;
+    border: 1px solid #393840 !important; border-radius: 20px !important;
+    background: var(--msg-console-well) !important;
+    box-shadow: inset 0 2px 5px #000a, 0 1px #ffffff0e !important;
+  }
+  .mw-track-studio .mw-track-master__play {
+    width: 48px !important; height: 48px !important; padding: 0 !important;
+  }
+  .mw-track-studio .mw-track-master__meta time {
+    font-size: 11px !important; font-variant-numeric: tabular-nums !important; color: #e1d7ed !important;
+  }
+  .mw-track-studio .mw-track-master__progress > i {
+    background: linear-gradient(90deg, #5137a1, #a98ef0) !important;
+    box-shadow: none !important;
+  }
+  .mw-track-studio .mw-track-studio__window > main {
+    min-height: 0 !important; padding: 16px 22px 22px !important; overflow-y: auto !important;
+  }
+  .mw-track-studio .mw-stem-console { gap: 10px !important; }
+  .mw-track-studio .mw-stem-row {
+    height: auto !important; min-height: 82px !important;
+    grid-template-columns: 24px 48px minmax(100px, 1fr) minmax(80px, 1.3fr) 42px auto !important;
+    grid-template-rows: auto !important;
+    grid-template-areas: 'index art name wave transport actions' !important;
+    gap: 10px !important; padding: 12px !important;
+    border: 1px solid transparent !important; border-radius: 18px !important;
+    background: var(--msg-console-face) !important; box-shadow: var(--msg-console-shadow) !important;
+    opacity: 1 !important;
+  }
+  .mw-track-studio .mw-stem-row__index { grid-area: index !important; font-size: 12px !important; color: #a19ba9 !important; }
+  .mw-track-studio .mw-stem-row > .mw-instrument-artwork { grid-area: art !important; width: 48px !important; height: 48px !important; }
+  .mw-track-studio .mw-stem-row__name { grid-area: name !important; min-width: 0 !important; }
+  .mw-track-studio .mw-stem-row__name strong { font-size: 14px !important; }
+  .mw-track-studio .mw-stem-row > .mw-waveform {
+    grid-area: wave !important; height: 36px !important; min-width: 0 !important;
+    padding: 4px 6px !important; border-radius: 10px !important;
+    background: var(--msg-console-well) !important; box-shadow: inset 0 1px 3px #0008 !important;
+  }
+  .mw-track-studio .mw-stem-row__transport { grid-area: transport !important; gap: 3px !important; }
+  .mw-track-studio .mw-stem-row__play { width: 40px !important; height: 40px !important; padding: 0 !important; }
+  .mw-track-studio .mw-stem-row__actions { grid-area: actions !important; gap: 6px !important; }
+  .mw-track-studio .mw-stem-row__actions button { min-height: 34px !important; font-size: 10px !important; }
+  .mw-track-studio .mw-stem-row.is-dimmed :is(.mw-waveform, .mw-stem-row__name) { opacity: .45 !important; }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule .mw-waveform__base,
+  .mw-track-studio .mw-waveform__base { stroke: #716d7e !important; }
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule .mw-waveform__played,
+  .mw-track-studio .mw-waveform__played { stroke: #a98ef0 !important; }
+
+  .mw-track-studio button:focus-visible,
+  :is(.messaging-page, .mobile-messaging) :is(.mw-audio-capsule, .mw-track-capsule) button:focus-visible {
+    outline: 2px solid #bda2f3 !important; outline-offset: 3px !important;
+  }
+  .mw-track-studio button:disabled,
+  :is(.messaging-page, .mobile-messaging) .mw-track-capsule button:disabled { opacity: .4 !important; }
+
+  @media (max-width: 820px) {
+    .mw-track-studio .mw-track-studio__hero {
+      grid-template-columns: minmax(0, 1fr) 40px !important;
+      grid-template-rows: auto auto auto auto !important;
+      padding: 16px !important; gap: 8px !important;
+    }
+    .mw-track-studio .mw-track-studio__close { grid-column: 2 !important; }
+    .mw-track-studio .mw-track-studio__hero > p { grid-column: 1 / -1 !important; }
+    .mw-track-studio .mw-track-studio__download { grid-column: 1 / -1 !important; grid-row: 3 !important; justify-self: start !important; }
+    .mw-track-studio .mw-track-studio__rule { display: none !important; }
+    .mw-track-studio .mw-track-master {
+      grid-row: 4 !important; grid-template-columns: 44px minmax(0, 1fr) 76px !important;
+      gap: 8px !important; padding: 8px !important; margin-top: 2px !important;
+    }
+    .mw-track-studio .mw-track-master__play { width: 44px !important; height: 44px !important; }
+    .mw-track-studio .mw-track-studio__window > main { padding: 12px 14px 18px !important; }
+    .mw-track-studio .mw-stem-row {
+      grid-template-columns: 22px 44px minmax(0, 1fr) 40px !important;
+      grid-template-rows: 44px 26px 34px !important;
+      grid-template-areas: 'index art name transport' 'wave wave wave wave' 'actions actions actions actions' !important;
+      min-height: 0 !important; gap: 8px !important; padding: 10px !important;
+    }
+    .mw-track-studio .mw-stem-row > .mw-instrument-artwork { width: 44px !important; height: 44px !important; }
+    .mw-track-studio .mw-stem-row > .mw-waveform { height: 26px !important; }
+    .mw-track-studio .mw-stem-row__actions { justify-self: end !important; }
+  }
+}

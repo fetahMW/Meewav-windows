@@ -1,0 +1,26 @@
+/* User-supplied wallpaper trial, 2026-09-29. Remove this stylesheet's link
+   to restore the untouched previous wallpaper and its original shading. */
+#root :is(.messaging-page, .mobile-messaging) {
+  --messaging-wallpaper-preview: url('/images/messaging/chat-acoustic-panels-20260929.png');
+}
+
+#root :is(.messaging-page, .mobile-messaging) .messaging-page__backdrop {
+  background: #151515 var(--messaging-wallpaper-preview) center / cover no-repeat;
+  opacity: 1;
+}
+
+#root :is(.messaging-page, .mobile-messaging) .messaging-page__backdrop::after,
+#root :is(.messaging-page, .mobile-messaging) .mw-chat-scene::before {
+  display: none;
+}
+
+/* Keep the wallpaper fixed beneath the scrolling conversation. Project and
+   group chats need their own image because their parent panels are opaque. */
+#root :is(.messaging-page, .mobile-messaging) .mw-chat-scene:has(> .mw-chat-timeline) {
+  background: #151515 var(--messaging-wallpaper-preview) center / cover no-repeat;
+}
+
+#root :is(.messaging-page, .mobile-messaging) .mw-chat-scene > .mw-chat-timeline,
+#root :is(.messaging-page, .mobile-messaging) .mw-chat-scene > .mw-chat-timeline > .mw-chat-timeline__inner {
+  background: transparent;
+}

@@ -669,7 +669,7 @@ export default function ProfileStatsView({ gradeLevel, gradeProgress, pointsToNe
                 <button
                   key={`${period}-${metric}-${index}`}
                   type="button"
-                  className={`profile-chart-point ${index === previewPointIndex ? "is-active" : ""} ${pinnedPointIndices.includes(index) ? "is-pinned" : ""}`}
+                  className={`profile-chart-point ${index === points.length - 1 ? "is-endpoint" : ""} ${index === previewPointIndex ? "is-active" : ""} ${pinnedPointIndices.includes(index) ? "is-pinned" : ""}`}
                   style={{ left: `${(point.x / 720) * 100}%`, top: `${(point.y / 230) * 100}%` }}
                   aria-label={`${snapshot.axis[index]} : ${definition.formatPoint(point.value)}`}
                   aria-pressed={pinnedPointIndices.includes(index)}

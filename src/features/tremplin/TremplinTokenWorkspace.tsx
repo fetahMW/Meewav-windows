@@ -1,3 +1,4 @@
+import { PolishedChartPoint } from "../../components/shared/PolishedChartPoint";
 import {
   Activity,
   AlertTriangle,
@@ -564,7 +565,7 @@ function TokenValueChart({ period, onPeriod }: { period: TokenPeriod; onPeriod: 
           <path d={area} fill={`url(#${chartId}-area)`} />
           <path d={path} className="ttw-chart-line" stroke={`url(#${chartId}-line)`} />
           {points.map(({ x, y, value }, index) => <g key={`${x}-${y}`} className={`ttw-chart-point ${index === points.length - 1 ? "is-current" : ""}`}><circle cx={x} cy={y} r={index === points.length - 1 ? 5 : 3} /><title>{formatEuro(value)}</title></g>)}
-          {lastPoint ? <circle className="ttw-chart-halo" cx={lastPoint.x} cy={lastPoint.y} r="11" /> : null}
+          {lastPoint ? <PolishedChartPoint x={lastPoint.x} y={lastPoint.y} /> : null}
         </svg>
       </div>
       <div className="ttw-chart-caption"><Info /><p><strong>Lecture de la période :</strong> la valeur termine au-dessus de son point de départ. Elle peut continuer à évoluer à la hausse comme à la baisse et dépend exclusivement des achats et des ventes.</p></div>
