@@ -476,7 +476,7 @@
 .artist-filter-active-chips__reset {
   border: 0;
   padding-inline: 8px;
-  color: #c6a9ff;
+  color: var(--mw-accent-secondary);
   background: transparent;
   font-weight: 800;
 }

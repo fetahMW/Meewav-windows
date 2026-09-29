@@ -881,7 +881,7 @@
 
 .place-chat__pinned > svg:first-child {
   width: 14px;
-  color: #b995ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-chat__pinned > span {
@@ -1405,7 +1405,7 @@
 
 .place-vocal-console__module-toggle > svg {
   width: 15px;
-  color: #bb91ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-vocal-console__module-toggle > span,
@@ -1748,7 +1748,7 @@
 
 .place-tools__quick button > svg {
   width: 17px;
-  color: #ad82ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-tools__quick button > span {

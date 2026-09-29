@@ -1778,11 +1778,11 @@
 }
 .room-tools-shell.is-classe .classroom-command-dock__controls > .is-hand-action > .classroom-raised-hand-glyph {
   display: block;
-  color: color-mix(in srgb, #bd8cff 58%, #747985);
+  color: color-mix(in srgb, var(--mw-accent-secondary) 58%, #747985);
   transform: none;
 }
 .room-tools-shell.is-classe .classroom-command-dock__controls > .is-hand-action.is-active > .classroom-raised-hand-glyph {
-  color: #d0a7ff;
+  color: var(--mw-accent-secondary);
   transform: none;
 }
 .room-tools-shell.is-classe .classroom-command-dock__controls > .is-resource-action.is-active > svg {

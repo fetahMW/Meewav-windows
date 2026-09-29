@@ -853,7 +853,7 @@ function PlaceChat({ room, canEngage, isHost, active, onSend, onPinMessage, onDe
             disabled={!canEngage}
             onSelect={(emoticon) => setDraft((value) => appendMeeWavEmoticon(value, emoticon.name, 1_000))}
           />
-          <button className="place-chat__send" type="submit" disabled={!canEngage || sending || !draft.trim()} aria-label="Envoyer"><Send aria-hidden="true" /></button>
+          <button className="place-chat__send mw-primary-action" type="submit" disabled={!canEngage || sending || !draft.trim()} aria-label="Envoyer"><Send aria-hidden="true" /></button>
         </div>
       </form>
     </div>

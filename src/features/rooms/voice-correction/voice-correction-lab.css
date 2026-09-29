@@ -40,7 +40,7 @@
   border: 1px solid #574275;
   border-radius: 16px;
   background: #211733;
-  color: #c49aff;
+  color: var(--mw-accent-secondary);
 }
 
 .voice-correction-lab__hero small {
@@ -212,7 +212,7 @@
   border: 1px solid #4a3b5d;
   border-radius: 11px;
   background: #241a33;
-  color: #c79cff;
+  color: var(--mw-accent-secondary);
 }
 .voice-correction-lab__engine-picker > button.is-active .voice-correction-lab__engine-icon {
   border-color: #327d74;

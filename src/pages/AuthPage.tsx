@@ -35,7 +35,7 @@ import AvatarSelectionPage from "./AvatarSelectionPage";
 import HolographicOrbCTA from "../components/auth/HolographicOrbCTA";
 import { AuthPanelChrome, SubtitleDivider, MidSeparator } from "../components/auth/AuthPanelChrome";
 import { MON_GLOBE_ROUTE } from "../features/globe/monGlobeContract";
-import { supabase } from "../lib/supabaseClient";
+import { supabase, supabaseUrl } from "../lib/supabaseClient";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAuthErrorMessage } from "../features/auth/auth.service";
 import { getSafeAuthReturnRoute } from "../features/auth/authReturnRoute";
@@ -91,6 +91,16 @@ export default function AuthPage() {
   );
   const localAuthPreviewAvailable = isLocalAuthPreviewAvailable();
   const [mode, setMode] = useState<AuthMode>("login");
+  const [testAliases, setTestAliases] = useState<string[]>([]);
+  useEffect(() => {
+    const bridge = window.meewavDesktop;
+    if (!bridge?.localTestAccountsEnabled) return;
+    let active = true;
+    void bridge.getTestAccountAliases?.(supabaseUrl).then((aliases) => {
+      if (active) setTestAliases(aliases);
+    }).catch(() => { /* Normal authentication stays available. */ });
+    return () => { active = false; };
+  }, []);
   const [signupStep, setSignupStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -122,6 +132,7 @@ export default function AuthPage() {
 
   // Controlled input states
   const [loginIdentifier, setLoginIdentifier] = useState("");
+  const isTestLogin = testAliases.includes(loginIdentifier.trim().toLowerCase());
   const [loginPassword, setLoginPassword] = useState("");
 
   const [signupUsername, setSignupUsername] = useState("");
@@ -486,11 +497,13 @@ export default function AuthPage() {
     try {
       if (mode === "login") {
         const emailToAuth = loginIdentifier.trim();
-        if (!emailToAuth.includes("@")) {
+        if (!isTestLogin && !emailToAuth.includes("@")) {
           throw new Error("Entre l’adresse e-mail de ton compte.");
         }
 
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = isTestLogin && window.meewavDesktop?.signInTestAccount
+          ? await supabase.auth.setSession(await window.meewavDesktop.signInTestAccount(emailToAuth, supabaseUrl))
+          : await supabase.auth.signInWithPassword({
           email: emailToAuth,
           password: loginPassword,
         });
@@ -793,9 +806,9 @@ export default function AuthPage() {
                       <label className="input-row">
                         <User size={19} className="input-icon" />
                         <input
-                          type="email"
-                          placeholder="Adresse e-mail"
-                          autoComplete="email"
+                          type={testAliases.length ? "text" : "email"}
+                          placeholder={testAliases.length ? "E-mail ou nom du compte test" : "Adresse e-mail"}
+                          autoComplete="username"
                           value={loginIdentifier}
                           onChange={(e) => setLoginIdentifier(e.target.value)}
                           disabled={loading}
@@ -803,7 +816,7 @@ export default function AuthPage() {
                         />
                       </label>
 
-                      <label className="input-row">
+                      {!isTestLogin && <label className="input-row">
                         <Lock size={18} className="input-icon" />
                         <input
                           type={showPassword ? "text" : "password"}
@@ -824,7 +837,9 @@ export default function AuthPage() {
                         >
                           {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
-                      </label>
+                      </label>}
+
+                      {isTestLogin && <p className="auth-subtitle">Compte test {loginIdentifier.trim().toLowerCase()} · application réelle</p>}
 
                       <Link className="auth-forgot-password" to="/auth/reset-password">
                         Mot de passe oublié ?

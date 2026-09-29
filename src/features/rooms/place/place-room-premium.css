@@ -1990,7 +1990,7 @@
 
 .place-chat__pin-action:hover {
   background: rgba(151, 91, 246, 0.12);
-  color: #c69bff;
+  color: var(--mw-accent-secondary);
 }
 
 @media (max-width: 1180px) {
@@ -3575,7 +3575,7 @@
   place-items: center;
   border-radius: 9px;
   background: rgba(139,82,224,.11);
-  color: #b990f1;
+  color: var(--mw-accent-secondary);
 }
 
 .place-fx-card__icon svg { width: 15px; height: 15px; }
@@ -8973,7 +8973,7 @@
   place-items: center;
   border-radius: 9px;
   background: #261740;
-  color: #c495ff;
+  color: var(--mw-accent-secondary);
 }
 
 .place-autotune-controls__icon svg { width: 17px; height: 17px; }

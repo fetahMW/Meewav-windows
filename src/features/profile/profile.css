@@ -1535,7 +1535,7 @@ body:has(.profile-page) {
   border: 1px solid rgba(178, 139, 255, 0.16);
   border-radius: 9px;
   background: rgba(139, 92, 255, 0.08);
-  color: #c9afff;
+  color: var(--mw-accent-secondary);
 }
 
 .profile-signal-strip > button > span:nth-child(2) { display: grid; min-width: 0; }
@@ -8810,7 +8810,7 @@ button.profile-audience-donut:hover {
   width: 20px;
   height: 20px;
   margin: 0 auto 6px;
-  color: #ae7bff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 10px rgba(174, 123, 255, 0.28));
   stroke-width: 1.8;
 }
@@ -10031,7 +10031,7 @@ button.profile-audience-donut:hover {
   border: 1px solid rgba(186, 151, 255, 0.12);
   border-radius: 11px;
   background: linear-gradient(135deg, rgba(139, 92, 255, 0.075), rgba(25, 184, 255, 0.025));
-  color: #c9afff;
+  color: var(--mw-accent-secondary);
   cursor: pointer;
   text-align: left;
 }
@@ -10190,7 +10190,7 @@ button.profile-audience-donut:hover {
   border: 1px dashed rgba(204, 183, 241, 0.13);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.014);
-  color: #ad8df0;
+  color: var(--mw-accent-secondary);
 }
 
 .profile-ranking-empty > span { display: grid; gap: 2px; }

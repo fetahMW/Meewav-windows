@@ -245,7 +245,7 @@
 /* The collapsed Loge player keeps the violet accent of its expanded audio controls. */
 .rooms-page .place-room-shell[data-room-presentation="loge"] .place-mixer-audio .place-mixer-audio__classroom-summary-icon {
   border-color: rgba(169,112,255,.24);
-  color: #c49bff;
+  color: var(--mw-accent-secondary);
   background: linear-gradient(145deg,rgba(135,77,220,.2),rgba(40,25,66,.12));
 }
 .rooms-page .place-room-shell[data-room-presentation="loge"] .place-mixer-audio .place-mixer-audio__classroom-summary small { color:rgba(201,173,242,.72); }

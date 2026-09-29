@@ -853,7 +853,7 @@
 .tremplin-public-home__weekly-badge svg {
   width: 1.36cqw;
   height: 1.36cqw;
-  color: #b77bff;
+  color: var(--mw-accent-secondary);
   stroke-width: 2.15;
 }
 
@@ -916,7 +916,7 @@
   top: 0;
   left: 0;
   gap: 0.82cqw;
-  color: #b47fff;
+  color: var(--mw-accent-secondary);
   font-size: 1.05cqw;
   font-weight: 820;
   letter-spacing: 0.2em;
@@ -1090,7 +1090,7 @@
 .tremplin-public-home__weekly-proof li svg {
   width: 1.8cqw;
   height: 1.8cqw;
-  color: #9d64ff;
+  color: var(--mw-accent-secondary);
   stroke-width: 2.2;
 }
 
@@ -1155,7 +1155,7 @@
   border: 0;
   border-bottom: 1px solid rgba(180, 153, 255, 0.34);
   background: transparent;
-  color: #c4adff;
+  color: var(--mw-accent-secondary);
   cursor: pointer;
   font-size: 12px;
   font-weight: 720;
@@ -1615,7 +1615,7 @@
 .tremplin-public-home__token-eyebrow svg {
   width: 14px;
   height: 14px;
-  color: #b58cff;
+  color: var(--mw-accent-secondary);
   fill: currentColor;
 }
 
@@ -1701,7 +1701,7 @@
 
 .tremplin-public-home__token-copy .tremplin-public-home__text-link svg {
   width: 21px;
-  color: #bc9cff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-public-home__token-rules {

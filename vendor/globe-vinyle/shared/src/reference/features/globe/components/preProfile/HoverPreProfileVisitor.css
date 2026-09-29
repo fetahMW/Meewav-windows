@@ -818,7 +818,7 @@
 }
 
 .mw-preprofile.is-visitor .mw-preprofile__contact-button svg {
-  color: #c6a5ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-preprofile.is-visitor .mw-collaboration-composer-shell {

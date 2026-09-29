@@ -598,7 +598,7 @@
 .tremplin-hero__trust svg {
   width: 17px;
   flex: 0 0 17px;
-  color: #9f80ff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-spotlight-card {
@@ -1144,7 +1144,7 @@
 .tremplin-impact-strip > div svg {
   width: 20px;
   grid-row: 1 / 3;
-  color: #9d7cff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-impact-strip > div strong {
@@ -1499,7 +1499,7 @@
 .tremplin-filter-bar label > svg {
   width: 16px;
   grid-row: 1 / 3;
-  color: #9e80ff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-filter-bar label > span {
@@ -1554,7 +1554,7 @@
 
 .tremplin-empty-state svg {
   width: 34px;
-  color: #9d7fff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-empty-state h2,
@@ -1941,7 +1941,7 @@
 
 .tremplin-documents-card button svg {
   width: 15px;
-  color: #9c7fff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-back-button {
@@ -2223,7 +2223,7 @@
 
 .tremplin-funding-use article svg {
   width: 15px;
-  color: #8e76e6;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-metrics-grid {
@@ -2544,7 +2544,7 @@
 .tremplin-support-module li > svg {
   width: 14px;
   flex: 0 0 14px;
-  color: #a286f5;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-support-module li span {
@@ -2608,7 +2608,7 @@
 
 .tremplin-technical-disclosure summary > span svg {
   width: 16px;
-  color: #a083f0;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-technical-disclosure > div {
@@ -3052,7 +3052,7 @@
 
 .tremplin-support-identity li svg {
   width: 12px;
-  color: #9f82ed;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-support-confirmation dl {
@@ -3075,7 +3075,7 @@
 .tremplin-support-confirmation > p:last-child svg {
   width: 15px;
   flex: 0 0 15px;
-  color: #a083f0;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-support-flow > footer {
@@ -3104,7 +3104,7 @@
 .tremplin-toast svg {
   width: 17px;
   flex: 0 0 17px;
-  color: #a88cff;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-realizations-grid {
@@ -3428,7 +3428,7 @@
 
 .tremplin-project-trust li svg {
   width: 15px;
-  color: #a489f5;
+  color: var(--mw-accent-secondary);
 }
 
 .tremplin-funding-use article em {

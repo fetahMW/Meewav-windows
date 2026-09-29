@@ -819,7 +819,7 @@
 
 .messaging-page .mw-attachment-queue__items article > svg {
   width: 18px;
-  color: #aa8aff;
+  color: var(--mw-accent-secondary);
 }
 
 .messaging-page .mw-attachment-queue__items article > span {
@@ -1503,7 +1503,7 @@
 
 .mw-bubble--file > svg {
   width: 24px;
-  color: #a874ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-bubble--file > span {
@@ -1658,7 +1658,7 @@
   place-items: center;
   border-radius: 15px;
   background: linear-gradient(145deg, rgba(155, 99, 255, 0.28), rgba(91, 24, 223, 0.12));
-  color: #c8a9ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-track-capsule__icon svg {
@@ -1881,7 +1881,7 @@
 
 .mw-attachment-menu > button > svg {
   width: 22px;
-  color: #b78aff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-attachment-menu > button > span {
@@ -2110,7 +2110,7 @@
 
 .mw-conversation-drawer nav > button > svg {
   width: 18px;
-  color: #a976ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-conversation-drawer nav > button > span {
@@ -2888,7 +2888,7 @@
 .mw-empty-workspace > svg {
   width: 42px;
   height: 42px;
-  color: #945cff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-empty-workspace h2 {
@@ -5073,7 +5073,7 @@
 
 .mw-rail-menu svg {
   width: 17px;
-  color: #a978ff;
+  color: var(--mw-accent-secondary);
 }
 
 .mw-space-pills {
@@ -5435,7 +5435,7 @@
   border: 1px solid rgba(180, 137, 255, 0.14);
   border-radius: 11px;
   background: linear-gradient(145deg, rgba(157, 76, 231, 0.76), rgba(83, 19, 123, 0.82));
-  color: #cbb0ff;
+  color: var(--mw-accent-secondary);
   box-shadow: none;
 }
 
@@ -6354,7 +6354,7 @@
   .mw-track-capsule__icon {
     border-color: rgba(104, 72, 255, 0.18);
     background: rgba(104, 72, 255, 0.16);
-    color: #c0a7ff;
+    color: var(--mw-accent-secondary);
     box-shadow: none;
   }
 

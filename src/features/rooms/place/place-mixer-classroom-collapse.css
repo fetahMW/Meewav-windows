@@ -114,7 +114,7 @@
   place-items: center;
   border: 1px solid rgba(169, 112, 255, .24);
   border-radius: 9px;
-  color: #a970ff;
+  color: var(--mw-accent-secondary);
   background: linear-gradient(145deg, rgba(169, 112, 255, .14), rgba(169, 112, 255, .04));
 }
 

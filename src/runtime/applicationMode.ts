@@ -3,6 +3,7 @@ const MODE_KEY = "meewav:desktop:application-mode:v1";
 
 export function getDesktopApplicationMode(): ApplicationMode | null {
   if (typeof window === "undefined" || window.meewavDesktop?.version !== 1) return null;
+  if (window.meewavDesktop.localTestAccountsEnabled) return "live";
   const query = new URLSearchParams(window.location.search);
   const fragment = new URLSearchParams(window.location.hash.slice(1));
   if (["/auth/callback", "/auth/update-password"].includes(window.location.pathname)

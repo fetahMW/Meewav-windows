@@ -105,7 +105,7 @@
   place-items: center;
   border-radius: 9px;
   background: rgba(157, 92, 220, .15);
-  color: #c485ff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-active-filter-summary svg {
@@ -340,7 +340,7 @@
 .shorts-card-menu svg {
   width: 16px;
   height: 16px;
-  color: #bf7cff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-notifications {
@@ -920,7 +920,7 @@
   place-items: center;
   border-radius: 10px;
   background: rgba(142, 81, 207, .13);
-  color: #c285ff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-format-selector button svg {
@@ -965,7 +965,7 @@
   border: 1px solid rgba(197, 139, 255, .26);
   border-radius: 18px;
   background: radial-gradient(circle, rgba(174, 105, 245, .28), rgba(174, 105, 245, .04));
-  color: #d2a7ff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-multicam-layouts strong {
@@ -1053,7 +1053,7 @@
 .shorts-creator-info > svg {
   width: 18px;
   height: 18px;
-  color: #a985ed;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-creator-info p {
@@ -1178,7 +1178,7 @@
   width: 48px;
   height: 48px;
   align-self: end;
-  color: #d4a6ff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 18px rgba(164, 88, 235, .4));
 }
 
@@ -1439,7 +1439,7 @@
 .shorts-visibility-choice > button > svg {
   width: 19px;
   height: 19px;
-  color: #c081ff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-visibility-choice > button > span {
@@ -3362,7 +3362,7 @@
   place-items: center;
   border-radius: 999px;
   background: rgba(187, 119, 255, .18);
-  color: #d9b8ff;
+  color: var(--mw-accent-secondary);
   font-size: 8px;
   font-weight: 850;
 }

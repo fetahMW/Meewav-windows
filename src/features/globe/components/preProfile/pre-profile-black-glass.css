@@ -8,13 +8,15 @@
     linear-gradient(180deg, #19171e59, #08070c33),
     linear-gradient(180deg, #303034, #1a191e 55%, #121116);
   --pp-key-shadow: inset 0 1px #ffffff12, inset 0 -1px 1px #0005, 0 2px 4px #0006;
+  /* Denser violet preserves the mixer material on the wider profile controls. */
   --pp-active-face:
     linear-gradient(122deg, #ffffff2b, #ffffff08 26%, transparent 48%) padding-box,
-    radial-gradient(ellipse at 50% -30%, #eadbff47, transparent 66%) padding-box,
-    linear-gradient(180deg, #3a2c4dc9, #23162fcc 46%, #472b66db) padding-box,
+    radial-gradient(ellipse at 50% -30%, #c997ff52, transparent 66%) padding-box,
+    linear-gradient(180deg, #43285ed9, #2e1744e6 46%, #5b2f8de8) padding-box,
     linear-gradient(140deg, #e8d5ff85, #b089e16b 29%, #3521436b 60%, #c6a1f08c) border-box;
-  --pp-active-shadow: inset 0 1px #ffffff2b, inset 0 3px 6px #09040e99,
-    inset 0 -2px 1px #c798ff52, 0 3px 7px #0009;
+  --pp-active-shadow: inset 0 1px 0 #ffffff2b, inset 0 3px 6px #09040e99, inset 1px 0 0 #ffffff0d,
+    inset 0 -2px 1px #c798ff52, inset 0 -10px 20px #7e44e321,
+    0 1px 0 #ffffff0a, 0 3px 7px #0009;
   padding-block: 0;
   color: #e8ebf2;
 
@@ -40,10 +42,13 @@
     border-color: #aebcd248; background: var(--pp-key);
     box-shadow: inset 0 1px #e8efff26, 0 0 10px #a8b7d00b; color: #fff;
   }
-  & .mw-preprofile__button--primary.is-active {
+  & .mw-preprofile__button--primary.is-active,
+  & .mw-preprofile__button--primary.is-active:hover {
     background: var(--pp-active-face);
     border-color: transparent;
     box-shadow: var(--pp-active-shadow);
+    backdrop-filter: blur(10px) saturate(135%);
+    text-shadow: 0 1px 2px #08040db3;
     color: #f4e8ff;
   }
   & .mw-preprofile__button--primary.is-active svg { color: #c27aff; filter: none; }
@@ -62,9 +67,12 @@
     box-shadow: inset 0 1px #d7e0ee0b;
   }
   & .mw-preprofile__tabs button { color: #818b9d; border-radius: 7px; }
-  & .mw-preprofile__tabs button.is-active {
+  & .mw-preprofile__tabs button.is-active,
+  & .mw-preprofile__tabs button.is-active:hover {
     color: #f8f6fa; background: var(--pp-active-face);
     box-shadow: var(--pp-active-shadow);
+    backdrop-filter: blur(10px) saturate(135%);
+    text-shadow: 0 1px 2px #08040db3;
   }
   & .mw-preprofile__tabs button::after { display: none; }
   & .mw-preprofile__overview-card,
@@ -99,19 +107,19 @@
   & .mw-preprofile__collab-button::before { display: none; }
   & .mw-preprofile__collab-button,
   & .mw-preprofile__collab-button:hover {
-    background: linear-gradient(122deg, #ffffff13, transparent 48%) padding-box,
-      linear-gradient(180deg, #24362e, #131e19 60%, #17291f) padding-box,
-      linear-gradient(140deg, #91b6a366, #36514544 60%, #64857366) border-box;
+    background: var(--pp-active-face);
     border-color: transparent;
-    box-shadow: var(--pp-key-shadow);
+    box-shadow: var(--pp-active-shadow);
+    backdrop-filter: blur(10px) saturate(135%);
+    text-shadow: 0 1px 2px #08040db3;
   }
   & .mw-preprofile__collab-icon {
     border-radius: 9px;
-    border: 1px solid #a8caba2e; background: linear-gradient(#34473c, #16211b);
-    box-shadow: inset 0 1px #d9ffe114; color: #92d4af;
+    border: 1px solid #b089e133; background: var(--pp-key);
+    box-shadow: inset 0 1px #ffffff14; color: var(--room-key-active-icon, #c27aff);
   }
-  & .mw-preprofile__collab-copy strong { color: #e0dce9; }
-  & .mw-preprofile__collab-copy small { color: #abbab1; font-weight: 500; }
+  & .mw-preprofile__collab-copy strong { color: #f8f6fa; }
+  & .mw-preprofile__collab-copy small { color: #c9badb; font-weight: 500; }
   & .mw-collaboration-composer-shell, & .mw-collaboration-composer {
     background: linear-gradient(155deg, #1d1e21, #101013 70%); border-color: #96a7c136;
   }

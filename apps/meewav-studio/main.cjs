@@ -3,6 +3,7 @@ const { isAbsolute, join, resolve, extname, sep } = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { appendFileSync, existsSync } = require('node:fs');
 const { authReturnUrl } = require('./auth-links.cjs');
+const { readTestAccounts, signInTestAccount, testAccountsAllowed } = require('./test-accounts.cjs');
 
 const studioUrl = app.isPackaged ? 'meewav://app/' : `http://127.0.0.1:${process.env.MEEWAV_DESKTOP_DEV_PORT || '5197'}/`;
 const trustedOrigin = new URL(studioUrl).origin;
@@ -18,6 +19,9 @@ const captureSelections = new Map();
 const qaUserData = process.env.MEEWAV_DESKTOP_QA_USER_DATA;
 if (qaUserData && !isAbsolute(qaUserData)) throw new Error('QA userData must be an absolute path');
 app.setPath('userData', qaUserData || join(app.getPath('appData'), app.isPackaged ? 'Meewav Studio' : 'Meewav Studio Dev'));
+const testAccountsFile = join(app.getPath('userData'), 'qa-test-accounts.json');
+const localTestAccountsEnabled = testAccountsAllowed(app.isPackaged, process.env.MEEWAV_TEST_MODE)
+  && Boolean(readTestAccounts(testAccountsFile));
 app.setAppUserModelId('com.meewav.studio');
 const primaryInstance = app.requestSingleInstanceLock();
 if (!primaryInstance) app.quit();
@@ -78,6 +82,7 @@ function createWindow() {
       sandbox: true,
       webSecurity: true,
       preload: join(__dirname, 'preload.cjs'),
+      additionalArguments: localTestAccountsEnabled ? ['--meewav-local-test-accounts'] : [],
       backgroundThrottling: false,
     },
   });
@@ -111,7 +116,7 @@ function createWindow() {
     if (!isTrusted(url)) event.preventDefault();
   });
   window.once('ready-to-show', () => window.show());
-  const initialUrl = pendingAuthUrl || studioUrl; pendingAuthUrl = null;
+  const initialUrl = pendingAuthUrl || (localTestAccountsEnabled ? new URL('/auth', studioUrl).href : studioUrl); pendingAuthUrl = null;
   // Auth return URLs can contain session tokens; never include them in diagnostics.
   void window.loadURL(initialUrl).catch(() => logLifecycle('load-error'));
 }
@@ -142,6 +147,16 @@ app.whenReady().then(() => {
     if (!isTrusted(event.senderFrame?.url || '') || event.senderFrame !== event.sender.mainFrame) throw new Error('Unsupported caller');
   };
   ipcMain.handle('meewav:capabilities', (event) => { assertTrusted(event); return capabilities; });
+  ipcMain.handle('meewav:test-account-aliases', (event, expectedUrl) => {
+    assertTrusted(event);
+    const config = localTestAccountsEnabled ? readTestAccounts(testAccountsFile) : null;
+    return config?.supabaseUrl === expectedUrl?.replace(/\/$/, '') ? config.accounts.map((item) => item.alias) : [];
+  });
+  ipcMain.handle('meewav:test-account-sign-in', (event, alias, expectedUrl) => {
+    assertTrusted(event);
+    if (new URL(event.senderFrame.url).pathname !== '/auth') throw new Error('Unsupported caller');
+    return signInTestAccount(localTestAccountsEnabled ? readTestAccounts(testAccountsFile) : null, alias, expectedUrl);
+  });
   ipcMain.handle('meewav:window-control', (event, action) => {
     assertTrusted(event);
     if (process.platform !== 'win32') return false;

@@ -9,7 +9,7 @@
   height: 30px;
   padding: 0;
   place-items: center;
-  color: #bf91ff;
+  color: var(--mw-accent-secondary);
   border: 1px solid rgba(154, 116, 255, 0.24);
   border-radius: 10px;
   background: rgba(17, 15, 34, 0.72);
@@ -87,7 +87,7 @@
 }
 
 .mw-emoticon-wall__header small {
-  color: #a985ff;
+  color: var(--mw-accent-secondary);
   font-size: 8px;
   font-weight: 800;
   letter-spacing: 0.13em;

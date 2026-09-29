@@ -63,7 +63,7 @@ export function AuthPanelChrome({
             <stop offset="100%" stopColor="#A78BF0" stopOpacity="0.24" />
           </linearGradient>
 
-          {/* Corps néon intermédiaire */}
+          {/* Biseau argent-violet */}
           <linearGradient
             id="panel-glow-core"
             x1="24"
@@ -72,13 +72,12 @@ export function AuthPanelChrome({
             y2="576"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stopColor="#A78BF0" />
-            <stop offset="13%" stopColor="#9464F5" />
-            <stop offset="30%" stopColor="#8B5CF6" />
-            <stop offset="52%" stopColor="#7544DF" />
-            <stop offset="74%" stopColor="#9464F5" />
-            <stop offset="88%" stopColor="#8B5CF6" />
-            <stop offset="100%" stopColor="#A78BF0" />
+            <stop offset="0%" stopColor="#D3C7F5" />
+            <stop offset="16%" stopColor="#A98EF0" />
+            <stop offset="38%" stopColor="#514A62" />
+            <stop offset="64%" stopColor="#292431" />
+            <stop offset="84%" stopColor="#807394" />
+            <stop offset="100%" stopColor="#A98EF0" />
           </linearGradient>
 
           {/* Filament lumineux fin */}
@@ -90,13 +89,11 @@ export function AuthPanelChrome({
             y2="578"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stopColor="#B6A0F5" />
-            <stop offset="14%" stopColor="#A78BF0" />
-            <stop offset="32%" stopColor="#9D78F0" />
-            <stop offset="52%" stopColor="#B6A0F5" />
-            <stop offset="72%" stopColor="#A78BF0" />
-            <stop offset="88%" stopColor="#9D78F0" />
-            <stop offset="100%" stopColor="#B6A0F5" />
+            <stop offset="0%" stopColor="#F4F0FF" stopOpacity=".7" />
+            <stop offset="18%" stopColor="#D3C7F5" stopOpacity=".1" />
+            <stop offset="42%" stopColor="#A98EF0" stopOpacity="0" />
+            <stop offset="78%" stopColor="#A98EF0" stopOpacity=".12" />
+            <stop offset="100%" stopColor="#DED3FC" stopOpacity=".45" />
           </linearGradient>
 
           {/* Arc inférieur glow */}
@@ -142,7 +139,7 @@ export function AuthPanelChrome({
             width="180%"
             height="180%"
           >
-            <feGaussianBlur in="SourceGraphic" stdDeviation="7.2" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
           </filter>
 
           <filter
@@ -162,7 +159,7 @@ export function AuthPanelChrome({
             width="120%"
             height="120%"
           >
-            <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" />
           </filter>
         </defs>
 
@@ -173,47 +170,46 @@ export function AuthPanelChrome({
           fillOpacity="0.94"
         />
 
-        {/* Léger voile intérieur pour donner de la matière */}
+        {/* Ombre fine du biseau */}
         <use
           href="#panel-shape"
-          stroke="#4C1D95"
-          strokeOpacity="0.10"
-          strokeWidth="18"
+          stroke="#000000"
+          strokeOpacity="0.46"
+          strokeWidth="2.6"
           filter="url(#panel-inner-soft)"
         />
 
-        {/* Halo externe large */}
+        {/* Reflet diffus discret */}
         <use
           href="#panel-shape"
           stroke="url(#panel-glow-atmo)"
-          strokeWidth="4.1"
-          opacity="0.30"
+          strokeWidth="2.2"
+          opacity="0.14"
           filter="url(#panel-blur-heavy)"
         />
 
-        {/* Corps néon */}
+        {/* Biseau net */}
         <use
           href="#panel-shape"
           stroke="url(#panel-glow-core)"
-          strokeWidth="1.15"
-          opacity="0.80"
-          filter="url(#panel-blur-medium)"
+          strokeWidth="1"
+          opacity="0.72"
         />
 
         {/* Filament fin */}
         <use
           href="#panel-shape"
           stroke="url(#panel-glow-filament)"
-          strokeWidth="0.46"
-          opacity="0.76"
+          strokeWidth="0.4"
+          opacity="0.60"
         />
 
         {/* Arc inférieur - halo */}
         <use
           href="#panel-bottom-arc"
           stroke="url(#panel-bottom-glow)"
-          strokeWidth="4.5"
-          opacity="0.40"
+          strokeWidth="2"
+          opacity="0.18"
           filter="url(#panel-blur-heavy)"
           strokeLinecap="round"
         />
@@ -222,8 +218,8 @@ export function AuthPanelChrome({
         <use
           href="#panel-bottom-arc"
           stroke="url(#panel-bottom-core)"
-          strokeWidth="0.85"
-          opacity="0.72"
+          strokeWidth="0.65"
+          opacity="0.45"
           strokeLinecap="round"
         />
       </svg>

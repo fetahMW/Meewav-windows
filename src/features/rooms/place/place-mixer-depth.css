@@ -88,7 +88,7 @@
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio__track-icon > svg {
-  color: #9364e4;
+  color: var(--mw-accent-secondary);
 }
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel .place-mixer .place-mixer-audio {
   --studio-black-key: linear-gradient(180deg, #ffffff1c, transparent 4px) padding-box,

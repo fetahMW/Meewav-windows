@@ -461,7 +461,7 @@
   border: 1px solid rgba(198, 150, 255, .44);
   border-radius: 1.2rem;
   background: linear-gradient(145deg, rgba(126, 59, 219, .58), rgba(79, 32, 143, .24));
-  color: #d3a2ff;
+  color: var(--mw-accent-secondary);
   box-shadow: 0 0 28px rgba(146, 72, 234, .22), inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 
@@ -471,7 +471,7 @@
 }
 
 .rooms-home-launch-dialog__eyebrow {
-  color: #bc79ff;
+  color: var(--mw-accent-secondary);
   font-size: .68rem;
   font-weight: 850;
   letter-spacing: .13em;

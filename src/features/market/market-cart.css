@@ -86,7 +86,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  color: #ac8aff;
+  color: var(--mw-accent-secondary);
   font-size: 9px;
   font-weight: 820;
   letter-spacing: 0.15em;
@@ -493,7 +493,7 @@
   place-items: center;
   border-radius: 12px;
   background: rgba(126, 82, 230, 0.13);
-  color: #aa86ff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-cart-delivery__icon svg {
@@ -757,7 +757,7 @@
   border-radius: 27px;
   background: linear-gradient(145deg, rgba(132, 83, 240, 0.22), rgba(55, 70, 160, 0.09));
   box-shadow: 0 20px 55px rgba(80, 49, 174, 0.21), inset 0 1px 0 rgba(255, 255, 255, 0.055);
-  color: #b191ff;
+  color: var(--mw-accent-secondary);
 }
 
 .market-cart-empty__icon::before {
@@ -775,7 +775,7 @@
 }
 
 .market-cart-empty > span {
-  color: #a986ff;
+  color: var(--mw-accent-secondary);
   font-size: 9px;
   font-weight: 820;
   letter-spacing: 0.13em;

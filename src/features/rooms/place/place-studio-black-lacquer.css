@@ -57,7 +57,7 @@
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"].is-active > svg {
-  color: #c780ff;
+  color: var(--mw-accent-secondary);
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel:not(.is-collapsed) .place-studio-panel__tabs > button[data-surface="mixer"].is-active::after {
@@ -75,7 +75,7 @@
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer__subnav.has-twists > button.is-active > svg {
-  color: #b26aff;
+  color: var(--mw-accent-secondary);
 }
 
 .rooms-page .place-room-shell[data-room-presentation] .place-studio-panel.is-mixer .place-mixer:is(.has-audio-player, .has-classroom-player) .place-mixer__subnav.has-twists > button.is-active::after {

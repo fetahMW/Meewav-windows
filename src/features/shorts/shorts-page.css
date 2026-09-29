@@ -1400,7 +1400,7 @@
   width: 23px;
   height: 23px;
   margin: auto;
-  color: #9b78e4;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-source-drop > div {
@@ -2733,7 +2733,7 @@
 .shorts-player-frame__buffering svg {
   width: 38px;
   height: 38px;
-  color: #bc75ff;
+  color: var(--mw-accent-secondary);
   filter: drop-shadow(0 0 12px rgba(167, 94, 242, .48));
   animation: shorts-player-spin 850ms linear infinite;
 }
@@ -3038,7 +3038,7 @@
 }
 
 .shorts-player-details__eyebrow {
-  color: #bf76f5;
+  color: var(--mw-accent-secondary);
   font-size: 8px;
   font-weight: 800;
   letter-spacing: .055em;
@@ -3079,7 +3079,7 @@
 .shorts-player-details__identity > svg {
   width: 12px;
   height: 12px;
-  color: #b36bff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-player-details__identity .mw-grade-badge {
@@ -3135,7 +3135,7 @@
 .shorts-player-details__actions > button.is-saved {
   border-color: rgba(198, 127, 255, .42);
   background: rgba(142, 75, 214, .16);
-  color: #e0b9ff;
+  color: var(--mw-accent-secondary);
 }
 
 .shorts-player-details__actions > button:hover {
