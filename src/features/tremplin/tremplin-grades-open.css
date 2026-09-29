@@ -68,3 +68,14 @@
   .tremplin-home #niveaux.tremplin-grades-open .tremplin-grade-card__sheen,
   .tremplin-home #niveaux.tremplin-grades-open .tremplin-grade-card__waves { display:none; }
 }
+
+/* Let neighbouring grades reach the viewport edges without widening the copy. */
+@media (max-width:600px) {
+  .tremplin-home #niveaux.tremplin-grades-open { overflow:visible; }
+  .tremplin-home #niveaux.tremplin-grades-open .tremplin-public-home__level-track {
+    width:100vw;
+    max-width:none;
+    margin-inline:calc((100% - 100vw) / 2);
+    padding-inline:max(0px,calc((100vw - var(--orbit-width)) / 2));
+  }
+}

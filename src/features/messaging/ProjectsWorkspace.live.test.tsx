@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ProjectsWorkspace,
@@ -178,6 +178,57 @@ function controller(overrides: Partial<ProjectsWorkspaceLiveController> = {}) {
 afterEach(cleanup);
 
 describe("ProjectsWorkspace live", () => {
+
+  it("présente les infos utiles et garde la gestion derrière une confirmation", async () => {
+    const setProjectStatus = vi.fn().mockResolvedValue({});
+    const live = controller({ setProjectStatus });
+    render(<ProjectsWorkspace liveController={live} />);
+    fireEvent.click(screen.getByRole("button", { name: "Infos" }));
+    const overview = screen.getByRole("region", { name: "Informations du projet" });
+    expect(within(overview).getByText("92 BPM")).toBeInTheDocument();
+    expect(within(overview).queryByText("Avancement")).not.toBeInTheDocument();
+    expect(within(overview).getByText("Détails de production").closest("details")).not.toHaveAttribute("open");
+    expect(within(overview).queryByRole("button", { name: /Supprimer le projet/ })).not.toBeInTheDocument();
+    fireEvent.click(within(overview).getByRole("button", { name: "Gérer le projet" }));
+    fireEvent.click(screen.getByRole("button", { name: /Terminer le projet/ }));
+    expect(screen.queryByRole("dialog", { name: "Gestion du projet" })).not.toBeInTheDocument();
+    expect(setProjectStatus).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Terminer", exact: true }));
+    await waitFor(() => expect(setProjectStatus).toHaveBeenCalledWith(projectId, "completed", workspace.updated_at));
+  });
+
+  it("conserve les accès membres sans afficher les commandes réservées au propriétaire", () => {
+    const denied = Object.fromEntries(Object.keys(permissions).map(key => [key, false])) as typeof permissions;
+    const live = controller({
+      items: [{ ...item, role: "contributor", permissions: denied }],
+      selectedProject: { ...workspace, owner_profile_id: otherProfileId, membership: { authority_role: "contributor", artistic_role: "Chanteur", ...denied } },
+    });
+    render(<ProjectsWorkspace liveController={live} />);
+    fireEvent.click(screen.getByRole("button", { name: "Infos" }));
+    const overview = screen.getByRole("region", { name: "Informations du projet" });
+    expect(within(overview).queryByRole("button", { name: "Modifier", exact: true })).not.toBeInTheDocument();
+    expect(within(overview).queryByRole("button", { name: "Inviter", exact: true })).not.toBeInTheDocument();
+    expect(within(overview).queryByRole("button", { name: /Options de/ })).not.toBeInTheDocument();
+    fireEvent.click(within(overview).getByRole("button", { name: "Gérer le projet" }));
+    const menu = screen.getByRole("dialog", { name: "Gestion du projet" });
+    expect(within(menu).getByRole("button", { name: /Quitter le projet/ })).toBeInTheDocument();
+    expect(within(menu).queryByRole("button", { name: /Terminer|Archiver|Supprimer/ })).not.toBeInTheDocument();
+  });
+
+  it("ne remplace pas les informations musicales absentes par des valeurs inventées", () => {
+    const live = controller({
+      items: [{ ...item, genre: null, bpm: null, musicalKey: null, deliveryAt: null }],
+      selectedProject: { ...workspace, genre: null, bpm: null, musical_key: null, delivery_at: null, milestone: null },
+    });
+    render(<ProjectsWorkspace liveController={live} />);
+    fireEvent.click(screen.getByRole("button", { name: "Infos" }));
+    const overview = screen.getByRole("region", { name: "Informations du projet" });
+    expect(within(overview).getByText("Non fixée")).toBeInTheDocument();
+    expect(within(overview).queryByText("Tempo")).not.toBeInTheDocument();
+    expect(within(overview).queryByText("Tonalité")).not.toBeInTheDocument();
+    expect(within(overview).queryByText("À définir")).not.toBeInTheDocument();
+  });
+
   it("mappe le projet Supabase sans inventer de stems, mixes ou feedbacks", () => {
     const mapped = mapMessagingProjectToWorkspaceItem(item, currentProfileId, workspace, messages);
 
@@ -219,7 +270,7 @@ describe("ProjectsWorkspace live", () => {
     const { rerender } = render(<ProjectsWorkspace liveController={firstController} />);
 
     fireEvent.click(screen.getByRole("button", { name: /Track Packs/ }));
-    expect(screen.getByRole("button", { name: /Track Packs/ })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /Track Packs/ })).toHaveAttribute("aria-current", "page");
 
     const nextController = controller({
       items: [item, secondItem],
@@ -230,7 +281,7 @@ describe("ProjectsWorkspace live", () => {
     rerender(<ProjectsWorkspace liveController={nextController} />);
 
     expect(screen.getByRole("region", { name: "Projet Aurora réel" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Track Packs/ })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /Track Packs/ })).toHaveAttribute("aria-current", "page");
     expect(screen.getByText("Stems bientôt disponibles")).toBeInTheDocument();
   });
 

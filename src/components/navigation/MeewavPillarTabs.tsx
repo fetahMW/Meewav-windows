@@ -101,10 +101,17 @@ export default function MeewavPillarTabs<Id extends string>({
   } as CSSProperties;
 
   useEffect(() => {
-    const activeTab = navigationRef.current?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (activeTab && typeof activeTab.scrollIntoView === "function") {
-      activeTab.scrollIntoView({ block: "nearest", inline: "nearest" });
-    }
+    const navigation = navigationRef.current;
+    const activeTab = navigation?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!navigation || !activeTab) return;
+    // Scroll only the tab rail. scrollIntoView also scrolls hidden vertical
+    // containers, moving the marker and sometimes the whole conversation.
+    const left = activeTab.offsetLeft;
+    const right = left + activeTab.offsetWidth;
+    const visibleLeft = navigation.scrollLeft;
+    const visibleRight = visibleLeft + navigation.clientWidth;
+    if (left < visibleLeft) navigation.scrollLeft = left;
+    else if (right > visibleRight) navigation.scrollLeft = right - navigation.clientWidth;
   }, [activeId]);
 
   return (

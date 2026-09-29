@@ -16,6 +16,7 @@ import {
   LogOut,
   MessageCircleMore,
   Mic,
+  MoreHorizontal,
   MoreVertical,
   Music,
   Music2,
@@ -75,6 +76,7 @@ import type { DemoMessage } from "./messagingDemoData";
 import { InstrumentArtwork, Waveform } from "./TrackPackStudioPrimitives";
 import { TRACK_PACK_INSTRUMENTS, inferTrackPackInstrument } from "./trackPackInstrumentCatalog";
 import "./messaging-hubs.css";
+import "./project-overview.css";
 
 type ProjectDetailTab = "chat" | "tasks" | "stems" | "info";
 type ProjectStatus = "inProgress" | "completed" | "archived";
@@ -1691,7 +1693,7 @@ function ProjectTasksPanel({
             );
           })}
         </nav>
-        <button type="button" className="mw-button mw-button--primary" disabled={live?.pending || (live ? !live.canMutate : false)} onClick={() => setCreateOpen(true)}><Plus size={15} /> Nouvelle tâche</button>
+        <button type="button" className="mw-button mw-button--primary mwp-task-add" aria-label="Nouvelle tâche" title="Nouvelle tâche" disabled={live?.pending || (live ? !live.canMutate : false)} onClick={() => setCreateOpen(true)}><Plus size={20} aria-hidden="true" /><span>Nouvelle tâche</span></button>
       </header>
 
       {filteredTasks.length === 0 ? (
@@ -1700,15 +1702,19 @@ function ProjectTasksPanel({
         <div className="mwp-task-list">
           {filteredTasks.map((task) => (
             <article key={task.id} className={"is-" + task.status}>
-              <button type="button" className="mwp-task-check" disabled={live ? !live.canMutate : false} onClick={() => toggleTask(task.id)} aria-label={task.status === "done" ? "Remettre la tâche à faire" : "Marquer la tâche comme terminée"}>
+              <button type="button" className="mwp-task-check" aria-pressed={task.status === "done"} disabled={live ? !live.canMutate : false} onClick={() => toggleTask(task.id)} aria-label={task.status === "done" ? "Remettre la tâche à faire" : "Marquer la tâche comme terminée"}>
                 {task.status === "done" ? <Check size={15} /> : null}
               </button>
-              <button type="button" className="mwp-task-copy" onClick={() => setSelectedTask(task)}>
-                <strong>{task.title}</strong>
-                {task.description && <span>{task.description}</span>}
-                <small>{task.assignment}{task.deadline ? " · " + task.deadline : ""}</small>
-              </button>
-              <button type="button" className="mwp-task-status" disabled={live ? !live.canMutate : false} onClick={() => cycleStatus(task.id)}>{taskStatusLabel(task.status)}</button>
+              <div className="mwp-task-content">
+                <button type="button" className="mwp-task-copy" onClick={() => setSelectedTask(task)}>
+                  <strong>{task.title}</strong>
+                  {task.description && <span>{task.description}</span>}
+                </button>
+                <div className="mwp-task-meta">
+                  <small>{task.assignment}{task.deadline ? " · " + task.deadline : ""}</small>
+                  <button type="button" className="mwp-task-status" disabled={live ? !live.canMutate : false} aria-label={`Changer le statut de « ${task.title} » : ${taskStatusLabel(task.status)}`} onClick={() => cycleStatus(task.id)}>{taskStatusLabel(task.status)}</button>
+                </div>
+              </div>
             </article>
           ))}
         </div>
@@ -2333,6 +2339,9 @@ function ProjectInfoPanel({
   };
 }) {
   const members = project.memberDetails ?? [];
+  const [manageOpen, setManageOpen] = useState(false);
+  const [showAllMembers, setShowAllMembers] = useState(false);
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteQuery, setInviteQuery] = useState("");
   const [inviteIds, setInviteIds] = useState<Set<string>>(new Set());
@@ -2514,126 +2523,106 @@ function ProjectInfoPanel({
   const activeMix = (project.mixes ?? []).find((mix) => mix.id === project.currentMixId)
     ?? (project.mixes ?? []).find((mix) => mix.isDefault)
     ?? project.mixes?.[0];
-  const totalTakes = (project.mixes ?? []).reduce((total, mix) => total + mix.takes.length, 0);
-  const workspaceInfo = project.workspaceInfo ?? {
-    genre: "Direction à définir",
-    bpm: getTake(activeMix, activeMix?.currentTakeId)?.stems[0]?.bpm ?? 120,
-    musicalKey: getTake(activeMix, activeMix?.currentTakeId)?.stems[0]?.musicalKey ?? "À définir",
-    objective: project.description || "Définir la direction artistique et le prochain livrable.",
-    delivery: project.deadline || "À planifier",
-    milestone: "Prochain point d’équipe",
-    completion: project.status === "completed" ? 100 : project.status === "archived" ? 96 : 24,
-    notes: "Les décisions importantes, stems et tâches de ce projet sont regroupés dans cet espace.",
+  const production = project.workspaceInfo;
+  const productionText = (value?: string) => {
+    const text = value?.trim() ?? "";
+    return ["à définir", "à planifier", "direction à définir"].includes(text.toLocaleLowerCase("fr-FR")) ? "" : text;
+  };
+  const description = project.description.trim() || productionText(production?.objective);
+  const objective = productionText(production?.objective);
+  const milestone = productionText(production?.milestone);
+  const notes = productionText(production?.notes);
+  const currentStem = getTake(activeMix, activeMix?.currentTakeId)?.stems[0];
+  const bpm = production?.bpm || currentStem?.bpm;
+  const musicalKey = productionText(production?.musicalKey || currentStem?.musicalKey);
+  const facts = [
+    { label: "Livraison", value: project.deadline || productionText(production?.delivery) || "Non fixée" },
+    ...(productionText(production?.genre) ? [{ label: "Style", value: productionText(production?.genre) }] : []),
+    ...(bpm && bpm > 0 ? [{ label: "Tempo", value: bpm + " BPM" }] : []),
+    ...(musicalKey ? [{ label: "Tonalité", value: musicalKey }] : []),
+  ];
+  const hasProductionDetails = Boolean((objective && objective !== description) || milestone || notes || project.createdAt || activeMix);
+  const visibleMembers = showAllMembers ? members : members.slice(0, 3);
+  const openProjectEdit = () => {
+    setEditName(project.name);
+    setEditDescription(project.description);
+    setEditDeadline(live ? (project.deliveryAt?.slice(0, 10) ?? "") : (project.deadline ?? ""));
+    setEditOpen(true);
+  };
+  const requestProjectAction = (action: ProjectConfirmAction) => {
+    setManageOpen(false);
+    setConfirmAction(action);
   };
 
   return (
-    <section className="mwp-project-info">
-      <article className="mwp-info-stage">
-        <header className="mwp-info-stage__hero">
-          <div className="mwp-info-stage__heading">
-            <span className="mwp-info-stage__eyebrow"><Music2 size={14} /> {workspaceInfo.genre}</span>
-            <h2>{project.name}</h2>
-            <p>{workspaceInfo.objective}</p>
-            <div className="mwp-info-stage__progress" aria-label={`Avancement ${workspaceInfo.completion}%`}>
-              <span><small>Avancement</small><strong>{workspaceInfo.completion}%</strong></span>
-              <i aria-hidden="true"><b style={{ width: `${Math.max(0, Math.min(workspaceInfo.completion, 100))}%` }} /></i>
-              <em>{workspaceInfo.milestone}</em>
+    <section className="mwp-project-info mwp-project-overview" aria-label="Informations du projet">
+      <div className="mwp-overview-layout">
+        <section className="mwp-overview-card mwp-overview-summary" aria-label="À propos du projet">
+          <header className="mwp-overview-heading">
+            <span className={`mwp-overview-status is-${project.status}`}><i aria-hidden="true" />{statusLabel(project.status)}</span>
+            <div className="mwp-overview-tools">
+              {canEditProject && <button type="button" className="mwp-overview-key" disabled={live?.pending} onClick={openProjectEdit}><Edit3 size={15} aria-hidden="true" /> Modifier</button>}
+              <button type="button" className="mwp-overview-key is-icon" aria-label="Gérer le projet" title="Gérer le projet" onClick={() => setManageOpen(true)}><MoreHorizontal size={20} aria-hidden="true" /></button>
             </div>
-          </div>
-          <div className="mwp-info-stage__status">
-            <span className={`is-${project.status}`}><i />{statusLabel(project.status)}</span>
-            {canEditProject && (
-              <button type="button" disabled={live?.pending} onClick={() => { setEditName(project.name); setEditDescription(project.description); setEditDeadline(live ? (project.deliveryAt?.slice(0, 10) ?? "") : (project.deadline ?? "")); setEditOpen(true); }}><Edit3 size={16} /> Modifier</button>
-            )}
-          </div>
-        </header>
+          </header>
+          {description ? <div className="mwp-overview-description">
+            <p className={descriptionExpanded || description.length <= 180 ? "" : "is-collapsed"}>{description}</p>
+            {description.length > 180 && <button type="button" aria-expanded={descriptionExpanded} onClick={() => setDescriptionExpanded(value => !value)}>{descriptionExpanded ? "Réduire" : "Lire la suite"}</button>}
+          </div> : canEditProject && <button type="button" className="mwp-overview-add-description" onClick={openProjectEdit}><Plus size={16} /> Ajouter une description</button>}
+          <dl className="mwp-overview-facts">
+            {facts.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+          </dl>
+        </section>
 
-        <div className="mwp-info-stage__pulse" aria-label="Résumé du projet">
-          <div><strong>{members.length}</strong><span>Membres</span></div>
-          <div><strong>{project.stemCount}</strong><span>Stems</span></div>
-          <div><strong>{project.tasks?.length ?? 0}</strong><span>Tâches</span></div>
-          <div><strong>{workspaceInfo.bpm}</strong><span>BPM</span></div>
-          <div className="mwp-info-stage__date"><small>TONALITÉ</small><strong>{workspaceInfo.musicalKey}</strong></div>
-          <div className="mwp-info-stage__date"><small>LIVRAISON</small><strong>{workspaceInfo.delivery}</strong></div>
+        <section className="mwp-overview-card mwp-overview-team" aria-label="Équipe du projet">
+          <header className="mwp-overview-heading">
+            <h3>Équipe <span>{members.length}</span></h3>
+            {canInvite && <button type="button" className="mwp-overview-key is-primary" disabled={live?.pending} onClick={() => { inviteAttemptRef.current = null; setInviteOpen(true); }}><UserPlus size={16} aria-hidden="true" /> Inviter</button>}
+          </header>
+          <ul className="mwp-overview-members">
+            {visibleMembers.map(member => <li key={member.memberId}>
+              <span className="mwp-overview-avatar"><img src={member.avatar} alt="" />{member.online && <i aria-label="En ligne" />}</span>
+              <span className="mwp-overview-member-copy">
+                <strong>{member.name}{member.id === viewerProfileId && <small> · Moi</small>}</strong>
+                <span>{member.role}{(member.creator || member.authorityRole === "owner") ? " · Propriétaire" : member.authorityRole === "admin" ? " · Admin" : ""}</span>
+              </span>
+              {canManageMembers && member.id !== viewerProfileId && member.authorityRole !== "owner" && <button type="button" className="mwp-overview-member-menu" disabled={live?.pending} onClick={() => setMemberMenuId(member.id)} aria-label={"Options de " + member.name}><MoreVertical size={18} aria-hidden="true" /></button>}
+            </li>)}
+          </ul>
+          {members.length === 0 && <p className="mwp-overview-empty">Aucun membre à afficher.</p>}
+          {members.length > 3 && <button type="button" className="mwp-overview-expand" aria-expanded={showAllMembers} onClick={() => setShowAllMembers(value => !value)}>{showAllMembers ? "Réduire l’équipe" : `Voir les ${members.length} membres`}<ChevronRight size={16} aria-hidden="true" /></button>}
+        </section>
+
+        {hasProductionDetails && <details className="mwp-overview-card mwp-overview-production">
+          <summary><Music2 size={17} aria-hidden="true" /><strong>Détails de production</strong><ChevronRight size={17} aria-hidden="true" /></summary>
+          <div className="mwp-overview-production-body">
+            <dl>
+              {objective && objective !== description && <div><dt>Objectif</dt><dd>{objective}</dd></div>}
+              {milestone && <div><dt>Prochain jalon</dt><dd>{milestone}</dd></div>}
+              {notes && <div><dt>Notes</dt><dd>{notes}</dd></div>}
+              {project.createdAt && <div><dt>Créé le</dt><dd>{project.createdAt}</dd></div>}
+            </dl>
+            {(project.mixes ?? []).length > 0 && <ul className="mwp-overview-mixes" aria-label="Mixes du projet">
+              {project.mixes?.map(mix => <li key={mix.id}><Music2 size={16} aria-hidden="true" /><span><strong>{mix.name}</strong><small>{mix.takes.length} prise{mix.takes.length > 1 ? "s" : ""}</small></span>{mix.id === activeMix?.id && <em>Mix actif</em>}</li>)}
+            </ul>}
+          </div>
+        </details>}
+      </div>
+      {live?.error && !manageOpen && <p className="mwp-overview-error" role="alert">{live.error}</p>}
+
+      {manageOpen && <Modal title="Gestion du projet" onClose={() => setManageOpen(false)}>
+        <div className="mwp-overview-actions">
+          {canEditProject && project.status !== "inProgress" && <button type="button" disabled={live?.pending} onClick={() => {
+            if (live) void live.setStatus("in_progress").then(() => setManageOpen(false)).catch(() => undefined);
+            else { onProjectChange({ ...project, status: "inProgress" }); setManageOpen(false); }
+          }}><History size={18} /><span><strong>Réouvrir</strong><small>Reprendre le travail</small></span><ChevronRight size={16} /></button>}
+          {canEditProject && project.status !== "completed" && <button type="button" disabled={live?.pending} onClick={() => requestProjectAction("complete")}><CheckCircle2 size={18} /><span><strong>Terminer le projet</strong><small>Le classer dans les projets terminés</small></span><ChevronRight size={16} /></button>}
+          {canEditProject && project.status !== "archived" && <button type="button" disabled={live?.pending} onClick={() => requestProjectAction("archive")}><Archive size={18} /><span><strong>Archiver</strong><small>Conserver le projet et son historique</small></span><ChevronRight size={16} /></button>}
+          {(!live || !isOwner) && <button type="button" className="is-warning" disabled={live?.pending} onClick={() => requestProjectAction("leave")}><LogOut size={18} /><span><strong>Quitter le projet</strong><small>Se retirer de l’équipe</small></span><ChevronRight size={16} /></button>}
+          {isOwner && <button type="button" className="is-danger" disabled={live?.pending} onClick={() => requestProjectAction("delete")}><Trash2 size={18} /><span><strong>Supprimer le projet</strong><small>Supprimer définitivement ce projet</small></span><ChevronRight size={16} /></button>}
         </div>
-
-        <div className="mwp-info-stage__body">
-          <div className="mwp-info-stage__main">
-            <section className="mwp-info-zone mwp-info-zone--brief">
-              <header>
-                <span><Info size={17} /><strong>Direction de production</strong><small>{totalTakes} take{totalTakes > 1 ? "s" : ""}</small></span>
-              </header>
-              <div className="mwp-info-brief">
-                <div>
-                  <small>PROCHAIN JALON</small>
-                  <strong>{workspaceInfo.milestone}</strong>
-                  <p>{workspaceInfo.notes}</p>
-                </div>
-                <dl>
-                  <div><dt>Créé</dt><dd>{project.createdAt || "Récemment"}</dd></div>
-                  <div><dt>Statut</dt><dd>{statusLabel(project.status)}</dd></div>
-                  <div><dt>Mix actif</dt><dd>{activeMix?.name || "À créer"}</dd></div>
-                </dl>
-              </div>
-            </section>
-
-            <section className="mwp-info-zone mwp-info-zone--members">
-              <header>
-                <span><Users size={17} /><strong>Équipe créative</strong><small>{members.length} membre{members.length > 1 ? "s" : ""}</small></span>
-                {canInvite && <button type="button" disabled={live?.pending} onClick={() => { inviteAttemptRef.current = null; setInviteOpen(true); }}><UserPlus size={16} /> Inviter</button>}
-              </header>
-              <div className="mwp-info-members">
-                {members.map((member) => (
-                  <div key={member.memberId}>
-                    <span className="mwp-member-avatar-wrap"><img src={member.avatar} alt="" />{member.online && <i />}</span>
-                    <span><strong>{member.name}{member.id === viewerProfileId ? " (Moi)" : ""}</strong><small>{member.role}</small></span>
-                    {member.creator && <em>Admin</em>}
-                    <span className="mwp-member-permissions">
-                      {member.permissions.canEdit && <i title="Peut éditer">E</i>}
-                      {member.permissions.canInvite && <i title="Peut inviter">I</i>}
-                      {member.permissions.canManageStems && <i title="Gère les stems">S</i>}
-                    </span>
-                    {canManageMembers && member.id !== viewerProfileId && member.authorityRole !== "owner" && (
-                      <button type="button" onClick={() => setMemberMenuId(member.id)} aria-label={"Options de " + member.name}><MoreVertical size={16} /></button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {(project.mixes ?? []).length > 0 && (
-              <section className="mwp-info-zone mwp-info-zone--mixes">
-                <header>
-                  <span><Music2 size={17} /><strong>Univers sonore</strong><small>{project.mixes?.length} mix{(project.mixes?.length ?? 0) > 1 ? "es" : ""}</small></span>
-                  {activeMix && <em><i /> {activeMix.name}</em>}
-                </header>
-                <div className="mwp-info-mixes">
-                  {project.mixes?.map((mix, index) => (
-                    <div key={mix.id} className={(mix.id === activeMix?.id ? "is-active" : "")}>
-                      <span className="mwp-info-mix-index">{String(index + 1).padStart(2, "0")}</span>
-                      <Music2 size={16} />
-                      <span><strong>{mix.name}</strong><small>{mix.takes.length} take{mix.takes.length > 1 ? "s" : ""}</small></span>
-                      {(mix.id === activeMix?.id) && <em>Mix actif</em>}
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
-
-          <aside className="mwp-info-stage__rail">
-            <header><ShieldCheck size={17} /><span><strong>Pilotage</strong><small>Gestion du projet</small></span></header>
-            <div className="mwp-action-list">
-              {canEditProject && project.status !== "inProgress" && <button type="button" disabled={live?.pending} onClick={() => live ? void live.setStatus("in_progress").catch(() => undefined) : onProjectChange({ ...project, status: "inProgress" })}><History size={17} /><span><strong>Réouvrir</strong><small>Reprendre le travail</small></span><ChevronRight size={16} /></button>}
-              {canEditProject && project.status !== "completed" && <button type="button" onClick={() => setConfirmAction("complete")}><CheckCircle2 size={17} /><span><strong>Terminer</strong><small>Valider la production</small></span><ChevronRight size={16} /></button>}
-              {canEditProject && project.status !== "archived" && <button type="button" onClick={() => setConfirmAction("archive")}><Archive size={17} /><span><strong>Archiver</strong><small>Conserver l’historique</small></span><ChevronRight size={16} /></button>}
-              {(!live || !isOwner) && <button type="button" className="is-warning" onClick={() => setConfirmAction("leave")}><LogOut size={17} /><span><strong>Quitter</strong><small>Sortir de l’équipe</small></span><ChevronRight size={16} /></button>}
-              {isOwner && <button type="button" className="is-danger" onClick={() => setConfirmAction("delete")}><Trash2 size={17} /><span><strong>Supprimer</strong><small>Action définitive</small></span><ChevronRight size={16} /></button>}
-            </div>
-            {live?.error && <small className="mw-wizard-note" role="alert">{live.error}</small>}
-          </aside>
-        </div>
-      </article>
+        {live?.error && <p className="mwp-overview-error" role="alert">{live.error}</p>}
+      </Modal>}
 
       {inviteOpen && (
         <Modal
