@@ -175,6 +175,7 @@ import "../scene/scene-card-surfaces.css";
 import "../rooms/home/rooms-home-filter-lacquer.css";
 import "../../components/shared/rail/rail-edge-navigation.css";
 import "../scene/scene-explorer-material.css";
+import "../scene/scene-desktop-sizing.css";
 
 type SceneTabId = SceneRouteTab;
 type ShortsNotification = {

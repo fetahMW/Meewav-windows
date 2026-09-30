@@ -1,0 +1,140 @@
+/* Desktop proportions measured from the supplied YouTube captures.
+ * Keep capture pixels out of the layout: sizes follow the available width.
+ * This separate sheet can be removed to restore the previous sizing. */
+.scene-page {
+  --scene-desktop-grid-gap: 16px;
+  --scene-desktop-short-columns: 5;
+  --scene-desktop-short-gaps: 64px;
+}
+
+.scene-page .scene-home-feed__grid {
+  column-gap: var(--scene-desktop-grid-gap);
+}
+
+.scene-page .scene-explore__catalog.is-landscape:not(.is-compact) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.scene-page .scene-home-feed__shorts-track {
+  gap: var(--scene-desktop-grid-gap);
+}
+
+.scene-page .scene-home-feed__shorts-track > .scene-vertical-card {
+  min-width: 0;
+  flex: 0 0 calc((100% - var(--scene-desktop-short-gaps)) / var(--scene-desktop-short-columns));
+}
+
+.scene-page .scene-explore__catalog.is-vertical {
+  grid-template-columns: repeat(var(--scene-desktop-short-columns), minmax(0, 1fr));
+  gap: 16px var(--scene-desktop-grid-gap);
+}
+
+/* A Short's feed thumbnail is 2:3; its playback surface remains 9:16. */
+.scene-page :is(.scene-home-feed__shorts-track, .scene-explore__catalog.is-vertical)
+  .scene-vertical-card .scene-vertical-card__media {
+  aspect-ratio: 2 / 3;
+}
+
+/* Closed watch navigation does not reserve a blank column. Open it as a drawer
+ * above the same layout, so neither the player nor suggestions jump in size. */
+.scene-page.has-watch-page .scene-watch-menu-space {
+  display: none;
+}
+
+.scene-page.has-watch-page .scene-watch-menu {
+  right: 0;
+  width: auto;
+}
+
+.scene-page.has-watch-page .scene-watch-menu__backdrop {
+  display: block;
+}
+
+.scene-page.has-watch-page .scene-watch-menu .scene-browse-nav {
+  width: min(270px, 85vw);
+  box-shadow: 14px 0 32px #0006;
+}
+
+.scene-page.has-watch-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed) {
+  margin-left: var(--shorts-nav-space);
+  padding-top: calc(var(--shorts-topbar-height) + var(--scene-content-top-gap, 24px));
+}
+
+/* Longform watch uses roughly 72% for the picture and 28% for its sidebar.
+ * Width, rather than window height, determines the normal 16:9 picture. */
+.scene-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed):not(.is-theater) {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 28%);
+  gap: 20px;
+}
+
+.scene-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed):not(.is-theater)
+  .shorts-player-frame:not(:fullscreen) {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 16 / 9;
+  margin-inline: 0;
+}
+
+.scene-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed)
+  .scene-watch-suggestion {
+  gap: 4px;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.scene-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed)
+  .scene-watch-suggestion__play {
+  grid-template-columns: minmax(0, 63%) minmax(0, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 1280px) {
+  .scene-page {
+    --scene-desktop-short-columns: 4;
+    --scene-desktop-short-gaps: 48px;
+  }
+
+  .scene-page .scene-home-feed__grid,
+  .scene-page .scene-explore__catalog.is-landscape:not(.is-compact) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .scene-page {
+    --scene-desktop-short-columns: 3;
+    --scene-desktop-short-gaps: 32px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .scene-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed):not(.is-theater) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .scene-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed)
+    .scene-watch-suggestion__play {
+    grid-template-columns: minmax(0, 30%) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .scene-page .scene-home-feed__grid,
+  .scene-page .scene-explore__catalog.is-landscape:not(.is-compact) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .scene-page.has-watch-page .shorts-player-layer.is-watch:not(.is-miniplayer):not(.is-vertical-feed) {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .scene-page {
+    --scene-desktop-short-columns: 2;
+    --scene-desktop-grid-gap: 10px;
+    --scene-desktop-short-gaps: 10px;
+  }
+}
