@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const listRoomAwardsMine = vi.hoisted(() => vi.fn());
@@ -96,7 +96,7 @@ describe("ProfileGiftsWorkspace Room awards", () => {
     expect(within(panel).getAllByText(/Cadeau Room vérifié le/)).toHaveLength(2);
     expect(within(panel).getAllByText("Registre serveur · récompense non modifiable")).toHaveLength(2);
     expect(panel.querySelector("[title]")).toBeNull();
-    expect(screen.getAllByText("Golden Like").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Supporter d’Or").length).toBeGreaterThan(0);
     expect(screen.getAllByText("La Certif").length).toBeGreaterThan(0);
     expect(listRoomAwardsMine).toHaveBeenCalledWith(OWNER_ID);
   });
@@ -107,7 +107,7 @@ describe("ProfileGiftsWorkspace Room awards", () => {
     render(<ProfileGiftsWorkspace storageScope={OWNER_ID} onBack={vi.fn()} onDone={vi.fn()} />);
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Tes suivis locaux restent accessibles");
-    expect(screen.getAllByText("Golden Like").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Supporter d’Or").length).toBeGreaterThan(0);
   });
 
   it("does not query private awards without an authenticated profile scope", () => {
@@ -116,6 +116,11 @@ describe("ProfileGiftsWorkspace Room awards", () => {
     expect(listRoomAwardsMine).not.toHaveBeenCalled();
     expect(listGiftInventoryMine).not.toHaveBeenCalled();
     expect(screen.queryByRole("region", { name: "Cadeaux reçus en Room" })).not.toBeInTheDocument();
+    const catalog = screen.getByRole("region", { name: "Catalogue de cadeaux à préparer" });
+    const gift = within(catalog).getByRole("button", { name: /Supporter d’Or/i });
+    expect(gift).toBeEnabled();
+    fireEvent.click(gift);
+    expect(gift).toHaveAttribute("aria-pressed", "true");
   });
 });
 
@@ -134,10 +139,10 @@ describe("ProfileGiftsWorkspace gift inventory", () => {
 
     const panel = await screen.findByRole("region", { name: "Mes cadeaux disponibles" });
     expect(within(panel).getAllByRole("article")).toHaveLength(6);
-    for (const label of ["Carte de Force", "Pass VIP", "Accès privé", "Golden Like", "Bonus supporter", "La Certif"]) {
+    for (const label of ["Distinction Live", "Pass VIP", "Cadeau surprise", "Supporter d’Or", "Bonus supporter", "La Certif"]) {
       expect(within(panel).getByText(label)).toBeVisible();
     }
-    const forceCard = within(panel).getByText("Carte de Force").closest("article");
+    const forceCard = within(panel).getByText("Distinction Live").closest("article");
     expect(forceCard).not.toBeNull();
     expect(within(forceCard as HTMLElement).getByText("4")).toBeVisible();
     expect(within(forceCard as HTMLElement).getByText("1")).toBeVisible();
@@ -192,7 +197,7 @@ describe("ProfileGiftsWorkspace gift inventory", () => {
     expect(within(catalog).getByText("0 disponible")).toBeVisible();
     expect(within(catalog).queryByText("3 restants")).not.toBeInTheDocument();
     expect(within(catalog).queryByText("2 restants")).not.toBeInTheDocument();
-    expect(within(catalog).getByRole("button", { name: /Golden Like/i })).toBeDisabled();
+    expect(within(catalog).getByRole("button", { name: /Supporter d’Or/i })).toBeEnabled();
   });
 
   it("does not present observe-mode balances as spendable inventory", async () => {
@@ -209,15 +214,39 @@ describe("ProfileGiftsWorkspace gift inventory", () => {
     expect(await within(panel).findByText("Activation de l’inventaire en préparation")).toBeVisible();
     expect(within(panel).queryByText("12")).not.toBeInTheDocument();
     const catalog = screen.getByRole("region", { name: "Catalogue de cadeaux à préparer" });
-    expect(within(catalog).getByRole("button", { name: /Golden Like/i })).toBeDisabled();
+    expect(within(catalog).getByRole("button", { name: /Supporter d’Or/i })).toBeEnabled();
     expect(within(catalog).getAllByText("Activation en préparation")).toHaveLength(6);
+  });
+
+  it.each(["empty", "not activated", "offline"])("prepares a local draft when inventory is %s and leaves distribution in Rooms", async (state) => {
+    if (state === "not activated") listGiftInventoryMine.mockResolvedValue(emptyInventory.map((item) => ({ ...item, enforcementActive: false })));
+    if (state === "offline") listGiftInventoryMine.mockRejectedValue(new Error("offline"));
+    const onDone = vi.fn();
+    render(<ProfileGiftsWorkspace storageScope={OWNER_ID} onBack={vi.fn()} onDone={onDone} />);
+
+    const catalog = screen.getByRole("region", { name: "Catalogue de cadeaux à préparer" });
+    fireEvent.click(within(catalog).getByRole("button", { name: /Supporter d’Or/i }));
+    fireEvent.click(within(catalog).getByRole("button", { name: /^Préparer/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Maya/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Continuer/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Enregistrer le brouillon/ }));
+
+    const drafts = screen.getByRole("region", { name: "Brouillons cadeaux locaux" });
+    expect(await within(drafts).findByText("Supporter d’Or")).toBeVisible();
+    expect(within(drafts).getByText("Brouillon")).toBeVisible();
+    expect(within(drafts).getByRole("link", { name: /Distribuer en Room/i })).toHaveAttribute("href", "/rooms");
+    expect(onDone).toHaveBeenCalledWith("Brouillon enregistré · distribue-le depuis une Room");
+    const stored = JSON.parse(window.localStorage.getItem(`meewav-profile-gifts-v3:${OWNER_ID}`) ?? "[]");
+    expect(stored).toHaveLength(1);
+    expect(stored[0]).toMatchObject({ gift: "Supporter d’Or", recipient: "Maya", status: "Prêt", action: "Ajouter à une ronde" });
+    expect(listGiftInventoryMine).toHaveBeenCalledTimes(1);
   });
 
   it("migrates legacy local sent entries to honest drafts and routes distribution to a Room", async () => {
     const storageKey = `meewav-profile-gifts-v3:${OWNER_ID}`;
     window.localStorage.setItem(storageKey, JSON.stringify([{
       id: "legacy-sent",
-      gift: "Golden Like",
+      gift: "Supporter d’Or",
       recipient: "Maya",
       recipientSource: "Raccourci",
       action: "Envoyer maintenant",

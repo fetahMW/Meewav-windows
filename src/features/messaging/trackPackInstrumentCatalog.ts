@@ -67,7 +67,7 @@ export const TRACK_PACK_INSTRUMENTS: Record<TrackPackInstrument, TrackPackInstru
     asset: "/images/messaging/instruments/synth.svg",
     name: "Synthé",
     description: "Ambiance et effets",
-    matches: /synth|pad|fx|lead|texture|ambient/i,
+    matches: /synth|pad|fx|lead|texture|ambient|instruments?/i,
   },
 };
 
@@ -96,6 +96,7 @@ const TRACK_PACK_STEM_PRESENTATIONS: ReadonlyArray<{
   name: string;
   description: string;
 }> = [
+  { matches: /instruments?/i, instrument: "synth", name: "Instruments", description: "Arrangement instrumental" },
   { matches: /kick/i, instrument: "drums", name: "Kick", description: "Impact grave" },
   { matches: /snare|clap/i, instrument: "drums", name: "Snare", description: "Caisse claire" },
   { matches: /hi[-_ ]?hat|hats?/i, instrument: "drums", name: "Hi-hat", description: "Charley et vélocité" },

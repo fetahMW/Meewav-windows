@@ -42,7 +42,7 @@ import {
   Vote,
   X,
 } from "lucide-react";
-import { useEffect, useRef, useState, type ChangeEvent, type CSSProperties, type FormEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ChangeEvent, type CSSProperties, type FormEvent, type ReactNode } from "react";
 import { appendMeeWavEmoticon, MeeWavEmoticonComposer, MeeWavEmoticonPicker, MeeWavRichText } from "../emoticons/MeewavEmoticons";
 import type {
   MessagingWorkspaceAttachmentsController,
@@ -102,6 +102,7 @@ export type ArtistGroup = {
   nextSessionTime?: string;
   confirmedCount?: number;
   waitingCount?: number;
+  sessionAttendance?: Record<string, "confirmed" | "pending">;
   pendingDecisionTitle?: string;
   messages: GroupChatMessage[];
   members: ArtistGroupMember[];
@@ -223,6 +224,7 @@ const initialGroups: ArtistGroup[] = [
     nextSessionTime: "Ce soir 21h30",
     confirmedCount: 3,
     waitingCount: 1,
+    sessionAttendance: { m1: "confirmed", m2: "confirmed", m3: "confirmed", m4: "pending" },
     relatedProjectIds: ["project_1", "project_2"],
     members: [
       { id: "m1", name: "Alex", role: "Beatmaker", online: true, avatar: avatar(1) },
@@ -345,6 +347,7 @@ let artistGroupSessionItems: ArtistGroup[] | null = null;
 function cloneArtistGroups(groups: ArtistGroup[]) {
   return groups.map((group) => ({
     ...group,
+    sessionAttendance: group.sessionAttendance ? { ...group.sessionAttendance } : undefined,
     relatedProjectIds: [...group.relatedProjectIds],
     messages: group.messages.map((message) => ({ ...message })),
     members: group.members.map((member) => ({ ...member })),
@@ -842,14 +845,18 @@ export default function ArtistGroupsWorkspace({
   onItemsChangeRef.current = onItemsChange;
   onActiveGroupChangeRef.current = onActiveGroupChange;
 
-  useEffect(() => {
-    if (createGroupSignal <= 0 || lastCreateGroupSignal.current === createGroupSignal) return;
-    lastCreateGroupSignal.current = createGroupSignal;
+  const openCreateFlow = useCallback(() => {
     setCreateStep(1);
     setCreateDraft(emptyDraft);
     setCreateError("");
     setCreateOpen(true);
-  }, [createGroupSignal]);
+  }, []);
+
+  useEffect(() => {
+    if (createGroupSignal <= 0 || lastCreateGroupSignal.current === createGroupSignal) return;
+    lastCreateGroupSignal.current = createGroupSignal;
+    openCreateFlow();
+  }, [createGroupSignal, openCreateFlow]);
 
   useEffect(() => {
     if (liveMode) return;
@@ -1088,6 +1095,9 @@ export default function ArtistGroupsWorkspace({
       ...group,
       nextSessionTitle: sessionTitle.trim(),
       nextSessionTime: `${sessionDate || "Date à définir"}${sessionPlace ? ` • ${sessionPlace}` : ""}`,
+      sessionAttendance: Object.fromEntries(group.members.map((member) => [member.id, "pending" as const])),
+      confirmedCount: 0,
+      waitingCount: group.members.length,
     }));
     setSessionTitle("");
     setSessionDate("");
@@ -1231,9 +1241,12 @@ export default function ArtistGroupsWorkspace({
   );
 
   const renderGroupSideAction = (group: ArtistGroup, activeView: GroupPanel) => (
-    <button type="button" className={`agw-panel-option${activeView === "settings" ? " is-active" : ""}`} onClick={() => openPanel(group.id, "settings")} aria-label="Paramètres et options du groupe" aria-pressed={activeView === "settings"}>
-      <Settings2 size={17} /> <span>Options</span>
-    </button>
+    <>
+      <button type="button" className={`agw-panel-option${activeView === "settings" ? " is-active" : ""}`} onClick={() => openPanel(group.id, "settings")} aria-label="Paramètres et options du groupe" aria-pressed={activeView === "settings"}>
+        <Settings2 size={17} /> <span>Options</span>
+      </button>
+      <button type="button" className="agw-panel-create" onClick={openCreateFlow} aria-label="Nouveau groupe" title="Créer un groupe"><Plus size={17} aria-hidden="true" /></button>
+    </>
   );
 
   const renderChat = (group: ArtistGroup) => (
@@ -1267,12 +1280,21 @@ export default function ArtistGroupsWorkspace({
             <h3>Prochaine session</h3>
             <p className="agw-next-session__time"><Clock3 size={19} /> <span>{group.nextSessionTime ?? "Ce soir 21h30"}</span><span className="agw-session-status"><i /> À venir</span></p>
             <div className="agw-next-session__actions">
-              <button type="button" className="agw-primary-button is-small" onClick={() => {
-                updateGroup(group.id, (current) => ({
-                  ...current,
-                  confirmedCount: Math.min(current.members.length, (current.confirmedCount ?? 0) + 1),
-                  waitingCount: Math.max(0, (current.waitingCount ?? 0) - 1),
-                }));
+              <button type="button" className="agw-primary-button is-small" disabled={Boolean(group.sessionAttendance) && !group.members.some((member) => group.sessionAttendance?.[member.id] === "pending")} onClick={() => {
+                updateGroup(group.id, (current) => {
+                  const awaitingMember = current.sessionAttendance
+                    ? current.members.find((member) => current.sessionAttendance?.[member.id] === "pending")
+                    : undefined;
+                  if (current.sessionAttendance && !awaitingMember) return current;
+                  return {
+                    ...current,
+                    sessionAttendance: awaitingMember
+                      ? { ...current.sessionAttendance, [awaitingMember.id]: "confirmed" }
+                      : current.sessionAttendance,
+                    confirmedCount: Math.min(current.members.length, (current.confirmedCount ?? 0) + 1),
+                    waitingCount: Math.max(0, (current.waitingCount ?? 0) - 1),
+                  };
+                });
                 notify("Session confirmée !");
               }}><Check size={18} /> Confirmer</button>
               <button type="button" className="agw-secondary-button is-small" aria-expanded={detailsOpen} aria-controls="agw-planning-session-details" onClick={() => setDetailsOpen((value) => !value)}><Info size={18} /> Détails</button>
@@ -1285,9 +1307,15 @@ export default function ArtistGroupsWorkspace({
               <p>Préparation du set et validation des transitions.</p>
             </div>
             <div className="agw-next-session__attendance">
-              <span className="agw-participant-stack" aria-label={`${group.confirmedCount ?? 0} membres confirmés`}>
-                {group.members.slice(0, 3).map((member) => <span key={member.id} title={member.name}><UserRound size={19} /></span>)}
-                <span className="is-waiting" title="En attente"><UserRound size={18} /></span>
+              <span className="agw-participant-stack" aria-label={`${group.confirmedCount ?? 0} confirmés, ${group.waitingCount ?? 0} en attente`}>
+                {group.members.filter((member) => !group.sessionAttendance || group.sessionAttendance[member.id]).map((member) => {
+                  const response = group.sessionAttendance?.[member.id];
+                  const attendance = response === "pending" ? "En attente" : response === "confirmed" ? "Présence confirmée" : undefined;
+                  const label = attendance ? `${member.name} — ${attendance}` : member.name;
+                  return <span key={member.id} className={response === "pending" ? "is-waiting" : response === "confirmed" ? "is-confirmed" : undefined} title={label} {...portraitProps({ id: member.id, name: member.name, avatarUrl: member.avatar, role: member.role })}>
+                    <img src={member.avatar} alt={label} loading="lazy" />
+                  </span>;
+                })}
               </span>
               <span><strong>{group.confirmedCount ?? 0}</strong> confirmés</span><i />
               <span><strong>{group.waitingCount ?? 0}</strong> en attente</span>
@@ -1440,7 +1468,7 @@ export default function ArtistGroupsWorkspace({
     <main className={`agw mw-polished-hub${panel || createOpen ? " has-panel" : ""}`}>
       {toast && <div className="agw-toast" role="status"><CheckCircle2 size={17} /> {toast}<button type="button" onClick={() => { setToast(""); liveController?.clearActionError(); }} aria-label="Fermer"><X size={15} /></button></div>}
       {renderLiveInvitations()}
-      {liveController && !groups.length && <section className="agw-live-state" role="status"><Users size={28} /><strong>{liveController.status === "loading" ? "Chargement des groupes…" : "Aucun groupe actif"}</strong><span>{liveController.error?.message ?? "Réunis ton équipe ou rejoins une invitation reçue."}</span>{liveController.status !== "loading" && !liveController.error && <button type="button" className="agw-primary-button mw-primary-action" onClick={() => setCreateOpen(true)}><Plus size={17} />Créer un groupe</button>}</section>}
+      {liveController && !groups.length && <section className="agw-live-state" role="status"><Users size={28} /><strong>{liveController.status === "loading" ? "Chargement des groupes…" : "Aucun groupe actif"}</strong><span>{liveController.error?.message ?? "Réunis ton équipe ou rejoins une invitation reçue."}</span>{liveController.status !== "loading" && !liveController.error && <button type="button" className="agw-primary-button mw-primary-action" onClick={openCreateFlow}><Plus size={17} />Créer un groupe</button>}</section>}
       {renderActivePanel()}
       {createOpen && renderCreateFlow()}
     </main>

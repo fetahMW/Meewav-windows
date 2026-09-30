@@ -16,7 +16,7 @@
 .profile-page .profile-main :is(
   .profile-panel, .profile-pulse-summary, .profile-pulse-chart,
   .profile-hero__identity-card, .profile-hero__insights-card,
-  .profile-media-card, .profile-private-master-detail__surface,
+  .profile-media-card,
   .profile-private-wallet-balance, .profile-private-wallet-account,
   .profile-private-wallet-activity, .profile-ranking-dashboard
 ) {
@@ -26,6 +26,18 @@
   backdrop-filter: blur(16px) saturate(.75);
   -webkit-backdrop-filter: blur(16px) saturate(.75);
 }
+
+/* Private tools keep their cards directly on the profile background. */
+.profile-page .profile-main .profile-private-master-detail__surface {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .profile-page .profile-main :is(.profile-hero__identity-card, .profile-hero__insights-card)::after {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.055), transparent);
 }
@@ -204,6 +216,183 @@
 
 .profile-page .profile-main.is-profile-home .profile-journey-card {
   min-height: 0;
+}
+
+/* Media tools share the heading's single row and the compact console finish. */
+.profile-page .profile-media-shell-header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.profile-page .profile-media-shell-header > h2 {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.profile-page .profile-media-workspace-chips {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.profile-page .profile-media-workspace-chips::-webkit-scrollbar { display: none; }
+.profile-page .profile-media-workspace-chips > button {
+  appearance: none;
+  flex: 0 0 auto;
+  min-width: 64px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--mw-control-face);
+  box-shadow: var(--mw-control-shadow);
+  color: var(--profile-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 650;
+  transition: color 150ms ease, filter 150ms ease;
+}
+.profile-page .profile-media-workspace-chips > button:hover { color: #fff; filter: brightness(1.1); }
+.profile-page .profile-media-workspace-chips > button.is-active {
+  background: var(--mw-primary-face);
+  box-shadow: var(--mw-primary-shadow);
+  color: #fff;
+}
+.profile-page .profile-media-workspace-chips > button:focus-visible {
+  outline: 2px solid var(--mw-accent-secondary);
+  outline-offset: 2px;
+}
+
+/* Cadeaux et Badges: opaque graphite glass, including their nested real-data panels. */
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) {
+  --profile-panel: #111217;
+  --profile-glass: linear-gradient(125deg, #ffffff0c, transparent 34%),
+    linear-gradient(180deg, #17191f, #090a0e);
+  --profile-inset-glass: linear-gradient(125deg, #ffffff08, transparent 38%),
+    linear-gradient(180deg, #202127, #111217);
+}
+.profile-page .profile-gifts-workspace { --studio-flow-accent: #a98ef0; }
+
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) :is(
+  .profile-gifts-overview-hero, .profile-gifts-inventory, .profile-gifts-room-awards,
+  .profile-gifts-catalog-section, .profile-gifts-tracking, .profile-gifts-editor,
+  .profile-studio-confirm,
+  .profile-studio-detail-hero, .profile-grade-overview, .profile-recognition-roadmap,
+  .profile-recognition-summary, .profile-recognition-card, .profile-certif-panel
+) {
+  background: var(--profile-glass);
+  border-color: var(--profile-border);
+  box-shadow: var(--profile-glass-edge);
+}
+.profile-page .profile-gifts-workspace :is(.profile-gifts-catalog-section, .profile-gifts-tracking) {
+  padding: 16px 18px;
+  border: 1px solid var(--profile-border);
+  border-radius: 18px;
+}
+
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) :is(
+  .profile-studio-tracking-card, .profile-studio-live-summary,
+  .profile-gift-catalog-card, .profile-gifts-inventory__grid > article,
+  .profile-gifts-room-awards__list > article, .profile-certif-panel__list article,
+  .profile-gift-detail__grid > article, .profile-gifts-summary-object,
+  .profile-gifts-recipient-picker, .profile-gifts-draft-notice, .profile-gifts-final-recap,
+  .profile-grade-signals, .profile-recognition-roadmap__next,
+  .profile-gifts-inventory__state, .profile-gifts-inventory__empty,
+  .profile-gifts-room-awards__state, .profile-gifts-drafts-empty,
+  .profile-certif-panel__disclaimer
+) {
+  background: var(--profile-inset-glass);
+  border-color: var(--profile-border);
+  box-shadow: inset 0 1px 0 #ffffff12, inset 0 -1px 0 #0006;
+}
+.profile-page .profile-gifts-workspace .profile-gift-catalog-card::before { display: none; }
+.profile-page .profile-gifts-workspace .profile-gifts-editor__canvas { background: #111217; }
+.profile-page .profile-gifts-workspace .profile-studio-row-menu {
+  background: var(--profile-glass);
+  border-color: var(--profile-border);
+}
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) :is(
+  .profile-gift-catalog-card, .profile-recognition-card, .profile-studio-tracking-card
+):hover {
+  border-color: #a98ef070;
+  box-shadow: inset 0 1px 0 #ffffff20, 0 8px 24px #0005;
+}
+
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) :is(
+  .profile-studio-filter-row > button, .profile-studio-workspace__back,
+  .profile-studio-real-steps button, .profile-studio-confirm footer button:not(.is-danger),
+  .profile-studio-tracking-card__actions > :is(button, a),
+  .profile-gifts-editor__footer > button, .profile-gifts-recipients > section:first-child > div > button,
+  .profile-gifts-recipient-picker > div > button, .profile-cage-wide-choice,
+  .profile-certif-panel__list button, .profile-recognition-summary > button,
+  .profile-gifts-inventory__header-actions > :is(span, a),
+  .profile-gifts-inventory__grid dl > div, .profile-gifts-room-awards > header > span,
+  .profile-gifts-room-awards__list em, .profile-certif-panel__icon,
+  .profile-certif-panel__safety, .profile-gift-catalog-card__meta > em
+) {
+  background: var(--profile-inset-glass);
+  border-color: var(--profile-border);
+  box-shadow: inset 0 1px 0 #ffffff16, inset 0 -1px 0 #0005;
+}
+.profile-page .profile-gifts-workspace :is(
+  .profile-cage-select select, .profile-studio-filter-row > button > span
+) { background: #14151a; }
+.profile-page .profile-badges-dashboard :is(
+  .profile-grade-signals > div > span,
+  .profile-recognition-roadmap__next > div:last-child > span,
+  .profile-recognition-summary > button > span
+) { background: #17181e; color: #c3b7df; }
+
+.profile-page .profile-gifts-workspace :is(
+  .profile-gift-catalog-card.is-selected,
+  .profile-studio-filter-row > button.is-active,
+  .profile-studio-real-steps li.is-current button,
+  .profile-studio-real-steps li.is-complete button,
+  .profile-gifts-recipients button.is-selected,
+  .profile-gifts-recipient-picker button.is-selected,
+  button.is-primary, a.is-primary
+),
+.profile-page .profile-badges-dashboard .profile-recognition-summary > button.is-active {
+  background: var(--mw-primary-face);
+  border-color: transparent;
+  box-shadow: var(--mw-primary-shadow);
+  color: #f7f5fb;
+}
+.profile-page .profile-gifts-workspace :is(
+  button.is-primary, a.is-primary
+):not(:disabled, [aria-disabled="true"]):hover {
+  filter: brightness(1.08);
+}
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) :is(
+  .profile-gift-catalog-card, .profile-recognition-card,
+  .profile-studio-filter-row > button, .profile-gifts-recipient-picker button,
+  .profile-gifts-recipients button, .profile-gifts-editor__footer > button
+):focus-visible {
+  outline: 2px solid #c3b7df;
+  outline-offset: 3px;
+}
+.profile-page :is(.profile-gifts-workspace, .profile-badges-dashboard) :is(
+  .profile-certif-panel__icon, .profile-certif-panel__safety,
+  .profile-gifts-editor__canvas > header > strong
+) { color: #c3b7df; }
+.profile-page .profile-badges-dashboard .profile-recognition-card.is-locked {
+  background: var(--profile-glass);
+}
+@media (max-width: 760px) {
+  .profile-page .profile-gifts-workspace :is(.profile-gifts-catalog-section, .profile-gifts-tracking) {
+    padding: 14px;
+  }
 }
 
 @media (min-width: 1100px) {

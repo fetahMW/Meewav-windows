@@ -93,11 +93,11 @@ afterEach(() => {
 });
 
 describe("MessageWorkspace message actions", () => {
-  it("referme le panneau de recherche au clic extérieur, avec Échap et avec la loupe", async () => {
+  it("ouvre les options depuis la liste et les referme au clic extérieur, avec Échap ou le bouton de fermeture", async () => {
     const live = liveController();
     const user = userEvent.setup();
     render(<MessageWorkspace newConversationSignal={0} liveController={live.value} />);
-    const trigger = screen.getByRole("button", { name: "Rechercher dans la conversation" });
+    const trigger = screen.getByRole("button", { name: "Options de Nadir" });
     await user.click(trigger);
     const drawer = screen.getByRole("complementary", { name: "Options de la conversation" });
     await user.click(within(drawer).getByPlaceholderText("Rechercher dans la conversation"));
@@ -106,9 +106,9 @@ describe("MessageWorkspace message actions", () => {
     expect(screen.queryByRole("complementary", { name: "Options de la conversation" })).not.toBeInTheDocument();
     await user.click(trigger);
     await user.keyboard("{Escape}");
-    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("complementary", { name: "Options de la conversation" })).not.toBeInTheDocument();
     await user.click(trigger);
-    await user.click(trigger);
+    await user.click(within(screen.getByRole("complementary", { name: "Options de la conversation" })).getByRole("button", { name: "Fermer" }));
     expect(screen.queryByRole("complementary", { name: "Options de la conversation" })).not.toBeInTheDocument();
   });
 

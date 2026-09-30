@@ -353,11 +353,15 @@
   }
 }
 
-/* Globe entry, Rooms creation and unread counts share the polished violet face. */
+/* Globe entry and national rankings, Rooms creation and unread counts share the polished violet face. */
 @layer meewav-primary-actions {
-  :is(.ring-explore-button,.rooms-page__launch-fab,.rooms-home__launch,.mw-conversation-row > b,.mw-rail-invitations > b) {
+  :is(.ring-explore-button,.national-top-ten.ring-key-surface,.rooms-page__launch-fab,.rooms-home__launch,.mw-conversation-row > b,.mw-rail-invitations > b) {
     background:var(--mw-primary-face)!important; border:1px solid transparent!important;
     color:#fff!important; box-shadow:var(--mw-primary-shadow)!important;
+  }
+  .national-top-ten.ring-key-surface {
+    --ring-key-rgb:var(--mw-accent-secondary-rgb,169,142,240)!important;
+    --ring-key-light:var(--mw-accent-secondary,#a98ef0)!important;
   }
   :is(.ring-explore-button,.rooms-page__launch-fab,.rooms-home__launch):focus-visible { outline:2px solid #d3c7f5!important;outline-offset:3px; }
   :is(.ring-explore-button,.rooms-page__launch-fab,.rooms-home__launch):disabled {opacity:.45!important;}

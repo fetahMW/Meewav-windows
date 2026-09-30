@@ -12,12 +12,12 @@
 .market-rail__track { gap: 14px; }
 .market-rail-card.market-home-hero,
 .market-rail-card.market-mini {
-  border: 1px solid #bfa4ef45;
-  background: radial-gradient(ellipse at 95% 100%, #67499c24, transparent 65%), linear-gradient(132deg, #e7d9ff0b, transparent 30%), #0b0912;
-  box-shadow: inset 0 1px 1px #eee3ff33, inset 0 -1px 1px #9276c426, 0 8px 20px #0005;
+  border: 1px solid #73768155;
+  background: #0d0e11;
+  box-shadow: inset 0 1px #ffffff30, inset 0 -2px 3px #000b, 0 12px 28px #0007;
 }
 .market-rail-card.market-home-hero:hover,
-.market-rail-card.market-mini:hover { border-color: #bc92ef8c; box-shadow: inset 0 1px 1px #fff6, 0 0 18px #9250ed19, 0 8px 20px #0005; }
+.market-rail-card.market-mini:hover { border-color: #a3a6b780; box-shadow: inset 0 1px #ffffff45, 0 16px 36px #0009; }
 .market-rail-card.market-home-hero { height: 330px; border-radius: 20px; }
 .market-home-hero .market-rail-card__main { display: grid; grid-template-columns: 46% minmax(0, 1fr); }
 .market-home-hero__visual { position: relative; display: block; min-width: 0; height: 100%; overflow: hidden; border-radius: 19px 0 0 19px; background: #ecebee; }
@@ -25,7 +25,7 @@
 .market-home-hero__visual::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, #d7c5ff0d, transparent 45%, #12081e30); }
 .market-home-hero[data-market-pillar="services"] .market-home-hero__visual img { object-fit: cover; }
 .market-home-hero .market-rail-card__favorite { right: auto; left: calc(46% - 46px); border-radius: 50%; }
-.market-home-hero__body { min-width: 0; display: flex; flex-direction: column; padding: 29px 24px 24px; background: linear-gradient(145deg, #d8bbff0b, transparent 28%, #05030940 29%, transparent 70%); }
+.market-home-hero__body { min-width: 0; display: flex; flex-direction: column; padding: 29px 24px 24px; background: linear-gradient(160deg, #181a1e, #0e0f12 48%, #07080a); }
 .market-home-hero__title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 9px 0 8px; color: #fcfaff; font-size: clamp(22px, 1.8vw, 28px); line-height: 1.12; letter-spacing: -.035em; }
 .market-home-hero__seller { color: #b3a6c6; font-size: 11px; line-height: 1.5; }
 .market-home-hero__description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: #c1b8cb; font-size: 12px; line-height: 1.55; margin: 17px 0 10px; }
@@ -78,7 +78,7 @@
 .market-page .market-product-card__footer { margin-top: 0; padding-top: 6px; gap: 8px; }
 .market-page .market-product-card__collective { margin-top: 5px; }
 .market-page .market-product-card__price strong { font-size: 18px; }
-.market-page .market-product-card { border-color: #b093da38; background: linear-gradient(145deg, #d1b3f909, transparent 40%), #09080f; box-shadow: inset 0 1px 1px #e0c6ff24, 0 8px 22px #0004; }
+.market-page .market-product-card { border-color: #73768155; background: #0d0e11; box-shadow: inset 0 1px #ffffff30, 0 12px 28px #0007; }
 .market-rail--featured { --rail-card-width: clamp(580px, 30vw, 760px); }
 .market-home-hero .market-rail-card__main { grid-template-columns: 54% minmax(0, 1fr); }
 .market-home-hero .market-rail-card__favorite { left: calc(54% - 46px); }
@@ -106,35 +106,66 @@
 .market-page .market-product-card__meta { font-size: 11px; line-height: 1.4; }
 .market-page .market-product-card__category { font-size: 9px; }
 
-/* The same graphite hi-fi lacquer as Rooms cards. */
-.market-page .market-product-card {
+/* Opaque graphite lacquer shared by every Marketplace card size. */
+.market-rail-card.market-home-hero,
+.market-rail-card.market-mini,
+.market-page .market-product-card,
+.market-listing-preview .market-listing-preview__card,
+.market-intents .market-intent-card,
+.market-seller-drafts .market-seller-drafts__list > li,
+.market-cart-panel .market-cart-line,
+.market-listing-preview .market-listing-preview__seller,
+.market-page :is(.market-detail__fact,.market-detail__seller,.market-detail__guarantee) {
+  --market-card-face: radial-gradient(ellipse 100% 80% at 22% -25%, #ffffff10, transparent 72%), linear-gradient(160deg, #181a1e, #0e0f12 48%, #07080a);
+  --market-card-reflection: linear-gradient(118deg, #ffffff0c, #ffffff03 28%, transparent 48%);
   border: 1px solid #73768155;
   border-top-color: #b5b9c470;
-  background: #0d0e11;
+  background: var(--market-card-face);
   box-shadow: inset 0 1px #ffffff30, inset 1px 0 #ffffff0d, inset -1px 0 #ffffff08, inset 0 -2px 3px #000b, 0 3px 0 #030405, 0 12px 28px #0007;
 }
-.market-page .market-product-card:hover,
-.market-page .market-product-card:focus-within {
+.market-page :is(.market-rail-card.market-home-hero, .market-rail-card.market-mini, .market-product-card):is(:hover, :focus-within),
+.market-listing-preview .market-listing-preview__card:focus-within,
+.market-intents .market-intent-card:focus-within,
+.market-seller-drafts .market-seller-drafts__list > li:focus-within,
+.market-cart-panel .market-cart-line:focus-within {
   border-color: #a3a6b780;
   box-shadow: inset 0 1px #ffffff45, inset 1px 0 #ffffff12, inset -1px 0 #ffffff0a, inset 0 -2px 3px #000b, 0 3px 0 #030405, 0 16px 36px #0009;
 }
-.market-page .market-product-card__body {
+.market-page :is(.market-home-hero__body, .market-mini .market-rail-card__body, .market-product-card__body),
+.market-listing-preview .market-listing-preview__body {
   position: relative;
+  overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(ellipse 100% 80% at 22% -25%, #ffffff10, transparent 72%), linear-gradient(160deg, #181a1e, #0e0f12 48%, #07080a);
+  background: var(--market-card-face);
   box-shadow: inset 0 1px #ffffff14, inset 1px 0 #ffffff08, inset 0 -2px 3px #0008;
 }
-.market-page .market-product-card__body::before {
+.market-page :is(.market-home-hero__body, .market-mini .market-rail-card__body, .market-product-card__body)::before,
+.market-listing-preview .market-listing-preview__body::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(118deg, #ffffff0c, #ffffff03 28%, transparent 48%);
+  background: var(--market-card-reflection);
   opacity: .65;
   transition: opacity 220ms ease;
 }
-.market-page .market-product-card:hover .market-product-card__body::before { opacity: 1; }
+.market-page :is(.market-rail-card, .market-product-card):is(:hover, :focus-within) :is(.market-home-hero__body, .market-rail-card__body, .market-product-card__body)::before { opacity: 1; }
+.market-page .market-home-hero__footer { border-top-color: #ffffff18; }
+.market-page :is(.market-home-hero__seller, .market-home-hero__price small, .market-rail-card__seller, .market-rail-card__price > span, .market-product-card__meta) { color: #a6a9b2; }
+.market-page .market-home-hero__description { color: #bfc2c9; }
+.market-page .market-card-seller__icon { border-color: #ffffff26; background: linear-gradient(145deg, #ffffff12, #0c0d10); box-shadow: inset 0 1px #ffffff18; }
+.market-page .market-home-hero__visual::after { background: linear-gradient(135deg, #ffffff0d, transparent 45%, #00000030); }
+.market-page .market-mini .market-rail-card__visual::after { background: linear-gradient(180deg, transparent 65%, #07080a80); }
+.market-page .market-product-card__visual::after { background: linear-gradient(180deg, transparent 82%, #07080a42); }
+.market-listing-preview .market-listing-preview__media { background: #0d0e11; }
+.market-listing-preview .market-listing-preview__media::after { background: linear-gradient(transparent, #07080ad1); }
+.market-cart-panel .market-cart-summary {
+  background: radial-gradient(ellipse 100% 80% at 22% -25%, #ffffff10, transparent 72%), linear-gradient(160deg, #181a1e, #0e0f12 48%, #07080a);
+  border-top-color: #b5b9c445;
+  box-shadow: inset 0 1px #ffffff14, 0 -18px 50px #0004;
+}
 @media (prefers-reduced-motion: reduce) {
-  .market-page .market-product-card__body::before { transition: none; }
+  .market-page :is(.market-home-hero__body, .market-rail-card__body, .market-product-card__body)::before,
+  .market-listing-preview .market-listing-preview__body::before { transition: none; }
 }

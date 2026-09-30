@@ -436,7 +436,7 @@
 .messaging-page .mw-workspace .mw-brief > button:hover { color: #bfaddb; }
 .messaging-page .mw-workspace .messaging-pillar-tabs.is-fine-indicator .meewav-pillar-tabs__indicator::before { opacity: .4; }
 .messaging-page .mw-workspace .mw-chat-header__identity {
-  display: flex; flex: 0 1 224px; min-width: 90px; max-width: 224px; align-items: center; gap: 9px; text-align: left;
+  display: flex; flex: 0 1 auto; min-width: 90px; max-width: 224px; align-items: center; gap: 9px; text-align: left;
 }
 .messaging-page .mw-workspace .mw-chat-header__identity-text { display: grid; min-width: 0; gap: 3px; }
 .messaging-page .mw-workspace .mw-chat-header__identity .mw-chat-header__contact { padding: 0; border: 0; }

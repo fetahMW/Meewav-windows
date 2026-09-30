@@ -1,0 +1,110 @@
+/* Project and group navigation reserve the same space for their actions. */
+#root .messaging-page .mw-workspace .mw-context-pane .mw-hub-chipbar {
+  padding-block: 4px;
+}
+#root .messaging-page .mw-workspace .mw-context-pane .mw-hub-chipbar > .agw-panel__controls {
+  box-sizing: border-box;
+  width: 148px;
+  flex: 0 0 148px;
+  justify-content: flex-end;
+  gap: 8px;
+}
+#root .messaging-page .mw-workspace .mw-hub-chipbar .agw-panel-create {
+  box-sizing: border-box;
+  width: 28px;
+  min-width: 28px;
+  flex: 0 0 28px;
+  padding: 0;
+}
+#root .messaging-page .mw-workspace .mw-hub-chipbar .mwp-project-invitations {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+#root .messaging-page .mwp-project-invitations__count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 13px;
+  padding: 1px 3px;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--mw-primary-face, #5137a1);
+  box-shadow: var(--mw-primary-shadow);
+  font-size: 8px;
+  line-height: 11px;
+  text-align: center;
+}
+@layer meewav-navigation-reference {
+  #root .messaging-page .mw-workspace .mw-hub-chipbar .mw-hub-chips.meewav-pillar-tabs > button {
+    flex: 1 0 0 !important;
+    min-width: 120px !important;
+  }
+}
+
+/* Context identity belongs to the fixed main header, outside scroll chrome. */
+#root .messaging-page .mw-workspace .mw-chat-header__context-identity {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 90px;
+  max-width: 260px;
+  align-items: center;
+  gap: 9px;
+  text-align: left;
+}
+#root .messaging-page .mw-chat-header__context-identity .mw-chat-header__contact {
+  padding: 0;
+  border: 0;
+}
+#root .messaging-page .mw-chat-header__context-identity strong,
+#root .messaging-page .mw-chat-header__context-identity small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+#root .messaging-page .mw-chat-header__context-identity strong {
+  color: #eeeaf4;
+  font-size: 13px;
+  font-weight: 650;
+}
+#root .messaging-page .mw-chat-header__context-identity small {
+  color: #aaa3bc;
+  font-size: 10px;
+}
+#root .messaging-page .mw-chat-header__context-create {
+  flex: 0 0 auto;
+}
+@media (max-width: 1100px) {
+  #root .messaging-page .mw-workspace .mw-context-pane .mw-hub-chipbar > .agw-panel__controls {
+    width: 100px;
+    flex-basis: 100px;
+  }
+  #root .messaging-page .mw-workspace .mw-hub-chipbar .agw-panel-option {
+    box-sizing: border-box;
+    width: 28px;
+    min-width: 28px;
+    padding: 0;
+    justify-content: center;
+  }
+  #root .messaging-page .mw-workspace .mw-hub-chipbar .agw-panel-option > span {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  #root .messaging-page .mw-workspace .mw-chat-header__context-identity {
+    max-width: 150px;
+    gap: 7px;
+  }
+  #root .messaging-page .mw-chat-header__context-identity strong { font-size: 11px; }
+  #root .messaging-page .mw-chat-header__context-identity small { display: none; }
+}

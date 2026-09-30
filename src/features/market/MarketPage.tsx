@@ -89,6 +89,7 @@ import type {
 import { useMarketLive } from "./useMarketLive";
 import { getMarketSellerIdentity } from "./marketSellerIdentity";
 import { buildMarketWallSequence } from "./marketWallSequence";
+import { orderMarketFeaturedProducts } from "./marketFeaturedSequence";
 import "./market-page.css";
 import "./market-home.css";
 import "./market-double-band.css";
@@ -508,6 +509,7 @@ function MarketRail({
   const settleTimerRef = useRef<number | null>(null);
   const loopCloneCount = Math.min(8, products.length);
   const initialIndex = loopCloneCount;
+  const firstProductId = products[0]?.id;
   const loopedProducts = useMemo(() => [
     ...products.slice(-loopCloneCount).map((product, index) => ({ product, loopCopy: "before" as const, renderKey: `before-${index}-${product.id}` })),
     ...products.map((product, index) => ({ product, loopCopy: "original" as const, renderKey: `original-${index}-${product.id}` })),
@@ -524,7 +526,7 @@ function MarketRail({
     viewport.style.scrollBehavior = "auto";
     viewport.scrollLeft = left;
     viewport.style.scrollBehavior = previousScrollBehavior;
-  }, [id, initialIndex, products.length]);
+  }, [firstProductId, id, initialIndex, products.length]);
 
   useEffect(() => () => {
     if (settleTimerRef.current !== null) window.clearTimeout(settleTimerRef.current);
@@ -931,7 +933,7 @@ export default function MarketPage() {
     && !showFavoritesOnly
     && appliedFilterCount === 0;
   const discoveryProducts = useMemo(
-    () => marketLive.active ? buildLiveFeaturedProducts(marketProducts) : featuredMarketProducts,
+    () => orderMarketFeaturedProducts(marketLive.active ? buildLiveFeaturedProducts(marketProducts) : featuredMarketProducts),
     [marketLive.active, marketProducts],
   );
   const homeRails = useMemo(

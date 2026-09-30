@@ -108,41 +108,6 @@ export function RoomCard({ room, featured = false, priority = false, onOpen }: R
         <span ref={mediaRef} className="rooms-home-card__media" aria-hidden="true">
           {(mediaUnavailable || !mediaSource) ? (
             <span className="rooms-home-card__media-fallback"><span>MW</span></span>
-          ) : isVertical ? (
-            <span className="rooms-home-card__vertical-stage">
-              <img
-                className="rooms-home-card__vertical-ambient"
-                src={mediaSource}
-                alt=""
-                loading={priority ? "eager" : "lazy"}
-                fetchPriority={priority ? "high" : "auto"}
-                decoding="async"
-                draggable={false}
-              />
-              <span className="rooms-home-card__vertical-window">
-                <img
-                  src={mediaSource}
-                  alt=""
-                  loading={priority ? "eager" : "lazy"}
-                  fetchPriority={priority ? "high" : "auto"}
-                  decoding="async"
-                  onError={handleMediaError}
-                />
-                {room.videoSource && videoVisible && previewRequested && !videoUnavailable ? (
-                  <video
-                    src={room.videoSource}
-                    poster={mediaSource}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload={priority ? "metadata" : "none"}
-                    tabIndex={-1}
-                    onError={() => setVideoUnavailable(true)}
-                  />
-                ) : null}
-              </span>
-            </span>
           ) : (
             <>
               <img
@@ -177,11 +142,6 @@ export function RoomCard({ room, featured = false, priority = false, onOpen }: R
             <Clock3 aria-hidden="true" />
             <span>{durationLabel}</span>
           </span>
-        </span>
-
-        <span className="rooms-home-card__body">
-          <span className="rooms-home-card__category-line"><span className="rooms-home-card__room-type">{roomTypeLabel(room.roomType)}</span><span className="rooms-home-card__city">{room.city ?? "France"} · {isVertical ? "9:16" : "16:9"}</span></span>
-          <strong className="rooms-home-card__title">{room.title}</strong>
           <span className="rooms-home-card__host">
             <span className="rooms-home-card__avatar" aria-hidden="true">
               <span>{initialsFor(room.hostName)}</span>
@@ -206,6 +166,15 @@ export function RoomCard({ room, featured = false, priority = false, onOpen }: R
                 title={`Badge niveau ${room.gradeLevel}`}
               />
             ) : null}
+          </span>
+        </span>
+
+        <span className="rooms-home-card__body">
+          <span className="rooms-home-card__room-type">{roomTypeLabel(room.roomType)}</span>
+          <strong className="rooms-home-card__title" title={room.title}>{room.title}</strong>
+          <span className="rooms-home-card__city" title={(room.city ?? "France") + " · " + (isVertical ? "9:16" : "16:9")}>
+            <span className="rooms-home-card__city-name">{room.city ?? "France"}</span>
+            <span className="rooms-home-card__media-format">· {isVertical ? "9:16" : "16:9"}</span>
           </span>
         </span>
       </button>

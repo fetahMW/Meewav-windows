@@ -14,13 +14,20 @@
   display: none;
 }
 
-/* Keep the wallpaper fixed beneath the scrolling conversation. Project and
-   group chats need their own image because their parent panels are opaque. */
-#root :is(.messaging-page, .mobile-messaging) .mw-chat-scene:has(> .mw-chat-timeline) {
+/* The workspace owns the wallpaper, so changing its tab keeps the same image. */
+#root :is(.messaging-page, .mobile-messaging) :is(.mw-chat-scene, .mw-project-detail__body, .agw-panel__layout) {
   background: #151515 var(--messaging-wallpaper-preview) center / cover no-repeat;
+}
+
+#root :is(.messaging-page, .mobile-messaging) :is(.mw-project-detail, .agw-panel) .mw-chat-scene,
+#root :is(.messaging-page, .mobile-messaging) .mw-track-studio--embedded .mw-track-studio__window {
+  background: transparent;
 }
 
 #root :is(.messaging-page, .mobile-messaging) .mw-chat-scene > .mw-chat-timeline,
 #root :is(.messaging-page, .mobile-messaging) .mw-chat-scene > .mw-chat-timeline > .mw-chat-timeline__inner {
   background: transparent;
 }
+
+/* Neutralize only image colors, without filtering message bubbles or controls. */
+#root .messaging-page :is(.messaging-page__backdrop,.mw-chat-scene,.mw-project-detail__body,.agw-panel__layout) { background-blend-mode:luminosity; }

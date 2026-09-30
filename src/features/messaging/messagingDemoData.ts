@@ -1,4 +1,5 @@
 import type { MessagingAttachmentViewModel } from "./messaging.attachments.types";
+import { demoTrackPackDuration, demoTrackPackStems } from "./demoTrackPackAudio";
 
 export type MessagingTab = "messages" | "collabs" | "projects" | "groups";
 export type MessagingSpace = "all" | MessagingTab;
@@ -545,7 +546,20 @@ const premiumConversationContent: Partial<Record<string, PremiumConversationCont
 export const demoConversations: DemoConversation[] = baseDemoConversations.map((conversation) => {
   const premiumContent = premiumConversationContent[conversation.id];
   const contact = demoContacts.find(person => person.username === conversation.handle.replace(/^@/, ""));
-  return { ...conversation, ...premiumContent, profileId: contact?.id ?? null };
+  const content = { ...conversation, ...premiumContent };
+  return {
+    ...content,
+    profileId: contact?.id ?? null,
+    messages: content.messages.map(message => message.kind !== "track-pack" ? message : {
+      ...message,
+      tracks: demoTrackPackStems.map(stem => stem.fileName),
+      trackMediaUrls: demoTrackPackStems.map(stem => stem.mediaUrl),
+      trackDurations: demoTrackPackStems.map(stem => demoTrackPackDuration(stem.durationSeconds)),
+      duration: demoTrackPackDuration(),
+      bpm: undefined,
+      musicalKey: undefined,
+    }),
+  };
 });
 
 const baseDemoCollabs: DemoCollab[] = [

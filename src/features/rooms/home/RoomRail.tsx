@@ -9,6 +9,7 @@ import {
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import type { RoomsHomeCollectionDefinition, RoomsHomeRoom } from "./roomsHome.types";
 import { RoomCard } from "./RoomCard";
+import { roomRailPageTarget } from "./roomRailNavigation";
 import "./rooms-home-components.css";
 import "../../../components/shared/rail/rail-edge-navigation.css";
 
@@ -98,29 +99,18 @@ export function RoomRail({
     };
   }, [collection.slug, initialScrollLeft, items.length, measure, scheduleMeasure]);
 
-  const cardStride = useCallback(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return 0;
-    const cards = viewport.querySelectorAll<HTMLElement>(".rooms-home-card");
-    if (cards.length > 1) {
-      const first = cards[0].getBoundingClientRect();
-      const second = cards[1].getBoundingClientRect();
-      const stride = Math.abs(second.left - first.left);
-      if (stride > 0) return stride;
-    }
-    return Math.max(240, viewport.clientWidth * 0.82);
-  }, []);
-
   const scrollByCards = useCallback((direction: -1 | 1) => {
     const viewport = viewportRef.current;
     if (!viewport) return;
-    const stride = cardStride();
-    const visibleCardCount = Math.max(1, Math.floor(viewport.clientWidth / Math.max(1, stride)));
-    viewport.scrollBy({
-      left: direction * stride * visibleCardCount,
+    const cards = [...viewport.querySelectorAll<HTMLElement>(".rooms-home-card")];
+    const firstLeft = cards[0]?.getBoundingClientRect().left ?? 0;
+    const starts = cards.map((card) => card.getBoundingClientRect().left - firstLeft);
+    const maximum = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    viewport.scrollTo({
+      left: roomRailPageTarget(starts, viewport.scrollLeft, viewport.clientWidth, maximum, direction),
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
-  }, [cardStride]);
+  }, []);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;

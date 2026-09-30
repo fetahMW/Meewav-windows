@@ -1,6 +1,6 @@
 import { portraitProps } from "../../components/shared/portraitPreProfile";
 import MeewavPillarTabs from "../../components/navigation/MeewavPillarTabs";
-import { demoTrackPackAudio } from "./demoTrackPackAudio";
+import { demoTrackPackStems } from "./demoTrackPackAudio";
 import {
   Archive,
   ArrowLeft,
@@ -521,13 +521,12 @@ function projectMembers(creatorId: string, ids: string[]) {
   }));
 }
 
-const nightDriveStems: ProjectStem[] = [
-  { id: "stem_1", label: "Drums", fileName: "drums_main.wav", durationSeconds: 204, bpm: 140, musicalKey: "Am", order: 0, addedBy: "user_2" },
-  { id: "stem_2", label: "Bass", fileName: "bass_808.wav", durationSeconds: 204, bpm: 140, musicalKey: "Am", order: 1, addedBy: "user_2" },
-  { id: "stem_3", label: "Synth Lead", fileName: "synth_lead_v2.wav", durationSeconds: 200, bpm: 140, musicalKey: "Am", order: 2, addedBy: "current_user" },
-  { id: "stem_4", label: "Vocals", fileName: "vocal_main_maya.wav", durationSeconds: 165, bpm: 140, musicalKey: "Am", order: 3, addedBy: "user_1" },
-  { id: "stem_5", label: "FX", fileName: "fx_risers.wav", durationSeconds: 204, bpm: 140, order: 4, addedBy: "user_3" },
-].map((stem) => ({ ...stem, ...demoTrackPackAudio(stem.label) }));
+const nightDriveStems: ProjectStem[] = demoTrackPackStems.map((stem, index) => ({
+  ...stem,
+  id: "stem_" + (index + 1),
+  order: index,
+  addedBy: index === 3 ? "user_1" : index === 2 ? "current_user" : "user_2",
+}));
 
 const nightDriveMixes: ProjectMix[] = [
   {
@@ -548,7 +547,7 @@ const nightDriveMixes: ProjectMix[] = [
       {
         id: "take_2",
         version: 2,
-        description: "Ajout du synth lead",
+        description: "Ajout de la piste instrumentale",
         stems: nightDriveStems.slice(0, 3),
         createdBy: "current_user",
         createdLabel: "Il y a 3 jours",
@@ -557,11 +556,11 @@ const nightDriveMixes: ProjectMix[] = [
       {
         id: "take_3",
         version: 3,
-        description: "Vocals de Maya + FX",
+        description: "Ajout des voix",
         stems: nightDriveStems,
         createdBy: "user_1",
         createdLabel: "Il y a 1 jour",
-        changes: { added: ["stem_4", "stem_5"], removed: [], modified: [] },
+        changes: { added: ["stem_4"], removed: [], modified: [] },
       },
     ],
   },
@@ -583,10 +582,12 @@ const nightDriveMixes: ProjectMix[] = [
   },
 ];
 
-const summerStems: ProjectStem[] = [
-  { id: "stem_ep_1", label: "Drums", fileName: "tropical_drums.wav", durationSeconds: 250, bpm: 110, musicalKey: "C", order: 0, addedBy: "user_3" },
-  { id: "stem_ep_2", label: "Chords", fileName: "piano_chords.wav", durationSeconds: 250, bpm: 110, musicalKey: "C", order: 1, addedBy: "user_3" },
-].map((stem) => ({ ...stem, ...demoTrackPackAudio(stem.label) }));
+const summerStems: ProjectStem[] = demoTrackPackStems.map((stem, index) => ({
+  ...stem,
+  id: "stem_ep_" + (index + 1),
+  order: index,
+  addedBy: "user_3",
+}));
 
 const summerMixes: ProjectMix[] = [
   {
@@ -694,7 +695,7 @@ const initialFeedbacks: ProjectFeedback[] = [
   {
     id: "fb_4",
     takeId: "take_3",
-    stemId: "stem_5",
+    stemId: "stem_3",
     position: "3:00",
     type: "question",
     content: "C’est quoi ce son à la fin ? C’est voulu ?",
@@ -707,7 +708,7 @@ const initialFeedbacks: ProjectFeedback[] = [
 ];
 
 const flutterProjectSeeds: ProjectWorkspaceItem[] = [
-  { id: "project_1", name: "Night Drive", description: "Single trap/drill avec Maya Chen. Objectif : sortie fin février.", cover: "/images/messaging/groups/group_2.png", status: "inProgress", members: 4, deadline: "Dans 21 jours", createdAt: "Il y a 30 jours", creatorId: "current_user", takeVersion: 3, stemCount: 5, unreadMessages: 3, newStems: 1, hasNewTake: true, newTasks: 0, currentMixId: "mix_1", memberDetails: projectMembers("current_user", ["current_user", "user_1", "user_2", "user_4"]), mixes: nightDriveMixes, tasks: projectOneTasks, feedbacks: initialFeedbacks },
+  { id: "project_1", name: "Night Drive", description: "Single trap/drill avec Maya Chen. Objectif : sortie fin février.", cover: "/images/messaging/groups/group_2.png", status: "inProgress", members: 4, deadline: "Dans 21 jours", createdAt: "Il y a 30 jours", creatorId: "current_user", takeVersion: 3, stemCount: 4, unreadMessages: 3, newStems: 1, hasNewTake: true, newTasks: 0, currentMixId: "mix_1", memberDetails: projectMembers("current_user", ["current_user", "user_1", "user_2", "user_4"]), mixes: nightDriveMixes, tasks: projectOneTasks, feedbacks: initialFeedbacks },
   { id: "project_2", name: "Summer Vibes EP", description: "EP 5 titres ambiance summer/tropical house", cover: "/images/messaging/groups/group_5.png", status: "inProgress", members: 3, createdAt: "Il y a 45 jours", creatorId: "user_3", takeVersion: 1, stemCount: 2, unreadMessages: 0, newStems: 0, hasNewTake: false, newTasks: 2, currentMixId: "mix_3", memberDetails: projectMembers("user_3", ["user_3", "current_user", "user_6"]), mixes: summerMixes, tasks: projectTwoTasks, feedbacks: [] },
   { id: "project_3", name: "Acoustic Session", description: "Reprise acoustique de mes titres", cover: "/images/messaging/groups/group_5.png", status: "completed", members: 2, createdAt: "Il y a 60 jours", creatorId: "current_user", stemCount: 0, unreadMessages: 0, newStems: 0, hasNewTake: false, newTasks: 0, memberDetails: projectMembers("current_user", ["current_user", "user_1"]), mixes: [], tasks: [], feedbacks: [] },
   { id: "project_4", name: "Old Beats Archive", description: "Anciennes prods à revisiter", cover: "/images/messaging/groups/group_3.png", status: "archived", members: 1, createdAt: "Il y a 120 jours", creatorId: "current_user", stemCount: 0, unreadMessages: 0, newStems: 0, hasNewTake: false, newTasks: 0, memberDetails: projectMembers("current_user", ["current_user"]), mixes: [], tasks: [], feedbacks: [] },
@@ -741,7 +742,7 @@ const flutterProjectMessages: ProjectChatMessage[] = [
   { id: "msg_p15", sender: "Lisa Music", body: "Bien reçu, je m’en occupe.", time: "Il y a 3 h 30" },
   { id: "msg_p16", sender: "Moi", mine: true, body: "On attend ton retour Lisa !", time: "Il y a 3 h 10" },
   { id: "msg_p17", sender: "Maya Chen", body: "Le drop est incroyable ! 🔥", time: "Il y a 2 h" },
-  { id: "msg_p18", sender: "SoundMax", body: "J’ai ajouté les vocals et les FX. Écoutez et dites-moi ce que vous en pensez !", time: "Il y a 1 h" },
+  { id: "msg_p18", sender: "SoundMax", body: "J’ai ajouté les voix. Écoutez et dites-moi ce que vous en pensez !", time: "Il y a 1 h" },
   { id: "msg_p19", sender: "Moi", mine: true, body: "Ça sonne vraiment pro maintenant.", time: "Il y a 50 min" },
   { id: "msg_p20", sender: "Lisa Music", body: "J’ai corrigé le Kick, c’est beaucoup plus propre.", time: "Il y a 40 min" },
   { id: "msg_p21", sender: "Maya Chen", body: "Merci Lisa ! C’est parfait.", time: "Il y a 30 min" },
@@ -850,12 +851,9 @@ function generatedProjectMessages(project: ProjectWorkspaceItem, blueprint: Proj
 
 function generatedProjectMix(project: ProjectWorkspaceItem, blueprint: ProjectFixtureBlueprint, index: number): ProjectMix {
   const takeId = `${project.id}_take_1`;
-  const stems: ProjectStem[] = blueprint.stems.map((stem, stemIndex) => ({
+  const stems: ProjectStem[] = demoTrackPackStems.map((stem, stemIndex) => ({
     id: `${project.id}_stem_${stemIndex + 1}`,
     ...stem,
-    ...demoTrackPackAudio(stem.label),
-    bpm: blueprint.bpm,
-    musicalKey: blueprint.musicalKey,
     order: stemIndex,
     addedBy: (project.memberDetails ?? [])[stemIndex % Math.max(project.memberDetails?.length ?? 1, 1)]?.id ?? "current_user",
   }));
@@ -1703,8 +1701,8 @@ function ProjectTasksPanel({
         <div className="mwp-task-list">
           {filteredTasks.map((task) => (
             <article key={task.id} className={"is-" + task.status}>
-              <button type="button" className="mwp-task-check" aria-pressed={task.status === "done"} disabled={live ? !live.canMutate : false} onClick={() => toggleTask(task.id)} aria-label={task.status === "done" ? "Remettre la tâche à faire" : "Marquer la tâche comme terminée"}>
-                {task.status === "done" ? <Check size={15} /> : null}
+              <button type="button" role="checkbox" className="mwp-task-check" aria-checked={task.status === "done"} disabled={live ? !live.canMutate || live.pending : false} onClick={() => toggleTask(task.id)} aria-label={task.title} title={task.status === "done" ? "Remettre la tâche à faire" : "Marquer la tâche comme terminée"}>
+                <span aria-hidden="true">{task.status === "done" ? <Check size={14} /> : null}</span>
               </button>
               <div className="mwp-task-content">
                 <button type="button" className="mwp-task-copy" onClick={() => setSelectedTask(task)}>
@@ -2928,8 +2926,8 @@ function ProjectInvitationsButton({ controller }: { controller: ProjectsWorkspac
 
   return (
     <>
-      <button type="button" className="mw-button mw-button--quiet" onClick={() => setOpen(true)}>
-        <UserPlus size={16} /> Invitations ({invitations.length})
+      <button type="button" className="mw-button mw-button--quiet mwp-project-invitations" onClick={() => setOpen(true)} aria-label={`Invitations (${invitations.length})`} title={`Invitations (${invitations.length})`}>
+        <UserPlus size={16} aria-hidden="true" /><span className="mwp-project-invitations__count" aria-hidden="true">{invitations.length > 99 ? "99+" : invitations.length}</span>
       </button>
       {open && (
         <Modal title="Invitations de projets" onClose={() => setOpen(false)}>

@@ -113,6 +113,12 @@ describe("ArtistGroupsWorkspace live", () => {
     );
 
     await waitFor(() => expect(controller.openGroup).toHaveBeenCalledWith(GROUP_ID));
+    fireEvent.click(screen.getByRole("button", { name: "Nouveau groupe" }));
+    fireEvent.change(screen.getByPlaceholderText("Ex : Midnight Echo"), { target: { value: "Brouillon" } });
+    fireEvent.click(screen.getByRole("button", { name: "Fermer" }));
+    fireEvent.click(screen.getByRole("button", { name: "Nouveau groupe" }));
+    expect(screen.getByPlaceholderText("Ex : Midnight Echo")).toHaveValue("");
+    fireEvent.click(screen.getByRole("button", { name: "Fermer" }));
     rerender(<ArtistGroupsWorkspace createGroupSignal={1} liveController={controller} onItemsChange={onItemsChange} />);
     await screen.findByPlaceholderText("Ex : Midnight Echo");
     fireEvent.change(screen.getByPlaceholderText("Ex : Midnight Echo"), { target: { value: "Aurora Club" } });
@@ -171,7 +177,7 @@ describe("ArtistGroupsWorkspace live", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ouvrir l’invitation d’un membre" }));
     fireEvent.change(screen.getByPlaceholderText("Nom ou @identifiant"), { target: { value: "Na" } });
     expect(controller.searchContacts).toHaveBeenCalledWith("Na");
-    fireEvent.click(screen.getByRole("button", { name: /Nadir/ }));
+    fireEvent.click(screen.getByRole("button", { name: /@nadir/ }));
     fireEvent.click(screen.getByRole("button", { name: "Envoyer l’invitation" }));
     await waitFor(() => expect(controller.inviteMember).toHaveBeenCalledWith(GROUP_ID, INVITEE_ID));
 
@@ -389,4 +395,22 @@ describe("ArtistGroupsWorkspace live", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ouvrir stems.wav" }));
     await waitFor(() => expect(resolveUrl).toHaveBeenCalledTimes(1));
   });
+});
+
+
+it("lie les portraits aux présences de la session et réinitialise les réponses au prochain créneau", async () => {
+  render(<ArtistGroupsWorkspace openGroupRequest={{ token: 1, groupId: "group_1" }} />);
+  fireEvent.click(await screen.findByRole("button", { name: "Planning" }));
+  expect(screen.getByAltText("Alex — Présence confirmée")).toHaveAttribute("src", "/images/messaging/avatars/avatar_1.png");
+  expect(screen.getByAltText("Sarah — Présence confirmée")).toHaveAttribute("src", "/images/messaging/avatars/avatar_4.png");
+  expect(screen.getByAltText("Julien — En attente")).toHaveAttribute("src", "/images/messaging/avatars/avatar_2.png");
+  fireEvent.click(screen.getByRole("button", { name: "Confirmer", exact: true }));
+  expect(screen.getByAltText("Julien — Présence confirmée")).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Confirmer", exact: true })).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: "Ajouter", exact: true }));
+  fireEvent.change(screen.getByLabelText("Titre"), { target: { value: "Nouvelle répétition" } });
+  fireEvent.submit(screen.getByRole("button", { name: "Créer", exact: true }).closest("form")!);
+  expect(screen.getByAltText("Alex — En attente")).toBeInTheDocument();
+  expect(screen.queryByAltText(/Présence confirmée/)).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Confirmer", exact: true })).toBeEnabled();
 });

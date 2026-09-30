@@ -1,5 +1,8 @@
 import { portraitProps } from "../../components/shared/portraitPreProfile";
 import { demoTrackPackAudio } from "./demoTrackPackAudio";
+import { useChatHeaderScroll } from "./useChatHeaderScroll";
+import "./workspace-header-scroll.css";
+import "./workspace-navigation.css";
 import { requestDirectCall } from "./MessagingCalls";
 import {
   ArrowDown,
@@ -339,26 +342,7 @@ function tracksFromMessage(message: DemoMessage): Track[] {
 }
 
 function viewerTracksFromMessage(message: DemoMessage): Track[] {
-  if (message.body !== "Track Pack" || !demoTrackPackIds.has(message.id)) return tracksFromMessage(message);
-  const showcase: Array<{ instrument: TrackPackInstrument; label: string; duration: string }> = [
-    { instrument: "drums", label: "batterie.wav", duration: "02:38" },
-    { instrument: "bass", label: "basse.wav", duration: "02:41" },
-    { instrument: "piano", label: "piano.wav", duration: "02:48" },
-    { instrument: "guitar", label: "guitare.wav", duration: "02:36" },
-    { instrument: "synth", label: "synthe.wav", duration: "02:55" },
-  ];
-  return showcase.map((track, index) => ({
-    id: `${message.id}-${track.instrument}`,
-    label: track.label,
-    color: trackColors[index % trackColors.length],
-    duration: !message.trackMediaUrls?.[index] ? formatDuration(demoTrackPackAudio(track.label).durationSeconds) : message.trackDurations?.[index] ?? track.duration,
-    muted: false,
-    solo: false,
-    mediaUrl: message.trackMediaUrls?.[index] || (demoTrackPackIds.has(message.id) ? demoTrackPackAudio(track.label).mediaUrl : undefined),
-    instrument: track.instrument,
-    displayName: TRACK_PACK_INSTRUMENTS[track.instrument].name,
-    description: TRACK_PACK_INSTRUMENTS[track.instrument].description,
-  }));
+  return tracksFromMessage(message);
 }
 
 const attachmentActions: Array<{ id: Exclude<DemoMessageKind, "text" | "track-pack" | "brief">; label: string; accept: string; icon: typeof Image }> = [
@@ -912,9 +896,7 @@ export function TrackPackViewer({ message, onClose, embedded = false }: { messag
 
 export function TrackPackCard({ message, onOpen }: { message: DemoMessage; onOpen: () => void }) {
   const isShowcaseTrackPack = message.body === "Track Pack";
-  const displayTracks = isShowcaseTrackPack
-    ? ["batterie.wav", "basse.wav", "piano.wav", "guitare.wav", "synthe.wav"]
-    : (message.tracks ?? trackTemplate.map((track) => track.label));
+  const displayTracks = message.tracks ?? trackTemplate.map((track) => track.label);
   const compactTracks = displayTracks.slice(0, 3);
   const totalTrackCount = displayTracks.length;
   const [activeTracks, setActiveTracks] = useState(() => new Set(displayTracks));
@@ -955,7 +937,7 @@ export function TrackPackCard({ message, onOpen }: { message: DemoMessage; onOpe
           return (
             <button key={track} type="button" className={activeTracks.has(track) ? "is-on" : ""} onClick={() => toggleTrack(track)}>
               <InstrumentArtwork instrument={presentation.instrument} compact />
-              <span>{isShowcaseTrackPack ? TRACK_PACK_INSTRUMENTS[presentation.instrument].name : presentation.name}</span>
+              <span>{presentation.name}</span>
             </button>
           );
         })}
@@ -2841,11 +2823,13 @@ export default function MessageWorkspace({
     setNotice("Conversation supprimée de cette démonstration.");
   };
 
+  useChatHeaderScroll(workspaceRef, contentSpace === "projects" || contentSpace === "groups", contentSpace);
+
   if (!selectedConversation) {
     const isLoading = liveController?.inboxStatus === "loading";
     const loadError = liveController?.inboxError;
     return (
-      <section className="mw-workspace is-empty">
+      <section className="mw-workspace is-empty" ref={workspaceRef}>
         <header className="mw-chat-header">
           <span className="mw-chat-header__brand"><MeewavPillarBrand pillar="Messagerie" /></span>
           <MeewavPillarTabs className="messaging-pillar-tabs is-fine-indicator" items={messagingSpaces}
@@ -2877,7 +2861,7 @@ export default function MessageWorkspace({
   const contextHeaderItem = showsContextIdentity
     ? selectedContextItem?.space === contentSpace ? selectedContextItem : contextFallbacks[contentSpace]
     : null;
-  const isRailSearchFirst = isMessageContent || contentSpace === "collabs";
+  const isRailSearchFirst = true;
 
   return (
     <section
@@ -2894,8 +2878,8 @@ export default function MessageWorkspace({
           ariaLabel="Espaces de la messagerie"
           onSelect={(space) => onSpaceChange?.(space)}
         />
-        {(isMessageContent || (contentSpace === "groups" && onCreateGroup)) && (
-          <nav className="mw-chat-header__utility" aria-label={isMessageContent ? "Actions et contact de la conversation" : "Actions des groupes"}>
+        {(isMessageContent || contextHeaderItem) && (
+          <nav className="mw-chat-header__utility" aria-label={isMessageContent ? "Actions et contact de la conversation" : contentSpace === "projects" ? "Projet sélectionné" : "Groupe sélectionné"}>
             {isMessageContent && (
               <span className="mw-chat-header__identity" title={selectedConversation.name}>
                 <span className="mw-chat-header__contact">
@@ -2909,17 +2893,23 @@ export default function MessageWorkspace({
             )}
             {isMessageContent && (
               <span className="mw-chat-header__actions">
-                <button type="button" className="mw-icon-button" data-conversation-drawer-trigger aria-expanded={drawerOpen} aria-controls="mw-conversation-drawer" onClick={() => setDrawerOpen((open) => !open)} aria-label="Rechercher dans la conversation"><Search /></button>
-                <button type="button" className="mw-icon-button" disabled={!liveController || Boolean(selectedConversation.readOnlyReason) || selectedConversation.conversationKind !== "direct"} title="Appeler ce contact" aria-label="Appel audio" onClick={() => requestDirectCall(selectedConversation.id, "audio")}><Phone /></button>
-                <button type="button" className="mw-icon-button" disabled={!liveController || Boolean(selectedConversation.readOnlyReason) || selectedConversation.conversationKind !== "direct"} title="Appeler ce contact en vidéo" aria-label="Appel vidéo" onClick={() => requestDirectCall(selectedConversation.id, "video")}><Video /></button>
-                <button type="button" className="mw-icon-button" data-conversation-drawer-trigger aria-expanded={drawerOpen} aria-controls="mw-conversation-drawer" onClick={() => setDrawerOpen((open) => !open)} aria-label="Options de la conversation"><Info /></button>
+                <span className="mw-chat-header__separator" aria-hidden="true" />
+                <button type="button" className="mw-icon-button mw-chat-header__call" disabled={!liveController || Boolean(selectedConversation.readOnlyReason) || selectedConversation.conversationKind !== "direct"} title="Appeler ce contact" aria-label="Appel audio" onClick={() => requestDirectCall(selectedConversation.id, "audio")}><Phone /></button>
+                <span className="mw-chat-header__separator" aria-hidden="true" />
+                <button type="button" className="mw-icon-button mw-chat-header__call" disabled={!liveController || Boolean(selectedConversation.readOnlyReason) || selectedConversation.conversationKind !== "direct"} title="Appeler ce contact en vidéo" aria-label="Appel vidéo" onClick={() => requestDirectCall(selectedConversation.id, "video")}><Video /></button>
               </span>
             )}
-            {contentSpace === "groups" && onCreateGroup && (
-              <button type="button" className="mw-chat-header__primary-action" onClick={onCreateGroup}>
-                <Users />
-                <span>Créer un groupe</span>
-              </button>
+            {contextHeaderItem && (
+              <span className="mw-chat-header__context-identity" title={contextHeaderItem.name}>
+                <span className="mw-chat-header__contact"><SidebarItemAvatar item={contextHeaderItem} showPresence={false} /></span>
+                <span className="mw-chat-header__identity-text">
+                  <span className="mw-chat-header__name-line"><strong>{contextHeaderItem.name}</strong>{contextHeaderItem.gradeLevel !== undefined && <MeewavGradeBadge className="mw-chat-header__grade" level={contextHeaderItem.gradeLevel} size="xs" variant="icon" />}</span>
+                  <small>{[contextHeaderItem.status, contextHeaderItem.role].filter(Boolean).join(" · ")}</small>
+                </span>
+              </span>
+            )}
+            {contentSpace === "groups" && contextHeaderItem?.id === "overview" && onCreateGroup && (
+              <button type="button" className="mw-icon-button mw-chat-header__context-create" onClick={onCreateGroup} aria-label="Nouveau groupe" title="Créer un groupe"><Plus /></button>
             )}
           </nav>
         )}
@@ -2927,11 +2917,6 @@ export default function MessageWorkspace({
 
       <aside className="mw-conversation-rail" id="mw-conversation-rail" ref={conversationRailRef}>
         <div className={`mw-rail-controls${isRailSearchFirst ? " is-search-first" : ""}`}>
-          {showsContextIdentity && contextHeaderItem && (
-            <div className="mw-rail-context-identity">
-              <><SidebarItemAvatar item={contextHeaderItem} showPresence={false} /><span><span className="mw-chat-header__name-line"><strong>{contextHeaderItem.name}</strong>{contextHeaderItem.gradeLevel !== undefined && <MeewavGradeBadge className="mw-chat-header__grade" level={contextHeaderItem.gradeLevel} size="xs" variant="icon" />}</span><small><i className={contextHeaderItem.online ? "is-online" : ""} /> {contextHeaderItem.status}<b>{contextHeaderItem.role}</b></small></span></>
-            </div>
-          )}
           <div className="mw-rail-search-wrap">
             <button
               type="button"

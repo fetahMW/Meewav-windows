@@ -6073,8 +6073,8 @@
     grid-template-rows: 76px minmax(0, 1fr) auto;
   }
 
-  .mw-chat-header nav .mw-icon-button:nth-child(2),
-  .mw-chat-header nav .mw-icon-button:nth-child(3) {
+  .mw-chat-header nav .mw-icon-button:not(.mw-chat-header__call):nth-child(2),
+  .mw-chat-header nav .mw-icon-button:not(.mw-chat-header__call):nth-child(3) {
     display: none;
   }
 
@@ -6541,8 +6541,8 @@
     padding-inline: 12px;
   }
 
-  .messaging-page .mw-chat-header nav .mw-icon-button:nth-child(2),
-  .messaging-page .mw-chat-header nav .mw-icon-button:nth-child(3) {
+  .messaging-page .mw-chat-header nav .mw-icon-button:not(.mw-chat-header__call):nth-child(2),
+  .messaging-page .mw-chat-header nav .mw-icon-button:not(.mw-chat-header__call):nth-child(3) {
     display: none;
   }
 

@@ -179,7 +179,7 @@ describe("MessageWorkspace live attachments", () => {
     const user = userEvent.setup();
     render(<MessageWorkspace newConversationSignal={0} liveController={live.value} />);
 
-    await user.click(screen.getByRole("button", { name: "Options de la conversation" }));
+    await user.click(screen.getByRole("button", { name: "Options de Nadir" }));
     await user.click(screen.getByRole("button", { name: /Signaler la conversation/ }));
     await user.selectOptions(screen.getByLabelText("Motif"), "harassment");
     await user.type(screen.getByPlaceholderText("Décris brièvement le problème"), "Messages agressifs répétés");
@@ -193,7 +193,7 @@ describe("MessageWorkspace live attachments", () => {
     ));
     expect(await screen.findByRole("status")).toHaveTextContent("Signalement envoyé");
 
-    await user.click(screen.getByRole("button", { name: "Options de la conversation" }));
+    await user.click(screen.getByRole("button", { name: "Options de Nadir" }));
     await user.click(screen.getByRole("button", { name: /Bloquer cet artiste/ }));
     await user.click(screen.getByRole("button", { name: "Bloquer" }));
     await waitFor(() => expect(blockCounterpart).toHaveBeenCalledTimes(1));
@@ -244,10 +244,10 @@ describe("MessageWorkspace live attachments", () => {
     await user.click(screen.getByRole("button", { name: /Nouvelle conversation/ }));
     const friendSearch = screen.getByRole("textbox", { name: "Rechercher un ami sur Meewav" });
     await user.type(friendSearch, "ma");
-    await user.click(screen.getByRole("button", { name: /Maya Sol/ }));
+    await user.click(screen.getByRole("button", { name: /@maya.*DJ/ }));
     await user.clear(friendSearch);
     await user.type(friendSearch, "na");
-    await user.click(screen.getByRole("button", { name: /Nadir Keys/ }));
+    await user.click(screen.getByRole("button", { name: /@nadir.*Pianiste/ }));
     const createButton = screen.getByRole("button", { name: "Créer groupe" });
     fireEvent.click(createButton);
     fireEvent.click(createButton);

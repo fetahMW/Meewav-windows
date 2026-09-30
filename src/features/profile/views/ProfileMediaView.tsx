@@ -13,12 +13,10 @@ import {
   FileImage,
   FileText,
   Film,
-  Gift,
   Grid2X2,
   Handshake,
   Headphones,
   Heart,
-  ListMusic,
   LoaderCircle,
   Maximize2,
   MoreHorizontal,
@@ -73,12 +71,12 @@ type ProfileMediaViewProps = {
 
 type MediaWorkspaceId = Exclude<MediaSectionId, "studio"> | StudioMode;
 
-const mediaWorkspaces: Array<{ id: MediaWorkspaceId; label: string; detail: string; accent: string; icon: typeof Archive }> = [
-  { id: "library", label: "Médiathèque", detail: "Tous tes contenus", accent: "#8b5cff", icon: Archive },
-  { id: "cage", label: "La Cage", detail: "Sessions et formats live", accent: "#ff465d", icon: Radio },
-  { id: "setlist", label: "Setlist", detail: "Passages et mixeur", accent: "#d946ef", icon: ListMusic },
-  { id: "gifts", label: "Cadeaux", detail: "Fans et communauté", accent: "#19b8ff", icon: Gift },
-  { id: "badges", label: "Badges", detail: "Grade et reconnaissances", accent: "#f4b942", icon: BadgeCheck },
+const mediaWorkspaces: Array<{ id: MediaWorkspaceId; label: string }> = [
+  { id: "library", label: "Média" },
+  { id: "cage", label: "Cage" },
+  { id: "setlist", label: "Setlist" },
+  { id: "gifts", label: "Cadeaux" },
+  { id: "badges", label: "Badges" },
 ];
 
 const kindFilters: Array<{ id: MediaLibraryFilter; label: string }> = [
@@ -210,13 +208,6 @@ export default function ProfileMediaView({
   const earnedBadgeCount = recognitionCatalog.filter((badge) => badge.status === "earned").length;
   const recognitionProgressCount = recognitionCatalog.filter((badge) => badge.status === "progress").length;
   const visibleRecognitions = recognitionCatalog.filter((badge) => recognitionFilter === "all" || badge.status === recognitionFilter);
-  const mediaWorkspaceMetrics: Record<MediaWorkspaceId, string> = {
-    library: String(items.length),
-    cage: "4",
-    setlist: "3",
-    gifts: "12",
-    badges: String(earnedBadgeCount),
-  };
 
   const visibleItems = useMemo(() => filterOwnerMedia(items, kind, query), [items, kind, query]);
 
@@ -523,29 +514,23 @@ export default function ProfileMediaView({
     <div className={`profile-view profile-media-view is-${activeMediaSection}`} aria-label="Média du profil">
       <header className="profile-private-shell-header profile-media-shell-header">
         <h2>Créations du profil</h2>
-        <div className="profile-private-shell-header__row">
-          <nav aria-label="Outils média">
-            {mediaWorkspaces.map((item) => {
-              const WorkspaceIcon = item.icon;
-              const isActive = activeWorkspaceId === item.id;
-              return (
-                <button
-                  key={item.id}
-                  id={`profile-media-tab-${item.id}`}
-                  type="button"
-                  aria-current={isActive ? "page" : undefined}
-                  className={isActive ? "is-active" : ""}
-                  style={{ "--private-tab-accent": item.accent } as React.CSSProperties}
-                  onClick={() => changeWorkspace(item.id)}
-                >
-                  <WorkspaceIcon size={15} />
-                  <strong>{item.label}</strong>
-                  <span>{mediaWorkspaceMetrics[item.id]}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+        <nav className="profile-media-workspace-chips" aria-label="Outils média">
+          {mediaWorkspaces.map((item) => {
+            const isActive = activeWorkspaceId === item.id;
+            return (
+              <button
+                key={item.id}
+                id={`profile-media-tab-${item.id}`}
+                type="button"
+                aria-current={isActive ? "page" : undefined}
+                className={isActive ? "is-active" : ""}
+                onClick={() => changeWorkspace(item.id)}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </nav>
       </header>
       <input
         ref={fileInputRef}

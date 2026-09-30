@@ -128,10 +128,9 @@
 }
 #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-list { gap:10px; }
 #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-list > article {
-  grid-template-columns:36px minmax(0,1fr); align-items:start; gap:10px; min-height:0; padding:12px;
+  grid-template-columns:44px minmax(0,1fr); align-items:start; gap:10px; min-height:0; padding:12px;
   border:1px solid var(--hub-rim); border-radius:16px; background:var(--hub-face); box-shadow:var(--hub-shadow);
 }
-#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-check { width:36px; height:36px; min-height:36px; margin-top:1px; }
 #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-content { min-width:0; }
 #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-copy {
   width:100%; min-height:40px; gap:5px; padding:0; border:0; border-radius:0; background:none; box-shadow:none; text-align:left;
@@ -148,3 +147,61 @@
   #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-project-tasks > header > .mwp-task-add { width:44px; min-width:44px; padding:0; }
   #root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-add > span { display:none; }
 }
+/* Neutral graphite surfaces; violet remains an interaction accent. */
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub {
+  --hub-face:linear-gradient(135deg,#ffffff09,transparent 42%),linear-gradient(180deg,#191a1d,#101113 52%,#090a0b);
+  --hub-rim:#d4d7df29;
+  --group-ink:#090a0b;
+  --group-muted:#b0b3bc;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-panel,.mw-project-detail,.agw-create) {
+  background:linear-gradient(135deg,#ffffff05,transparent 40%),#090a0b;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub :is(.agw-panel__bar,.agw-panel > .mw-hub-chipbar,.mwp-project-floating-controls) {
+  background:linear-gradient(125deg,#ffffff09,transparent 50%),linear-gradient(#1c1d20,#101113);
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-list > article {
+  grid-template-columns:44px minmax(0,1fr);
+  column-gap:8px;
+  background:var(--hub-face);
+  border-color:var(--hub-rim);
+}
+/* 22px visible square inside a 44px pointer and keyboard target. */
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-check {
+  display:grid; place-items:center;
+  width:44px; height:44px; min-width:44px; min-height:44px; margin:0; padding:0;
+  border:0; border-radius:8px; background:none; box-shadow:none;
+  color:#fff;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-check > span {
+  box-sizing:border-box; display:grid; place-items:center;
+  width:22px; height:22px; border-radius:6px;
+  border:1px solid #b5b9c463; border-top-color:#d0d4db73;
+  background:linear-gradient(135deg,#ffffff10,transparent 48%),linear-gradient(#222428,#111215);
+  box-shadow:inset 0 1px #ffffff18,inset 0 -1px #0009,0 2px 4px #0005;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-check[aria-checked=true] > span {
+  border-color:transparent; background:var(--mw-primary-face); box-shadow:var(--mw-primary-shadow);
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-check:not(:disabled):hover > span { border-color:#c7cad499; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-copy :is(strong,span) { white-space:normal; overflow-wrap:anywhere; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-copy > span {
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; color:#adb0b8;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-meta small { color:#a6a9b2; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .mwp-task-status {
+  background:var(--mw-control-face); box-shadow:var(--mw-control-shadow); border-color:transparent; color:#d5d7de;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .is-inProgress .mwp-task-status { color:#c4b2f6; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-participant-stack { flex-wrap:wrap; row-gap:5px; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-participant-stack > span {
+  position:relative; flex-shrink:0; box-sizing:border-box;
+  border-color:#82869080; background:#111215; color:inherit;
+  box-shadow:inset 0 1px #ffffff35,0 2px 5px #0006;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-participant-stack > span img {
+  display:block; width:100%; height:100%; border-radius:50%; object-fit:cover;
+}
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-participant-stack > span.is-confirmed { border-color:#aaaeb896; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-participant-stack > span.is-waiting { border-style:dashed; border-color:#74798490; }
+#root :is(.mobile-messaging,.messaging-page) .mw-polished-hub .agw-next-session__attendance > i { background:#a98ef0; box-shadow:none; }

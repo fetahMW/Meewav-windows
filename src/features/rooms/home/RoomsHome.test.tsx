@@ -74,20 +74,23 @@ describe("RoomsHome", () => {
     expect(screen.queryByText(/^LIVE$/i)).not.toBeInTheDocument();
   });
 
-  it("fills portrait card side space with a blurred copy of the same poster", () => {
+  it("uses one full portrait frame with the artist inside the image and a compact caption", () => {
     const { container } = renderRoomsHome();
     const verticalCard = container.querySelector(".rooms-home-card--vertical-media");
-    const ambientPoster = verticalCard?.querySelector<HTMLImageElement>(
-      ".rooms-home-card__vertical-ambient",
-    );
-    const foregroundPoster = verticalCard?.querySelector<HTMLImageElement>(
-      ".rooms-home-card__vertical-window > img",
-    );
+    const media = verticalCard?.querySelector(".rooms-home-card__media");
+    const caption = verticalCard?.querySelector(".rooms-home-card__body");
 
     expect(verticalCard).not.toBeNull();
-    expect(ambientPoster).not.toBeNull();
-    expect(foregroundPoster).not.toBeNull();
-    expect(ambientPoster?.getAttribute("src")).toBe(foregroundPoster?.getAttribute("src"));
+    expect(media?.querySelectorAll(":scope > img")).toHaveLength(1);
+    expect(media?.querySelector(".rooms-home-card__host-name")).not.toBeNull();
+    expect(media?.querySelector(".rooms-home-card__avatar img")).not.toBeNull();
+    expect(caption?.querySelector(".rooms-home-card__host")).toBeNull();
+    expect([...caption!.children].map((child) => child.className)).toEqual([
+      "rooms-home-card__room-type", "rooms-home-card__title", "rooms-home-card__city",
+    ]);
+    const title = caption?.querySelector(".rooms-home-card__title");
+    expect(title).toHaveAttribute("title", title?.textContent);
+    expect(verticalCard?.querySelector(".rooms-home-card__profile-trigger")).toHaveAttribute("aria-haspopup", "dialog");
   });
 
   it("opens the launch sequencer information dialog", async () => {

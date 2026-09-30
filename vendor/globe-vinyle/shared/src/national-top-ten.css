@@ -78,7 +78,7 @@
 .immersive-globe .is-champion .national-top-ten__artist { grid-template-columns: 22px var(--top-ten-portrait-size) minmax(0, 1fr) 13px; min-height: 105px; padding: 12px 8px; border-radius: 11px; }
 .is-champion .national-top-ten__rank { align-self: start; margin-top: 5px; font-size: 15px; color: var(--honors-accent); font-weight: 650; }
 .is-champion .national-top-ten__portrait img { border-radius: 15.6px; box-shadow: 0 0 0 1px rgba(var(--ring-key-rgb), .65), 0 5px 15px #0005; }
-.national-top-ten__crown { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 23px; height: 17px; border: 1px solid var(--ring-key-light); border-radius: 6px; background: linear-gradient(135deg, #e5a1ff, #985be2); color: #1a0d2c; }
+.national-top-ten__crown { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 23px; height: 17px; border: 1px solid var(--ring-key-light); border-radius: 6px; background: linear-gradient(135deg, var(--ring-key-light), #5137a1); color: #1a0d2c; }
 .national-top-ten__number-one { color: var(--honors-accent); font-size: 7px; font-weight: 650; letter-spacing: .14em; margin-bottom: 2px; }
 .is-champion .national-top-ten__identity > strong { font-size: 13px; letter-spacing: .02em; }
 .national-top-ten__footer { flex: none; padding: 12px 10px 11px; margin-top: 7px; border-top: 1px solid rgba(var(--ring-key-rgb), .16); text-align: center; background: linear-gradient(100deg, rgba(var(--ring-key-rgb), .06), transparent); }

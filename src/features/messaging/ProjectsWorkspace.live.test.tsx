@@ -179,6 +179,39 @@ afterEach(cleanup);
 
 describe("ProjectsWorkspace live", () => {
 
+  it("termine une tâche par sa case et attend l’état confirmé du serveur", async () => {
+    const upsertTask = vi.fn().mockResolvedValue({});
+    const live = controller({ upsertTask });
+    const { rerender } = render(<ProjectsWorkspace liveController={live} />);
+    fireEvent.click(screen.getByRole("button", { name: "Tâches" }));
+    const checkbox = screen.getByRole("checkbox", { name: "Valider le refrain", checked: false });
+    fireEvent.click(checkbox);
+    await waitFor(() => expect(upsertTask).toHaveBeenCalledWith(expect.objectContaining({
+      projectId, taskId: workspace.tasks[0].task_id, title: "Valider le refrain", status: "done",
+    })));
+    expect(checkbox).toHaveAttribute("aria-checked", "false");
+    rerender(<ProjectsWorkspace liveController={controller({
+      upsertTask,
+      selectedProject: { ...workspace, tasks: [{ ...workspace.tasks[0], status: "done" }] },
+    })} />);
+    fireEvent.click(screen.getByRole("checkbox", { name: "Valider le refrain", checked: true }));
+    await waitFor(() => expect(upsertTask).toHaveBeenLastCalledWith(expect.objectContaining({ status: "todo" })));
+  });
+
+  it("garde la case de tâche désactivée pour un membre sans permission", () => {
+    const denied = Object.fromEntries(Object.keys(permissions).map(key => [key, false])) as typeof permissions;
+    const live = controller({
+      items: [{ ...item, role: "contributor", permissions: denied }],
+      selectedProject: { ...workspace, owner_profile_id: otherProfileId, membership: { authority_role: "contributor", artistic_role: "Chanteur", ...denied } },
+    });
+    render(<ProjectsWorkspace liveController={live} />);
+    fireEvent.click(screen.getByRole("button", { name: "Tâches" }));
+    const checkbox = screen.getByRole("checkbox", { name: "Valider le refrain" });
+    expect(checkbox).toBeDisabled();
+    fireEvent.click(checkbox);
+    expect(live.upsertTask).not.toHaveBeenCalled();
+  });
+
   it("présente les infos utiles et garde la gestion derrière une confirmation", async () => {
     const setProjectStatus = vi.fn().mockResolvedValue({});
     const live = controller({ setProjectStatus });
@@ -313,8 +346,8 @@ describe("ProjectsWorkspace live", () => {
     fireEvent.click(screen.getByRole("button", { name: "Nouveau projet" }));
     fireEvent.change(screen.getByPlaceholderText("Nom du projet"), { target: { value: "Aurora" } });
     fireEvent.click(screen.getByRole("button", { name: /Suivant/ }));
-    fireEvent.click(screen.getByRole("button", { name: /Maya/ }));
-    fireEvent.click(screen.getByRole("button", { name: /Nadir/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Maya/, pressed: false }));
+    fireEvent.click(screen.getByRole("button", { name: /Nadir/, pressed: false }));
     fireEvent.click(screen.getByRole("button", { name: /Suivant/ }));
     fireEvent.click(screen.getByRole("button", { name: /Suivant/ }));
     fireEvent.click(screen.getByRole("button", { name: "Créer le projet" }));

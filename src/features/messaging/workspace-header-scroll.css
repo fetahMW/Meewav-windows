@@ -1,0 +1,37 @@
+/* Workspace headers float over stable scrollers, without changing their height
+   when hidden. Every tab uses the same direction detector. */
+#root :is(.messaging-page, .mobile-messaging) :is(.mwp-project-detail, .agw-panel)[data-auto-chat-header-owner] {
+  grid-template-rows: minmax(0, 1fr) !important;
+}
+#root :is(.messaging-page, .mobile-messaging) .mwp-project-detail[data-auto-chat-header-owner] { position: relative; }
+#root :is(.messaging-page, .mobile-messaging) :is(.mwp-project-detail, .agw-panel)[data-auto-chat-header-owner] > [data-auto-chat-chrome] {
+  position: absolute; inset: 0 0 auto; width: 100%; box-sizing: border-box;
+  z-index: 15; margin: 0; transform: translateY(0); transition: transform 180ms ease-out;
+}
+#root :is(.messaging-page, .mobile-messaging) [data-auto-chat-header-owner] > [data-auto-chat-chrome][data-chat-header-hidden] {
+  transform: translateY(-100%); pointer-events: none;
+}
+#root :is(.messaging-page, .mobile-messaging) [data-auto-chat-header-content] { box-sizing: border-box; min-height: 0; padding-top: 0 !important; }
+#root :is(.messaging-page, .mobile-messaging) [data-auto-chat-header-content] > .mwp-project-tasks {
+  padding-top: calc(var(--auto-chat-header-height, 64px) + 24px) !important;
+  scroll-padding-top: calc(var(--auto-chat-header-height, 64px) + 14px);
+}
+#root :is(.messaging-page, .mobile-messaging) [data-auto-chat-header-content] > .mwp-project-stems {
+  padding-top: calc(var(--auto-chat-header-height, 64px) + 18px) !important;
+  scroll-padding-top: calc(var(--auto-chat-header-height, 64px) + 14px);
+}
+#root :is(.messaging-page, .mobile-messaging) [data-project-tab="info"] [data-auto-chat-header-content],
+#root :is(.messaging-page, .mobile-messaging) .agw-panel [data-auto-chat-header-content]:not(:has(> .agw-group-chat)) {
+  padding-top: var(--auto-chat-header-height, 64px) !important;
+  scroll-padding-top: calc(var(--auto-chat-header-height, 64px) + 14px);
+}
+#root :is(.messaging-page, .mobile-messaging) [data-auto-chat-header-scene] > .mw-chat-timeline {
+  padding-top: 0 !important;
+  scroll-padding-top: calc(var(--auto-chat-header-height, 64px) + 14px) !important;
+}
+#root :is(.messaging-page, .mobile-messaging) [data-auto-chat-header-scene] > .mw-chat-timeline > .mw-chat-timeline__inner {
+  padding-top: calc(var(--auto-chat-header-height, 64px) + 14px) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #root :is(.messaging-page, .mobile-messaging) [data-auto-chat-chrome] { transition: none; }
+}
