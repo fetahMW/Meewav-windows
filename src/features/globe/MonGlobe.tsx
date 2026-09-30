@@ -47,6 +47,7 @@ export function MonGlobe({ initialDestination }: MonGlobeProps) {
   const persistenceOwner = profileOwnerId ?? "anonymous";
   return (
     <VinylGlobe
+      animateEntry={initialDestination === "authentication"}
       // Keep the loading animation mounted while the session resolves.
       // The embedded globe itself still waits for its definitive owner.
       ownerKey={authenticatedUserId === undefined ? null : persistenceOwner}

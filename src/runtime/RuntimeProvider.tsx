@@ -11,6 +11,8 @@ export type DesktopDescriptor = {
 };
 export type DesktopBridge = {
   version: 1;
+  openAuthUrl?(url: string): Promise<void>;
+  prepareAuthReturn?(): Promise<void>;
   localTestAccountsEnabled?: boolean;
   getTestAccountAliases?(supabaseUrl: string): Promise<string[]>;
   signInTestAccount?(alias: string, supabaseUrl: string): Promise<{ access_token: string; refresh_token: string }>;

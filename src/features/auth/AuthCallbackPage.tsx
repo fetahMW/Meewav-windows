@@ -3,14 +3,15 @@ import { AlertCircle, Loader } from "lucide-react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
 import { getAuthErrorMessage } from "./auth.service";
-
-function safeInternalPath(value: string | null) {
-  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/globe";
-  return value;
-}
+import { useAuth } from "./AuthContext";
+import { peekPendingMusicSceneArrival } from "./musicSceneOnboardingContract";
+import { finalizeMusicSceneOAuthOnboarding } from "./musicSceneOAuthFinalization";
+import { getSafeAuthReturnRoute } from "./authReturnRoute";
+import { MON_GLOBE_AUTH_NAVIGATION_STATE } from "../globe/monGlobeContract";
 
 export default function AuthCallbackPage() {
   const navigate = useNavigate();
+  const { markOnboardingComplete } = useAuth();
   const [searchParams] = useSearchParams();
   const started = useRef(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,13 +35,22 @@ export default function AuthCallbackPage() {
         throw new Error("Le lien de connexion est invalide ou a expiré.");
       }
 
-      navigate(safeInternalPath(searchParams.get("next")), { replace: true });
+      const pending = peekPendingMusicSceneArrival();
+      if (pending?.auth?.flow === "oauth") {
+        await finalizeMusicSceneOAuthOnboarding(pending);
+        markOnboardingComplete();
+      }
+      const destination = getSafeAuthReturnRoute({ returnTo: searchParams.get("next") });
+      navigate(destination, {
+        replace: true,
+        state: destination.split("?")[0] === "/globe" ? MON_GLOBE_AUTH_NAVIGATION_STATE : undefined,
+      });
     };
 
     void completeAuthentication().catch((callbackError: unknown) => {
       setError(getAuthErrorMessage(callbackError, "Impossible de finaliser la connexion."));
     });
-  }, [navigate, searchParams]);
+  }, [markOnboardingComplete, navigate, searchParams]);
 
   return (
     <main className="auth-action-page">
@@ -51,7 +61,7 @@ export default function AuthCallbackPage() {
             <AlertCircle className="auth-action-icon is-error" size={28} />
             <h1>Connexion interrompue</h1>
             <p>{error}</p>
-            <Link className="primary-button auth-action-link" to="/auth">Retour à la connexion</Link>
+            <Link className="primary-button auth-action-link" to="/auth?resume_onboarding=1">Retour à la connexion</Link>
           </>
         ) : (
           <>

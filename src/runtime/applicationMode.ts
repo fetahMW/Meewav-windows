@@ -6,6 +6,12 @@ export function getDesktopApplicationMode(): ApplicationMode | null {
   if (window.meewavDesktop.localTestAccountsEnabled) return "live";
   const query = new URLSearchParams(window.location.search);
   const fragment = new URLSearchParams(window.location.hash.slice(1));
+  // An explicit presentation launch keeps the auth screens and demo data together.
+  if (window.location.pathname === "/auth" && ["login", "demo"].includes(query.get("entry") ?? "")) {
+    const mode = query.get("entry") === "demo" ? "demo" : "live";
+    window.sessionStorage.setItem(MODE_KEY, mode);
+    return mode;
+  }
   if (["/auth/callback", "/auth/update-password"].includes(window.location.pathname)
     && (query.has("code") || query.has("error") || fragment.has("access_token") || fragment.has("error"))) {
     window.sessionStorage.setItem(MODE_KEY, "live");

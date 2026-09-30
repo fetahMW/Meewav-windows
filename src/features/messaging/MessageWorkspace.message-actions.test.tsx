@@ -32,7 +32,7 @@ function liveController() {
   const selected = conversation("conversation-main", "Nadir", messages);
   const target = conversation("conversation-target", "Alya");
   const sendText = vi.fn(async () => true);
-  const setReaction = vi.fn(async () => true);
+  const setReaction = vi.fn(async (_messageId: string, _emoji: string, _active: boolean) => true);
   const pinMessage = vi.fn(async () => true);
   const deleteMessage = vi.fn(async () => true);
   const forwardMessage = vi.fn(async () => true);
@@ -136,9 +136,40 @@ describe("MessageWorkspace message actions", () => {
     const user = userEvent.setup();
     render(<MessageWorkspace newConversationSignal={0} liveController={live.value} />);
 
-    await user.click(screen.getByRole("button", { name: "Retirer la réaction 🔥 1" }));
+    await user.click(within(messageElement("Le refrain fonctionne très bien.")).getByRole("button", { name: "🔥" }));
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
     expect(live.setReaction).toHaveBeenCalledWith("message-received", "🔥", true);
+  });
+
+  it("keeps reactions open for several choices and removes only my selected reaction", async () => {
+    const live = liveController();
+    live.value.messages[0].reactions = ["🔥 1", "👍 2"];
+    live.value.isReactionActiveByMe = (_messageId, emoji) => emoji === "🔥";
+    const user = userEvent.setup();
+    render(<MessageWorkspace newConversationSignal={0} liveController={live.value} />);
+    const received = messageElement("Le refrain fonctionne très bien.");
+    expect(within(received).getByRole("button", { name: "🔥" })).toHaveTextContent(/^🔥$/u);
+    expect(within(received).getByRole("button", { name: "👍 2" })).toHaveTextContent("2");
+    await user.click(received);
+    await user.click(screen.getByRole("button", { name: "Réagir avec 🎧" }));
+    await user.click(screen.getByRole("button", { name: "Réagir avec 👏" }));
+    expect(screen.getByRole("menu", { name: "Actions du message de Nadir" })).toBeInTheDocument();
+    expect(live.setReaction).toHaveBeenCalledWith("message-received", "🎧", true);
+    expect(live.setReaction).toHaveBeenCalledWith("message-received", "👏", true);
+    await user.click(screen.getByRole("button", { name: "Réagir avec 🔥" }));
+    expect(live.setReaction).toHaveBeenLastCalledWith("message-received", "🔥", false);
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  });
+
+  it("decodes emoticons in contact previews without showing their storage tokens", () => {
+    const live = liveController();
+    live.value.conversations[0].preview = "Écoute [[mw:coeur-casque]] [[mw:note-en-flamme]]";
+    const view = render(<MessageWorkspace newConversationSignal={0} liveController={live.value} />);
+    const preview = view.container.querySelector(".mw-conversation-row em") as HTMLElement;
+    expect(preview).toHaveTextContent("Écoute");
+    expect(preview).not.toHaveTextContent("[[mw:");
+    expect(within(preview).getAllByRole("img")).toHaveLength(2);
   });
 
   it("replies with the source message id and exposes an explicit composer banner", async () => {
@@ -259,23 +290,31 @@ describe("Collaboration and reaction wiring", () => {
     const view = render(<Harness />);
     await user.click(screen.getByRole("button", { name: "Accepter" }));
     const list = view.container.querySelector(".mw-conversation-list") as HTMLElement;
-    await waitFor(() => expect(within(list).getByRole("button", { name: /Nouvel artiste.*Collab acceptée/ })).toBeVisible());
+    const contact = await within(list).findByRole("button", { name: /^Nouvel artiste(?:,|$)/u });
+    expect(contact).toBeVisible();
+    expect(contact).toHaveTextContent("Collab acceptée");
     await user.type(screen.getByRole("textbox", { name: "Écrire un message" }), "Merci, on commence demain.");
     await user.click(screen.getByRole("button", { name: "Envoyer" }));
     expect(screen.getAllByText("Merci, on commence demain.").some((el) => el.closest(".mw-message"))).toBe(true);
-    expect(within(list).getByRole("button", { name: /Nouvel artiste.*Merci, on commence demain/ })).toBeVisible();
+    expect(within(list).getByRole("button", { name: /^Nouvel artiste(?:,|$)/u })).toHaveTextContent("Merci, on commence demain.");
   });
 
-  it("opens the shared emoticon wall without dismissing the menu and sends its token", async () => {
+  it("keeps the emoticon wall open for multiple reactions and closes it on demand", async () => {
     const live = liveController();
     const user = userEvent.setup();
     render(<MessageWorkspace newConversationSignal={0} liveController={live.value} />);
     await user.click(messageElement("Le refrain fonctionne très bien."));
     await user.click(screen.getByRole("button", { name: "Ouvrir le mur d’émoticônes" }));
-    const wall = screen.getByRole("dialog", { name: "Mur d’émoticônes" });
+    const wall = screen.getByRole("dialog", { name: "Émoticônes" });
     await user.click(within(wall).getAllByRole("listitem")[0]);
     expect(live.setReaction).toHaveBeenCalledWith("message-received", expect.stringMatching(/^\[\[mw:/), true);
-    expect(screen.queryByRole("dialog", { name: "Mur d’émoticônes" })).not.toBeInTheDocument();
+    expect(wall).toBeInTheDocument();
+    await user.click(within(wall).getAllByRole("listitem")[1]);
+    expect(live.setReaction).toHaveBeenCalledTimes(2);
+    expect(live.setReaction.mock.calls[0][1]).not.toBe(live.setReaction.mock.calls[1][1]);
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog", { name: "Émoticônes" })).not.toBeInTheDocument();
+    expect(screen.getByRole("menu", { name: "Actions du message de Nadir" })).toBeInTheDocument();
   });
 });
 

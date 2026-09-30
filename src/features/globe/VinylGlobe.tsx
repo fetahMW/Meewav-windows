@@ -14,10 +14,13 @@ const destinations = new Set(['/messages', '/rooms/home', '/scene', '/market', '
 type VinylGlobeProps = {
   arrival?: MusicSceneOnboardingPayload | null;
   ownerKey?: string | null;
+  animateEntry?: boolean;
 };
 
-export default function VinylGlobe({ arrival, ownerKey = 'anonymous' }: VinylGlobeProps) {
+export default function VinylGlobe({ arrival, ownerKey = 'anonymous', animateEntry = false }: VinylGlobeProps) {
   const frame = useRef<HTMLIFrameElement>(null);
+  // An internal navigation must not reload the canvas to remove its intro query.
+  const entryAnimation = useRef(animateEntry).current;
   const navigate = useNavigate();
   const [frameState, setFrameState] = useState<{ owner: string | null; loading: boolean }>({
     owner: null, loading: true,
@@ -85,9 +88,15 @@ export default function VinylGlobe({ arrival, ownerKey = 'anonymous' }: VinylGlo
       frame.current?.contentWindow?.postMessage({ channel: CHANNEL, type: 'activity', active: false }, window.location.origin);
     };
   }, [navigate, ownerKey]);
+  const frameParams = new URLSearchParams();
+  const applicationMode = getDesktopApplicationMode();
+  if (applicationMode) frameParams.set('mode', applicationMode === 'demo' ? 'demo' : 'real');
+  if (window.meewavDesktop?.version === 1) frameParams.set('idleOrbit', 'pause');
+  if (entryAnimation) frameParams.set('intro', 'auth');
+  const frameSearch = frameParams.toString();
   return <main className="vinyl-globe-page" aria-label="Mon Globe" aria-busy={loading}>
     {ownerKey !== null && <iframe key={ownerKey} ref={frame} className="vinyl-globe-frame" title="Globe MeeWav et artistes légendaires"
-      src={`${import.meta.env.BASE_URL}globe-vinyle/index.html${getDesktopApplicationMode() ? `?mode=${getDesktopApplicationMode() === "demo" ? "demo" : "real"}` : ""}`} allow="fullscreen" inert={loading}
+      src={`${import.meta.env.BASE_URL}globe-vinyle/index.html${frameSearch ? `?${frameSearch}` : ''}`} allow="fullscreen" inert={loading}
       data-loading={loading} />}
     {loading && <GlobeLoading />}
     {ownerKey && <EmbeddedGlobeProfileActions key={ownerKey} frame={frame} ownerId={ownerKey} allowDemo={getDesktopApplicationMode() !== "live"} />}

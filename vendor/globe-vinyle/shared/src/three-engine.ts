@@ -163,6 +163,7 @@ export async function createThree(
   const earth = new T.Mesh(new T.SphereGeometry(R, 192, 96), oceanMaterial);
   globeRoot.add(earth);
   const orbitOptions = new URLSearchParams(location.search);
+  const pauseOrbitAtRest = orbitOptions.get("idleOrbit") === "pause";
   const saturnRing = createSaturnRing(scene, {
     quality: orbitOptions.get("orbitQuality") || undefined,
     animated: orbitOptions.has("orbitMotion") ? orbitOptions.get("orbitMotion") !== "off" : undefined,
@@ -178,6 +179,9 @@ export async function createThree(
       renderer.render(scene, camera);
       orbitBloom.render(camera, dt);
       groundAvatars?.render(renderer);
+      const renderedAt = performance.now();
+      renderTimes.push(renderedAt);
+      while (renderTimes.length && renderTimes[0] < renderedAt - 1000) renderTimes.shift();
       finishFirstFrame?.();
       finishFirstFrame = undefined;
     } finally { renderer.info.autoReset = autoReset; }
@@ -1124,7 +1128,11 @@ export async function createThree(
     updateDepartments(now);
     setBrandVisible(view.height >= brandOverviewHeight * 0.999
       && !motion.isFlying() && !wheelZoom.isMoving() && pointers.size < 2);
-    const vinylChanged = saturnRing.tick(dt, camera, view.height > 70);
+    // Avoid sustained GPU rendering for ambient rotation on desktop. Gestures
+    // and camera flights continue at their normal rate.
+    const orbitMoving = motion.isMoving() || motion.isFlying() || wheelZoom.isMoving()
+      || orbit.isMoving() || pointers.size > 0;
+    const vinylChanged = saturnRing.tick(dt, camera, view.height > 70, !pauseOrbitAtRest || orbitMoving);
     const portraitsChanged = (poseChanged || sceneDirty || vinylChanged) && ringPortraits.setOverview(view.height);
     quarterStream.updateRequests(now, view, geographicViewport || viewportBounds(view, width, height, 1.3));
     if (!pointerIsIdle()) {
@@ -1186,8 +1194,6 @@ export async function createThree(
     const gpuQuery = beginGpu(moving);
     updateLand();
     renderScene(dt);
-    renderTimes.push(performance.now());
-    while (renderTimes.length && renderTimes[0] < performance.now() - 1000) renderTimes.shift();
     Object.assign(renderedView, view);
     if (gpuQuery) {
       gl.endQuery(timer.TIME_ELAPSED_EXT);

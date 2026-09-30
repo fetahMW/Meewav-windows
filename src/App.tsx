@@ -136,7 +136,7 @@ function AuthenticatedGlobeTestRoute() {
     return <Navigate to="/auth" replace />;
   }
 
-  const globe = <MonGlobe initialDestination={getMonGlobeInitialDestination(location.state)} />;
+  const globe = <MonGlobe initialDestination={getMonGlobeInitialDestination(location.state, location.search)} />;
   return runtime.isDesktop ? <RequireAuth>{globe}</RequireAuth> : globe;
 }
 
@@ -155,7 +155,9 @@ function PreviewAuthenticatedRoute({
 }
 
 function AuthenticationRoute() {
-  if (getDesktopApplicationMode() === "demo") return <Navigate to={MON_GLOBE_ROUTE} replace />;
+  const location = useLocation();
+  const presentationEntry = new URLSearchParams(location.search).get("entry") === "demo";
+  if (getDesktopApplicationMode() === "demo" && !presentationEntry) return <Navigate to={MON_GLOBE_ROUTE} replace />;
   if (IS_ROOMS_WORKSPACE_PREVIEW_MODE) return <Navigate to="/rooms" replace />;
   return (
     <Suspense fallback={<AppRouteLoading />}>

@@ -4,7 +4,7 @@ module.exports = {
   extraMetadata: { main: 'apps/meewav-studio/main.cjs', description: 'Studio Meewav pour Windows', author: 'Meewav' },
   directories: { output: 'release/windows' },
   protocols: [{ name: 'Meewav authentication', schemes: ['meewav'] }],
-  files: [{ from: 'dist-desktop', to: 'dist', filter: ['**/*'] }, 'apps/meewav-studio/main.cjs', 'apps/meewav-studio/preload.cjs', 'apps/meewav-studio/auth-links.cjs',
+  files: [{ from: 'dist-desktop', to: 'dist', filter: ['**/*'] }, 'apps/meewav-studio/main.cjs', 'apps/meewav-studio/preload.cjs', 'apps/meewav-studio/auth-links.cjs', 'apps/meewav-studio/auth-loopback.cjs',
     'apps/meewav-studio/test-accounts.cjs', 'apps/meewav-studio/platforms/**/*', 'apps/meewav-studio/assets/**/*', 'package.json', '!node_modules/**/*'],
   asar: true, npmRebuild: false,
   win: { target: [{target:'nsis',arch:['x64']}], icon: 'apps/meewav-studio/assets/meewav.ico' },

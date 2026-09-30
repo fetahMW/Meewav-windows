@@ -5,6 +5,10 @@ import { AuthContext, type AuthContextValue } from "./AuthContext";
 import { RequireAuth } from "./RequireAuth";
 import { disableLocalAuthPreview, enableLocalAuthPreview } from "./localAuthPreview";
 
+vi.mock("../../components/shared/AppRouteLoading", () => ({
+  default: () => <div>Ouverture de ton espace Meewav…</div>,
+}));
+
 afterEach(() => {
   cleanup();
   disableLocalAuthPreview();

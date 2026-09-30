@@ -2,10 +2,16 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import electronPath from 'electron';
+import { loadEnv } from 'vite';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
 const desktopPort = process.env.MEEWAV_DESKTOP_DEV_PORT || '5197';
+const publicEnvironment = loadEnv('development', root, 'VITE_SUPABASE_URL');
+const debugPort = process.env.MEEWAV_DESKTOP_DEBUG_PORT;
+if (debugPort && (!/^\d+$/.test(debugPort) || Number(debugPort) < 1024 || Number(debugPort) > 65535)) {
+  throw new Error('Invalid desktop debugging port');
+}
 const vite = spawn(process.execPath, [resolve(root, 'node_modules/vite/bin/vite.js'),
   '--host', '127.0.0.1', '--port', desktopPort, '--strictPort'], {
   cwd: root,
@@ -36,10 +42,13 @@ try {
     await new Promise((resolveWait) => setTimeout(resolveWait, 250));
   }
   if (!ready) throw new Error(`Le serveur local Studio n’a pas démarré sur 127.0.0.1:${desktopPort}.`);
-  electron = spawn(electronPath, [resolve(here, 'main.cjs')], {
+  electron = spawn(electronPath, [
+    ...(debugPort ? ['--remote-debugging-address=127.0.0.1', `--remote-debugging-port=${debugPort}`] : []),
+    resolve(here, 'main.cjs'),
+  ], {
     cwd: root,
     stdio: 'inherit',
-    env: { ...process.env },
+    env: { ...process.env, MEEWAV_SUPABASE_URL: publicEnvironment.VITE_SUPABASE_URL || process.env.MEEWAV_SUPABASE_URL || 'https://dqabekaqpznjsagoxzwc.supabase.co' },
   });
   electron.on('exit', (code) => close(code || 0));
 } catch (error) {

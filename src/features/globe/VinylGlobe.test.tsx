@@ -5,6 +5,39 @@ import VinylGlobe from './VinylGlobe';
 import { installHostBridge } from '../../../vendor/globe-vinyle/shared/src/host-bridge';
 vi.mock('../../../vendor/meewav-vinyl/src/GlobeLoading', () => ({default: () => <div role="status">Chargement</div>}));
 
+it('met le rendu ambiant au repos uniquement dans la fenêtre desktop', () => {
+  const descriptor = Object.getOwnPropertyDescriptor(window, 'meewavDesktop');
+  Object.defineProperty(window, 'meewavDesktop', { configurable: true, value: { version: 1 } });
+  let view = render(<MemoryRouter><VinylGlobe /></MemoryRouter>);
+  try {
+    let frame = screen.getByTitle('Globe MeeWav et artistes légendaires') as HTMLIFrameElement;
+    expect(new URL(frame.src).searchParams.get('idleOrbit')).toBe('pause');
+    view.unmount();
+    Object.defineProperty(window, 'meewavDesktop', { configurable: true, value: undefined });
+    view = render(<MemoryRouter><VinylGlobe /></MemoryRouter>);
+    frame = screen.getByTitle('Globe MeeWav et artistes légendaires') as HTMLIFrameElement;
+    expect(new URL(frame.src).searchParams.has('idleOrbit')).toBe(false);
+  } finally {
+    view.unmount();
+    if (descriptor) Object.defineProperty(window, 'meewavDesktop', descriptor);
+    else delete window.meewavDesktop;
+  }
+});
+
+it('transmet le vol auth au premier montage sans recharger le globe au retour interne', () => {
+  const view = render(<MemoryRouter><VinylGlobe animateEntry /></MemoryRouter>);
+  const frame = screen.getByTitle('Globe MeeWav et artistes légendaires') as HTMLIFrameElement;
+  expect(new URL(frame.src).searchParams.get('intro')).toBe('auth');
+  const entrySrc = frame.src;
+  view.rerender(<MemoryRouter><VinylGlobe /></MemoryRouter>);
+  expect(frame.src).toBe(entrySrc);
+  view.unmount();
+  const ordinary = render(<MemoryRouter><VinylGlobe /></MemoryRouter>);
+  const ordinaryFrame = screen.getByTitle('Globe MeeWav et artistes légendaires') as HTMLIFrameElement;
+  expect(new URL(ordinaryFrame.src).searchParams.has('intro')).toBe(false);
+  ordinary.unmount();
+});
+
 it('transmet le quartier après le premier rendu du globe et une seule fois',async()=>{
   const arrival:any={createdAt:1,profile:{profileId:'test-user'},city:{communeCode:'75056'},scene:{zoneId:'fr-paris-7510704',center:[2.294694,48.858093],source:'iris'}};
   const view=render(<MemoryRouter><VinylGlobe arrival={arrival}/></MemoryRouter>);

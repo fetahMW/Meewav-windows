@@ -2,6 +2,8 @@ import type { MusicScene, MusicSceneCity } from "./musicSceneSelection";
 
 const PENDING_ARRIVAL_STORAGE_KEY = "meewav:music-scene-onboarding:pending-arrival:v1";
 const CURRENT_PROFILE_STORAGE_KEY = "meewav:music-scene-onboarding:current-profile:v1";
+const PENDING_OAUTH_STORAGE_KEY = "meewav:music-scene-onboarding:oauth-draft:v1";
+const OAUTH_DRAFT_MAX_AGE_MS = 30 * 60 * 1000;
 
 export type MusicSceneOnboardingProfile = {
   profileId: string;
@@ -195,6 +197,12 @@ export function saveMusicSceneOnboarding(payload: MusicSceneOnboardingPayload) {
   if (typeof window === "undefined") return;
   const serialized = JSON.stringify(payload);
   try {
+    // Only the avatar/scene selection survives an external sign-in or app restart.
+    // This payload contains neither a password nor any authentication token.
+    if (payload.auth?.flow === "oauth") window.localStorage.setItem(PENDING_OAUTH_STORAGE_KEY, serialized);
+    else window.localStorage.removeItem(PENDING_OAUTH_STORAGE_KEY);
+  } catch { /* Session storage remains sufficient while the window stays open. */ }
+  try {
     window.sessionStorage.setItem(PENDING_ARRIVAL_STORAGE_KEY, serialized);
   } catch {
     // Account creation remains usable even when the browser blocks session storage.
@@ -208,7 +216,15 @@ export function saveMusicSceneOnboarding(payload: MusicSceneOnboardingPayload) {
 
 export function peekPendingMusicSceneArrival() {
   if (typeof window === "undefined") return null;
-  return readStorage(window.sessionStorage, PENDING_ARRIVAL_STORAGE_KEY);
+  const current = readStorage(window.sessionStorage, PENDING_ARRIVAL_STORAGE_KEY);
+  if (current) return current;
+  const draft = readStorage(window.localStorage, PENDING_OAUTH_STORAGE_KEY);
+  if (draft?.auth?.flow === "oauth"
+    && draft.profile.profileId === "onboarding-current-user"
+    && Date.now() - draft.createdAt >= 0
+    && Date.now() - draft.createdAt < OAUTH_DRAFT_MAX_AGE_MS) return draft;
+  try { window.localStorage.removeItem(PENDING_OAUTH_STORAGE_KEY); } catch { /* Optional storage. */ }
+  return null;
 }
 
 export function consumePendingMusicSceneArrival() {
@@ -230,6 +246,7 @@ export function readCurrentMusicSceneProfile() {
 
 export function clearMusicSceneOnboardingPreview() {
   if (typeof window === "undefined") return;
+  try { window.localStorage.removeItem(PENDING_OAUTH_STORAGE_KEY); } catch { /* Optional storage. */ }
   try {
     window.sessionStorage.removeItem(PENDING_ARRIVAL_STORAGE_KEY);
     window.sessionStorage.removeItem(CURRENT_PROFILE_STORAGE_KEY);

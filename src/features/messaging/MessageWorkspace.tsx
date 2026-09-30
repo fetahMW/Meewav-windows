@@ -1235,9 +1235,9 @@ function MessageActionPopover({
       {!message.deleted && (
         <div className="mw-message-actions__emojis" role="group" aria-label="Ajouter une réaction">
           {MESSAGE_REACTION_EMOJIS.map((emoji) => (
-            <button key={emoji} type="button" onClick={() => runAndClose(() => onReact(emoji))} aria-label={`Réagir avec ${emoji}`}>{emoji}</button>
+            <button key={emoji} type="button" onClick={() => onReact(emoji)} aria-label={`Réagir avec ${emoji}`}>{emoji}</button>
           ))}
-          <MeeWavEmoticonPicker panelClassName="mw-message-reaction-wall" label="Ouvrir le mur d’émoticônes" onSelect={(emoticon) => runAndClose(() => onReact(meewavEmoticonToken(emoticon.name)))} />
+          <MeeWavEmoticonPicker panelClassName="mw-message-reaction-wall" label="Ouvrir le mur d’émoticônes" onSelect={(emoticon) => onReact(meewavEmoticonToken(emoticon.name))} />
         </div>
       )}
       {!message.deleted && (
@@ -1383,9 +1383,16 @@ function MessageItem({
     <div className="mw-message__meta">
       {message.reactions && message.reactions.length > 0 && (
         <div className="mw-message__reactions" aria-label="Réactions au message">
-          {message.reactions.map((reaction) => (
-            <button type="button" key={reaction} onClick={() => onToggleReaction(message.id, reaction)} aria-label={`Retirer la réaction ${reaction}`}><MeeWavRichText emoticonSize={26}>{reaction}</MeeWavRichText></button>
-          ))}
+          {message.reactions.map((reaction) => {
+            const summary = reaction.match(/^(.*?)\s+(\d+)$/u);
+            const emoji = summary?.[1] ?? reaction;
+            const count = Number(summary?.[2] ?? 1);
+            return (
+              <button type="button" key={emoji} onClick={() => onToggleReaction(message.id, emoji)} title="Ajouter ou retirer ma réaction" aria-description={`${count} ${count > 1 ? "personnes ont" : "personne a"} réagi.`}>
+                <MeeWavRichText emoticonSize={26}>{emoji}</MeeWavRichText>{count > 1 && ` ${count}`}
+              </button>
+            );
+          })}
         </div>
       )}
       {message.pinned && <span className="mw-message__pinned"><Pin aria-hidden="true" /> Épinglé</span>}
@@ -2987,7 +2994,7 @@ export default function MessageWorkspace({
             <article key={conversation.id} className={selectedConversation.id === conversation.id ? "is-active" : ""}>
               <button type="button" className="mw-conversation-row" onClick={() => selectConversation(conversation.id)} title={conversation.name} aria-label={`${conversation.name}${conversation.unread > 0 ? `, ${conversation.unread} messages non lus` : ""}`} aria-current={selectedConversation.id === conversation.id ? "true" : undefined}>
                 <ConversationAvatar conversation={conversation} />
-                <span><span><strong>{conversation.name}</strong><small>{conversation.time}</small></span><em>{conversation.preview}</em><small>{conversation.role}</small></span>
+                <span><span><strong>{conversation.name}</strong><small>{conversation.time}</small></span><em><MeeWavRichText className="mw-conversation-preview" emoticonSize={18}>{conversation.preview}</MeeWavRichText></em><small>{conversation.role}</small></span>
                 {conversation.unread > 0 && <b>{conversation.unread > 99 ? "99+" : conversation.unread}</b>}
               </button>
               <button type="button" className="mw-conversation-row__options" onClick={() => { selectConversation(conversation.id); setDrawerOpen(true); }} aria-label={`Options de ${conversation.name}`}><MoreHorizontal /></button>
@@ -2996,7 +3003,7 @@ export default function MessageWorkspace({
             <article key={item.key} className={selectedRailKey === item.key ? "is-active" : ""} data-space={item.space}>
               <button type="button" className="mw-conversation-row" onClick={() => onRailItemSelect?.(item)} title={item.name} aria-label={`${item.name}${(item.unread ?? 0) > 0 ? `, ${item.unread} éléments non lus` : ""}`} aria-current={selectedRailKey === item.key ? "true" : undefined}>
                 <SidebarItemAvatar item={item} />
-                <span><span><strong>{item.name}</strong><small>{item.time}</small></span><em>{item.preview}</em><small>{item.role}</small></span>
+                <span><span><strong>{item.name}</strong><small>{item.time}</small></span><em><MeeWavRichText className="mw-conversation-preview" emoticonSize={18}>{item.preview}</MeeWavRichText></em><small>{item.role}</small></span>
                 {(item.unread ?? 0) > 0 && <b>{(item.unread ?? 0) > 99 ? "99+" : item.unread}</b>}
               </button>
             </article>

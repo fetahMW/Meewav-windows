@@ -19,6 +19,7 @@ import manifestV4Json from "./meewav-emoticons-v4.manifest.json";
 import manifestV5Json from "./meewav-emoticons-v5.manifest.json";
 import manifestV6Json from "./meewav-emoticons-v6.manifest.json";
 import "./meewav-emoticons.css";
+import "./emoticon-wall-material.css";
 
 type ManifestItem = {
   id: number;
@@ -332,6 +333,7 @@ export function MeeWavEmoticonPicker({
   const [position, setPosition] = useState<CSSProperties>({});
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const categories = useMemo(() => [
     "all",
@@ -346,17 +348,22 @@ export function MeeWavEmoticonPicker({
   }, [category, query]);
 
   useEffect(() => {
+    if (gridRef.current) gridRef.current.scrollTop = 0;
+  }, [category, query]);
+
+  useEffect(() => {
     if (!open) return undefined;
-    const place = () => {
+    const place = (event?: Event) => {
+      if (event?.type === "scroll" && event.target instanceof Node && panelRef.current?.contains(event.target)) return;
       const rect = triggerRef.current?.getBoundingClientRect();
       if (!rect) return;
-      const width = Math.min(368, window.innerWidth - 24);
-      const height = Math.min(418, window.innerHeight - 24);
+      const width = Math.min(480, window.innerWidth - 24);
+      const height = Math.min(544, window.innerHeight - 24);
       const left = Math.max(12, Math.min(window.innerWidth - width - 12, rect.right - width));
       const top = rect.top >= height + 12
         ? rect.top - height - 8
         : Math.min(window.innerHeight - height - 12, rect.bottom + 8);
-      setPosition({ left, top, width, maxHeight: height });
+      setPosition({ left, top, width, height, maxHeight: height });
     };
     const closeOnOutside = (event: PointerEvent) => {
       const target = event.target as Node | null;
@@ -406,7 +413,7 @@ export function MeeWavEmoticonPicker({
         >
           <header className="mw-emoticon-wall__header">
             <span className="mw-emoticon-wall__mark"><MeewavEmoticonImage name="coeur-casque" size={42} decorative /></span>
-            <span><small>PACKS OFFICIELS</small><strong id={titleId}>Mur d’émoticônes</strong><em>{MEEWAV_EMOTICONS.length} vibes musicales MeeWav</em></span>
+            <span><strong id={titleId}>Émoticônes</strong><em>{MEEWAV_EMOTICONS.length} créations musicales MeeWav</em></span>
             <button type="button" onClick={() => { setOpen(false); triggerRef.current?.focus(); }} aria-label="Fermer le mur d’émoticônes"><X aria-hidden="true" /></button>
           </header>
           <label className="mw-emoticon-wall__search">
@@ -417,7 +424,7 @@ export function MeeWavEmoticonPicker({
           <nav className="mw-emoticon-wall__categories" aria-label="Catégories d’émoticônes">
             {categories.map((id) => <button type="button" key={id} className={category === id ? "is-active" : ""} aria-pressed={category === id} onClick={() => setCategory(id)}>{CATEGORY_LABELS[id] ?? id}</button>)}
           </nav>
-          <div className="mw-emoticon-wall__grid" role="list" aria-label={`${filtered.length} émoticônes`}>
+          <div ref={gridRef} className="mw-emoticon-wall__grid" role="list" aria-label={`${filtered.length} émoticônes`}>
             {filtered.map((item) => (
               <button
                 type="button"
@@ -429,7 +436,7 @@ export function MeeWavEmoticonPicker({
                   onSelect(item);
                 }}
               >
-                <MeewavEmoticonImage name={item.name} size={54} decorative />
+                <MeewavEmoticonImage name={item.name} size={58} decorative />
                 <span>{item.label}</span>
               </button>
             ))}

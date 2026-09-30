@@ -27,7 +27,42 @@
     box-shadow: inset 0 1px #ffffff0c !important;
   }
 
-  :is(.messaging-page, .mobile-messaging) .mw-message :is(.mw-bubble--text, .mw-bubble--file, .mw-audio-capsule, .mw-brief) {
+  /* Desktop contact panel: deep smoked glass, with a quiet neutral reflection. */
+  @media (min-width: 761px) {
+    .messaging-page .mw-conversation-rail {
+      background:
+        linear-gradient(125deg, #ffffff06, transparent 40%),
+        linear-gradient(180deg, #111112, #0b0b0c 50%, #080809) !important;
+      box-shadow: inset 0 1px #ffffff0a, inset -1px 0 #ffffff06, inset 0 -1px #0008 !important;
+    }
+    /* A lighter graphite well keeps search visible without a plum surface. */
+    .messaging-page .mw-workspace:not(.is-contact-rail-compact) .mw-rail-search {
+      background:
+        linear-gradient(115deg, #ffffff05, transparent 54%),
+        linear-gradient(180deg, #242424, #181818 50%, #121212) !important;
+      border-color: #ffffff1a !important;
+      border-top-color: #ffffff26 !important;
+      box-shadow: inset 0 1px #ffffff0c, inset 0 -1px #0005 !important;
+    }
+    .messaging-page .mw-workspace:not(.is-contact-rail-compact) .mw-rail-search:focus-within {
+      border-color: #a98ef073 !important;
+      box-shadow: inset 0 1px #ffffff0c, inset 0 -1px #0005, 0 0 0 2px #a98ef014 !important;
+    }
+    .messaging-page .mw-workspace:not(.is-contact-rail-compact) .mw-rail-tune {
+      background: transparent !important;
+      border-left-color: #ffffff14 !important;
+      box-shadow: none !important;
+    }
+    .messaging-page .mw-workspace:not(.is-contact-rail-compact) .mw-rail-tune:is(:hover, .is-active, [aria-expanded="true"]) {
+      background: #ffffff09 !important;
+    }
+    .messaging-page .mw-workspace:not(.is-contact-rail-compact) .mw-rail-tune:focus-visible {
+      outline: 2px solid var(--mw-accent-secondary, #a98ef0) !important;
+      outline-offset: -3px !important;
+    }
+  }
+
+  :is(.messaging-page, .mobile-messaging) .mw-message :is(.mw-bubble--text, .mw-bubble--file, .mw-audio-capsule, .mw-brief, .mw-message__reply-preview) {
     background: var(--msg-glass-incoming) !important;
     background-color: #151619 !important;
     border: 1px solid #515258 !important;
@@ -37,10 +72,74 @@
     opacity: 1 !important;
     color: #f2eff7 !important;
   }
-  :is(.messaging-page, .mobile-messaging) .mw-message.is-mine :is(.mw-bubble--text, .mw-bubble--file, .mw-audio-capsule, .mw-brief) {
+  :is(.messaging-page, .mobile-messaging) .mw-message.is-mine :is(.mw-bubble--text, .mw-bubble--file, .mw-audio-capsule, .mw-brief, .mw-message__reply-preview) {
     background: var(--msg-glass-outgoing) !important;
     background-color: #30234e !important;
     border-color: #75608f !important;
+  }
+
+  /* Enlarge sent emoticons visually, preserving bubble metrics and wrapping. */
+  .messaging-page .mw-message .mw-bubble--text > p > .mw-rich-text > .mw-rich-text__emoticon {
+    transform: scale(1.2) !important;
+    transform-origin: center !important;
+  }
+  /* Contact previews decode the same tokens within their existing single line. */
+  :is(.messaging-page, .mobile-messaging) .mw-conversation-row .mw-conversation-preview {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-conversation-preview > .mw-rich-text__emoticon {
+    width: 1.2em !important;
+    height: 1.2em !important;
+    margin: 0 .08em !important;
+    vertical-align: -.22em !important;
+  }
+
+  /* Compact reply context: the sender and one line of the original message. */
+  :is(.messaging-page, .mobile-messaging) .mw-message .mw-message__reply-preview {
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-rows: 12px 16px !important;
+    gap: 2px !important;
+    width: fit-content !important;
+    max-width: min(280px, 100%) !important;
+    min-width: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 0 6px !important;
+    padding: 5px 10px !important;
+    overflow: hidden !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px #ffffff18 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message__reply-preview:not(:has(> span)) {
+    grid-template-rows: auto !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message__reply-preview > :is(small, span) {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    color: inherit !important;
+    -webkit-line-clamp: unset !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message__reply-preview > small {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    line-height: 12px !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    opacity: .8 !important;
+  }
+  :is(.messaging-page, .mobile-messaging) .mw-message__reply-preview > span {
+    font-size: 12px !important;
+    line-height: 16px !important;
   }
 
   /* The approved Android composer material, without changing its geometry. */
@@ -57,20 +156,20 @@
     border-top-color: #c5c1dd88 !important;
   }
 
-  /* Opaque glass pills: full-size emoji and a clear reaction count. */
+  /* Keep the reaction itself, without a surrounding capsule. */
   :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 5px !important;
-    min-width: 42px !important;
-    min-height: 36px !important;
+    min-width: 0 !important;
+    min-height: 32px !important;
     height: auto !important;
-    padding: 4px 10px !important;
-    border: 1px solid #85838f !important;
-    border-radius: 18px !important;
-    background: linear-gradient(135deg, #ffffff12, transparent 55%), linear-gradient(180deg, #34343c, #202026) !important;
-    box-shadow: inset 0 1px #ffffff20, 0 2px 4px #0005 !important;
+    padding: 0 2px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
     color: #faf8ff !important;
     font-size: 13px !important;
     font-weight: 600 !important;
@@ -78,12 +177,29 @@
     opacity: 1 !important;
   }
   :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button:is(:hover, [aria-pressed="true"]) {
-    border-color: #b8a3ed !important;
-    box-shadow: inset 0 1px #ffffff30, 0 0 0 1px #a98ef04d !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #fff !important;
   }
   :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button:focus-visible {
     outline: 2px solid #cbb5ff !important;
     outline-offset: 3px !important;
+  }
+  /* Legacy span styles also drew a second, nested reaction pill. */
+  :is(.messaging-page, .mobile-messaging) .mw-message__reactions > button > .mw-rich-text {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font: inherit !important;
+    transform: scale(1.2) !important;
+    transform-origin: center !important;
   }
 
   /* A compact audio row: title, waveform and duration beside one glass disc. */

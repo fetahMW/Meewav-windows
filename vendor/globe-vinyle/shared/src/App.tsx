@@ -9,6 +9,7 @@ import { GLOBE_OVERVIEW } from "./saturn-ring.mjs";
 import { notifyHost, requestLiveMarkers } from './host-bridge';
 import GlobeLoading from '../../../meewav-vinyl/src/GlobeLoading';
 import { cityArrivalTarget, countryArrivalTarget, quarterArrivalTarget } from "./navigation-presets.mjs";
+import { prepareGlobeEntry } from "./globe-entry.mjs";
 
 const world = GLOBE_OVERVIEW;
 const base = () => new URL(".", document.baseURI);
@@ -127,19 +128,24 @@ export default function App() {
       }
       engine.current = result;
       (window as any).__meewavEngine = result;
+      let startGlobeEntry = () => {};
       if (previewSnapshot.current) {
         result.restorePreviewSnapshot(previewSnapshot.current);
         result.setSelection(selection.current);
         previewSnapshot.current = null;
       } else if (new URLSearchParams(location.search).get("view") === "eiffel") {
         result.flyTo({ lon: EIFFEL.lon, lat: EIFFEL.lat, height: 0.02, pitch: 60, bearing: -35 }, 0);
-      } else result.flyTo(result.getOverviewTarget("globe"), 0);
+      } else startGlobeEntry = prepareGlobeEntry(result, {
+        fromAuthentication: new URLSearchParams(location.search).get('intro') === 'auth',
+        reducedMotion: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false,
+      });
       // The host keeps the spinning record until the canvas has actually
       // rendered its first frame, including a restored artist-exploration view.
       await result.firstFrame;
       if (op !== operation.current) return;
       setReady(true);
       notifyHost('ready');
+      startGlobeEntry();
       if (new URLSearchParams(location.search).get("probe") === "1") {
         result.probeCadence().then((report) => {
           const output = document.createElement("script");

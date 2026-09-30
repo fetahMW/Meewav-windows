@@ -2,6 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('meewavDesktop', Object.freeze({
   version: 1,
+  openAuthUrl: (url) => ipcRenderer.invoke('meewav:open-auth-url', url),
+  prepareAuthReturn: () => ipcRenderer.invoke('meewav:prepare-auth-return'),
   localTestAccountsEnabled: process.argv.includes('--meewav-local-test-accounts'),
   getTestAccountAliases: (supabaseUrl) => ipcRenderer.invoke('meewav:test-account-aliases', supabaseUrl),
   signInTestAccount: (alias, supabaseUrl) => ipcRenderer.invoke('meewav:test-account-sign-in', alias, supabaseUrl),

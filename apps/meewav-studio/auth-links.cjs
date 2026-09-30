@@ -18,4 +18,26 @@ function authReturnUrl(value) {
     return url.href;
   } catch { return null; }
 }
-module.exports = { authReturnUrl };
+const desktopAuthCallback = 'meewav://app/auth/callback';
+
+/** Only the configured Supabase authorization endpoint may open a browser. */
+function authStartUrl(value, supabaseUrl) {
+  try {
+    const target = new URL(value);
+    const expected = new URL(supabaseUrl);
+    if (expected.protocol !== 'https:' || target.origin !== expected.origin
+      || target.username || target.password || target.hash
+      || target.pathname !== '/auth/v1/authorize'
+      || !['google', 'apple'].includes(target.searchParams.get('provider'))
+      || target.searchParams.get('redirect_to') !== desktopAuthCallback) return null;
+    return target.href;
+  } catch { return null; }
+}
+
+function authRendererReturnUrl(value, studioUrl) {
+  const validated = authReturnUrl(value);
+  if (!validated) return null;
+  const callback = new URL(validated);
+  return new URL(callback.pathname + callback.search + callback.hash, studioUrl).href;
+}
+module.exports = { authReturnUrl, authStartUrl, authRendererReturnUrl, desktopAuthCallback };

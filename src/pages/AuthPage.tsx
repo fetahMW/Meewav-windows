@@ -34,8 +34,10 @@ import PillarCard from "../components/PillarCard";
 import AvatarSelectionPage from "./AvatarSelectionPage";
 import HolographicOrbCTA from "../components/auth/HolographicOrbCTA";
 import { AuthPanelChrome, SubtitleDivider, MidSeparator } from "../components/auth/AuthPanelChrome";
-import { MON_GLOBE_ROUTE } from "../features/globe/monGlobeContract";
+import { MON_GLOBE_ROUTE, MON_GLOBE_AUTH_NAVIGATION_STATE } from "../features/globe/monGlobeContract";
 import { supabase, supabaseUrl } from "../lib/supabaseClient";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { useAuth } from "../features/auth/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAuthErrorMessage } from "../features/auth/auth.service";
 import { getSafeAuthReturnRoute } from "../features/auth/authReturnRoute";
@@ -54,12 +56,16 @@ import {
 } from "../features/auth/musicSceneSelection";
 import {
   clearMusicSceneOnboardingPreview,
+  getCanonicalOnboardingAvatarFile,
   getOnboardingAvatarIconId,
+  readCurrentMusicSceneProfile,
+  peekPendingMusicSceneArrival,
   saveMusicSceneOnboarding,
   type MusicSceneOnboardingPayload,
 } from "../features/auth/musicSceneOnboardingContract";
 import { prepareAuthenticatedMusicSceneArrival } from "../features/auth/musicSceneAuthenticatedArrival";
 import { persistMusicSceneProfile } from "../features/auth/musicSceneProfilePersistence";
+import { startSocialSignIn } from "../features/auth/socialSignIn";
 import {
   SCENE_NAME,
 } from "../features/shorts/sceneContract";
@@ -84,6 +90,10 @@ type SocialProvider = "google" | "apple";
 export default function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, markOnboardingComplete } = useAuth();
+  const resumeOnboarding = new URLSearchParams(location.search).get("resume_onboarding") === "1";
+  const pendingSignupUserRef = useRef<SupabaseUser | null>(null);
+  const resumedUserIdRef = useRef<string | null>(null);
   const navigationState = location.state as { returnTo?: unknown } | null;
   const queryReturnTo = new URLSearchParams(location.search).get("returnTo");
   const postLoginRoute = getSafeAuthReturnRoute(
@@ -145,7 +155,54 @@ export default function AuthPage() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [authSuccess, setAuthSuccess] = useState<string | null>(null);
 
+  useEffect(() => {
+    const pendingOAuth = peekPendingMusicSceneArrival();
+    if (!localAuthPreviewAvailable && !resumeOnboarding && !user && pendingOAuth?.auth?.flow === "oauth") {
+      saveMusicSceneOnboarding(pendingOAuth);
+      void window.meewavDesktop?.prepareAuthReturn?.().catch((error: unknown) => {
+        setAuthError(getAuthErrorMessage(error, "Impossible de préparer le retour de connexion."));
+      });
+      setSelectedAvatar(pendingOAuth.profile.avatarFile);
+      setSelectedRole(pendingOAuth.profile.role);
+      setSelectedSceneCity(pendingOAuth.city);
+      setCityQuery(pendingOAuth.city.result.label);
+      setSelectedMusicScene(pendingOAuth.scene);
+      setSceneQuery(pendingOAuth.scene.label);
+      setSceneOptions([pendingOAuth.scene]);
+      setIsVisibleAroundMe(pendingOAuth.profile.visible);
+      setPendingSocialProvider(pendingOAuth.auth.provider);
+      setMode("signup");
+      setSignupStep(3);
+      return;
+    }
+    if (!resumeOnboarding || !user || resumedUserIdRef.current === user.id) return;
+    resumedUserIdRef.current = user.id;
+    pendingSignupUserRef.current = user;
+    const stored = readCurrentMusicSceneProfile();
+    const ownDraft = stored?.profile.profileId === user.id
+      ? stored
+      : pendingOAuth?.auth?.flow === "oauth" ? pendingOAuth : null;
+    const metadata = user.user_metadata;
+    const avatar = typeof metadata.avatar_name === "string" ? metadata.avatar_name : "Utilisateur.png";
+    setSelectedAvatar(ownDraft?.profile.avatarFile ?? getCanonicalOnboardingAvatarFile(avatar));
+    setSelectedRole(ownDraft?.profile.role ?? (typeof metadata.artist_type === "string" ? metadata.artist_type : "Utilisateur"));
+    setSignupUsername(typeof metadata.username === "string" ? metadata.username : ownDraft?.profile.username ?? "");
+    setSignupEmail(user.email ?? "");
+    setMode("signup");
+    setSignupStep(3);
+    if (ownDraft) {
+      setSelectedSceneCity(ownDraft.city);
+      setCityQuery(ownDraft.city.result.label);
+      setSelectedMusicScene(ownDraft.scene);
+      setSceneQuery(ownDraft.scene.label);
+      setSceneOptions([ownDraft.scene]);
+      setIsVisibleAroundMe(ownDraft.profile.visible);
+    }
+  }, [localAuthPreviewAvailable, resumeOnboarding, user]);
+
   const resetSignupDraft = () => {
+    pendingSignupUserRef.current = null;
+    resumedUserIdRef.current = null;
     sceneLoadTokenRef.current += 1;
     sceneIndexRequestedRef.current = false;
     setSignupStep(1);
@@ -373,7 +430,7 @@ export default function AuthPage() {
       version: 1,
       createdAt: Date.now(),
       ...(
-        pendingSocialProvider
+        pendingSocialProvider && !useLocalPreviewPersona
           ? { auth: { flow: "oauth" as const, provider: pendingSocialProvider } }
           : {}
       ),
@@ -408,7 +465,7 @@ export default function AuthPage() {
       if (onboardingPayload) saveMusicSceneOnboarding(onboardingPayload);
       else clearMusicSceneOnboardingPreview();
       enableLocalAuthPreview();
-      navigate(MON_GLOBE_ROUTE, { replace: true });
+      navigate(MON_GLOBE_ROUTE, { replace: true, state: MON_GLOBE_AUTH_NAVIGATION_STATE });
       return;
     }
 
@@ -440,11 +497,10 @@ export default function AuthPage() {
 
   const isLocationStepValid = Boolean(selectedSceneCity && selectedMusicScene);
 
-  // Global auto-dismiss timer for premium toasts
+  // Successful feedback can fade; an error stays available until the next action.
   useEffect(() => {
-    if (authError || authSuccess) {
+    if (authSuccess && !authError) {
       const timer = setTimeout(() => {
-        setAuthError(null);
         setAuthSuccess(null);
       }, 5000);
       return () => clearTimeout(timer);
@@ -479,7 +535,8 @@ export default function AuthPage() {
     setAuthError(null);
     setAuthSuccess(null);
 
-    if (mode === "signup" && !pendingSocialProvider) {
+    if (loading) return;
+    if (mode === "signup" && !pendingSocialProvider && !pendingSignupUserRef.current) {
       const credentialError = validateSignupCredentials({
         username: signupUsername,
         email: signupEmail,
@@ -520,11 +577,18 @@ export default function AuthPage() {
           console.warn("[auth] Impossible de préparer l'arrivée sur la scène.", arrivalError);
         }
         if (data.user && restoredArrival) {
-          restoredArrival = await persistMusicSceneProfile(data.user, restoredArrival);
+          try {
+            restoredArrival = await persistMusicSceneProfile(data.user, restoredArrival);
+            markOnboardingComplete();
+          } catch (profileError) {
+            // RequireAuth still checks onboarding. A completed account must not
+            // lose a successful login because optional scene synchronization failed.
+            console.warn("[auth] Synchronisation du profil indisponible.", getAuthErrorMessage(profileError, "profile_sync_failed"));
+          }
         }
         if (!restoredArrival) clearMusicSceneOnboardingPreview();
         setAuthSuccess("Connexion réussie !");
-        navigate(postLoginRoute, { replace: true });
+        navigate(postLoginRoute, { replace: true, state: postLoginRoute === MON_GLOBE_ROUTE ? MON_GLOBE_AUTH_NAVIGATION_STATE : undefined });
       } else {
         // Sign-up: the account joins a musical scene, never a precise address.
         if (!selectedSceneCity || !selectedMusicScene) {
@@ -538,34 +602,42 @@ export default function AuthPage() {
           return;
         }
 
-        const { data, error } = await supabase.auth.signUp({
-          email: signupEmail.trim(),
-          password: signupPassword,
-          options: {
-            data: {
-              username: signupUsername.trim(),
-              avatar_name: selectedAvatarFile,
-              artist_type: selectedRole,
-              city: selectedSceneCity.result.label,
-              commune_code: selectedSceneCity.communeCode,
-              zone_id: selectedMusicScene.zoneId,
-              district_id: selectedMusicScene.zoneId,
-              district_name: selectedMusicScene.label,
-              scene_name: selectedMusicScene.label,
-              scene_source: selectedMusicScene.source,
-              longitude: selectedMusicScene.center[0],
-              latitude: selectedMusicScene.center[1],
-              country: "France",
-              is_ghost_mode: !isVisibleAroundMe,
-              show_on_public_profile: isVisibleAroundMe,
+        let signupUser = pendingSignupUserRef.current;
+        if (!signupUser) {
+          const { data, error } = await supabase.auth.signUp({
+            email: signupEmail.trim(),
+            password: signupPassword,
+            options: {
+              data: {
+                onboarding_completed: false,
+                username: signupUsername.trim(),
+                avatar_name: selectedAvatarFile,
+                artist_type: selectedRole,
+                city: selectedSceneCity.result.label,
+                commune_code: selectedSceneCity.communeCode,
+                zone_id: selectedMusicScene.zoneId,
+                district_id: selectedMusicScene.zoneId,
+                district_name: selectedMusicScene.label,
+                scene_name: selectedMusicScene.label,
+                scene_source: selectedMusicScene.source,
+                longitude: selectedMusicScene.center[0],
+                latitude: selectedMusicScene.center[1],
+                country: "France",
+                is_ghost_mode: !isVisibleAroundMe,
+                show_on_public_profile: isVisibleAroundMe,
+              }
             }
+          });
+
+          if (error) throw error;
+
+          if (!data.user) {
+            throw new Error("Supabase n'a pas confirmé la création du nouveau compte.");
           }
-        });
-
-        if (error) throw error;
-
-        if (!data.user) {
-          throw new Error("Supabase n'a pas confirmé la création du nouveau compte.");
+          signupUser = data.user;
+          // A later persistence error retries this authenticated account,
+          // instead of creating it again on the next globe click.
+          pendingSignupUserRef.current = signupUser;
         }
 
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
@@ -582,16 +654,20 @@ export default function AuthPage() {
           return;
         }
 
-        if (activeSession.user.id !== data.user.id) {
+        if (activeSession.user.id !== signupUser.id) {
+          pendingSignupUserRef.current = null;
           await supabase.auth.signOut({ scope: "local" });
           clearMusicSceneOnboardingPreview();
           throw new Error("La session active ne correspond pas au nouveau compte. Recommence l'inscription.");
         }
 
+        const onboardingPayload = createOnboardingPayload(signupUser.id);
+        if (!onboardingPayload) throw new Error("Choisis la scène musicale que tu veux rejoindre.");
+        saveMusicSceneOnboarding(onboardingPayload);
+        await persistMusicSceneProfile(activeSession.user, onboardingPayload);
+        markOnboardingComplete();
         setAuthSuccess("Inscription réussie et connecté !");
-        const onboardingPayload = createOnboardingPayload(data.user.id);
-        if (onboardingPayload) await persistMusicSceneProfile(data.user, onboardingPayload);
-        navigate(MON_GLOBE_ROUTE);
+        navigate(MON_GLOBE_ROUTE, { replace: true, state: MON_GLOBE_AUTH_NAVIGATION_STATE });
       }
     } catch (err: unknown) {
       setAuthError(getAuthErrorMessage(err, "Une erreur s’est produite."));
@@ -607,8 +683,10 @@ export default function AuthPage() {
     setAuthSuccess(null);
 
     try {
-      const { error } = await supabase.auth.signOut({ scope: "local" });
-      if (error) throw error;
+      if (!localAuthPreviewAvailable) {
+        const { error } = await supabase.auth.signOut({ scope: "local" });
+        if (error) throw error;
+      }
       clearMusicSceneOnboardingPreview();
       resetSignupDraft();
       setMode("signup");
@@ -670,13 +748,7 @@ export default function AuthPage() {
     setAuthSuccess(null);
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: new URL(MON_GLOBE_ROUTE, window.location.origin).href,
-        }
-      });
-      if (error) throw error;
+      await startSocialSignIn(provider);
     } catch (err: unknown) {
       setAuthError(getAuthErrorMessage(err, "Une erreur s’est produite lors de la connexion sociale."));
     } finally {
@@ -701,6 +773,10 @@ export default function AuthPage() {
 
   const handleBackToCredentials = () => {
     setPendingSocialProvider(null);
+    if (pendingSignupUserRef.current) {
+      handleBackToLogin();
+      return;
+    }
     handleStepChangeWithPulse(2);
   };
 

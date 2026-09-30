@@ -1,12 +1,16 @@
-const { app, BrowserWindow, Menu, session, ipcMain, desktopCapturer, protocol, net } = require('electron');
+const { app, BrowserWindow, Menu, session, ipcMain, desktopCapturer, protocol, net, shell } = require('electron');
 const { isAbsolute, join, resolve, extname, sep } = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { appendFileSync, existsSync } = require('node:fs');
-const { authReturnUrl } = require('./auth-links.cjs');
+const { authReturnUrl, authStartUrl, authRendererReturnUrl } = require('./auth-links.cjs');
+const { createAuthLoopback } = require('./auth-loopback.cjs');
 const { readTestAccounts, signInTestAccount, testAccountsAllowed } = require('./test-accounts.cjs');
 
 const studioUrl = app.isPackaged ? 'meewav://app/' : `http://127.0.0.1:${process.env.MEEWAV_DESKTOP_DEV_PORT || '5197'}/`;
+const launchAtAuth = !app.isPackaged && process.env.MEEWAV_DESKTOP_START_AUTH === '1';
+const launchAuthEntry = process.env.MEEWAV_DESKTOP_AUTH_MODE === 'demo' ? 'demo' : 'login';
 const trustedOrigin = new URL(studioUrl).origin;
+const authProjectUrl = process.env.MEEWAV_SUPABASE_URL || 'https://dqabekaqpznjsagoxzwc.supabase.co';
 protocol.registerSchemesAsPrivileged([{ scheme: 'meewav', privileges: {
   standard: true, secure: true, supportFetchAPI: true, corsEnabled: true, stream: true,
 } }]);
@@ -26,11 +30,33 @@ app.setAppUserModelId('com.meewav.studio');
 const primaryInstance = app.requestSingleInstanceLock();
 if (!primaryInstance) app.quit();
 let mainWindow = null;
-let pendingAuthUrl = app.isPackaged ? process.argv.map(authReturnUrl).find(Boolean) : null;
+let authLoopback = null;
+let preparingAuthReturn = null;
+let openingAuthBrowser = false;
+function stopAuthLoopback() {
+  const current = authLoopback;
+  authLoopback = null;
+  return current?.close() || Promise.resolve();
+}
+async function prepareAuthReturn() {
+  if (authLoopback?.active) return;
+  if (preparingAuthReturn) return preparingAuthReturn;
+  preparingAuthReturn = (async () => {
+    await stopAuthLoopback();
+    const registered = app.isPackaged
+      ? app.setAsDefaultProtocolClient('meewav')
+      : app.setAsDefaultProtocolClient('meewav', process.execPath, [resolve(__dirname, 'main.cjs')]);
+    if (!registered) throw new Error('Impossible de préparer le retour de connexion dans Meewav.');
+    try { authLoopback = await createAuthLoopback({ onReturn: acceptAuthReturn }); }
+    catch { throw new Error('Le retour de connexion est occupé par une autre application. Ferme-la puis réessaie.'); }
+  })();
+  try { await preparingAuthReturn; } finally { preparingAuthReturn = null; }
+}
+let pendingAuthUrl = process.argv.map(value => authRendererReturnUrl(value, studioUrl)).find(Boolean) || null;
 function acceptAuthReturn(value) {
-  if (!app.isPackaged) return;
-  const url = authReturnUrl(value);
+  const url = authRendererReturnUrl(value, studioUrl);
   if (!url) return;
+  void stopAuthLoopback();
   pendingAuthUrl = url;
   if (mainWindow && !mainWindow.isDestroyed()) {
     const target = pendingAuthUrl; pendingAuthUrl = null;
@@ -108,7 +134,7 @@ function createWindow() {
     // Recover once only: a repeat crash must not create an endless reload loop.
     window.webContents.reload();
   });
-  window.webContents.on('did-finish-load', () => logLifecycle('did-finish-load'));
+  window.webContents.on('did-finish-load', () => logLifecycle('did-finish-load', { pathname: new URL(window.webContents.getURL()).pathname }));
   window.webContents.on('did-fail-load', (_event, errorCode, errorDescription, _url, isMainFrame) => {
     if (isMainFrame) logLifecycle('did-fail-load', { errorCode, errorDescription });
   });
@@ -116,7 +142,9 @@ function createWindow() {
     if (!isTrusted(url)) event.preventDefault();
   });
   window.once('ready-to-show', () => window.show());
-  const initialUrl = pendingAuthUrl || (localTestAccountsEnabled ? new URL('/auth', studioUrl).href : studioUrl); pendingAuthUrl = null;
+  const startupUrl = new URL((localTestAccountsEnabled || launchAtAuth) ? '/auth' : '/', studioUrl);
+  if (launchAtAuth) startupUrl.searchParams.set('entry', launchAuthEntry);
+  const initialUrl = pendingAuthUrl || startupUrl.href; pendingAuthUrl = null;
   // Auth return URLs can contain session tokens; never include them in diagnostics.
   void window.loadURL(initialUrl).catch(() => logLifecycle('load-error'));
 }
@@ -147,6 +175,26 @@ app.whenReady().then(() => {
     if (!isTrusted(event.senderFrame?.url || '') || event.senderFrame !== event.sender.mainFrame) throw new Error('Unsupported caller');
   };
   ipcMain.handle('meewav:capabilities', (event) => { assertTrusted(event); return capabilities; });
+  ipcMain.handle('meewav:prepare-auth-return', async (event) => {
+    assertTrusted(event);
+    if (new URL(event.senderFrame.url).pathname !== '/auth') throw new Error('Unsupported caller');
+    await prepareAuthReturn();
+  });
+  ipcMain.handle('meewav:open-auth-url', async (event, value) => {
+    assertTrusted(event);
+    if (new URL(event.senderFrame.url).pathname !== '/auth') throw new Error('Unsupported caller');
+    const target = authStartUrl(value, authProjectUrl);
+    if (!target) throw new Error('Adresse de connexion non autorisée.');
+    if (openingAuthBrowser) throw new Error('La connexion est déjà en cours.');
+    openingAuthBrowser = true;
+    try {
+      await prepareAuthReturn();
+      await shell.openExternal(target);
+    } catch (error) {
+      await stopAuthLoopback();
+      throw error;
+    } finally { openingAuthBrowser = false; }
+  });
   ipcMain.handle('meewav:test-account-aliases', (event, expectedUrl) => {
     assertTrusted(event);
     const config = localTestAccountsEnabled ? readTestAccounts(testAccountsFile) : null;
@@ -223,3 +271,4 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => app.quit());
+app.on('before-quit', () => { void stopAuthLoopback(); });
