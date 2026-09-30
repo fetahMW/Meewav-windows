@@ -35,6 +35,7 @@ import { createOrbitCameraUpdater, createOrbitGesture, createOrbitViewport, isOr
 
 import { createMotionMetrics } from "./motion-metrics.mjs";
 import { createCadenceProbe } from "./cadence-probe.mjs";
+import { createRenderCadence } from "./render-cadence.mjs";
 
 const clamp = T.MathUtils.clamp;
 const landColor = new T.Color(FOREIGN_LAND_COLOR);
@@ -81,6 +82,9 @@ export async function createThree(
   quarterIndex: any = { assets: [], labels: [] },
   liveMarkers: any[] | null = null,
 ) {
+  const orbitOptions = new URLSearchParams(location.search);
+  const desktopRendering = orbitOptions.get("renderProfile") === "desktop";
+  const renderCadence = createRenderCadence(desktopRendering);
   const scene = new T.Scene();
   const globeRoot = new T.Group();
   globeRoot.name = "globe-geography";
@@ -99,7 +103,7 @@ export async function createThree(
   const renderer = new T.WebGLRenderer({
     antialias: true,
     alpha: true,
-    powerPreference: "high-performance",
+    powerPreference: desktopRendering ? "low-power" : "high-performance",
     logarithmicDepthBuffer: false,
   });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -162,8 +166,6 @@ export async function createThree(
   softenGlobeReflections(oceanMaterial);
   const earth = new T.Mesh(new T.SphereGeometry(R, 192, 96), oceanMaterial);
   globeRoot.add(earth);
-  const orbitOptions = new URLSearchParams(location.search);
-  const pauseOrbitAtRest = orbitOptions.get("idleOrbit") === "pause";
   const saturnRing = createSaturnRing(scene, {
     quality: orbitOptions.get("orbitQuality") || undefined,
     animated: orbitOptions.has("orbitMotion") ? orbitOptions.get("orbitMotion") !== "off" : undefined,
@@ -1064,6 +1066,13 @@ export async function createThree(
   }
   function frame(now: number) {
     if (!alive || !active) return;
+    const cameraMoving = ringNavigation.active || motion.isMoving() || motion.isFlying()
+      || wheelZoom.isMoving() || orbit.isMoving() || pointers.size > 0;
+    const ambient = !cameraMoving && view.height > 70;
+    if (!renderCadence.frame(now, ambient, cadenceProbe.active || (!cameraMoving && (sceneDirty || viewportNeedsUpdate || pendingHover !== null)))) {
+      raf = requestAnimationFrame(frame);
+      return;
+    }
     const frameStart = performance.now();
     const dt = lastTime ? (now - lastTime) / 1000 : 0;
     lastTime = now;
@@ -1128,11 +1137,8 @@ export async function createThree(
     updateDepartments(now);
     setBrandVisible(view.height >= brandOverviewHeight * 0.999
       && !motion.isFlying() && !wheelZoom.isMoving() && pointers.size < 2);
-    // Avoid sustained GPU rendering for ambient rotation on desktop. Gestures
-    // and camera flights continue at their normal rate.
-    const orbitMoving = motion.isMoving() || motion.isFlying() || wheelZoom.isMoving()
-      || orbit.isMoving() || pointers.size > 0;
-    const vinylChanged = saturnRing.tick(dt, camera, view.height > 70, !pauseOrbitAtRest || orbitMoving);
+    // dt includes skipped frames, preserving the automatic record's turn speed.
+    const vinylChanged = saturnRing.tick(dt, camera, view.height > 70);
     const portraitsChanged = (poseChanged || sceneDirty || vinylChanged) && ringPortraits.setOverview(view.height);
     quarterStream.updateRequests(now, view, geographicViewport || viewportBounds(view, width, height, 1.3));
     if (!pointerIsIdle()) {
@@ -1315,6 +1321,7 @@ export async function createThree(
     searchAvatars(query: string) { return groundAvatars?.search(query) || []; },
     getAvatarStats() { return groundAvatars?.stats() || { total: 0, visible: 0 }; },
     getRingNavigationState: () => ({ ...ringNavigation.state(), portraits: ringPortraits.count }),
+    getRingState: saturnRing.state,
     setFocus(destination: any) {
       pendingFlightFocus = null;
       territoryFocus.set(destination);
@@ -1419,6 +1426,7 @@ export async function createThree(
       orbit.cancel();
       sceneDirty = true;
       lastTime = 0;
+      renderCadence.reset();
       cancelPick();
       pointers.clear();
       canvas.classList.remove("dragging");

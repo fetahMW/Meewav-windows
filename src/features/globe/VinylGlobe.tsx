@@ -91,7 +91,7 @@ export default function VinylGlobe({ arrival, ownerKey = 'anonymous', animateEnt
   const frameParams = new URLSearchParams();
   const applicationMode = getDesktopApplicationMode();
   if (applicationMode) frameParams.set('mode', applicationMode === 'demo' ? 'demo' : 'real');
-  if (window.meewavDesktop?.version === 1) frameParams.set('idleOrbit', 'pause');
+  if (window.meewavDesktop?.version === 1) frameParams.set('renderProfile', 'desktop');
   if (entryAnimation) frameParams.set('intro', 'auth');
   const frameSearch = frameParams.toString();
   return <main className="vinyl-globe-page" aria-label="Mon Globe" aria-busy={loading}>
